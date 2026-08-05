@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marketplace B2B — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .listing-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px; cursor: pointer; transition: border-color 0.15s; }
+  .listing-card:hover { border-color: var(--bronze); }
+  .listing-card.selected { border-color: var(--bronze); box-shadow: 0 0 0 1px var(--bronze); }
+  .listing-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
+  .listing-name { font-size: 13.5px; font-weight: 700; color: var(--ink); }
+  .listing-seller { font-size: 10.5px; color: var(--ink-faint); margin-bottom: 8px; }
+  .listing-price { display: flex; gap: 12px; font-size: 12px; }
+  .filter-chip { background: var(--card-bg); border: 1px solid var(--line); border-radius: 7px; padding: 7px 12px; font-size: 11px; color: var(--ink-dim); cursor: pointer; }
+  .publish-btn { background: var(--bronze); color: #ffffff; border: none; border-radius: 8px; padding: 10px 18px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
+  .proposta-row { background: var(--navy-800); border-radius: 6px; padding: 8px 12px; display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 8px; }
+  .neg-btn { border: 1px solid var(--bronze); color: var(--bronze); border-radius: 7px; padding: 7px 0; text-align: center; font-size: 11.5px; font-weight: 700; margin-top: 8px; }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="brand"><div class="brand-mark">M</div><div class="brand-text"><div class="brand-title">Portal Privado</div><div class="brand-sub">SINAGEPE — Marketplace B2B</div></div></div>
+      <nav class="nav-list">
+        <a class="nav-item" href="portal-empresas.html"><span class="nav-icon">▦</span> Painel</a>
+        <a class="nav-item active" href="marketplace-b2b.html"><span class="nav-icon">◎</span> Marketplace</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⇄</span> Logística</a>
+        <a class="nav-item" href="#"><span class="nav-icon">▤</span> Armazéns</a>
+        <a class="nav-item" href="#"><span class="nav-icon">≋</span> Simulador</a>
+        <a class="nav-item" href="#"><span class="nav-icon">▧</span> Relatórios</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⚙</span> Configurações</a>
+      </nav>
+    </div>
+    <div class="sidebar-footer"><div class="avatar-dot" id="user-initials">MP</div><div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div></div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title-group"><div class="topbar-title">Marketplace B2B</div><div class="topbar-badge">Transacções entre Empresas Registadas</div></div>
+      <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+    </div>
+    <div class="content" id="content-mount"></div>
+    <div class="footer"><span>© 2026 SINAGEPE Moçambique — Acesso Privado</span><span id="footer-updated">—</span></div>
+  </div>
+</div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.load().then(renderMarketplace);
+
+let DATA;
+let SELECCIONADO = null;
+
+function renderMarketplace(data) {
+  DATA = data;
+  SINAGEPE.renderUserFooter({ utilizador: { nome: 'Importadora Silva Lda.', instituicao: 'Sector Privado', direccao: 'Administrador' } });
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  const m = data.marketplace;
+  document.getElementById('content-mount').innerHTML = `
+    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
+      ${SINAGEPE.kpiCard({ label: 'Anúncios Activos', valor: m.kpis.anunciosActivos, estado: 'Normal', tipo: 'info' })}
+      ${SINAGEPE.kpiCard({ label: 'Transacções em Curso', valor: m.kpis.transaccoesEmCurso, estado: 'Em Negociação', tipo: 'warn' })}
+      ${SINAGEPE.kpiCard({ label: 'Volume Transaccionado (Mês)', valor: (m.kpis.volumeTransaccionadoMzn / 1e6).toFixed(1) + 'M MZN', estado: 'Crescente', tipo: 'ok' })}
+      ${SINAGEPE.kpiCard({ label: 'Taxa de Conclusão', valor: m.kpis.taxaConclusaoPercent + '%', estado: 'Saudável', tipo: 'ok' })}
+    </div>
+
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+        <div style="display:flex;gap:8px" id="filters"></div>
+        <button class="publish-btn">+ Publicar Novo Anúncio</button>
+      </div>
+      <div class="row-3" id="listings-grid" style="grid-template-columns:repeat(3,1fr)"></div>
+    </div>
+
+    <div class="card" id="negociacao-panel"></div>
+  `;
+
+  document.getElementById('filters').innerHTML = ['Todos os Produtos', 'Todas as Províncias', 'Todos os Estados']
+    .map(f => `<div class="filter-chip">${f} ▾</div>`).join('');
+
+  renderListings(m.anuncios);
+  SELECCIONADO = m.anuncios.find(a => a.estado === 'Em Negociação')?.id || m.anuncios[0].id;
+  renderNegociacao(SELECCIONADO);
+}
+
+const ESTADO_TIPO = { 'Activo': 'ok', 'Em Negociação': 'warn', 'Vendido': 'info' };
+
+function renderListings(anuncios) {
+  document.getElementById('listings-grid').innerHTML = anuncios.map(a => `
+    <div class="listing-card ${a.id === SELECCIONADO ? 'selected' : ''}" data-id="${a.id}">
+      <div class="listing-top">
+        <span class="listing-name">${a.produto}</span>
+        <span class="state-tag" style="background:var(--${ESTADO_TIPO[a.estado]}-bg);color:var(--${ESTADO_TIPO[a.estado]})">${a.estado}</span>
+      </div>
+      <div class="listing-seller">${a.vendedor} · ${a.provincia}</div>
+      <div class="listing-price">
+        <span style="font-weight:600;color:var(--ink)">${a.quantidadeT} t</span>
+        <span style="font-weight:700;color:var(--bronze)">${SINAGEPE.fmt(a.precoMznT)} MZN/t</span>
+      </div>
+      <div class="neg-btn">Ver e Negociar</div>
+    </div>`).join('');
+
+  document.querySelectorAll('.listing-card').forEach(card => card.addEventListener('click', () => {
+    SELECCIONADO = card.dataset.id;
+    renderListings(DATA.marketplace.anuncios);
+    renderNegociacao(SELECCIONADO);
+  }));
+}
+
+function renderNegociacao(id) {
+  const a = DATA.marketplace.anuncios.find(x => x.id === id);
+  const propostas = DATA.marketplace.propostas[id] || [];
+  const panel = document.getElementById('negociacao-panel');
+
+  if (a.estado === 'Vendido') {
+    panel.innerHTML = `<div class="card-title">Negociação — ${a.produto} (${a.vendedor})</div><div class="card-subtitle" style="margin-bottom:0">#${a.id} · Transacção concluída — não há acções disponíveis.</div>`;
+    return;
+  }
+
+  panel.innerHTML = `
+    <div class="card-title">Negociação — ${a.produto} (${a.vendedor})</div>
+    <div class="card-subtitle">#${a.id} ${propostas.length ? '· Aberta há 2 dias' : '· Sem propostas ainda — envia a primeira'}</div>
+    <div id="propostas-list">${propostas.map(p => `<div class="proposta-row"><span>${p.texto}</span><span style="color:var(--ink-faint)">${p.tempo}</span></div>`).join('')}</div>
+    <div style="display:flex;gap:10px;margin-top:10px">
+      <button style="background:var(--ok);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:12px;cursor:pointer" id="btn-aceitar">Aceitar e Fechar Venda</button>
+      <button style="background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:10px 20px;font-weight:700;font-size:12px;cursor:pointer" id="btn-contraproposta">Fazer Contraproposta</button>
+    </div>
+    <div id="neg-status" style="margin-top:10px;font-size:11.5px;color:var(--ink-faint)"></div>
+  `;
+
+  document.getElementById('btn-aceitar').addEventListener('click', function () {
+    this.disabled = true;
+    document.getElementById('neg-status').textContent = '✔ Venda fechada — transacção registada. (Simulação, sem backend real neste protótipo.)';
+  });
+  document.getElementById('btn-contraproposta').addEventListener('click', () => {
+    const valor = prompt('Valor da contraproposta (MZN/t):', a.precoMznT);
+    if (!valor) return;
+    DATA.marketplace.propostas[id] = propostas.concat([{ texto: `Contraproposta enviada: ${valor} MZN/t`, tempo: 'Agora' }]);
+    renderNegociacao(id);
+  });
+}
+</script>
+</body>
+</html>
