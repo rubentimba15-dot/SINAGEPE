@@ -118,6 +118,26 @@
       "consumo": 24800,
       "cobertura": 9,
       "estado": "Crítico"
+    },
+    {
+      "produto": "Medicamentos",
+      "stock": 3100,
+      "producao": 400,
+      "importacao": 4200,
+      "exportacao": 0,
+      "consumo": 5100,
+      "cobertura": 19,
+      "estado": "Atenção"
+    },
+    {
+      "produto": "Cimento Nacional",
+      "stock": 88000,
+      "producao": 62000,
+      "importacao": 9000,
+      "exportacao": 4000,
+      "consumo": 51000,
+      "cobertura": 61,
+      "estado": "Excelente"
     }
   ],
   "precoTendencia": {
@@ -580,72 +600,261 @@
     "kpis": {
       "disponibilidadeProdutos": 74,
       "diasCoberturaMedia": 22,
-      "estradasOperacionaisKm": { "operacional": 312, "total": 480 },
-      "pontesOperacionais": { "operacional": 5, "total": 7 },
+      "estradasOperacionaisKm": {
+        "operacional": 312,
+        "total": 480
+      },
+      "pontesOperacionais": {
+        "operacional": 5,
+        "total": 7
+      },
       "custoMedioFreteUsd": 2.1
     },
     "distritos": [
-      { "nome": "Beira (Porto)", "produto": "Arroz", "stock": 4200, "coberturaDias": 24 },
-      { "nome": "Dondo", "produto": "Milho", "stock": 1800, "coberturaDias": 11 },
-      { "nome": "Nhamatanda", "produto": "Trigo", "stock": 950, "coberturaDias": 8 },
-      { "nome": "Chibabava", "produto": "Arroz", "stock": 310, "coberturaDias": 4 },
-      { "nome": "Buzi", "produto": "Combustível (litros)", "stock": 62000, "coberturaDias": 13 }
+      {
+        "nome": "Beira (Porto)",
+        "produto": "Arroz",
+        "stock": 4200,
+        "coberturaDias": 24
+      },
+      {
+        "nome": "Dondo",
+        "produto": "Milho",
+        "stock": 1800,
+        "coberturaDias": 11
+      },
+      {
+        "nome": "Nhamatanda",
+        "produto": "Trigo",
+        "stock": 950,
+        "coberturaDias": 8
+      },
+      {
+        "nome": "Chibabava",
+        "produto": "Arroz",
+        "stock": 310,
+        "coberturaDias": 4
+      },
+      {
+        "nome": "Buzi",
+        "produto": "Combustível (litros)",
+        "stock": 62000,
+        "coberturaDias": 13
+      }
     ],
     "recomendacaoIA": {
       "texto": "Para mitigar a crise de stock em Chibabava, reencaminhar 15 toneladas de arroz do Porto da Beira via ferrovia secundária até ao Dondo e posterior transbordo rodoviário.",
-      "origem": "Beira (Porto)", "destino": "Chibabava", "produto": "Arroz", "quantidadeT": 15
+      "origem": "Beira (Porto)",
+      "destino": "Chibabava",
+      "produto": "Arroz",
+      "quantidadeT": 15
     }
   },
   "relatoriosModelo": [
-    { "nome": "Balanço Nacional Semanal", "frequencia": "Semanal", "descricao": "Resumo de stock, produção, importações e exportações de todos os produtos essenciais.", "geradoEm": "Seg, 03 Ago 08:00" },
-    { "nome": "Boletim de Preços Diários", "frequencia": "Diário", "descricao": "Preços médios de retalho por produto e província, com variação face ao dia anterior.", "geradoEm": "Hoje, 06:00" },
-    { "nome": "Relatório de Alertas Mensal", "frequencia": "Mensal", "descricao": "Consolidado de todos os alertas gerados, por tipo, severidade e resolução.", "geradoEm": "01 Ago 09:00" }
+    {
+      "nome": "Balanço Nacional Semanal",
+      "frequencia": "Semanal",
+      "descricao": "Resumo de stock, produção, importações e exportações de todos os produtos essenciais.",
+      "geradoEm": "Seg, 03 Ago 08:00"
+    },
+    {
+      "nome": "Boletim de Preços Diários",
+      "frequencia": "Diário",
+      "descricao": "Preços médios de retalho por produto e província, com variação face ao dia anterior.",
+      "geradoEm": "Hoje, 06:00"
+    },
+    {
+      "nome": "Relatório de Alertas Mensal",
+      "frequencia": "Mensal",
+      "descricao": "Consolidado de todos os alertas gerados, por tipo, severidade e resolução.",
+      "geradoEm": "01 Ago 09:00"
+    }
   ],
   "exportacoesRecentes": [
-    { "ficheiro": "Boletim_Precos_Capitais_Provinciais_23_02.xlsx", "formato": "XLSX", "data": "23 Fev, 06:02", "tamanho": "184 KB", "geradoPor": "Sistema Automático" },
-    { "ficheiro": "Balanco_Nacional_Semanal_S31.pdf", "formato": "PDF", "data": "22 Fev, 08:01", "tamanho": "1.2 MB", "geradoPor": "Sistema Automático" },
-    { "ficheiro": "Export_Custom_Arroz_Sofala.csv", "formato": "CSV", "data": "21 Fev, 15:44", "tamanho": "42 KB", "geradoPor": "Dr. A. Muthemba" }
+    {
+      "ficheiro": "Boletim_Precos_Capitais_Provinciais_23_02.xlsx",
+      "formato": "XLSX",
+      "data": "23 Fev, 06:02",
+      "tamanho": "184 KB",
+      "geradoPor": "Sistema Automático"
+    },
+    {
+      "ficheiro": "Balanco_Nacional_Semanal_S31.pdf",
+      "formato": "PDF",
+      "data": "22 Fev, 08:01",
+      "tamanho": "1.2 MB",
+      "geradoPor": "Sistema Automático"
+    },
+    {
+      "ficheiro": "Export_Custom_Arroz_Sofala.csv",
+      "formato": "CSV",
+      "data": "21 Fev, 15:44",
+      "tamanho": "42 KB",
+      "geradoPor": "Dr. A. Muthemba"
+    }
   ],
   "armazens": [
     {
-      "codigo": "WH-SOF-001", "nome": "Terminal de Grãos da Beira", "provincia": "Sofala", "operador": "Cereais Moçambique",
-      "capacidadeTotalT": 120000, "condicaoFisica": "Boa", "ultimaInspeccao": "12 Jul 2026",
-      "ocupacaoPercent": 96, "produtos": [
-        { "produto": "Trigo", "toneladas": 65000, "percentagem": 54 },
-        { "produto": "Milho", "toneladas": 40000, "percentagem": 33 },
-        { "produto": "Arroz", "toneladas": 11000, "percentagem": 9 }
+      "codigo": "WH-SOF-001",
+      "nome": "Terminal de Grãos da Beira",
+      "provincia": "Sofala",
+      "operador": "Cereais Moçambique",
+      "capacidadeTotalT": 120000,
+      "condicaoFisica": "Boa",
+      "ultimaInspeccao": "12 Jul 2026",
+      "ocupacaoPercent": 96,
+      "produtos": [
+        {
+          "produto": "Trigo",
+          "toneladas": 65000,
+          "percentagem": 54
+        },
+        {
+          "produto": "Milho",
+          "toneladas": 40000,
+          "percentagem": 33
+        },
+        {
+          "produto": "Arroz",
+          "toneladas": 11000,
+          "percentagem": 9
+        }
       ],
-      "condicoesConservacao": { "tempoMedioPermanenciaDias": 24, "taxaPerdasPercent": 1.4, "humidadePercent": 14.2, "temperaturaC": 22, "pragas": "Nenhuma" }
+      "condicoesConservacao": {
+        "tempoMedioPermanenciaDias": 24,
+        "taxaPerdasPercent": 1.4,
+        "humidadePercent": 14.2,
+        "temperaturaC": 22,
+        "pragas": "Nenhuma"
+      }
     },
-    { "codigo": "WH-NAM-002", "nome": "Silo Regional de Nampula", "provincia": "Nampula", "operador": "Logística Nacional", "capacidadeTotalT": 85000, "condicaoFisica": "Boa", "ultimaInspeccao": "02 Ago 2026", "ocupacaoPercent": 58 },
-    { "codigo": "WH-TET-003", "nome": "Armazém Central de Tete", "provincia": "Tete", "operador": "Cereais Moçambique", "capacidadeTotalT": 40000, "condicaoFisica": "Deficiente", "ultimaInspeccao": "28 Jun 2026", "ocupacaoPercent": 22 },
-    { "codigo": "WH-MAP-004", "nome": "Silos de Maputo", "provincia": "Maputo", "operador": "Logística Nacional", "capacidadeTotalT": 150000, "condicaoFisica": "Boa", "ultimaInspeccao": "15 Jul 2026", "ocupacaoPercent": 71 },
-    { "codigo": "WH-ZAM-005", "nome": "Armazém de Quelimane", "provincia": "Zambézia", "operador": "Armazéns do Centro", "capacidadeTotalT": 30000, "condicaoFisica": "Razoável", "ultimaInspeccao": "20 Jul 2026", "ocupacaoPercent": 83 }
+    {
+      "codigo": "WH-NAM-002",
+      "nome": "Silo Regional de Nampula",
+      "provincia": "Nampula",
+      "operador": "Logística Nacional",
+      "capacidadeTotalT": 85000,
+      "condicaoFisica": "Boa",
+      "ultimaInspeccao": "02 Ago 2026",
+      "ocupacaoPercent": 58
+    },
+    {
+      "codigo": "WH-TET-003",
+      "nome": "Armazém Central de Tete",
+      "provincia": "Tete",
+      "operador": "Cereais Moçambique",
+      "capacidadeTotalT": 40000,
+      "condicaoFisica": "Deficiente",
+      "ultimaInspeccao": "28 Jun 2026",
+      "ocupacaoPercent": 22
+    },
+    {
+      "codigo": "WH-MAP-004",
+      "nome": "Silos de Maputo",
+      "provincia": "Maputo",
+      "operador": "Logística Nacional",
+      "capacidadeTotalT": 150000,
+      "condicaoFisica": "Boa",
+      "ultimaInspeccao": "15 Jul 2026",
+      "ocupacaoPercent": 71
+    },
+    {
+      "codigo": "WH-ZAM-005",
+      "nome": "Armazém de Quelimane",
+      "provincia": "Zambézia",
+      "operador": "Armazéns do Centro",
+      "capacidadeTotalT": 30000,
+      "condicaoFisica": "Razoável",
+      "ultimaInspeccao": "20 Jul 2026",
+      "ocupacaoPercent": 83
+    }
   ],
-  "paisesOrigem": ["Índia", "África do Sul", "Brasil", "Tailândia", "Rússia", "Argentina"],
-  "portosEntrada": ["Porto de Maputo", "Porto da Beira", "Porto de Nacala", "Fronteira Ressano Garcia"],
+  "paisesOrigem": [
+    "Índia",
+    "África do Sul",
+    "Brasil",
+    "Tailândia",
+    "Rússia",
+    "Argentina"
+  ],
+  "portosEntrada": [
+    "Porto de Maputo",
+    "Porto da Beira",
+    "Porto de Nacala",
+    "Fronteira Ressano Garcia"
+  ],
   "distribuicaoZonas": [
-    { "zona": "Sul", "percentagem": 40 },
-    { "zona": "Centro", "percentagem": 35 },
-    { "zona": "Norte", "percentagem": 25 }
+    {
+      "zona": "Sul",
+      "percentagem": 40
+    },
+    {
+      "zona": "Centro",
+      "percentagem": 35
+    },
+    {
+      "zona": "Norte",
+      "percentagem": 25
+    }
   ],
   "portalPME": {
-    "operador": { "nome": "Mercearia Esperança", "tipo": "Operador Económico", "localizacao": "Maputo, Bairro Central" },
+    "operador": {
+      "nome": "Mercearia Esperança",
+      "tipo": "Operador Económico",
+      "localizacao": "Maputo, Bairro Central"
+    },
     "historicoReportes": [
-      { "produto": "Arroz", "data": "04 Ago", "precoVenda": 68, "estado": "Aprovado" },
-      { "produto": "Óleo Alimentar", "data": "03 Ago", "precoVenda": 145, "estado": "Aprovado" },
-      { "produto": "Açúcar", "data": "01 Ago", "precoVenda": 82, "estado": "Aprovado" }
+      {
+        "produto": "Arroz",
+        "data": "04 Ago",
+        "precoVenda": 68,
+        "estado": "Aprovado"
+      },
+      {
+        "produto": "Óleo Alimentar",
+        "data": "03 Ago",
+        "precoVenda": 145,
+        "estado": "Aprovado"
+      },
+      {
+        "produto": "Açúcar",
+        "data": "01 Ago",
+        "precoVenda": 82,
+        "estado": "Aprovado"
+      }
     ],
     "tendenciasLocais": [
-      { "produto": "Arroz", "variacaoPercent": 2.4 },
-      { "produto": "Óleo Alimentar", "variacaoPercent": -1.2 }
+      {
+        "produto": "Arroz",
+        "variacaoPercent": 2.4
+      },
+      {
+        "produto": "Óleo Alimentar",
+        "variacaoPercent": -1.2
+      }
     ],
-    "alertasLocais": ["Aviso de Abastecimento de Trigo na sua zona — cobertura em queda"],
+    "alertasLocais": [
+      "Aviso de Abastecimento de Trigo na sua zona — cobertura em queda"
+    ],
     "procuraEstimada": [
-      { "categoria": "Farinha de Milho", "percentagem": 85 },
-      { "categoria": "Arroz", "percentagem": 70 },
-      { "categoria": "Açúcar", "percentagem": 45 }
+      {
+        "categoria": "Farinha de Milho",
+        "percentagem": 85
+      },
+      {
+        "categoria": "Arroz",
+        "percentagem": 70
+      },
+      {
+        "categoria": "Açúcar",
+        "percentagem": 45
+      }
     ]
+  },
+  "zonasProvincias": {
+    "Sul": ["Maputo", "Gaza", "Inhambane"],
+    "Centro": ["Sofala", "Manica", "Zambézia", "Tete"],
+    "Norte": ["Nampula", "Niassa", "Cabo Delgado"]
   },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
