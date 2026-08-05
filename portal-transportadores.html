@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal de Transportadores — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="brand"><div class="brand-mark">P</div><div class="brand-text"><div class="brand-title">Portal Privado</div><div class="brand-sub">SINAGEPE — Transportadores</div></div></div>
+      <nav class="nav-list">
+        <a class="nav-item active" href="portal-transportadores.html"><span class="nav-icon">▦</span> Painel</a>
+        <a class="nav-item" href="#"><span class="nav-icon">◎</span> Mercado</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⇄</span> Logística</a>
+        <a class="nav-item" href="#"><span class="nav-icon">▤</span> Armazéns</a>
+        <a class="nav-item" href="#"><span class="nav-icon">≋</span> Simulador</a>
+        <a class="nav-item" href="#"><span class="nav-icon">▧</span> Relatórios</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⚙</span> Configurações</a>
+      </nav>
+    </div>
+    <div class="sidebar-footer"><div class="avatar-dot" id="user-initials">TM</div><div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div></div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title-group"><div class="topbar-title">Portal de Transportadores</div><div class="topbar-badge">Ministério dos Transportes — Acesso Privado</div></div>
+      <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+    </div>
+    <div class="content" id="content-mount"></div>
+    <div class="footer"><span>© 2026 SINAGEPE Moçambique — Ministério dos Transportes e Comunicações</span><span id="footer-updated">—</span></div>
+  </div>
+</div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.load().then(data => {
+  const t = data.portalTransportadores;
+  SINAGEPE.renderUserFooter({ utilizador: { nome: t.frota, instituicao: 'Sector de Transportes', direccao: 'Gestor de Frota' } });
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  document.getElementById('content-mount').innerHTML = `
+    <div class="card">
+      <div class="card-title">Cargas Disponíveis SINAGEPE</div>
+      <div class="card-subtitle">Correspondência entre carga disponível e capacidade de transporte</div>
+      <table class="balance-table">
+        <thead><tr><th>Origem</th><th>Destino</th><th>Produto</th><th>Peso</th><th>Frete</th><th>Prazo</th><th>Estado</th></tr></thead>
+        <tbody id="cargas-body"></tbody>
+      </table>
+    </div>
+
+    <div class="row-2">
+      <div class="card" style="background:var(--navy-800);border-color:var(--bronze-dim)">
+        <div class="kpi-label">Maior Lucro Previsto</div>
+        <p style="font-size:12.5px;color:var(--ink-dim);line-height:1.6;margin:8px 0 0" id="subsidio-texto"></p>
+      </div>
+      <div class="card" style="background:var(--navy-800)">
+        <div class="kpi-label">Alerta de Retorno Vazio</div>
+        <p style="font-size:12.5px;color:var(--ink-dim);line-height:1.6;margin:8px 0 0" id="retorno-texto"></p>
+      </div>
+    </div>
+  `;
+
+  const ESTADO_TIPO = { 'Excelente': 'ok', 'Estável': 'info', 'Urgente': 'crit' };
+  document.getElementById('cargas-body').innerHTML = t.cargasDisponiveis.map(c => `
+    <tr><td>${c.origem}</td><td>${c.destino}</td><td>${c.produto}</td><td>${c.pesoT} t</td>
+    <td>${c.valorFreteUsdTKm} USD/t·km</td><td>${c.prazoDias} dias</td>
+    <td><span class="state-tag" style="background:var(--${ESTADO_TIPO[c.estado]}-bg);color:var(--${ESTADO_TIPO[c.estado]})">${c.estado}</span></td></tr>`).join('');
+
+  document.getElementById('subsidio-texto').textContent =
+    `Subsídio SINAGEPE activo de +${t.subsidio.valorAdicionalPercentKm}% por km para transporte de ${t.subsidio.produto} até ${t.subsidio.destino} — rota considerada estratégica.`;
+  document.getElementById('retorno-texto').textContent =
+    `Rota ${t.retornoVazio.rota}: ${t.retornoVazio.sugestao}.`;
+});
+</script>
+</body>
+</html>
