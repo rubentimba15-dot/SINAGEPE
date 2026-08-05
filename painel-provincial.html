@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel Provincial — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+</head>
+<body>
+
+<div class="app-shell" id="app-shell"></div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('mapa', 'Painel Provincial', 'Drill-down · Mapa Nacional');
+
+document.getElementById('content-mount').innerHTML = `
+  <div class="kpi-row" style="grid-template-columns:repeat(5,1fr)" id="kpi-row"></div>
+
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">Estado de Stock &amp; Cobertura por Distrito</div>
+      <div class="card-subtitle" id="distrito-subtitle">—</div>
+      <table class="balance-table">
+        <thead><tr><th>Distrito</th><th>Produto</th><th>Stock</th><th>Cobertura</th><th>Estado</th></tr></thead>
+        <tbody id="distritos-body"></tbody>
+      </table>
+      <div class="legend" style="margin-top:12px">
+        <div class="legend-item"><span class="legend-dot" style="background:var(--crit)"></span> Crítico (&lt;7 dias)</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--warn)"></span> Atenção (7&ndash;14 dias)</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--ok)"></span> Estável (15&ndash;30 dias)</div>
+        <div class="legend-item"><span class="legend-dot" style="background:var(--info)"></span> Excelente (&gt;30 dias)</div>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--navy-800);border-color:var(--bronze-dim)">
+      <div class="kpi-label">Recomendação de IA</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6;margin:8px 0 16px" id="recomendacao-texto"></p>
+      <button id="btn-desvio-stock" style="background:var(--bronze);color:var(--navy-950);border:none;border-radius:8px;padding:10px 18px;font-family:var(--font-body);font-weight:700;font-size:13px;cursor:pointer">Iniciar Desvio de Stock</button>
+      <div id="desvio-status" style="margin-top:10px;font-size:11.5px;color:var(--ink-faint)"></div>
+    </div>
+  </div>
+`;
+
+SINAGEPE.load().then(renderPainelProvincial);
+
+function renderPainelProvincial(data) {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  const p = data.painelProvincial;
+  document.getElementById('distrito-subtitle').textContent = 'Província de ' + p.provincia;
+
+  const k = p.kpis;
+  const kpiDefs = [
+    { label: 'Disponibilidade de Produtos', valor: k.disponibilidadeProdutos + '%', estado: 'Regular', tipo: 'warn' },
+    { label: 'Dias de Cobertura (Média)', valor: k.diasCoberturaMedia, estado: 'Estável', tipo: 'ok' },
+    { label: 'Estradas Operacionais', valor: k.estradasOperacionaisKm.operacional + '/' + k.estradasOperacionaisKm.total + ' km', estado: 'Sob Alerta', tipo: 'warn' },
+    { label: 'Pontes Operacionais', valor: k.pontesOperacionais.operacional + '/' + k.pontesOperacionais.total, estado: 'Crítico', tipo: 'crit' },
+    { label: 'Custo Médio de Frete', valor: k.custoMedioFreteUsd + ' USD/t', estado: 'Elevado', tipo: 'warn' },
+  ];
+  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
+
+  // limiares distritais confirmados: Crítico <7, Atenção 7-14, Estável 15-30, Excelente >30
+  function classificaDistrital(dias) {
+    if (dias < 7) return { t: 'Crítico', tipo: 'crit' };
+    if (dias < 15) return { t: 'Atenção', tipo: 'warn' };
+    if (dias <= 30) return { t: 'Estável', tipo: 'ok' };
+    return { t: 'Excelente', tipo: 'info' };
+  }
+
+  document.getElementById('distritos-body').innerHTML = p.distritos.map(d => {
+    const c = classificaDistrital(d.coberturaDias);
+    return `<tr><td>${d.nome}</td><td>${d.produto}</td><td>${SINAGEPE.fmt(d.stock)}</td><td>${d.coberturaDias} dias</td>
+      <td><span class="state-tag" style="background:var(--${c.tipo}-bg);color:var(--${c.tipo})">${c.t}</span></td></tr>`;
+  }).join('');
+
+  document.getElementById('recomendacao-texto').textContent = p.recomendacaoIA.texto;
+  document.getElementById('btn-desvio-stock').addEventListener('click', function () {
+    this.disabled = true;
+    document.getElementById('desvio-status').innerHTML =
+      '⏳ Pedido registado — aguarda aprovação conjunta do MIC e do Delegado Provincial. (Simulação — sem envio real neste protótipo.)';
+  });
+}
+</script>
+</body>
+</html>
