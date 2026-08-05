@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal PME — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .form-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+  .form-field label { font-size: 11px; color: var(--ink-faint); font-weight: 600; }
+  .form-field input, .form-field select {
+    background: var(--navy-900); color: var(--ink); border: 1px solid var(--line);
+    border-radius: 7px; padding: 9px 11px; font-size: 12.5px; font-family: var(--font-body);
+  }
+  .procura-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .procura-label { width: 110px; font-size: 12px; color: var(--ink-dim); }
+</style>
+</head>
+<body>
+
+<div class="app-shell" id="app-shell"></div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('pmes', 'Portal PME', 'Reporte de Dados e Inteligência de Mercado');
+
+document.getElementById('content-mount').innerHTML = `
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)" id="kpi-row"></div>
+
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">Reportar Dados de Venda &amp; Stock</div>
+      <div class="card-subtitle">Mantenha os dados actualizados para obter o selo de conformidade e ver estatísticas de mercado</div>
+      <div class="form-field"><label>Produto</label><select id="p-produto"></select></div>
+      <div class="form-field"><label>Quantidade Recebida</label><input type="number" id="p-recebida" placeholder="ex: 200"></div>
+      <div class="form-field"><label>Stock Actual (Físico)</label><input type="number" id="p-stock" placeholder="ex: 120"></div>
+      <div class="form-field"><label>Preço de Compra (MZN/kg)</label><input type="number" id="p-compra" placeholder="ex: 55"></div>
+      <div class="form-field"><label>Preço de Venda Praticado (MZN/kg)</label><input type="number" id="p-venda" placeholder="ex: 68"></div>
+      <div class="form-field"><label>Localização do Estabelecimento</label><input type="text" id="p-local" placeholder="ex: Maputo, Bairro Central"></div>
+      <button id="btn-submeter" style="width:100%;background:var(--bronze);color:var(--navy-950);border:none;border-radius:8px;padding:11px;font-weight:700;font-size:13px;cursor:pointer">Submeter Reporte de Dados</button>
+      <div id="submit-status" style="margin-top:10px;font-size:11.5px"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Inteligência de Mercado Local</div>
+      <div class="card-subtitle">Retorno gerado a partir dos reportes de todos os operadores da sua zona</div>
+      <div class="kpi-label" style="margin-bottom:8px">Tendência de Preços</div>
+      <div id="tendencias-list" style="margin-bottom:16px"></div>
+      <div class="kpi-label" style="margin-bottom:8px">Alertas Locais Activos</div>
+      <div id="alertas-locais" style="margin-bottom:16px"></div>
+      <div class="kpi-label" style="margin-bottom:8px">Procura Estimada por Categoria (7 dias)</div>
+      <div id="procura-list"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Histórico Recente de Reportes</div>
+    <table class="balance-table">
+      <thead><tr><th>Produto</th><th>Data</th><th>Preço Venda</th><th>Estado</th></tr></thead>
+      <tbody id="historico-body"></tbody>
+    </table>
+  </div>
+`;
+
+SINAGEPE.load().then(renderPortalPME);
+
+function renderPortalPME(data) {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  const pme = data.portalPME;
+  const historico = [...pme.historicoReportes]; // cópia local, para a submissão simulada crescer sem tocar nos dados-base
+
+  const kpiDefs = [
+    { label: 'Meus Produtos', valor: [...new Set(historico.map(h => h.produto))].length + ' Activos', estado: 'Regular', tipo: 'info' },
+    { label: 'Último Reporte', valor: historico[0].data, estado: 'Em Dia', tipo: 'ok' },
+    { label: 'Tendência de Mercado', valor: 'Estável', estado: 'Normal', tipo: 'ok' },
+    { label: 'Alertas do Distrito', valor: pme.alertasLocais.length + ' Activos', estado: pme.alertasLocais.length > 0 ? 'Atenção' : 'Normal', tipo: pme.alertasLocais.length > 0 ? 'warn' : 'ok' },
+  ];
+  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
+
+  document.getElementById('p-produto').innerHTML = data.balancoNacional.map(p => `<option>${p.produto}</option>`).join('');
+  document.getElementById('p-local').value = pme.operador.localizacao;
+
+  document.getElementById('tendencias-list').innerHTML = pme.tendenciasLocais.map(t => `
+    <div class="medida-row"><span>${t.produto}</span><span style="color:${t.variacaoPercent >= 0 ? 'var(--crit)' : 'var(--ok)'}">${t.variacaoPercent >= 0 ? '+' : ''}${t.variacaoPercent}% MoM</span></div>`).join('');
+
+  document.getElementById('alertas-locais').innerHTML = pme.alertasLocais.length
+    ? pme.alertasLocais.map(a => `<div class="alert-card warn">${a}</div>`).join('')
+    : '<div style="font-size:12px;color:var(--ink-faint)">Sem alertas activos na sua zona.</div>';
+
+  document.getElementById('procura-list').innerHTML = pme.procuraEstimada.map(p => `
+    <div class="procura-row">
+      <div class="procura-label">${p.categoria}</div>
+      <div class="zona-bar-track" style="flex:1;height:8px;background:var(--navy-800);border-radius:6px;overflow:hidden">
+        <div style="height:100%;width:${p.percentagem}%;background:var(--info)"></div>
+      </div>
+      <div style="font-family:var(--font-data);font-size:11.5px;width:32px;text-align:right">${p.percentagem}%</div>
+    </div>`).join('');
+
+  function renderHistorico() {
+    document.getElementById('historico-body').innerHTML = historico.map(h => {
+      const tipo = h.estado === 'Aprovado' ? 'ok' : 'warn';
+      return `<tr><td>${h.produto}</td><td>${h.data}</td><td>${h.precoVenda} MZN/kg</td>
+        <td><span class="state-tag" style="background:var(--${tipo}-bg);color:var(--${tipo})">${h.estado}</span></td></tr>`;
+    }).join('');
+  }
+  renderHistorico();
+
+  // validação automática por plausibilidade (secção 58 do documento) — preço dentro de um intervalo razoável
+  document.getElementById('btn-submeter').addEventListener('click', () => {
+    const produto = document.getElementById('p-produto').value;
+    const precoVenda = Number(document.getElementById('p-venda').value);
+    const precoCompra = Number(document.getElementById('p-compra').value);
+    const statusEl = document.getElementById('submit-status');
+
+    if (!precoVenda || !precoCompra) {
+      statusEl.innerHTML = '<span style="color:var(--crit)">Preenche pelo menos o preço de compra e de venda antes de submeter.</span>';
+      return;
+    }
+    const plausivel = precoVenda >= precoCompra && precoVenda <= precoCompra * 2.5;
+    const novoEstado = plausivel ? 'Aprovado' : 'Pendente';
+    historico.unshift({ produto, data: 'Hoje', precoVenda, estado: novoEstado });
+    renderHistorico();
+    statusEl.innerHTML = plausivel
+      ? '<span style="color:var(--ok)">✔ Reporte validado automaticamente e aprovado.</span>'
+      : '<span style="color:var(--warn)">⏳ Preço fora do intervalo esperado — reporte marcado como Pendente para revisão.</span>';
+  });
+}
+</script>
+</body>
+</html>
