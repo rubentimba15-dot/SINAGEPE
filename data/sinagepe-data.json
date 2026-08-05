@@ -64,6 +64,25 @@
     { "modal": "Ferroviário (Sena/Limpopo)", "percentagem": 42 },
     { "modal": "Marítimo (Cabotagem Nacional)", "percentagem": 91 }
   ],
+  "infraestrutura": {
+    "portosOperacionais": { "activos": 3, "total": 3 },
+    "aeroportosActivos": 12,
+    "cfmOperacionalPercent": 72,
+    "custoMaximoReferenciaTKm": 3.0
+  },
+  "custoLogisticoBreakdown": [
+    { "categoria": "Frete de Longo Curso", "percentagem": 45 },
+    { "categoria": "Combustível", "percentagem": 25 },
+    { "categoria": "Portagens & Taxas", "percentagem": 12 },
+    { "categoria": "Carga e Descarga", "percentagem": 10 },
+    { "categoria": "Seguros & Perdas", "percentagem": 8 }
+  ],
+  "fluxosCorredor": [
+    { "corredor": "Corredor da Beira (N6)", "produtosAfectados": "Trigo, Milho, Adubo", "tonelagemSemana": 15200, "projecaoPrecoPercent": 18, "rotaAlternativa": "Via Chimoio-Senga + Ferroviário", "custoAdicionalPercent": 18, "tempoAdicionalH": 14 },
+    { "corredor": "Corredor de Nacala", "produtosAfectados": "Arroz, Fertilizantes", "tonelagemSemana": 9800, "projecaoPrecoPercent": 11, "rotaAlternativa": "Via Cuamba + Cabotagem Marítima", "custoAdicionalPercent": 15, "tempoAdicionalH": 20 },
+    { "corredor": "Corredor de Maputo (N4)", "produtosAfectados": "Óleo Alimentar, Açúcar", "tonelagemSemana": 21400, "projecaoPrecoPercent": 22, "rotaAlternativa": "Via Ressano Garcia + Ferrovia CFM", "custoAdicionalPercent": 12, "tempoAdicionalH": 9 },
+    { "corredor": "Via Beira-Tete (N7)", "produtosAfectados": "Fertilizantes, Combustíveis", "tonelagemSemana": 7300, "projecaoPrecoPercent": 9, "rotaAlternativa": "Via N6 + N103", "custoAdicionalPercent": 10, "tempoAdicionalH": 11 }
+  ],
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
