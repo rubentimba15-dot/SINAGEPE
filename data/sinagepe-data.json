@@ -1082,6 +1082,25 @@
       { "nome": "Importador Norte-Lda", "provincia": "Nampula", "autosEmitidos": 3, "ultimaVisita": "Há 6 dias", "nivelRisco": "Médio" }
     ]
   },
+  "dashboardARC": {
+    "kpis": { "hhiNacional": 0.42, "mercadosMonitorizados": 24, "alertasConcorrenciaisActivos": 5, "investigacoesActivas": 3 },
+    "hhiPorProduto": [
+      { "produto": "Farinha de Milho", "hhi": 0.22 }, { "produto": "Arroz Importado", "hhi": 0.58 },
+      { "produto": "Óleo Alimentar", "hhi": 0.65 }, { "produto": "Açúcar Castanho", "hhi": 0.38 }, { "produto": "Adubos & Insumos", "hhi": 0.78 }
+    ],
+    "empresasDominantes": [
+      { "produto": "Adubos NPK", "empresa": "Agrícola Sul Limitada", "quotaPercent": 72, "tendencia": "Estável", "risco": "Crítico" },
+      { "produto": "Óleo Alimentar", "empresa": "Moçambique Óleos SA", "quotaPercent": 58, "tendencia": "Crescente", "risco": "Alto" },
+      { "produto": "Arroz Nacional", "empresa": "Cereal Comercial Norte", "quotaPercent": 21, "tendencia": "Decrescente", "risco": "Baixo" },
+      { "produto": "Farinha de Trigo", "empresa": "Farinhas do Índico", "quotaPercent": 45, "tendencia": "Crescente", "risco": "Médio" }
+    ],
+    "barreirasEntrada": [
+      { "tipo": "Distribuição", "pontuacao": 8.5, "descricao": "Monopólio logístico severo" },
+      { "tipo": "Importação", "pontuacao": 6.2, "descricao": "Barreiras alfandegárias médias" },
+      { "tipo": "Processamento", "pontuacao": 9.0, "descricao": "Alto investimento de capital" }
+    ],
+    "alertaCartel": { "produto": "Óleo Alimentar", "local": "Beira", "empresasEnvolvidas": 3, "janela": "48h", "descricao": "Aumento concertado de preços entre 3 distribuidores da Beira, com flutuações idênticas a menos de 48h de intervalo, sem justificação de custos reais." }
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
