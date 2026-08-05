@@ -860,6 +860,29 @@
     { "produto": "Arroz", "armazem": "Silos de Maputo", "quantidadeT": 3500, "estado": "Bloqueado" },
     { "produto": "Farinha de Milho", "armazem": "Armazém Central de Beira", "quantidadeT": 5200, "estado": "Bloqueado" }
   ],
+  "registoAuditoria": [
+    { "hora": "09:42", "utilizador": "Dr. A. Muthemba", "accao": "Consulta", "modulo": "Balanço Nacional", "detalhes": "Consultou balanço de Arroz", "ip": "10.20.4.12", "estado": "Sucesso" },
+    { "hora": "09:38", "utilizador": "Sistema IA", "accao": "Decisão", "modulo": "IRAE", "detalhes": "Simulou quota de trigo e taxas de retenção", "ip": "—", "estado": "Sucesso" },
+    { "hora": "09:15", "utilizador": "Sistema IA", "accao": "Decisão", "modulo": "Alertas", "detalhes": "Gerado Alerta de Ruptura de Óleo", "ip": "—", "estado": "Sucesso" },
+    { "hora": "08:55", "utilizador": "operador.beira3", "accao": "Login", "modulo": "Autenticação", "detalhes": "Tentativa de acesso fora do horário habitual", "ip": "197.218.4.90", "estado": "Bloqueado" },
+    { "hora": "08:40", "utilizador": "Eng. E. Nhaca", "accao": "Alteração", "modulo": "Dashboard Agricultura", "detalhes": "Actualizou estimativa de produção de Milho", "ip": "10.20.9.4", "estado": "Sucesso" }
+  ],
+  "papeisAcesso": [
+    { "nome": "Administrador", "utilizadores": 4 },
+    { "nome": "Analista Nacional", "utilizadores": 12 },
+    { "nome": "Analista Provincial", "utilizadores": 22 },
+    { "nome": "Operador PME", "utilizadores": 98 },
+    { "nome": "Inspecção Geral (IGSAE)", "utilizadores": 6 },
+    { "nome": "Observador Público", "utilizadores": 14 }
+  ],
+  "fontesDados": [
+    { "nome": "INE (Estatística)", "estado": "Conectado" },
+    { "nome": "SIMA (Preços)", "estado": "Conectado" },
+    { "nome": "Alfândegas de Moçambique", "estado": "Conectado" },
+    { "nome": "Ministério da Agricultura", "estado": "Pendente" },
+    { "nome": "MIST (Tecnologias)", "estado": "Conectado" },
+    { "nome": "API Portos de Maputo/Beira", "estado": "Indisponível" }
+  ],
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
