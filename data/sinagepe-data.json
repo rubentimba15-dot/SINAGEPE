@@ -39,6 +39,31 @@
       { "nome": "Arroz", "cor": "#5b8ac9", "valores": [52, 54, 53, 56, 58, 57] }
     ]
   },
+  "iamProvincial": [
+    { "nome": "Cabo Delgado", "valor": 0.88, "classificacao": "Alto" },
+    { "nome": "Niassa", "valor": 0.75, "classificacao": "Adequado" },
+    { "nome": "Nampula", "valor": 0.85, "classificacao": "Alto" },
+    { "nome": "Zambézia", "valor": 0.60, "classificacao": "Moderado" },
+    { "nome": "Tete", "valor": 0.41, "classificacao": "Crítico" },
+    { "nome": "Manica", "valor": 0.78, "classificacao": "Adequado" },
+    { "nome": "Sofala", "valor": 0.68, "classificacao": "Moderado" },
+    { "nome": "Inhambane", "valor": 0.81, "classificacao": "Alto" },
+    { "nome": "Gaza", "valor": 0.79, "classificacao": "Adequado" },
+    { "nome": "Maputo", "valor": 0.92, "classificacao": "Excelente" }
+  ],
+  "corredores": [
+    { "nome": "Corredor da Beira (N6)", "origem": "Porto da Beira", "destino": "Fronteira Machipanda", "estado": "Operacional", "distanciaKm": 288, "tempoH": 6.5, "custoTKm": 1.2, "trafego": "Alto" },
+    { "nome": "Corredor de Nacala", "origem": "Porto de Nacala", "destino": "Fronteira Entre-Lagos", "estado": "Operacional", "distanciaKm": 610, "tempoH": 12, "custoTKm": 0.9, "trafego": "Moderado" },
+    { "nome": "Corredor de Maputo (N4)", "origem": "Porto de Maputo", "destino": "Fronteira Ressano Garcia", "estado": "Operacional", "distanciaKm": 88, "tempoH": 2, "custoTKm": 1.5, "trafego": "Extremo" },
+    { "nome": "Eixo Norte-Sul (N1)", "origem": "Maputo", "destino": "Pemba", "estado": "Condicionado", "distanciaKm": 2400, "tempoH": 48, "custoTKm": 2.4, "trafego": "Moderado" },
+    { "nome": "Ligação Tete-Zambézia", "origem": "Tete", "destino": "Quelimane", "estado": "Interrompido", "distanciaKm": 420, "tempoH": null, "custoTKm": null, "trafego": "Nenhum" },
+    { "nome": "Via Beira-Tete (N7)", "origem": "Beira", "destino": "Tete", "estado": "Operacional", "distanciaKm": 590, "tempoH": 9, "custoTKm": 1.1, "trafego": "Alto" }
+  ],
+  "utilizacaoModal": [
+    { "modal": "Rodoviário (N1/Corredores)", "percentagem": 78 },
+    { "modal": "Ferroviário (Sena/Limpopo)", "percentagem": 42 },
+    { "modal": "Marítimo (Cabotagem Nacional)", "percentagem": 91 }
+  ],
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
