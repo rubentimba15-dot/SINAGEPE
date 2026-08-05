@@ -1058,6 +1058,14 @@
       { "produto": "Óleos Crus", "valorUsd": 55000000, "percentCota": 19.6 }, { "produto": "Fertilizantes", "valorUsd": 25000000, "percentCota": 8.9 }
     ]
   },
+  "dashboardTransportes": {
+    "kpis": { "estradasCortadas": 14, "pontesCondicionadas": 8, "portosOperacionaisTotal": "3/3", "aeroportosActivos": 12, "cfmOperacionalPercent": 72, "custoMedioFreteUsd": 1.8 },
+    "tempoDesembaraco": [{ "porto": "Porto de Maputo", "dias": 3.2 }, { "porto": "Porto da Beira", "dias": 4.1 }, { "porto": "Porto de Nacala", "dias": 3.6 }],
+    "rotasAlternativas": [
+      { "nome": "Bypass Ferroviário CFM", "beneficio": "Redução de Risco de Avaria em 80%" },
+      { "nome": "Cabotagem Marítima Maputo-Beira", "beneficio": "Poupe 12% por tonelada" }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
