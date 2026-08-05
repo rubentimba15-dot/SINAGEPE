@@ -992,6 +992,15 @@
       { "cultura": "Feijão", "razao": "Segurança Alimentar" }
     ]
   },
+  "portalComerciantes": {
+    "armazem": "Armazém Central Maputo",
+    "kpis": { "produtosMaisVendidos": "Arroz, Óleo", "produtosEmFalta": 1, "stockPercent": 68, "lucroEstimadoPercent": 15, "alertasActivos": 2 },
+    "reabastecimento": [
+      { "produto": "Trigo em Pó", "stockActualT": 2.1, "coberturaDias": 2, "fornecedor": "Importadora Silva Lda.", "precoEstimado": 420 },
+      { "produto": "Farinha de Milho", "stockActualT": 8.4, "coberturaDias": 11, "fornecedor": "Cereais Moçambique", "precoEstimado": 310 },
+      { "produto": "Arroz Extra", "stockActualT": 22, "coberturaDias": 38, "fornecedor": "—", "precoEstimado": null }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
