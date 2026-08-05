@@ -574,6 +574,28 @@
       ]
     }
   ],
+  "painelProvincial": {
+    "provincia": "Sofala",
+    "iam": 68,
+    "kpis": {
+      "disponibilidadeProdutos": 74,
+      "diasCoberturaMedia": 22,
+      "estradasOperacionaisKm": { "operacional": 312, "total": 480 },
+      "pontesOperacionais": { "operacional": 5, "total": 7 },
+      "custoMedioFreteUsd": 2.1
+    },
+    "distritos": [
+      { "nome": "Beira (Porto)", "produto": "Arroz", "stock": 4200, "coberturaDias": 24 },
+      { "nome": "Dondo", "produto": "Milho", "stock": 1800, "coberturaDias": 11 },
+      { "nome": "Nhamatanda", "produto": "Trigo", "stock": 950, "coberturaDias": 8 },
+      { "nome": "Chibabava", "produto": "Arroz", "stock": 310, "coberturaDias": 4 },
+      { "nome": "Buzi", "produto": "Combustível (litros)", "stock": 62000, "coberturaDias": 13 }
+    ],
+    "recomendacaoIA": {
+      "texto": "Para mitigar a crise de stock em Chibabava, reencaminhar 15 toneladas de arroz do Porto da Beira via ferrovia secundária até ao Dondo e posterior transbordo rodoviário.",
+      "origem": "Beira (Porto)", "destino": "Chibabava", "produto": "Arroz", "quantidadeT": 15
+    }
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
