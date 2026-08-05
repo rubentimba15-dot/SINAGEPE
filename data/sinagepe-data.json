@@ -606,6 +606,22 @@
     { "ficheiro": "Balanco_Nacional_Semanal_S31.pdf", "formato": "PDF", "data": "22 Fev, 08:01", "tamanho": "1.2 MB", "geradoPor": "Sistema Automático" },
     { "ficheiro": "Export_Custom_Arroz_Sofala.csv", "formato": "CSV", "data": "21 Fev, 15:44", "tamanho": "42 KB", "geradoPor": "Dr. A. Muthemba" }
   ],
+  "armazens": [
+    {
+      "codigo": "WH-SOF-001", "nome": "Terminal de Grãos da Beira", "provincia": "Sofala", "operador": "Cereais Moçambique",
+      "capacidadeTotalT": 120000, "condicaoFisica": "Boa", "ultimaInspeccao": "12 Jul 2026",
+      "ocupacaoPercent": 96, "produtos": [
+        { "produto": "Trigo", "toneladas": 65000, "percentagem": 54 },
+        { "produto": "Milho", "toneladas": 40000, "percentagem": 33 },
+        { "produto": "Arroz", "toneladas": 11000, "percentagem": 9 }
+      ],
+      "condicoesConservacao": { "tempoMedioPermanenciaDias": 24, "taxaPerdasPercent": 1.4, "humidadePercent": 14.2, "temperaturaC": 22, "pragas": "Nenhuma" }
+    },
+    { "codigo": "WH-NAM-002", "nome": "Silo Regional de Nampula", "provincia": "Nampula", "operador": "Logística Nacional", "capacidadeTotalT": 85000, "condicaoFisica": "Boa", "ultimaInspeccao": "02 Ago 2026", "ocupacaoPercent": 58 },
+    { "codigo": "WH-TET-003", "nome": "Armazém Central de Tete", "provincia": "Tete", "operador": "Cereais Moçambique", "capacidadeTotalT": 40000, "condicaoFisica": "Deficiente", "ultimaInspeccao": "28 Jun 2026", "ocupacaoPercent": 22 },
+    { "codigo": "WH-MAP-004", "nome": "Silos de Maputo", "provincia": "Maputo", "operador": "Logística Nacional", "capacidadeTotalT": 150000, "condicaoFisica": "Boa", "ultimaInspeccao": "15 Jul 2026", "ocupacaoPercent": 71 },
+    { "codigo": "WH-ZAM-005", "nome": "Armazém de Quelimane", "provincia": "Zambézia", "operador": "Armazéns do Centro", "capacidadeTotalT": 30000, "condicaoFisica": "Razoável", "ultimaInspeccao": "20 Jul 2026", "ocupacaoPercent": 83 }
+  ],
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
