@@ -112,7 +112,10 @@ const SINAGEPE = (() => {
         <div class="content" id="content-mount"></div>
         <div class="footer">
           <span>© 2026 SINAGEPE Moçambique — Ministério da Indústria e Comércio</span>
-          <span id="footer-updated">Última actualização: —</span>
+          <span style="display:flex;gap:16px;align-items:center">
+            <a href="portal-publico.html" style="color:var(--ink-faint)">Portal Público ↗</a>
+            <span id="footer-updated">Última actualização: —</span>
+          </span>
         </div>
       </div>`;
     document.getElementById('sidebar-mount').innerHTML = renderSidebar(activeKey);
