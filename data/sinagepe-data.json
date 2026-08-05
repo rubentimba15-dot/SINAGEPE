@@ -897,6 +897,23 @@
       { "fase": "T-0h", "titulo": "Coordenar com INGD", "estado": "Pendente", "responsavel": "Equipa Multissectorial" }
     ]
   },
+  "appConsumidor": {
+    "localizacao": "Maputo Cidade",
+    "economiaMensalPossivel": 1200,
+    "lojasPreco": [
+      { "loja": "Mercado Central", "distanciaKm": 0.8, "preco": 62, "tendenciaPercent": -3 },
+      { "loja": "Mercearia Esperança", "distanciaKm": 1.4, "preco": 65, "tendenciaPercent": 2 },
+      { "loja": "Supermercado Kanimambo", "distanciaKm": 2.1, "preco": 70, "tendenciaPercent": 0 }
+    ],
+    "categorias": [
+      { "nome": "Arroz", "estado": "Normal" },
+      { "nome": "Farinha", "estado": "Normal" },
+      { "nome": "Óleo", "estado": "Instável" },
+      { "nome": "Açúcar", "estado": "Normal" },
+      { "nome": "Sabão", "estado": "Normal" },
+      { "nome": "Feijão", "estado": "Instável" }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
