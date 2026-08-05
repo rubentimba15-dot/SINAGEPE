@@ -1119,6 +1119,27 @@
       { "produto": "Farinha de Milho", "nivel": "Baixo Risco" }, { "produto": "Arroz Importado", "nivel": "Moderado" }, { "produto": "Fertilizantes NPK", "nivel": "Alto Risco" }
     ]
   },
+  "portalUniversidades": {
+    "instituicao": "Univ. Eduardo Mondlane",
+    "kpis": { "datasetsDisponiveis": 47, "seriesHistoricasAnos": 12, "indicadoresEconomicos": 156, "downloadsMes": 234 },
+    "categorias": [{ "nome": "Preços", "n": 14 }, { "nome": "Produção", "n": 8 }, { "nome": "Comércio", "n": 11 }, { "nome": "Logística", "n": 6 }, { "nome": "Clima", "n": 5 }, { "nome": "Demografia", "n": 3 }],
+    "datasetsCompilados": [
+      { "descricao": "Histórico de Preços de Cereais", "periodo": "2014-2026", "formatos": "CSV, JSON, SPSS, Stata" },
+      { "descricao": "Balanço de Fluxos Logísticos", "periodo": "2020-2025", "formatos": "CSV, JSON" }
+    ]
+  },
+  "portalParceiros": {
+    "organizacao": "FAO Representação",
+    "classificacaoIPC": [
+      { "provincia": "Tete", "fase": 4 }, { "provincia": "Cabo Delgado", "fase": 3 }, { "provincia": "Zambézia", "fase": 3 },
+      { "provincia": "Nampula", "fase": 2 }, { "provincia": "Manica", "fase": 2 }, { "provincia": "Sofala", "fase": 1 },
+      { "provincia": "Gaza", "fase": 1 }, { "provincia": "Inhambane", "fase": 1 }, { "provincia": "Maputo", "fase": 1 }
+    ],
+    "eventosClimaticos": [
+      { "nome": "Ciclone Tropical Freddy", "local": "Zambézia", "perdaHa": 45000, "recuperacaoMeses": 6, "estado": "Crítico" },
+      { "nome": "Seca El Niño", "local": "Gaza & Inhambane", "perdaHa": null, "recuperacaoMeses": null, "estado": "Aviso", "nota": "Apoio WFP já iniciado" }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
