@@ -1046,6 +1046,18 @@
     "impactoMacro": { "contribuicaoPibPercent": 4.8, "balancaComercialUsd": -235000000 },
     "recomendacoes": ["Integração de PMEs no canal de facturação electrónica.", "Ajuste de 1,5% na taxa de compensação aduaneira sobre trigo."]
   },
+  "dashboardBancoCentral": {
+    "kpis": { "pressaoCambialIndex": 0.67, "necessidadeDivisasMesUsd": 280000000, "reservasCoberturaMeses": 4.8, "nivelCriticoMeses": 3.0, "inflacaoMensalPercent": 1.2, "pressaoImportacoesPercent": 8, "taxaCambio": 63.45 },
+    "intervencao": [
+      { "horizonteDias": 30, "valorUsd": 85000000, "justificacao": "Foco em manter stock de Trigo e combustíveis logísticos." },
+      { "horizonteDias": 60, "valorUsd": 140000000, "justificacao": "Alta sazonal em sementes e óleos vegetais." },
+      { "horizonteDias": 90, "valorUsd": 210000000, "justificacao": "Reposição de reservas antes da época de escassez." }
+    ],
+    "demandaCambialProduto": [
+      { "produto": "Arroz", "valorUsd": 120000000, "percentCota": 42.8 }, { "produto": "Trigo Moído", "valorUsd": 80000000, "percentCota": 28.5 },
+      { "produto": "Óleos Crus", "valorUsd": 55000000, "percentCota": 19.6 }, { "produto": "Fertilizantes", "valorUsd": 25000000, "percentCota": 8.9 }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
