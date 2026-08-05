@@ -83,6 +83,36 @@
     { "corredor": "Corredor de Maputo (N4)", "produtosAfectados": "Óleo Alimentar, Açúcar", "tonelagemSemana": 21400, "projecaoPrecoPercent": 22, "rotaAlternativa": "Via Ressano Garcia + Ferrovia CFM", "custoAdicionalPercent": 12, "tempoAdicionalH": 9 },
     { "corredor": "Via Beira-Tete (N7)", "produtosAfectados": "Fertilizantes, Combustíveis", "tonelagemSemana": 7300, "projecaoPrecoPercent": 9, "rotaAlternativa": "Via N6 + N103", "custoAdicionalPercent": 10, "tempoAdicionalH": 11 }
   ],
+  "corredorDetalhe": {
+    "corredor": "Via Beira-Tete (N7)",
+    "rota": "EN1/EN102",
+    "iam": 0.72,
+    "pontosTransito": [
+      { "codigo": "PE-01", "nome": "Porto da Beira", "estado": "Livre" },
+      { "codigo": "CD-04", "nome": "Chimoio", "estado": "Livre" },
+      { "codigo": "CD-05", "nome": "Gondola", "estado": "Atenção", "motivo": "Obras" },
+      { "codigo": "PT-08", "nome": "Rio Luenha", "estado": "Bloqueado", "motivo": "Corte de estrada — inundações" },
+      { "codigo": "TE-01", "nome": "Tete Centro", "estado": "Livre" }
+    ],
+    "segmentos": [
+      { "de": "PE-01", "para": "CD-04", "estado": "Livre" },
+      { "de": "CD-04", "para": "CD-05", "estado": "Atenção" },
+      { "de": "CD-05", "para": "PT-08", "estado": "Bloqueado" },
+      { "de": "PT-08", "para": "TE-01", "estado": "Atenção" }
+    ],
+    "cartoes": {
+      "estradas": { "operacionalKm": 412, "totalKm": 520 },
+      "pontes": { "operacionais": 6, "total": 8 },
+      "terminais": { "operacionais": 4, "total": 4 }
+    },
+    "ocupacaoActual": 85,
+    "tendenciaFluxo30dias": [62, 65, 68, 71, 74, 78, 82, 85],
+    "alertas": [
+      { "titulo": "CORTE DE ESTRADA (Rio Luenha)", "severidade": "Crítico", "tempo": "Há 2 horas", "descricao": "Inundações impedem passagem de veículos pesados." },
+      { "titulo": "OBRAS EM GONDOLA", "severidade": "Atenção", "tempo": "Activo", "descricao": "Atraso médio de 45 min na travessia." }
+    ],
+    "rotaAlternativa": { "nome": "Bypass Ferroviário CFM (Beira→Tete)", "tempoEstimadoDelta": "-4 Horas", "poupancaPercent": 12 }
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
