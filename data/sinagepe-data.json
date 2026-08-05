@@ -622,6 +622,13 @@
     { "codigo": "WH-MAP-004", "nome": "Silos de Maputo", "provincia": "Maputo", "operador": "Logística Nacional", "capacidadeTotalT": 150000, "condicaoFisica": "Boa", "ultimaInspeccao": "15 Jul 2026", "ocupacaoPercent": 71 },
     { "codigo": "WH-ZAM-005", "nome": "Armazém de Quelimane", "provincia": "Zambézia", "operador": "Armazéns do Centro", "capacidadeTotalT": 30000, "condicaoFisica": "Razoável", "ultimaInspeccao": "20 Jul 2026", "ocupacaoPercent": 83 }
   ],
+  "paisesOrigem": ["Índia", "África do Sul", "Brasil", "Tailândia", "Rússia", "Argentina"],
+  "portosEntrada": ["Porto de Maputo", "Porto da Beira", "Porto de Nacala", "Fronteira Ressano Garcia"],
+  "distribuicaoZonas": [
+    { "zona": "Sul", "percentagem": 40 },
+    { "zona": "Centro", "percentagem": 35 },
+    { "zona": "Norte", "percentagem": 25 }
+  ],
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
