@@ -303,6 +303,32 @@ table.balance-table th:not(:first-child), table.balance-table td:not(:first-chil
 .util-fill.pill-warn { background: var(--warn); }
 .util-fill.pill-crit { background: var(--crit); }
 
+/* alertas — reutilizado no Detalhe de Corredor e na Gestão de Alertas */
+.alert-card { border-left: 3px solid; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; background: var(--navy-800); cursor: pointer; transition: background 0.15s; }
+.alert-card:hover { background: var(--navy-700); }
+.alert-card.selected { background: var(--navy-700); }
+.alert-card.crit { border-color: var(--crit); } .alert-card.warn { border-color: var(--warn); } .alert-card.ok { border-color: var(--ok); }
+.alert-title { font-size: 12.5px; font-weight: 700; letter-spacing: 0.02em; }
+.alert-meta { font-size: 10.5px; color: var(--ink-faint); margin: 3px 0 6px; }
+.alert-desc { font-size: 12px; color: var(--ink-dim); }
+
+/* barra de filtros */
+.filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
+.filter-bar select {
+  background: var(--navy-800); color: var(--ink); border: 1px solid var(--line);
+  border-radius: 8px; padding: 8px 12px; font-family: var(--font-body); font-size: 12.5px;
+}
+
+/* layout de dois painéis (lista + detalhe) */
+.split-panel { display: grid; grid-template-columns: 1fr 1.1fr; gap: 18px; align-items: start; }
+.detail-panel { position: sticky; top: 26px; }
+.confidence-badge { font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 20px; background: var(--ok-bg); color: var(--ok); }
+.medida-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 12.5px; }
+.medida-row:last-child { border-bottom: none; }
+.expand-box { background: var(--navy-900); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin-top: 12px; font-size: 12px; color: var(--ink-dim); line-height: 1.6; }
+
+@media (max-width: 900px) { .split-panel { grid-template-columns: 1fr; } .detail-panel { position: static; } }
+
 canvas { max-width: 100%; }
 
 /* responsivo */
