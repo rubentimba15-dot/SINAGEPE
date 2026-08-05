@@ -103,7 +103,10 @@ const SINAGEPE = (() => {
             <div class="topbar-title">${topbarTitle}</div>
             <div class="topbar-badge">${topbarBadge}</div>
           </div>
-          <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <a href="assistente-ia.html" style="font-size:11.5px;font-weight:600;color:var(--bronze-light);display:flex;align-items:center;gap:5px">✦ Assistente IA</a>
+            <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+          </div>
         </div>
         <div class="content" id="content-mount"></div>
         <div class="footer">
