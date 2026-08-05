@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Módulo de Logística — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+</head>
+<body>
+
+<div class="app-shell" id="app-shell"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('logistica', 'Módulo de Logística', 'Corredores, Custos e Simulação de Ruptura');
+
+document.getElementById('content-mount').innerHTML = `
+  <div class="kpi-row" id="kpi-row" style="grid-template-columns:repeat(4,1fr)"></div>
+
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">Painel de Corredores Activos e Gargalos</div>
+      <div class="card-subtitle">Mesmos corredores fixos do Mapa Nacional — o estado é que muda em tempo real</div>
+      <table class="balance-table">
+        <thead><tr><th>Corredor</th><th>Origem</th><th>Destino</th><th>Estado</th><th>Distância</th><th>Tempo</th><th>Custo t/km</th><th>Tráfego</th></tr></thead>
+        <tbody id="corredores-body"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Balanço de Custo Logístico Total</div>
+      <div class="card-subtitle">Distribuição percentual do custo nacional de transporte</div>
+      <canvas id="chart-custo" height="220"></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Simulador de Ruptura de Eixos Críticos</div>
+    <div class="card-subtitle">Selecciona um corredor para simular o impacto de um bloqueio</div>
+    <select id="sim-select" style="background:var(--navy-800);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;margin-bottom:16px;min-width:280px;"></select>
+    <div id="sim-result"></div>
+  </div>
+`;
+
+SINAGEPE.load().then(renderLogistica);
+
+function renderLogistica(data) {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  // --- KPIs calculados a partir dos dados-base, não fixos ---
+  const ipl = SINAGEPE.calcIPL(data);
+  const incl = SINAGEPE.calcINCL(data);
+  const corredoresCriticos = data.corredores.filter(c => c.estado === 'Condicionado' || c.estado === 'Interrompido').length;
+  const custosValidos = data.corredores.map(c => c.custoTKm).filter(v => v !== null);
+  const custoMedio = (custosValidos.reduce((a, b) => a + b, 0) / custosValidos.length).toFixed(2);
+
+  const classificaIPL = ipl < 0.4 ? 'Pressão Estável' : ipl < 0.7 ? 'Pressão Moderada' : 'Pressão Alta';
+  const classificaINCL = incl > 0.7 ? 'Capacidade Adequada' : incl > 0.4 ? 'Capacidade Limitada' : 'Capacidade Crítica';
+
+  const kpiDefs = [
+    { label: 'Índice de Pressão Logística (IPL)', valor: ipl.toFixed(2), estado: classificaIPL, tipo: ipl < 0.4 ? 'ok' : ipl < 0.7 ? 'warn' : 'crit' },
+    { label: 'Capacidade Nacional (INCL)', valor: incl.toFixed(2), estado: classificaINCL, tipo: incl > 0.7 ? 'ok' : incl > 0.4 ? 'warn' : 'crit' },
+    { label: 'Custo Médio por Tonelada', valor: custoMedio + ' USD', estado: 'Normal', tipo: 'info' },
+    { label: 'Corredores Críticos', valor: corredoresCriticos + ' Eixos', estado: corredoresCriticos > 0 ? 'Atenção' : 'Normal', tipo: corredoresCriticos > 0 ? 'warn' : 'ok' },
+  ];
+  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
+
+  // --- Tabela de corredores (mesma lógica do Mapa Nacional) ---
+  const ESTADO_TIPO = { 'Operacional': 'ok', 'Condicionado': 'warn', 'Interrompido': 'crit' };
+  document.getElementById('corredores-body').innerHTML = data.corredores.map(c => {
+    const tag = `<span class="state-tag" style="background:var(--${ESTADO_TIPO[c.estado]}-bg);color:var(--${ESTADO_TIPO[c.estado]})">${c.estado}</span>`;
+    const tempo = c.tempoH === null ? '—' : c.tempoH + 'h';
+    const custo = c.custoTKm === null ? '—' : c.custoTKm + ' USD';
+    return `<tr><td>${c.nome}</td><td>${c.origem}</td><td>${c.destino}</td><td>${tag}</td><td>${c.distanciaKm} km</td><td>${tempo}</td><td>${custo}</td><td>${c.trafego}</td></tr>`;
+  }).join('');
+
+  // --- Gráfico de custo logístico ---
+  new Chart(document.getElementById('chart-custo'), {
+    type: 'doughnut',
+    data: {
+      labels: data.custoLogisticoBreakdown.map(c => c.categoria),
+      datasets: [{
+        data: data.custoLogisticoBreakdown.map(c => c.percentagem),
+        backgroundColor: ['#d9a441', '#5b8ac9', '#3ecf8e', '#e0a83e', '#e2555c'],
+        borderWidth: 0,
+      }]
+    },
+    options: { plugins: { legend: { position: 'bottom', labels: { color: '#97a3c2', font: { size: 10.5 }, boxWidth: 10 } } }, cutout: '62%' }
+  });
+
+  // --- Simulador de ruptura ---
+  const select = document.getElementById('sim-select');
+  select.innerHTML = data.fluxosCorredor.map(f => `<option value="${f.corredor}">${f.corredor} — Bloqueio</option>`).join('');
+
+  function renderSim(corredorNome) {
+    const f = data.fluxosCorredor.find(x => x.corredor === corredorNome);
+    document.getElementById('sim-result').innerHTML = `
+      <div class="row-3">
+        <div class="card" style="background:var(--navy-800)">
+          <div class="kpi-label">Produtos Afectados</div>
+          <div style="font-size:15px;font-weight:600;margin-top:4px">${f.produtosAfectados}</div>
+        </div>
+        <div class="card" style="background:var(--navy-800)">
+          <div class="kpi-label">Tonelagem em Risco</div>
+          <div class="kpi-value">${SINAGEPE.fmt(f.tonelagemSemana)} t/semana</div>
+        </div>
+        <div class="card" style="background:var(--navy-800)">
+          <div class="kpi-label">Projecção de Preços</div>
+          <div class="kpi-value" style="color:var(--crit)">+${f.projecaoPrecoPercent}%</div>
+        </div>
+      </div>
+      <div class="card" style="background:var(--navy-800);margin-top:14px">
+        <div class="kpi-label">Rota Alternativa Recomendada (IA)</div>
+        <div style="font-size:15px;font-weight:600;margin:6px 0 10px">${f.rotaAlternativa}</div>
+        <div style="display:flex;gap:24px;font-size:13px;color:var(--ink-dim)">
+          <span>Tempo adicional: <b style="color:var(--ink)">+${f.tempoAdicionalH}h</b></span>
+          <span>Custo adicional: <b style="color:var(--ink)">+${f.custoAdicionalPercent}%</b></span>
+        </div>
+      </div>`;
+  }
+
+  select.addEventListener('change', e => renderSim(e.target.value));
+  renderSim(data.fluxosCorredor[0].corredor);
+}
+</script>
+</body>
+</html>
