@@ -5,114 +5,575 @@
     "modo": "SIMULADO"
   },
   "kpis": {
-    "disponibilidadeNacional": { "valor": 87, "unidade": "%", "estado": "Regular", "nota": "Stock Físico" },
-    "diasCoberturaMedia": { "valor": 42, "unidade": "dias", "estado": "Estável" },
-    "alertasActivos": { "valor": 12, "estado": "Atenção" },
-    "produtosCriticos": { "valor": 3, "estado": "Crítico" },
-    "importacoesTransito": { "valor": 28.45, "unidade": "mil ton", "estado": "Normal" },
-    "indiceLogisticoNacional": { "valor": 0.72, "estado": "Adequado" }
+    "disponibilidadeNacional": {
+      "valor": 87,
+      "unidade": "%",
+      "estado": "Regular",
+      "nota": "Stock Físico"
+    },
+    "diasCoberturaMedia": {
+      "valor": 42,
+      "unidade": "dias",
+      "estado": "Estável"
+    },
+    "importacoesTransito": {
+      "valor": 28.45,
+      "unidade": "mil ton",
+      "estado": "Normal"
+    },
+    "indiceLogisticoNacional": {
+      "valor": 0.72,
+      "estado": "Adequado"
+    }
   },
   "provincias": [
-    { "nome": "Cabo Delgado", "disponibilidade": 94 },
-    { "nome": "Niassa", "disponibilidade": 88 },
-    { "nome": "Nampula", "disponibilidade": 91 },
-    { "nome": "Zambézia", "disponibilidade": 72 },
-    { "nome": "Tete", "disponibilidade": 42 },
-    { "nome": "Manica", "disponibilidade": 85 },
-    { "nome": "Sofala", "disponibilidade": 68 },
-    { "nome": "Inhambane", "disponibilidade": 89 },
-    { "nome": "Gaza", "disponibilidade": 87 },
-    { "nome": "Maputo", "disponibilidade": 96 }
+    {
+      "nome": "Cabo Delgado",
+      "disponibilidade": 94
+    },
+    {
+      "nome": "Niassa",
+      "disponibilidade": 88
+    },
+    {
+      "nome": "Nampula",
+      "disponibilidade": 91
+    },
+    {
+      "nome": "Zambézia",
+      "disponibilidade": 72
+    },
+    {
+      "nome": "Tete",
+      "disponibilidade": 42
+    },
+    {
+      "nome": "Manica",
+      "disponibilidade": 85
+    },
+    {
+      "nome": "Sofala",
+      "disponibilidade": 68
+    },
+    {
+      "nome": "Inhambane",
+      "disponibilidade": 89
+    },
+    {
+      "nome": "Gaza",
+      "disponibilidade": 87
+    },
+    {
+      "nome": "Maputo",
+      "disponibilidade": 96
+    }
   ],
   "balancoNacional": [
-    { "produto": "Arroz", "stock": 45200, "producao": 12000, "importacao": 38000, "exportacao": 500, "consumo": 35000, "cobertura": 38, "estado": "Estável" },
-    { "produto": "Trigo", "stock": 18400, "producao": 2100, "importacao": 22000, "exportacao": 0, "consumo": 28500, "cobertura": 14, "estado": "Atenção" },
-    { "produto": "Óleo Alimentar", "stock": 21300, "producao": 8600, "importacao": 15200, "exportacao": 300, "consumo": 19800, "cobertura": 29, "estado": "Estável" },
-    { "produto": "Farinha de Milho", "stock": 61500, "producao": 41000, "importacao": 6000, "exportacao": 1200, "consumo": 26400, "cobertura": 52, "estado": "Excelente" },
-    { "produto": "Fertilizantes", "stock": 9200, "producao": 0, "importacao": 14500, "exportacao": 0, "consumo": 24800, "cobertura": 9, "estado": "Crítico" }
+    {
+      "produto": "Arroz",
+      "stock": 45200,
+      "producao": 12000,
+      "importacao": 38000,
+      "exportacao": 500,
+      "consumo": 35000,
+      "cobertura": 38,
+      "estado": "Estável"
+    },
+    {
+      "produto": "Trigo",
+      "stock": 18400,
+      "producao": 2100,
+      "importacao": 22000,
+      "exportacao": 0,
+      "consumo": 28500,
+      "cobertura": 14,
+      "estado": "Atenção"
+    },
+    {
+      "produto": "Óleo Alimentar",
+      "stock": 21300,
+      "producao": 8600,
+      "importacao": 15200,
+      "exportacao": 300,
+      "consumo": 19800,
+      "cobertura": 29,
+      "estado": "Estável"
+    },
+    {
+      "produto": "Farinha de Milho",
+      "stock": 61500,
+      "producao": 41000,
+      "importacao": 6000,
+      "exportacao": 1200,
+      "consumo": 26400,
+      "cobertura": 52,
+      "estado": "Excelente"
+    },
+    {
+      "produto": "Fertilizantes",
+      "stock": 9200,
+      "producao": 0,
+      "importacao": 14500,
+      "exportacao": 0,
+      "consumo": 24800,
+      "cobertura": 9,
+      "estado": "Crítico"
+    }
   ],
-  "alertasSeveridade": { "critico": 3, "atencao": 4, "normal": 5 },
   "precoTendencia": {
-    "meses": ["Fev", "Mar", "Abr", "Mai", "Jun", "Jul"],
+    "meses": [
+      "Fev",
+      "Mar",
+      "Abr",
+      "Mai",
+      "Jun",
+      "Jul"
+    ],
     "series": [
-      { "nome": "Farinha de Milho", "cor": "#d9a441", "valores": [38, 39, 41, 40, 43, 45] },
-      { "nome": "Arroz", "cor": "#5b8ac9", "valores": [52, 54, 53, 56, 58, 57] }
+      {
+        "nome": "Farinha de Milho",
+        "cor": "#d9a441",
+        "valores": [
+          38,
+          39,
+          41,
+          40,
+          43,
+          45
+        ]
+      },
+      {
+        "nome": "Arroz",
+        "cor": "#5b8ac9",
+        "valores": [
+          52,
+          54,
+          53,
+          56,
+          58,
+          57
+        ]
+      }
     ]
   },
   "iamProvincial": [
-    { "nome": "Cabo Delgado", "valor": 0.88, "classificacao": "Alto" },
-    { "nome": "Niassa", "valor": 0.75, "classificacao": "Adequado" },
-    { "nome": "Nampula", "valor": 0.85, "classificacao": "Alto" },
-    { "nome": "Zambézia", "valor": 0.60, "classificacao": "Moderado" },
-    { "nome": "Tete", "valor": 0.41, "classificacao": "Crítico" },
-    { "nome": "Manica", "valor": 0.78, "classificacao": "Adequado" },
-    { "nome": "Sofala", "valor": 0.68, "classificacao": "Moderado" },
-    { "nome": "Inhambane", "valor": 0.81, "classificacao": "Alto" },
-    { "nome": "Gaza", "valor": 0.79, "classificacao": "Adequado" },
-    { "nome": "Maputo", "valor": 0.92, "classificacao": "Excelente" }
+    {
+      "nome": "Cabo Delgado",
+      "valor": 0.88,
+      "classificacao": "Alto"
+    },
+    {
+      "nome": "Niassa",
+      "valor": 0.75,
+      "classificacao": "Adequado"
+    },
+    {
+      "nome": "Nampula",
+      "valor": 0.85,
+      "classificacao": "Alto"
+    },
+    {
+      "nome": "Zambézia",
+      "valor": 0.6,
+      "classificacao": "Moderado"
+    },
+    {
+      "nome": "Tete",
+      "valor": 0.41,
+      "classificacao": "Crítico"
+    },
+    {
+      "nome": "Manica",
+      "valor": 0.78,
+      "classificacao": "Adequado"
+    },
+    {
+      "nome": "Sofala",
+      "valor": 0.68,
+      "classificacao": "Moderado"
+    },
+    {
+      "nome": "Inhambane",
+      "valor": 0.81,
+      "classificacao": "Alto"
+    },
+    {
+      "nome": "Gaza",
+      "valor": 0.79,
+      "classificacao": "Adequado"
+    },
+    {
+      "nome": "Maputo",
+      "valor": 0.92,
+      "classificacao": "Excelente"
+    }
   ],
   "corredores": [
-    { "nome": "Corredor da Beira (N6)", "origem": "Porto da Beira", "destino": "Fronteira Machipanda", "estado": "Operacional", "distanciaKm": 288, "tempoH": 6.5, "custoTKm": 1.2, "trafego": "Alto" },
-    { "nome": "Corredor de Nacala", "origem": "Porto de Nacala", "destino": "Fronteira Entre-Lagos", "estado": "Operacional", "distanciaKm": 610, "tempoH": 12, "custoTKm": 0.9, "trafego": "Moderado" },
-    { "nome": "Corredor de Maputo (N4)", "origem": "Porto de Maputo", "destino": "Fronteira Ressano Garcia", "estado": "Operacional", "distanciaKm": 88, "tempoH": 2, "custoTKm": 1.5, "trafego": "Extremo" },
-    { "nome": "Eixo Norte-Sul (N1)", "origem": "Maputo", "destino": "Pemba", "estado": "Condicionado", "distanciaKm": 2400, "tempoH": 48, "custoTKm": 2.4, "trafego": "Moderado" },
-    { "nome": "Ligação Tete-Zambézia", "origem": "Tete", "destino": "Quelimane", "estado": "Interrompido", "distanciaKm": 420, "tempoH": null, "custoTKm": null, "trafego": "Nenhum" },
-    { "nome": "Via Beira-Tete (N7)", "origem": "Beira", "destino": "Tete", "estado": "Operacional", "distanciaKm": 590, "tempoH": 9, "custoTKm": 1.1, "trafego": "Alto" }
+    {
+      "nome": "Corredor da Beira (N6)",
+      "origem": "Porto da Beira",
+      "destino": "Fronteira Machipanda",
+      "estado": "Operacional",
+      "distanciaKm": 288,
+      "tempoH": 6.5,
+      "custoTKm": 1.2,
+      "trafego": "Alto"
+    },
+    {
+      "nome": "Corredor de Nacala",
+      "origem": "Porto de Nacala",
+      "destino": "Fronteira Entre-Lagos",
+      "estado": "Operacional",
+      "distanciaKm": 610,
+      "tempoH": 12,
+      "custoTKm": 0.9,
+      "trafego": "Moderado"
+    },
+    {
+      "nome": "Corredor de Maputo (N4)",
+      "origem": "Porto de Maputo",
+      "destino": "Fronteira Ressano Garcia",
+      "estado": "Operacional",
+      "distanciaKm": 88,
+      "tempoH": 2,
+      "custoTKm": 1.5,
+      "trafego": "Extremo"
+    },
+    {
+      "nome": "Eixo Norte-Sul (N1)",
+      "origem": "Maputo",
+      "destino": "Pemba",
+      "estado": "Condicionado",
+      "distanciaKm": 2400,
+      "tempoH": 48,
+      "custoTKm": 2.4,
+      "trafego": "Moderado"
+    },
+    {
+      "nome": "Ligação Tete-Zambézia",
+      "origem": "Tete",
+      "destino": "Quelimane",
+      "estado": "Interrompido",
+      "distanciaKm": 420,
+      "tempoH": null,
+      "custoTKm": null,
+      "trafego": "Nenhum"
+    },
+    {
+      "nome": "Via Beira-Tete (N7)",
+      "origem": "Beira",
+      "destino": "Tete",
+      "estado": "Operacional",
+      "distanciaKm": 590,
+      "tempoH": 9,
+      "custoTKm": 1.1,
+      "trafego": "Alto"
+    }
   ],
   "utilizacaoModal": [
-    { "modal": "Rodoviário (N1/Corredores)", "percentagem": 78 },
-    { "modal": "Ferroviário (Sena/Limpopo)", "percentagem": 42 },
-    { "modal": "Marítimo (Cabotagem Nacional)", "percentagem": 91 }
+    {
+      "modal": "Rodoviário (N1/Corredores)",
+      "percentagem": 78
+    },
+    {
+      "modal": "Ferroviário (Sena/Limpopo)",
+      "percentagem": 42
+    },
+    {
+      "modal": "Marítimo (Cabotagem Nacional)",
+      "percentagem": 91
+    }
   ],
   "infraestrutura": {
-    "portosOperacionais": { "activos": 3, "total": 3 },
+    "portosOperacionais": {
+      "activos": 3,
+      "total": 3
+    },
     "aeroportosActivos": 12,
     "cfmOperacionalPercent": 72,
     "custoMaximoReferenciaTKm": 3.0
   },
   "custoLogisticoBreakdown": [
-    { "categoria": "Frete de Longo Curso", "percentagem": 45 },
-    { "categoria": "Combustível", "percentagem": 25 },
-    { "categoria": "Portagens & Taxas", "percentagem": 12 },
-    { "categoria": "Carga e Descarga", "percentagem": 10 },
-    { "categoria": "Seguros & Perdas", "percentagem": 8 }
+    {
+      "categoria": "Frete de Longo Curso",
+      "percentagem": 45
+    },
+    {
+      "categoria": "Combustível",
+      "percentagem": 25
+    },
+    {
+      "categoria": "Portagens & Taxas",
+      "percentagem": 12
+    },
+    {
+      "categoria": "Carga e Descarga",
+      "percentagem": 10
+    },
+    {
+      "categoria": "Seguros & Perdas",
+      "percentagem": 8
+    }
   ],
   "fluxosCorredor": [
-    { "corredor": "Corredor da Beira (N6)", "produtosAfectados": "Trigo, Milho, Adubo", "tonelagemSemana": 15200, "projecaoPrecoPercent": 18, "rotaAlternativa": "Via Chimoio-Senga + Ferroviário", "custoAdicionalPercent": 18, "tempoAdicionalH": 14 },
-    { "corredor": "Corredor de Nacala", "produtosAfectados": "Arroz, Fertilizantes", "tonelagemSemana": 9800, "projecaoPrecoPercent": 11, "rotaAlternativa": "Via Cuamba + Cabotagem Marítima", "custoAdicionalPercent": 15, "tempoAdicionalH": 20 },
-    { "corredor": "Corredor de Maputo (N4)", "produtosAfectados": "Óleo Alimentar, Açúcar", "tonelagemSemana": 21400, "projecaoPrecoPercent": 22, "rotaAlternativa": "Via Ressano Garcia + Ferrovia CFM", "custoAdicionalPercent": 12, "tempoAdicionalH": 9 },
-    { "corredor": "Via Beira-Tete (N7)", "produtosAfectados": "Fertilizantes, Combustíveis", "tonelagemSemana": 7300, "projecaoPrecoPercent": 9, "rotaAlternativa": "Via N6 + N103", "custoAdicionalPercent": 10, "tempoAdicionalH": 11 }
+    {
+      "corredor": "Corredor da Beira (N6)",
+      "produtosAfectados": "Trigo, Milho, Adubo",
+      "tonelagemSemana": 15200,
+      "projecaoPrecoPercent": 18,
+      "rotaAlternativa": "Via Chimoio-Senga + Ferroviário",
+      "custoAdicionalPercent": 18,
+      "tempoAdicionalH": 14
+    },
+    {
+      "corredor": "Corredor de Nacala",
+      "produtosAfectados": "Arroz, Fertilizantes",
+      "tonelagemSemana": 9800,
+      "projecaoPrecoPercent": 11,
+      "rotaAlternativa": "Via Cuamba + Cabotagem Marítima",
+      "custoAdicionalPercent": 15,
+      "tempoAdicionalH": 20
+    },
+    {
+      "corredor": "Corredor de Maputo (N4)",
+      "produtosAfectados": "Óleo Alimentar, Açúcar",
+      "tonelagemSemana": 21400,
+      "projecaoPrecoPercent": 22,
+      "rotaAlternativa": "Via Ressano Garcia + Ferrovia CFM",
+      "custoAdicionalPercent": 12,
+      "tempoAdicionalH": 9
+    },
+    {
+      "corredor": "Via Beira-Tete (N7)",
+      "produtosAfectados": "Fertilizantes, Combustíveis",
+      "tonelagemSemana": 7300,
+      "projecaoPrecoPercent": 9,
+      "rotaAlternativa": "Via N6 + N103",
+      "custoAdicionalPercent": 10,
+      "tempoAdicionalH": 11
+    }
   ],
   "corredorDetalhe": {
     "corredor": "Via Beira-Tete (N7)",
     "rota": "EN1/EN102",
     "iam": 0.72,
     "pontosTransito": [
-      { "codigo": "PE-01", "nome": "Porto da Beira", "estado": "Livre" },
-      { "codigo": "CD-04", "nome": "Chimoio", "estado": "Livre" },
-      { "codigo": "CD-05", "nome": "Gondola", "estado": "Atenção", "motivo": "Obras" },
-      { "codigo": "PT-08", "nome": "Rio Luenha", "estado": "Bloqueado", "motivo": "Corte de estrada — inundações" },
-      { "codigo": "TE-01", "nome": "Tete Centro", "estado": "Livre" }
+      {
+        "codigo": "PE-01",
+        "nome": "Porto da Beira",
+        "estado": "Livre"
+      },
+      {
+        "codigo": "CD-04",
+        "nome": "Chimoio",
+        "estado": "Livre"
+      },
+      {
+        "codigo": "CD-05",
+        "nome": "Gondola",
+        "estado": "Atenção",
+        "motivo": "Obras"
+      },
+      {
+        "codigo": "PT-08",
+        "nome": "Rio Luenha",
+        "estado": "Bloqueado",
+        "motivo": "Corte de estrada — inundações"
+      },
+      {
+        "codigo": "TE-01",
+        "nome": "Tete Centro",
+        "estado": "Livre"
+      }
     ],
     "segmentos": [
-      { "de": "PE-01", "para": "CD-04", "estado": "Livre" },
-      { "de": "CD-04", "para": "CD-05", "estado": "Atenção" },
-      { "de": "CD-05", "para": "PT-08", "estado": "Bloqueado" },
-      { "de": "PT-08", "para": "TE-01", "estado": "Atenção" }
+      {
+        "de": "PE-01",
+        "para": "CD-04",
+        "estado": "Livre"
+      },
+      {
+        "de": "CD-04",
+        "para": "CD-05",
+        "estado": "Atenção"
+      },
+      {
+        "de": "CD-05",
+        "para": "PT-08",
+        "estado": "Bloqueado"
+      },
+      {
+        "de": "PT-08",
+        "para": "TE-01",
+        "estado": "Atenção"
+      }
     ],
     "cartoes": {
-      "estradas": { "operacionalKm": 412, "totalKm": 520 },
-      "pontes": { "operacionais": 6, "total": 8 },
-      "terminais": { "operacionais": 4, "total": 4 }
+      "estradas": {
+        "operacionalKm": 412,
+        "totalKm": 520
+      },
+      "pontes": {
+        "operacionais": 6,
+        "total": 8
+      },
+      "terminais": {
+        "operacionais": 4,
+        "total": 4
+      }
     },
     "ocupacaoActual": 85,
-    "tendenciaFluxo30dias": [62, 65, 68, 71, 74, 78, 82, 85],
-    "alertas": [
-      { "titulo": "CORTE DE ESTRADA (Rio Luenha)", "severidade": "Crítico", "tempo": "Há 2 horas", "descricao": "Inundações impedem passagem de veículos pesados." },
-      { "titulo": "OBRAS EM GONDOLA", "severidade": "Atenção", "tempo": "Activo", "descricao": "Atraso médio de 45 min na travessia." }
+    "tendenciaFluxo30dias": [
+      62,
+      65,
+      68,
+      71,
+      74,
+      78,
+      82,
+      85
     ],
-    "rotaAlternativa": { "nome": "Bypass Ferroviário CFM (Beira→Tete)", "tempoEstimadoDelta": "-4 Horas", "poupancaPercent": 12 }
+    "alertas": [
+      {
+        "titulo": "CORTE DE ESTRADA (Rio Luenha)",
+        "severidade": "Crítico",
+        "tempo": "Há 2 horas",
+        "descricao": "Inundações impedem passagem de veículos pesados."
+      },
+      {
+        "titulo": "OBRAS EM GONDOLA",
+        "severidade": "Atenção",
+        "tempo": "Activo",
+        "descricao": "Atraso médio de 45 min na travessia."
+      }
+    ],
+    "rotaAlternativa": {
+      "nome": "Bypass Ferroviário CFM (Beira→Tete)",
+      "tempoEstimadoDelta": "-4 Horas",
+      "poupancaPercent": 12
+    }
   },
+  "alertasDetalhe": [
+    {
+      "id": "ALT-09432",
+      "tipo": "Ruptura",
+      "severidade": "Crítico",
+      "produto": "Fertilizantes",
+      "provincia": "Tete",
+      "tempo": "Há 12 min",
+      "confianca": 94,
+      "estado": "Novo",
+      "titulo": "Ruptura de Stock de Fertilizantes NPK",
+      "descricao": "O stock de Fertilizantes NPK em Tete caiu abaixo do limiar crítico de cobertura (9 dias), com tendência a agravar-se nas próximas duas semanas devido à época de sementeira.",
+      "fontes": [
+        "Declarações de Trânsito Aduaneiro (MIC)",
+        "Cadastro de Armazéns — Tete"
+      ],
+      "regra": "Stock actual < 15% da média de consumo regional trimestral",
+      "medidas": [
+        {
+          "descricao": "Canal Verde Logístico (Porto da Beira)",
+          "responsavel": "Alfândegas/MIC"
+        },
+        {
+          "descricao": "Subsidiação Temporária a PMEs da região",
+          "responsavel": "Ministério da Agricultura"
+        }
+      ]
+    },
+    {
+      "id": "ALT-09417",
+      "tipo": "Retenção",
+      "severidade": "Atenção",
+      "produto": "Óleo Alimentar",
+      "provincia": "Manica",
+      "tempo": "Há 40 min",
+      "confianca": 82,
+      "estado": "Em verificação",
+      "titulo": "Retenção Especulativa de Óleo de Cozinha",
+      "descricao": "Um operador em Manica apresenta stock elevado e redução atípica de saídas, sem constrangimento logístico identificado — padrão compatível com retenção especulativa.",
+      "fontes": [
+        "Reportes PME (Portal PME)",
+        "Sensores de Armazém de Chimoio"
+      ],
+      "regra": "Stocks elevados + redução de saídas > 30% sem causa logística identificada",
+      "medidas": [
+        {
+          "descricao": "Notificação ao IGSAE para inspecção de campo",
+          "responsavel": "IGSAE"
+        }
+      ]
+    },
+    {
+      "id": "ALT-09405",
+      "tipo": "Divergência",
+      "severidade": "Atenção",
+      "produto": "Trigo",
+      "provincia": "Nampula",
+      "tempo": "Há 1h 10min",
+      "confianca": 78,
+      "estado": "Em verificação",
+      "titulo": "Divergência de Preço de Trigo Importado",
+      "descricao": "O preço declarado na fronteira diverge em mais de 15% do preço médio de mercado para o mesmo período, sem justificação de custo de frete adicional.",
+      "fontes": [
+        "Alfândegas de Moçambique",
+        "SIMA — Preços de Mercado"
+      ],
+      "regra": "Divergência de preço declarado vs. mercado > 15%",
+      "medidas": [
+        {
+          "descricao": "Verificação de manifesto aduaneiro",
+          "responsavel": "Alfândegas/MIC"
+        }
+      ]
+    },
+    {
+      "id": "ALT-09390",
+      "tipo": "Dumping",
+      "severidade": "Atenção",
+      "produto": "Açúcar",
+      "provincia": "Maputo",
+      "tempo": "Há 2h",
+      "confianca": 65,
+      "estado": "Novo",
+      "titulo": "Suspeita de Dumping de Açúcar Importado",
+      "descricao": "Volume de importação de açúcar de um único país de origem a preço abaixo do custo de produção regional estimado.",
+      "fontes": [
+        "Alfândegas de Moçambique",
+        "Dashboard ARC — preços de referência"
+      ],
+      "regra": "Preço de importação < custo de produção regional estimado − 20%",
+      "medidas": [
+        {
+          "descricao": "Encaminhar para avaliação da ARC",
+          "responsavel": "ARC"
+        }
+      ]
+    },
+    {
+      "id": "ALT-09380",
+      "tipo": "Logística",
+      "severidade": "Crítico",
+      "produto": "Trigo, Milho, Adubo",
+      "provincia": "Sofala",
+      "tempo": "Há 2 horas",
+      "confianca": 98,
+      "estado": "Confirmado",
+      "titulo": "Corte de Estrada no Corredor Beira-Tete",
+      "descricao": "Inundações no Rio Luenha cortaram a passagem de veículos pesados no corredor Via Beira-Tete (N7), afectando o abastecimento de Tete.",
+      "fontes": [
+        "Módulo de Logística — Detalhe de Corredor",
+        "ANE"
+      ],
+      "regra": "Segmento de corredor em estado Bloqueado por mais de 1 hora",
+      "medidas": [
+        {
+          "descricao": "Activar rota alternativa (Bypass Ferroviário CFM)",
+          "responsavel": "Ministério dos Transportes"
+        }
+      ]
+    }
+  ],
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
