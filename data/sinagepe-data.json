@@ -1001,6 +1001,37 @@
       { "produto": "Arroz Extra", "stockActualT": 22, "coberturaDias": 38, "fornecedor": "—", "precoEstimado": null }
     ]
   },
+  "portalTransportadores": {
+    "frota": "TransMoz Logística",
+    "cargasDisponiveis": [
+      { "origem": "Porto da Beira", "destino": "Chimoio", "produto": "Trigo", "pesoT": 22, "valorFreteUsdTKm": 1.2, "prazoDias": 3, "estado": "Excelente" },
+      { "origem": "Maputo", "destino": "Xai-Xai", "produto": "Cimento Nacional", "pesoT": 30, "valorFreteUsdTKm": 0.9, "prazoDias": 2, "estado": "Estável" },
+      { "origem": "Nacala", "destino": "Cuamba", "produto": "Fertilizantes", "pesoT": 18, "valorFreteUsdTKm": 1.5, "prazoDias": 1, "estado": "Urgente" }
+    ],
+    "subsidio": { "produto": "Fertilizantes", "destino": "Nacala", "valorAdicionalPercentKm": 5 },
+    "retornoVazio": { "rota": "Chimoio → Beira", "sugestao": "Reserve carga de Milho em trânsito para evitar retorno vazio" }
+  },
+  "dashboardAgricultura": {
+    "kpis": { "producaoEstimadaTon": 2840000, "areaCultivadaHa": 4250000, "previsaoProxSafraTon": 3120000, "taxaAutoSuficienciaPercent": 84, "produtoresRegistados": 1240000 },
+    "produtividadeProvincial": [
+      { "provincia": "Nampula", "tHa": 2.8 }, { "provincia": "Gaza", "tHa": 2.4 },
+      { "provincia": "Zambézia", "tHa": 1.8 }, { "provincia": "Tete", "tHa": 0.9 }
+    ],
+    "calendarioRegional": [
+      { "regiao": "Norte", "provincias": "Cabo Delgado, Nampula, Niassa", "fase": "Colheita", "nota": "Fase final de escoamento para silos regionais" },
+      { "regiao": "Centro", "provincias": "Zambézia, Tete, Manica", "fase": "Crescimento/Maturação", "nota": "Pragas sob monitoramento activo" },
+      { "regiao": "Sul", "provincias": "Gaza, Inhambane, Maputo", "fase": "Sementeira/Preparação", "nota": "Distribuição primária de sementes concluída" }
+    ],
+    "producaoCultura": [
+      { "cultura": "Milho", "percentMeta": 94 }, { "cultura": "Arroz", "percentMeta": 72 },
+      { "cultura": "Mandioca", "percentMeta": 102 }, { "cultura": "Feijão", "percentMeta": 93 }, { "cultura": "Sorgo", "percentMeta": 91 }
+    ],
+    "alertas": [
+      { "provincia": "Tete", "titulo": "Risco de Seca", "severidade": "Crítico" },
+      { "provincia": "Zambézia", "titulo": "Praga de Gafanhotos", "severidade": "Atenção" },
+      { "provincia": "Nampula", "titulo": "Superávit de Produção", "severidade": "Favorável" }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
