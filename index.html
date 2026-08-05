@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel Nacional — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ============ SIDEBAR (padrão partilhado por todos os ecrãs internos) ============ -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <div class="brand-mark">S</div>
+        <div class="brand-text">
+          <div class="brand-title">SINAGEPE</div>
+          <div class="brand-sub">Moçambique</div>
+        </div>
+      </div>
+      <nav class="nav-list">
+        <a class="nav-item active" href="index.html">
+          <span class="nav-icon">▦</span> Painel
+        </a>
+        <a class="nav-item" href="#" aria-disabled="true">
+          <span class="nav-icon">⚠</span> Alertas
+        </a>
+        <a class="nav-item" href="#" aria-disabled="true">
+          <span class="nav-icon">◎</span> Mapa
+        </a>
+        <a class="nav-item" href="#" aria-disabled="true">
+          <span class="nav-icon">≋</span> Simulador
+        </a>
+        <a class="nav-item" href="#" aria-disabled="true">
+          <span class="nav-icon">⛁</span> PMEs
+        </a>
+        <a class="nav-item" href="#" aria-disabled="true">
+          <span class="nav-icon">▤</span> Armazéns
+        </a>
+        <a class="nav-item" href="#" aria-disabled="true">
+          <span class="nav-icon">⇄</span> Logística
+        </a>
+        <a class="nav-item" href="#" aria-disabled="true">
+          <span class="nav-icon">▧</span> Relatórios
+        </a>
+      </nav>
+    </div>
+    <div class="sidebar-footer">
+      <div class="avatar-dot" id="user-initials">AM</div>
+      <div class="sidebar-footer-text">
+        <div class="sidebar-footer-name" id="user-nome">—</div>
+        <div class="sidebar-footer-role" id="user-cargo">—</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <div class="main">
+
+    <div class="topbar">
+      <div class="topbar-title-group">
+        <div class="topbar-title">Painel Nacional</div>
+        <div class="topbar-badge">Disponibilidade Física · Governo</div>
+      </div>
+      <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+    </div>
+
+    <div class="content">
+
+      <!-- KPIs -->
+      <div class="kpi-row" id="kpi-row"></div>
+
+      <!-- Mapa provincial + Alertas por severidade -->
+      <div class="row-2">
+        <div class="card">
+          <div class="card-title">Disponibilidade por Província</div>
+          <div class="card-subtitle">Percentagem do stock mínimo estratégico coberto, por província</div>
+          <div class="province-grid" id="province-grid"></div>
+          <div class="legend">
+            <div class="legend-item"><span class="legend-dot" style="background:var(--ok)"></span> Normal (≥80%)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:var(--warn)"></span> Aviso (50–80%)</div>
+            <div class="legend-item"><span class="legend-dot" style="background:var(--crit)"></span> Ruptura (&lt;50%)</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Alertas por Severidade</div>
+          <div class="card-subtitle">12 alertas activos a nível nacional</div>
+          <canvas id="chart-alertas" height="180"></canvas>
+        </div>
+      </div>
+
+      <!-- Balanço Nacional Vivo + Tendência de preços -->
+      <div class="row-2">
+        <div class="card">
+          <div class="card-title">Balanço Nacional Vivo</div>
+          <div class="card-subtitle">Stock, fluxos e cobertura por produto essencial</div>
+          <table class="balance-table">
+            <thead>
+              <tr>
+                <th>Produto</th><th>Stock</th><th>Prod.</th><th>Import.</th><th>Export.</th><th>Consumo</th><th>Cobertura</th><th>Estado</th>
+              </tr>
+            </thead>
+            <tbody id="balance-body"></tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Tendência de Preços</div>
+          <div class="card-subtitle">MZN/kg, últimos 6 meses</div>
+          <canvas id="chart-precos" height="200"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <span>© 2026 SINAGEPE Moçambique — Ministério da Indústria e Comércio</span>
+      <span id="footer-updated">Última actualização: —</span>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.load().then(renderPainelNacional);
+
+function renderPainelNacional(data) {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  // --- KPIs ---
+  const k = data.kpis;
+  const kpiDefs = [
+    { label: 'Disponibilidade Nacional (Stock Físico)', valor: k.disponibilidadeNacional.valor + '%', estado: k.disponibilidadeNacional.estado, tipo: 'warn' },
+    { label: 'Dias de Cobertura (Média)', valor: k.diasCoberturaMedia.valor, estado: k.diasCoberturaMedia.estado, tipo: 'ok' },
+    { label: 'Alertas Activos', valor: k.alertasActivos.valor, estado: k.alertasActivos.estado, tipo: 'warn' },
+    { label: 'Produtos Críticos', valor: k.produtosCriticos.valor, estado: k.produtosCriticos.estado, tipo: 'crit' },
+    { label: 'Importações em Trânsito', valor: k.importacoesTransito.valor + 'k ton', estado: k.importacoesTransito.estado, tipo: 'info' },
+    { label: 'Índice Logístico Nacional', valor: k.indiceLogisticoNacional.valor, estado: k.indiceLogisticoNacional.estado, tipo: 'info' },
+  ];
+  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
+
+  // --- Mapa provincial ---
+  document.getElementById('province-grid').innerHTML = data.provincias.map(p => {
+    const cls = p.disponibilidade >= 80 ? 'tile-ok' : p.disponibilidade >= 50 ? 'tile-warn' : 'tile-crit';
+    return `<div class="province-tile ${cls}"><div class="province-name">${p.nome}</div><div class="province-value">${p.disponibilidade}%</div></div>`;
+  }).join('');
+
+  // --- Balanço nacional ---
+  document.getElementById('balance-body').innerHTML = data.balancoNacional.map(row => {
+    const tag = SINAGEPE.stateTag(row.estado);
+    return `<tr>
+      <td>${row.produto}</td>
+      <td>${SINAGEPE.fmt(row.stock)}</td>
+      <td>${SINAGEPE.fmt(row.producao)}</td>
+      <td>${SINAGEPE.fmt(row.importacao)}</td>
+      <td>${SINAGEPE.fmt(row.exportacao)}</td>
+      <td>${SINAGEPE.fmt(row.consumo)}</td>
+      <td>${row.cobertura} dias</td>
+      <td>${tag}</td>
+    </tr>`;
+  }).join('');
+
+  // --- Gráfico de alertas (donut) ---
+  new Chart(document.getElementById('chart-alertas'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Crítico', 'Atenção', 'Normal'],
+      datasets: [{
+        data: [data.alertasSeveridade.critico, data.alertasSeveridade.atencao, data.alertasSeveridade.normal],
+        backgroundColor: ['#e2555c', '#e0a83e', '#3ecf8e'],
+        borderWidth: 0,
+      }]
+    },
+    options: {
+      plugins: { legend: { position: 'bottom', labels: { color: '#97a3c2', font: { size: 11 }, boxWidth: 10 } } },
+      cutout: '68%',
+    }
+  });
+
+  // --- Gráfico de tendência de preços ---
+  new Chart(document.getElementById('chart-precos'), {
+    type: 'line',
+    data: {
+      labels: data.precoTendencia.meses,
+      datasets: data.precoTendencia.series.map(s => ({
+        label: s.nome,
+        data: s.valores,
+        borderColor: s.cor,
+        backgroundColor: s.cor,
+        tension: 0.35,
+        pointRadius: 3,
+      }))
+    },
+    options: {
+      plugins: { legend: { position: 'bottom', labels: { color: '#97a3c2', font: { size: 11 }, boxWidth: 10 } } },
+      scales: {
+        x: { ticks: { color: '#5f6d90', font: { size: 10 } }, grid: { color: 'rgba(179,130,74,0.08)' } },
+        y: { ticks: { color: '#5f6d90', font: { size: 10 } }, grid: { color: 'rgba(179,130,74,0.08)' } },
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>
