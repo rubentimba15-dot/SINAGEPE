@@ -1140,6 +1140,21 @@
       { "nome": "Seca El Niño", "local": "Gaza & Inhambane", "perdaHa": null, "recuperacaoMeses": null, "estado": "Aviso", "nota": "Apoio WFP já iniciado" }
     ]
   },
+  "marketplace": {
+    "kpis": { "anunciosActivos": 58, "transaccoesEmCurso": 12, "volumeTransaccionadoMzn": 4200000, "taxaConclusaoPercent": 81 },
+    "anuncios": [
+      { "id": "MKT-00842", "produto": "Adubo NPK", "vendedor": "Agrícola Sul Limitada", "provincia": "Maputo", "quantidadeT": 40, "precoMznT": 890, "estado": "Em Negociação" },
+      { "id": "MKT-00831", "produto": "Trigo Moído", "vendedor": "Farinhas do Índico", "provincia": "Nampula", "quantidadeT": 18, "precoMznT": 520, "estado": "Activo" },
+      { "id": "MKT-00819", "produto": "Óleo Alimentar (Bruto)", "vendedor": "Moçambique Óleos SA", "provincia": "Beira", "quantidadeT": 25, "precoMznT": 1150, "estado": "Activo" },
+      { "id": "MKT-00805", "produto": "Arroz Extra", "vendedor": "Cereal Comercial Norte", "provincia": "Nampula", "quantidadeT": 30, "precoMznT": 640, "estado": "Vendido" }
+    ],
+    "propostas": {
+      "MKT-00842": [
+        { "texto": "Comprador propôs 850 MZN/t para 40t", "tempo": "Há 1 dia" },
+        { "texto": "Vendedor contrapropôs 880 MZN/t", "tempo": "Há 6 horas" }
+      ]
+    }
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
