@@ -114,5 +114,45 @@ const SINAGEPE = (() => {
     document.getElementById('sidebar-mount').innerHTML = renderSidebar(activeKey);
   }
 
-  return { load, fmt, stateTag, kpiCard, renderUserFooter, mountShell };
+  // ---------------------------------------------------------------
+  // IPL e INCL — fórmulas de trabalho para o MVP (secção 14 do
+  // documento de especificação). Pesos calibráveis, a afinar com
+  // dados reais mais tarde; calculados aqui, não hardcoded, para
+  // nunca desalinharem dos dados-base.
+  // ---------------------------------------------------------------
+  function calcIPL(data) {
+    const cs = data.corredores;
+    const total = cs.length;
+    const operacionais = cs.filter(c => c.estado === 'Operacional').length;
+    const interrompidos = cs.filter(c => c.estado === 'Interrompido').length;
+    const custosValidos = cs.map(c => c.custoTKm).filter(v => v !== null);
+    const custoMedio = custosValidos.reduce((a, b) => a + b, 0) / custosValidos.length;
+    const custoMaxRef = data.infraestrutura.custoMaximoReferenciaTKm;
+    const capacidadeRodoviaria = (data.utilizacaoModal.find(u => u.modal.startsWith('Rodoviário')).percentagem) / 100;
+
+    const ipl = 0.40 * (1 - operacionais / total)
+              + 0.30 * (custoMedio / custoMaxRef)
+              + 0.20 * (1 - capacidadeRodoviaria)
+              + 0.10 * (interrompidos / total);
+    return Math.min(1, Math.max(0, ipl));
+  }
+
+  function calcINCL(data) {
+    const cs = data.corredores;
+    const kmTotais = cs.reduce((a, c) => a + c.distanciaKm, 0);
+    const kmTransitaveis = cs.filter(c => c.estado !== 'Interrompido').reduce((a, c) => a + c.distanciaKm, 0);
+    const portos = data.infraestrutura.portosOperacionais;
+    const custoMedio = cs.map(c => c.custoTKm).filter(v => v !== null).reduce((a, b, _, arr) => a + b / arr.length, 0);
+    const custoMaxRef = data.infraestrutura.custoMaximoReferenciaTKm;
+    const modosDisponiveis = 3; // rodoviário, ferroviário, marítimo têm dados; aéreo ainda não modelado
+    const totalModos = 4;
+
+    const incl = 0.35 * (kmTransitaveis / kmTotais)
+               + 0.25 * (portos.activos / portos.total)
+               + 0.25 * (1 - custoMedio / custoMaxRef)
+               + 0.15 * (modosDisponiveis / totalModos);
+    return Math.min(1, Math.max(0, incl));
+  }
+
+  return { load, fmt, stateTag, kpiCard, renderUserFooter, mountShell, calcIPL, calcINCL };
 })();
