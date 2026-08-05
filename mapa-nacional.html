@@ -81,8 +81,11 @@ function renderMapaNacional(data) {
     const tag = `<span class="state-tag" style="background:var(--${ESTADO_CORREDOR_TIPO[c.estado]}-bg);color:var(--${ESTADO_CORREDOR_TIPO[c.estado]})">${c.estado}</span>`;
     const tempo = c.tempoH === null ? '—' : c.tempoH + 'h';
     const custo = c.custoTKm === null ? '—' : c.custoTKm + ' USD';
+    const nome = c.nome === data.corredorDetalhe.corredor
+      ? `<a href="detalhe-corredor.html" style="color:var(--bronze-light);text-decoration:underline">${c.nome}</a>`
+      : c.nome;
     return `<tr>
-      <td>${c.nome}</td><td>${c.origem}</td><td>${c.destino}</td><td>${tag}</td>
+      <td>${nome}</td><td>${c.origem}</td><td>${c.destino}</td><td>${tag}</td>
       <td>${c.distanciaKm} km</td><td>${tempo}</td><td>${custo}</td><td>${c.trafego}</td>
     </tr>`;
   }).join('');
