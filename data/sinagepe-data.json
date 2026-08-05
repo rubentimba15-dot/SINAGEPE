@@ -1032,6 +1032,20 @@
       { "provincia": "Nampula", "titulo": "Superávit de Produção", "severidade": "Favorável" }
     ]
   },
+  "dashboardFinancas": {
+    "kpis": { "receitaFiscalEstimadaMzn": 4200000000, "ivaPotencialMzn": 890000000, "importacoesCifUsd": 320000000, "exportacoesFobUsd": 85000000, "perdasFiscaisPercent": 12, "evolucaoConsumoPercent": 3.2 },
+    "receitaPorProduto": [
+      { "produto": "Farinha de Milho", "valorMzn": 1450000000 }, { "produto": "Arroz Importado", "valorMzn": 1200000000 },
+      { "produto": "Óleo Alimentar", "valorMzn": 850000000 }, { "produto": "Trigo Moído", "valorMzn": 520000000 }, { "produto": "Açúcar Refinado", "valorMzn": 310000000 }
+    ],
+    "perdasFiscais": [
+      { "tipo": "Comércio Informal", "valorAnualMzn": 450000000, "descricao": "Estima-se que 45% das transacções de arroz ocorram fora do circuito fiscal registado." },
+      { "tipo": "Isenções Aduaneiras", "valorAnualMzn": 280000000, "descricao": "Impacto de isenções de emergência (adubos, sementes)." },
+      { "tipo": "Evasão Registada", "valorAnualMzn": 160000000, "descricao": "Subfacturação detectada nos portos de Nacala e Beira em produtos refinados." }
+    ],
+    "impactoMacro": { "contribuicaoPibPercent": 4.8, "balancaComercialUsd": -235000000 },
+    "recomendacoes": ["Integração de PMEs no canal de facturação electrónica.", "Ajuste de 1,5% na taxa de compensação aduaneira sobre trigo."]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
