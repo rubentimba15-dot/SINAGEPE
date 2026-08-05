@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "sistema": "SINAGEPE",
+    "ultimaActualizacao": "Há 5 min",
+    "modo": "SIMULADO"
+  },
+  "kpis": {
+    "disponibilidadeNacional": { "valor": 87, "unidade": "%", "estado": "Regular", "nota": "Stock Físico" },
+    "diasCoberturaMedia": { "valor": 42, "unidade": "dias", "estado": "Estável" },
+    "alertasActivos": { "valor": 12, "estado": "Atenção" },
+    "produtosCriticos": { "valor": 3, "estado": "Crítico" },
+    "importacoesTransito": { "valor": 28.45, "unidade": "mil ton", "estado": "Normal" },
+    "indiceLogisticoNacional": { "valor": 0.72, "estado": "Adequado" }
+  },
+  "provincias": [
+    { "nome": "Cabo Delgado", "disponibilidade": 94 },
+    { "nome": "Niassa", "disponibilidade": 88 },
+    { "nome": "Nampula", "disponibilidade": 91 },
+    { "nome": "Zambézia", "disponibilidade": 72 },
+    { "nome": "Tete", "disponibilidade": 42 },
+    { "nome": "Manica", "disponibilidade": 85 },
+    { "nome": "Sofala", "disponibilidade": 68 },
+    { "nome": "Inhambane", "disponibilidade": 89 },
+    { "nome": "Gaza", "disponibilidade": 87 },
+    { "nome": "Maputo", "disponibilidade": 96 }
+  ],
+  "balancoNacional": [
+    { "produto": "Arroz", "stock": 45200, "producao": 12000, "importacao": 38000, "exportacao": 500, "consumo": 35000, "cobertura": 38, "estado": "Estável" },
+    { "produto": "Trigo", "stock": 18400, "producao": 2100, "importacao": 22000, "exportacao": 0, "consumo": 28500, "cobertura": 14, "estado": "Atenção" },
+    { "produto": "Óleo Alimentar", "stock": 21300, "producao": 8600, "importacao": 15200, "exportacao": 300, "consumo": 19800, "cobertura": 29, "estado": "Estável" },
+    { "produto": "Farinha de Milho", "stock": 61500, "producao": 41000, "importacao": 6000, "exportacao": 1200, "consumo": 26400, "cobertura": 52, "estado": "Excelente" },
+    { "produto": "Fertilizantes", "stock": 9200, "producao": 0, "importacao": 14500, "exportacao": 0, "consumo": 24800, "cobertura": 9, "estado": "Crítico" }
+  ],
+  "alertasSeveridade": { "critico": 3, "atencao": 4, "normal": 5 },
+  "precoTendencia": {
+    "meses": ["Fev", "Mar", "Abr", "Mai", "Jun", "Jul"],
+    "series": [
+      { "nome": "Farinha de Milho", "cor": "#d9a441", "valores": [38, 39, 41, 40, 43, 45] },
+      { "nome": "Arroz", "cor": "#5b8ac9", "valores": [52, 54, 53, 56, 58, 57] }
+    ]
+  },
+  "utilizador": {
+    "nome": "Dr. A. Muthemba",
+    "cargo": "Analista Sénior",
+    "instituicao": "MIST/MIC",
+    "direccao": "Direcção de Inteligência"
+  }
+}
