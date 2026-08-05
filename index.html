@@ -51,6 +51,40 @@ document.getElementById('content-mount').innerHTML = `
       <canvas id="chart-precos" height="200"></canvas>
     </div>
   </div>
+
+  <div class="card">
+    <div class="card-title">Outros Módulos, Dashboards e Portais</div>
+    <div class="card-subtitle">Ecrãs sem item próprio na sidebar principal — acesso directo aqui</div>
+    <div class="row-2">
+      <div>
+        <div class="kpi-label" style="margin-bottom:8px">Dashboards Sectoriais</div>
+        <div class="medida-row"><a href="dashboard-agricultura.html" style="color:var(--bronze-light)">Agricultura (MASA)</a></div>
+        <div class="medida-row"><a href="dashboard-financas.html" style="color:var(--bronze-light)">Finanças</a></div>
+        <div class="medida-row"><a href="dashboard-banco-central.html" style="color:var(--bronze-light)">Banco Central</a></div>
+        <div class="medida-row"><a href="dashboard-transportes.html" style="color:var(--bronze-light)">Transportes</a></div>
+      </div>
+      <div>
+        <div class="kpi-label" style="margin-bottom:8px">Fiscalização e Regulação</div>
+        <div class="medida-row"><a href="dashboard-igsae.html" style="color:var(--bronze-light)">IGSAE</a></div>
+        <div class="medida-row"><a href="dashboard-arc.html" style="color:var(--bronze-light)">ARC (Concorrência)</a></div>
+      </div>
+    </div>
+    <div class="row-2" style="margin-top:14px">
+      <div>
+        <div class="kpi-label" style="margin-bottom:8px">Portais por Agente Económico</div>
+        <div class="medida-row"><a href="portal-empresas.html" style="color:var(--bronze-light)">Empresas</a></div>
+        <div class="medida-row"><a href="portal-produtores.html" style="color:var(--bronze-light)">Produtores</a></div>
+        <div class="medida-row"><a href="portal-comerciantes.html" style="color:var(--bronze-light)">Comerciantes</a></div>
+        <div class="medida-row"><a href="portal-transportadores.html" style="color:var(--bronze-light)">Transportadores</a></div>
+      </div>
+      <div>
+        <div class="kpi-label" style="margin-bottom:8px">Parceiros Institucionais</div>
+        <div class="medida-row"><a href="portal-bancos.html" style="color:var(--bronze-light)">Bancos</a></div>
+        <div class="medida-row"><a href="portal-universidades.html" style="color:var(--bronze-light)">Universidades</a></div>
+        <div class="medida-row"><a href="portal-parceiros.html" style="color:var(--bronze-light)">Parceiros Internacionais</a></div>
+      </div>
+    </div>
+  </div>
 `;
 
 SINAGEPE.load().then(renderPainelNacional);
