@@ -48,5 +48,71 @@ const SINAGEPE = (() => {
     if (cargoEl) cargoEl.textContent = `${u.instituicao} — ${u.direccao || u.cargo}`;
   }
 
-  return { load, fmt, stateTag, kpiCard, renderUserFooter };
+  // ---------------------------------------------------------------
+  // Navegação partilhada — fonte única da sidebar, para todos os ecrãs.
+  // Qualquer alteração aqui aplica-se a TODOS os ecrãs de uma vez,
+  // evitando as inconsistências que já vimos no protótipo Figma.
+  // ---------------------------------------------------------------
+  const NAV_ITEMS = [
+    { key: 'painel',     label: 'Painel',      icon: '▦', href: 'index.html' },
+    { key: 'alertas',    label: 'Alertas',     icon: '⚠', href: 'alertas.html' },
+    { key: 'mapa',       label: 'Mapa',        icon: '◎', href: 'mapa-nacional.html' },
+    { key: 'simulador',  label: 'Simulador',   icon: '≋', href: 'simulador-importacoes.html' },
+    { key: 'pmes',       label: 'PMEs',        icon: '⛁', href: 'portal-pme.html' },
+    { key: 'armazens',   label: 'Armazéns',    icon: '▤', href: 'cadastro-armazens.html' },
+    { key: 'logistica',  label: 'Logística',   icon: '⇄', href: 'modulo-logistica.html' },
+    { key: 'relatorios', label: 'Relatórios',  icon: '▧', href: 'relatorios.html' },
+  ];
+
+  function renderSidebar(activeKey) {
+    const nav = NAV_ITEMS.map(item => {
+      const cls = item.key === activeKey ? 'nav-item active' : 'nav-item';
+      // Ecrãs ainda não construídos apontam para "#" e ficam visualmente
+      // acessíveis, mas não navegáveis, até existirem.
+      const href = item._built === false ? '#' : item.href;
+      return `<a class="${cls}" href="${href}"><span class="nav-icon">${item.icon}</span> ${item.label}</a>`;
+    }).join('');
+
+    return `
+      <div class="sidebar-top">
+        <div class="brand">
+          <div class="brand-mark">S</div>
+          <div class="brand-text">
+            <div class="brand-title">SINAGEPE</div>
+            <div class="brand-sub">Moçambique</div>
+          </div>
+        </div>
+        <nav class="nav-list">${nav}</nav>
+      </div>
+      <div class="sidebar-footer">
+        <div class="avatar-dot" id="user-initials">—</div>
+        <div class="sidebar-footer-text">
+          <div class="sidebar-footer-name" id="user-nome">—</div>
+          <div class="sidebar-footer-role" id="user-cargo">—</div>
+        </div>
+      </div>`;
+  }
+
+  function mountShell(activeKey, topbarTitle, topbarBadge) {
+    const shellRoot = document.getElementById('app-shell');
+    shellRoot.innerHTML = `
+      <aside class="sidebar" id="sidebar-mount"></aside>
+      <div class="main">
+        <div class="topbar">
+          <div class="topbar-title-group">
+            <div class="topbar-title">${topbarTitle}</div>
+            <div class="topbar-badge">${topbarBadge}</div>
+          </div>
+          <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+        </div>
+        <div class="content" id="content-mount"></div>
+        <div class="footer">
+          <span>© 2026 SINAGEPE Moçambique — Ministério da Indústria e Comércio</span>
+          <span id="footer-updated">Última actualização: —</span>
+        </div>
+      </div>`;
+    document.getElementById('sidebar-mount').innerHTML = renderSidebar(activeKey);
+  }
+
+  return { load, fmt, stateTag, kpiCard, renderUserFooter, mountShell };
 })();

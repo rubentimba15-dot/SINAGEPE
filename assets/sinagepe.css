@@ -293,6 +293,16 @@ table.balance-table th:not(:first-child), table.balance-table td:not(:first-chil
   font-size: 11px; color: var(--ink-faint);
 }
 
+/* barras de utilização modal (corredores) */
+.util-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.util-row:last-child { margin-bottom: 0; }
+.util-label-row { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-dim); }
+.util-track { height: 8px; border-radius: 6px; background: var(--navy-800); overflow: hidden; }
+.util-fill { height: 100%; border-radius: 6px; }
+.util-fill.tile-ok, .util-fill.pill-ok { background: var(--ok); }
+.util-fill.pill-warn { background: var(--warn); }
+.util-fill.pill-crit { background: var(--crit); }
+
 canvas { max-width: 100%; }
 
 /* responsivo */
