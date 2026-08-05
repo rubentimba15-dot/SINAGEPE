@@ -883,6 +883,20 @@
     { "nome": "MIST (Tecnologias)", "estado": "Conectado" },
     { "nome": "API Portos de Maputo/Beira", "estado": "Indisponível" }
   ],
+  "climaDesastres": {
+    "alerta": { "nome": "Ciclone Tropical Filipo", "categoria": 2, "horasParaImpacto": 72, "ventoKmh": 150, "precipitacaoMm": 200, "corredoresRisco": ["Corredor de Nacala", "Via Beira-Tete (N7)"] },
+    "kpis": { "provinciasRisco": 4, "corredoresAfectados": 7, "toneladasRisco": 18500, "populacaoAfectada": 1200000 },
+    "impactoEconomico": [
+      { "produto": "Arroz", "stockRiscoT": 6200, "consumoDiarioT": 180, "perdaEstimadaUsd": 350000 },
+      { "produto": "Milho", "stockRiscoT": 4100, "consumoDiarioT": 210, "perdaEstimadaUsd": 240000 }
+    ],
+    "cronograma": [
+      { "fase": "T-72h", "titulo": "Pré-posicionar stocks", "estado": "Concluído", "responsavel": "MIST/Distribuidores" },
+      { "fase": "T-48h", "titulo": "Activar rotas alternativas", "estado": "Em Progresso", "responsavel": "ANE/Transportadores" },
+      { "fase": "T-24h", "titulo": "Alertar operadores logísticos", "estado": "Agendado", "responsavel": "SINAGEPE Portal" },
+      { "fase": "T-0h", "titulo": "Coordenar com INGD", "estado": "Pendente", "responsavel": "Equipa Multissectorial" }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
