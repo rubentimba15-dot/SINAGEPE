@@ -32,7 +32,7 @@ document.getElementById('content-mount').innerHTML = `
     </div>
     <div class="card">
       <div class="card-title">Alertas por Severidade</div>
-      <div class="card-subtitle">12 alertas activos a nível nacional</div>
+      <div class="card-subtitle" id="alertas-subtitle">A carregar...</div>
       <canvas id="chart-alertas" height="180"></canvas>
     </div>
   </div>
@@ -60,14 +60,23 @@ function renderPainelNacional(data) {
   document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
 
   const k = data.kpis;
+  // Alertas Activos, Produtos Críticos e Severidade calculados a partir dos
+  // dados reais (alertasDetalhe / balancoNacional) — não hardcoded, para nunca
+  // ficarem desalinhados como aconteceu na primeira versão deste ecrã.
+  const alertasActivos = data.alertasDetalhe.length;
+  const produtosCriticos = data.balancoNacional.filter(p => p.estado === 'Crítico').length;
+  const severidadeCount = { Crítico: 0, Atenção: 0, Normal: 0 };
+  data.alertasDetalhe.forEach(a => { severidadeCount[a.severidade] = (severidadeCount[a.severidade] || 0) + 1; });
+
   const kpiDefs = [
     { label: 'Disponibilidade Nacional (Stock Físico)', valor: k.disponibilidadeNacional.valor + '%', estado: k.disponibilidadeNacional.estado, tipo: 'warn' },
     { label: 'Dias de Cobertura (Média)', valor: k.diasCoberturaMedia.valor, estado: k.diasCoberturaMedia.estado, tipo: 'ok' },
-    { label: 'Alertas Activos', valor: k.alertasActivos.valor, estado: k.alertasActivos.estado, tipo: 'warn' },
-    { label: 'Produtos Críticos', valor: k.produtosCriticos.valor, estado: k.produtosCriticos.estado, tipo: 'crit' },
+    { label: 'Alertas Activos', valor: alertasActivos, estado: alertasActivos > 0 ? 'Atenção' : 'Normal', tipo: alertasActivos > 0 ? 'warn' : 'ok' },
+    { label: 'Produtos Críticos', valor: produtosCriticos, estado: produtosCriticos > 0 ? 'Crítico' : 'Normal', tipo: produtosCriticos > 0 ? 'crit' : 'ok' },
     { label: 'Importações em Trânsito', valor: k.importacoesTransito.valor + 'k ton', estado: k.importacoesTransito.estado, tipo: 'info' },
     { label: 'Índice Logístico Nacional', valor: k.indiceLogisticoNacional.valor, estado: k.indiceLogisticoNacional.estado, tipo: 'info' },
   ];
+  document.getElementById('alertas-subtitle').innerHTML = `${alertasActivos} alertas activos a nível nacional — <a href="alertas.html" style="color:var(--bronze-light)">ver todos</a>`;
   document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
 
   document.getElementById('province-grid').innerHTML = data.provincias.map(p => {
@@ -84,7 +93,7 @@ function renderPainelNacional(data) {
   new Chart(document.getElementById('chart-alertas'), {
     type: 'doughnut',
     data: { labels: ['Crítico', 'Atenção', 'Normal'], datasets: [{
-      data: [data.alertasSeveridade.critico, data.alertasSeveridade.atencao, data.alertasSeveridade.normal],
+      data: [severidadeCount['Crítico'], severidadeCount['Atenção'], severidadeCount['Normal']],
       backgroundColor: ['#e2555c', '#e0a83e', '#3ecf8e'], borderWidth: 0 }] },
     options: { plugins: { legend: { position: 'bottom', labels: { color: '#97a3c2', font: { size: 11 }, boxWidth: 10 } } }, cutout: '68%' }
   });
