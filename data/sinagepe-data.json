@@ -1101,6 +1101,24 @@
     ],
     "alertaCartel": { "produto": "Óleo Alimentar", "local": "Beira", "empresasEnvolvidas": 3, "janela": "48h", "descricao": "Aumento concertado de preços entre 3 distribuidores da Beira, com flutuações idênticas a menos de 48h de intervalo, sem justificação de custos reais." }
   },
+  "portalBancos": {
+    "banco": "Banco Comercial de Moçambique",
+    "kpis": { "procuraFinanciamentoPercent": 12.4, "cadeiasMonitoradas": 8, "empresasRegistadas": 145, "creditoHomologadoMzn": 2100000000, "inadimplenciaMediaPercent": 4.2, "lotesQualificados": 23 },
+    "cadeiaValorTrigo": [
+      { "fase": "Importação de Sementes", "montanteMzn": 45000000, "nota": "Garantia Estatal do Fundo de Fomento" },
+      { "fase": "Moagem e Processamento", "montanteMzn": 120000000, "nota": "Moagem de trigo activa na Província de Sofala" },
+      { "fase": "Distribuição por Grossistas", "montanteMzn": 35000000, "nota": "Rotas de transporte monitoradas por GPS" }
+    ],
+    "empresasCandidatas": [
+      { "empresa": "Moçambique Cereais Lda", "sector": "Processamento", "montanteMzn": 12000000, "classificacao": "Baixo", "scoreIA": "AA+" },
+      { "empresa": "Agrícola de Chokwé", "sector": "Produção de Arroz", "montanteMzn": 8500000, "classificacao": "Moderado", "scoreIA": "A" },
+      { "empresa": "Armazéns do Centro", "sector": "Logística e Frio", "montanteMzn": 15000000, "classificacao": "Baixo", "scoreIA": "AAA" },
+      { "empresa": "Adubos da Beira Corp", "sector": "Importação Agro", "montanteMzn": 22000000, "classificacao": "Alto", "scoreIA": "BBB" }
+    ],
+    "riscoSectorial": [
+      { "produto": "Farinha de Milho", "nivel": "Baixo Risco" }, { "produto": "Arroz Importado", "nivel": "Moderado" }, { "produto": "Fertilizantes NPK", "nivel": "Alto Risco" }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
