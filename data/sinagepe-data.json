@@ -947,6 +947,23 @@
     ],
     "calibracao": { "precisaoModeloPercent": 94.2, "ultimoTreino": "Hoje, 02h40" }
   },
+  "portalEmpresas": {
+    "empresa": "Importadora Silva Lda.",
+    "kpis": { "evolucaoMercadoPercent": 5.2, "tendenciaProcura": "Crescente", "precoMedioArroz": 45, "custosLogisticosPercent": 12, "margemEstimadaPercent": 18, "oportunidadesActivas": 4 },
+    "benchmarks": [
+      { "operador": "Operador A", "faixaQuota": "20–30%", "faixaPreco": "43–46 MZN/kg", "tendencia": "Estável" },
+      { "operador": "Operador B", "faixaQuota": "10–20%", "faixaPreco": "45–48 MZN/kg", "tendencia": "Em queda" },
+      { "operador": "Sua Empresa", "faixaQuota": "10–20%", "faixaPreco": "44–46 MZN/kg", "tendencia": "Crescente" }
+    ],
+    "recomendacoes": [
+      { "tipo": "Compra Recomendada", "texto": "Trigo com subida de preço prevista de +4% nas próximas 2 semanas — considerar compra antecipada.", "confianca": 91 },
+      { "tipo": "Venda Activa", "texto": "Óleo Alimentar em Nampula tem procura acima da média — bom momento para vender excedentes.", "confianca": 84 },
+      { "tipo": "Fornecimento", "texto": "Fornecedor de Arroz mais competitivo esta semana: preço 6% abaixo da média nacional.", "confianca": 88 },
+      { "tipo": "Oportunidade", "texto": "Tete apresenta défice de Fertilizantes — margem estimada superior à média nacional.", "confianca": 79 }
+    ],
+    "produtosCrescimento": [{ "produto": "Farinha de Milho", "percent": 14 }, { "produto": "Arroz Premium", "percent": 9 }],
+    "custosLogisticos": [{ "categoria": "Transporte Marítimo", "percent": 45 }, { "categoria": "Armazenagem Maputo", "percent": 35 }, { "categoria": "Desalfandegamento", "percent": 20 }]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
