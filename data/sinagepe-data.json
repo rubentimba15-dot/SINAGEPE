@@ -629,6 +629,24 @@
     { "zona": "Centro", "percentagem": 35 },
     { "zona": "Norte", "percentagem": 25 }
   ],
+  "portalPME": {
+    "operador": { "nome": "Mercearia Esperança", "tipo": "Operador Económico", "localizacao": "Maputo, Bairro Central" },
+    "historicoReportes": [
+      { "produto": "Arroz", "data": "04 Ago", "precoVenda": 68, "estado": "Aprovado" },
+      { "produto": "Óleo Alimentar", "data": "03 Ago", "precoVenda": 145, "estado": "Aprovado" },
+      { "produto": "Açúcar", "data": "01 Ago", "precoVenda": 82, "estado": "Aprovado" }
+    ],
+    "tendenciasLocais": [
+      { "produto": "Arroz", "variacaoPercent": 2.4 },
+      { "produto": "Óleo Alimentar", "variacaoPercent": -1.2 }
+    ],
+    "alertasLocais": ["Aviso de Abastecimento de Trigo na sua zona — cobertura em queda"],
+    "procuraEstimada": [
+      { "categoria": "Farinha de Milho", "percentagem": 85 },
+      { "categoria": "Arroz", "percentagem": 70 },
+      { "categoria": "Açúcar", "percentagem": 45 }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
