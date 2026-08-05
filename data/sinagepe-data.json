@@ -856,6 +856,10 @@
     "Centro": ["Sofala", "Manica", "Zambézia", "Tete"],
     "Norte": ["Nampula", "Niassa", "Cabo Delgado"]
   },
+  "reservaEstrategica": [
+    { "produto": "Arroz", "armazem": "Silos de Maputo", "quantidadeT": 3500, "estado": "Bloqueado" },
+    { "produto": "Farinha de Milho", "armazem": "Armazém Central de Beira", "quantidadeT": 5200, "estado": "Bloqueado" }
+  ],
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
