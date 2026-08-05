@@ -914,6 +914,21 @@
       { "nome": "Feijão", "estado": "Instável" }
     ]
   },
+  "portalPublico": {
+    "meta": 85,
+    "cabaz": [
+      { "produto": "Arroz Escorrido", "precoMzn": 62, "tendenciaPercent": -2.1 },
+      { "produto": "Farinha de Milho", "precoMzn": 38, "tendenciaPercent": 1.4 },
+      { "produto": "Farinha de Trigo", "precoMzn": 55, "tendenciaPercent": 3.2 },
+      { "produto": "Açúcar Castanho", "precoMzn": 70, "tendenciaPercent": -0.8 },
+      { "produto": "Gasóleo (Diesel)", "precoMzn": 92, "tendenciaPercent": 2.5 },
+      { "produto": "Cimento Nacional", "precoMzn": 480, "tendenciaPercent": 0.3 }
+    ],
+    "alertasPublicos": [
+      { "tipo": "Aviso", "titulo": "Condicionamento Temporário na EN1", "descricao": "Atraso de 24h por alagamentos em Gaza." },
+      { "tipo": "Positivo", "titulo": "Corredor Logístico da Beira Operando a 100%", "descricao": "Fluxo normalizado após conclusão das reparações." }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
