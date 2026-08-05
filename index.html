@@ -58,30 +58,30 @@ document.getElementById('content-mount').innerHTML = `
     <div class="row-2">
       <div>
         <div class="kpi-label" style="margin-bottom:8px">Dashboards Sectoriais</div>
-        <div class="medida-row"><a href="dashboard-agricultura.html" style="color:var(--bronze-light)">Agricultura (MASA)</a></div>
-        <div class="medida-row"><a href="dashboard-financas.html" style="color:var(--bronze-light)">Finanças</a></div>
-        <div class="medida-row"><a href="dashboard-banco-central.html" style="color:var(--bronze-light)">Banco Central</a></div>
-        <div class="medida-row"><a href="dashboard-transportes.html" style="color:var(--bronze-light)">Transportes</a></div>
+        <div class="medida-row"><a href="dashboard-agricultura.html" style="color:var(--bronze)">Agricultura (MASA)</a></div>
+        <div class="medida-row"><a href="dashboard-financas.html" style="color:var(--bronze)">Finanças</a></div>
+        <div class="medida-row"><a href="dashboard-banco-central.html" style="color:var(--bronze)">Banco Central</a></div>
+        <div class="medida-row"><a href="dashboard-transportes.html" style="color:var(--bronze)">Transportes</a></div>
       </div>
       <div>
         <div class="kpi-label" style="margin-bottom:8px">Fiscalização e Regulação</div>
-        <div class="medida-row"><a href="dashboard-igsae.html" style="color:var(--bronze-light)">IGSAE</a></div>
-        <div class="medida-row"><a href="dashboard-arc.html" style="color:var(--bronze-light)">ARC (Concorrência)</a></div>
+        <div class="medida-row"><a href="dashboard-igsae.html" style="color:var(--bronze)">IGSAE</a></div>
+        <div class="medida-row"><a href="dashboard-arc.html" style="color:var(--bronze)">ARC (Concorrência)</a></div>
       </div>
     </div>
     <div class="row-2" style="margin-top:14px">
       <div>
         <div class="kpi-label" style="margin-bottom:8px">Portais por Agente Económico</div>
-        <div class="medida-row"><a href="portal-empresas.html" style="color:var(--bronze-light)">Empresas</a></div>
-        <div class="medida-row"><a href="portal-produtores.html" style="color:var(--bronze-light)">Produtores</a></div>
-        <div class="medida-row"><a href="portal-comerciantes.html" style="color:var(--bronze-light)">Comerciantes</a></div>
-        <div class="medida-row"><a href="portal-transportadores.html" style="color:var(--bronze-light)">Transportadores</a></div>
+        <div class="medida-row"><a href="portal-empresas.html" style="color:var(--bronze)">Empresas</a></div>
+        <div class="medida-row"><a href="portal-produtores.html" style="color:var(--bronze)">Produtores</a></div>
+        <div class="medida-row"><a href="portal-comerciantes.html" style="color:var(--bronze)">Comerciantes</a></div>
+        <div class="medida-row"><a href="portal-transportadores.html" style="color:var(--bronze)">Transportadores</a></div>
       </div>
       <div>
         <div class="kpi-label" style="margin-bottom:8px">Parceiros Institucionais</div>
-        <div class="medida-row"><a href="portal-bancos.html" style="color:var(--bronze-light)">Bancos</a></div>
-        <div class="medida-row"><a href="portal-universidades.html" style="color:var(--bronze-light)">Universidades</a></div>
-        <div class="medida-row"><a href="portal-parceiros.html" style="color:var(--bronze-light)">Parceiros Internacionais</a></div>
+        <div class="medida-row"><a href="portal-bancos.html" style="color:var(--bronze)">Bancos</a></div>
+        <div class="medida-row"><a href="portal-universidades.html" style="color:var(--bronze)">Universidades</a></div>
+        <div class="medida-row"><a href="portal-parceiros.html" style="color:var(--bronze)">Parceiros Internacionais</a></div>
       </div>
     </div>
   </div>
@@ -110,7 +110,7 @@ function renderPainelNacional(data) {
     { label: 'Importações em Trânsito', valor: k.importacoesTransito.valor + 'k ton', estado: k.importacoesTransito.estado, tipo: 'info' },
     { label: 'Índice Logístico Nacional', valor: k.indiceLogisticoNacional.valor, estado: k.indiceLogisticoNacional.estado, tipo: 'info' },
   ];
-  document.getElementById('alertas-subtitle').innerHTML = `${alertasActivos} alertas activos a nível nacional — <a href="alertas.html" style="color:var(--bronze-light)">ver todos</a>`;
+  document.getElementById('alertas-subtitle').innerHTML = `${alertasActivos} alertas activos a nível nacional — <a href="alertas.html" style="color:var(--bronze)">ver todos</a>`;
   document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
 
   document.getElementById('province-grid').innerHTML = data.provincias.map(p => {

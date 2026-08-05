@@ -34,7 +34,7 @@ document.getElementById('content-mount').innerHTML = `
   <div class="card">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <span style="font-size:12px;color:var(--ink-faint)">Alertas de retenção especulativa são detectados por um sub-módulo dedicado.</span>
-      <a href="irae.html" style="font-size:12px;font-weight:600;color:var(--bronze-light)">Ver Casos IRAE (Retenção Artificial) →</a>
+      <a href="irae.html" style="font-size:12px;font-weight:600;color:var(--bronze)">Ver Casos IRAE (Retenção Artificial) →</a>
     </div>
   </div>
 
@@ -123,7 +123,7 @@ function renderDetalhe(a) {
     <p style="font-size:13px;color:var(--ink-dim);line-height:1.6">${a.descricao}</p>
 
     <details style="margin-bottom:16px">
-      <summary style="cursor:pointer;font-size:12.5px;font-weight:600;color:var(--bronze-light)">Por que recebi este alerta?</summary>
+      <summary style="cursor:pointer;font-size:12.5px;font-weight:600;color:var(--bronze)">Por que recebi este alerta?</summary>
       <div class="expand-box">
         <b>Fontes de dados:</b> ${a.fontes.join(', ')}<br>
         <b>Regra de decisão:</b> ${a.regra}<br>

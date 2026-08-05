@@ -61,7 +61,7 @@ function renderAdministracao(data) {
 
   document.getElementById('auditoria-body').innerHTML = data.registoAuditoria.map(r => {
     const tipo = r.estado === 'Sucesso' ? 'ok' : 'crit';
-    const utilizadorHtml = r.utilizador === 'Sistema IA' ? `<span style="color:var(--bronze-light)">✦ ${r.utilizador}</span>` : r.utilizador;
+    const utilizadorHtml = r.utilizador === 'Sistema IA' ? `<span style="color:var(--bronze)">✦ ${r.utilizador}</span>` : r.utilizador;
     return `<tr><td style="font-family:var(--font-data)">${r.hora}</td><td>${utilizadorHtml}</td><td>${r.accao}</td><td>${r.modulo}</td><td>${r.detalhes}</td>
       <td style="font-family:var(--font-data);font-size:10.5px;color:var(--ink-faint)">${r.ip}</td>
       <td><span class="state-tag" style="background:var(--${tipo}-bg);color:var(--${tipo})">${r.estado}</span></td></tr>`;

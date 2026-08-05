@@ -75,7 +75,7 @@ function renderLogistica(data) {
     const tempo = c.tempoH === null ? '—' : c.tempoH + 'h';
     const custo = c.custoTKm === null ? '—' : c.custoTKm + ' USD';
     const nome = c.nome === data.corredorDetalhe.corredor
-      ? `<a href="detalhe-corredor.html" style="color:var(--bronze-light);text-decoration:underline">${c.nome}</a>`
+      ? `<a href="detalhe-corredor.html" style="color:var(--bronze);text-decoration:underline">${c.nome}</a>`
       : c.nome;
     return `<tr><td>${nome}</td><td>${c.origem}</td><td>${c.destino}</td><td>${tag}</td><td>${c.distanciaKm} km</td><td>${tempo}</td><td>${custo}</td><td>${c.trafego}</td></tr>`;
   }).join('');
