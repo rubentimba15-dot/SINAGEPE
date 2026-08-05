@@ -929,6 +929,24 @@
       { "tipo": "Positivo", "titulo": "Corredor Logístico da Beira Operando a 100%", "descricao": "Fluxo normalizado após conclusão das reparações." }
     ]
   },
+  "irae": {
+    "kpis": { "iraeMedioNacional": 0.34, "operadoresMonitorizados": 1247, "alertasRetencaoActivos": 4, "casosConfirmados": 1 },
+    "casos": [
+      { "operador": "OP-9012", "produto": "Arroz", "provincia": "Sofala", "score": 0.86, "duracaoDias": 9, "checks": { "logistica": false, "clima": false, "outro": false }, "estadoIGSAE": "Pendente" },
+      { "operador": "OP-4411", "produto": "Óleo Alimentar", "provincia": "Manica", "score": 0.74, "duracaoDias": 6, "checks": { "logistica": true, "clima": false, "outro": true }, "estadoIGSAE": "Em Verificação" },
+      { "operador": "OP-0118", "produto": "Trigo", "provincia": "Nampula", "score": 0.52, "duracaoDias": 4, "checks": { "logistica": true, "clima": true, "outro": true }, "estadoIGSAE": "Justificado" },
+      { "operador": "OP-8822", "produto": "Fertilizantes", "provincia": "Tete", "score": 0.91, "duracaoDias": 14, "checks": { "logistica": false, "clima": false, "outro": false }, "estadoIGSAE": "Confirmado" },
+      { "operador": "OP-3310", "produto": "Açúcar", "provincia": "Maputo", "score": 0.38, "duracaoDias": 3, "checks": { "logistica": false, "clima": false, "outro": false }, "estadoIGSAE": "Falso Positivo" }
+    ],
+    "classificacaoEscassez": [
+      { "tipo": "Escassez Real", "estado": "Sem Alerta" },
+      { "tipo": "Escassez Regional", "estado": "Monitorizar" },
+      { "tipo": "Escassez Logística", "estado": "Estável" },
+      { "tipo": "Escassez Estatística", "estado": "Aviso" },
+      { "tipo": "Possível Escassez Artificial", "estado": "Risco Alto" }
+    ],
+    "calibracao": { "precisaoModeloPercent": 94.2, "ultimoTreino": "Hoje, 02h40" }
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
