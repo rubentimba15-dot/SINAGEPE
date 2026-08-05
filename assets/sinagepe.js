@@ -62,6 +62,7 @@ const SINAGEPE = (() => {
     { key: 'armazens',   label: 'Armazéns',    icon: '▤', href: 'cadastro-armazens.html' },
     { key: 'logistica',  label: 'Logística',   icon: '⇄', href: 'modulo-logistica.html' },
     { key: 'relatorios', label: 'Relatórios',  icon: '▧', href: 'relatorios.html' },
+    { key: 'config',     label: 'Configurações', icon: '⚙', href: 'administracao-auditoria.html' },
   ];
 
   function renderSidebar(activeKey) {
