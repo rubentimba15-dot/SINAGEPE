@@ -596,6 +596,16 @@
       "origem": "Beira (Porto)", "destino": "Chibabava", "produto": "Arroz", "quantidadeT": 15
     }
   },
+  "relatoriosModelo": [
+    { "nome": "Balanço Nacional Semanal", "frequencia": "Semanal", "descricao": "Resumo de stock, produção, importações e exportações de todos os produtos essenciais.", "geradoEm": "Seg, 03 Ago 08:00" },
+    { "nome": "Boletim de Preços Diários", "frequencia": "Diário", "descricao": "Preços médios de retalho por produto e província, com variação face ao dia anterior.", "geradoEm": "Hoje, 06:00" },
+    { "nome": "Relatório de Alertas Mensal", "frequencia": "Mensal", "descricao": "Consolidado de todos os alertas gerados, por tipo, severidade e resolução.", "geradoEm": "01 Ago 09:00" }
+  ],
+  "exportacoesRecentes": [
+    { "ficheiro": "Boletim_Precos_Capitais_Provinciais_23_02.xlsx", "formato": "XLSX", "data": "23 Fev, 06:02", "tamanho": "184 KB", "geradoPor": "Sistema Automático" },
+    { "ficheiro": "Balanco_Nacional_Semanal_S31.pdf", "formato": "PDF", "data": "22 Fev, 08:01", "tamanho": "1.2 MB", "geradoPor": "Sistema Automático" },
+    { "ficheiro": "Export_Custom_Arroz_Sofala.csv", "formato": "CSV", "data": "21 Fev, 15:44", "tamanho": "42 KB", "geradoPor": "Dr. A. Muthemba" }
+  ],
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
