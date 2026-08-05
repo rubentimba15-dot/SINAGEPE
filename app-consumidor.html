@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App Consumidor — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  body { display: flex; justify-content: center; padding: 30px 12px; background: var(--navy-950); }
+  .phone { width: 390px; max-width: 100%; background: var(--navy-900); border-radius: 28px; border: 1px solid var(--line); overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+  .phone-header { padding: 18px 18px 14px; border-bottom: 1px solid var(--line); }
+  .phone-header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .phone-title { font-family: var(--font-display); font-weight: 700; font-size: 15px; }
+  .phone-loc { font-size: 11px; color: var(--ink-faint); }
+  .phone-body { padding: 16px 18px 90px; max-height: 640px; overflow-y: auto; }
+  .savings-banner { background: linear-gradient(135deg, var(--bronze) 0%, var(--bronze-light) 100%); border-radius: 12px; padding: 14px 16px; color: var(--navy-950); margin-bottom: 16px; }
+  .savings-banner b { font-size: 15px; }
+  .store-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .store-name { font-size: 12.5px; font-weight: 600; }
+  .store-dist { font-size: 10.5px; color: var(--ink-faint); }
+  .store-price { font-family: var(--font-data); font-size: 14px; font-weight: 700; text-align: right; }
+  .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .cat-tile { background: var(--navy-800); border-radius: 10px; padding: 12px 8px; text-align: center; font-size: 11px; position: relative; }
+  .cat-dot { width: 7px; height: 7px; border-radius: 50%; position: absolute; top: 8px; right: 8px; }
+  .bottom-nav { position: absolute; bottom: 0; left: 0; right: 0; background: var(--navy-900); border-top: 1px solid var(--line); display: flex; padding: 10px 0; }
+  .nav-btn { flex: 1; text-align: center; font-size: 10px; color: var(--ink-faint); }
+  .nav-btn.active { color: var(--bronze-light); font-weight: 700; }
+  .phone-wrap { position: relative; }
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="phone-header">
+    <div class="phone-header-top">
+      <span class="phone-title">SINAGEPE Consumidor</span>
+      <span style="font-size:10px;color:var(--ink-faint)">PT-MZ</span>
+    </div>
+    <div class="phone-loc" id="loc-text">📍 —</div>
+  </div>
+  <div class="phone-wrap">
+    <div class="phone-body">
+      <div class="savings-banner">
+        <div style="font-size:10.5px;opacity:0.8">Economia Mensal Possível</div>
+        <b id="economia-valor">—</b>
+      </div>
+
+      <div class="kpi-label" style="margin-bottom:8px">Menor Preço Próximo — Arroz</div>
+      <div id="lojas-list" style="margin-bottom:20px"></div>
+
+      <div class="kpi-label" style="margin-bottom:10px">Produtos Disponíveis</div>
+      <div class="cat-grid"></div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-btn active">Preços</div>
+      <div class="nav-btn">Mapa</div>
+      <div class="nav-btn">Alertas</div>
+      <div class="nav-btn">Perfil</div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.load().then(data => {
+  const a = data.appConsumidor;
+  document.getElementById('loc-text').textContent = '📍 ' + a.localizacao;
+  document.getElementById('economia-valor').textContent = 'Poupe até ' + SINAGEPE.fmt(a.economiaMensalPossivel) + ' MZN/mês';
+
+  document.getElementById('lojas-list').innerHTML = a.lojasPreco.map(l => `
+    <div class="store-row">
+      <div><div class="store-name">${l.loja}</div><div class="store-dist">${l.distanciaKm} km</div></div>
+      <div class="store-price">${l.preco} MZN/kg<div style="font-size:10px;font-weight:400;color:${l.tendenciaPercent < 0 ? 'var(--ok)' : l.tendenciaPercent > 0 ? 'var(--crit)' : 'var(--ink-faint)'}">${l.tendenciaPercent > 0 ? '+' : ''}${l.tendenciaPercent}%</div></div>
+    </div>`).join('');
+
+  const ESTADO_COR = { 'Normal': 'var(--ok)', 'Instável': 'var(--warn)' };
+  document.querySelector('.cat-grid').innerHTML = a.categorias.map(c => `
+    <div class="cat-tile"><div class="cat-dot" style="background:${ESTADO_COR[c.estado]}"></div>${c.nome}</div>`).join('');
+});
+</script>
+</body>
+</html>
