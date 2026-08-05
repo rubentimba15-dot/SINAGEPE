@@ -1066,6 +1066,22 @@
       { "nome": "Cabotagem Marítima Maputo-Beira", "beneficio": "Poupe 12% por tonelada" }
     ]
   },
+  "dashboardIGSAE": {
+    "kpis": { "fiscalizacoesRealizadasMes": 342, "produtosApreendidosT": 18, "alertasEspeculacaoActivos": 7, "alertasContrabandoActivos": 3, "produtosDeterioradosLotes": 12, "casosPendentes": 23 },
+    "mapaRisco": [
+      { "local": "Nacala", "tipo": "Contrabando", "nivel": "Risco Extremo" }, { "local": "Tete", "tipo": "Especulação", "nivel": "Alerta/Desvio" },
+      { "local": "Maputo", "tipo": "Fraude de Stock", "nivel": "Risco Extremo" }, { "local": "Beira", "tipo": "—", "nivel": "Fiscalizado Limpo" }
+    ],
+    "rankingInfracoes": [
+      { "tipo": "Especulação de Preços (Arroz)", "ocorrencias": 142, "tendencia": "↑ Alta", "gravidade": "Crítica" },
+      { "tipo": "Contrabando de Combustíveis", "ocorrencias": 89, "tendencia": "↑ Subida", "gravidade": "Crítica" },
+      { "tipo": "Ocultação de Farinha de Trigo", "ocorrencias": 54, "tendencia": "→ Estável", "gravidade": "Alerta" }
+    ],
+    "operadoresSuspeitos": [
+      { "nome": "Distribuidor Alpha-MZ", "provincia": "Sofala", "autosEmitidos": 4, "ultimaVisita": "Há 2 dias", "nivelRisco": "Severo" },
+      { "nome": "Importador Norte-Lda", "provincia": "Nampula", "autosEmitidos": 3, "ultimaVisita": "Há 6 dias", "nivelRisco": "Médio" }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
