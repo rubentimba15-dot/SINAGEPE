@@ -964,6 +964,34 @@
     "produtosCrescimento": [{ "produto": "Farinha de Milho", "percent": 14 }, { "produto": "Arroz Premium", "percent": 9 }],
     "custosLogisticos": [{ "categoria": "Transporte Marítimo", "percent": 45 }, { "categoria": "Armazenagem Maputo", "percent": 35 }, { "categoria": "Desalfandegamento", "percent": 20 }]
   },
+  "portalProdutores": {
+    "cooperativa": "Cooperativa Agrícola Zambézia",
+    "kpis": { "areaCultivadaHa": 450, "producaoPrevistaTon": 680, "precoActual": 45, "procuraRegional": "Crescente", "rentabilidadeEstimadaPercent": 22 },
+    "previsaoTempo": [
+      { "dia": "Seg", "tempC": 27, "recomendacao": "Ideal para Colheita" },
+      { "dia": "Ter", "tempC": 29, "recomendacao": "Ideal para Colheita" },
+      { "dia": "Qua", "tempC": 24, "recomendacao": "Evitar Secagem" },
+      { "dia": "Qui", "tempC": 22, "recomendacao": "Evitar Secagem" },
+      { "dia": "Sex", "tempC": 26, "recomendacao": "Normal" },
+      { "dia": "Sáb", "tempC": 28, "recomendacao": "Excelente" },
+      { "dia": "Dom", "tempC": 30, "recomendacao": "Excelente" }
+    ],
+    "recomendacoes": [
+      { "tipo": "Quanto Produzir", "texto": "Volume óptimo estimado: 700 toneladas, com base na procura projectada para os próximos 3 meses." },
+      { "tipo": "Quando Colher", "texto": "Janela ideal: próximos 2 dias, antes da chuva prevista para quarta-feira." },
+      { "tipo": "Onde Vender", "texto": "Melhor margem líquida em Quelimane, após custo de transporte." }
+    ],
+    "precosFuturos": [
+      { "cultura": "Milho", "precoActual": 32, "precoFuturo": 35, "variacaoPercent": 9 },
+      { "cultura": "Arroz", "precoActual": 45, "precoFuturo": 44, "variacaoPercent": -2 },
+      { "cultura": "Mandioca", "precoActual": 18, "precoFuturo": 20, "variacaoPercent": 11 }
+    ],
+    "culturasRecomendadas": [
+      { "cultura": "Milho", "razao": "Rentabilidade Máxima" },
+      { "cultura": "Mandioca", "razao": "Baixa Água" },
+      { "cultura": "Feijão", "razao": "Segurança Alimentar" }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
