@@ -81,7 +81,10 @@ function renderPainelNacional(data) {
 
   document.getElementById('province-grid').innerHTML = data.provincias.map(p => {
     const cls = p.disponibilidade >= 80 ? 'tile-ok' : p.disponibilidade >= 50 ? 'tile-warn' : 'tile-crit';
-    return `<div class="province-tile ${cls}"><div class="province-name">${p.nome}</div><div class="province-value">${p.disponibilidade}%</div></div>`;
+    const nomeHtml = p.nome === data.painelProvincial.provincia
+      ? `<a href="painel-provincial.html" style="color:inherit;text-decoration:underline">${p.nome}</a>`
+      : p.nome;
+    return `<div class="province-tile ${cls}"><div class="province-name">${nomeHtml}</div><div class="province-value">${p.disponibilidade}%</div></div>`;
   }).join('');
 
   document.getElementById('balance-body').innerHTML = data.balancoNacional.map(row => `<tr>
