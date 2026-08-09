@@ -65,6 +65,12 @@ function renderAlertas(data) {
   ['f-produto', 'f-provincia', 'f-tipo', 'f-confianca'].forEach(id =>
     document.getElementById(id).addEventListener('change', aplicarFiltros));
 
+  // Deep-link opcional: alertas.html?provincia=Tete pré-selecciona o filtro
+  // (usado pelo mapa central do dashboard) — não afecta o uso normal do ecrã.
+  const params = new URLSearchParams(window.location.search);
+  const provinciaParam = params.get('provincia');
+  if (provinciaParam) document.getElementById('f-provincia').value = provinciaParam;
+
   SELECCIONADO = TODOS_ALERTAS[0].id;
   aplicarFiltros();
 }
