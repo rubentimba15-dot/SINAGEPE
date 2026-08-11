@@ -112,9 +112,10 @@ const SINAGEPE = (() => {
         <div class="content" id="content-mount"></div>
         <div class="footer">
           <span>© 2026 SINAGEPE Moçambique — Ministério da Indústria e Comércio</span>
-          <span style="display:flex;gap:16px;align-items:center">
+          <span style="display:flex;gap:18px;align-items:center">
             <a href="portal-publico.html" style="color:var(--ink-faint)">Portal Público ↗</a>
             <span id="footer-updated">Última actualização: —</span>
+            <span style="color:var(--ok);font-weight:600;font-size:11px">● DADOS REAIS EM TEMPO REAL (DADOS DEMONSTRATIVOS)</span>
           </span>
         </div>
       </div>`;
