@@ -8,16 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg1: #060a17; --bg2: #0b1426;
-    --sidebar-bg: #040712; --card-bg: rgba(15,26,48,0.8); --card-line: rgba(30,45,75,0.5);
-    --gold-line: rgba(212,165,116,0.2);
-    --gold: #d4a574; --teal: #2dd4bf; --blue: #38bdf8; --amber: #f59e0b; --red: #ef4444;
-    --ink: #f1f5f9; --ink-dim: #94a3b8; --ink-faint: #64748b;
-    --nav-active: #1e2d4b; --nav-idle: #111e35;
-    --font-display: 'Outfit', sans-serif; --font-body: 'Inter', sans-serif; --font-data: 'IBM Plex Mono', ui-monospace, monospace;
+    --bg1: #040712; --bg2: #040712;
+    --sidebar-bg: #040712; --card-bg: #0f1a30; --card-line: rgba(30,45,75,0.5);
+    --gold-line: rgba(30,45,75,0.5);
+    --gold: #2490de; --teal: #2dd4bf; --blue: #2490de; --amber: #f59e0b; --red: #dc2626; --ok: #059669;
+    --ink: #ffffff; --ink-dim: #94a3b8; --ink-faint: #64748b;
+    --nav-active: #2490de; --nav-idle: transparent;
+    --font-display: 'Inter', sans-serif; --font-body: 'Inter', sans-serif; --font-data: 'Inter', sans-serif;
   }
   * { box-sizing: border-box; }
-  html, body { margin:0; padding:0; background: linear-gradient(144deg, var(--bg1) 25%, var(--bg2) 75%); color: var(--ink); font-family: var(--font-body); font-size: 13px; min-height:100vh; }
+  html, body { margin:0; padding:0; background: var(--bg1); color: var(--ink); font-family: var(--font-body); font-size: 13px; min-height:100vh; }
   a { color: inherit; text-decoration: none; }
 
   .app { display:flex; min-height:100vh; }
@@ -67,7 +67,7 @@
   .kpi-card { flex:1; background:var(--card-bg); border:1px solid var(--card-line); border-radius:12px; padding:16px; box-shadow:0 6px 16px rgba(0,0,0,0.15); }
   .kpi-label { font-size:11px; font-weight:500; color:var(--ink-dim); text-transform:uppercase; margin-bottom:8px; }
   .kpi-value-row { display:flex; align-items:baseline; justify-content:space-between; border-bottom:1px solid var(--gold-line); padding-bottom:8px; }
-  .kpi-value { font-family:var(--font-display); font-weight:700; font-size:24px; color:var(--gold); }
+  .kpi-value { font-family:var(--font-display); font-weight:700; font-size:24px; color:#ffffff; }
   .kpi-badge { font-size:10px; font-weight:600; padding:2px 8px; border-radius:4px; }
 
   .bento-row { display:flex; gap:24px; flex:1; align-items:stretch; }
@@ -236,7 +236,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 <script>
-const COR = { ok: '#2dd4bf', warn: '#f59e0b', crit: '#ef4444', info: '#38bdf8' };
+const COR = { ok: '#059669', warn: '#f59e0b', crit: '#dc2626', info: '#2490de' };
 
 fetch('data/sinagepe-data.json').then(r => r.json()).then(boot);
 
@@ -339,7 +339,7 @@ function montarMapa(data) {
   const LABEL_OFF = { 'Ressano Garcia': [-4,25], 'Machipanda': [-6,15], 'Entre-Lagos': [8,3] };
   const CITY_LABEL_OFF = { 'Manica': [9,-9] };
   const POS_LOOKUP = { ...PORTOS, ...FRONTEIRAS, 'Maputo': CIDADE_POS['Maputo'], 'Pemba': CIDADE_POS['Cabo Delgado'], 'Tete': CIDADE_POS['Tete'], 'Quelimane': CIDADE_POS['Zambézia'], 'Beira': CIDADE_POS['Sofala'] };
-  const ESTADO_ESTRADA_COR = { 'Operacional': 'rgba(212,165,116,0.6)', 'Condicionado': 'rgba(245,158,11,0.7)', 'Interrompido': 'rgba(239,68,68,0.75)' };
+  const ESTADO_ESTRADA_COR = { 'Operacional': 'rgba(217,119,6,0.6)', 'Condicionado': 'rgba(245,158,11,0.7)', 'Interrompido': 'rgba(220,38,38,0.75)' };
 
   function estadoProvincia(nome) {
     const p = data.provincias.find(x => x.nome === nome);
@@ -387,7 +387,7 @@ function montarMapa(data) {
     `<circle cx="${x}" cy="${y}" r="14" fill="none" stroke="${COR.info}" stroke-width="1.2" opacity="0.7" style="cursor:pointer" onclick="irLogistica()"/>`).join('');
   const fronteirasSvg = Object.entries(FRONTEIRAS).map(([nome,[x,y]]) => {
     const [lx,ly] = LABEL_OFF[nome]; const anchor = lx<0?'end':'start';
-    return `<rect x="${x-4}" y="${y-4}" width="8" height="8" rx="1.5" fill="#d4a574" opacity="0.85" transform="rotate(45 ${x} ${y})"/>
+    return `<rect x="${x-4}" y="${y-4}" width="8" height="8" rx="1.5" fill="#d97706" opacity="0.85" transform="rotate(45 ${x} ${y})"/>
       <text x="${x+lx}" y="${y+ly}" text-anchor="${anchor}" font-size="7.5" fill="#93a3c2" font-family="Inter">${nome}</text>`;
   }).join('');
   const armazensSvg = data.armazens.map((w,i) => {
@@ -401,10 +401,10 @@ function montarMapa(data) {
     <div class="map-svg-wrap">
       <svg viewBox="0 0 340 620" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
         <defs><linearGradient id="mozGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="rgba(212,165,116,0.14)"/><stop offset="55%" stop-color="rgba(56,189,248,0.08)"/><stop offset="100%" stop-color="rgba(56,189,248,0.14)"/>
+          <stop offset="0%" stop-color="rgba(217,119,6,0.14)"/><stop offset="55%" stop-color="rgba(36,144,222,0.08)"/><stop offset="100%" stop-color="rgba(36,144,222,0.14)"/>
         </linearGradient></defs>
         <path d="${MOZ_PATH}" fill="#000" opacity="0.3" transform="translate(4,8)"/>
-        <path d="${MOZ_PATH}" fill="url(#mozGrad)" stroke="#d4a574" stroke-width="1.3"/>
+        <path d="${MOZ_PATH}" fill="url(#mozGrad)" stroke="#d97706" stroke-width="1.3"/>
         ${estradasSvg}${arcosSvg}${armazensSvg}${fronteirasSvg}${portosSvg}${pontosSvg}${hubsSvg}
       </svg>
     </div>`;
