@@ -413,7 +413,8 @@ const NIVEIS_ACESSO = [
       "app-consumidor-comparador.html",
       "portal-publico.html"
     ],
-    "email": "administrador@gmail.com"
+    "email": "administrador@gmail.com",
+    "paginaInicial": "index.html"
   },
   {
     "pin": "1112",
@@ -466,7 +467,8 @@ const NIVEIS_ACESSO = [
       "portal-parceiros.html",
       "portal-publico.html"
     ],
-    "email": "governo@gmail.com"
+    "email": "governo@gmail.com",
+    "paginaInicial": "index.html"
   },
   {
     "pin": "1113",
@@ -481,7 +483,8 @@ const NIVEIS_ACESSO = [
       "balanco-nacional-vivo.html",
       "dashboard-agricultura.html"
     ],
-    "email": "masa@gmail.com"
+    "email": "masa@gmail.com",
+    "paginaInicial": "dashboard-agricultura.html"
   },
   {
     "pin": "1114",
@@ -494,7 +497,8 @@ const NIVEIS_ACESSO = [
       "relatorios.html",
       "dashboard-financas.html"
     ],
-    "email": "financas@gmail.com"
+    "email": "financas@gmail.com",
+    "paginaInicial": "dashboard-financas.html"
   },
   {
     "pin": "1115",
@@ -507,7 +511,8 @@ const NIVEIS_ACESSO = [
       "relatorios.html",
       "dashboard-banco-central.html"
     ],
-    "email": "bancocentral@gmail.com"
+    "email": "bancocentral@gmail.com",
+    "paginaInicial": "dashboard-banco-central.html"
   },
   {
     "pin": "1116",
@@ -522,7 +527,8 @@ const NIVEIS_ACESSO = [
       "detalhe-corredor.html",
       "dashboard-transportes.html"
     ],
-    "email": "transportes@gmail.com"
+    "email": "transportes@gmail.com",
+    "paginaInicial": "dashboard-transportes.html"
   },
   {
     "pin": "1117",
@@ -536,7 +542,8 @@ const NIVEIS_ACESSO = [
       "irae.html",
       "dashboard-igsae.html"
     ],
-    "email": "igsae@gmail.com"
+    "email": "igsae@gmail.com",
+    "paginaInicial": "dashboard-igsae.html"
   },
   {
     "pin": "1118",
@@ -550,7 +557,8 @@ const NIVEIS_ACESSO = [
       "detalhe-oferta-marketplace.html",
       "dashboard-arc.html"
     ],
-    "email": "arc@gmail.com"
+    "email": "arc@gmail.com",
+    "paginaInicial": "dashboard-arc.html"
   },
   {
     "pin": "1119",
@@ -564,7 +572,8 @@ const NIVEIS_ACESSO = [
       "perfil-empresa.html",
       "mapa-nacional.html"
     ],
-    "email": "empresas@gmail.com"
+    "email": "empresas@gmail.com",
+    "paginaInicial": "portal-empresas.html"
   },
   {
     "pin": "1120",
@@ -576,7 +585,8 @@ const NIVEIS_ACESSO = [
       "marketplace-b2b.html",
       "mapa-nacional.html"
     ],
-    "email": "produtores@gmail.com"
+    "email": "produtores@gmail.com",
+    "paginaInicial": "portal-produtores.html"
   },
   {
     "pin": "1121",
@@ -588,7 +598,8 @@ const NIVEIS_ACESSO = [
       "portal-pme.html",
       "marketplace-b2b.html"
     ],
-    "email": "comerciantes@gmail.com"
+    "email": "comerciantes@gmail.com",
+    "paginaInicial": "portal-comerciantes.html"
   },
   {
     "pin": "1122",
@@ -601,7 +612,8 @@ const NIVEIS_ACESSO = [
       "marketplace-b2b.html",
       "detalhe-corredor.html"
     ],
-    "email": "transportadores@gmail.com"
+    "email": "transportadores@gmail.com",
+    "paginaInicial": "portal-transportadores.html"
   },
   {
     "pin": "1123",
@@ -611,7 +623,8 @@ const NIVEIS_ACESSO = [
     "paginas": [
       "portal-bancos.html"
     ],
-    "email": "bancos@gmail.com"
+    "email": "bancos@gmail.com",
+    "paginaInicial": "portal-bancos.html"
   },
   {
     "pin": "1124",
@@ -621,7 +634,8 @@ const NIVEIS_ACESSO = [
     "paginas": [
       "portal-investidores.html"
     ],
-    "email": "investidores@gmail.com"
+    "email": "investidores@gmail.com",
+    "paginaInicial": "portal-investidores.html"
   },
   {
     "pin": "1125",
@@ -631,7 +645,8 @@ const NIVEIS_ACESSO = [
     "paginas": [
       "portal-universidades.html"
     ],
-    "email": "universidades@gmail.com"
+    "email": "universidades@gmail.com",
+    "paginaInicial": "portal-universidades.html"
   },
   {
     "pin": "1126",
@@ -641,7 +656,8 @@ const NIVEIS_ACESSO = [
     "paginas": [
       "portal-parceiros.html"
     ],
-    "email": "parceiros@gmail.com"
+    "email": "parceiros@gmail.com",
+    "paginaInicial": "portal-parceiros.html"
   },
   {
     "pin": "1127",
@@ -661,7 +677,8 @@ const NIVEIS_ACESSO = [
       "app-consumidor-perfil.html",
       "app-consumidor-comparador.html"
     ],
-    "email": "publico@gmail.com"
+    "email": "publico@gmail.com",
+    "paginaInicial": "portal-publico.html"
   }
 ];
 
@@ -676,6 +693,11 @@ document.getElementById('btn-logout').addEventListener('click', (e) => {
 
 function entrarNoSistema(nivel) {
   sessionStorage.setItem('sinagepe_nivel', JSON.stringify(nivel));
+  const destino = nivel.paginaInicial || 'index.html';
+  if (destino !== 'index.html') {
+    window.location.href = destino;
+    return;
+  }
   document.getElementById('login-screen').style.display = 'none';
   document.querySelector('.app').classList.add('visible');
   fetch('data/sinagepe-data.json').then(r => r.json()).then(data => boot(data, nivel));

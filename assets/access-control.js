@@ -16,6 +16,7 @@
 
   var paginas = nivel.paginas || [];
   if (paginas.indexOf(pagina) === -1) {
+    document.documentElement.style.visibility = 'hidden';
     location.href = 'index.html?negado=' + encodeURIComponent(pagina);
   }
 })();
