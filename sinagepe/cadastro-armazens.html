@@ -21,7 +21,13 @@ document.getElementById('content-mount').innerHTML = `
   <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)" id="kpi-row"></div>
 
   <div class="card">
-    <div class="card-title">Inventário de Armazéns</div>
+    <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">Inventário de Armazéns
+      <span style="font-size:11px;font-weight:600;display:flex;gap:14px">
+        <a href="formulario-registar-armazem.html" style="color:var(--bronze)">+ Registar Armazém</a>
+        <a href="estado-vazio-armazens.html" style="color:var(--ink-faint)">Ver Estado Vazio</a>
+        <a href="estado-erro.html" style="color:var(--ink-faint)">Ver Estado de Erro</a>
+      </span>
+    </div>
     <div class="card-subtitle">Clica numa linha para ver o detalhe (distribuição de stock e condições de conservação)</div>
     <table class="balance-table">
       <thead><tr><th>Nome</th><th>Província</th><th>Operador</th><th>Capacidade</th><th>Ocup.</th><th>Condição</th><th>Últ. Inspecção</th></tr></thead>

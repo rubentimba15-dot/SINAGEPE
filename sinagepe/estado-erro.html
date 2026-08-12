@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Erro de Conexão — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .error-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 60px 40px; text-align: center; }
+  .error-icon { width: 100px; height: 100px; border-radius: 50px; background: var(--crit-bg); border: 2px solid var(--crit); box-shadow: 0 8px 16px rgba(220,38,38,0.2); display: flex; align-items: center; justify-content: center; font-size: 38px; }
+  .error-title { font-size: 21px; font-weight: 700; color: #fff; }
+  .error-desc { font-size: 14px; color: var(--ink-dim); max-width: 480px; line-height: 1.6; }
+  .retry-btn { background: var(--bg-card-hover); border: 1px solid var(--accent-orange); color: #fff; border-radius: 6px; padding: 12px 22px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+  .error-code { font-size: 10.5px; color: var(--ink-muted); }
+</style>
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('armazens', 'Gestão de Armazéns', 'Sistema de Armazenamento Geral');
+document.getElementById('content-mount').innerHTML = `
+  <div class="error-wrap">
+    <div class="error-icon">⚠</div>
+    <div class="error-title">Erro de Conexão</div>
+    <div class="error-desc">Não foi possível estabelecer uma comunicação segura com o servidor central do SINAGEPE em Maputo. Por favor, certifique-se que o seu terminal de operações governamentais está devidamente conectado à rede nacional.</div>
+    <button class="retry-btn" onclick="location.reload()">⟳ Tentar Novamente</button>
+    <div class="error-code">Código do Erro: SIN_504_GATEWAY_TIMEOUT</div>
+  </div>
+`;
+SINAGEPE.load().then(data => {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao;
+});
+</script>
+</body>
+</html>
