@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Administração e Auditoria — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+</head>
+<body>
+
+<div class="app-shell" id="app-shell"></div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('config', 'Administração e Auditoria', 'Utilizadores · Perfis · Auditoria · Sistema');
+
+document.getElementById('content-mount').innerHTML = `
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)" id="kpi-row"></div>
+
+  <div class="card">
+    <div class="card-title">Registo de Auditoria</div>
+    <div class="card-subtitle">Inclui acções humanas e decisões automáticas do "Sistema IA" — mesmo registo para ambas, para efeitos de responsabilização</div>
+    <table class="balance-table">
+      <thead><tr><th>Hora</th><th>Utilizador</th><th>Acção</th><th>Módulo</th><th>Detalhes</th><th>IP</th><th>Estado</th></tr></thead>
+      <tbody id="auditoria-body"></tbody>
+    </table>
+  </div>
+
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">Perfis de Acesso Activos</div>
+      <div class="card-subtitle">6 papéis oficiais, com âmbito e permissões próprias</div>
+      <div id="papeis-list"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Estado das Fontes de Dados</div>
+      <div class="card-subtitle">Quando uma fonte fica indisponível, o sistema usa cache do último dado válido — nunca mostra vazio</div>
+      <div id="fontes-list"></div>
+    </div>
+  </div>
+`;
+
+SINAGEPE.load().then(renderAdministracao);
+
+function renderAdministracao(data) {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  const totalUtilizadores = data.papeisAcesso.reduce((a, p) => a + p.utilizadores, 0);
+  const fontesIndisponiveis = data.fontesDados.filter(f => f.estado !== 'Conectado').length;
+
+  const kpiDefs = [
+    { label: 'Operações Registadas (Sessão)', valor: data.registoAuditoria.length, estado: 'Normal', tipo: 'info' },
+    { label: 'Utilizadores Activos', valor: totalUtilizadores, estado: data.papeisAcesso.length + ' Papéis', tipo: 'ok' },
+    { label: 'Tentativas Bloqueadas', valor: data.registoAuditoria.filter(r => r.estado === 'Bloqueado').length, estado: 'Monitorizado', tipo: 'warn' },
+    { label: 'Fontes de Dados Indisponíveis', valor: fontesIndisponiveis, estado: fontesIndisponiveis > 0 ? 'Atenção' : 'Todas OK', tipo: fontesIndisponiveis > 0 ? 'warn' : 'ok' },
+  ];
+  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
+
+  document.getElementById('auditoria-body').innerHTML = data.registoAuditoria.map(r => {
+    const tipo = r.estado === 'Sucesso' ? 'ok' : 'crit';
+    const utilizadorHtml = r.utilizador === 'Sistema IA' ? `<span style="color:var(--bronze)">✦ ${r.utilizador}</span>` : r.utilizador;
+    return `<tr><td style="font-family:var(--font-data)">${r.hora}</td><td>${utilizadorHtml}</td><td>${r.accao}</td><td>${r.modulo}</td><td>${r.detalhes}</td>
+      <td style="font-family:var(--font-data);font-size:10.5px;color:var(--ink-faint)">${r.ip}</td>
+      <td><span class="state-tag" style="background:var(--${tipo}-bg);color:var(--${tipo})">${r.estado}</span></td></tr>`;
+  }).join('');
+
+  document.getElementById('papeis-list').innerHTML = data.papeisAcesso.map(p => `
+    <div class="medida-row"><span>${p.nome}</span><span style="font-family:var(--font-data)">${p.utilizadores} utilizadores</span></div>`).join('');
+
+  const FONTE_TIPO = { 'Conectado': 'ok', 'Pendente': 'warn', 'Indisponível': 'crit' };
+  document.getElementById('fontes-list').innerHTML = data.fontesDados.map(f => `
+    <div class="medida-row"><span>${f.nome}</span><span class="state-tag" style="background:var(--${FONTE_TIPO[f.estado]}-bg);color:var(--${FONTE_TIPO[f.estado]})">${f.estado}</span></div>`).join('');
+}
+</script>
+</body>
+</html>

@@ -256,7 +256,7 @@
         <div class="brand-desc">Gestão de Produtos Essenciais</div>
       </div>
       <nav class="sidebar-nav">
-        <a class="nav-item active" href="#"><span class="nav-icon">▦</span><span class="nav-label">Painel <span style="color:var(--gold)">(Activo)</span></span><span class="nav-active-bar"></span></a>
+        <a class="nav-item active" href="index.html"><span class="nav-icon">▦</span><span class="nav-label">Painel <span style="color:var(--gold)">(Activo)</span></span><span class="nav-active-bar"></span></a>
         <a class="nav-item" href="alertas.html"><span class="nav-icon">⚠</span><span class="nav-label">Alertas <span style="color:var(--red)" id="nav-alertas-count"></span></span></a>
         <a class="nav-item" href="mapa-nacional.html"><span class="nav-icon">◎</span><span class="nav-label">Mapa <span style="color:var(--teal)">(Live)</span></span></a>
         <a class="nav-item" href="simulador-importacoes.html"><span class="nav-icon">≋</span><span class="nav-label">Simulador <span style="color:var(--blue)">(Beta)</span></span></a>
@@ -300,6 +300,7 @@
         <div class="col-side">
           <div class="panel">
             <div class="panel-header"><span class="panel-title">Balanço Nacional Vivo</span>
+              <a href="painel-nacional.html" style="font-size:10.5px;color:var(--gold);font-weight:600">Ver Detalhe Completo →</a>
               <div class="live-badge"><span class="live-pulse"></span> <span id="balanco-updated">—</span></div>
             </div>
             <table class="exec-table">
@@ -359,11 +360,19 @@ const NIVEIS_ACESSO = [
 
 document.getElementById('btn-logout').addEventListener('click', (e) => {
   e.preventDefault();
+  sessionStorage.removeItem('sinagepe_nivel');
   document.querySelector('.app').classList.remove('visible');
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('login-email').value = '';
   document.getElementById('login-pass').value = '';
 });
+
+function entrarNoSistema(nivel) {
+  sessionStorage.setItem('sinagepe_nivel', JSON.stringify(nivel));
+  document.getElementById('login-screen').style.display = 'none';
+  document.querySelector('.app').classList.add('visible');
+  fetch('data/sinagepe-data.json').then(r => r.json()).then(data => boot(data, nivel));
+}
 
 document.getElementById('login-submit').addEventListener('click', () => {
   const email = document.getElementById('login-email').value.trim().toLowerCase();
@@ -373,10 +382,17 @@ document.getElementById('login-submit').addEventListener('click', () => {
     return;
   }
   const nivel = NIVEIS_ACESSO.find(n => email.includes(n.chave)) || NIVEIS_ACESSO[0];
-  document.getElementById('login-screen').style.display = 'none';
-  document.querySelector('.app').classList.add('visible');
-  fetch('data/sinagepe-data.json').then(r => r.json()).then(data => boot(data, nivel));
+  entrarNoSistema(nivel);
 });
+
+// Sessão activa nesta aba/browser — evita pedir login outra vez sempre
+// que se volta ao Painel a partir de outro ecrã, dentro da mesma visita.
+(function retomarSessao() {
+  const guardado = sessionStorage.getItem('sinagepe_nivel');
+  if (guardado) {
+    try { entrarNoSistema(JSON.parse(guardado)); } catch (e) { /* sessão inválida, mostra login normalmente */ }
+  }
+})();
 
 function boot(data, nivel) {
   const nomeUtilizador = nivel ? nivel.nome : data.utilizador.nome;
@@ -395,15 +411,15 @@ function boot(data, nivel) {
   const produtosCriticos = data.balancoNacional.filter(p => p.estado === 'Crítico').length;
 
   const kpis = [
-    ['Disponibilidade Nacional', data.kpis.disponibilidadeNacional.valor + '%', data.kpis.disponibilidadeNacional.estado, 'ok'],
+    ['Disponibilidade Nacional', data.kpis.disponibilidadeNacional.valor + '%', data.kpis.disponibilidadeNacional.estado, 'ok', 'detalhe-kpi.html'],
     ['Dias de Cobertura', data.kpis.diasCoberturaMedia.valor + ' Dias', data.kpis.diasCoberturaMedia.estado, 'ok'],
     ['Alertas Activos', data.alertasDetalhe.length, 'Monitorizar', 'crit'],
     ['Produtos Críticos', produtosCriticos, data.balancoNacional.filter(p=>p.estado==='Crítico').map(p=>p.produto).join('/') || '—', 'warn'],
     ['Importações Trânsito', data.kpis.importacoesTransito.valor + 'k ton', data.kpis.importacoesTransito.estado, 'ok'],
     ['Índice Logístico', data.kpis.indiceLogisticoNacional.valor, data.kpis.indiceLogisticoNacional.estado, 'info'],
   ];
-  document.getElementById('kpi-row').innerHTML = kpis.map(([label, val, tag, tipo]) => `
-    <div class="kpi-card">
+  document.getElementById('kpi-row').innerHTML = kpis.map(([label, val, tag, tipo, href]) => `
+    <div class="kpi-card" ${href ? `style="cursor:pointer" onclick="location.href='${href}'"` : ''}>
       <div class="kpi-label">${label}</div>
       <div class="kpi-value-row"><span class="kpi-value">${val}</span>
         <span class="kpi-badge" style="background:${COR[tipo]}1a;color:${COR[tipo]}">${tag}</span>

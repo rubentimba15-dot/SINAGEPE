@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal de Empresas — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <div class="brand-mark">P</div>
+        <div class="brand-text"><div class="brand-title">Portal Privado</div><div class="brand-sub">SINAGEPE — Empresas</div></div>
+      </div>
+      <nav class="nav-list">
+        <a class="nav-item active" href="portal-empresas.html"><span class="nav-icon">▦</span> PAINEL</a>
+        <a class="nav-item" href="marketplace-b2b.html"><span class="nav-icon">◎</span> Mercado</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⇄</span> Logística</a>
+        <a class="nav-item" href="#"><span class="nav-icon">▤</span> Armazéns</a>
+        <a class="nav-item" href="#"><span class="nav-icon">≋</span> Simulador</a>
+        <a class="nav-item" href="#"><span class="nav-icon">▧</span> Relatórios</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⚙</span> Configurações</a>
+      </nav>
+    </div>
+    <div class="sidebar-footer">
+      <div class="avatar-dot" id="user-initials">IS</div>
+      <div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title-group"><div class="topbar-title">Portal de Empresas</div><div class="topbar-badge">Inteligência de Mercado</div></div>
+      <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+    </div>
+    <div class="content" id="content-mount"></div>
+    <div class="footer"><span>© 2026 SINAGEPE Moçambique — Acesso Privado</span><span id="footer-updated">—</span></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+document.getElementById('content-mount').innerHTML = `
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)" id="kpi-row"></div>
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">Concorrentes &amp; Benchmarks (Faixas)</div>
+      <div class="card-subtitle">Faixas largas — não percentagens exactas — para proteger a identidade de mercados com poucos operadores</div>
+      <table class="balance-table">
+        <thead><tr><th>Operador</th><th>Quota</th><th>Preço</th><th>Tendência</th></tr></thead>
+        <tbody id="bench-body"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Divisão de Custos Logísticos</div>
+      <canvas id="chart-custos" height="180"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Recomendações de IA</div>
+    <div class="card-subtitle">Orientadas a resultado comercial — não à mesma finalidade da IA interna do Governo</div>
+    <div class="row-3" id="recomendacoes-grid" style="grid-template-columns:repeat(2,1fr)"></div>
+  </div>
+`;
+
+SINAGEPE.load().then(data => {
+  SINAGEPE.renderUserFooter({ utilizador: { nome: data.portalEmpresas.empresa, instituicao: 'Sector Privado', direccao: 'Administrador' } });
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  const e = data.portalEmpresas;
+  const kpiDefs = [
+    { label: 'Evolução do Mercado', valor: '+' + e.kpis.evolucaoMercadoPercent + '%', estado: 'Alta Mensal', tipo: 'ok' },
+    { label: 'Preço Médio (Arroz)', valor: e.kpis.precoMedioArroz + ' MZN/kg', estado: 'Estável', tipo: 'info' },
+    { label: 'Margem Estimada', valor: e.kpis.margemEstimadaPercent + '%', estado: 'Adequado', tipo: 'ok' },
+  ];
+  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
+
+  document.getElementById('bench-body').innerHTML = e.benchmarks.map(b => `
+    <tr><td>${b.operador}${b.operador === 'Sua Empresa' ? ' <span class="pill pill-info" style="font-size:9px">Você</span>' : ''}</td>
+    <td>${b.faixaQuota}</td><td>${b.faixaPreco}</td><td>${b.tendencia}</td></tr>`).join('');
+
+  new Chart(document.getElementById('chart-custos'), {
+    type: 'doughnut',
+    data: { labels: e.custosLogisticos.map(c => c.categoria), datasets: [{ data: e.custosLogisticos.map(c => c.percent), backgroundColor: ['#d9a441', '#5b8ac9', '#3ecf8e'], borderWidth: 0 }] },
+    options: { plugins: { legend: { position: 'bottom', labels: { color: '#97a3c2', font: { size: 10.5 }, boxWidth: 10 } } }, cutout: '62%' }
+  });
+
+  document.getElementById('recomendacoes-grid').innerHTML = e.recomendacoes.map(r => `
+    <div class="card" style="background:var(--navy-800)">
+      <div class="pill pill-info" style="margin-bottom:8px">${r.tipo}</div>
+      <p style="font-size:12.5px;color:var(--ink-dim);line-height:1.5;margin:0 0 8px">${r.texto}</p>
+      <div style="font-size:10.5px;color:var(--ink-faint)">Confiança: ${r.confianca}%</div>
+    </div>`).join('');
+});
+</script>
+</body>
+</html>

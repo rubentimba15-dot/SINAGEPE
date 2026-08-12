@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assistente IA — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .chat-shell { display: grid; grid-template-columns: 220px 1fr; gap: 18px; height: calc(100vh - 180px); }
+  .history-panel { overflow-y: auto; }
+  .history-item { font-size: 11.5px; color: var(--ink-dim); padding: 8px 10px; border-radius: 6px; margin-bottom: 4px; cursor: pointer; }
+  .history-item:hover { background: var(--navy-800); }
+  .chat-area { display: flex; flex-direction: column; }
+  .messages { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; padding-right: 4px; }
+  .msg-user { align-self: flex-end; background: var(--navy-700); border-radius: 12px 12px 2px 12px; padding: 10px 14px; max-width: 70%; font-size: 13px; }
+  .msg-ia { align-self: flex-start; max-width: 85%; }
+  .msg-ia-text { background: var(--navy-800); border-radius: 12px 12px 12px 2px; padding: 12px 15px; font-size: 13px; color: var(--ink-dim); line-height: 1.6; }
+  .msg-ia-card { background: var(--navy-800); border: 1px solid var(--line); border-radius: 10px; padding: 14px; margin-top: 8px; }
+  .msg-ia-source { font-size: 10.5px; color: var(--ink-faint); margin-top: 6px; }
+  .chip-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 14px; }
+  .chip { font-size: 11.5px; padding: 6px 12px; border-radius: 20px; background: var(--navy-800); color: var(--ink-dim); border: 1px solid var(--line); cursor: pointer; }
+  .chip:hover { color: var(--bronze); border-color: var(--bronze-dim); }
+  .input-row { display: flex; gap: 8px; margin-top: 12px; }
+  .input-row input { flex: 1; background: var(--navy-800); color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-size: 13px; }
+  .input-row button { background: var(--bronze); color: var(--navy-950); border: none; border-radius: 10px; padding: 0 18px; font-weight: 700; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div class="app-shell" id="app-shell"></div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('painel', 'Assistente IA', 'BETA — Consultas em Linguagem Natural');
+
+document.getElementById('content-mount').innerHTML = `
+  <div class="chat-shell">
+    <div class="card history-panel">
+      <div class="kpi-label" style="margin-bottom:10px">Consultas Recentes</div>
+      <div class="history-item">Cobertura de Arroz hoje</div>
+      <div class="history-item">Previsão 30 dias — Trigo</div>
+      <div class="history-item">Simulação de atraso no porto</div>
+    </div>
+    <div class="card chat-area">
+      <div class="messages" id="messages"></div>
+      <div class="chip-row" id="chip-row"></div>
+      <div class="input-row">
+        <input type="text" id="chat-input" placeholder="Pergunta em linguagem natural — ex: como está a cobertura de arroz?">
+        <button id="chat-send">Enviar</button>
+      </div>
+    </div>
+  </div>
+`;
+
+SINAGEPE.load().then(renderAssistente);
+
+function renderAssistente(data) {
+  SINAGEPE.renderUserFooter(data);
+
+  const chips = ['Balanço Nacional', 'Previsão 30 dias', 'Alertas activos', 'Simular cenário'];
+  document.getElementById('chip-row').innerHTML = chips.map(c => `<div class="chip">${c}</div>`).join('');
+  document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => enviar(c.textContent)));
+
+  document.getElementById('chat-send').addEventListener('click', () => enviar(document.getElementById('chat-input').value));
+  document.getElementById('chat-input').addEventListener('keydown', e => { if (e.key === 'Enter') enviar(e.target.value); });
+
+  function addUserMsg(texto) {
+    const el = document.createElement('div');
+    el.className = 'msg-user';
+    el.textContent = texto;
+    document.getElementById('messages').appendChild(el);
+  }
+
+  function addIaMsg(html, fonte, confianca) {
+    const el = document.createElement('div');
+    el.className = 'msg-ia';
+    el.innerHTML = `<div class="msg-ia-card">${html}${fonte ? `<div class="msg-ia-source">Grau de Confiança: ${confianca}% · Fontes: ${fonte}</div>` : ''}</div>`;
+    document.getElementById('messages').appendChild(el);
+    document.getElementById('messages').scrollTop = 999999;
+  }
+
+  function responder(texto) {
+    const t = texto.toLowerCase();
+
+    // Simulação de cenário — reutiliza a Reserva Estratégica e o padrão de aprovação já confirmados
+    if (t.includes('simul') || t.includes('atras')) {
+      const r = data.reservaEstrategica[0];
+      addIaMsg(`
+        <div class="pill pill-crit" style="margin-bottom:8px">ALERTA: Simulação de Ruptura de Stock</div>
+        <div style="display:flex;gap:24px;margin-bottom:10px">
+          <div><div style="font-size:10.5px;color:var(--ink-faint)">Cobertura Corrente</div><div class="kpi-value" style="font-size:18px">${data.balancoNacional[0].cobertura} dias</div></div>
+          <div><div style="font-size:10.5px;color:var(--ink-faint)">Nova Cobertura Projectada</div><div class="kpi-value" style="font-size:18px;color:var(--crit)">${data.balancoNacional[0].cobertura - 6} dias</div></div>
+        </div>
+        <b style="font-size:12px">Recomendações Estratégicas</b>
+        <ol style="font-size:12.5px;color:var(--ink-dim);padding-left:18px;margin:6px 0 0;line-height:1.7">
+          <li><b>Activar Reserva Estratégica</b> — libertar ${SINAGEPE.fmt(r.quantidadeT)} t de ${r.produto} (${r.armazem}) para as províncias críticas.</li>
+          <li><b>Redireccionamento Terrestre</b> — desviar carga em trânsito pelo corredor alternativo mais próximo.</li>
+        </ol>`, null, null);
+      return;
+    }
+
+    if (t.includes('alerta')) {
+      addIaMsg(`Existem <b>${data.alertasDetalhe.length} alertas activos</b> a nível nacional — o mais crítico é "${data.alertasDetalhe[0].titulo}" em ${data.alertasDetalhe[0].provincia}. Consulta o <a href="alertas.html" style="color:var(--bronze)">Centro de Alertas</a> para o detalhe completo.`, 'Centro de Alertas', 96);
+      return;
+    }
+
+    if (t.includes('previsão') || t.includes('previsao') || t.includes('30 dias')) {
+      addIaMsg(`A previsão a 30 dias para o Trigo mantém-se em "Atenção" — cobertura actual de ${data.balancoNacional[1].cobertura} dias, sem sinais de agravamento imediato segundo o cenário Base.`, 'Balanço Nacional Vivo, INE', 79);
+      return;
+    }
+
+    // resposta por defeito — balanço nacional (padrão "Como está a cobertura de X")
+    const produtoMencionado = data.balancoNacional.find(p => t.includes(p.produto.toLowerCase().split(' ')[0]));
+    const p = produtoMencionado || data.balancoNacional[0];
+    addIaMsg(`
+      <div style="font-weight:600;margin-bottom:8px">Balanço de ${p.produto}</div>
+      <div class="row-3">
+        <div><div style="font-size:10.5px;color:var(--ink-faint)">Stock Nacional</div><div class="kpi-value" style="font-size:15px">${SINAGEPE.fmt(p.stock)} t</div></div>
+        <div><div style="font-size:10.5px;color:var(--ink-faint)">Cobertura Estimada</div><div class="kpi-value" style="font-size:15px">${p.cobertura} dias</div></div>
+        <div><div style="font-size:10.5px;color:var(--ink-faint)">Estado</div><div class="kpi-value" style="font-size:15px">${p.estado}</div></div>
+      </div>`, 'INE, SIMA Moçambique, Alfândegas de Moçambique', 82);
+  }
+
+  function enviar(texto) {
+    if (!texto || !texto.trim()) return;
+    addUserMsg(texto);
+    document.getElementById('chat-input').value = '';
+    setTimeout(() => responder(texto), 300);
+  }
+
+  // mensagem inicial
+  addIaMsg('Olá! Sou o Assistente IA do SINAGEPE. Podes perguntar sobre cobertura de produtos, alertas activos, previsões, ou pedir para simular um cenário de ruptura.', null, null);
+}
+</script>
+</body>
+</html>

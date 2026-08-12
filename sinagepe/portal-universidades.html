@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal Universidades — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="brand"><div class="brand-mark">U</div><div class="brand-text"><div class="brand-title">Portal Académico</div><div class="brand-sub">SINAGEPE — Investigação</div></div></div>
+      <nav class="nav-list">
+        <a class="nav-item active" href="portal-universidades.html"><span class="nav-icon">▤</span> Datasets</a>
+        <a class="nav-item" href="#"><span class="nav-icon">▧</span> Séries Históricas</a>
+        <a class="nav-item" href="#"><span class="nav-icon">◎</span> Publicações</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⇄</span> Acesso API</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⚙</span> Guia Metodológico</a>
+      </nav>
+    </div>
+    <div class="sidebar-footer"><div class="avatar-dot" id="user-initials">JN</div><div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div></div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title-group"><div class="topbar-title">Portal Universidades</div><div class="topbar-badge">Dados Exclusivos para Investigação Científica</div></div>
+      <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+    </div>
+    <div class="content" id="content-mount"></div>
+    <div class="footer"><span>© 2026 SINAGEPE Moçambique — Acesso Académico</span><span id="footer-updated">—</span></div>
+  </div>
+</div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.load().then(data => {
+  const u = data.portalUniversidades;
+  SINAGEPE.renderUserFooter({ utilizador: { nome: 'Prof. Dr. J. Nhambiu', instituicao: u.instituicao, direccao: 'Investigador' } });
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  document.getElementById('content-mount').innerHTML = `
+    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
+      ${SINAGEPE.kpiCard({ label: 'Datasets Disponíveis', valor: u.kpis.datasetsDisponiveis, estado: '+4 este mês', tipo: 'ok' })}
+      ${SINAGEPE.kpiCard({ label: 'Séries Históricas', valor: u.kpis.seriesHistoricasAnos + ' anos', estado: 'Desde 2014', tipo: 'info' })}
+      ${SINAGEPE.kpiCard({ label: 'Indicadores Económicos', valor: u.kpis.indicadoresEconomicos, estado: 'Activos', tipo: 'info' })}
+      ${SINAGEPE.kpiCard({ label: 'Downloads do Mês', valor: u.kpis.downloadsMes, estado: 'Uso ' + u.instituicao.split(' ').pop(), tipo: 'ok' })}
+    </div>
+
+    <div class="row-2">
+      <div class="card">
+        <div class="card-title">Navegar por Categoria</div>
+        <div id="categorias-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Datasets Pré-Compilados</div>
+        <table class="balance-table">
+          <thead><tr><th>Descrição</th><th>Período</th><th>Formatos</th></tr></thead>
+          <tbody id="datasets-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card" style="background:var(--navy-800)">
+      <div class="card-title">Acesso à API</div>
+      <div class="card-subtitle">Autenticado por instituição — gratuito para universidades moçambicanas públicas</div>
+      <pre style="background:var(--navy-950);border-radius:8px;padding:12px 14px;font-family:var(--font-data);font-size:11.5px;color:#94a3b8;overflow-x:auto">GET /v1/academic/datasets
+Host: api.sinagepe.gov.mz
+Authorization: Bearer uem_key_***</pre>
+      <button style="margin-top:10px;background:var(--bronze);color:var(--navy-950);border:none;border-radius:8px;padding:9px 16px;font-weight:700;font-size:12.5px;cursor:pointer">Solicitar Chave API</button>
+    </div>
+  `;
+
+  document.getElementById('categorias-list').innerHTML = u.categorias.map(c => `
+    <div class="medida-row"><span>${c.nome}</span><span class="pill pill-info">${c.n}</span></div>`).join('');
+
+  document.getElementById('datasets-body').innerHTML = u.datasetsCompilados.map(d => `
+    <tr><td>${d.descricao}</td><td>${d.periodo}</td><td>${d.formatos}</td></tr>`).join('');
+});
+</script>
+</body>
+</html>
