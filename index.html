@@ -239,7 +239,7 @@
       <div class="login-error" id="login-error" style="text-align:center;margin-top:10px"></div>
       <div class="login-support-row">Suporte Técnico do MIC: <b>+258 21 480 000</b> · <a href="#">ajuda@sinagepe.gov.mz</a></div>
       <div class="login-legal-row"><span>© 2026 SINAGEPE Moçambique — Ministério da Indústria e Comércio</span><span>v3.4.1 — Oficial</span></div>
-      <div style="margin-top:18px;font-size:10.5px;color:var(--ink-faint);text-align:center">1111 Administrador · 2222 Governo Central · 3333 Inspecção Regulamentar · 4444 Operador Corporativo · 5555 Público — usa o e-mail correspondente abaixo</div>
+      <div style="margin-top:18px;font-size:10.5px;color:var(--ink-faint);text-align:center">17 contas de acesso, cada uma só vê o que precisa (ex: administrador@gmail.com, governo@gmail.com, masa@gmail.com...) — palavra-passe: qualquer texto · <a href="lista-de-acessos.html" style="color:var(--gold)">Ver lista completa de acessos →</a></div>
     </div>
   </div>
 </div>
@@ -351,11 +351,318 @@
 const COR = { ok: '#059669', warn: '#f59e0b', crit: '#dc2626', info: '#2490de' };
 
 const NIVEIS_ACESSO = [
-  { chave: 'administrador', nome: 'Administrador de Sistema', email: 'administrador@gmail.com' },
-  { chave: 'governo', nome: 'Governo Central (Decisor)', email: 'governo@gmail.com' },
-  { chave: 'inspeccao', nome: 'Inspecção Regulamentar', email: 'inspeccao@gmail.com' },
-  { chave: 'operador', nome: 'Operador Corporativo', email: 'operador@gmail.com' },
-  { chave: 'publico', nome: 'Público', email: 'publico@gmail.com' },
+  {
+    "pin": "1111",
+    "chave": "administrador",
+    "nome": "Administrador de Sistema",
+    "instituicao": "SINAGEPE — Direcção Técnica",
+    "paginas": [
+      "index.html",
+      "alertas.html",
+      "mapa-nacional.html",
+      "simulador-importacoes.html",
+      "portal-pme.html",
+      "cadastro-armazens.html",
+      "modulo-logistica.html",
+      "balanco-nacional-vivo.html",
+      "assistente-ia.html",
+      "relatorios.html",
+      "administracao-auditoria.html",
+      "irae.html",
+      "clima-desastres.html",
+      "painel-nacional.html",
+      "painel-provincial.html",
+      "detalhe-corredor.html",
+      "marketplace-b2b.html",
+      "detalhe-provincia.html",
+      "detalhe-produto.html",
+      "detalhe-alerta.html",
+      "detalhe-armazem.html",
+      "detalhe-oferta-marketplace.html",
+      "perfil-empresa.html",
+      "detalhe-kpi.html",
+      "estado-vazio-armazens.html",
+      "formulario-registar-armazem.html",
+      "estado-erro.html",
+      "tablet-painel-nacional.html",
+      "tablet-centro-alertas.html",
+      "tablet-cadastro-armazens.html",
+      "dashboard-igsae.html",
+      "dashboard-arc.html",
+      "dashboard-agricultura.html",
+      "dashboard-financas.html",
+      "dashboard-banco-central.html",
+      "dashboard-transportes.html",
+      "portal-empresas.html",
+      "portal-produtores.html",
+      "portal-comerciantes.html",
+      "portal-transportadores.html",
+      "portal-bancos.html",
+      "portal-investidores.html",
+      "portal-universidades.html",
+      "portal-parceiros.html",
+      "app-consumidor.html",
+      "app-consumidor-home.html",
+      "app-consumidor-precos.html",
+      "app-consumidor-mapa.html",
+      "app-consumidor-alertas.html",
+      "app-consumidor-produto-detalhe.html",
+      "app-consumidor-loja-detalhe.html",
+      "app-consumidor-alerta-detalhe.html",
+      "app-consumidor-perfil.html",
+      "app-consumidor-comparador.html",
+      "portal-publico.html"
+    ],
+    "email": "administrador@gmail.com"
+  },
+  {
+    "pin": "1112",
+    "chave": "governo",
+    "nome": "Governo Central (Decisor)",
+    "instituicao": "Governo de Moçambique",
+    "paginas": [
+      "index.html",
+      "alertas.html",
+      "mapa-nacional.html",
+      "simulador-importacoes.html",
+      "portal-pme.html",
+      "cadastro-armazens.html",
+      "modulo-logistica.html",
+      "balanco-nacional-vivo.html",
+      "assistente-ia.html",
+      "relatorios.html",
+      "irae.html",
+      "clima-desastres.html",
+      "painel-nacional.html",
+      "painel-provincial.html",
+      "detalhe-corredor.html",
+      "marketplace-b2b.html",
+      "detalhe-provincia.html",
+      "detalhe-produto.html",
+      "detalhe-alerta.html",
+      "detalhe-armazem.html",
+      "detalhe-oferta-marketplace.html",
+      "perfil-empresa.html",
+      "detalhe-kpi.html",
+      "estado-vazio-armazens.html",
+      "formulario-registar-armazem.html",
+      "estado-erro.html",
+      "tablet-painel-nacional.html",
+      "tablet-centro-alertas.html",
+      "tablet-cadastro-armazens.html",
+      "dashboard-igsae.html",
+      "dashboard-arc.html",
+      "dashboard-agricultura.html",
+      "dashboard-financas.html",
+      "dashboard-banco-central.html",
+      "dashboard-transportes.html",
+      "portal-empresas.html",
+      "portal-produtores.html",
+      "portal-comerciantes.html",
+      "portal-transportadores.html",
+      "portal-bancos.html",
+      "portal-investidores.html",
+      "portal-universidades.html",
+      "portal-parceiros.html",
+      "portal-publico.html"
+    ],
+    "email": "governo@gmail.com"
+  },
+  {
+    "pin": "1113",
+    "chave": "masa",
+    "nome": "MASA — Ministério da Agricultura",
+    "instituicao": "MASA",
+    "paginas": [
+      "index.html",
+      "alertas.html",
+      "mapa-nacional.html",
+      "relatorios.html",
+      "balanco-nacional-vivo.html",
+      "dashboard-agricultura.html"
+    ],
+    "email": "masa@gmail.com"
+  },
+  {
+    "pin": "1114",
+    "chave": "financas",
+    "nome": "Ministério das Finanças",
+    "instituicao": "Ministério das Finanças",
+    "paginas": [
+      "index.html",
+      "alertas.html",
+      "relatorios.html",
+      "dashboard-financas.html"
+    ],
+    "email": "financas@gmail.com"
+  },
+  {
+    "pin": "1115",
+    "chave": "bancocentral",
+    "nome": "Banco de Moçambique",
+    "instituicao": "Banco de Moçambique",
+    "paginas": [
+      "index.html",
+      "alertas.html",
+      "relatorios.html",
+      "dashboard-banco-central.html"
+    ],
+    "email": "bancocentral@gmail.com"
+  },
+  {
+    "pin": "1116",
+    "chave": "transportes",
+    "nome": "Ministério dos Transportes",
+    "instituicao": "Ministério dos Transportes",
+    "paginas": [
+      "index.html",
+      "alertas.html",
+      "mapa-nacional.html",
+      "modulo-logistica.html",
+      "detalhe-corredor.html",
+      "dashboard-transportes.html"
+    ],
+    "email": "transportes@gmail.com"
+  },
+  {
+    "pin": "1117",
+    "chave": "igsae",
+    "nome": "IGSAE — Inspecção-Geral",
+    "instituicao": "IGSAE",
+    "paginas": [
+      "index.html",
+      "alertas.html",
+      "detalhe-alerta.html",
+      "irae.html",
+      "dashboard-igsae.html"
+    ],
+    "email": "igsae@gmail.com"
+  },
+  {
+    "pin": "1118",
+    "chave": "arc",
+    "nome": "ARC — Autoridade Reguladora da Concorrência",
+    "instituicao": "ARC",
+    "paginas": [
+      "index.html",
+      "marketplace-b2b.html",
+      "perfil-empresa.html",
+      "detalhe-oferta-marketplace.html",
+      "dashboard-arc.html"
+    ],
+    "email": "arc@gmail.com"
+  },
+  {
+    "pin": "1119",
+    "chave": "empresas",
+    "nome": "Empresas / Importadores",
+    "instituicao": "Operador Corporativo — Empresas",
+    "paginas": [
+      "portal-empresas.html",
+      "marketplace-b2b.html",
+      "detalhe-oferta-marketplace.html",
+      "perfil-empresa.html",
+      "mapa-nacional.html"
+    ],
+    "email": "empresas@gmail.com"
+  },
+  {
+    "pin": "1120",
+    "chave": "produtores",
+    "nome": "Produtores / Agricultores",
+    "instituicao": "Operador Corporativo — Produtores",
+    "paginas": [
+      "portal-produtores.html",
+      "marketplace-b2b.html",
+      "mapa-nacional.html"
+    ],
+    "email": "produtores@gmail.com"
+  },
+  {
+    "pin": "1121",
+    "chave": "comerciantes",
+    "nome": "Comerciantes / PME",
+    "instituicao": "Operador Corporativo — Comerciantes",
+    "paginas": [
+      "portal-comerciantes.html",
+      "portal-pme.html",
+      "marketplace-b2b.html"
+    ],
+    "email": "comerciantes@gmail.com"
+  },
+  {
+    "pin": "1122",
+    "chave": "transportadores",
+    "nome": "Transportadores",
+    "instituicao": "Operador Corporativo — Logística",
+    "paginas": [
+      "portal-transportadores.html",
+      "modulo-logistica.html",
+      "marketplace-b2b.html",
+      "detalhe-corredor.html"
+    ],
+    "email": "transportadores@gmail.com"
+  },
+  {
+    "pin": "1123",
+    "chave": "bancos",
+    "nome": "Bancos",
+    "instituicao": "Operador Corporativo — Banca",
+    "paginas": [
+      "portal-bancos.html"
+    ],
+    "email": "bancos@gmail.com"
+  },
+  {
+    "pin": "1124",
+    "chave": "investidores",
+    "nome": "Investidores",
+    "instituicao": "Operador Corporativo — Investimento",
+    "paginas": [
+      "portal-investidores.html"
+    ],
+    "email": "investidores@gmail.com"
+  },
+  {
+    "pin": "1125",
+    "chave": "universidades",
+    "nome": "Universidades",
+    "instituicao": "Parceiro Académico",
+    "paginas": [
+      "portal-universidades.html"
+    ],
+    "email": "universidades@gmail.com"
+  },
+  {
+    "pin": "1126",
+    "chave": "parceiros",
+    "nome": "Parceiros Institucionais",
+    "instituicao": "Parceiro Institucional",
+    "paginas": [
+      "portal-parceiros.html"
+    ],
+    "email": "parceiros@gmail.com"
+  },
+  {
+    "pin": "1127",
+    "chave": "publico",
+    "nome": "Público em Geral",
+    "instituicao": "Cidadão",
+    "paginas": [
+      "portal-publico.html",
+      "app-consumidor.html",
+      "app-consumidor-home.html",
+      "app-consumidor-precos.html",
+      "app-consumidor-mapa.html",
+      "app-consumidor-alertas.html",
+      "app-consumidor-produto-detalhe.html",
+      "app-consumidor-loja-detalhe.html",
+      "app-consumidor-alerta-detalhe.html",
+      "app-consumidor-perfil.html",
+      "app-consumidor-comparador.html"
+    ],
+    "email": "publico@gmail.com"
+  }
 ];
 
 document.getElementById('btn-logout').addEventListener('click', (e) => {
@@ -381,7 +688,8 @@ document.getElementById('login-submit').addEventListener('click', () => {
     document.getElementById('login-error').textContent = 'Preenche o e-mail e a palavra-passe para continuares.';
     return;
   }
-  const nivel = NIVEIS_ACESSO.find(n => email.includes(n.chave)) || NIVEIS_ACESSO[0];
+  const localPart = email.split('@')[0];
+  const nivel = NIVEIS_ACESSO.find(n => n.chave === localPart) || NIVEIS_ACESSO[NIVEIS_ACESSO.length - 1];
   entrarNoSistema(nivel);
 });
 
