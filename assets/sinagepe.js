@@ -38,14 +38,22 @@ const SINAGEPE = (() => {
 
   function renderUserFooter(data) {
     const u = data.utilizador;
-    if (!u) return;
-    const initials = u.nome.split(' ').filter(w => w.length > 1 || /[A-Z]/.test(w)).map(w => w[0]).join('').slice(0, 2).toUpperCase();
-    const initialsEl = document.getElementById('user-initials');
-    const nomeEl = document.getElementById('user-nome');
-    const cargoEl = document.getElementById('user-cargo');
-    if (initialsEl) initialsEl.textContent = initials || 'U';
-    if (nomeEl) nomeEl.textContent = u.nome;
-    if (cargoEl) cargoEl.textContent = `${u.instituicao} — ${u.direccao || u.cargo}`;
+    if (u) {
+      const initials = u.nome.split(' ').filter(w => w.length > 1 || /[A-Z]/.test(w)).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+      const initialsEl = document.getElementById('user-initials');
+      const nomeEl = document.getElementById('user-nome');
+      const cargoEl = document.getElementById('user-cargo');
+      if (initialsEl) initialsEl.textContent = initials || 'U';
+      if (nomeEl) nomeEl.textContent = u.nome;
+      if (cargoEl) cargoEl.textContent = `${u.instituicao} — ${u.direccao || u.cargo}`;
+    }
+    // contagens da sidebar — mesma fonte de dados em todos os 31 ecrãs, nunca hardcoded
+    const alertasEl = document.getElementById('nav-alertas-count');
+    const armazensEl = document.getElementById('nav-armazens-count');
+    const corredoresEl = document.getElementById('nav-corredores-count');
+    if (alertasEl && data.alertasDetalhe) alertasEl.textContent = `(${data.alertasDetalhe.length})`;
+    if (armazensEl && data.armazens) armazensEl.textContent = `(${data.armazens.length})`;
+    if (corredoresEl && data.corredores) corredoresEl.textContent = `(${data.corredores.length})`;
   }
 
   // ---------------------------------------------------------------
@@ -55,24 +63,25 @@ const SINAGEPE = (() => {
   // ---------------------------------------------------------------
   const NAV_ITEMS = [
     { key: 'painel',     label: 'Painel',      icon: '▦', href: 'index.html' },
-    { key: 'alertas',    label: 'Alertas',     icon: '⚠', href: 'alertas.html' },
+    { key: 'alertas',    label: 'Alertas',     icon: '⚠', href: 'alertas.html', countId: 'nav-alertas-count' },
     { key: 'mapa',       label: 'Mapa',        icon: '◎', href: 'mapa-nacional.html' },
     { key: 'simulador',  label: 'Simulador',   icon: '≋', href: 'simulador-importacoes.html' },
     { key: 'pmes',       label: 'PMEs',        icon: '⛁', href: 'portal-pme.html' },
-    { key: 'armazens',   label: 'Armazéns',    icon: '▤', href: 'cadastro-armazens.html' },
-    { key: 'logistica',  label: 'Logística',   icon: '⇄', href: 'modulo-logistica.html' },
+    { key: 'armazens',   label: 'Armazéns',    icon: '▤', href: 'cadastro-armazens.html', countId: 'nav-armazens-count' },
+    { key: 'logistica',  label: 'Logística',   icon: '⇄', href: 'modulo-logistica.html', countId: 'nav-corredores-count' },
     { key: 'relatorios', label: 'Relatórios',  icon: '▧', href: 'relatorios.html' },
     { key: 'config',     label: 'Configurações', icon: '⚙', href: 'administracao-auditoria.html' },
+    { key: 'marketplace', label: 'Marketplace B2B', icon: '⬡', href: 'marketplace-b2b.html' },
   ];
 
   function renderSidebar(activeKey) {
     const nav = NAV_ITEMS.map(item => {
       const cls = item.key === activeKey ? 'nav-item active' : 'nav-item';
-      // Ecrãs ainda não construídos apontam para "#" e ficam visualmente
-      // acessíveis, mas não navegáveis, até existirem.
       const href = item._built === false ? '#' : item.href;
-      return `<a class="${cls}" href="${href}"><span class="nav-icon">${item.icon}</span> ${item.label}</a>`;
+      const count = item.countId ? ` <span id="${item.countId}"></span>` : '';
+      return `<a class="${cls}" href="${href}"><span class="nav-icon">${item.icon}</span> ${item.label}${count}</a>`;
     }).join('');
+    const logout = `<a class="nav-item" href="index.html" style="margin-top:8px;border-top:1px solid var(--border-card);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:var(--crit)">Sair (Logout)</span></a>`;
 
     return `
       <div class="sidebar-top">
@@ -83,7 +92,7 @@ const SINAGEPE = (() => {
             <div class="brand-sub">Moçambique</div>
           </div>
         </div>
-        <nav class="nav-list">${nav}</nav>
+        <nav class="nav-list">${nav}${logout}</nav>
       </div>
       <div class="sidebar-footer">
         <div class="avatar-dot" id="user-initials">—</div>
