@@ -1155,6 +1155,28 @@
       ]
     }
   },
+  "portalInvestidores": {
+    "investidor": "InvestMoz Global",
+    "kpis": [
+      { "label": "Produtos em Expansão", "valor": "5 Sectores", "tag": "Forte Incentivo" },
+      { "label": "Distritos Prioritários", "valor": "12 Alvo", "tag": "Benefício Fiscal" },
+      { "label": "Cadeias Activas", "valor": "8 Cadeias", "tag": "Monitorizadas" },
+      { "label": "Retorno Médio Agro", "valor": "22% ROI", "tag": "Histórico Estável" },
+      { "label": "Risco do Investimento", "valor": "Moderado", "tag": "Seguro Garantido", "tipo": "warn" },
+      { "label": "Fluxo FDI Recente", "valor": "+8.2% YoY", "tag": "Nacional" }
+    ],
+    "oportunidades": [
+      { "nome": "Fábrica de Moagem Chimoio", "local": "Manica", "investimento": 45000000, "roi": 24, "risco": "Moderado" },
+      { "nome": "Estufas Hidropónicas", "local": "Gaza (Bilene)", "investimento": 12500000, "roi": 18, "risco": "Baixo" },
+      { "nome": "Refinaria de Óleo de Girassol", "local": "Nampula", "investimento": 85000000, "roi": 29, "risco": "Moderado" },
+      { "nome": "Silos de Grãos Térmicos", "local": "Zambézia", "investimento": 32000000, "roi": 21, "risco": "Baixo" }
+    ],
+    "hotspots": [
+      { "nome": "Silos Centro (Zambézia)", "tipo": "Armazenagem" },
+      { "nome": "Fábrica de Algodão (Nampula)", "tipo": "Processamento" }
+    ],
+    "simulador": { "investimentoBaseMzn": 15000000, "anos": 3, "taxaRentabilidadePercent": 21 }
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
