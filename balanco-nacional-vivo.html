@@ -29,7 +29,9 @@ SINAGEPE.mountShell('painel', 'Balanço Nacional Vivo', 'Equação de Fluxo Fís
 document.getElementById('content-mount').innerHTML = `
   <div class="card">
     <div class="tab-row" id="produto-tabs"></div>
-    <div class="card-title" style="margin-bottom:2px">Equação de Fluxo Físico Nacional</div>
+    <div class="card-title" style="margin-bottom:2px;display:flex;justify-content:space-between;align-items:center">Equação de Fluxo Físico Nacional
+      <a href="detalhe-produto.html" style="font-size:11px;color:var(--bronze);font-weight:600">Ver Detalhe do Arroz →</a>
+    </div>
     <div class="card-subtitle">Disponibilidade = Stock Inicial + Produção + Importações − Exportações − Consumo − Perdas</div>
     <div class="equation-row" id="equation-row"></div>
   </div>

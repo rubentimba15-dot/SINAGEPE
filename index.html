@@ -411,15 +411,15 @@ function boot(data, nivel) {
   const produtosCriticos = data.balancoNacional.filter(p => p.estado === 'Crítico').length;
 
   const kpis = [
-    ['Disponibilidade Nacional', data.kpis.disponibilidadeNacional.valor + '%', data.kpis.disponibilidadeNacional.estado, 'ok'],
+    ['Disponibilidade Nacional', data.kpis.disponibilidadeNacional.valor + '%', data.kpis.disponibilidadeNacional.estado, 'ok', 'detalhe-kpi.html'],
     ['Dias de Cobertura', data.kpis.diasCoberturaMedia.valor + ' Dias', data.kpis.diasCoberturaMedia.estado, 'ok'],
     ['Alertas Activos', data.alertasDetalhe.length, 'Monitorizar', 'crit'],
     ['Produtos Críticos', produtosCriticos, data.balancoNacional.filter(p=>p.estado==='Crítico').map(p=>p.produto).join('/') || '—', 'warn'],
     ['Importações Trânsito', data.kpis.importacoesTransito.valor + 'k ton', data.kpis.importacoesTransito.estado, 'ok'],
     ['Índice Logístico', data.kpis.indiceLogisticoNacional.valor, data.kpis.indiceLogisticoNacional.estado, 'info'],
   ];
-  document.getElementById('kpi-row').innerHTML = kpis.map(([label, val, tag, tipo]) => `
-    <div class="kpi-card">
+  document.getElementById('kpi-row').innerHTML = kpis.map(([label, val, tag, tipo, href]) => `
+    <div class="kpi-card" ${href ? `style="cursor:pointer" onclick="location.href='${href}'"` : ''}>
       <div class="kpi-label">${label}</div>
       <div class="kpi-value-row"><span class="kpi-value">${val}</span>
         <span class="kpi-badge" style="background:${COR[tipo]}1a;color:${COR[tipo]}">${tag}</span>

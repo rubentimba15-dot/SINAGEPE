@@ -122,7 +122,7 @@ function renderDetalhe(a) {
   el.innerHTML = `
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
       <span class="pill pill-${SEV_TIPO[a.severidade]}">SEVERIDADE ${a.severidade.toUpperCase()}</span>
-      <span style="font-family:var(--font-data);font-size:11px;color:var(--ink-faint)">#${a.id}</span>
+      <span style="font-family:var(--font-data);font-size:11px;color:var(--ink-faint)">#<a href="detalhe-alerta.html?id=${a.id}" style="color:var(--bronze)">${a.id}</a></span>
     </div>
     <div class="card-title" style="margin-bottom:2px">${a.titulo}</div>
     <div class="card-subtitle">${a.provincia} · Actualizado ${a.tempo}</div>

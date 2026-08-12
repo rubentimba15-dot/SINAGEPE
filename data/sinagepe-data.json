@@ -1177,6 +1177,40 @@
     ],
     "simulador": { "investimentoBaseMzn": 15000000, "anos": 3, "taxaRentabilidadePercent": 21 }
   },
+  "detalheProvincia": {
+    "produtos": [
+      { "produto": "Arroz", "stock": 140, "unidade": "t", "requisitoDiario": 35, "coberturaDias": 4, "estado": "Crítico" },
+      { "produto": "Trigo", "stock": 90, "unidade": "t", "requisitoDiario": 15, "coberturaDias": 6, "estado": "Crítico" },
+      { "produto": "Óleo Alimentar", "stock": 4200, "unidade": "L", "requisitoDiario": 450, "coberturaDias": 9, "estado": "Atenção" },
+      { "produto": "Farinha de Milho", "stock": 1200, "unidade": "t", "requisitoDiario": 40, "coberturaDias": 30, "estado": "Estável" }
+    ],
+    "populacaoSobRiscoM": 1.8,
+    "distritosAfectados": 9,
+    "custosLogisticosAdicionaisPercent": 15,
+    "timeline": [
+      { "titulo": "Silo de Tete — Arroz Esgotado", "tempo": "Há 15m", "descricao": "Ruptura crítica identificada no armazém central provincial de Tete.", "severidade": "Crítico" },
+      { "titulo": "Bloqueio Parcial EN103", "tempo": "Há 2h", "descricao": "Trânsito condicionado na via de acesso a Moatize devido a alagamentos.", "severidade": "Atenção" }
+    ]
+  },
+  "detalheProduto": {
+    "produto": "Arroz",
+    "stockTotalT": 45200,
+    "consumoMedioMensalT": 35600,
+    "dependenciaImportacoesPercent": 68,
+    "precoMedioMznKg": 82.4,
+    "variacaoPrecoMomPercent": 2.4,
+    "coberturaDias": 38,
+    "distribuicaoRegional": [
+      { "regiao": "Maputo Cidade", "stock": 12400, "estado": "Estável" },
+      { "regiao": "Nampula", "stock": 9200, "estado": "Estável" },
+      { "regiao": "Zambézia", "stock": 3400, "estado": "Atenção" },
+      { "regiao": "Tete", "stock": 140, "estado": "Crítico" }
+    ],
+    "movimentacoes": [
+      { "rota": "Porto da Beira → Chibabava", "quantidadeT": 15, "nota": "Rotulado como desvio de emergência via camião." },
+      { "rota": "Maputo Silos → Gaza", "quantidadeT": 45, "nota": "Abastecimento quinzenal programado." }
+    ]
+  },
   "utilizador": {
     "nome": "Dr. A. Muthemba",
     "cargo": "Analista Sénior",
