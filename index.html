@@ -360,11 +360,19 @@ const NIVEIS_ACESSO = [
 
 document.getElementById('btn-logout').addEventListener('click', (e) => {
   e.preventDefault();
+  sessionStorage.removeItem('sinagepe_nivel');
   document.querySelector('.app').classList.remove('visible');
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('login-email').value = '';
   document.getElementById('login-pass').value = '';
 });
+
+function entrarNoSistema(nivel) {
+  sessionStorage.setItem('sinagepe_nivel', JSON.stringify(nivel));
+  document.getElementById('login-screen').style.display = 'none';
+  document.querySelector('.app').classList.add('visible');
+  fetch('data/sinagepe-data.json').then(r => r.json()).then(data => boot(data, nivel));
+}
 
 document.getElementById('login-submit').addEventListener('click', () => {
   const email = document.getElementById('login-email').value.trim().toLowerCase();
@@ -374,10 +382,17 @@ document.getElementById('login-submit').addEventListener('click', () => {
     return;
   }
   const nivel = NIVEIS_ACESSO.find(n => email.includes(n.chave)) || NIVEIS_ACESSO[0];
-  document.getElementById('login-screen').style.display = 'none';
-  document.querySelector('.app').classList.add('visible');
-  fetch('data/sinagepe-data.json').then(r => r.json()).then(data => boot(data, nivel));
+  entrarNoSistema(nivel);
 });
+
+// Sessão activa nesta aba/browser — evita pedir login outra vez sempre
+// que se volta ao Painel a partir de outro ecrã, dentro da mesma visita.
+(function retomarSessao() {
+  const guardado = sessionStorage.getItem('sinagepe_nivel');
+  if (guardado) {
+    try { entrarNoSistema(JSON.parse(guardado)); } catch (e) { /* sessão inválida, mostra login normalmente */ }
+  }
+})();
 
 function boot(data, nivel) {
   const nomeUtilizador = nivel ? nivel.nome : data.utilizador.nome;
