@@ -125,7 +125,7 @@ function renderNegociacao(id) {
 
   panel.innerHTML = `
     <div class="card-title">Negociação — ${a.produto} (${a.vendedor})</div>
-    <div class="card-subtitle">#${a.id} ${propostas.length ? '· Aberta há 2 dias' : '· Sem propostas ainda — envia a primeira'}</div>
+    <div class="card-subtitle">#${a.id} ${propostas.length ? '· Aberta há 2 dias' : '· Sem propostas ainda — envia a primeira'} · <a href="detalhe-oferta-marketplace.html?id=${a.id}" style="color:var(--bronze)">Ver Oferta Completa</a> · <a href="perfil-empresa.html" style="color:var(--bronze)">Ver Perfil do Vendedor</a></div>
     <div id="propostas-list">${propostas.map(p => `<div class="proposta-row"><span>${p.texto}</span><span style="color:var(--ink-faint)">${p.tempo}</span></div>`).join('')}</div>
     <div style="display:flex;gap:10px;margin-top:10px">
       <button style="background:var(--ok);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:12px;cursor:pointer" id="btn-aceitar">Aceitar e Fechar Venda</button>
