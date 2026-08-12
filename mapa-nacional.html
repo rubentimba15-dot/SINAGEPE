@@ -63,6 +63,8 @@ function renderMapaNacional(data) {
     const cls = p.disponibilidade >= 80 ? 'tile-ok' : p.disponibilidade >= 50 ? 'tile-warn' : 'tile-crit';
     const nomeHtml = p.nome === data.painelProvincial.provincia
       ? `<a href="painel-provincial.html" style="color:inherit;text-decoration:underline">${p.nome}</a>`
+      : p.nome === 'Tete'
+      ? `<a href="detalhe-provincia.html" style="color:inherit;text-decoration:underline">${p.nome}</a>`
       : p.nome;
     return `<div class="province-tile ${cls}"><div class="province-name">${nomeHtml}</div><div class="province-value">${p.disponibilidade}%</div></div>`;
   }).join('');
