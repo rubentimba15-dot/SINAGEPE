@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confirmar Acção — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; z-index:20; }
+  .modal-box { background:#1f2436; border-radius:20px; padding:36px 40px; width:540px; max-width:92vw; text-align:center; }
+  .icon-warn { width:80px; height:80px; border-radius:40px; background:#3a2a10; display:flex; align-items:center; justify-content:center; font-size:32px; color:#f2991a; font-weight:800; margin:0 auto 20px; }
+  h1 { color:#f2f5f7; font-size:19px; margin:0 0 12px; }
+  p { color:#8c94a1; font-size:13.5px; line-height:1.6; margin:0 0 24px; }
+  .btn-row { display:flex; gap:14px; justify-content:center; }
+  .btn { border-radius:8px; padding:12px 30px; font-size:13.5px; font-weight:700; border:none; cursor:pointer; }
+  .btn-cancel { background:#262b3d; border:1px solid #404554; color:#b2bac2; }
+  .btn-confirm { background:#d9a621; color:#0d0d1a; }
+</style>
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+<div class="modal-backdrop">
+  <div class="modal-box">
+    <div class="icon-warn">!</div>
+    <h1>Confirmar Alteração de Stock</h1>
+    <p>Está prestes a reduzir o stock de Arroz no Armazém Regional Sul - Maputo em 5.000 toneladas. Esta acção será registada no histórico de auditoria.</p>
+    <div class="btn-row">
+      <button class="btn btn-cancel" onclick="location.href='cadastro-armazens.html'">Cancelar</button>
+      <button class="btn btn-confirm" onclick="location.href='estado-sucesso.html'">Confirmar</button>
+    </div>
+  </div>
+</div>
+<script src="assets/access-control.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('armazens', 'Gestão de Armazéns', 'Sistema de Armazenamento Geral');
+SINAGEPE.load().then(data => { SINAGEPE.renderUserFooter(data); document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao; });
+</script>
+</body>
+</html>

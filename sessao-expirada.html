@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sessão Expirada — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html,body { margin:0; padding:0; background:#171c2b; font-family:'Inter',sans-serif; min-height:100vh; }
+  .wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; }
+  .card { background:#1c2133; border-radius:20px; padding:40px 48px; width:460px; max-width:90vw; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+  .brand { color:#218c59; font-weight:700; font-size:16px; margin-bottom:14px; }
+  .icon-circle { width:100px; height:100px; border-radius:50px; background:#1e2a3d; display:flex; align-items:center; justify-content:center; font-size:40px; margin:0 auto 20px; }
+  h1 { color:#f2f5f7; font-size:24px; margin:0 0 12px; }
+  p { color:#8c94a1; font-size:14px; line-height:1.6; margin:0 0 24px; }
+  .btn-solid { display:inline-block; background:#d9a621; color:#0d0d1a; border-radius:25px; padding:14px 60px; font-size:16px; font-weight:700; border:none; cursor:pointer; text-decoration:none; }
+  .detalhe { margin-top:20px; font-size:12px; color:#666e78; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="brand">SINAGEPE</div>
+    <div class="icon-circle">⏱</div>
+    <h1>Sessão Expirada</h1>
+    <p>A sua sessão expirou por inactividade.<br>Por razões de segurança, faça login novamente<br>para continuar a utilizar o sistema.</p>
+    <a class="btn-solid" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel');sessionStorage.removeItem('sinagepe_login_time')">Iniciar Sessão</a>
+    <div class="detalhe" id="ultima-actividade"></div>
+  </div>
+</div>
+<script>
+  const params = new URLSearchParams(location.search);
+  const t = params.get('desde');
+  if (t) {
+    const data = new Date(parseInt(t, 10));
+    document.getElementById('ultima-actividade').textContent = 'Última actividade: ' + data.toLocaleString('pt-PT');
+  }
+</script>
+</body>
+</html>

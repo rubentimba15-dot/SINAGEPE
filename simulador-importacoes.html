@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulador de Importações — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .form-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+  .form-field label { font-size: 11px; color: var(--ink-faint); font-weight: 600; }
+  .form-field input, .form-field select {
+    background: var(--navy-900); color: var(--ink); border: 1px solid var(--line);
+    border-radius: 7px; padding: 9px 11px; font-size: 12.5px; font-family: var(--font-body);
+  }
+  .radio-group { display: flex; gap: 8px; }
+  .radio-opt { flex: 1; text-align: center; padding: 9px; border: 1px solid var(--line); border-radius: 7px; font-size: 12px; cursor: pointer; color: var(--ink-dim); }
+  .radio-opt.selected { background: var(--bronze); color: var(--navy-950); border-color: var(--bronze); font-weight: 700; }
+  .cobertura-compare { display: flex; align-items: center; gap: 18px; margin: 14px 0; }
+  .cobertura-box { flex: 1; text-align: center; padding: 16px; border-radius: 10px; }
+  .zona-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .zona-label { width: 60px; font-size: 12px; color: var(--ink-dim); }
+  .zona-bar-track { flex: 1; height: 10px; background: var(--navy-800); border-radius: 6px; overflow: hidden; }
+  .zona-bar-fill { height: 100%; background: var(--bronze); border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<div class="app-shell" id="app-shell"></div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('simulador', 'Simulador de Importações', 'Impacto na Cobertura e Distribuição Nacional');
+
+document.getElementById('content-mount').innerHTML = `
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">Parâmetros da Simulação</div>
+      <div class="form-field"><label>Produto Essencial</label><select id="s-produto"></select></div>
+      <div class="form-field"><label>Quantidade (toneladas)</label><input type="number" id="s-quantidade" value="15000" min="0"></div>
+      <div class="form-field"><label>Preço CIF Estimado (USD/ton)</label><input type="number" id="s-preco" value="420" min="0"></div>
+      <div class="form-field"><label>País de Origem</label><select id="s-pais"></select></div>
+      <div class="form-field"><label>Porto ou Fronteira de Entrada</label><select id="s-porto"></select></div>
+      <div class="form-field"><label>Modalidade de Entrada</label>
+        <div class="radio-group" id="s-modalidade">
+          <div class="radio-opt selected" data-v="Imediata">Imediata</div>
+          <div class="radio-opt" data-v="Faseada">Faseada</div>
+          <div class="radio-opt" data-v="Adiada">Adiada</div>
+        </div>
+      </div>
+      <button id="btn-simular" style="width:100%;background:var(--bronze);color:var(--navy-950);border:none;border-radius:8px;padding:11px;font-weight:700;font-size:13px;cursor:pointer;margin-top:6px">Simular Impacto Logístico</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Impacto na Cobertura Nacional</div>
+      <div class="cobertura-compare">
+        <div class="cobertura-box" style="background:var(--navy-800)">
+          <div class="kpi-label">Cobertura Actual</div>
+          <div class="kpi-value" id="cob-actual" style="font-size:26px">—</div>
+          <div style="font-size:11px;color:var(--ink-faint);margin-top:4px">dias</div>
+        </div>
+        <div style="font-size:22px;color:var(--ink-faint)">→</div>
+        <div class="cobertura-box" style="background:var(--ok-bg)">
+          <div class="kpi-label">Cobertura Projectada</div>
+          <div class="kpi-value" id="cob-projectada" style="font-size:26px;color:var(--ok)">—</div>
+          <div style="font-size:11px;color:var(--ok)" id="cob-delta">—</div>
+        </div>
+      </div>
+
+      <div class="kpi-label" style="margin:18px 0 10px">Distribuição Territorial Sugerida</div>
+      <div id="zonas-list"></div>
+
+      <div class="card" style="background:var(--navy-800);border-color:var(--bronze-dim);margin-top:14px">
+        <div class="kpi-label">Recomendação de Inteligência MIC</div>
+        <p id="recomendacao-ia" style="font-size:12.5px;color:var(--ink-dim);line-height:1.6;margin:6px 0 0"></p>
+      </div>
+    </div>
+  </div>
+`;
+
+SINAGEPE.load().then(renderSimulador);
+
+function renderSimulador(data) {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  document.getElementById('s-produto').innerHTML = data.balancoNacional.map(p => `<option>${p.produto}</option>`).join('');
+  document.getElementById('s-pais').innerHTML = data.paisesOrigem.map(p => `<option>${p}</option>`).join('');
+  document.getElementById('s-porto').innerHTML = data.portosEntrada.map(p => `<option>${p}</option>`).join('');
+
+  document.getElementById('zonas-list').innerHTML = data.distribuicaoZonas.map(z => `
+    <div class="zona-bar-row">
+      <div class="zona-label">${z.zona}</div>
+      <div class="zona-bar-track"><div class="zona-bar-fill" style="width:${z.percentagem}%"></div></div>
+      <div style="font-family:var(--font-data);font-size:12px;width:36px;text-align:right">${z.percentagem}%</div>
+    </div>`).join('');
+
+  document.querySelectorAll('#s-modalidade .radio-opt').forEach(opt =>
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('#s-modalidade .radio-opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+    }));
+
+  function simular() {
+    const produtoNome = document.getElementById('s-produto').value;
+    const quantidade = Number(document.getElementById('s-quantidade').value) || 0;
+    const p = data.balancoNacional.find(x => x.produto === produtoNome);
+
+    // consumo diário derivado da cobertura já confirmada, para nunca desalinhar do Painel Nacional
+    const consumoDiario = p.stock / p.cobertura;
+    const coberturaProjectada = Math.round((p.stock + quantidade) / consumoDiario);
+
+    document.getElementById('cob-actual').textContent = p.cobertura;
+    document.getElementById('cob-projectada').textContent = coberturaProjectada;
+    document.getElementById('cob-delta').textContent = `+${coberturaProjectada - p.cobertura} Dias (Seguro)`;
+
+    const modalidade = document.querySelector('#s-modalidade .selected').dataset.v;
+    document.getElementById('recomendacao-ia').textContent =
+      `Com ${SINAGEPE.fmt(quantidade)} t de ${produtoNome} a entrar de forma ${modalidade.toLowerCase()}, a cobertura nacional sobe de ${p.cobertura} para ${coberturaProjectada} dias. ` +
+      `Recomenda-se distribuição prioritária pela Zona Sul (maior consumo histórico) e monitorização da Zona Norte nas duas semanas seguintes à chegada.`;
+  }
+
+  document.getElementById('btn-simular').addEventListener('click', simular);
+  simular();
+}
+</script>
+</body>
+</html>

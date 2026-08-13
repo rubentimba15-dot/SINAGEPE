@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel de Ajuda — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .faq-item { padding:14px 0; border-bottom:1px solid var(--border-divider); }
+  .faq-item:last-child { border-bottom:none; }
+  .faq-q { font-size:13.5px; font-weight:700; color:#fff; margin-bottom:6px; }
+  .faq-a { font-size:12.5px; color:var(--ink-dim); line-height:1.6; }
+</style>
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+<script src="assets/access-control.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('config', 'Painel de Ajuda', 'Perguntas Frequentes e Suporte');
+document.getElementById('content-mount').innerHTML = `
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">Perguntas Frequentes</div>
+      <div class="faq-item"><div class="faq-q">Como interpreto os níveis de cobertura?</div><div class="faq-a">Crítico &lt;10 dias, Atenção 10–19, Estável 20–49, Excelente ≥50 dias, ao nível nacional (os limiares distritais são diferentes).</div></div>
+      <div class="faq-item"><div class="faq-q">Porque não vejo todos os módulos?</div><div class="faq-a">O acesso é atribuído por perfil ("need to know basis") — cada conta só vê os ecrãs relevantes à sua função.</div></div>
+      <div class="faq-item"><div class="faq-q">Com que frequência os dados são actualizados?</div><div class="faq-a">Este é um protótipo de demonstração — os dados são estáticos, ilustrativos do funcionamento real do sistema.</div></div>
+      <div class="faq-item"><div class="faq-q">A minha sessão terminou sozinha, porquê?</div><div class="faq-a">Por segurança, a sessão expira ao fim de 30 minutos de inactividade.</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Suporte Técnico</div>
+      <div class="medida-row"><span>Linha directa (MIC)</span><span>+258 21 480 000</span></div>
+      <div class="medida-row"><span>E-mail</span><span>ajuda@sinagepe.gov.mz</span></div>
+      <div class="medida-row"><span>Versão do sistema</span><span>v3.4.1 — Oficial</span></div>
+      <div class="medida-row"><span>Documentação</span><span><a href="lista-de-acessos.html" style="color:var(--bronze)">Lista de Acessos →</a></span></div>
+    </div>
+  </div>
+`;
+SINAGEPE.load().then(data => {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao;
+});
+</script>
+</body>
+</html>

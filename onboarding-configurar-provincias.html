@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Configurar Províncias — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html,body { margin:0; padding:0; background:#171c2b; font-family:'Inter',sans-serif; min-height:100vh; }
+  .wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px; }
+  .card { background:#1c2133; border-radius:20px; padding:44px 50px; width:640px; max-width:92vw; }
+  h1 { color:#fff; font-size:24px; margin:0 0 6px; text-align:center; }
+  h2 { color:#808c99; font-size:13.5px; margin:0 0 28px; text-align:center; font-weight:400; }
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:30px; }
+  .prov-chip { background:#262b3d; border:2px solid #404554; border-radius:8px; padding:11px 14px; cursor:pointer; color:#b2bac2; font-size:13px; font-weight:600; display:flex; align-items:center; gap:10px; }
+  .prov-chip.sel { border-color:#218c59; background:#132a1e; color:#fff; }
+  .check { width:16px; height:16px; border-radius:4px; border:2px solid #404554; }
+  .prov-chip.sel .check { background:#218c59; border-color:#218c59; }
+  .btn-row { display:flex; justify-content:space-between; }
+  .btn-back { color:#8c94a1; background:none; border:none; font-size:13.5px; cursor:pointer; }
+  .btn-solid { background:#d9a621; color:#0d0d1a; border-radius:25px; padding:12px 40px; font-size:14px; font-weight:700; border:none; cursor:pointer; text-decoration:none; display:inline-block; }
+  .dots { margin-top:24px; display:flex; gap:8px; justify-content:center; }
+  .dot { width:10px; height:10px; border-radius:50%; background:#404554; }
+  .dot.on { background:#d9a621; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Quais províncias quer monitorizar?</h1>
+    <h2>Pode seleccionar uma ou várias — isto define o âmbito dos seus alertas</h2>
+    <div class="grid" id="prov-grid"></div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="location.href='onboarding-selecionar-perfil.html'">← Voltar</button>
+      <a class="btn-solid" href="onboarding-conclusao.html">Continuar →</a>
+    </div>
+    <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot on"></div><div class="dot"></div></div>
+  </div>
+</div>
+<script>
+  const provincias = ["Cabo Delgado", "Niassa", "Nampula", "Zambézia", "Tete", "Manica", "Sofala", "Inhambane", "Gaza", "Maputo"];
+  document.getElementById('prov-grid').innerHTML = provincias.map(p => `
+    <div class="prov-chip sel" onclick="this.classList.toggle('sel')"><span class="check"></span>${p}</div>`).join('');
+</script>
+</body>
+</html>

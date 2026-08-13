@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Detalhe do Alerta — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .breadcrumb { font-size: 12px; color: var(--ink-faint); margin-bottom: 4px; }
+  .page-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .page-title { font-size: 24px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 14px; }
+  .back-btn { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600; color: var(--bronze); }
+</style>
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('alertas', 'Atlas de Monitoria de Mercadorias e Corredores', 'Sistema Vivo');
+const params = new URLSearchParams(location.search);
+
+document.getElementById('content-mount').innerHTML = `
+  <div class="page-title-row">
+    <div><div class="breadcrumb">Centro de Alertas &gt; Detalhe</div>
+    <div class="page-title" id="alerta-titulo">—</div></div>
+    <a class="back-btn" href="alertas.html">← Voltar ao Centro de Alertas</a>
+  </div>
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)" id="kpi-row"></div>
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">Descrição Completa</div>
+      <p style="font-size:13px;color:var(--ink-dim);line-height:1.6" id="alerta-desc"></p>
+      <div class="card-title" style="margin-top:16px">Fontes de Dados</div>
+      <div id="alerta-fontes"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Medidas de Contingência Recomendadas</div>
+      <div id="alerta-medidas"></div>
+      <div style="display:flex;gap:10px;margin-top:16px">
+        <button style="background:var(--ok);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-weight:700;font-size:12.5px;cursor:pointer" id="btn-mitigar">Mitigar Rápido</button>
+        <button style="background:transparent;border:1px solid var(--border-card);color:#fff;border-radius:8px;padding:10px 18px;font-weight:700;font-size:12.5px;cursor:pointer" id="btn-oficio">Disparar Ofício</button>
+      </div>
+      <div id="acao-status" style="margin-top:10px;font-size:11.5px;color:var(--ink-faint)"></div>
+    </div>
+  </div>
+`;
+
+SINAGEPE.load().then(data => {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao;
+
+  const id = params.get('id');
+  const a = data.alertasDetalhe.find(x => x.id === id) || data.alertasDetalhe[0];
+  const SEV = { 'Crítico': 'crit', 'Atenção': 'warn' };
+  document.getElementById('alerta-titulo').innerHTML = `${a.titulo} <span class="pill pill-${SEV[a.severidade]}">${a.severidade}</span>`;
+  document.getElementById('alerta-desc').textContent = a.descricao;
+  document.getElementById('alerta-fontes').innerHTML = a.fontes.map(f => `<div class="medida-row"><span>${f}</span></div>`).join('');
+  document.getElementById('alerta-medidas').innerHTML = a.medidas.map(m => `<div class="medida-row"><span>${m.descricao}</span><span class="pill pill-info">${m.responsavel}</span></div>`).join('');
+
+  const kpis = [
+    { label: 'Grau de Confiança', valor: a.confianca + '%', estado: 'IA', tipo: 'ok' },
+    { label: 'Província', valor: a.provincia, estado: a.tipo, tipo: 'info' },
+    { label: 'Tempo Decorrido', valor: a.tempo, estado: a.estado, tipo: SEV[a.severidade] },
+    { label: 'Produto Afectado', valor: a.produto, estado: 'Monitorizado', tipo: 'warn' },
+  ];
+  document.getElementById('kpi-row').innerHTML = kpis.map(SINAGEPE.kpiCard).join('');
+
+  document.getElementById('btn-mitigar').addEventListener('click', function () {
+    this.disabled = true;
+    document.getElementById('acao-status').textContent = '✔ Instituição responsável notificada. (Simulação.)';
+  });
+  document.getElementById('btn-oficio').addEventListener('click', function () {
+    this.disabled = true;
+    document.getElementById('acao-status').textContent = '📄 Rascunho de ofício gerado, a aguardar revisão. (Simulação.)';
+  });
+});
+</script>
+</body>
+</html>

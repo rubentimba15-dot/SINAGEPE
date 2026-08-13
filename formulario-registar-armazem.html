@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Registar Armazém — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .modal-backdrop { position: fixed; inset: 0; background: rgba(1,3,11,0.7); backdrop-filter: blur(2px); display: flex; align-items: center; justify-content: center; z-index: 20; }
+  .modal-box { background: var(--bg-card-hover); border: 1px solid var(--border-card); border-radius: 12px; padding: 28px; width: 600px; max-width: 92vw; max-height: 88vh; overflow-y: auto; box-shadow: 0 16px 40px rgba(0,0,0,0.5); }
+  .modal-header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 16px; border-bottom: 1px solid var(--border-card); margin-bottom: 18px; }
+  .modal-title { font-size: 17px; font-weight: 700; color: #fff; }
+  .modal-sub { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+  .modal-close { color: var(--ink-faint); cursor: pointer; font-size: 18px; background: none; border: none; }
+  .field-group { margin-bottom: 15px; }
+  .field-row { display: flex; gap: 14px; }
+  .field-row .field-group { flex: 1; }
+  .field-label { font-size: 11.5px; font-weight: 600; color: var(--ink-faint); margin-bottom: 5px; display: block; }
+  .field-input, .field-select { width: 100%; background: var(--bg-input); border: 1px solid var(--border-input); border-radius: 6px; padding: 10px 12px; color: #fff; font-size: 13px; font-family: inherit; }
+  .field-input::placeholder { color: var(--ink-muted); }
+  .segmented { display: flex; gap: 4px; background: var(--bg-input); border: 1px solid var(--border-input); border-radius: 6px; padding: 4px; }
+  .segment { flex: 1; text-align: center; padding: 8px; border-radius: 4px; font-size: 12.5px; font-weight: 500; color: var(--ink-faint); cursor: pointer; }
+  .segment.selected { background: var(--accent-orange); color: #040712; font-weight: 700; }
+  .chip-wrap { display: flex; flex-wrap: wrap; gap: 8px; background: var(--bg-input); border: 1px solid var(--border-input); border-radius: 6px; padding: 10px 12px; }
+  .chip { padding: 4px 10px; border-radius: 4px; font-size: 10.5px; font-weight: 600; cursor: pointer; background: rgba(30,45,75,0.4); color: var(--ink-faint); border: 1px solid transparent; }
+  .chip.selected { background: var(--bg-card-hover); color: #fff; border-color: var(--accent-orange); }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 12px; padding-top: 16px; border-top: 1px solid var(--border-card); margin-top: 18px; }
+  .btn-cancel { border: 1px solid var(--border-card); background: transparent; color: var(--ink-faint); border-radius: 6px; padding: 10px 18px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .btn-save { background: var(--accent-orange); border: none; color: #040712; border-radius: 6px; padding: 10px 20px; font-size: 13px; font-weight: 700; cursor: pointer; }
+  .field-status { font-size: 12px; margin-top: 12px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div><div class="modal-title">Registar Novo Armazém</div><div class="modal-sub">Insira os dados técnicos e operacionais da infraestrutura.</div></div>
+      <button class="modal-close" onclick="location.href='cadastro-armazens.html'">✕</button>
+    </div>
+    <div class="field-group"><label class="field-label">Nome do Armazém</label><input class="field-input" placeholder="Ex: Armazém Geral de Chimoio - Bloco A"></div>
+    <div class="field-row">
+      <div class="field-group"><label class="field-label">Província</label>
+        <select class="field-select" id="f-provincia"></select>
+      </div>
+      <div class="field-group"><label class="field-label">Distrito</label><input class="field-input" placeholder="Ex: Beira"></div>
+    </div>
+    <div class="field-row">
+      <div class="field-group"><label class="field-label">Coordenadas GPS</label><input class="field-input" placeholder="Ex: -19.827, 34.872"></div>
+      <div class="field-group"><label class="field-label">Capacidade (Toneladas)</label><input class="field-input" type="number" placeholder="Ex: 2500"></div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Tipo de Armazenamento</label>
+      <div class="segmented" id="tipo-segmented">
+        <div class="segment" data-t="Frio">Frio</div><div class="segment" data-t="Seco">Seco</div><div class="segment selected" data-t="Misto">Misto</div>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Produtos Permitidos (selecção múltipla)</label>
+      <div class="chip-wrap" id="produtos-chips">
+        <div class="chip selected" data-c="Cereais">Cereais</div><div class="chip selected" data-c="Medicamentos">Medicamentos</div>
+        <div class="chip selected" data-c="Sementes">Sementes</div><div class="chip" data-c="Perecíveis">Perecíveis</div>
+        <div class="chip" data-c="Combustíveis">Combustíveis</div>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group"><label class="field-label">Responsável Técnico</label><input class="field-input" placeholder="Ex: Eng. Amílcar Silva"></div>
+      <div class="field-group"><label class="field-label">Contacto (Moçambique)</label><input class="field-input" placeholder="+258 84 000 0000"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="location.href='cadastro-armazens.html'">Cancelar</button>
+      <button class="btn-save" id="btn-guardar">Guardar Registo</button>
+    </div>
+    <div class="field-status" id="form-status"></div>
+  </div>
+</div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('armazens', 'Gestão de Armazéns', 'Sistema de Armazenamento Geral');
+SINAGEPE.load().then(data => {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao;
+  document.getElementById('f-provincia').innerHTML = data.provincias.map(p => `<option>${p.nome}</option>`).join('');
+});
+
+document.querySelectorAll('#tipo-segmented .segment').forEach(el => el.addEventListener('click', () => {
+  document.querySelectorAll('#tipo-segmented .segment').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+}));
+document.querySelectorAll('#produtos-chips .chip').forEach(el => el.addEventListener('click', () => el.classList.toggle('selected')));
+document.getElementById('btn-guardar').addEventListener('click', () => {
+  document.getElementById('form-status').textContent = '✔ Registo guardado com sucesso. (Simulação — não persiste entre sessões.)';
+  document.getElementById('form-status').style.color = 'var(--ok)';
+});
+</script>
+</body>
+</html>

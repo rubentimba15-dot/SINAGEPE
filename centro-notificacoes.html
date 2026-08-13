@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Centro de Notificações — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+<script src="assets/access-control.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('alertas', 'Centro de Notificações', 'Todas as Actividades');
+document.getElementById('content-mount').innerHTML = `<div class="card"><div class="card-title">Notificações Recentes</div><div id="notif-list"></div></div>`;
+SINAGEPE.load().then(data => {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao;
+  const SEV = { 'Crítico': 'crit', 'Atenção': 'warn' };
+  document.getElementById('notif-list').innerHTML = data.alertasDetalhe.map(a => `
+    <div class="alert-card ${SEV[a.severidade]}">
+      <div style="display:flex;justify-content:space-between"><span class="alert-title">${a.titulo}</span><span class="alert-meta">${a.tempo}</span></div>
+      <div class="alert-desc">${a.provincia} · ${a.tipo}</div>
+    </div>`).join('');
+});
+</script>
+</body>
+</html>

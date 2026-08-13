@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conexão Perdida — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html,body { margin:0; padding:0; background:#171c2b; font-family:'Inter',sans-serif; min-height:100vh; }
+  .banner { background:rgba(217,64,51,0.15); color:#f26659; font-size:13px; font-weight:500; padding:12px 24px; text-align:center; }
+  .wrap { min-height:calc(100vh - 44px); display:flex; align-items:center; justify-content:center; }
+  .card { background:#1c2133; border-radius:20px; padding:40px 48px; width:460px; max-width:90vw; text-align:center; }
+  .icon-circle { width:100px; height:100px; border-radius:50px; background:#3a1a1a; display:flex; align-items:center; justify-content:center; font-size:36px; color:#d9594d; margin:0 auto 24px; }
+  h1 { color:#f2f5f7; font-size:24px; margin:0 0 12px; }
+  p { color:#8c94a1; font-size:14px; line-height:1.6; margin:0 0 28px; }
+  .btn-solid { background:#d9a621; color:#0d0d1a; border-radius:8px; padding:13px 30px; font-size:14px; font-weight:700; border:none; cursor:pointer; }
+</style>
+</head>
+<body>
+<div class="banner">⚠ Sem conexão ao servidor. Os dados apresentados podem não estar actualizados. A reconectar...</div>
+<div class="wrap">
+  <div class="card">
+    <div class="icon-circle">✕</div>
+    <h1>Conexão Perdida</h1>
+    <p>Não foi possível estabelecer conexão com o servidor.<br>Verifique a sua ligação à internet e tente novamente.</p>
+    <button class="btn-solid" onclick="location.reload()">Tentar Novamente</button>
+  </div>
+</div>
+</body>
+</html>

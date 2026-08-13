@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal de Comerciantes — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="brand"><div class="brand-mark">P</div><div class="brand-text"><div class="brand-title">Portal Privado</div><div class="brand-sub">SINAGEPE — Comerciantes</div></div></div>
+      <nav class="nav-list">
+        <a class="nav-item active" href="portal-comerciantes.html"><span class="nav-icon">▦</span> PAINEL</a>
+        <a class="nav-item" href="marketplace-b2b.html"><span class="nav-icon">◎</span> Mercado</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⇄</span> Logística</a>
+        <a class="nav-item" href="#"><span class="nav-icon">▤</span> Armazéns</a>
+        <a class="nav-item" href="#"><span class="nav-icon">≋</span> Simulador</a>
+        <a class="nav-item" href="#"><span class="nav-icon">▧</span> Relatórios</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⚙</span> Configurações</a>
+        <a class="nav-item" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="margin-top:8px;border-top:1px solid rgba(212,165,116,0.15);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:#ef4444">Sair (Logout)</span></a>
+      </nav>
+    </div>
+    <div class="sidebar-footer"><div class="avatar-dot" id="user-initials">AM</div><div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div></div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title-group"><div class="topbar-title">Portal de Comerciantes</div><div class="topbar-badge">Stock &amp; Reabastecimento</div></div>
+      <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+    </div>
+    <div class="content" id="content-mount"></div>
+    <div class="footer"><span>© 2026 SINAGEPE Moçambique — Acesso Privado</span><span id="footer-updated">—</span></div>
+  </div>
+</div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.load().then(data => {
+  const c = data.portalComerciantes;
+  SINAGEPE.renderUserFooter({ utilizador: { nome: c.armazem, instituicao: 'Sector Comercial', direccao: 'Director de Logística' } });
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  document.getElementById('content-mount').innerHTML = `
+    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
+      ${SINAGEPE.kpiCard({ label: 'Stock Actual', valor: c.kpis.stockPercent + '%', estado: 'Regular', tipo: 'warn' })}
+      ${SINAGEPE.kpiCard({ label: 'Produtos em Falta', valor: c.kpis.produtosEmFalta, estado: 'Atenção', tipo: 'crit' })}
+      ${SINAGEPE.kpiCard({ label: 'Lucro Estimado', valor: c.kpis.lucroEstimadoPercent + '%', estado: 'Normal', tipo: 'ok' })}
+      ${SINAGEPE.kpiCard({ label: 'Alertas Activos', valor: c.kpis.alertasActivos, estado: 'Monitorizar', tipo: 'warn' })}
+    </div>
+
+    <div class="card">
+      <div class="card-title">Sugestões de Encomenda &amp; Reabastecimento Automático</div>
+      <div class="card-subtitle">Limiares distritais: Crítico &lt;7 dias, Atenção 7&ndash;14, Estável &ge;15</div>
+      <table class="balance-table">
+        <thead><tr><th>Produto</th><th>Stock Actual</th><th>Cobertura</th><th>Recomendação</th><th>Fornecedor Sugerido</th><th>Preço Est.</th></tr></thead>
+        <tbody id="reabastecimento-body"></tbody>
+      </table>
+    </div>
+  `;
+
+  document.getElementById('reabastecimento-body').innerHTML = c.reabastecimento.map(r => {
+    let rec, tipo;
+    if (r.coberturaDias < 7) { rec = 'Reabastecer'; tipo = 'crit'; }
+    else if (r.coberturaDias < 15) { rec = 'Comprar Breve'; tipo = 'warn'; }
+    else { rec = 'Manter Stock'; tipo = 'ok'; }
+    return `<tr><td>${r.produto}</td><td>${r.stockActualT} t</td><td>${r.coberturaDias} dias</td>
+      <td><span class="state-tag" style="background:var(--${tipo}-bg);color:var(--${tipo})">${rec}</span></td>
+      <td>${r.fornecedor}</td><td>${r.precoEstimado ? r.precoEstimado + ' MZN/t' : '—'}</td></tr>`;
+  }).join('');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balanço Nacional Vivo — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .tab-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tab { padding: 7px 13px; border-radius: 7px; font-size: 12px; font-weight: 600; cursor: pointer; background: var(--navy-800); color: var(--ink-dim); border: 1px solid var(--line); }
+  .tab.active { background: var(--bronze); color: var(--navy-950); border-color: var(--bronze); }
+  .equation-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-family: var(--font-data); font-size: 13px; margin: 14px 0; }
+  .eq-term { background: var(--navy-800); border-radius: 8px; padding: 10px 14px; text-align: center; }
+  .eq-term .eq-label { font-size: 9.5px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 4px; }
+  .eq-op { color: var(--ink-faint); font-size: 16px; }
+</style>
+</head>
+<body>
+
+<div class="app-shell" id="app-shell"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('painel', 'Balanço Nacional Vivo', 'Equação de Fluxo Físico Nacional');
+
+document.getElementById('content-mount').innerHTML = `
+  <div class="card">
+    <div class="tab-row" id="produto-tabs"></div>
+    <div class="card-title" style="margin-bottom:2px;display:flex;justify-content:space-between;align-items:center">Equação de Fluxo Físico Nacional
+      <a href="detalhe-produto.html" style="font-size:11px;color:var(--bronze);font-weight:600">Ver Detalhe do Arroz →</a>
+    </div>
+    <div class="card-subtitle">Disponibilidade = Stock Inicial + Produção + Importações − Exportações − Consumo − Perdas</div>
+    <div class="equation-row" id="equation-row"></div>
+  </div>
+
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">Disponibilidade Física vs. Logística Efectiva</div>
+      <div class="card-subtitle">A física é o stock bruto; a efectiva ajusta pelo IPL (pressão logística actual)</div>
+      <div class="row-2">
+        <div class="card" style="background:var(--navy-800)">
+          <div class="kpi-label">Disponibilidade Física Estática</div>
+          <div class="kpi-value" id="disp-fisica" style="font-size:24px"></div>
+        </div>
+        <div class="card" style="background:var(--warn-bg)">
+          <div class="kpi-label">Disponibilidade Logística Efectiva</div>
+          <div class="kpi-value" id="disp-efectiva" style="font-size:24px;color:var(--warn)"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Distribuição por Zona (Norte/Centro/Sul)</div>
+      <div class="card-subtitle">Stock do produto seleccionado, repartido pelas três zonas</div>
+      <div id="zona-table"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Previsão de Disponibilidade (180 dias)</div>
+    <div class="card-subtitle">Três cenários — Optimista (−15% variância), Base, Pessimista (+15% variância)</div>
+    <canvas id="chart-previsao" height="180"></canvas>
+  </div>
+`;
+
+SINAGEPE.load().then(renderBalanco);
+
+let PRODUTO_ACTUAL = null;
+
+function renderBalanco(data) {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  document.getElementById('produto-tabs').innerHTML = data.balancoNacional.map(p =>
+    `<div class="tab" data-p="${p.produto}">${p.produto}</div>`).join('');
+
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    render(t.dataset.p, data);
+  }));
+
+  document.querySelector('.tab').classList.add('active');
+  render(data.balancoNacional[0].produto, data);
+}
+
+function render(produtoNome, data) {
+  PRODUTO_ACTUAL = produtoNome;
+  const p = data.balancoNacional.find(x => x.produto === produtoNome);
+  const perdas = Math.round(p.stock * 0.01); // perdas estimadas — ~1% do stock, ver secção 59 do documento
+  const disponibilidade = p.stock + p.producao + p.importacao - p.exportacao - p.consumo - perdas;
+
+  document.getElementById('equation-row').innerHTML = `
+    <div class="eq-term"><span class="eq-label">Stock Inicial</span>${SINAGEPE.fmt(p.stock)}</div>
+    <span class="eq-op">+</span>
+    <div class="eq-term"><span class="eq-label">Produção</span>${SINAGEPE.fmt(p.producao)}</div>
+    <span class="eq-op">+</span>
+    <div class="eq-term"><span class="eq-label">Importações</span>${SINAGEPE.fmt(p.importacao)}</div>
+    <span class="eq-op">−</span>
+    <div class="eq-term"><span class="eq-label">Exportações</span>${SINAGEPE.fmt(p.exportacao)}</div>
+    <span class="eq-op">−</span>
+    <div class="eq-term"><span class="eq-label">Consumo</span>${SINAGEPE.fmt(p.consumo)}</div>
+    <span class="eq-op">−</span>
+    <div class="eq-term"><span class="eq-label">Perdas</span>${SINAGEPE.fmt(perdas)}</div>
+    <span class="eq-op">=</span>
+    <div class="eq-term" style="background:var(--ok-bg);color:var(--ok)"><span class="eq-label" style="color:var(--ok)">Disponibilidade</span>${SINAGEPE.fmt(disponibilidade)}</div>
+  `;
+
+  // Física estática (KPI nacional já confirmado) vs. Efectiva (ajustada pelo IPL — secção 60)
+  const dispFisica = data.kpis.disponibilidadeNacional.valor;
+  const ipl = SINAGEPE.calcIPL(data);
+  const dispEfectiva = Math.round(dispFisica * (1 - ipl));
+  document.getElementById('disp-fisica').textContent = dispFisica + '%';
+  document.getElementById('disp-efectiva').textContent = dispEfectiva + '%';
+
+  // distribuição por zona, proporcional aos pesos já confirmados
+  document.getElementById('zona-table').innerHTML = data.distribuicaoZonas.map(z => {
+    const provincias = data.zonasProvincias[z.zona].join(', ');
+    const stockZona = Math.round(p.stock * z.percentagem / 100);
+    return `<div class="medida-row"><span>${z.zona} <span style="color:var(--ink-faint);font-size:10.5px">(${provincias})</span></span><span>${SINAGEPE.fmt(stockZona)} t</span></div>`;
+  }).join('');
+
+  // previsão 180 dias — fluxo líquido mensal aplicado ao stock actual, com banda ±15%
+  const fluxoLiquidoMensal = (p.producao + p.importacao - p.exportacao - p.consumo) / 6;
+  const meses = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6'];
+  const base = meses.map((_, i) => Math.round(p.stock + fluxoLiquidoMensal * (i + 1)));
+  const optimista = base.map(v => Math.round(v * 1.15));
+  const pessimista = base.map(v => Math.round(v * 0.85));
+  const capacidadeCritica = Math.round(p.stock * 0.3);
+
+  if (window.chartPrevisao) window.chartPrevisao.destroy();
+  window.chartPrevisao = new Chart(document.getElementById('chart-previsao'), {
+    type: 'line',
+    data: {
+      labels: meses,
+      datasets: [
+        { label: 'Optimista', data: optimista, borderColor: '#3ecf8e', tension: 0.3, pointRadius: 2 },
+        { label: 'Base', data: base, borderColor: '#d9a441', tension: 0.3, pointRadius: 2 },
+        { label: 'Pessimista', data: pessimista, borderColor: '#e2555c', tension: 0.3, pointRadius: 2 },
+        { label: 'Capacidade Crítica', data: meses.map(() => capacidadeCritica), borderColor: '#5f6d90', borderDash: [5, 4], pointRadius: 0 },
+      ]
+    },
+    options: {
+      plugins: { legend: { position: 'bottom', labels: { color: '#97a3c2', font: { size: 10.5 }, boxWidth: 10 } } },
+      scales: {
+        x: { ticks: { color: '#5f6d90', font: { size: 10 } }, grid: { display: false } },
+        y: { ticks: { color: '#5f6d90', font: { size: 10 } }, grid: { color: 'rgba(179,130,74,0.08)' } },
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>

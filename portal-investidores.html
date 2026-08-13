@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal de Investimento Agro-Industrial — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .op-card { background: var(--bg-card-hover); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+  .op-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .op-nome { font-size: 13px; font-weight: 700; color: #fff; }
+  .op-meta { font-size: 11.5px; color: var(--ink-dim); }
+  .op-risco { font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
+  .hotspot-map { background: var(--bg-input); border-radius: 12px; height: 220px; position: relative; overflow: hidden; }
+  .hotspot-tag { position: absolute; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 8px; padding: 6px 10px; display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; }
+  .hotspot-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .sim-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <div class="brand-mark" style="background:linear-gradient(90deg,#009739,#d11119)">I</div>
+        <div class="brand-text"><div class="brand-title">Portal Privado</div><div class="brand-sub">SINAGEPE — Investidores</div></div>
+      </div>
+      <nav class="nav-list">
+        <a class="nav-item active" href="portal-investidores.html"><span class="nav-icon">▦</span> PAINEL</a>
+        <a class="nav-item" href="alertas.html"><span class="nav-icon">⚠</span> Alertas</a>
+        <a class="nav-item" href="mapa-nacional.html"><span class="nav-icon">◎</span> Mapa</a>
+        <a class="nav-item" href="simulador-importacoes.html"><span class="nav-icon">≋</span> Simulador</a>
+        <a class="nav-item" href="portal-parceiros.html"><span class="nav-icon">🤝</span> Parceiros</a>
+        <a class="nav-item" href="portal-investidores.html"><span class="nav-icon">▤</span> Investimentos</a>
+        <a class="nav-item" href="modulo-logistica.html"><span class="nav-icon">⇄</span> Logística</a>
+        <a class="nav-item" href="relatorios.html"><span class="nav-icon">▧</span> Relatórios</a>
+        <a class="nav-item" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="margin-top:8px;border-top:1px solid rgba(212,165,116,0.15);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:#ef4444">Sair (Logout)</span></a>
+      </nav>
+    </div>
+    <div class="sidebar-footer">
+      <div class="avatar-dot" id="user-initials">IM</div>
+      <div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div>
+    </div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title-group"><div class="topbar-title">Portal de Investimento Agro-Industrial Moçambicano</div><div class="topbar-badge">Investidor Privado</div></div>
+      <div class="live-indicator"><span class="live-dot"></span> Conexão Segura · API Activa</div>
+    </div>
+    <div class="content" id="content-mount"></div>
+    <div class="footer"><span>© 2026 Agência para a Promoção de Investimento e Exportações (APIEX) — Acesso Privado SINAGEPE</span><span id="footer-updated">—</span></div>
+  </div>
+</div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.load().then(data => {
+  const p = data.portalInvestidores;
+  SINAGEPE.renderUserFooter({ utilizador: { nome: p.investidor, instituicao: 'Investidor Privado', direccao: 'Director de Portefólio' } });
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  document.getElementById('content-mount').innerHTML = `
+    <div class="kpi-row" id="kpi-row"></div>
+    <div class="row-2">
+      <div class="card">
+        <div class="card-title">Oportunidades de Investimento</div>
+        <div id="oportunidades-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Hotspots de Investimento SINAGEPE</div>
+        <div class="card-subtitle">Zonas francas activas</div>
+        <div class="hotspot-map" id="hotspot-map"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🧮 Simulador de Retorno (IA)</div>
+        <div class="card-subtitle">Projecção média com base no histórico das províncias de Moçambique</div>
+        <div class="sim-row"><span style="font-weight:700;color:#fff">Investimento Base</span><span id="sim-base" style="font-weight:700;color:var(--ok)"></span></div>
+        <div class="kpi-label">Retorno Projectado (<span id="sim-anos"></span> Anos)</div>
+        <div class="kpi-value" style="font-size:20px;margin:4px 0" id="sim-retorno"></div>
+        <div style="font-size:11px;color:var(--ok);font-weight:600" id="sim-taxa"></div>
+      </div>
+    </div>
+  `;
+
+  const kpiDefs = p.kpis.map(k => ({ label: k.label, valor: k.valor, estado: k.tag, tipo: k.tipo || 'ok' }));
+  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
+
+  document.getElementById('oportunidades-list').innerHTML = p.oportunidades.map(o => `
+    <div class="op-card">
+      <div class="op-top"><span class="op-nome">${o.nome}</span><span class="pill pill-ok">${o.roi}% ROI</span></div>
+      <div class="op-meta">${o.local} · Invest: ${SINAGEPE.fmt(o.investimento)} MZN</div>
+      <div class="op-risco">Risco: ${o.risco}</div>
+    </div>`).join('');
+
+  const cores = ['var(--ok)', 'var(--warn)'];
+  const posicoes = [[15, 15, 55, 55], [55, 40, 40, 40]];
+  document.getElementById('hotspot-map').innerHTML = p.hotspots.map((h, i) => {
+    const [top, left] = posicoes[i];
+    return `<div class="hotspot-tag" style="top:${top}%;left:${left}%"><span class="hotspot-dot" style="background:${cores[i % 2]}"></span>${h.nome}</div>`;
+  }).join('');
+
+  document.getElementById('sim-base').textContent = SINAGEPE.fmt(p.simulador.investimentoBaseMzn) + ' MZN';
+  document.getElementById('sim-anos').textContent = p.simulador.anos;
+  const retorno = Math.round(p.simulador.investimentoBaseMzn * (1 + p.simulador.taxaRentabilidadePercent / 100 * p.simulador.anos));
+  document.getElementById('sim-retorno').textContent = SINAGEPE.fmt(retorno) + ' MZN';
+  document.getElementById('sim-taxa').textContent = 'Taxa interna de rentabilidade de ' + p.simulador.taxaRentabilidadePercent + '%';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sucesso — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .wrap-central { flex:1; display:flex; align-items:center; justify-content:center; padding:60px; }
+  .card-suc { background:#1c2133; border-radius:20px; padding:40px 48px; width:600px; max-width:92vw; text-align:center; }
+  .icon-ok { width:120px; height:120px; border-radius:60px; background:#218c59; display:flex; align-items:center; justify-content:center; font-size:44px; color:#fff; margin:0 auto 22px; }
+  h1 { color:#f2f5f7; font-size:22px; margin:0 0 10px; }
+  p { color:#8c94a1; font-size:14px; line-height:1.5; margin:0 0 20px; }
+  .detalhe-box { background:rgba(33,140,89,0.1); border-radius:8px; padding:16px; color:#21b273; font-size:13px; font-weight:500; margin-bottom:24px; }
+  .btn-solid { display:inline-block; background:#d9a621; color:#0d0d1a; border-radius:8px; padding:13px 40px; font-size:14px; font-weight:700; text-decoration:none; }
+</style>
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+<script src="assets/access-control.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('armazens', 'Gestão de Armazéns', 'Sistema de Armazenamento Geral');
+document.getElementById('content-mount').innerHTML = `
+  <div class="wrap-central"><div class="card-suc">
+    <div class="icon-ok">✓</div>
+    <h1>Operação Concluída com Sucesso</h1>
+    <p>O stock de Arroz no Armazém Regional Sul - Maputo foi actualizado com sucesso. Registo #AZ-2026-0847.</p>
+    <div class="detalhe-box">Arroz · +5.000t · Armazém Regional Sul - Maputo · 13/08/2026</div>
+    <a class="btn-solid" href="cadastro-armazens.html">Voltar ao Painel</a>
+  </div></div>
+`;
+SINAGEPE.load().then(data => { SINAGEPE.renderUserFooter(data); document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao; });
+</script>
+</body>
+</html>

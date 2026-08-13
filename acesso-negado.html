@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acesso Restrito — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html,body { margin:0; padding:0; background:#171c2b; font-family:'Inter',sans-serif; min-height:100vh; }
+  .wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; }
+  .card { background:#1c2133; border-radius:20px; padding:44px 48px; width:460px; max-width:90vw; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+  .icon-circle { width:100px; height:100px; border-radius:50px; background:#3a2a10; display:flex; align-items:center; justify-content:center; font-size:36px; margin:0 auto 24px; }
+  h1 { color:#f2f5f7; font-size:24px; margin:0 0 12px; }
+  p { color:#8c94a1; font-size:14px; line-height:1.6; margin:0 0 28px; }
+  .btn-row { display:flex; gap:14px; justify-content:center; }
+  .btn { border-radius:8px; padding:13px 24px; font-size:14px; font-weight:700; border:none; cursor:pointer; text-decoration:none; }
+  .btn-outline { background:#262b3d; border:1px solid #404554; color:#b2bac2; }
+  .btn-solid { background:#d9a621; color:#0d0d1a; }
+  .detalhe { margin-top:20px; font-size:11.5px; color:#666e78; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="icon-circle">🔒</div>
+    <h1>Acesso Restrito</h1>
+    <p>Não tem permissões para aceder a este módulo.<br>Contacte o administrador para solicitar acesso.</p>
+    <div class="btn-row">
+      <a class="btn btn-outline" href="#" onclick="alert('Pedido enviado ao Administrador de Sistema. (Simulação.)'); return false;">Solicitar Acesso</a>
+      <a class="btn btn-solid" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')">Voltar ao Início</a>
+    </div>
+    <div class="detalhe" id="detalhe-pagina"></div>
+  </div>
+</div>
+<script>
+  const params = new URLSearchParams(location.search);
+  const pagina = params.get('negado');
+  if (pagina) document.getElementById('detalhe-pagina').textContent = 'Ecrã solicitado: ' + pagina;
+</script>
+</body>
+</html>

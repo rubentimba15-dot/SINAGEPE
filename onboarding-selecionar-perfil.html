@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seleccionar Perfil — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  html,body { margin:0; padding:0; background:#171c2b; font-family:'Inter',sans-serif; min-height:100vh; }
+  .wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:40px; }
+  .card { background:#1c2133; border-radius:20px; padding:44px 50px; width:760px; max-width:92vw; }
+  h1 { color:#fff; font-size:24px; margin:0 0 6px; text-align:center; }
+  h2 { color:#808c99; font-size:13.5px; margin:0 0 28px; text-align:center; font-weight:400; }
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:30px; }
+  .perfil-card { background:#262b3d; border:2px solid #404554; border-radius:10px; padding:14px 16px; cursor:pointer; }
+  .perfil-card.sel { border-color:#d9a621; background:#2b2515; }
+  .perfil-nome { color:#fff; font-weight:700; font-size:13.5px; }
+  .perfil-inst { color:#8c94a1; font-size:11px; margin-top:3px; }
+  .btn-row { display:flex; justify-content:space-between; }
+  .btn-back { color:#8c94a1; background:none; border:none; font-size:13.5px; cursor:pointer; }
+  .btn-solid { background:#d9a621; color:#0d0d1a; border-radius:25px; padding:12px 40px; font-size:14px; font-weight:700; border:none; cursor:pointer; text-decoration:none; display:inline-block; }
+  .dots { margin-top:24px; display:flex; gap:8px; justify-content:center; }
+  .dot { width:10px; height:10px; border-radius:50%; background:#404554; }
+  .dot.on { background:#d9a621; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Qual é o seu perfil institucional?</h1>
+    <h2>Isto define o que vai ver no sistema — cada perfil só acede ao que precisa</h2>
+    <div class="grid" id="perfil-grid"></div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="location.href='onboarding-boas-vindas.html'">← Voltar</button>
+      <a class="btn-solid" href="onboarding-configurar-provincias.html">Continuar →</a>
+    </div>
+    <div class="dots"><div class="dot"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div>
+  </div>
+</div>
+<script>
+  const perfis = [
+    ['Administrador de Sistema', 'SINAGEPE — Direcção Técnica'], ['Governo Central (Decisor)', 'Governo de Moçambique'],
+    ['MASA — Agricultura', 'Ministério da Agricultura'], ['Ministério das Finanças', 'Finanças'],
+    ['Empresas / Importadores', 'Operador Corporativo'], ['Produtores / Agricultores', 'Operador Corporativo'],
+    ['Transportadores', 'Operador Corporativo'], ['Público em Geral', 'Cidadão'],
+  ];
+  document.getElementById('perfil-grid').innerHTML = perfis.map(([nome, inst], i) => `
+    <div class="perfil-card ${i===0?'sel':''}" onclick="document.querySelectorAll('.perfil-card').forEach(c=>c.classList.remove('sel'));this.classList.add('sel')">
+      <div class="perfil-nome">${nome}</div><div class="perfil-inst">${inst}</div>
+    </div>`).join('');
+</script>
+</body>
+</html>

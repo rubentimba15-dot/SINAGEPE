@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard IGSAE — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="brand"><div class="brand-mark">I</div><div class="brand-text"><div class="brand-title">IGSAE</div><div class="brand-sub">Inspecção-Geral</div></div></div>
+      <nav class="nav-list">
+        <a class="nav-item active" href="dashboard-igsae.html"><span class="nav-icon">▦</span> Painel de Fiscalização</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⚠</span> Centro de Alertas</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⛁</span> Empresas Suspeitas</a>
+        <a class="nav-item" href="#"><span class="nav-icon">▧</span> Auto de Infração</a>
+        <a class="nav-item" href="#"><span class="nav-icon">⚙</span> Configurações</a>
+        <a class="nav-item" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="margin-top:8px;border-top:1px solid rgba(212,165,116,0.15);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:#ef4444">Sair (Logout)</span></a>
+      </nav>
+    </div>
+    <div class="sidebar-footer"><div class="avatar-dot" id="user-initials">FM</div><div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div></div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title-group"><div class="topbar-title">Dashboard IGSAE</div><div class="topbar-badge">Portal Vivo de Inteligência Integrada (SIMULADO)</div></div>
+      <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+    </div>
+    <div class="content" id="content-mount"></div>
+    <div class="footer"><span>© 2026 SINAGEPE Moçambique - IGSAE</span><span id="footer-updated">—</span></div>
+  </div>
+</div>
+
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.load().then(data => {
+  const i = data.dashboardIGSAE;
+  SINAGEPE.renderUserFooter({ utilizador: { nome: 'Dra. F. Mapote', instituicao: 'IGSAE', direccao: 'Inspectora-Geral Adjunta' } });
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  document.getElementById('content-mount').innerHTML = `
+    <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
+      ${SINAGEPE.kpiCard({ label: 'Fiscalizações Realizadas (Mês)', valor: i.kpis.fiscalizacoesRealizadasMes, estado: 'No Prazo', tipo: 'ok' })}
+      ${SINAGEPE.kpiCard({ label: 'Produtos Apreendidos', valor: i.kpis.produtosApreendidosT + ' ton', estado: 'Crítico', tipo: 'crit' })}
+      ${SINAGEPE.kpiCard({ label: 'Casos Pendentes', valor: i.kpis.casosPendentes, estado: 'Em Análise', tipo: 'warn' })}
+    </div>
+
+    <div class="row-2">
+      <div class="card">
+        <div class="card-title">Mapa de Risco e Fiscalização</div>
+        <div id="mapa-risco-list"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Ranking de Infracções Detectadas</div>
+        <table class="balance-table">
+          <thead><tr><th>Tipo</th><th>Ocorrências</th><th>Tendência</th><th>Gravidade</th></tr></thead>
+          <tbody id="infracoes-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Principais Operadores sob Suspeita</div>
+      <div class="card-subtitle">Pseudónimos consistentes e persistentes — o mesmo operador mantém sempre o mesmo nome, para permitir acompanhar reincidências ao longo do tempo</div>
+      <table class="balance-table">
+        <thead><tr><th>Operador</th><th>Província</th><th>Reincidências</th><th>Últ. Visita</th><th>Nível de Risco</th></tr></thead>
+        <tbody id="suspeitos-body"></tbody>
+      </table>
+    </div>
+  `;
+
+  const RISCO_TIPO = { 'Risco Extremo': 'crit', 'Alerta/Desvio': 'warn', 'Fiscalizado Limpo': 'ok' };
+  document.getElementById('mapa-risco-list').innerHTML = i.mapaRisco.map(m => `
+    <div class="medida-row"><span>${m.local}${m.tipo !== '—' ? ' — ' + m.tipo : ''}</span><span class="state-tag" style="background:var(--${RISCO_TIPO[m.nivel]}-bg);color:var(--${RISCO_TIPO[m.nivel]})">${m.nivel}</span></div>`).join('');
+
+  const GRAV_TIPO = { 'Crítica': 'crit', 'Alerta': 'warn' };
+  document.getElementById('infracoes-body').innerHTML = i.rankingInfracoes.map(r => `
+    <tr><td>${r.tipo}</td><td>${r.ocorrencias}</td><td>${r.tendencia}</td>
+    <td><span class="state-tag" style="background:var(--${GRAV_TIPO[r.gravidade]}-bg);color:var(--${GRAV_TIPO[r.gravidade]})">${r.gravidade}</span></td></tr>`).join('');
+
+  const RISCO_OP_TIPO = { 'Severo': 'crit', 'Médio': 'warn' };
+  document.getElementById('suspeitos-body').innerHTML = i.operadoresSuspeitos.map(o => `
+    <tr><td>${o.nome}</td><td>${o.provincia}</td><td>${o.autosEmitidos} Autos Emitidos</td><td>${o.ultimaVisita}</td>
+    <td><span class="state-tag" style="background:var(--${RISCO_OP_TIPO[o.nivelRisco]}-bg);color:var(--${RISCO_OP_TIPO[o.nivelRisco]})">${o.nivelRisco}</span></td></tr>`).join('');
+});
+</script>
+</body>
+</html>

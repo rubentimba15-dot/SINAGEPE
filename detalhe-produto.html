@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Detalhe do Produto — SINAGEPE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .breadcrumb { font-size: 12px; color: var(--ink-faint); margin-bottom: 4px; }
+  .page-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .page-title { font-size: 26px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 14px; }
+  .back-btn { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600; color: var(--bronze); }
+  .flow-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+  .flow-node { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .flow-icon { width: 40px; height: 40px; border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
+  .flow-arrow { color: var(--ink-faint); }
+  .move-card { background: var(--bg-card-hover); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('painel', 'Atlas de Monitoria de Mercadorias e Corredores', 'Sistema Vivo');
+
+document.getElementById('content-mount').innerHTML = `
+  <div class="page-title-row">
+    <div>
+      <div class="breadcrumb">Balanço Nacional &gt; Grãos &gt; <span id="prod-nome">—</span></div>
+      <div class="page-title">Monitoria de Mercadoria: <span id="prod-nome2">—</span> <span class="pill pill-ok" id="prod-badge"></span></div>
+    </div>
+    <a class="back-btn" href="balanco-nacional-vivo.html">← Voltar ao Balanço Nacional</a>
+  </div>
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)" id="kpi-row"></div>
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">Evolução de Preço de Venda Médio (MZN/kg)</div>
+      <canvas id="chart-preco" height="120"></canvas>
+    </div>
+    <div class="card">
+      <div class="card-title">Distribuição de Stock Regional</div>
+      <div id="regional-list"></div>
+    </div>
+  </div>
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">Fluxo Geral de Abastecimento</div>
+      <div class="flow-row" id="flow-row"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Movimentações Recentes</div>
+      <div id="move-list"></div>
+    </div>
+  </div>
+`;
+
+SINAGEPE.load().then(data => {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao;
+
+  const p = data.detalheProduto;
+  document.getElementById('prod-nome').textContent = p.produto;
+  document.getElementById('prod-nome2').textContent = p.produto;
+  document.getElementById('prod-badge').textContent = `Estável Nacional (${p.coberturaDias} Dias)`;
+
+  const kpis = [
+    { label: 'Stock Total Registado', valor: SINAGEPE.fmt(p.stockTotalT) + ' t', estado: 'Adequado', tipo: 'ok' },
+    { label: 'Consumo Médio Mensal', valor: SINAGEPE.fmt(p.consumoMedioMensalT) + ' t', estado: 'Padrão Estável', tipo: 'ok' },
+    { label: 'Dependência de Importações', valor: p.dependenciaImportacoesPercent + '%', estado: 'Risco Médio', tipo: 'warn' },
+    { label: 'Preço Médio de Venda', valor: p.precoMedioMznKg + ' MZN/kg', estado: '+' + p.variacaoPrecoMomPercent + '% MoM', tipo: 'warn' },
+  ];
+  document.getElementById('kpi-row').innerHTML = kpis.map(SINAGEPE.kpiCard).join('');
+
+  const serie = data.precoTendencia.series.find(s => s.nome.toLowerCase().includes(p.produto.toLowerCase())) || data.precoTendencia.series[0];
+  new Chart(document.getElementById('chart-preco'), {
+    type: 'line',
+    data: { labels: data.precoTendencia.meses, datasets: [{ data: serie.valores, borderColor: '#d97706', backgroundColor: 'rgba(217,119,6,0.12)', fill: true, tension: 0.35, pointRadius: 3 }] },
+    options: { plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { display: false } }, y: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(30,45,75,0.4)' } } } }
+  });
+
+  const REG_TIPO = { 'Estável': 'ok', 'Atenção': 'warn', 'Crítico': 'crit' };
+  document.getElementById('regional-list').innerHTML = p.distribuicaoRegional.map(r => `
+    <div class="util-row"><div class="util-label-row"><span>${r.regiao}</span><span>${SINAGEPE.fmt(r.stock)} t (${r.estado})</span></div>
+    <div class="util-track"><div class="util-fill pill-${REG_TIPO[r.estado]}" style="width:${Math.min(100, r.stock/124)}%"></div></div></div>`).join('');
+
+  const flow = [
+    ['🌐','Importação','SADC/Ásia','var(--bronze)'], ['⚓','Portos Secundários','Beira/Nacala','var(--ok)'],
+    ['🏠','Silos Nacionais','Armazenamento','var(--warn)'], ['🛒','Mercados Locais','Distribuição','var(--bronze)'],
+  ];
+  document.getElementById('flow-row').innerHTML = flow.map(([icon,nome,sub,cor], i) => `
+    ${i>0 ? '<span class="flow-arrow">→</span>' : ''}
+    <div class="flow-node"><div class="flow-icon" style="background:${cor}22;color:${cor}">${icon}</div>
+    <div style="font-size:12px;font-weight:700;color:#fff">${nome}</div><div style="font-size:10px;color:var(--ink-faint)">${sub}</div></div>`).join('');
+
+  document.getElementById('move-list').innerHTML = p.movimentacoes.map(m => `
+    <div class="move-card"><div style="display:flex;justify-content:space-between"><b style="color:#fff;font-size:12.5px">${m.rota}</b><span style="color:var(--ok);font-size:11px;font-weight:600">${m.quantidadeT} t</span></div>
+    <div style="font-size:11px;color:var(--ink-faint);margin-top:4px">${m.nota}</div></div>`).join('');
+});
+</script>
+</body>
+</html>

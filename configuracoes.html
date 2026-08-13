@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Configurações — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .settings-row { display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid var(--border-divider); }
+  .settings-row:last-child { border-bottom:none; }
+  .settings-label { font-size:13px; color:#fff; font-weight:600; }
+  .settings-desc { font-size:11.5px; color:var(--ink-faint); margin-top:2px; }
+  .toggle { width:40px; height:22px; border-radius:11px; background:var(--bg-input); position:relative; cursor:pointer; }
+  .toggle.on { background:var(--ok); }
+  .toggle-dot { width:18px; height:18px; border-radius:50%; background:#fff; position:absolute; top:2px; left:2px; transition:.15s; }
+  .toggle.on .toggle-dot { left:20px; }
+</style>
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+<script src="assets/access-control.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('config', 'Configurações', 'Preferências da Conta');
+document.getElementById('content-mount').innerHTML = `
+  <div class="row-2">
+    <div class="card">
+      <div class="card-title">Notificações</div>
+      <div class="settings-row"><div><div class="settings-label">Alertas Críticos</div><div class="settings-desc">Notificação imediata para rupturas de stock</div></div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      <div class="settings-row"><div><div class="settings-label">Relatórios Semanais</div><div class="settings-desc">Resumo por email todas as segundas-feiras</div></div><div class="toggle on" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+      <div class="settings-row"><div><div class="settings-label">Actualizações do Marketplace</div><div class="settings-desc">Novas ofertas na sua área</div></div><div class="toggle" onclick="this.classList.toggle('on')"><div class="toggle-dot"></div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Conta e Segurança</div>
+      <div class="settings-row"><div><div class="settings-label">Nome</div></div><div style="color:var(--ink-dim);font-size:13px" id="conta-nome">—</div></div>
+      <div class="settings-row"><div><div class="settings-label">E-mail</div></div><div style="color:var(--ink-dim);font-size:13px" id="conta-email">—</div></div>
+      <div class="settings-row"><div><div class="settings-label">Tempo limite de sessão</div><div class="settings-desc">Termina a sessão após inactividade</div></div><div style="color:var(--gold,var(--bronze));font-size:13px;font-weight:700">30 minutos</div></div>
+    </div>
+  </div>
+`;
+SINAGEPE.load().then(data => {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao;
+  const guardado = sessionStorage.getItem('sinagepe_nivel');
+  if (guardado) {
+    const nivel = JSON.parse(guardado);
+    document.getElementById('conta-nome').textContent = nivel.nome;
+    document.getElementById('conta-email').textContent = nivel.email;
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>App Consumidor — Detalhe da Loja</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app-consumidor.css">
+</head>
+<body>
+<div class="phone">
+  <div class="status-bar"><b>09:41</b><span class="status-icons">📶 📡 🔋</span></div>
+  <div class="mob-header">
+    <a class="mob-back" href="app-consumidor-mapa.html">‹ Onde Comprar</a>
+    <div class="mob-title" id="loja-nome" style="margin-top:8px">—</div>
+    <div class="mob-sub" id="loja-dist">—</div>
+  </div>
+  <div class="mob-content">
+    <div class="mob-card" id="loja-card"></div>
+  </div>
+  <div class="bottom-nav">
+    <a class="nav-tab" href="app-consumidor-home.html"><span class="ic">🏠</span>Início</a>
+    <a class="nav-tab" href="app-consumidor-precos.html"><span class="ic">📈</span>Preços</a>
+    <a class="nav-tab active" href="app-consumidor-mapa.html"><span class="ic">🗺️</span>Mapa</a>
+    <a class="nav-tab" href="app-consumidor-alertas.html"><span class="ic">🔔</span>Alertas</a>
+  </div>
+</div>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.load().then(data => {
+  const params = new URLSearchParams(location.search);
+  const nome = params.get('loja') || data.appConsumidor.lojasPreco[0].loja;
+  const l = data.appConsumidor.lojasPreco.find(x => x.loja === nome) || data.appConsumidor.lojasPreco[0];
+  document.getElementById('loja-nome').textContent = l.loja;
+  document.getElementById('loja-dist').textContent = l.distanciaKm + ' km de distância';
+  document.getElementById('loja-card').innerHTML = `
+    <div class="price-row"><span style="color:var(--mob-dim)">Preço do Arroz</span><span style="color:var(--mob-ink);font-weight:700">${l.preco} MZN/kg</span></div>
+    <div class="price-row"><span style="color:var(--mob-dim)">Tendência (30 dias)</span><span style="color:${l.tendenciaPercent<0?'var(--mob-teal)':'var(--mob-red)'};font-weight:700">${l.tendenciaPercent>0?'+':''}${l.tendenciaPercent}%</span></div>
+    <div class="price-row"><span style="color:var(--mob-dim)">Categoria</span><span style="color:var(--mob-ink);font-weight:700">Loja Licenciada</span></div>
+  `;
+});
+</script>
+</body>
+</html>

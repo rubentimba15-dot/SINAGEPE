@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Histórico de Actividade — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+<script src="assets/access-control.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('config', 'Histórico de Actividade', 'Registo de Auditoria');
+document.getElementById('content-mount').innerHTML = `
+  <div class="card">
+    <div class="card-title">Registo de Acções</div>
+    <table class="balance-table">
+      <thead><tr><th>Data/Hora</th><th>Utilizador</th><th>Acção</th><th>Estado</th></tr></thead>
+      <tbody id="hist-body"></tbody>
+    </table>
+  </div>
+`;
+SINAGEPE.load().then(data => {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao;
+  const registos = (data.registoAuditoria || []).length ? data.registoAuditoria : [
+    { dataHora: data.meta.ultimaActualizacao, utilizador: 'Sistema', accao: 'Sincronização de dados nacional', estado: 'Sucesso' },
+  ];
+  document.getElementById('hist-body').innerHTML = registos.map(r => `
+    <tr><td>${r.dataHora || r.data || '—'}</td><td>${r.utilizador || r.actor || '—'}</td><td>${r.accao || r.descricao || '—'}</td>
+    <td>${SINAGEPE.stateTag(r.estado || 'Estável')}</td></tr>`).join('');
+});
+</script>
+</body>
+</html>
