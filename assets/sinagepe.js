@@ -81,7 +81,7 @@ const SINAGEPE = (() => {
       const count = item.countId ? ` <span id="${item.countId}"></span>` : '';
       return `<a class="${cls}" href="${href}"><span class="nav-icon">${item.icon}</span> ${item.label}${count}</a>`;
     }).join('');
-    const logout = `<a class="nav-item" href="index.html" style="margin-top:8px;border-top:1px solid var(--border-card);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:var(--crit)">Sair (Logout)</span></a>`;
+    const logout = `<a class="nav-item" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="margin-top:8px;border-top:1px solid var(--border-card);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:var(--crit)">Sair (Logout)</span></a>`;
 
     return `
       <div class="sidebar-top">
