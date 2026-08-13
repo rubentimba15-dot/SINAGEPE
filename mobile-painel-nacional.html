@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile — Painel Nacional — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app-consumidor.css">
+<style>.gov-badge{background:rgba(217,166,33,0.12);color:var(--mob-gold);font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:4px;display:inline-block;margin-bottom:8px}</style>
+</head>
+<body>
+<div class="phone">
+  <div class="status-bar"><b>09:41</b><span class="status-icons">📶 📡 🔋</span></div>
+  <div class="mob-header">
+    <div class="gov-badge">ACESSO GOVERNAMENTAL</div>
+    <div class="mob-title">Painel Nacional</div>
+    <div class="mob-sub">Visão executiva — Moçambique</div>
+  </div>
+  <div class="mob-content" id="mob-content"></div>
+  <div class="bottom-nav">
+    <a class="nav-tab active" href="mobile-painel-nacional.html"><span class="ic">🏠</span>Painel</a>
+    <a class="nav-tab" href="mobile-centro-alertas.html"><span class="ic">⚠</span>Alertas</a>
+    <a class="nav-tab" href="mobile-marketplace.html"><span class="ic">🛒</span>Mercado</a>
+    <a class="nav-tab" href="mobile-configuracoes.html"><span class="ic">⚙</span>Config</a>
+  </div>
+</div>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.load().then(data => {
+  document.getElementById('mob-content').innerHTML = `
+    <div class="mob-card"><div class="menu-title">Disponibilidade Nacional</div>
+    <div style="font-size:32px;font-weight:800;color:var(--mob-teal);margin-top:6px">${data.kpis.disponibilidadeNacional.valor}%</div>
+    <div style="font-size:11.5px;color:var(--mob-dim)">${data.kpis.disponibilidadeNacional.estado}</div></div>
+    <a href="mobile-centro-alertas.html" style="text-decoration:none"><div class="mob-card menu-card">
+      <div class="menu-icon" style="background:rgba(217,64,51,0.12);color:#f26659">⚠</div>
+      <div><div class="menu-title">${data.alertasDetalhe.length} Alertas Activos</div><div class="menu-desc">Toque para ver detalhes</div></div>
+      <div class="menu-chevron">›</div></div></a>
+    <div class="mob-card"><div class="menu-title">Balanço Nacional Vivo</div>
+      ${data.balancoNacional.slice(0,3).map(p=>`<div class="price-row"><span style="color:var(--mob-ink)">${p.produto}</span><span style="color:var(--mob-dim)">${p.cobertura}d</span></div>`).join('')}
+    </div>
+  `;
+});
+</script>
+</body>
+</html>

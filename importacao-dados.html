@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Importação de Dados — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .drop-zone { background:var(--bg-card); border:2px dashed var(--border-input); border-radius:16px; padding:50px; text-align:center; margin-bottom:24px; }
+  .drop-icon { font-size:40px; margin-bottom:12px; }
+  .drop-title { font-size:16px; font-weight:600; color:#fff; margin-bottom:6px; }
+  .drop-sub { font-size:13px; color:var(--ink-faint); margin-bottom:20px; }
+  .btn-select { background:var(--accent-orange); color:#0d0d1a; border:none; border-radius:18px; padding:9px 24px; font-weight:700; font-size:13px; cursor:pointer; }
+</style>
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+<script src="assets/access-control.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('config', 'Importação de Dados', 'Carregamento de Ficheiros');
+document.getElementById('content-mount').innerHTML = `
+  <div class="drop-zone">
+    <div class="drop-icon">📂</div>
+    <div class="drop-title">Arraste ficheiros ou clique para carregar</div>
+    <div class="drop-sub">Formatos aceites: CSV, XLSX, JSON · Tamanho máximo: 50MB</div>
+    <button class="btn-select" onclick="document.getElementById('import-status').textContent='Simulação — nenhum ficheiro foi realmente enviado.'">Seleccionar Ficheiro</button>
+  </div>
+  <div style="font-size:11.5px;color:var(--ink-faint);margin-bottom:16px" id="import-status"></div>
+  <div class="card">
+    <div class="card-title">Importações Recentes</div>
+    <table class="balance-table">
+      <thead><tr><th>Ficheiro</th><th>Tipo</th><th>Registos</th><th>Estado</th><th>Data</th><th>Utilizador</th></tr></thead>
+      <tbody id="import-body"></tbody>
+    </table>
+  </div>
+`;
+SINAGEPE.load().then(data => {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao;
+
+  const importacoes = [
+    ['precos_maputo_ago2026.csv','Preços','12.450','Concluído','13/08/2026','João Mendes'],
+    ['stocks_nacional_jul2026.xlsx','Stocks','8.320','Concluído','12/08/2026','Ana Sousa'],
+    ['pmes_novos_registos.json','PMEs','156','Em Processo','12/08/2026','Carlos Neto'],
+    ['armazens_gps_update.csv','Armazéns','89','Concluído','11/08/2026','Maria Silva'],
+    ['precos_beira_ago2026.csv','Preços','7.890','Erro','10/08/2026','Pedro Tomás'],
+    ['corredores_logisticos.xlsx','Logística','34','Concluído','09/08/2026','Rita Lopes'],
+  ];
+  const ESTADO_TIPO = { 'Concluído':'ok', 'Em Processo':'warn', 'Erro':'crit' };
+  document.getElementById('import-body').innerHTML = importacoes.map(([ficheiro,tipo,reg,estado,data_,user]) => `
+    <tr><td>${ficheiro}</td><td>${tipo}</td><td>${reg}</td>
+    <td><span class="state-tag" style="background:var(--${ESTADO_TIPO[estado]}-bg);color:var(--${ESTADO_TIPO[estado]})">${estado}</span></td>
+    <td>${data_}</td><td>${user}</td></tr>`).join('');
+});
+</script>
+</body>
+</html>

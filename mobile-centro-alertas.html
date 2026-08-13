@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile — Centro de Alertas — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app-consumidor.css">
+</head>
+<body>
+<div class="phone">
+  <div class="status-bar"><b>09:41</b><span class="status-icons">📶 📡 🔋</span></div>
+  <div class="mob-header"><div class="mob-title">Centro de Alertas</div><div class="mob-sub">Todos os alertas activos</div></div>
+  <div class="mob-content" id="mob-content"></div>
+  <div class="bottom-nav">
+    <a class="nav-tab" href="mobile-painel-nacional.html"><span class="ic">🏠</span>Painel</a>
+    <a class="nav-tab active" href="mobile-centro-alertas.html"><span class="ic">⚠</span>Alertas</a>
+    <a class="nav-tab" href="mobile-marketplace.html"><span class="ic">🛒</span>Mercado</a>
+    <a class="nav-tab" href="mobile-configuracoes.html"><span class="ic">⚙</span>Config</a>
+  </div>
+</div>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.load().then(data => {
+  const SEV = { 'Crítico': ['#f26659','rgba(239,68,68,0.1)'], 'Atenção': ['#f2991a','rgba(245,158,11,0.1)'] };
+  document.getElementById('mob-content').innerHTML = data.alertasDetalhe.map(a => {
+    const [cor,bg] = SEV[a.severidade] || SEV['Atenção'];
+    return `<div class="mob-card" style="border-left:3px solid ${cor}">
+      <span class="pill-tag" style="color:${cor};background:${bg}">${a.severidade}</span>
+      <div style="color:var(--mob-ink);font-weight:700;font-size:14px;margin-top:8px">${a.titulo}</div>
+      <div style="color:var(--mob-dim);font-size:11.5px;margin-top:2px">${a.provincia} · ${a.tempo}</div></div>`;
+  }).join('');
+});
+</script>
+</body>
+</html>

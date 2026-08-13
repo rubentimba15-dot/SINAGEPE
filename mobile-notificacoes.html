@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile — Notificações — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app-consumidor.css">
+</head>
+<body>
+<div class="phone">
+  <div class="status-bar"><b>09:41</b><span class="status-icons">📶 📡 🔋</span></div>
+  <div class="mob-header"><div class="mob-title">Notificações</div><div class="mob-sub">Actividade recente da conta</div></div>
+  <div class="mob-content" id="mob-content"></div>
+  <div class="bottom-nav">
+    <a class="nav-tab" href="mobile-painel-nacional.html"><span class="ic">🏠</span>Painel</a>
+    <a class="nav-tab" href="mobile-centro-alertas.html"><span class="ic">⚠</span>Alertas</a>
+    <a class="nav-tab" href="mobile-marketplace.html"><span class="ic">🛒</span>Mercado</a>
+    <a class="nav-tab active" href="mobile-configuracoes.html"><span class="ic">⚙</span>Config</a>
+  </div>
+</div>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.load().then(data => {
+  document.getElementById('mob-content').innerHTML = data.alertasDetalhe.map(a => `
+    <div class="mob-card menu-card">
+      <div class="menu-icon" style="background:rgba(45,212,191,0.1);color:var(--mob-teal)">🔔</div>
+      <div><div class="menu-title">${a.titulo}</div><div class="menu-desc">${a.tempo}</div></div>
+    </div>`).join('');
+});
+</script>
+</body>
+</html>

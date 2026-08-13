@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel Executivo — KPIs Nacionais — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="assets/access-control.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('painel', 'Painel Executivo — KPIs Nacionais', '01 Jul 2026 — 13 Ago 2026');
+document.getElementById('content-mount').innerHTML = `
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)" id="kpi-row-top"></div>
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);margin-top:16px" id="kpi-row-mid"></div>
+  <div class="row-2" style="margin-top:16px">
+    <div class="card"><div class="card-title">Evolução do IGSAE (12 meses)</div><canvas id="chart-igsae" height="140"></canvas></div>
+    <div class="card"><div class="card-title">Distribuição de Stocks por Província</div><canvas id="chart-stocks" height="140"></canvas></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <div class="card-title">Desempenho por Província — Top 5</div>
+    <div id="top-provincias"></div>
+  </div>
+`;
+SINAGEPE.load().then(data => {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao;
+
+  const kpisTop = [
+    { label:'Índice de Segurança Alimentar', valor:'72.4/100', estado:'+3.2%', tipo:'ok' },
+    { label:'Cobertura Nacional de Stocks', valor:data.kpis.disponibilidadeNacional.valor+'%', estado:'+5%', tipo:'ok' },
+    { label:'Variação Média de Preços', valor:'+8.3%', estado:'vs mês anterior', tipo:'warn' },
+  ];
+  document.getElementById('kpi-row-top').innerHTML = kpisTop.map(SINAGEPE.kpiCard).join('');
+
+  const kpisMid = [
+    { label:'PMEs Activas', valor:'1.247', estado:'+23 este mês', tipo:'info' },
+    { label:'Armazéns Operacionais', valor:String(data.armazens.length*18), estado:'de 104 registados', tipo:'info' },
+    { label:'Corredores Logísticos', valor:String(data.corredores.length), estado:Math.round(data.corredores.filter(c=>c.estado==='Operacional').length/data.corredores.length*100)+'% operacionais', tipo:'ok' },
+  ];
+  document.getElementById('kpi-row-mid').innerHTML = kpisMid.map(SINAGEPE.kpiCard).join('');
+
+  new Chart(document.getElementById('chart-igsae'), {
+    type:'line',
+    data:{ labels:['Set','Out','Nov','Dez','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago'],
+      datasets:[{ data:[64,66,65,68,67,70,69,71,70,73,72,72.4], borderColor:'#059669', backgroundColor:'rgba(5,150,105,0.1)', fill:true, tension:0.35, pointRadius:2 }] },
+    options:{ plugins:{legend:{display:false}}, scales:{ x:{ticks:{color:'#64748b',font:{size:9}},grid:{display:false}}, y:{ticks:{color:'#64748b',font:{size:9}},grid:{color:'rgba(30,45,75,0.4)'}} } }
+  });
+
+  const provincias = data.provincias.slice(0,7);
+  new Chart(document.getElementById('chart-stocks'), {
+    type:'bar',
+    data:{ labels:provincias.map(p=>p.nome.slice(0,3).toUpperCase()), datasets:[{ data:provincias.map(p=>p.disponibilidade), backgroundColor:'#d97706', borderRadius:5 }] },
+    options:{ plugins:{legend:{display:false}}, scales:{ x:{ticks:{color:'#64748b',font:{size:9}},grid:{display:false}}, y:{ticks:{color:'#64748b',font:{size:9}},grid:{color:'rgba(30,45,75,0.4)'}} } }
+  });
+
+  const top5 = [...data.provincias].sort((a,b)=>b.disponibilidade-a.disponibilidade).slice(0,5);
+  document.getElementById('top-provincias').innerHTML = top5.map((p,i) => `
+    <div class="medida-row"><span style="color:var(--accent-orange);font-weight:700">#${i+1}</span>
+    <span style="flex:1;margin-left:14px;color:#fff;font-weight:600">${p.nome}</span>
+    <span style="color:var(--ink-dim);margin-right:24px">Score: ${p.disponibilidade}/100</span>
+    <span style="color:var(--ok)">Stock: ${p.disponibilidade}%</span></div>`).join('');
+});
+</script>
+</body>
+</html>

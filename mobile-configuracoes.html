@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<script src="assets/access-control.js"></script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mobile — Configurações — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/app-consumidor.css">
+</head>
+<body>
+<div class="phone">
+  <div class="status-bar"><b>09:41</b><span class="status-icons">📶 📡 🔋</span></div>
+  <div class="mob-header"><div class="mob-title">Configurações</div><div class="mob-sub">Conta e preferências</div></div>
+  <div class="mob-content">
+    <div class="mob-card menu-card"><div class="menu-icon" style="background:rgba(217,166,33,0.1);color:var(--mob-gold)">🔔</div><div><div class="menu-title">Notificações</div><div class="menu-desc">Alertas críticos, relatórios</div></div><div class="menu-chevron">›</div></div>
+    <div class="mob-card menu-card"><div class="menu-icon" style="background:rgba(45,212,191,0.1);color:var(--mob-teal)">👤</div><div><div class="menu-title">A Minha Conta</div><div class="menu-desc">Perfil e segurança</div></div><div class="menu-chevron">›</div></div>
+    <a href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="text-decoration:none"><div class="mob-card menu-card"><div class="menu-icon" style="background:rgba(239,68,68,0.1);color:#f26659">↩</div><div><div class="menu-title" style="color:#f26659">Sair (Logout)</div></div></div></a>
+  </div>
+  <div class="bottom-nav">
+    <a class="nav-tab" href="mobile-painel-nacional.html"><span class="ic">🏠</span>Painel</a>
+    <a class="nav-tab" href="mobile-centro-alertas.html"><span class="ic">⚠</span>Alertas</a>
+    <a class="nav-tab" href="mobile-marketplace.html"><span class="ic">🛒</span>Mercado</a>
+    <a class="nav-tab active" href="mobile-configuracoes.html"><span class="ic">⚙</span>Config</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gestão de Utilizadores — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/sinagepe.css">
+<style>
+  .kpi-mini { background:var(--bg-card); border-radius:12px; padding:16px 20px; }
+  .kpi-mini-label { font-size:12px; color:var(--ink-faint); margin-bottom:6px; }
+  .kpi-mini-val { font-size:28px; font-weight:700; }
+  .search-row { display:flex; gap:12px; margin:20px 0; }
+  .search-box { flex:1; background:var(--bg-card); border-radius:8px; padding:11px 16px; color:var(--ink-muted); font-size:13px; }
+  .btn-novo { background:var(--accent-orange); color:#0d0d1a; border:none; border-radius:8px; padding:11px 22px; font-weight:700; font-size:13px; cursor:pointer; white-space:nowrap; }
+</style>
+</head>
+<body>
+<div class="app-shell" id="app-shell"></div>
+<script src="assets/access-control.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+SINAGEPE.mountShell('config', 'Gestão de Utilizadores', 'Administração de Contas');
+document.getElementById('content-mount').innerHTML = `
+  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)" id="kpi-row"></div>
+  <div class="search-row">
+    <div class="search-box">🔍 Pesquisar por nome, email ou instituição...</div>
+    <button class="btn-novo">+ Novo Utilizador</button>
+  </div>
+  <div class="card">
+    <table class="balance-table">
+      <thead><tr><th>Nome</th><th>Email</th><th>Perfil</th><th>Província</th><th>Estado</th><th>Último Acesso</th></tr></thead>
+      <tbody id="util-body"></tbody>
+    </table>
+  </div>
+`;
+SINAGEPE.load().then(data => {
+  SINAGEPE.renderUserFooter(data);
+  document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao;
+
+  const kpis = [
+    { label:'Total Utilizadores', valor:'847', estado:'Registados', tipo:'info' },
+    { label:'Activos Hoje', valor:'234', estado:'Sessão Iniciada', tipo:'ok' },
+    { label:'Pendentes Aprovação', valor:'12', estado:'A Aguardar', tipo:'warn' },
+    { label:'Desactivados', valor:'35', estado:'Sem Acesso', tipo:'crit' },
+  ];
+  document.getElementById('kpi-row').innerHTML = kpis.map(SINAGEPE.kpiCard).join('');
+
+  const utilizadores = [
+    ['João Mendes','j.mendes@mic.gov.mz','Admin Nacional','Nacional','Activo','Agora'],
+    ['Ana Sousa','a.sousa@mic.gov.mz','Gestor Provincial','Maputo','Activo','Há 1h'],
+    ['Carlos Neto','c.neto@mic.gov.mz','Analista','Sofala','Activo','Há 2h'],
+    ['Maria Silva','m.silva@minfin.gov.mz','Gestor Provincial','Nampula','Activo','Ontem'],
+    ['Pedro Tomás','p.tomas@masa.gov.mz','Operador','Manica','Pendente','—'],
+    ['Rita Lopes','r.lopes@mic.gov.mz','Analista','Inhambane','Activo','Há 3h'],
+    ['Manuel Costa','m.costa@gov.mz','Admin Provincial','Cabo Delgado','Activo','12/08'],
+    ['Sofia Dias','s.dias@masa.gov.mz','Operador','Niassa','Desactivado','05/08'],
+  ];
+  const ESTADO_TIPO = { 'Activo':'ok', 'Pendente':'warn', 'Desactivado':'crit' };
+  document.getElementById('util-body').innerHTML = utilizadores.map(([nome,email,perfil,prov,estado,acesso]) => `
+    <tr><td>${nome}</td><td>${email}</td><td>${perfil}</td><td>${prov}</td>
+    <td><span class="state-tag" style="background:var(--${ESTADO_TIPO[estado]}-bg);color:var(--${ESTADO_TIPO[estado]})">${estado}</span></td><td>${acesso}</td></tr>`).join('');
+});
+</script>
+</body>
+</html>
