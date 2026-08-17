@@ -61,7 +61,7 @@ a{color:inherit;text-decoration:none}
 .eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
 
 /* ---- separadores (as "janelas") ---- */
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
 .tab{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;padding:0;cursor:pointer;overflow:hidden;text-align:left;transition:.22s;font:inherit;color:inherit;position:relative}
 .tab:hover{border-color:var(--brzg);transform:translateY(-3px)}
 .tab.on{border-color:var(--acc);box-shadow:0 0 0 1px rgba(34,184,240,.25)}
@@ -168,7 +168,6 @@ function capa(tipo){
 const JANELAS=[
   {id:'fao', org:'FAO — FAOSTAT', desc:'Produção, balanços alimentares e segurança alimentar de Moçambique', estado:'Chamada directa', cor:'#22B8F0'},
   {id:'wfp', org:'PAM / WFP', desc:'HungerMap LIVE, preços de mercado e insegurança alimentar', estado:'Chamada directa', cor:'#2DD4BF'},
-  {id:'ine', org:'INE Moçambique', desc:'Índice de Preços no Consumidor e estatísticas oficiais', estado:'Importação manual', cor:'#C98A3C'},
   {id:'gs1', org:'Sistema GS1', desc:'Validação de GTIN, prefixos e identificação de produto', estado:'Funciona offline', cor:'#22B8F0'}
 ];
 
@@ -466,20 +465,21 @@ function abrir(id){
 }
 
 (function iniciar(){
-  if(window.SINAGEPE&&SINAGEPE.mountShell){
+  if(typeof SINAGEPE!=='undefined'&&SINAGEPE.mountShell){
     SINAGEPE.mountShell('config','Fontes Internacionais','INTEGRAÇÃO EXTERNA');
   }else{
     document.getElementById('app-shell').innerHTML='<div class="main"><div class="topbar"><div><div class="topbar-title">Fontes Internacionais</div><div class="topbar-badge">Integração externa</div></div></div><div class="content" id="content-mount"></div></div>';
   }
   const alvo=document.getElementById('content-mount')||document.getElementById('app-shell');
   alvo.innerHTML=`
-    <div class="eyebrow" style="margin-bottom:12px">Quatro janelas de consulta externa</div>
+    <div class="eyebrow" style="margin-bottom:12px">Três janelas de consulta internacional</div>
+    <div class="linkcard" style="margin-bottom:14px"><div style="flex:1"><div class="t">O INE mudou de sítio</div><div class="d">O Instituto Nacional de Estatística é uma instituição moçambicana e passou para o ecrã Fontes Nacionais, ao lado do Instituto de Cereais.</div></div><a class="ar" href="fontes-nacionais.html">→</a></div>
     <div class="tabs">${JANELAS.map(j=>`<button class="tab frame" data-j="${j.id}" onclick="abrir('${j.id}')">
       <div class="cover">${capa(j.id)}<span class="pill" style="background:${j.cor}22;color:${j.cor};border:1px solid ${j.cor}55">${j.estado}</span></div>
       <div class="body"><div class="org">${j.org}</div><div class="desc">${j.desc}</div></div></button>`).join('')}</div>
     <div id="janela"></div>`;
   abrir('fao');
-  if(window.SINAGEPE&&SINAGEPE.load){
+  if(typeof SINAGEPE!=='undefined'&&SINAGEPE.load){
     SINAGEPE.load().then(d=>{ SINAGEPE.renderUserFooter(d);
       const f=document.getElementById('footer-updated'); if(f) f.textContent='Última actualização: '+(d.meta.ultimaActualizacao||'—');
     }).catch(()=>{});

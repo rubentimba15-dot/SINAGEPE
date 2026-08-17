@@ -382,7 +382,9 @@ svg.tc-map{width:100%;height:auto;display:block}
         <a class="nav-item" href="relatorios.html"><span class="nav-icon">▧</span><span class="nav-label">Relatórios</span></a>
         <a class="nav-item" href="administracao-auditoria.html"><span class="nav-icon">⚙</span><span class="nav-label">Configurações <span style="color:var(--gold)">(Sistema)</span></span></a>
         <a class="nav-item" href="marketplace-b2b.html"><span class="nav-icon">⬡</span><span class="nav-label">Marketplace B2B</span></a>
-        <a class="nav-item" href="fontes-internacionais.html"><span class="nav-icon">⬢</span><span class="nav-label">Fontes Internacionais <span style="color:var(--teal)">(Novo)</span></span></a>
+        <a class="nav-item" href="inteligencia-consolidada.html"><span class="nav-icon">◈</span><span class="nav-label">Inteligência <span style="color:var(--teal)">(Novo)</span></span></a>
+        <a class="nav-item" href="fontes-nacionais.html"><span class="nav-icon">⬣</span><span class="nav-label">Fontes Nacionais</span></a>
+        <a class="nav-item" href="fontes-internacionais.html"><span class="nav-icon">⬢</span><span class="nav-label">Fontes Internacionais</span></a>
         <a class="nav-item" href="#" id="btn-logout" style="margin-top:8px;border-top:1px solid var(--gold-line);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span><span class="nav-label" style="color:#dc2626">Sair (Logout)</span></a>
       </nav>
     </div>
@@ -482,6 +484,7 @@ svg.tc-map{width:100%;height:auto;display:block}
 
 </div>
 <script src="assets/sinagepe.js"></script>
+<script src="assets/sinagepe-produtos.js"></script>
 <script>
 const COR = { ok: '#059669', warn: '#f59e0b', crit: '#dc2626', info: '#2490de' };
 
@@ -561,7 +564,9 @@ const NIVEIS_ACESSO = [
       "mobile-marketplace.html",
       "mobile-configuracoes.html",
       "portal-publico.html",
-      "fontes-internacionais.html"
+      "fontes-internacionais.html",
+      "inteligencia-consolidada.html",
+      "fontes-nacionais.html"
     ],
     "email": "administrador@gmail.com",
     "paginaInicial": "index.html"
@@ -628,7 +633,9 @@ const NIVEIS_ACESSO = [
       "mobile-marketplace.html",
       "mobile-configuracoes.html",
       "portal-publico.html",
-      "fontes-internacionais.html"
+      "fontes-internacionais.html",
+      "inteligencia-consolidada.html",
+      "fontes-nacionais.html"
     ],
     "email": "governo@gmail.com",
     "paginaInicial": "index.html"
@@ -645,7 +652,9 @@ const NIVEIS_ACESSO = [
       "relatorios.html",
       "balanco-nacional-vivo.html",
       "dashboard-agricultura.html",
-      "fontes-internacionais.html"
+      "fontes-internacionais.html",
+      "inteligencia-consolidada.html",
+      "fontes-nacionais.html"
     ],
     "email": "masa@gmail.com",
     "paginaInicial": "dashboard-agricultura.html"
@@ -660,7 +669,9 @@ const NIVEIS_ACESSO = [
       "alertas.html",
       "relatorios.html",
       "dashboard-financas.html",
-      "fontes-internacionais.html"
+      "fontes-internacionais.html",
+      "inteligencia-consolidada.html",
+      "fontes-nacionais.html"
     ],
     "email": "financas@gmail.com",
     "paginaInicial": "dashboard-financas.html"
@@ -675,7 +686,9 @@ const NIVEIS_ACESSO = [
       "alertas.html",
       "relatorios.html",
       "dashboard-banco-central.html",
-      "fontes-internacionais.html"
+      "fontes-internacionais.html",
+      "inteligencia-consolidada.html",
+      "fontes-nacionais.html"
     ],
     "email": "bancocentral@gmail.com",
     "paginaInicial": "dashboard-banco-central.html"
@@ -692,7 +705,9 @@ const NIVEIS_ACESSO = [
       "modulo-logistica.html",
       "detalhe-corredor.html",
       "dashboard-transportes.html",
-      "fontes-internacionais.html"
+      "fontes-internacionais.html",
+      "inteligencia-consolidada.html",
+      "fontes-nacionais.html"
     ],
     "email": "transportes@gmail.com",
     "paginaInicial": "dashboard-transportes.html"
@@ -708,7 +723,9 @@ const NIVEIS_ACESSO = [
       "detalhe-alerta.html",
       "irae.html",
       "dashboard-igsae.html",
-      "fontes-internacionais.html"
+      "fontes-internacionais.html",
+      "inteligencia-consolidada.html",
+      "fontes-nacionais.html"
     ],
     "email": "igsae@gmail.com",
     "paginaInicial": "dashboard-igsae.html"
@@ -724,7 +741,9 @@ const NIVEIS_ACESSO = [
       "perfil-empresa.html",
       "detalhe-oferta-marketplace.html",
       "dashboard-arc.html",
-      "fontes-internacionais.html"
+      "fontes-internacionais.html",
+      "inteligencia-consolidada.html",
+      "fontes-nacionais.html"
     ],
     "email": "arc@gmail.com",
     "paginaInicial": "dashboard-arc.html"
@@ -813,7 +832,9 @@ const NIVEIS_ACESSO = [
     "instituicao": "Parceiro Académico",
     "paginas": [
       "portal-universidades.html",
-      "fontes-internacionais.html"
+      "fontes-internacionais.html",
+      "inteligencia-consolidada.html",
+      "fontes-nacionais.html"
     ],
     "email": "universidades@gmail.com",
     "paginaInicial": "portal-universidades.html"
@@ -1094,7 +1115,8 @@ function tcIlustracao(produto,c){
 function tcProdutos(data){
   $('tc-prods').innerHTML=data.balancoNacional.map(p=>{
     const c=corEstado(p.estado);
-    return `<a class="tc-prod tc-frame" href="detalhe-produto.html"><div class="ph">${tcIlustracao(p.produto,c)}
+    const img = (typeof PRODUTOS!=='undefined'&&PRODUTOS.imagem) ? PRODUTOS.imagem(p.produto,52) : tcIlustracao(p.produto,c);
+    return `<a class="tc-prod tc-frame" href="detalhe-produto.html"><div class="ph">${img}
       <div><div class="nm">${p.produto}</div><div class="st" style="color:${c}">${p.estado}</div></div></div>
       <div class="dd"><b class="tc-mono" style="color:${c}">${p.cobertura}</b><span>dias de cobertura</span></div>
       <div class="pr"><span>Stock</span><span class="tc-mono">${nfmt(p.stock)} t</span></div></a>`;
@@ -1166,7 +1188,7 @@ function boot(data, nivel){
 
   // IPL/INCL: usa as fórmulas partilhadas de assets/sinagepe.js quando disponíveis
   let ipl=0.38, incl=0.61;
-  try{ if(window.SINAGEPE){ ipl=SINAGEPE.calcIPL(data); incl=SINAGEPE.calcINCL(data); } }
+  try{ if(typeof SINAGEPE!=='undefined'){ ipl=SINAGEPE.calcIPL(data); incl=SINAGEPE.calcINCL(data); } }
   catch(e){ console.warn('IPL/INCL: fórmulas partilhadas indisponíveis, usados valores de recurso.', e); }
 
   tcRelogio(); setInterval(tcRelogio,1000);

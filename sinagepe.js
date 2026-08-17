@@ -72,6 +72,8 @@ const SINAGEPE = (() => {
     { key: 'relatorios', label: 'Relatórios',  icon: '▧', href: 'relatorios.html' },
     { key: 'config',     label: 'Configurações', icon: '⚙', href: 'administracao-auditoria.html' },
     { key: 'marketplace', label: 'Marketplace B2B', icon: '⬡', href: 'marketplace-b2b.html' },
+    { key: 'inteligencia', label: 'Inteligência', icon: '◈', href: 'inteligencia-consolidada.html' },
+    { key: 'nacionais',    label: 'Fontes Nacionais', icon: '⬣', href: 'fontes-nacionais.html' },
     { key: 'fontes', label: 'Fontes Internacionais', icon: '⬢', href: 'fontes-internacionais.html' },
   ];
 

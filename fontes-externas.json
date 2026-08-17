@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "descricao": "Dados recolhidos de fontes externas ao SINAGEPE. Cada bloco declara a origem, a data de recolha e se o valor foi verificado ou é provisório. O motor de inteligência só trata como facto o que tiver verificado=true.",
+    "ultimaRecolha": "2026-08-17",
+    "aviso": "Os valores marcados verificado=false são referências de trabalho e devem ser substituidos por dados oficiais antes de qualquer utilizacao em documento de decisao."
+  },
+
+  "ine": {
+    "organismo": "Instituto Nacional de Estatistica",
+    "sigla": "INE",
+    "ambito": "Nacional",
+    "url": "https://www.ine.gov.mz/",
+    "temAPI": false,
+    "notaAcesso": "Sem servico programatico. Publicacao mensal em PDF e folha de calculo. Importacao manual ou recolha do lado do servidor.",
+    "ipc": {
+      "base": "2023=100",
+      "cidades": ["Maputo", "Beira", "Nampula", "Quelimane", "Tete", "Chimoio", "Xai-Xai", "Inhambane"],
+      "divisaoAcompanhada": "Alimentacao e bebidas nao alcoolicas",
+      "verificado": false,
+      "serie": [
+        { "mes": "2026-03", "indiceGeral": 104.1, "indiceAlimentar": 106.2, "variacaoMensal": 0.31 },
+        { "mes": "2026-04", "indiceGeral": 104.6, "indiceAlimentar": 107.4, "variacaoMensal": 0.48 },
+        { "mes": "2026-05", "indiceGeral": 105.0, "indiceAlimentar": 108.9, "variacaoMensal": 0.38 },
+        { "mes": "2026-06", "indiceGeral": 105.7, "indiceAlimentar": 110.6, "variacaoMensal": 0.67 },
+        { "mes": "2026-07", "indiceGeral": 106.3, "indiceAlimentar": 112.5, "variacaoMensal": 0.57 },
+        { "mes": "2026-08", "indiceGeral": 107.1, "indiceAlimentar": 114.8, "variacaoMensal": 0.75 }
+      ]
+    }
+  },
+
+  "icm": {
+    "organismo": "Instituto de Cereais de Mocambique, IP",
+    "sigla": "ICM",
+    "ambito": "Nacional",
+    "tutela": "Ministerio da Industria e Comercio",
+    "url": "https://icm.gov.mz/",
+    "temAPI": false,
+    "mandato": [
+      "Coordenar a comercializacao agricola ao longo das cadeias de valor",
+      "Intervir como agente de comercializacao de ultimo recurso dos excedentes de producao",
+      "Criar stock de cereais de reserva para garantir a seguranca alimentar",
+      "Garantir a absorcao da producao local pela industria nacional"
+    ],
+    "baseLegal": "Decreto 62/2016 do Conselho de Ministros",
+    "reservaEstrategica": {
+      "metaToneladas": 20000,
+      "metaVerificada": true,
+      "metaFonte": "Objectivo publico declarado pelo ICM: reserva estrategica minima de 20 mil toneladas de cereais, com enfoque no abastecimento da regiao Sul",
+      "actualToneladas": 12400,
+      "actualVerificado": false,
+      "focoRegional": "Sul"
+    },
+    "importacoes": {
+      "notaFonte": "O ICM declarou publicamente ter encontrado precos de importacao de arroz declarados em cerca de 470 USD por tonelada quando o preco praticado nos mercados internacionais rondava 350 USD por tonelada.",
+      "verificado": true,
+      "linhas": [
+        { "produto": "Arroz", "precoDeclaradoUSDt": 470, "precoReferenciaUSDt": 350, "volumeToneladas": 42000, "verificado": true },
+        { "produto": "Trigo", "precoDeclaradoUSDt": 310, "precoReferenciaUSDt": 268, "volumeToneladas": 28000, "verificado": false }
+      ]
+    },
+    "stockCereais": {
+      "verificado": false,
+      "linhas": [
+        { "produto": "Arroz", "toneladas": 5200 },
+        { "produto": "Trigo", "toneladas": 3100 },
+        { "produto": "Farinha de Milho", "toneladas": 4100 }
+      ]
+    }
+  },
+
+  "fao": {
+    "organismo": "Organizacao das Nacoes Unidas para a Alimentacao e a Agricultura",
+    "sigla": "FAO",
+    "ambito": "Internacional",
+    "url": "https://www.fao.org/faostat/en/#country/144",
+    "temAPI": true,
+    "endpoint": "https://fenixservices.fao.org/faostat/api/v1/en/data/",
+    "codigoArea": 144,
+    "notaAcesso": "Sem autenticacao. Desfasamento tipico de dois a tres anos. Serve para enquadramento estrutural, nao para alerta rapido.",
+    "consumoPerCapita": {
+      "unidade": "kg/pessoa/ano",
+      "verificado": false,
+      "linhas": [
+        { "produto": "Arroz", "valor": 26.4 },
+        { "produto": "Trigo", "valor": 14.1 },
+        { "produto": "Farinha de Milho", "valor": 78.3 },
+        { "produto": "Oleo Alimentar", "valor": 6.2 }
+      ]
+    },
+    "populacao": { "valor": 34600000, "ano": 2025, "verificado": false }
+  },
+
+  "wfp": {
+    "organismo": "Programa Alimentar Mundial",
+    "sigla": "PAM / WFP",
+    "ambito": "Internacional",
+    "url": "https://hungermap.wfp.org/",
+    "temAPI": true,
+    "endpoint": "https://api.hungermapdata.org/v2/iso3/MOZ/countryIso3Data.json",
+    "notaAcesso": "Serie publica limitada aos ultimos 100 dias. Precos por mercado exigem credenciais da API DataBridges."
+  },
+
+  "gs1": {
+    "organismo": "Sistema GS1",
+    "sigla": "GS1",
+    "ambito": "Internacional",
+    "url": "https://www.gs1.org/services/verified-by-gs1",
+    "temAPI": true,
+    "notaAcesso": "As APIs exigem filiacao e subscricao paga. A validacao de estrutura de GTIN e o calculo do digito de controlo sao feitos localmente, sem chave.",
+    "notaMocambique": "Nao consta prefixo GS1 atribuido a Mocambique na lista de codigos de pais. A confirmar junto da GS1 Global antes de qualquer decisao de politica.",
+    "identificacaoProdutos": {
+      "verificado": false,
+      "linhas": [
+        { "produto": "Arroz", "gtin": "6001234567899", "origemPrefixo": "GS1 Africa do Sul" },
+        { "produto": "Oleo Alimentar", "gtin": "6009876543219", "origemPrefixo": "GS1 Africa do Sul" },
+        { "produto": "Acucar", "gtin": "6005551112220", "origemPrefixo": "GS1 Africa do Sul" },
+        { "produto": "Trigo", "gtin": "", "origemPrefixo": "" },
+        { "produto": "Farinha de Milho", "gtin": "", "origemPrefixo": "" },
+        { "produto": "Fertilizantes", "gtin": "", "origemPrefixo": "" },
+        { "produto": "Cimento Nacional", "gtin": "", "origemPrefixo": "" }
+      ]
+    }
+  }
+}

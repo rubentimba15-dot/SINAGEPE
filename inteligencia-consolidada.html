@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SINAGEPE — Inteligência Consolidada</title>
+<link rel="stylesheet" href="assets/sinagepe-tema.css">
+<style>
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px}
+.kpi{background:var(--card-bg);border:1px solid var(--card-line);border-radius:13px;padding:14px 16px 13px;position:relative;transition:.22s}
+.kpi:hover{background:var(--cardh);border-color:var(--brzg);transform:translateY(-3px)}
+.kpi .cap{font-size:9.5px;color:var(--ink-faint);letter-spacing:.13em;text-transform:uppercase}
+.kpi .v{font-size:28px;font-weight:500;margin-top:8px;line-height:1;letter-spacing:-.02em}
+.kpi .v small{font-size:12px;color:var(--ink-dim);margin-left:4px}
+.kpi .sub{font-size:10.5px;color:var(--ink-dim);margin-top:7px;line-height:1.4}
+.kpi .rail{position:absolute;left:0;top:14px;bottom:14px;width:2px;border-radius:2px}
+.prodcell{display:flex;align-items:center;gap:11px}
+.prodcell .nm{font-size:12.5px;font-weight:500}
+.prodcell .sub{font-size:10px;color:var(--ink-faint);margin-top:2px}
+.icd{display:flex;align-items:center;gap:8px}
+.icd .bar{width:52px}
+.achado{padding:15px 18px;border-bottom:1px solid var(--card-line)}
+.achado:last-child{border-bottom:none}
+.achado .h{display:flex;align-items:flex-start;gap:11px}
+.achado .h b{font-size:13px;font-weight:500;flex:1}
+.achado .ev{font-size:11.5px;color:var(--ink-dim);margin-top:7px;line-height:1.65}
+.achado .ev code{font-family:'IBM Plex Mono',monospace;color:var(--brzl);background:rgba(201,138,60,.1);padding:1px 5px;border-radius:3px;font-size:11px}
+.achado .acc{margin-top:10px;padding:10px 12px;background:#080F1C;border-left:2px solid var(--brz);border-radius:0 8px 8px 0;font-size:11.5px;line-height:1.6}
+.achado .f{display:flex;align-items:center;gap:9px;margin-top:10px;flex-wrap:wrap}
+.chip{font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;padding:3px 9px;border-radius:3px;font-weight:500}
+.fonte{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(38,56,86,.4);font-size:12px}
+.fonte:last-child{border-bottom:none}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:8px}
+#relatorio{display:none;margin-top:14px}
+#relatorio h3{font-size:15px;font-weight:500;margin:18px 0 8px;color:var(--brzl)}
+#relatorio p{font-size:12.5px;color:var(--ink-dim);line-height:1.75;margin-bottom:9px}
+#relatorio ul{margin:0 0 10px 18px;font-size:12.5px;color:var(--ink-dim);line-height:1.8}
+@media (max-width:1400px){.kpis{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div id="app-shell"></div>
+
+<script src="assets/access-control.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script src="assets/sinagepe-produtos.js"></script>
+<script>
+/* ============================================================
+   MOTOR DE INTELIGÊNCIA CONSOLIDADA
+   ------------------------------------------------------------
+   Cruza o que o SINAGEPE recolheu com FAO, INE, ICM e GS1.
+   Não mostra as fontes lado a lado: confronta-as, mede as
+   divergências e transforma isso em achados accionáveis.
+
+   Pressupostos declarados (alteráveis aqui em cima, para que
+   ninguém tenha de os procurar no meio do código):
+   ============================================================ */
+const PRESSUPOSTOS = {
+  elasticidadeProcura: 0.6,   // quanto da inflação alimentar se converte em procura antecipada
+  limiarDivergencia: 20,      // % a partir da qual duas fontes são consideradas em conflito
+  limiarRupturaDias: 15,      // dias de cobertura abaixo dos quais se abre achado crítico
+  limiarSobreprecoPct: 15,    // % de desvio de preço de importação que justifica verificação
+  limiarReservaPct: 70,       // % de cumprimento da reserva estratégica abaixo do qual há achado
+  horizonteProjeccaoDias: 90
+};
+
+let D=null, FX=null, M=null;
+const $=id=>document.getElementById(id);
+const nf=(n,d=0)=>(n==null||isNaN(n))?'—':Number(n).toLocaleString('pt-PT',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=(n,d=1)=>n==null?'—':(n>0?'+':'')+nf(n,d)+'%';
+
+/* ---------- utilitários ---------- */
+function digitoControlo(corpo){
+  let s=0; const inv=String(corpo).split('').reverse();
+  for(let i=0;i<inv.length;i++) s+=Number(inv[i])*(i%2===0?3:1);
+  return (10-(s%10))%10;
+}
+const gtinValido=g=>{ g=String(g||'').replace(/\D/g,''); return [8,12,13,14].includes(g.length) && digitoControlo(g.slice(0,-1))===Number(g.slice(-1)); };
+
+/* ============================================================
+   1. CONSOLIDAÇÃO
+   ============================================================ */
+function consolidar(){
+  const s=FX.ine.ipc.serie, pri=s[0], ult=s[s.length-1];
+  const premioAlimentar = ((ult.indiceAlimentar/pri.indiceAlimentar-1)-(ult.indiceGeral/pri.indiceGeral-1))*100;
+  const factorProcura = 1 + (premioAlimentar/100)*PRESSUPOSTOS.elasticidadeProcura;
+  const pop = FX.fao.populacao.valor;
+
+  const produtos = D.balancoNacional.map(b=>{
+    const nome=b.produto;
+    const consumoSin = b.cobertura>0 ? b.stock/b.cobertura : null;          // t/dia implícito
+    const fao = FX.fao.consumoPerCapita.linhas.find(x=>x.produto===nome);
+    const consumoFAO = fao ? fao.valor*pop/1000/365 : null;                  // t/dia teórico
+    const divConsumo = (consumoSin&&consumoFAO) ? (consumoSin-consumoFAO)/consumoFAO*100 : null;
+
+    const icm = FX.icm.stockCereais.linhas.find(x=>x.produto===nome);
+    const divStock = icm ? (b.stock-icm.toneladas)/icm.toneladas*100 : null;
+
+    const ident = FX.gs1.identificacaoProdutos.linhas.find(x=>x.produto===nome);
+    const temGTIN = ident && gtinValido(ident.gtin);
+
+    const fontes = ['SINAGEPE'];
+    if(fao) fontes.push('FAO');
+    if(icm) fontes.push('ICM');
+    if(temGTIN) fontes.push('GS1');
+    fontes.push('INE');   // o índice de preços aplica-se a todos os produtos da cesta
+
+    // Índice de Confiança do Dado — 0 a 100
+    let icd = 25 + fontes.length*11;                                        // cobertura de fontes
+    if(divConsumo!=null && Math.abs(divConsumo)>PRESSUPOSTOS.limiarDivergencia) icd -= 18;
+    if(divStock!=null && Math.abs(divStock)>PRESSUPOSTOS.limiarDivergencia) icd -= 18;
+    if(!FX.fao.consumoPerCapita.verificado && fao) icd -= 8;
+    if(!FX.icm.stockCereais.verificado && icm) icd -= 8;
+    if(!temGTIN) icd -= 6;
+    icd=Math.max(5,Math.min(100,Math.round(icd)));
+
+    const coberturaAjustada = b.cobertura/factorProcura;
+    return { nome, stock:b.stock, cobertura:b.cobertura, estado:b.estado,
+      consumoSin, consumoFAO, divConsumo, stockICM:icm?icm.toneladas:null, divStock,
+      gtin:ident?ident.gtin:'', temGTIN, fontes, icd, coberturaAjustada,
+      risco: coberturaAjustada<PRESSUPOSTOS.limiarRupturaDias?'crit':coberturaAjustada<30?'warn':'ok' };
+  });
+
+  const r=FX.icm.reservaEstrategica;
+  const cumprReserva = r.metaToneladas ? r.actualToneladas/r.metaToneladas*100 : null;
+  const exposicao = FX.icm.importacoes.linhas.reduce((a,l)=>a+(l.precoDeclaradoUSDt-l.precoReferenciaUSDt)*l.volumeToneladas,0);
+  const identCob = produtos.filter(p=>p.temGTIN).length/produtos.length*100;
+  const icdMedio = produtos.reduce((a,p)=>a+p.icd,0)/produtos.length;
+
+  return { produtos, premioAlimentar, factorProcura, cumprReserva, deficeReserva:Math.max(0,r.metaToneladas-r.actualToneladas),
+           exposicao, identCob, icdMedio, ult };
+}
+
+/* ============================================================
+   2. ACHADOS — regras sobre o consolidado
+   ============================================================ */
+function achados(){
+  const A=[];
+  M.produtos.forEach(p=>{
+    if(p.risco==='crit') A.push({sev:'crit', t:`Ruptura projectada — ${p.nome}`,
+      ev:`A cobertura declarada é de <code>${nf(p.cobertura)} dias</code>. Corrigida pela pressão de procura que resulta da inflação alimentar do INE (factor <code>${nf(M.factorProcura,3)}</code>), cai para <code>${nf(p.coberturaAjustada,1)} dias</code> — abaixo do limiar de ${PRESSUPOSTOS.limiarRupturaDias} dias.`,
+      ac:`Accionar reposição antecipada ou libertação parcial de reserva para ${p.nome}, dimensionada para repor ${nf(PRESSUPOSTOS.limiarRupturaDias*2-p.coberturaAjustada,0)} dias de cobertura.`,
+      apr:'MIC + Delegado Provincial', prod:p.nome, prov:!FX.ine.ipc.verificado});
+
+    if(p.divConsumo!=null && Math.abs(p.divConsumo)>PRESSUPOSTOS.limiarDivergencia)
+      A.push({sev:'warn', t:`Divergência de consumo — ${p.nome}`,
+      ev:`O consumo implícito nos dados do SINAGEPE é de <code>${nf(p.consumoSin,1)} t/dia</code>. O consumo teórico calculado a partir do consumo per capita da FAO e da população é de <code>${nf(p.consumoFAO,1)} t/dia</code> — uma diferença de <code>${pct(p.divConsumo)}</code>.`,
+      ac:`Verificar a taxa de consumo usada no balanço de ${p.nome}. Uma sobrestimativa inflaciona artificialmente a cobertura e adia alertas que deviam ter disparado.`,
+      apr:'Direcção de Estatística + MIC', prod:p.nome, prov:!FX.fao.consumoPerCapita.verificado||!FX.fao.populacao.verificado});
+
+    if(p.divStock!=null && Math.abs(p.divStock)>PRESSUPOSTOS.limiarDivergencia)
+      A.push({sev:'crit', t:`Divergência de stock com o ICM — ${p.nome}`,
+      ev:`O SINAGEPE regista <code>${nf(p.stock)} t</code>; o ICM declara <code>${nf(p.stockICM)} t</code>. A diferença é de <code>${pct(p.divStock)}</code>.`,
+      ac:`Reconciliação física com o ICM antes de qualquer decisão sobre ${p.nome}. Duas contagens diferentes do mesmo cereal significa que uma delas está errada.`,
+      apr:'ICM + MIC', prod:p.nome, prov:!FX.icm.stockCereais.verificado});
+
+    if(!p.temGTIN) A.push({sev:'info', t:`Produto sem identificação normalizada — ${p.nome}`,
+      ev:`Não há GTIN válido associado a ${p.nome}. Sem chave GS1, o mesmo produto no armazém, na alfândega e no retalho fica impossível de casar automaticamente.`,
+      ac:`Atribuir GTIN através de organização-membro GS1 e registar no cadastro de produto.`,
+      apr:'MIC + operador', prod:p.nome, prov:!FX.gs1.identificacaoProdutos.verificado});
+  });
+
+  if(M.cumprReserva!=null && M.cumprReserva<PRESSUPOSTOS.limiarReservaPct)
+    A.push({sev:'crit', t:'Reserva estratégica abaixo do limiar',
+      ev:`A meta pública do ICM é de <code>${nf(FX.icm.reservaEstrategica.metaToneladas)} t</code> de cereais. O registo actual é de <code>${nf(FX.icm.reservaEstrategica.actualToneladas)} t</code>, ou seja <code>${nf(M.cumprReserva,1)}%</code> da meta, com um défice de <code>${nf(M.deficeReserva)} t</code>.`,
+      ac:'Programar aquisição faseada para fechar o défice, com prioridade para a região Sul, que é o foco declarado da reserva.',
+      apr:'Aprovação ministerial', prov:!FX.icm.reservaEstrategica.actualVerificado});
+
+  FX.icm.importacoes.linhas.forEach(l=>{
+    const d=(l.precoDeclaradoUSDt-l.precoReferenciaUSDt)/l.precoReferenciaUSDt*100;
+    if(d>PRESSUPOSTOS.limiarSobreprecoPct)
+      A.push({sev:'crit', t:`Preço de importação declarado acima da referência — ${l.produto}`,
+        ev:`Declarado <code>${nf(l.precoDeclaradoUSDt)} USD/t</code> contra referência de <code>${nf(l.precoReferenciaUSDt)} USD/t</code> (<code>${pct(d)}</code>). Sobre um volume de <code>${nf(l.volumeToneladas)} t</code>, a exposição cambial é de <code>${nf((l.precoDeclaradoUSDt-l.precoReferenciaUSDt)*l.volumeToneladas/1e6,2)} milhões de USD</code>.`,
+        ac:`Verificação documental das operações de importação de ${l.produto}: facturas, contratos e comprovativos de pagamento. Um desvio desta ordem pode ter explicação legítima — frete, seguro, prazo — mas exige demonstração.`,
+        apr:'MIC + Alfândegas + Banco Central', prod:l.produto, prov:!l.verificado});
+  });
+
+  if(M.premioAlimentar>3) A.push({sev:'warn', t:'Inflação alimentar acima do índice geral',
+    ev:`No período carregado do INE, o índice de alimentação subiu <code>${nf(M.premioAlimentar,1)} pontos percentuais</code> acima do índice geral. É este diferencial que o motor converte em pressão de procura, com elasticidade de <code>${PRESSUPOSTOS.elasticidadeProcura}</code>.`,
+    ac:'Rever para baixo as projecções de cobertura de todos os produtos da cesta básica e antecipar as reposições programadas.',
+    apr:'MIC + Finanças', prov:!FX.ine.ipc.verificado});
+
+  const ordem={crit:0,warn:1,info:2};
+  return A.sort((a,b)=>ordem[a.sev]-ordem[b.sev]);
+}
+
+/* ============================================================
+   3. RENDER
+   ============================================================ */
+function renderKPIs(){
+  const cor=v=>v>=75?'#12B981':v>=50?'#F0A926':'#EF4444';
+  const K=[
+    {c:'Confiança do dado',v:nf(M.icdMedio,0),u:'/100',s:'Média ponderada das fontes por produto',col:cor(M.icdMedio)},
+    {c:'Reserva estratégica',v:nf(M.cumprReserva,0),u:'%',s:`Défice de ${nf(M.deficeReserva)} t face à meta do ICM`,col:cor(M.cumprReserva)},
+    {c:'Prémio de inflação alimentar',v:pct(M.premioAlimentar,1),u:'',s:'Alimentação acima do índice geral (INE)',col:M.premioAlimentar>3?'#EF4444':'#F0A926'},
+    {c:'Exposição cambial',v:nf(M.exposicao/1e6,2),u:'M USD',s:'Sobredeclaração em importações (ICM)',col:'#EF4444'},
+    {c:'Identificação GS1',v:nf(M.identCob,0),u:'%',s:'Produtos com GTIN válido no cadastro',col:cor(M.identCob)}
+  ];
+  $('kpis').innerHTML=K.map(k=>`<div class="kpi frame"><span class="rail" style="background:${k.col}"></span>
+    <div class="cap">${k.c}</div><div class="v mono" style="color:${k.col}">${k.v}<small>${k.u}</small></div>
+    <div class="sub">${k.s}</div></div>`).join('');
+}
+
+function renderMatriz(){
+  const corIcd=v=>v>=75?'var(--ok)':v>=50?'var(--warn)':'var(--crit)';
+  const corRisco={ok:'var(--ok)',warn:'var(--warn)',crit:'var(--crit)'};
+  $('matriz').innerHTML=`<table><thead><tr>
+    <th>Produto</th><th>Fontes que o cobrem</th><th style="text-align:right">Stock SINAGEPE</th>
+    <th style="text-align:right">Stock ICM</th><th style="text-align:right">Consumo obs. / FAO</th>
+    <th style="text-align:right">Cobertura corrigida</th><th>Confiança</th></tr></thead><tbody>
+    ${M.produtos.map(p=>`<tr>
+      <td><div class="prodcell">${PRODUTOS.imagem(p.nome,44)}<div><div class="nm">${p.nome}</div>
+        <div class="sub">${p.temGTIN?'GTIN '+p.gtin:'sem GTIN'}</div></div></div></td>
+      <td>${p.fontes.map(f=>`<span class="chip" style="background:rgba(34,184,240,.12);color:var(--acc);margin-right:4px">${f}</span>`).join('')}</td>
+      <td class="mono" style="text-align:right">${nf(p.stock)} t</td>
+      <td class="mono" style="text-align:right;color:${p.divStock!=null&&Math.abs(p.divStock)>PRESSUPOSTOS.limiarDivergencia?'var(--crit)':'var(--ink-dim)'}">
+        ${p.stockICM!=null?nf(p.stockICM)+' t':'—'}${p.divStock!=null?`<div style="font-size:10px">${pct(p.divStock)}</div>`:''}</td>
+      <td class="mono" style="text-align:right">${p.consumoSin!=null?nf(p.consumoSin,1):'—'}
+        ${p.consumoFAO!=null?`<span style="color:var(--ink-faint)"> / ${nf(p.consumoFAO,1)}</span>`:''}
+        ${p.divConsumo!=null?`<div style="font-size:10px;color:${Math.abs(p.divConsumo)>PRESSUPOSTOS.limiarDivergencia?'var(--warn)':'var(--ink-faint)'}">${pct(p.divConsumo)}</div>`:''}</td>
+      <td class="mono" style="text-align:right;color:${corRisco[p.risco]}">${nf(p.coberturaAjustada,1)} d
+        <div style="font-size:10px;color:var(--ink-faint)">declarada ${nf(p.cobertura)}</div></td>
+      <td><div class="icd"><span class="bar"><i style="width:${p.icd}%;background:${corIcd(p.icd)}"></i></span>
+        <b class="mono" style="font-size:12px;color:${corIcd(p.icd)}">${p.icd}</b></div></td></tr>`).join('')}
+    </tbody></table>
+    <div class="note">A coluna de consumo mostra o valor observado no SINAGEPE e, a seguir, o valor teórico derivado do consumo per capita da FAO aplicado à população. Quando os dois se afastam mais de ${PRESSUPOSTOS.limiarDivergencia}%, abre-se um achado — porque uma das duas contas está errada e isso muda quando o alerta dispara.</div>`;
+}
+
+function renderAchados(){
+  const A=achados();
+  const c={crit:'var(--crit)',warn:'var(--warn)',info:'var(--info)'};
+  const bg={crit:'var(--crit-bg)',warn:'var(--warn-bg)',info:'var(--info-bg)'};
+  const rot={crit:'Crítico',warn:'Aviso',info:'Informação'};
+  const np=A.filter(x=>x.prov).length;
+  $('achados-count').textContent=A.length+' achados'+(np?' · '+np+' provisórios':'');
+  $('achados').innerHTML=A.map(a=>`<div class="achado">
+    <div class="h"><span class="chip" style="background:${bg[a.sev]};color:${c[a.sev]}">${rot[a.sev]}</span><b>${a.t}</b>
+      ${a.prov?'<span class="chip" title="Assenta em dados ainda não verificados" style="background:var(--warn-bg);color:var(--warn)">base provisória</span>':''}</div>
+    <div class="ev">${a.ev}</div>
+    <div class="acc"><b style="color:var(--brzl)">Acção recomendada.</b> ${a.ac}</div>
+    <div class="f"><span class="chip" style="background:rgba(201,138,60,.12);color:var(--brz)">🔒 ${a.apr}</span>
+      <span style="flex:1"></span><button class="btn acc no-print" type="button">Submeter a aprovação</button></div></div>`).join('');
+  return A;
+}
+
+function renderProjeccao(){
+  const H=PRESSUPOSTOS.horizonteProjeccaoDias;
+  const alvo=[...M.produtos].sort((a,b)=>a.coberturaAjustada-b.coberturaAjustada).slice(0,3);
+  const w=760,h=250,pl=40,pb=28;
+  const X=d=>pl+d/H*(w-pl-14);
+  const maxY=Math.max(60,...alvo.map(p=>p.cobertura));
+  const Y=v=>h-pb-(v/maxY)*(h-pb-18);
+  const cores=['#EF4444','#F0A926','#22B8F0'];
+  let g='';for(let i=0;i<=4;i++){const v=maxY*i/4;
+    g+=`<line x1="${pl}" y1="${Y(v)}" x2="${w-14}" y2="${Y(v)}" stroke="#22354F" stroke-width=".7"/><text x="6" y="${Y(v)+4}" fill="#5E7189" font-size="9.5" font-family="IBM Plex Mono">${nf(v,0)}</text>`;}
+  let lab='';for(let d=0;d<=H;d+=15) lab+=`<text x="${X(d)}" y="${h-8}" fill="#5E7189" font-size="9.5" text-anchor="middle">${d}d</text>`;
+  const limiar=`<line x1="${pl}" y1="${Y(PRESSUPOSTOS.limiarRupturaDias)}" x2="${w-14}" y2="${Y(PRESSUPOSTOS.limiarRupturaDias)}" stroke="#EF4444" stroke-width="1.2" stroke-dasharray="6 5" opacity=".8"/>
+    <text x="${w-18}" y="${Y(PRESSUPOSTOS.limiarRupturaDias)-6}" fill="#EF4444" font-size="9.5" text-anchor="end">limiar de ruptura (${PRESSUPOSTOS.limiarRupturaDias} d)</text>`;
+  const linhas=alvo.map((p,i)=>{
+    const base=[],aju=[];
+    for(let d=0;d<=H;d+=3){ base.push([X(d),Y(Math.max(0,p.cobertura-d))]); aju.push([X(d),Y(Math.max(0,p.coberturaAjustada-d*M.factorProcura))]); }
+    const P=a=>a.map((q,j)=>(j?'L':'M')+q[0].toFixed(1)+','+q[1].toFixed(1)).join(' ');
+    return `<path d="${P(base)}" fill="none" stroke="${cores[i]}" stroke-width="1.5" stroke-dasharray="5 4" opacity=".55"/>
+            <path d="${P(aju)}" fill="none" stroke="${cores[i]}" stroke-width="2.4"/>`;
+  }).join('');
+  $('projeccao').innerHTML=`<div class="row" style="font-size:10.5px;color:var(--ink-dim);margin-bottom:10px">
+    ${alvo.map((p,i)=>`<span style="display:flex;align-items:center;gap:6px"><i style="width:10px;height:10px;border-radius:2px;background:${cores[i]}"></i>${p.nome}</span>`).join('')}
+    <span style="color:var(--ink-faint);margin-left:auto">Tracejado: sem correcção · Cheio: corrigido pela procura</span></div>
+    <svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto" role="img" aria-label="Projecção de cobertura a ${H} dias">${g}${lab}${limiar}${linhas}</svg>
+    <div class="note">Projecção linear a ${H} dias sobre a taxa de consumo actual. A linha cheia aplica o factor de procura <span class="mono">${nf(M.factorProcura,3)}</span>, derivado do prémio de inflação alimentar do INE com elasticidade de ${PRESSUPOSTOS.elasticidadeProcura}. É um modelo simples e assumido como tal: não incorpora sazonalidade, campanha agrícola nem choques logísticos. Serve para ordenar prioridades, não para substituir análise sectorial.</div>`;
+}
+
+function renderProveniencia(){
+  const F=[
+    {n:'SINAGEPE — balanço nacional', v:true, d:'data/sinagepe-data.json', nota:D.meta.modo||'—'},
+    {n:'INE — Índice de Preços no Consumidor', v:FX.ine.ipc.verificado, d:'Importação manual', nota:'Sem API pública'},
+    {n:'ICM — meta da reserva estratégica', v:FX.icm.reservaEstrategica.metaVerificada, d:'Declaração pública do ICM', nota:'20 000 t'},
+    {n:'ICM — existências actuais', v:FX.icm.reservaEstrategica.actualVerificado, d:'Recolha manual', nota:'A confirmar'},
+    {n:'ICM — preços de importação', v:FX.icm.importacoes.verificado, d:'Declaração pública do ICM', nota:'Arroz verificado'},
+    {n:'FAO — consumo per capita', v:FX.fao.consumoPerCapita.verificado, d:'FAOSTAT área 144', nota:'Desfasamento 2–3 anos'},
+    {n:'FAO — população', v:FX.fao.populacao.verificado, d:'FAOSTAT', nota:String(FX.fao.populacao.ano)},
+    {n:'GS1 — identificação de produto', v:FX.gs1.identificacaoProdutos.verificado, d:'Cadastro interno', nota:'Validação local do GTIN'}
+  ];
+  const nv=F.filter(f=>!f.v).length;
+  $('prov-count').textContent=nv?nv+' por verificar':'tudo verificado';
+  $('proveniencia').innerHTML=F.map(f=>`<div class="fonte">
+    <div><span class="dot" style="background:${f.v?'var(--ok)':'var(--warn)'}"></span>${f.n}
+      <div style="font-size:10px;color:var(--ink-faint);margin-left:16px">${f.d} · ${f.nota}</div></div>
+    <span class="chip" style="background:${f.v?'var(--ok-bg)':'var(--warn-bg)'};color:${f.v?'var(--ok)':'var(--warn)'}">${f.v?'Verificado':'Provisório'}</span>
+  </div>`).join('')+`<div class="note">O motor calcula com tudo, mas penaliza a confiança do que não está verificado. Nenhum número marcado como provisório deve entrar em documento oficial sem confirmação junto da instituição de origem.</div>`;
+}
+
+/* ============================================================
+   4. RELATÓRIO EXECUTIVO
+   ============================================================ */
+function gerarRelatorio(){
+  const A=achados();
+  const crit=A.filter(a=>a.sev==='crit'), aviso=A.filter(a=>a.sev==='warn');
+  const risco=[...M.produtos].sort((a,b)=>a.coberturaAjustada-b.coberturaAjustada);
+  const hoje=new Date().toLocaleDateString('pt-PT',{day:'2-digit',month:'long',year:'numeric'});
+  const el=$('relatorio');
+  el.innerHTML=`
+    <div class="eyebrow">Relatório executivo gerado pelo sistema</div>
+    <h3 style="font-size:20px;margin-top:10px">Situação consolidada dos produtos estratégicos</h3>
+    <p style="color:var(--ink-faint);font-size:11.5px">Maputo, ${hoje} · SINAGEPE — Sistema Nacional de Gestão de Produtos Estratégicos · Documento gerado automaticamente a partir de ${['SINAGEPE','INE','ICM','FAO','GS1'].join(', ')}</p>
+
+    <h3>1. Síntese</h3>
+    <p>O cruzamento das fontes disponíveis produziu <b>${A.length} achados</b>, dos quais <b>${crit.length} de natureza crítica</b> e ${aviso.length} de aviso. O índice médio de confiança do dado situa-se em <b>${nf(M.icdMedio,0)} em 100</b>, o que ${M.icdMedio>=75?'permite decidir com margem razoável':M.icdMedio>=50?'aconselha confirmação antes de decisões de valor elevado':'não permite decisões de valor elevado sem verificação prévia'}.</p>
+    <p>O produto com menor margem é o <b>${risco[0].nome}</b>, com cobertura corrigida de ${nf(risco[0].coberturaAjustada,1)} dias contra ${nf(risco[0].cobertura)} dias declarados. A reserva estratégica de cereais cumpre <b>${nf(M.cumprReserva,1)}%</b> da meta de ${nf(FX.icm.reservaEstrategica.metaToneladas)} toneladas fixada pelo ICM, com um défice de ${nf(M.deficeReserva)} toneladas.</p>
+
+    <h3>2. Pressão de preços</h3>
+    <p>Segundo a série do INE carregada no sistema, a divisão de alimentação e bebidas não alcoólicas subiu ${nf(M.premioAlimentar,1)} pontos percentuais acima do índice geral. Aplicando uma elasticidade de ${PRESSUPOSTOS.elasticidadeProcura}, o sistema corrige a procura por um factor de ${nf(M.factorProcura,3)}, o que reduz proporcionalmente todas as coberturas projectadas. Na prática, significa que os dias de folga do país são menos do que os mapas de stock sugerem.</p>
+
+    <h3>3. Exposição cambial em importações</h3>
+    <p>O confronto entre os preços de importação declarados e as referências internacionais aponta para uma exposição de <b>${nf(M.exposicao/1e6,2)} milhões de dólares</b>. ${FX.icm.importacoes.notaFonte} Este valor não constitui prova de infracção; é um indicador que justifica verificação documental das operações em causa.</p>
+
+    <h3>4. Achados críticos</h3>
+    ${A.filter(a=>a.prov).length?`<p style="color:var(--warn)"><b>Advertência.</b> ${A.filter(a=>a.prov).length} dos ${A.length} achados assentam, no todo ou em parte, em dados ainda não verificados junto da instituição de origem. Não devem fundamentar decisão sem confirmação prévia.</p>`:''}
+    ${crit.length?`<ul>${crit.map(a=>`<li><b>${a.t}.</b> ${a.ac}<br><span style="color:var(--ink-faint);font-size:11px">Aprovação: ${a.apr}</span></li>`).join('')}</ul>`:'<p>Não foram identificados achados críticos neste ciclo.</p>'}
+
+    <h3>5. Qualidade da informação</h3>
+    <p>Dos oito blocos de dados que alimentam esta análise, ${[FX.ine.ipc.verificado,FX.icm.reservaEstrategica.metaVerificada,FX.icm.reservaEstrategica.actualVerificado,FX.icm.importacoes.verificado,FX.fao.consumoPerCapita.verificado,FX.fao.populacao.verificado,FX.gs1.identificacaoProdutos.verificado].filter(Boolean).length+1} estão verificados. A cobertura de identificação GS1 é de ${nf(M.identCob,0)}%, o que limita a reconciliação automática entre armazém, alfândega e retalho para os produtos em falta.</p>
+
+    <h3>6. Pressupostos do modelo</h3>
+    <ul>
+      <li>Elasticidade da procura à inflação alimentar: ${PRESSUPOSTOS.elasticidadeProcura}</li>
+      <li>Limiar de divergência entre fontes: ${PRESSUPOSTOS.limiarDivergencia}%</li>
+      <li>Limiar de ruptura: ${PRESSUPOSTOS.limiarRupturaDias} dias de cobertura</li>
+      <li>Projecção linear a ${PRESSUPOSTOS.horizonteProjeccaoDias} dias, sem sazonalidade nem choques logísticos</li>
+    </ul>
+    <p style="color:var(--ink-faint);font-size:11px;margin-top:18px;border-top:1px solid var(--card-line);padding-top:12px">Documento gerado automaticamente. Os valores assinalados como provisórios carecem de confirmação junto das instituições de origem antes de utilização em processo de decisão.</p>`;
+  el.style.display='block';
+  if(el.scrollIntoView) el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ============================================================
+   5. ARRANQUE
+   ============================================================ */
+(async function iniciar(){
+  if(typeof SINAGEPE!=='undefined'&&SINAGEPE.mountShell) SINAGEPE.mountShell('inteligencia','Inteligência Consolidada','MOTOR MULTI-FONTE');
+  const alvo=document.getElementById('content-mount')||document.getElementById('app-shell');
+  alvo.innerHTML=`<div class="row" style="justify-content:space-between;margin-bottom:14px">
+      <div class="eyebrow">SINAGEPE · INE · ICM · FAO · GS1 cruzados num só motor</div>
+      <div class="row no-print"><button class="btn acc" onclick="gerarRelatorio()">Gerar relatório executivo</button>
+        <button class="btn" onclick="window.print()">Imprimir</button></div></div>
+    <div class="kpis" id="kpis"></div>
+    <div class="card frame"><div class="ch"><h2>Matriz de consolidação por produto</h2><span class="tag live">Cruzamento de 5 fontes</span></div>
+      <div class="cb" id="matriz"></div></div>
+    <div class="grid2" style="margin-top:12px">
+      <div class="card frame"><div class="ch"><h2>Achados accionáveis</h2><span class="tag crit" id="achados-count">—</span></div>
+        <div id="achados"></div></div>
+      <div class="card frame"><div class="ch"><h2>Proveniência e verificação</h2><span class="tag warn" id="prov-count">—</span></div>
+        <div class="cb" id="proveniencia"></div></div>
+    </div>
+    <div class="card frame" style="margin-top:12px"><div class="ch"><h2>Projecção de cobertura</h2>
+      <span class="tag">${PRESSUPOSTOS.horizonteProjeccaoDias} dias</span></div><div class="cb" id="projeccao"></div></div>
+    <div class="card frame" id="relatorio-wrap" style="margin-top:12px"><div class="cb"><div id="relatorio"></div>
+      <div id="relatorio-vazio" style="font-size:12px;color:var(--ink-faint)">O relatório executivo é montado a partir dos achados acima e pode ser impresso ou guardado em PDF pelo diálogo de impressão.</div></div></div>`;
+
+  try{
+    const [d,fx]=await Promise.all([
+      fetch('data/sinagepe-data.json').then(r=>r.json()),
+      fetch('data/fontes-externas.json').then(r=>r.json())
+    ]);
+    D=d; FX=fx;
+  }catch(e){
+    alvo.innerHTML=`<div class="card frame"><div class="cb"><div class="msg">
+      <span class="ic" style="background:var(--crit-bg);color:var(--crit)">✕</span>
+      <div><b style="color:var(--crit)">Não foi possível carregar os dados</b><br>
+      <span style="color:var(--ink-dim)">O motor precisa de <span class="mono">data/sinagepe-data.json</span> e de <span class="mono">data/fontes-externas.json</span>. Confirme que os dois ficheiros estão publicados. Detalhe: ${e.message}</span></div></div></div></div>`;
+    return;
+  }
+
+  M=consolidar();
+  renderKPIs(); renderMatriz(); renderAchados(); renderProveniencia(); renderProjeccao();
+  if(typeof SINAGEPE!=='undefined'&&SINAGEPE.renderUserFooter) SINAGEPE.renderUserFooter(D);
+  const f=document.getElementById('footer-updated'); if(f) f.textContent='Última actualização: '+(D.meta.ultimaActualizacao||'—');
+  document.getElementById('relatorio-vazio').style.display='block';
+})();
+</script>
+</body>
+</html>

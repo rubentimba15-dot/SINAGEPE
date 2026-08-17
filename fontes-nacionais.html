@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SINAGEPE — Fontes Nacionais</title>
+<link rel="stylesheet" href="assets/sinagepe-tema.css">
+<style>
+.tabs{grid-template-columns:repeat(2,1fr)}
+@media (max-width:820px){.tabs{grid-template-columns:1fr}}
+.mand{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--card-line);font-size:12px;color:var(--ink-dim);line-height:1.55}
+.mand span{color:var(--brz);flex:none;font-family:'IBM Plex Mono',monospace;font-size:11px}
+</style>
+</head>
+<body>
+<div id="app-shell"></div>
+
+<script src="assets/access-control.js"></script>
+<script src="assets/sinagepe.js"></script>
+<script>
+/* ============================================================
+   FONTES NACIONAIS — INE e Instituto de Cereais de Moçambique
+   Duas janelas. Ambas as instituições publicam em documento, não
+   em serviço automático, por isso a via é importação e recolha.
+   ============================================================ */
+let FX=null;
+
+function capa(tipo){
+  const B='#C98A3C', A='#22B8F0', V='#12B981';
+  const defs=`<defs><linearGradient id="g${tipo}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${tipo==='ine'?B:V}" stop-opacity=".18"/><stop offset="100%" stop-color="#060B16" stop-opacity="0"/></linearGradient>
+    <pattern id="p${tipo}" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M14 0H0V14" fill="none" stroke="#152740" stroke-width=".6"/></pattern></defs>`;
+  const base=`<rect width="300" height="104" fill="#0A1220"/><rect width="300" height="104" fill="url(#g${tipo})"/><rect width="300" height="104" fill="url(#p${tipo})" opacity=".7"/>`;
+  let art='';
+  if(tipo==='ine'){
+    art=`<g stroke="${B}" stroke-width="1.4" fill="none">
+      <rect x="96" y="60" width="15" height="28"/><rect x="118" y="46" width="15" height="42"/>
+      <rect x="140" y="54" width="15" height="34"/><rect x="162" y="34" width="15" height="54"/><rect x="184" y="48" width="15" height="40"/></g>
+      <path d="M96 66l22-16 22 10 22-22 22 16" stroke="${A}" stroke-width="1.5" fill="none"/>
+      <circle cx="184" cy="54" r="3" fill="${A}"/><path d="M84 88h132" stroke="#22354F" stroke-width="1"/>`;
+  }else{
+    art=`<path d="M150 92V40" stroke="${V}" stroke-width="2.4" stroke-linecap="round"/>
+      <g fill="none" stroke="${V}" stroke-width="1.5">
+      <path d="M150 46c7-9 20-10 20-10s-1 13-9 18-11-8-11-8ZM150 46c-7-9-20-10-20-10s1 13 9 18 11-8 11-8Z"/>
+      <path d="M150 66c7-9 20-10 20-10s-1 13-9 18-11-8-11-8ZM150 66c-7-9-20-10-20-10s1 13 9 18 11-8 11-8Z"/></g>
+      <g stroke="${B}" stroke-width="1.3" fill="none"><path d="M58 88V62l16-12 16 12v26"/><path d="M58 70h32M58 79h32"/>
+      <path d="M210 88V62l16-12 16 12v26"/><path d="M210 70h32M210 79h32"/></g>`;
+  }
+  return `<svg viewBox="0 0 300 104" preserveAspectRatio="xMidYMid slice">${defs}${base}${art}</svg>`;
+}
+
+const JANELAS=[
+  {id:'ine', org:'INE — Instituto Nacional de Estatística', desc:'Índice de Preços no Consumidor e estatísticas oficiais do país', estado:'Importação manual', cor:'#C98A3C'},
+  {id:'icm', org:'ICM — Instituto de Cereais de Moçambique', desc:'Reserva estratégica, comercialização agrícola e importações de cereais', estado:'Recolha manual', cor:'#12B981'}
+];
+
+function aviso(tipo,titulo,texto){
+  const c={ok:'var(--ok)',warn:'var(--warn)',crit:'var(--crit)',info:'var(--info)'}[tipo];
+  const bg={ok:'var(--ok-bg)',warn:'var(--warn-bg)',crit:'var(--crit-bg)',info:'var(--info-bg)'}[tipo];
+  const ic={ok:'✓',warn:'!',crit:'✕',info:'i'}[tipo];
+  return `<div class="msg"><span class="ic" style="background:${bg};color:${c}">${ic}</span>
+    <div><b style="color:${c}">${titulo}</b><br><span style="color:var(--ink-dim)">${texto}</span></div></div>`;
+}
+const nf=(n,d=0)=>Number(n).toLocaleString('pt-PT',{minimumFractionDigits:d,maximumFractionDigits:d});
+
+/* ---------- importador de CSV (partilhado pelas duas janelas) ---------- */
+function importarCSV(txt,alvo){
+  const out=document.getElementById(alvo);
+  const linhas=txt.trim().split(/\r?\n/).filter(l=>l.trim());
+  if(linhas.length<2){ out.innerHTML=aviso('warn','Ficheiro insuficiente','São precisas pelo menos uma linha de cabeçalho e uma de dados.'); return; }
+  const sep=(linhas[0].match(/;/g)||[]).length>(linhas[0].match(/,/g)||[]).length?';':',';
+  const cab=linhas[0].split(sep).map(s=>s.trim().replace(/^"|"$/g,''));
+  const dados=linhas.slice(1,301).map(l=>l.split(sep).map(s=>s.trim().replace(/^"|"$/g,'')));
+  const numCol=cab.map((_,i)=>dados.every(d=>d[i]!==undefined&&d[i]!==''&&!isNaN(Number(String(d[i]).replace(',','.')))));
+  const iNum=numCol.indexOf(true);
+  let graf='';
+  if(iNum>-1&&dados.length>1){
+    const vals=dados.map(d=>Number(String(d[iNum]).replace(',','.')));
+    const mn=Math.min(...vals),mx=Math.max(...vals),w=540,h=130;
+    const pts=vals.map((v,i)=>[28+i/(vals.length-1)*(w-40),h-18-((v-mn)/((mx-mn)||1))*(h-36)]);
+    const d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+    graf=`<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;margin-bottom:14px">
+      <path d="${d} L${pts[pts.length-1][0]},${h-18} L${pts[0][0]},${h-18}Z" fill="#C98A3C" opacity=".13"/>
+      <path d="${d}" fill="none" stroke="#C98A3C" stroke-width="2.3" stroke-linejoin="round"/>
+      <circle cx="${pts[pts.length-1][0]}" cy="${pts[pts.length-1][1]}" r="4" fill="#C98A3C" stroke="#060B16" stroke-width="2"/>
+      <text x="4" y="14" fill="#5E7189" font-size="9.5" font-family="IBM Plex Mono">${nf(mx,1)}</text>
+      <text x="4" y="${h-4}" fill="#5E7189" font-size="9.5" font-family="IBM Plex Mono">${nf(mn,1)}</text></svg>`;
+  }
+  out.innerHTML=graf+`<table><thead><tr>${cab.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+    <tbody>${dados.slice(0,12).map(d=>`<tr>${d.map((v,i)=>`<td class="${numCol[i]?'mono':''}"${numCol[i]?' style="text-align:right;color:var(--brzl)"':''}>${v}</td>`).join('')}</tr></tr>`).join('')}</tbody></table>
+    <div class="note">${dados.length} linha(s) lida(s); mostradas as primeiras 12. O ficheiro é processado no seu navegador e não sai do seu computador. Para que o motor de inteligência use estes números de forma permanente, têm de ser gravados em <span class="mono">data/fontes-externas.json</span>.</div>`;
+}
+function ligarFicheiro(inputId,alvo){
+  const f=document.getElementById(inputId);
+  if(f) f.addEventListener('change',e=>{
+    const file=e.target.files[0]; if(!file) return;
+    const r=new FileReader(); r.onload=()=>importarCSV(r.result,alvo); r.readAsText(file,'UTF-8');
+  });
+}
+
+/* ============================================================ INE */
+function painelINE(){
+  const ine=FX&&FX.ine;
+  const s=ine&&ine.ipc&&ine.ipc.serie||[];
+  let serie='';
+  if(s.length){
+    const w=540,h=150,mn=Math.min(...s.map(x=>Math.min(x.indiceGeral,x.indiceAlimentar)))-1;
+    const mx=Math.max(...s.map(x=>Math.max(x.indiceGeral,x.indiceAlimentar)))+1;
+    const X=i=>34+i/(s.length-1)*(w-46), Y=v=>h-22-((v-mn)/(mx-mn))*(h-40);
+    const ln=k=>s.map((x,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(x[k]).toFixed(1)).join(' ');
+    let g='';for(let i=0;i<4;i++){const v=mn+(mx-mn)*i/3;
+      g+=`<line x1="34" y1="${Y(v)}" x2="${w-12}" y2="${Y(v)}" stroke="#22354F" stroke-width=".7"/><text x="2" y="${Y(v)+4}" fill="#5E7189" font-size="9" font-family="IBM Plex Mono">${nf(v,0)}</text>`;}
+    const lab=s.map((x,i)=>`<text x="${X(i)}" y="${h-6}" fill="#5E7189" font-size="9" text-anchor="middle">${x.mes.slice(5)}</text>`).join('');
+    serie=`<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto">${g}${lab}
+      <path d="${ln('indiceAlimentar')}" fill="none" stroke="#C98A3C" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="${ln('indiceGeral')}" fill="none" stroke="#22B8F0" stroke-width="1.9" stroke-dasharray="5 4"/>
+      <circle cx="${X(s.length-1)}" cy="${Y(s[s.length-1].indiceAlimentar)}" r="4" fill="#C98A3C" stroke="#060B16" stroke-width="2"/></svg>
+      <div class="row" style="font-size:10.5px;color:var(--ink-dim);margin-top:8px">
+        <span style="display:flex;align-items:center;gap:6px"><i style="width:10px;height:10px;border-radius:2px;background:#C98A3C"></i>Alimentação e bebidas não alcoólicas</span>
+        <span style="display:flex;align-items:center;gap:6px"><i style="width:10px;height:10px;border-radius:2px;background:#22B8F0"></i>Índice geral</span></div>`;
+  }
+  const ult=s[s.length-1], pri=s[0];
+  const premio = (ult&&pri) ? ((ult.indiceAlimentar/pri.indiceAlimentar-1)-(ult.indiceGeral/pri.indiceGeral-1))*100 : null;
+  return `<div class="grid2">
+    <div class="card frame"><div class="ch"><h2>Índice de Preços no Consumidor</h2>
+      <span class="tag ${ine&&ine.ipc.verificado?'ok':'warn'}">${ine&&ine.ipc.verificado?'Verificado':'Provisório'}</span></div>
+      <div class="cb">${serie||aviso('warn','Sem série carregada','Não foi possível ler data/fontes-externas.json.')}
+        <div class="kv">
+          <div><div class="l">Índice alimentar</div><div class="n mono" style="color:var(--brzl)">${ult?nf(ult.indiceAlimentar,1):'—'}</div></div>
+          <div><div class="l">Índice geral</div><div class="n mono">${ult?nf(ult.indiceGeral,1):'—'}</div></div>
+          <div><div class="l">Variação mensal</div><div class="n mono" style="color:var(--warn)">${ult?nf(ult.variacaoMensal,2)+'%':'—'}</div></div>
+          <div><div class="l">Prémio alimentar</div><div class="n mono" style="color:${premio>0?'var(--red)':'var(--ok)'}">${premio!=null?(premio>0?'+':'')+nf(premio,1)+' pp':'—'}</div></div>
+        </div>
+        <div class="note">O prémio alimentar é quanto a alimentação subiu <b>acima</b> do índice geral no período carregado. É este número que traduz a inflação em pressão sobre o consumidor, e é ele que o motor de inteligência usa para ajustar a projecção de cobertura.</div>
+      </div></div>
+    <div>
+      <div class="card frame"><div class="ch"><h2>Importar dados do INE</h2></div><div class="cb">
+        ${aviso('warn','Sem serviço automático','O INE publica em PDF e folha de cálculo. Descarregue a nota de imprensa mensal, converta para CSV e importe aqui.')}
+        <div class="row" style="margin-top:14px"><input type="file" id="ine-file" accept=".csv,.txt" style="font-size:12px"></div>
+        <div class="out" id="ine-out">${aviso('info','À espera de ficheiro','Aceita CSV com vírgula ou ponto e vírgula.')}</div>
+      </div></div>
+      <div class="card frame" style="margin-top:12px"><div class="ch"><h2>Onde ir</h2></div><div class="cb">
+        <a class="linkcard" href="https://www.ine.gov.mz/" target="_blank" rel="noopener"><div style="flex:1"><div class="t">Portal do INE</div><div class="d">Notas de imprensa mensais do IPC</div></div><span class="ar">↗</span></a>
+        <a class="linkcard" href="https://mozdata.ine.gov.mz/index.php/home" target="_blank" rel="noopener"><div style="flex:1"><div class="t">MozData</div><div class="d">Arquivo Nacional de Dados — microdados de inquéritos</div></div><span class="ar">↗</span></a>
+        <a class="linkcard" href="https://nso-mozambique.opendataforafrica.org/" target="_blank" rel="noopener"><div style="flex:1"><div class="t">OpenData INE</div><div class="d">Séries temporais e catálogo</div></div><span class="ar">↗</span></a>
+        <div class="note">O IPC cobre oito cidades — Maputo, Beira, Nampula, Quelimane, Tete, Chimoio, Xai-Xai e Inhambane — com base 2023=100.</div>
+      </div></div>
+    </div></div>`;
+}
+
+/* ============================================================ ICM */
+function painelICM(){
+  const icm=FX&&FX.icm; if(!icm) return aviso('crit','Sem dados','Não foi possível ler data/fontes-externas.json.');
+  const r=icm.reservaEstrategica;
+  const cumpr=r.metaToneladas?Math.min(100,r.actualToneladas/r.metaToneladas*100):0;
+  const defice=Math.max(0,r.metaToneladas-r.actualToneladas);
+  const imp=icm.importacoes.linhas.map(l=>{
+    const desvio=(l.precoDeclaradoUSDt-l.precoReferenciaUSDt);
+    return {...l, desvio, pct:desvio/l.precoReferenciaUSDt*100, exposicao:desvio*l.volumeToneladas};
+  });
+  const expTotal=imp.reduce((a,l)=>a+l.exposicao,0);
+  const corC=cumpr>=90?'var(--ok)':cumpr>=60?'var(--warn)':'var(--crit)';
+  return `<div class="grid2">
+    <div>
+      <div class="card frame"><div class="ch"><h2>Reserva estratégica de cereais</h2>
+        <span class="tag ${r.metaVerificada?'ok':'warn'}">Meta ${r.metaVerificada?'verificada':'provisória'}</span></div>
+        <div class="cb">
+          <div class="row" style="justify-content:space-between;align-items:baseline">
+            <span style="font-size:12px;color:var(--ink-dim)">Cumprimento da meta nacional</span>
+            <b class="mono" style="font-size:26px;color:${corC}">${nf(cumpr,1)}%</b></div>
+          <div class="bar" style="margin-top:10px;height:8px"><i style="width:${cumpr}%;background:${corC}"></i></div>
+          <div class="kv">
+            <div><div class="l">Meta</div><div class="n mono">${nf(r.metaToneladas)} t</div></div>
+            <div><div class="l">Existente</div><div class="n mono" style="color:${corC}">${nf(r.actualToneladas)} t</div></div>
+            <div><div class="l">Défice</div><div class="n mono" style="color:var(--crit)">${nf(defice)} t</div></div>
+            <div><div class="l">Foco regional</div><div class="n" style="font-size:14px">${r.focoRegional}</div></div>
+          </div>
+          <div class="note">${r.metaFonte}. O valor existente está marcado como <b>${r.actualVerificado?'verificado':'provisório'}</b> e tem de ser confirmado junto do ICM antes de entrar em qualquer documento de decisão.</div>
+        </div></div>
+
+      <div class="card frame" style="margin-top:12px"><div class="ch"><h2>Preços de importação declarados</h2>
+        <span class="tag crit">Exposição ${nf(expTotal/1e6,2)} M USD</span></div>
+        <div class="cb">
+          <table><thead><tr><th>Produto</th><th style="text-align:right">Declarado</th><th style="text-align:right">Referência</th><th style="text-align:right">Desvio</th><th style="text-align:right">Volume</th><th style="text-align:right">Exposição</th></tr></thead>
+          <tbody>${imp.map(l=>`<tr>
+            <td>${l.produto} ${l.verificado?'':'<span class="tag warn" style="margin-left:6px">provisório</span>'}</td>
+            <td class="mono" style="text-align:right">${nf(l.precoDeclaradoUSDt)} USD/t</td>
+            <td class="mono" style="text-align:right;color:var(--ink-dim)">${nf(l.precoReferenciaUSDt)} USD/t</td>
+            <td class="mono" style="text-align:right;color:${l.pct>20?'var(--crit)':'var(--warn)'}">+${nf(l.pct,1)}%</td>
+            <td class="mono" style="text-align:right">${nf(l.volumeToneladas)} t</td>
+            <td class="mono" style="text-align:right;color:var(--brzl)">${nf(l.exposicao/1e6,2)} M</td></tr>`).join('')}</tbody></table>
+          <div class="note">${icm.importacoes.notaFonte}<br><br>A coluna de exposição é o desvio multiplicado pelo volume: é o valor que, a confirmar-se a sobredeclaração, terá saído do país acima do preço de mercado. Não é prova de infracção — é um indicador que justifica verificação documental.</div>
+        </div></div>
+    </div>
+    <div>
+      <div class="card frame"><div class="ch"><h2>Mandato do ICM</h2><span class="tag">${icm.baseLegal}</span></div><div class="cb">
+        ${icm.mandato.map((m,i)=>`<div class="mand"><span>0${i+1}</span><div>${m}</div></div>`).join('')}
+        <div class="note">Instituição pública sob tutela do ${icm.tutela}. É a contraparte natural do SINAGEPE em tudo o que toca a cereais: os armazéns, a reserva e a comercialização de último recurso são dela.</div>
+      </div></div>
+      <div class="card frame" style="margin-top:12px"><div class="ch"><h2>Stock de cereais declarado</h2></div><div class="cb">
+        <table><tbody>${icm.stockCereais.linhas.map(l=>`<tr><td>${l.produto}</td><td class="mono" style="text-align:right;color:var(--brzl)">${nf(l.toneladas)} t</td></tr>`).join('')}</tbody></table>
+        <div class="row" style="margin-top:14px"><input type="file" id="icm-file" accept=".csv,.txt" style="font-size:12px"></div>
+        <div class="out" id="icm-out">${aviso('info','Importar actualização','Carregue o mapa de stocks do ICM em CSV para actualizar a leitura.')}</div>
+      </div></div>
+      <div class="card frame" style="margin-top:12px"><div class="ch"><h2>Onde ir</h2></div><div class="cb">
+        <a class="linkcard" href="https://icm.gov.mz/" target="_blank" rel="noopener"><div style="flex:1"><div class="t">Portal do ICM</div><div class="d">Notícias, mandato e comercialização agrícola</div></div><span class="ar">↗</span></a>
+        <a class="linkcard" href="https://icm.gov.mz/quem-somos/" target="_blank" rel="noopener"><div style="flex:1"><div class="t">Perfil institucional</div><div class="d">Missão, visão e áreas funcionais</div></div><span class="ar">↗</span></a>
+      </div></div>
+    </div></div>`;
+}
+
+const PAINEIS={ine:painelINE,icm:painelICM};
+function abrir(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.j===id));
+  document.getElementById('janela').innerHTML=PAINEIS[id]();
+  if(id==='ine') ligarFicheiro('ine-file','ine-out');
+  if(id==='icm') ligarFicheiro('icm-file','icm-out');
+}
+
+(async function iniciar(){
+  if(typeof SINAGEPE!=='undefined'&&SINAGEPE.mountShell) SINAGEPE.mountShell('nacionais','Fontes Nacionais','INE · ICM');
+  const alvo=document.getElementById('content-mount')||document.getElementById('app-shell');
+  try{ FX=await (await fetch('data/fontes-externas.json')).json(); }catch(e){ FX=null; }
+  alvo.innerHTML=`<div class="eyebrow" style="margin-bottom:12px">Instituições nacionais que alimentam o sistema</div>
+    <div class="tabs">${JANELAS.map(j=>`<button class="tab frame" data-j="${j.id}" onclick="abrir('${j.id}')">
+      <div class="cover">${capa(j.id)}<span class="pill" style="background:${j.cor}22;color:${j.cor};border:1px solid ${j.cor}55">${j.estado}</span></div>
+      <div class="body"><div class="org">${j.org}</div><div class="desc">${j.desc}</div></div></button>`).join('')}</div>
+    <div id="janela"></div>`;
+  abrir('ine');
+  if(typeof SINAGEPE!=='undefined'&&SINAGEPE.load){
+    SINAGEPE.load().then(d=>SINAGEPE.renderUserFooter(d)).catch(()=>{});
+  }
+})();
+</script>
+</body>
+</html>
