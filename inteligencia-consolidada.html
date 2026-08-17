@@ -358,19 +358,45 @@ function gerarRelatorio(){
     <div class="card frame" id="relatorio-wrap" style="margin-top:12px"><div class="cb"><div id="relatorio"></div>
       <div id="relatorio-vazio" style="font-size:12px;color:var(--ink-faint)">O relatório executivo é montado a partir dos achados acima e pode ser impresso ou guardado em PDF pelo diálogo de impressão.</div></div></div>`;
 
-  try{
-    const [d,fx]=await Promise.all([
-      fetch('data/sinagepe-data.json').then(r=>r.json()),
-      fetch('data/fontes-externas.json').then(r=>r.json())
-    ]);
-    D=d; FX=fx;
-  }catch(e){
-    alvo.innerHTML=`<div class="card frame"><div class="cb"><div class="msg">
-      <span class="ic" style="background:var(--crit-bg);color:var(--crit)">✕</span>
-      <div><b style="color:var(--crit)">Não foi possível carregar os dados</b><br>
-      <span style="color:var(--ink-dim)">O motor precisa de <span class="mono">data/sinagepe-data.json</span> e de <span class="mono">data/fontes-externas.json</span>. Confirme que os dois ficheiros estão publicados. Detalhe: ${e.message}</span></div></div></div></div>`;
+  // Diagnóstico por ficheiro: diz QUAL falhou e PORQUÊ, em vez de um erro genérico
+  async function carregar(caminho){
+    const r=await fetch(caminho,{cache:'no-store'});
+    const bruto=await r.text();
+    const ct=(r.headers.get('content-type')||'desconhecido').split(';')[0];
+    if(!r.ok) return {erro:`HTTP ${r.status} — o servidor não encontrou o ficheiro`, caminho, ct, amostra:bruto.slice(0,60)};
+    if(/^\s*</.test(bruto)) return {erro:'O servidor devolveu HTML em vez de JSON (quase sempre a página de erro 404)', caminho, ct, amostra:bruto.slice(0,60)};
+    try{ return {ok:JSON.parse(bruto)}; }
+    catch(e){ return {erro:'Ficheiro encontrado mas o conteúdo não é JSON válido: '+e.message, caminho, ct, amostra:bruto.slice(0,60)}; }
+  }
+  const [rd,rf]=await Promise.all([carregar('data/sinagepe-data.json'),carregar('data/fontes-externas.json')]);
+  const falhas=[rd,rf].filter(x=>x.erro);
+  if(falhas.length){
+    alvo.innerHTML=`<div class="card frame"><div class="ch"><h2>Não foi possível arrancar o motor</h2>
+        <span class="tag crit">${falhas.length} ficheiro(s) em falta</span></div><div class="cb">
+      ${falhas.map(f=>`<div class="msg" style="margin-bottom:14px">
+        <span class="ic" style="background:var(--crit-bg);color:var(--crit)">✕</span>
+        <div><b class="mono" style="color:var(--brzl)">${f.caminho}</b><br>
+        <span style="color:var(--ink-dim)">${f.erro}</span><br>
+        <span style="font-size:10.5px;color:var(--ink-faint)">Tipo devolvido: <span class="mono">${f.ct}</span> · Primeiros caracteres: <span class="mono">${f.amostra.replace(/[<>]/g,c=>({'<':'&lt;','>':'&gt;'}[c]))}</span></span></div></div>`).join('')}
+      <div class="acc" style="background:#080F1C;border-left:2px solid var(--brz);border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;line-height:1.7">
+        <b style="color:var(--brzl)">O que fazer.</b> Confirme que o ficheiro está dentro da pasta <span class="mono">data/</span> do repositório, com o nome exacto e sem sufixos como <span class="mono">(1)</span>. O nome tem de ser <span class="mono">fontes-externas.json</span>, tudo em minúsculas. Depois de copiar, faça commit e push, e recarregue com Ctrl+Shift+R.
+        <br><br>Para testar sem tocar no repositório, carregue aqui o ficheiro directamente:
+        <div class="row" style="margin-top:10px"><input type="file" id="fx-manual" accept=".json" style="font-size:12px"></div></div>
+      </div></div>`;
+    const inp=document.getElementById('fx-manual');
+    if(inp) inp.addEventListener('change',ev=>{
+      const file=ev.target.files[0]; if(!file) return;
+      const rd2=new FileReader();
+      rd2.onload=()=>{ try{ sessionStorage.setItem('fx_manual',rd2.result); location.reload(); }
+        catch(e){ alert('Ficheiro inválido: '+e.message); } };
+      rd2.readAsText(file,'UTF-8');
+    });
     return;
   }
+  D=rd.ok; FX=rf.ok;
+  const manual=sessionStorage.getItem('fx_manual');
+  if(manual){ try{ FX=JSON.parse(manual); }catch(e){} }
+
 
   M=consolidar();
   renderKPIs(); renderMatriz(); renderAchados(); renderProveniencia(); renderProjeccao();
