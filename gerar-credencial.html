@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SINAGEPE — Gerar credencial</title>
+<link rel="stylesheet" href="assets/sinagepe-tema.css">
+<style>
+body{display:grid;place-items:start center;padding:40px 20px}
+.wrap{width:100%;max-width:720px}
+.saida{background:#080F1C;border:1px solid var(--card-line);border-radius:11px;padding:15px;margin-top:16px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;white-space:pre-wrap;word-break:break-all;color:var(--brzl);min-height:80px}
+input[type=text]{width:100%}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow" style="margin-bottom:14px">Ferramenta de administração</div>
+  <div class="card frame">
+    <div class="ch"><h2>Gerar credencial de acesso</h2><span class="tag">PBKDF2 · 150 000 iterações</span></div>
+    <div class="cb">
+      <p style="font-size:12.5px;color:var(--ink-dim);line-height:1.7">
+        Escreva a palavra-passe que quer atribuir a um parceiro. A ferramenta devolve o <span class="mono">salt</span> e o
+        <span class="mono">hash</span> para colar dentro da entrada desse parceiro no <span class="mono">NIVEIS_ACESSO</span>, no
+        <span class="mono">index.html</span>. A palavra-passe em si nunca fica guardada em lado nenhum do sistema.
+      </p>
+      <div class="row" style="margin-top:16px">
+        <input type="text" id="pw" placeholder="Palavra-passe a atribuir" style="flex:1;min-width:220px">
+        <button class="btn" onclick="sugerir()">Sugerir forte</button>
+        <button class="btn acc" onclick="gerar()">Gerar</button>
+      </div>
+      <div class="saida" id="out">A saída aparece aqui.</div>
+      <div class="row" style="margin-top:12px"><button class="btn" onclick="copiar()">Copiar</button></div>
+      <div class="note">
+        <b>Aviso importante.</b> Num site estático, o <span class="mono">hash</span> fica visível no código-fonte de quem abrir a página.
+        Isto impede o acesso casual — já não basta escrever um e-mail e inventar uma palavra-passe — mas não resiste a um atacante
+        determinado, que pode tentar adivinhar a palavra-passe offline sem limite de tentativas. Por isso as palavras-passe têm de
+        ser longas e aleatórias, nunca palavras ou datas. Protecção a sério exige validação do lado do servidor.
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const AL='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+function sugerir(){
+  const b=new Uint32Array(16); crypto.getRandomValues(b);
+  let s=''; for(let i=0;i<16;i++){ if(i&&i%4===0)s+='-'; s+=AL[b[i]%AL.length]; }
+  document.getElementById('pw').value=s;
+}
+const b64=buf=>btoa(String.fromCharCode.apply(null,new Uint8Array(buf)));
+async function gerar(){
+  const pw=document.getElementById('pw').value;
+  const out=document.getElementById('out');
+  if(!pw){ out.textContent='Escreva uma palavra-passe primeiro.'; return; }
+  if(pw.length<12){ out.textContent='Demasiado curta. Use pelo menos 12 caracteres aleatórios — o hash fica público no código-fonte.'; return; }
+  out.textContent='A calcular…';
+  const salt=crypto.getRandomValues(new Uint8Array(16));
+  const chave=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveBits']);
+  const bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt,iterations:150000,hash:'SHA-256'},chave,256);
+  out.textContent='"salt": "'+b64(salt)+'",\n"hash": "'+b64(bits)+'"';
+}
+function copiar(){
+  const t=document.getElementById('out').textContent;
+  navigator.clipboard.writeText(t).then(()=>{document.getElementById('out').style.borderColor='var(--ok)';
+    setTimeout(()=>document.getElementById('out').style.borderColor='var(--card-line)',900);});
+}
+</script>
+</body>
+</html>
