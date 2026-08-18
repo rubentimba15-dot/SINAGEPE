@@ -355,7 +355,7 @@ svg.tc-map{width:100%;height:auto;display:block}
       <div class="login-error" id="login-error" style="text-align:center;margin-top:10px"></div>
       <div class="login-support-row">Suporte Técnico do MIC: <b>+258 21 480 000</b> · <a href="#">ajuda@sinagepe.gov.mz</a></div>
       <div class="login-legal-row"><span>© 2026 SINAGEPE Moçambique — Ministério da Indústria e Comércio</span><span>v3.4.1 — Oficial</span></div>
-      <div style="margin-top:18px;font-size:10.5px;color:var(--ink-faint);text-align:center">17 contas de acesso, cada uma só vê o que precisa (ex: administrador@gmail.com, governo@gmail.com, masa@gmail.com...) — palavra-passe: qualquer texto · <a href="lista-de-acessos.html" style="color:var(--gold)">Ver lista completa de acessos →</a></div>
+      <div style="margin-top:18px;font-size:10.5px;color:var(--ink-faint);text-align:center">18 contas institucionais, cada uma com acesso limitado à sua área. As credenciais são distribuídas por via institucional e não são publicadas neste ecrã.</div>
     </div>
   </div>
 </div>
@@ -379,6 +379,7 @@ svg.tc-map{width:100%;height:auto;display:block}
         <a class="nav-item" href="simulador-preditivo.html"><span class="nav-icon">◭</span><span class="nav-label">Simulador Preditivo <span style="color:var(--teal)">(Novo)</span></span></a>
         <a class="nav-item" href="portal-pme.html"><span class="nav-icon">⛁</span><span class="nav-label">PMEs <span style="color:var(--amber)">(Atenção)</span></span></a>
         <a class="nav-item" href="cadastro-armazens.html"><span class="nav-icon">▤</span><span class="nav-label">Armazéns <span style="color:var(--teal)" id="nav-armazens-count"></span></span></a>
+        <a class="nav-item" href="armazens-nacionais.html"><span class="nav-icon">&#9707;</span><span class="nav-label">Armaz&eacute;ns Nacionais <span style="color:var(--teal)">(Novo)</span></span></a>
         <a class="nav-item" href="modulo-logistica.html"><span class="nav-icon">⇄</span><span class="nav-label">Logística <span style="color:var(--blue)" id="nav-corredores-count"></span></span></a>
         <a class="nav-item" href="rede-logistica.html"><span class="nav-icon">⌘</span><span class="nav-label">Rede Logística <span style="color:var(--teal)">(Novo)</span></span></a>
         <a class="nav-item" href="relatorios.html"><span class="nav-icon">▧</span><span class="nav-label">Relatórios</span></a>
@@ -568,6 +569,7 @@ const NIVEIS_ACESSO = [
       "portal-publico.html",
       "fontes-internacionais.html",
       "inteligencia-consolidada.html",
+      "armazens-nacionais.html",
       "fontes-nacionais.html",
       "lista-de-acessos.html",
       "rede-logistica.html",
@@ -642,6 +644,7 @@ const NIVEIS_ACESSO = [
       "portal-publico.html",
       "fontes-internacionais.html",
       "inteligencia-consolidada.html",
+      "armazens-nacionais.html",
       "fontes-nacionais.html",
       "rede-logistica.html",
       "simulador-preditivo.html"
@@ -654,8 +657,8 @@ const NIVEIS_ACESSO = [
   {
     "pin": "1113",
     "chave": "masa",
-    "nome": "MASA — Ministério da Agricultura",
-    "instituicao": "MASA",
+    "nome": "MAAP — Ministério da Agricultura, Ambiente e Pescas",
+    "instituicao": "MAAP",
     "paginas": [
       "index.html",
       "alertas.html",
@@ -665,6 +668,7 @@ const NIVEIS_ACESSO = [
       "dashboard-agricultura.html",
       "fontes-internacionais.html",
       "inteligencia-consolidada.html",
+      "armazens-nacionais.html",
       "fontes-nacionais.html",
       "simulador-preditivo.html"
     ],
@@ -685,6 +689,7 @@ const NIVEIS_ACESSO = [
       "dashboard-financas.html",
       "fontes-internacionais.html",
       "inteligencia-consolidada.html",
+      "armazens-nacionais.html",
       "fontes-nacionais.html",
       "simulador-preditivo.html"
     ],
@@ -705,6 +710,7 @@ const NIVEIS_ACESSO = [
       "dashboard-banco-central.html",
       "fontes-internacionais.html",
       "inteligencia-consolidada.html",
+      "armazens-nacionais.html",
       "fontes-nacionais.html",
       "simulador-preditivo.html"
     ],
@@ -727,6 +733,7 @@ const NIVEIS_ACESSO = [
       "dashboard-transportes.html",
       "fontes-internacionais.html",
       "inteligencia-consolidada.html",
+      "armazens-nacionais.html",
       "fontes-nacionais.html",
       "rede-logistica.html",
       "simulador-preditivo.html"
@@ -749,6 +756,7 @@ const NIVEIS_ACESSO = [
       "dashboard-igsae.html",
       "fontes-internacionais.html",
       "inteligencia-consolidada.html",
+      "armazens-nacionais.html",
       "fontes-nacionais.html",
       "simulador-preditivo.html"
     ],
@@ -770,6 +778,7 @@ const NIVEIS_ACESSO = [
       "dashboard-arc.html",
       "fontes-internacionais.html",
       "inteligencia-consolidada.html",
+      "armazens-nacionais.html",
       "fontes-nacionais.html",
       "simulador-preditivo.html"
     ],
@@ -877,6 +886,7 @@ const NIVEIS_ACESSO = [
       "portal-universidades.html",
       "fontes-internacionais.html",
       "inteligencia-consolidada.html",
+      "armazens-nacionais.html",
       "fontes-nacionais.html",
       "simulador-preditivo.html"
     ],
