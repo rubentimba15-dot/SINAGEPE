@@ -6,7 +6,8 @@
 <title>SINAGEPE — Fontes Nacionais</title>
 <link rel="stylesheet" href="assets/sinagepe-tema.css">
 <style>
-.tabs{grid-template-columns:repeat(2,1fr)}
+.tabs{grid-template-columns:repeat(4,1fr)}
+@media (max-width:1200px){.tabs{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:820px){.tabs{grid-template-columns:1fr}}
 .mand{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--card-line);font-size:12px;color:var(--ink-dim);line-height:1.55}
 .mand span{color:var(--brz);flex:none;font-family:'IBM Plex Mono',monospace;font-size:11px}
@@ -28,7 +29,7 @@ let FX=null;
 function capa(tipo){
   const B='#C98A3C', A='#22B8F0', V='#12B981';
   const defs=`<defs><linearGradient id="g${tipo}" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="${tipo==='ine'?B:V}" stop-opacity=".18"/><stop offset="100%" stop-color="#060B16" stop-opacity="0"/></linearGradient>
+      <stop offset="0%" stop-color="${tipo==='ine'?B:tipo==='icm'?V:tipo==='imopetro'?'#E0A458':A}" stop-opacity=".18"/><stop offset="100%" stop-color="#060B16" stop-opacity="0"/></linearGradient>
     <pattern id="p${tipo}" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M14 0H0V14" fill="none" stroke="#152740" stroke-width=".6"/></pattern></defs>`;
   const base=`<rect width="300" height="104" fill="#0A1220"/><rect width="300" height="104" fill="url(#g${tipo})"/><rect width="300" height="104" fill="url(#p${tipo})" opacity=".7"/>`;
   let art='';
@@ -46,12 +47,31 @@ function capa(tipo){
       <g stroke="${B}" stroke-width="1.3" fill="none"><path d="M58 88V62l16-12 16 12v26"/><path d="M58 70h32M58 79h32"/>
       <path d="M210 88V62l16-12 16 12v26"/><path d="M210 70h32M210 79h32"/></g>`;
   }
+  if(tipo==='imopetro'){
+    art=`<g stroke="#E0A458" stroke-width="1.5" fill="none">
+      <rect x="96" y="34" width="34" height="54" rx="4"/><rect x="103" y="42" width="20" height="14" rx="2"/>
+      <path d="M130 46h9a4 4 0 0 1 4 4v22a5 5 0 0 0 10 0V58h-3"/></g>
+      <g stroke="${A}" stroke-width="1.4" fill="none"><ellipse cx="196" cy="50" rx="26" ry="10"/>
+      <path d="M170 50v24c0 5.5 11.6 10 26 10s26-4.5 26-10V50"/><path d="M170 62c0 5.5 11.6 10 26 10s26-4.5 26-10"/></g>
+      <path d="M60 88h190" stroke="#C98A3C" stroke-width="1.2" opacity=".7"/>
+      <path d="M62 40l10 10 10-16 10 12" stroke="#EF4444" stroke-width="1.4" fill="none" opacity=".8"/>`;
+  } else if(tipo==='cta'){
+    art=`<g stroke="${A}" stroke-width="1.5" fill="none">
+      <circle cx="120" cy="46" r="10"/><path d="M104 76c0-9 7-16 16-16s16 7 16 16"/>
+      <circle cx="180" cy="46" r="10"/><path d="M164 76c0-9 7-16 16-16s16 7 16 16"/>
+      <circle cx="150" cy="34" r="11"/><path d="M132 68c0-10 8-18 18-18s18 8 18 18"/></g>
+      <path d="M70 88h160" stroke="#C98A3C" stroke-width="1.2" opacity=".7"/>
+      <path d="M232 40l14-8 14 12" stroke="#12B981" stroke-width="1.4" fill="none" opacity=".8"/>
+      <path d="M40 40l14-8 14 12" stroke="#12B981" stroke-width="1.4" fill="none" opacity=".8"/>`;
+  }
   return `<svg viewBox="0 0 300 104" preserveAspectRatio="xMidYMid slice">${defs}${base}${art}</svg>`;
 }
 
 const JANELAS=[
   {id:'ine', org:'INE — Instituto Nacional de Estatística', desc:'Índice de Preços no Consumidor e estatísticas oficiais do país', estado:'Importação manual', cor:'#C98A3C'},
-  {id:'icm', org:'ICM — Instituto de Cereais de Moçambique', desc:'Reserva estratégica, comercialização agrícola e importações de cereais', estado:'Recolha manual', cor:'#12B981'}
+  {id:'icm', org:'ICM — Instituto de Cereais de Moçambique', desc:'Reserva estratégica, comercialização agrícola e importações de cereais', estado:'Recolha manual', cor:'#12B981'},
+  {id:'imopetro', org:'IMOPETRO / ENAPP', desc:'Importação de combustíveis líquidos — gasóleo, gasolina, jet e gás', estado:'Em transição', cor:'#E0A458'},
+  {id:'cta', org:'CTA — Sector privado', desc:'Confederação das Associações Económicas de Moçambique', estado:'Parceiro', cor:'#22B8F0'}
 ];
 
 function aviso(tipo,titulo,texto){
@@ -209,7 +229,75 @@ function painelICM(){
     </div></div>`;
 }
 
-const PAINEIS={ine:painelINE,icm:painelICM};
+/* ============================================================ IMOPETRO / ENAPP */
+function painelIMOPETRO(){
+  const im=FX&&FX.imopetro; if(!im) return aviso('crit','Sem dados','Não foi possível ler data/fontes-externas.json.');
+  const tr=im.transicaoInstitucional, par=im.paridadeImportacao;
+  const exp=par.linhas.reduce((a,l)=>a+(l.precoDeclaradoUSDt-l.precoReferenciaUSDt)*l.volumeToneladas,0);
+  const total=im.importacoes.linhas.reduce((a,l)=>a+l.toneladasConcurso,0);
+  return `<div class="grid2">
+    <div>
+      <div class="card frame"><div class="ch"><h2>Transição institucional</h2><span class="tag crit">${tr.data}</span></div>
+        <div class="cb">
+          ${aviso('warn','A entidade importadora está a mudar',tr.descricao)}
+          <div class="kv">
+            <div><div class="l">Modelo actual</div><div class="n" style="font-size:14px">IMOPETRO</div></div>
+            <div><div class="l">Modelo aprovado</div><div class="n" style="font-size:14px;color:var(--brzl)">ENAPP</div></div>
+          </div>
+          <div class="eyebrow" style="margin-top:16px">Por esclarecer</div>
+          <div style="margin-top:6px">${tr.porEsclarecer.map((x,i)=>`<div class="mand"><span>0${i+1}</span><div>${x}</div></div>`).join('')}</div>
+          <div class="note">Enquanto a transição não estiver concluída, os dados de combustível que entram no SINAGEPE têm contraparte incerta. Convém fixar por escrito quem responde por eles.</div>
+        </div></div>
+
+      <div class="card frame" style="margin-top:12px"><div class="ch"><h2>Volumes de concurso</h2><span class="tag ok">Verificado</span></div>
+        <div class="cb">
+          <table><thead><tr><th>Produto</th><th style="text-align:right">Toneladas por concurso</th><th style="text-align:right">Peso</th></tr></thead>
+          <tbody>${im.importacoes.linhas.map(l=>`<tr><td>${l.produto}</td>
+            <td class="mono" style="text-align:right;color:var(--brzl)">${nf(l.toneladasConcurso)} t</td>
+            <td class="mono" style="text-align:right;color:var(--ink-dim)">${nf(l.toneladasConcurso/total*100,1)}%</td></tr>`).join('')}
+          <tr><td><b>Total</b></td><td class="mono" style="text-align:right"><b>${nf(total)} t</b></td><td></td></tr></tbody></table>
+          <div class="note">${im.importacoes.notaFonte} Ciclo de ${im.importacoes.periodicidadeConcursoMeses} meses. Descarga em ${im.importacoes.portosDescarga.join(', ')}.</div>
+        </div></div>
+    </div>
+    <div>
+      <div class="card frame"><div class="ch"><h2>Mandato</h2><span class="tag">Decreto 89/2019</span></div><div class="cb">
+        ${im.mandato.map((m,i)=>`<div class="mand"><span>0${i+1}</span><div>${m}</div></div>`).join('')}
+        <div class="note">${im.estatuto}</div>
+      </div></div>
+      <div class="card frame" style="margin-top:12px"><div class="ch"><h2>Paridade de importação</h2>
+        <span class="tag warn">Exposição ${nf(exp/1e6,2)} M USD</span></div><div class="cb">
+        <table><thead><tr><th>Produto</th><th style="text-align:right">Praticado</th><th style="text-align:right">Paridade</th><th style="text-align:right">Desvio</th></tr></thead>
+        <tbody>${par.linhas.map(l=>{const d=(l.precoDeclaradoUSDt-l.precoReferenciaUSDt)/l.precoReferenciaUSDt*100;
+          return `<tr><td>${l.produto}</td><td class="mono" style="text-align:right">${nf(l.precoDeclaradoUSDt)}</td>
+          <td class="mono" style="text-align:right;color:var(--ink-dim)">${nf(l.precoReferenciaUSDt)}</td>
+          <td class="mono" style="text-align:right;color:${d>7?'var(--warn)':'var(--ok)'}">+${nf(d,1)}%</td></tr>`;}).join('')}</tbody></table>
+        <div class="note">${par.nota} A ARENE é quem fixa e divulga o preço ao consumidor final; o desvio face à paridade é indicador de margem, não de infracção.</div>
+      </div></div>
+      <div class="card frame" style="margin-top:12px"><div class="ch"><h2>Onde ir</h2></div><div class="cb">
+        <a class="linkcard" href="https://www.imopetro.co.mz/" target="_blank" rel="noopener"><div style="flex:1"><div class="t">IMOPETRO</div><div class="d">Concursos e comunicados</div></div><span class="ar">↗</span></a>
+        <a class="linkcard" href="https://arene.org.mz/" target="_blank" rel="noopener"><div style="flex:1"><div class="t">ARENE</div><div class="d">Autoridade Reguladora de Energia — preços ao consumidor</div></div><span class="ar">↗</span></a>
+      </div></div>
+    </div></div>`;
+}
+
+/* ============================================================ CTA */
+function painelCTA(){
+  const c=FX&&FX.cta; if(!c) return aviso('crit','Sem dados','Não foi possível ler data/fontes-externas.json.');
+  return `<div class="grid2">
+    <div class="card frame"><div class="ch"><h2>CTA como parceiro do SINAGEPE</h2><span class="tag live">Parceiro</span></div>
+      <div class="cb">
+        <div style="font-size:12.5px;color:var(--ink-dim);line-height:1.7">${c.natureza}</div>
+        <div class="eyebrow" style="margin-top:16px">O que traz ao sistema</div>
+        <div style="margin-top:6px">${c.papelNoSinagepe.map((x,i)=>`<div class="mand"><span>0${i+1}</span><div>${x}</div></div>`).join('')}</div>
+        <div class="note">A CTA não é fonte de dados no sentido em que o INE ou o ICM são: não publica séries. O valor está no sentido inverso — é o canal pelo qual as empresas podem confirmar ou contestar os números que o SINAGEPE apresenta. Um sistema que só ouve o Estado não detecta quando os dados do Estado estão errados.</div>
+      </div></div>
+    <div class="card frame"><div class="ch"><h2>Onde ir</h2></div><div class="cb">
+      <a class="linkcard" href="https://cta.org.mz/" target="_blank" rel="noopener"><div style="flex:1"><div class="t">Portal da CTA</div><div class="d">Posicionamentos e publicações do sector privado</div></div><span class="ar">↗</span></a>
+      <div class="note">${c.notaAcesso}</div>
+    </div></div></div>`;
+}
+
+const PAINEIS={ine:painelINE,icm:painelICM,imopetro:painelIMOPETRO,cta:painelCTA};
 function abrir(id){
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.dataset.j===id));
   document.getElementById('janela').innerHTML=PAINEIS[id]();
@@ -218,7 +306,7 @@ function abrir(id){
 }
 
 (async function iniciar(){
-  if(typeof SINAGEPE!=='undefined'&&SINAGEPE.mountShell) SINAGEPE.mountShell('nacionais','Fontes Nacionais','INE · ICM');
+  if(typeof SINAGEPE!=='undefined'&&SINAGEPE.mountShell) SINAGEPE.mountShell('nacionais','Fontes Nacionais','INE · ICM · IMOPETRO · CTA');
   const alvo=document.getElementById('content-mount')||document.getElementById('app-shell');
   try{ FX=await (await fetch('data/fontes-externas.json')).json(); }catch(e){ FX=null; }
   alvo.innerHTML=`<div class="eyebrow" style="margin-bottom:12px">Instituições nacionais que alimentam o sistema</div>

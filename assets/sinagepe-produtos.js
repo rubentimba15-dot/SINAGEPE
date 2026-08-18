@@ -24,7 +24,15 @@ var PRODUTOS = (() => {
     'fertilizantes':    { slug:'fertilizantes',    forma:'saco',    cor:'#5FB98A', grao:'#9BD9B8' },
     'medicamentos':     { slug:'medicamentos',     forma:'caixa',   cor:'#7EC4F5', grao:'#C9E7FB' },
     'cimento nacional': { slug:'cimento',          forma:'cimento', cor:'#9FB0C4', grao:'#C3D0E0' },
-    'cimento':          { slug:'cimento',          forma:'cimento', cor:'#9FB0C4', grao:'#C3D0E0' }
+    'cimento':          { slug:'cimento',          forma:'cimento', cor:'#9FB0C4', grao:'#C3D0E0' },
+    'gasóleo (diesel)': { slug:'gasoleo',          forma:'bomba',   cor:'#E0A458', grao:'#F3D0A0' },
+    'gasoleo (diesel)': { slug:'gasoleo',          forma:'bomba',   cor:'#E0A458', grao:'#F3D0A0' },
+    'gasóleo':          { slug:'gasoleo',          forma:'bomba',   cor:'#E0A458', grao:'#F3D0A0' },
+    'diesel':           { slug:'gasoleo',          forma:'bomba',   cor:'#E0A458', grao:'#F3D0A0' },
+    'gasolina':         { slug:'gasolina',         forma:'bidao',   cor:'#5FA8E0', grao:'#B2DCF7' },
+    'jet a-1':          { slug:'jet',              forma:'tanque',  cor:'#A78BFA', grao:'#D6C9FD' },
+    'gás de cozinha':   { slug:'gpl',              forma:'botija',  cor:'#EF6B6B', grao:'#F8B4B4' },
+    'gpl':              { slug:'gpl',              forma:'botija',  cor:'#EF6B6B', grao:'#F8B4B4' }
   };
 
   const meta = nome => META[String(nome||'').trim().toLowerCase()]
@@ -82,6 +90,34 @@ var PRODUTOS = (() => {
         <ellipse cx="60" cy="86" rx="15" ry="10" transform="rotate(4 60 86)"/></g>
         <g stroke="#0A1220" stroke-width="1.6" opacity=".4" fill="none">
         <path d="M38 70c5-3 11-3 16 0M64 68c5-3 11-3 16 0M52 50c5-3 11-3 16 0M52 85c5-3 11-3 16 0"/></g>`;
+    } else if (m.forma === 'bomba') {
+      corpo = `<rect x="30" y="26" width="40" height="66" rx="6" fill="${C}"/>
+        <rect x="37" y="34" width="26" height="18" rx="3" fill="#0A1220" opacity=".45"/>
+        <path d="M41 40h18M41 46h11" stroke="${m.grao}" stroke-width="2" opacity=".8" stroke-linecap="round"/>
+        <rect x="37" y="60" width="26" height="5" rx="2.5" fill="#0A1220" opacity=".3"/>
+        <path d="M70 40h9a4 4 0 0 1 4 4v26a5 5 0 0 1-10 0V56h-3" stroke="${m.cor}" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <rect x="26" y="92" width="48" height="6" rx="3" fill="${m.cor}" opacity=".8"/>
+        <path d="M30 32h40" stroke="#fff" stroke-width="1" opacity=".16"/>`;
+    } else if (m.forma === 'bidao') {
+      corpo = `<path d="M32 34h34a6 6 0 0 1 6 6v50a6 6 0 0 1-6 6H32a6 6 0 0 1-6-6V40a6 6 0 0 1 6-6Z" fill="${C}"/>
+        <path d="M72 46h9a4 4 0 0 1 4 4v10" stroke="${m.cor}" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <rect x="42" y="26" width="16" height="9" rx="3" fill="${m.cor}"/>
+        <rect x="34" y="52" width="30" height="22" rx="3" fill="#0A1220" opacity=".38"/>
+        <path d="M39 60h20M39 67h13" stroke="${m.grao}" stroke-width="2" opacity=".8" stroke-linecap="round"/>
+        <path d="M38 38v58" stroke="#fff" stroke-width="1.5" opacity=".15"/>`;
+    } else if (m.forma === 'tanque') {
+      corpo = `<rect x="20" y="42" width="80" height="38" rx="19" fill="${C}"/>
+        <path d="M39 42v38M61 42v38M81 42v38" stroke="#0A1220" stroke-width="1.6" opacity=".35"/>
+        <rect x="46" y="30" width="28" height="12" rx="4" fill="${m.cor}" opacity=".85"/>
+        <circle cx="36" cy="88" r="7" fill="#0A1220" opacity=".55"/><circle cx="84" cy="88" r="7" fill="#0A1220" opacity=".55"/>
+        <path d="M24 50h72" stroke="#fff" stroke-width="1.4" opacity=".14"/>`;
+    } else if (m.forma === 'botija') {
+      corpo = `<path d="M38 40h44a6 6 0 0 1 6 6v44a6 6 0 0 1-6 6H38a6 6 0 0 1-6-6V46a6 6 0 0 1 6-6Z" fill="${C}"/>
+        <rect x="50" y="24" width="20" height="16" rx="4" fill="${m.cor}"/>
+        <path d="M46 24h28" stroke="${m.cor}" stroke-width="4" stroke-linecap="round"/>
+        <rect x="42" y="58" width="36" height="20" rx="3" fill="#0A1220" opacity=".38"/>
+        <path d="M47 66h26M47 73h16" stroke="${m.grao}" stroke-width="2" opacity=".8" stroke-linecap="round"/>
+        <path d="M44 44v52" stroke="#fff" stroke-width="1.5" opacity=".15"/>`;
     } else if (m.forma === 'cubo') {
       corpo = `<path d="M60 22l34 17v42L60 98 26 81V39l34-17Z" fill="${C}"/>
         <path d="M26 39l34 17 34-17M60 56v42" stroke="#0A1220" stroke-width="2" opacity=".35" fill="none"/>

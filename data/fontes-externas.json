@@ -5,7 +5,6 @@
     "ultimaRecolha": "2026-08-17",
     "aviso": "Os valores marcados verificado=false são referências de trabalho e devem ser substituidos por dados oficiais antes de qualquer utilizacao em documento de decisao."
   },
-
   "ine": {
     "organismo": "Instituto Nacional de Estatistica",
     "sigla": "INE",
@@ -15,20 +14,58 @@
     "notaAcesso": "Sem servico programatico. Publicacao mensal em PDF e folha de calculo. Importacao manual ou recolha do lado do servidor.",
     "ipc": {
       "base": "2023=100",
-      "cidades": ["Maputo", "Beira", "Nampula", "Quelimane", "Tete", "Chimoio", "Xai-Xai", "Inhambane"],
+      "cidades": [
+        "Maputo",
+        "Beira",
+        "Nampula",
+        "Quelimane",
+        "Tete",
+        "Chimoio",
+        "Xai-Xai",
+        "Inhambane"
+      ],
       "divisaoAcompanhada": "Alimentacao e bebidas nao alcoolicas",
       "verificado": false,
       "serie": [
-        { "mes": "2026-03", "indiceGeral": 104.1, "indiceAlimentar": 106.2, "variacaoMensal": 0.31 },
-        { "mes": "2026-04", "indiceGeral": 104.6, "indiceAlimentar": 107.4, "variacaoMensal": 0.48 },
-        { "mes": "2026-05", "indiceGeral": 105.0, "indiceAlimentar": 108.9, "variacaoMensal": 0.38 },
-        { "mes": "2026-06", "indiceGeral": 105.7, "indiceAlimentar": 110.6, "variacaoMensal": 0.67 },
-        { "mes": "2026-07", "indiceGeral": 106.3, "indiceAlimentar": 112.5, "variacaoMensal": 0.57 },
-        { "mes": "2026-08", "indiceGeral": 107.1, "indiceAlimentar": 114.8, "variacaoMensal": 0.75 }
+        {
+          "mes": "2026-03",
+          "indiceGeral": 104.1,
+          "indiceAlimentar": 106.2,
+          "variacaoMensal": 0.31
+        },
+        {
+          "mes": "2026-04",
+          "indiceGeral": 104.6,
+          "indiceAlimentar": 107.4,
+          "variacaoMensal": 0.48
+        },
+        {
+          "mes": "2026-05",
+          "indiceGeral": 105.0,
+          "indiceAlimentar": 108.9,
+          "variacaoMensal": 0.38
+        },
+        {
+          "mes": "2026-06",
+          "indiceGeral": 105.7,
+          "indiceAlimentar": 110.6,
+          "variacaoMensal": 0.67
+        },
+        {
+          "mes": "2026-07",
+          "indiceGeral": 106.3,
+          "indiceAlimentar": 112.5,
+          "variacaoMensal": 0.57
+        },
+        {
+          "mes": "2026-08",
+          "indiceGeral": 107.1,
+          "indiceAlimentar": 114.8,
+          "variacaoMensal": 0.75
+        }
       ]
     }
   },
-
   "icm": {
     "organismo": "Instituto de Cereais de Mocambique, IP",
     "sigla": "ICM",
@@ -55,20 +92,40 @@
       "notaFonte": "O ICM declarou publicamente ter encontrado precos de importacao de arroz declarados em cerca de 470 USD por tonelada quando o preco praticado nos mercados internacionais rondava 350 USD por tonelada.",
       "verificado": true,
       "linhas": [
-        { "produto": "Arroz", "precoDeclaradoUSDt": 470, "precoReferenciaUSDt": 350, "volumeToneladas": 42000, "verificado": true },
-        { "produto": "Trigo", "precoDeclaradoUSDt": 310, "precoReferenciaUSDt": 268, "volumeToneladas": 28000, "verificado": false }
+        {
+          "produto": "Arroz",
+          "precoDeclaradoUSDt": 470,
+          "precoReferenciaUSDt": 350,
+          "volumeToneladas": 42000,
+          "verificado": true
+        },
+        {
+          "produto": "Trigo",
+          "precoDeclaradoUSDt": 310,
+          "precoReferenciaUSDt": 268,
+          "volumeToneladas": 28000,
+          "verificado": false
+        }
       ]
     },
     "stockCereais": {
       "verificado": false,
       "linhas": [
-        { "produto": "Arroz", "toneladas": 5200 },
-        { "produto": "Trigo", "toneladas": 3100 },
-        { "produto": "Farinha de Milho", "toneladas": 4100 }
+        {
+          "produto": "Arroz",
+          "toneladas": 5200
+        },
+        {
+          "produto": "Trigo",
+          "toneladas": 3100
+        },
+        {
+          "produto": "Farinha de Milho",
+          "toneladas": 4100
+        }
       ]
     }
   },
-
   "fao": {
     "organismo": "Organizacao das Nacoes Unidas para a Alimentacao e a Agricultura",
     "sigla": "FAO",
@@ -82,15 +139,30 @@
       "unidade": "kg/pessoa/ano",
       "verificado": false,
       "linhas": [
-        { "produto": "Arroz", "valor": 26.4 },
-        { "produto": "Trigo", "valor": 14.1 },
-        { "produto": "Farinha de Milho", "valor": 78.3 },
-        { "produto": "Oleo Alimentar", "valor": 6.2 }
+        {
+          "produto": "Arroz",
+          "valor": 26.4
+        },
+        {
+          "produto": "Trigo",
+          "valor": 14.1
+        },
+        {
+          "produto": "Farinha de Milho",
+          "valor": 78.3
+        },
+        {
+          "produto": "Oleo Alimentar",
+          "valor": 6.2
+        }
       ]
     },
-    "populacao": { "valor": 34600000, "ano": 2025, "verificado": false }
+    "populacao": {
+      "valor": 34600000,
+      "ano": 2025,
+      "verificado": false
+    }
   },
-
   "wfp": {
     "organismo": "Programa Alimentar Mundial",
     "sigla": "PAM / WFP",
@@ -100,7 +172,6 @@
     "endpoint": "https://api.hungermapdata.org/v2/iso3/MOZ/countryIso3Data.json",
     "notaAcesso": "Serie publica limitada aos ultimos 100 dias. Precos por mercado exigem credenciais da API DataBridges."
   },
-
   "gs1": {
     "organismo": "Sistema GS1",
     "sigla": "GS1",
@@ -112,14 +183,145 @@
     "identificacaoProdutos": {
       "verificado": false,
       "linhas": [
-        { "produto": "Arroz", "gtin": "6001234567899", "origemPrefixo": "GS1 Africa do Sul" },
-        { "produto": "Oleo Alimentar", "gtin": "6009876543219", "origemPrefixo": "GS1 Africa do Sul" },
-        { "produto": "Acucar", "gtin": "6005551112220", "origemPrefixo": "GS1 Africa do Sul" },
-        { "produto": "Trigo", "gtin": "", "origemPrefixo": "" },
-        { "produto": "Farinha de Milho", "gtin": "", "origemPrefixo": "" },
-        { "produto": "Fertilizantes", "gtin": "", "origemPrefixo": "" },
-        { "produto": "Cimento Nacional", "gtin": "", "origemPrefixo": "" }
+        {
+          "produto": "Arroz",
+          "gtin": "6001234567899",
+          "origemPrefixo": "GS1 Africa do Sul"
+        },
+        {
+          "produto": "Oleo Alimentar",
+          "gtin": "6009876543219",
+          "origemPrefixo": "GS1 Africa do Sul"
+        },
+        {
+          "produto": "Acucar",
+          "gtin": "6005551112220",
+          "origemPrefixo": "GS1 Africa do Sul"
+        },
+        {
+          "produto": "Trigo",
+          "gtin": "",
+          "origemPrefixo": ""
+        },
+        {
+          "produto": "Farinha de Milho",
+          "gtin": "",
+          "origemPrefixo": ""
+        },
+        {
+          "produto": "Fertilizantes",
+          "gtin": "",
+          "origemPrefixo": ""
+        },
+        {
+          "produto": "Cimento Nacional",
+          "gtin": "",
+          "origemPrefixo": ""
+        }
       ]
     }
+  },
+  "imopetro": {
+    "organismo": "IMOPETRO — Importadora Mocambicana de Petroleos, Lda.",
+    "sigla": "IMOPETRO",
+    "ambito": "Nacional",
+    "url": "https://www.imopetro.co.mz/",
+    "temAPI": false,
+    "notaAcesso": "Sem servico programatico. Concursos e comunicados publicados no site e na imprensa.",
+    "estatuto": "Sociedade detida pelas distribuidoras de produtos petroliferos que operam no pais; a Petromoc detem 51% e as restantes distribuidoras 49%. Criada em 1999. Regida pelo Decreto 89/2019, de 18 de Novembro, e anteriormente pelo Decreto 45/2012. Regulada pelo MIREME e pela ARENE.",
+    "estatutoVerificado": true,
+    "mandato": [
+      "Agente exclusivo de importacao de combustiveis liquidos para o mercado nacional",
+      "Agregar a procura das distribuidoras licenciadas para obter ganhos de escala",
+      "Garantir a disponibilidade de gasolina, gasoleo, jet e gas de cozinha",
+      "Prestar informacao ao MIREME; a ARENE fixa e divulga o preco ao consumidor"
+    ],
+    "transicaoInstitucional": {
+      "nova entidade": "ENAPP — Empresa Nacional de Aquisicoes de Produtos Petroliferos",
+      "data": "Julho de 2026",
+      "descricao": "O Conselho de Ministros aprovou a criacao da ENAPP, empresa publica que passa a assegurar em exclusividade a aquisicao e gestao do abastecimento de combustiveis, substituindo o modelo em vigor ha cerca de 30 anos assente na IMOPETRO.",
+      "verificado": true,
+      "porEsclarecer": [
+        "Destino da IMOPETRO, dos seus trabalhadores e dos contratos em curso",
+        "Relacionamento entre a ENAPP e os distribuidores privados",
+        "Regime de transparencia dos concursos da ENAPP"
+      ]
+    },
+    "importacoes": {
+      "notaFonte": "Volumes ancorados em concursos publicos internacionais da IMOPETRO. Um concurso semestral previu 212 mil t de gasolina, 31,5 mil t de jet e 668,5 mil t de gasoleo 50 ppm, num total de 912 mil t, descarregadas nos portos de Maputo, Beira, Nacala e Pemba.",
+      "verificado": true,
+      "periodicidadeConcursoMeses": 6,
+      "portosDescarga": [
+        "Maputo",
+        "Beira",
+        "Nacala",
+        "Pemba"
+      ],
+      "linhas": [
+        {
+          "produto": "Gasolina",
+          "toneladasConcurso": 212000,
+          "verificado": true
+        },
+        {
+          "produto": "Gasóleo (Diesel)",
+          "toneladasConcurso": 668500,
+          "verificado": true
+        },
+        {
+          "produto": "Jet A-1",
+          "toneladasConcurso": 31500,
+          "verificado": true
+        }
+      ]
+    },
+    "stockCombustiveis": {
+      "verificado": false,
+      "nota": "Existencias declaradas nos terminais. Valores de demonstracao, a substituir por dados da IMOPETRO/ENAPP.",
+      "linhas": [
+        {
+          "produto": "Gasóleo (Diesel)",
+          "toneladas": 88000
+        },
+        {
+          "produto": "Gasolina",
+          "toneladas": 34500
+        }
+      ]
+    },
+    "paridadeImportacao": {
+      "verificado": false,
+      "nota": "Preco de paridade de importacao contra preco praticado. Valores de demonstracao.",
+      "linhas": [
+        {
+          "produto": "Gasóleo (Diesel)",
+          "precoDeclaradoUSDt": 742,
+          "precoReferenciaUSDt": 690,
+          "volumeToneladas": 668500
+        },
+        {
+          "produto": "Gasolina",
+          "precoDeclaradoUSDt": 806,
+          "precoReferenciaUSDt": 775,
+          "volumeToneladas": 212000
+        }
+      ]
+    }
+  },
+  "cta": {
+    "organismo": "CTA — Confederacao das Associacoes Economicas de Mocambique",
+    "sigla": "CTA",
+    "ambito": "Nacional",
+    "url": "https://cta.org.mz/",
+    "temAPI": false,
+    "natureza": "Organizacao economica, nao-governamental e apartidaria, que representa os interesses do sector privado mocambicano no dialogo com o Governo.",
+    "naturezaVerificada": true,
+    "papelNoSinagepe": [
+      "Interlocutor do sector privado no Dialogo Publico-Privado (DPP) e no Conselho de Monitoria do Ambiente de Negocios (CMAN)",
+      "Organiza a Conferencia Anual do Sector Privado (CASP)",
+      "Produz posicionamentos sectoriais, incluindo sobre a crise de combustiveis e o seu impacto no sector produtivo",
+      "Canal natural para validar com as empresas os dados de stock e de preco recolhidos pelo sistema"
+    ],
+    "notaAcesso": "Sem API. Publicacoes em PDF no portal. Integracao por importacao manual ou protocolo de partilha de dados."
   }
 }

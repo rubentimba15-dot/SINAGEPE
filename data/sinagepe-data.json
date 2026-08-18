@@ -138,6 +138,26 @@
       "consumo": 51000,
       "cobertura": 61,
       "estado": "Excelente"
+    },
+    {
+      "produto": "Gasóleo (Diesel)",
+      "stock": 96000,
+      "producao": 0,
+      "importacao": 668500,
+      "exportacao": 0,
+      "consumo": 111400,
+      "cobertura": 26,
+      "estado": "Regular"
+    },
+    {
+      "produto": "Gasolina",
+      "stock": 31500,
+      "producao": 0,
+      "importacao": 212000,
+      "exportacao": 0,
+      "consumo": 35300,
+      "cobertura": 27,
+      "estado": "Regular"
     }
   ],
   "precoTendencia": {
@@ -172,6 +192,18 @@
           56,
           58,
           57
+        ]
+      },
+      {
+        "nome": "Gasóleo (MZN/l)",
+        "cor": "#2DD4BF",
+        "valores": [
+          82.5,
+          84.1,
+          86.0,
+          87.4,
+          89.9,
+          92.3
         ]
       }
     ]
@@ -852,344 +884,1385 @@
     ]
   },
   "zonasProvincias": {
-    "Sul": ["Maputo", "Gaza", "Inhambane"],
-    "Centro": ["Sofala", "Manica", "Zambézia", "Tete"],
-    "Norte": ["Nampula", "Niassa", "Cabo Delgado"]
+    "Sul": [
+      "Maputo",
+      "Gaza",
+      "Inhambane"
+    ],
+    "Centro": [
+      "Sofala",
+      "Manica",
+      "Zambézia",
+      "Tete"
+    ],
+    "Norte": [
+      "Nampula",
+      "Niassa",
+      "Cabo Delgado"
+    ]
   },
   "reservaEstrategica": [
-    { "produto": "Arroz", "armazem": "Silos de Maputo", "quantidadeT": 3500, "estado": "Bloqueado" },
-    { "produto": "Farinha de Milho", "armazem": "Armazém Central de Beira", "quantidadeT": 5200, "estado": "Bloqueado" }
+    {
+      "produto": "Arroz",
+      "armazem": "Silos de Maputo",
+      "quantidadeT": 3500,
+      "estado": "Bloqueado"
+    },
+    {
+      "produto": "Farinha de Milho",
+      "armazem": "Armazém Central de Beira",
+      "quantidadeT": 5200,
+      "estado": "Bloqueado"
+    }
   ],
   "registoAuditoria": [
-    { "hora": "09:42", "utilizador": "Dr. A. Muthemba", "accao": "Consulta", "modulo": "Balanço Nacional", "detalhes": "Consultou balanço de Arroz", "ip": "10.20.4.12", "estado": "Sucesso" },
-    { "hora": "09:38", "utilizador": "Sistema IA", "accao": "Decisão", "modulo": "IRAE", "detalhes": "Simulou quota de trigo e taxas de retenção", "ip": "—", "estado": "Sucesso" },
-    { "hora": "09:15", "utilizador": "Sistema IA", "accao": "Decisão", "modulo": "Alertas", "detalhes": "Gerado Alerta de Ruptura de Óleo", "ip": "—", "estado": "Sucesso" },
-    { "hora": "08:55", "utilizador": "operador.beira3", "accao": "Login", "modulo": "Autenticação", "detalhes": "Tentativa de acesso fora do horário habitual", "ip": "197.218.4.90", "estado": "Bloqueado" },
-    { "hora": "08:40", "utilizador": "Eng. E. Nhaca", "accao": "Alteração", "modulo": "Dashboard Agricultura", "detalhes": "Actualizou estimativa de produção de Milho", "ip": "10.20.9.4", "estado": "Sucesso" }
+    {
+      "hora": "09:42",
+      "utilizador": "Dr. A. Muthemba",
+      "accao": "Consulta",
+      "modulo": "Balanço Nacional",
+      "detalhes": "Consultou balanço de Arroz",
+      "ip": "10.20.4.12",
+      "estado": "Sucesso"
+    },
+    {
+      "hora": "09:38",
+      "utilizador": "Sistema IA",
+      "accao": "Decisão",
+      "modulo": "IRAE",
+      "detalhes": "Simulou quota de trigo e taxas de retenção",
+      "ip": "—",
+      "estado": "Sucesso"
+    },
+    {
+      "hora": "09:15",
+      "utilizador": "Sistema IA",
+      "accao": "Decisão",
+      "modulo": "Alertas",
+      "detalhes": "Gerado Alerta de Ruptura de Óleo",
+      "ip": "—",
+      "estado": "Sucesso"
+    },
+    {
+      "hora": "08:55",
+      "utilizador": "operador.beira3",
+      "accao": "Login",
+      "modulo": "Autenticação",
+      "detalhes": "Tentativa de acesso fora do horário habitual",
+      "ip": "197.218.4.90",
+      "estado": "Bloqueado"
+    },
+    {
+      "hora": "08:40",
+      "utilizador": "Eng. E. Nhaca",
+      "accao": "Alteração",
+      "modulo": "Dashboard Agricultura",
+      "detalhes": "Actualizou estimativa de produção de Milho",
+      "ip": "10.20.9.4",
+      "estado": "Sucesso"
+    }
   ],
   "papeisAcesso": [
-    { "nome": "Administrador", "utilizadores": 4 },
-    { "nome": "Analista Nacional", "utilizadores": 12 },
-    { "nome": "Analista Provincial", "utilizadores": 22 },
-    { "nome": "Operador PME", "utilizadores": 98 },
-    { "nome": "Inspecção Geral (IGSAE)", "utilizadores": 6 },
-    { "nome": "Observador Público", "utilizadores": 14 }
+    {
+      "nome": "Administrador",
+      "utilizadores": 4
+    },
+    {
+      "nome": "Analista Nacional",
+      "utilizadores": 12
+    },
+    {
+      "nome": "Analista Provincial",
+      "utilizadores": 22
+    },
+    {
+      "nome": "Operador PME",
+      "utilizadores": 98
+    },
+    {
+      "nome": "Inspecção Geral (IGSAE)",
+      "utilizadores": 6
+    },
+    {
+      "nome": "Observador Público",
+      "utilizadores": 14
+    }
   ],
   "fontesDados": [
-    { "nome": "INE (Estatística)", "estado": "Conectado" },
-    { "nome": "SIMA (Preços)", "estado": "Conectado" },
-    { "nome": "Alfândegas de Moçambique", "estado": "Conectado" },
-    { "nome": "Ministério da Agricultura", "estado": "Pendente" },
-    { "nome": "MIST (Tecnologias)", "estado": "Conectado" },
-    { "nome": "API Portos de Maputo/Beira", "estado": "Indisponível" }
+    {
+      "nome": "INE (Estatística)",
+      "estado": "Conectado"
+    },
+    {
+      "nome": "SIMA (Preços)",
+      "estado": "Conectado"
+    },
+    {
+      "nome": "Alfândegas de Moçambique",
+      "estado": "Conectado"
+    },
+    {
+      "nome": "Ministério da Agricultura",
+      "estado": "Pendente"
+    },
+    {
+      "nome": "MIST (Tecnologias)",
+      "estado": "Conectado"
+    },
+    {
+      "nome": "API Portos de Maputo/Beira",
+      "estado": "Indisponível"
+    }
   ],
   "climaDesastres": {
-    "alerta": { "nome": "Ciclone Tropical Filipo", "categoria": 2, "horasParaImpacto": 72, "ventoKmh": 150, "precipitacaoMm": 200, "corredoresRisco": ["Corredor de Nacala", "Via Beira-Tete (N7)"] },
-    "kpis": { "provinciasRisco": 4, "corredoresAfectados": 7, "toneladasRisco": 18500, "populacaoAfectada": 1200000 },
+    "alerta": {
+      "nome": "Ciclone Tropical Filipo",
+      "categoria": 2,
+      "horasParaImpacto": 72,
+      "ventoKmh": 150,
+      "precipitacaoMm": 200,
+      "corredoresRisco": [
+        "Corredor de Nacala",
+        "Via Beira-Tete (N7)"
+      ]
+    },
+    "kpis": {
+      "provinciasRisco": 4,
+      "corredoresAfectados": 7,
+      "toneladasRisco": 18500,
+      "populacaoAfectada": 1200000
+    },
     "impactoEconomico": [
-      { "produto": "Arroz", "stockRiscoT": 6200, "consumoDiarioT": 180, "perdaEstimadaUsd": 350000 },
-      { "produto": "Milho", "stockRiscoT": 4100, "consumoDiarioT": 210, "perdaEstimadaUsd": 240000 }
+      {
+        "produto": "Arroz",
+        "stockRiscoT": 6200,
+        "consumoDiarioT": 180,
+        "perdaEstimadaUsd": 350000
+      },
+      {
+        "produto": "Milho",
+        "stockRiscoT": 4100,
+        "consumoDiarioT": 210,
+        "perdaEstimadaUsd": 240000
+      }
     ],
     "cronograma": [
-      { "fase": "T-72h", "titulo": "Pré-posicionar stocks", "estado": "Concluído", "responsavel": "MIST/Distribuidores" },
-      { "fase": "T-48h", "titulo": "Activar rotas alternativas", "estado": "Em Progresso", "responsavel": "ANE/Transportadores" },
-      { "fase": "T-24h", "titulo": "Alertar operadores logísticos", "estado": "Agendado", "responsavel": "SINAGEPE Portal" },
-      { "fase": "T-0h", "titulo": "Coordenar com INGD", "estado": "Pendente", "responsavel": "Equipa Multissectorial" }
+      {
+        "fase": "T-72h",
+        "titulo": "Pré-posicionar stocks",
+        "estado": "Concluído",
+        "responsavel": "MIST/Distribuidores"
+      },
+      {
+        "fase": "T-48h",
+        "titulo": "Activar rotas alternativas",
+        "estado": "Em Progresso",
+        "responsavel": "ANE/Transportadores"
+      },
+      {
+        "fase": "T-24h",
+        "titulo": "Alertar operadores logísticos",
+        "estado": "Agendado",
+        "responsavel": "SINAGEPE Portal"
+      },
+      {
+        "fase": "T-0h",
+        "titulo": "Coordenar com INGD",
+        "estado": "Pendente",
+        "responsavel": "Equipa Multissectorial"
+      }
     ]
   },
   "appConsumidor": {
     "localizacao": "Maputo Cidade",
     "economiaMensalPossivel": 1200,
     "lojasPreco": [
-      { "loja": "Mercado Central", "distanciaKm": 0.8, "preco": 62, "tendenciaPercent": -3 },
-      { "loja": "Mercearia Esperança", "distanciaKm": 1.4, "preco": 65, "tendenciaPercent": 2 },
-      { "loja": "Supermercado Kanimambo", "distanciaKm": 2.1, "preco": 70, "tendenciaPercent": 0 }
+      {
+        "loja": "Mercado Central",
+        "distanciaKm": 0.8,
+        "preco": 62,
+        "tendenciaPercent": -3
+      },
+      {
+        "loja": "Mercearia Esperança",
+        "distanciaKm": 1.4,
+        "preco": 65,
+        "tendenciaPercent": 2
+      },
+      {
+        "loja": "Supermercado Kanimambo",
+        "distanciaKm": 2.1,
+        "preco": 70,
+        "tendenciaPercent": 0
+      }
     ],
     "categorias": [
-      { "nome": "Arroz", "estado": "Normal" },
-      { "nome": "Farinha", "estado": "Normal" },
-      { "nome": "Óleo", "estado": "Instável" },
-      { "nome": "Açúcar", "estado": "Normal" },
-      { "nome": "Sabão", "estado": "Normal" },
-      { "nome": "Feijão", "estado": "Instável" }
+      {
+        "nome": "Arroz",
+        "estado": "Normal"
+      },
+      {
+        "nome": "Farinha",
+        "estado": "Normal"
+      },
+      {
+        "nome": "Óleo",
+        "estado": "Instável"
+      },
+      {
+        "nome": "Açúcar",
+        "estado": "Normal"
+      },
+      {
+        "nome": "Sabão",
+        "estado": "Normal"
+      },
+      {
+        "nome": "Feijão",
+        "estado": "Instável"
+      }
     ]
   },
   "portalPublico": {
     "meta": 85,
     "cabaz": [
-      { "produto": "Arroz Escorrido", "precoMzn": 62, "tendenciaPercent": -2.1 },
-      { "produto": "Farinha de Milho", "precoMzn": 38, "tendenciaPercent": 1.4 },
-      { "produto": "Farinha de Trigo", "precoMzn": 55, "tendenciaPercent": 3.2 },
-      { "produto": "Açúcar Castanho", "precoMzn": 70, "tendenciaPercent": -0.8 },
-      { "produto": "Gasóleo (Diesel)", "precoMzn": 92, "tendenciaPercent": 2.5 },
-      { "produto": "Cimento Nacional", "precoMzn": 480, "tendenciaPercent": 0.3 }
+      {
+        "produto": "Arroz Escorrido",
+        "precoMzn": 62,
+        "tendenciaPercent": -2.1
+      },
+      {
+        "produto": "Farinha de Milho",
+        "precoMzn": 38,
+        "tendenciaPercent": 1.4
+      },
+      {
+        "produto": "Farinha de Trigo",
+        "precoMzn": 55,
+        "tendenciaPercent": 3.2
+      },
+      {
+        "produto": "Açúcar Castanho",
+        "precoMzn": 70,
+        "tendenciaPercent": -0.8
+      },
+      {
+        "produto": "Gasóleo (Diesel)",
+        "precoMzn": 92,
+        "tendenciaPercent": 2.5
+      },
+      {
+        "produto": "Cimento Nacional",
+        "precoMzn": 480,
+        "tendenciaPercent": 0.3
+      }
     ],
     "alertasPublicos": [
-      { "tipo": "Aviso", "titulo": "Condicionamento Temporário na EN1", "descricao": "Atraso de 24h por alagamentos em Gaza." },
-      { "tipo": "Positivo", "titulo": "Corredor Logístico da Beira Operando a 100%", "descricao": "Fluxo normalizado após conclusão das reparações." }
+      {
+        "tipo": "Aviso",
+        "titulo": "Condicionamento Temporário na EN1",
+        "descricao": "Atraso de 24h por alagamentos em Gaza."
+      },
+      {
+        "tipo": "Positivo",
+        "titulo": "Corredor Logístico da Beira Operando a 100%",
+        "descricao": "Fluxo normalizado após conclusão das reparações."
+      }
     ]
   },
   "irae": {
-    "kpis": { "iraeMedioNacional": 0.34, "operadoresMonitorizados": 1247, "alertasRetencaoActivos": 4, "casosConfirmados": 1 },
+    "kpis": {
+      "iraeMedioNacional": 0.34,
+      "operadoresMonitorizados": 1247,
+      "alertasRetencaoActivos": 4,
+      "casosConfirmados": 1
+    },
     "casos": [
-      { "operador": "OP-9012", "produto": "Arroz", "provincia": "Sofala", "score": 0.86, "duracaoDias": 9, "checks": { "logistica": false, "clima": false, "outro": false }, "estadoIGSAE": "Pendente" },
-      { "operador": "OP-4411", "produto": "Óleo Alimentar", "provincia": "Manica", "score": 0.74, "duracaoDias": 6, "checks": { "logistica": true, "clima": false, "outro": true }, "estadoIGSAE": "Em Verificação" },
-      { "operador": "OP-0118", "produto": "Trigo", "provincia": "Nampula", "score": 0.52, "duracaoDias": 4, "checks": { "logistica": true, "clima": true, "outro": true }, "estadoIGSAE": "Justificado" },
-      { "operador": "OP-8822", "produto": "Fertilizantes", "provincia": "Tete", "score": 0.91, "duracaoDias": 14, "checks": { "logistica": false, "clima": false, "outro": false }, "estadoIGSAE": "Confirmado" },
-      { "operador": "OP-3310", "produto": "Açúcar", "provincia": "Maputo", "score": 0.38, "duracaoDias": 3, "checks": { "logistica": false, "clima": false, "outro": false }, "estadoIGSAE": "Falso Positivo" }
+      {
+        "operador": "OP-9012",
+        "produto": "Arroz",
+        "provincia": "Sofala",
+        "score": 0.86,
+        "duracaoDias": 9,
+        "checks": {
+          "logistica": false,
+          "clima": false,
+          "outro": false
+        },
+        "estadoIGSAE": "Pendente"
+      },
+      {
+        "operador": "OP-4411",
+        "produto": "Óleo Alimentar",
+        "provincia": "Manica",
+        "score": 0.74,
+        "duracaoDias": 6,
+        "checks": {
+          "logistica": true,
+          "clima": false,
+          "outro": true
+        },
+        "estadoIGSAE": "Em Verificação"
+      },
+      {
+        "operador": "OP-0118",
+        "produto": "Trigo",
+        "provincia": "Nampula",
+        "score": 0.52,
+        "duracaoDias": 4,
+        "checks": {
+          "logistica": true,
+          "clima": true,
+          "outro": true
+        },
+        "estadoIGSAE": "Justificado"
+      },
+      {
+        "operador": "OP-8822",
+        "produto": "Fertilizantes",
+        "provincia": "Tete",
+        "score": 0.91,
+        "duracaoDias": 14,
+        "checks": {
+          "logistica": false,
+          "clima": false,
+          "outro": false
+        },
+        "estadoIGSAE": "Confirmado"
+      },
+      {
+        "operador": "OP-3310",
+        "produto": "Açúcar",
+        "provincia": "Maputo",
+        "score": 0.38,
+        "duracaoDias": 3,
+        "checks": {
+          "logistica": false,
+          "clima": false,
+          "outro": false
+        },
+        "estadoIGSAE": "Falso Positivo"
+      }
     ],
     "classificacaoEscassez": [
-      { "tipo": "Escassez Real", "estado": "Sem Alerta" },
-      { "tipo": "Escassez Regional", "estado": "Monitorizar" },
-      { "tipo": "Escassez Logística", "estado": "Estável" },
-      { "tipo": "Escassez Estatística", "estado": "Aviso" },
-      { "tipo": "Possível Escassez Artificial", "estado": "Risco Alto" }
+      {
+        "tipo": "Escassez Real",
+        "estado": "Sem Alerta"
+      },
+      {
+        "tipo": "Escassez Regional",
+        "estado": "Monitorizar"
+      },
+      {
+        "tipo": "Escassez Logística",
+        "estado": "Estável"
+      },
+      {
+        "tipo": "Escassez Estatística",
+        "estado": "Aviso"
+      },
+      {
+        "tipo": "Possível Escassez Artificial",
+        "estado": "Risco Alto"
+      }
     ],
-    "calibracao": { "precisaoModeloPercent": 94.2, "ultimoTreino": "Hoje, 02h40" }
+    "calibracao": {
+      "precisaoModeloPercent": 94.2,
+      "ultimoTreino": "Hoje, 02h40"
+    }
   },
   "portalEmpresas": {
     "empresa": "Importadora Silva Lda.",
-    "kpis": { "evolucaoMercadoPercent": 5.2, "tendenciaProcura": "Crescente", "precoMedioArroz": 45, "custosLogisticosPercent": 12, "margemEstimadaPercent": 18, "oportunidadesActivas": 4 },
+    "kpis": {
+      "evolucaoMercadoPercent": 5.2,
+      "tendenciaProcura": "Crescente",
+      "precoMedioArroz": 45,
+      "custosLogisticosPercent": 12,
+      "margemEstimadaPercent": 18,
+      "oportunidadesActivas": 4
+    },
     "benchmarks": [
-      { "operador": "Operador A", "faixaQuota": "20–30%", "faixaPreco": "43–46 MZN/kg", "tendencia": "Estável" },
-      { "operador": "Operador B", "faixaQuota": "10–20%", "faixaPreco": "45–48 MZN/kg", "tendencia": "Em queda" },
-      { "operador": "Sua Empresa", "faixaQuota": "10–20%", "faixaPreco": "44–46 MZN/kg", "tendencia": "Crescente" }
+      {
+        "operador": "Operador A",
+        "faixaQuota": "20–30%",
+        "faixaPreco": "43–46 MZN/kg",
+        "tendencia": "Estável"
+      },
+      {
+        "operador": "Operador B",
+        "faixaQuota": "10–20%",
+        "faixaPreco": "45–48 MZN/kg",
+        "tendencia": "Em queda"
+      },
+      {
+        "operador": "Sua Empresa",
+        "faixaQuota": "10–20%",
+        "faixaPreco": "44–46 MZN/kg",
+        "tendencia": "Crescente"
+      }
     ],
     "recomendacoes": [
-      { "tipo": "Compra Recomendada", "texto": "Trigo com subida de preço prevista de +4% nas próximas 2 semanas — considerar compra antecipada.", "confianca": 91 },
-      { "tipo": "Venda Activa", "texto": "Óleo Alimentar em Nampula tem procura acima da média — bom momento para vender excedentes.", "confianca": 84 },
-      { "tipo": "Fornecimento", "texto": "Fornecedor de Arroz mais competitivo esta semana: preço 6% abaixo da média nacional.", "confianca": 88 },
-      { "tipo": "Oportunidade", "texto": "Tete apresenta défice de Fertilizantes — margem estimada superior à média nacional.", "confianca": 79 }
+      {
+        "tipo": "Compra Recomendada",
+        "texto": "Trigo com subida de preço prevista de +4% nas próximas 2 semanas — considerar compra antecipada.",
+        "confianca": 91
+      },
+      {
+        "tipo": "Venda Activa",
+        "texto": "Óleo Alimentar em Nampula tem procura acima da média — bom momento para vender excedentes.",
+        "confianca": 84
+      },
+      {
+        "tipo": "Fornecimento",
+        "texto": "Fornecedor de Arroz mais competitivo esta semana: preço 6% abaixo da média nacional.",
+        "confianca": 88
+      },
+      {
+        "tipo": "Oportunidade",
+        "texto": "Tete apresenta défice de Fertilizantes — margem estimada superior à média nacional.",
+        "confianca": 79
+      }
     ],
-    "produtosCrescimento": [{ "produto": "Farinha de Milho", "percent": 14 }, { "produto": "Arroz Premium", "percent": 9 }],
-    "custosLogisticos": [{ "categoria": "Transporte Marítimo", "percent": 45 }, { "categoria": "Armazenagem Maputo", "percent": 35 }, { "categoria": "Desalfandegamento", "percent": 20 }]
+    "produtosCrescimento": [
+      {
+        "produto": "Farinha de Milho",
+        "percent": 14
+      },
+      {
+        "produto": "Arroz Premium",
+        "percent": 9
+      }
+    ],
+    "custosLogisticos": [
+      {
+        "categoria": "Transporte Marítimo",
+        "percent": 45
+      },
+      {
+        "categoria": "Armazenagem Maputo",
+        "percent": 35
+      },
+      {
+        "categoria": "Desalfandegamento",
+        "percent": 20
+      }
+    ]
   },
   "portalProdutores": {
     "cooperativa": "Cooperativa Agrícola Zambézia",
-    "kpis": { "areaCultivadaHa": 450, "producaoPrevistaTon": 680, "precoActual": 45, "procuraRegional": "Crescente", "rentabilidadeEstimadaPercent": 22 },
+    "kpis": {
+      "areaCultivadaHa": 450,
+      "producaoPrevistaTon": 680,
+      "precoActual": 45,
+      "procuraRegional": "Crescente",
+      "rentabilidadeEstimadaPercent": 22
+    },
     "previsaoTempo": [
-      { "dia": "Seg", "tempC": 27, "recomendacao": "Ideal para Colheita" },
-      { "dia": "Ter", "tempC": 29, "recomendacao": "Ideal para Colheita" },
-      { "dia": "Qua", "tempC": 24, "recomendacao": "Evitar Secagem" },
-      { "dia": "Qui", "tempC": 22, "recomendacao": "Evitar Secagem" },
-      { "dia": "Sex", "tempC": 26, "recomendacao": "Normal" },
-      { "dia": "Sáb", "tempC": 28, "recomendacao": "Excelente" },
-      { "dia": "Dom", "tempC": 30, "recomendacao": "Excelente" }
+      {
+        "dia": "Seg",
+        "tempC": 27,
+        "recomendacao": "Ideal para Colheita"
+      },
+      {
+        "dia": "Ter",
+        "tempC": 29,
+        "recomendacao": "Ideal para Colheita"
+      },
+      {
+        "dia": "Qua",
+        "tempC": 24,
+        "recomendacao": "Evitar Secagem"
+      },
+      {
+        "dia": "Qui",
+        "tempC": 22,
+        "recomendacao": "Evitar Secagem"
+      },
+      {
+        "dia": "Sex",
+        "tempC": 26,
+        "recomendacao": "Normal"
+      },
+      {
+        "dia": "Sáb",
+        "tempC": 28,
+        "recomendacao": "Excelente"
+      },
+      {
+        "dia": "Dom",
+        "tempC": 30,
+        "recomendacao": "Excelente"
+      }
     ],
     "recomendacoes": [
-      { "tipo": "Quanto Produzir", "texto": "Volume óptimo estimado: 700 toneladas, com base na procura projectada para os próximos 3 meses." },
-      { "tipo": "Quando Colher", "texto": "Janela ideal: próximos 2 dias, antes da chuva prevista para quarta-feira." },
-      { "tipo": "Onde Vender", "texto": "Melhor margem líquida em Quelimane, após custo de transporte." }
+      {
+        "tipo": "Quanto Produzir",
+        "texto": "Volume óptimo estimado: 700 toneladas, com base na procura projectada para os próximos 3 meses."
+      },
+      {
+        "tipo": "Quando Colher",
+        "texto": "Janela ideal: próximos 2 dias, antes da chuva prevista para quarta-feira."
+      },
+      {
+        "tipo": "Onde Vender",
+        "texto": "Melhor margem líquida em Quelimane, após custo de transporte."
+      }
     ],
     "precosFuturos": [
-      { "cultura": "Milho", "precoActual": 32, "precoFuturo": 35, "variacaoPercent": 9 },
-      { "cultura": "Arroz", "precoActual": 45, "precoFuturo": 44, "variacaoPercent": -2 },
-      { "cultura": "Mandioca", "precoActual": 18, "precoFuturo": 20, "variacaoPercent": 11 }
+      {
+        "cultura": "Milho",
+        "precoActual": 32,
+        "precoFuturo": 35,
+        "variacaoPercent": 9
+      },
+      {
+        "cultura": "Arroz",
+        "precoActual": 45,
+        "precoFuturo": 44,
+        "variacaoPercent": -2
+      },
+      {
+        "cultura": "Mandioca",
+        "precoActual": 18,
+        "precoFuturo": 20,
+        "variacaoPercent": 11
+      }
     ],
     "culturasRecomendadas": [
-      { "cultura": "Milho", "razao": "Rentabilidade Máxima" },
-      { "cultura": "Mandioca", "razao": "Baixa Água" },
-      { "cultura": "Feijão", "razao": "Segurança Alimentar" }
+      {
+        "cultura": "Milho",
+        "razao": "Rentabilidade Máxima"
+      },
+      {
+        "cultura": "Mandioca",
+        "razao": "Baixa Água"
+      },
+      {
+        "cultura": "Feijão",
+        "razao": "Segurança Alimentar"
+      }
     ]
   },
   "portalComerciantes": {
     "armazem": "Armazém Central Maputo",
-    "kpis": { "produtosMaisVendidos": "Arroz, Óleo", "produtosEmFalta": 1, "stockPercent": 68, "lucroEstimadoPercent": 15, "alertasActivos": 2 },
+    "kpis": {
+      "produtosMaisVendidos": "Arroz, Óleo",
+      "produtosEmFalta": 1,
+      "stockPercent": 68,
+      "lucroEstimadoPercent": 15,
+      "alertasActivos": 2
+    },
     "reabastecimento": [
-      { "produto": "Trigo em Pó", "stockActualT": 2.1, "coberturaDias": 2, "fornecedor": "Importadora Silva Lda.", "precoEstimado": 420 },
-      { "produto": "Farinha de Milho", "stockActualT": 8.4, "coberturaDias": 11, "fornecedor": "Cereais Moçambique", "precoEstimado": 310 },
-      { "produto": "Arroz Extra", "stockActualT": 22, "coberturaDias": 38, "fornecedor": "—", "precoEstimado": null }
+      {
+        "produto": "Trigo em Pó",
+        "stockActualT": 2.1,
+        "coberturaDias": 2,
+        "fornecedor": "Importadora Silva Lda.",
+        "precoEstimado": 420
+      },
+      {
+        "produto": "Farinha de Milho",
+        "stockActualT": 8.4,
+        "coberturaDias": 11,
+        "fornecedor": "Cereais Moçambique",
+        "precoEstimado": 310
+      },
+      {
+        "produto": "Arroz Extra",
+        "stockActualT": 22,
+        "coberturaDias": 38,
+        "fornecedor": "—",
+        "precoEstimado": null
+      }
     ]
   },
   "portalTransportadores": {
     "frota": "TransMoz Logística",
     "cargasDisponiveis": [
-      { "origem": "Porto da Beira", "destino": "Chimoio", "produto": "Trigo", "pesoT": 22, "valorFreteUsdTKm": 1.2, "prazoDias": 3, "estado": "Excelente" },
-      { "origem": "Maputo", "destino": "Xai-Xai", "produto": "Cimento Nacional", "pesoT": 30, "valorFreteUsdTKm": 0.9, "prazoDias": 2, "estado": "Estável" },
-      { "origem": "Nacala", "destino": "Cuamba", "produto": "Fertilizantes", "pesoT": 18, "valorFreteUsdTKm": 1.5, "prazoDias": 1, "estado": "Urgente" }
+      {
+        "origem": "Porto da Beira",
+        "destino": "Chimoio",
+        "produto": "Trigo",
+        "pesoT": 22,
+        "valorFreteUsdTKm": 1.2,
+        "prazoDias": 3,
+        "estado": "Excelente"
+      },
+      {
+        "origem": "Maputo",
+        "destino": "Xai-Xai",
+        "produto": "Cimento Nacional",
+        "pesoT": 30,
+        "valorFreteUsdTKm": 0.9,
+        "prazoDias": 2,
+        "estado": "Estável"
+      },
+      {
+        "origem": "Nacala",
+        "destino": "Cuamba",
+        "produto": "Fertilizantes",
+        "pesoT": 18,
+        "valorFreteUsdTKm": 1.5,
+        "prazoDias": 1,
+        "estado": "Urgente"
+      }
     ],
-    "subsidio": { "produto": "Fertilizantes", "destino": "Nacala", "valorAdicionalPercentKm": 5 },
-    "retornoVazio": { "rota": "Chimoio → Beira", "sugestao": "Reserve carga de Milho em trânsito para evitar retorno vazio" }
+    "subsidio": {
+      "produto": "Fertilizantes",
+      "destino": "Nacala",
+      "valorAdicionalPercentKm": 5
+    },
+    "retornoVazio": {
+      "rota": "Chimoio → Beira",
+      "sugestao": "Reserve carga de Milho em trânsito para evitar retorno vazio"
+    }
   },
   "dashboardAgricultura": {
-    "kpis": { "producaoEstimadaTon": 2840000, "areaCultivadaHa": 4250000, "previsaoProxSafraTon": 3120000, "taxaAutoSuficienciaPercent": 84, "produtoresRegistados": 1240000 },
+    "kpis": {
+      "producaoEstimadaTon": 2840000,
+      "areaCultivadaHa": 4250000,
+      "previsaoProxSafraTon": 3120000,
+      "taxaAutoSuficienciaPercent": 84,
+      "produtoresRegistados": 1240000
+    },
     "produtividadeProvincial": [
-      { "provincia": "Nampula", "tHa": 2.8 }, { "provincia": "Gaza", "tHa": 2.4 },
-      { "provincia": "Zambézia", "tHa": 1.8 }, { "provincia": "Tete", "tHa": 0.9 }
+      {
+        "provincia": "Nampula",
+        "tHa": 2.8
+      },
+      {
+        "provincia": "Gaza",
+        "tHa": 2.4
+      },
+      {
+        "provincia": "Zambézia",
+        "tHa": 1.8
+      },
+      {
+        "provincia": "Tete",
+        "tHa": 0.9
+      }
     ],
     "calendarioRegional": [
-      { "regiao": "Norte", "provincias": "Cabo Delgado, Nampula, Niassa", "fase": "Colheita", "nota": "Fase final de escoamento para silos regionais" },
-      { "regiao": "Centro", "provincias": "Zambézia, Tete, Manica", "fase": "Crescimento/Maturação", "nota": "Pragas sob monitoramento activo" },
-      { "regiao": "Sul", "provincias": "Gaza, Inhambane, Maputo", "fase": "Sementeira/Preparação", "nota": "Distribuição primária de sementes concluída" }
+      {
+        "regiao": "Norte",
+        "provincias": "Cabo Delgado, Nampula, Niassa",
+        "fase": "Colheita",
+        "nota": "Fase final de escoamento para silos regionais"
+      },
+      {
+        "regiao": "Centro",
+        "provincias": "Zambézia, Tete, Manica",
+        "fase": "Crescimento/Maturação",
+        "nota": "Pragas sob monitoramento activo"
+      },
+      {
+        "regiao": "Sul",
+        "provincias": "Gaza, Inhambane, Maputo",
+        "fase": "Sementeira/Preparação",
+        "nota": "Distribuição primária de sementes concluída"
+      }
     ],
     "producaoCultura": [
-      { "cultura": "Milho", "percentMeta": 94 }, { "cultura": "Arroz", "percentMeta": 72 },
-      { "cultura": "Mandioca", "percentMeta": 102 }, { "cultura": "Feijão", "percentMeta": 93 }, { "cultura": "Sorgo", "percentMeta": 91 }
+      {
+        "cultura": "Milho",
+        "percentMeta": 94
+      },
+      {
+        "cultura": "Arroz",
+        "percentMeta": 72
+      },
+      {
+        "cultura": "Mandioca",
+        "percentMeta": 102
+      },
+      {
+        "cultura": "Feijão",
+        "percentMeta": 93
+      },
+      {
+        "cultura": "Sorgo",
+        "percentMeta": 91
+      }
     ],
     "alertas": [
-      { "provincia": "Tete", "titulo": "Risco de Seca", "severidade": "Crítico" },
-      { "provincia": "Zambézia", "titulo": "Praga de Gafanhotos", "severidade": "Atenção" },
-      { "provincia": "Nampula", "titulo": "Superávit de Produção", "severidade": "Favorável" }
+      {
+        "provincia": "Tete",
+        "titulo": "Risco de Seca",
+        "severidade": "Crítico"
+      },
+      {
+        "provincia": "Zambézia",
+        "titulo": "Praga de Gafanhotos",
+        "severidade": "Atenção"
+      },
+      {
+        "provincia": "Nampula",
+        "titulo": "Superávit de Produção",
+        "severidade": "Favorável"
+      }
     ]
   },
   "dashboardFinancas": {
-    "kpis": { "receitaFiscalEstimadaMzn": 4200000000, "ivaPotencialMzn": 890000000, "importacoesCifUsd": 320000000, "exportacoesFobUsd": 85000000, "perdasFiscaisPercent": 12, "evolucaoConsumoPercent": 3.2 },
+    "kpis": {
+      "receitaFiscalEstimadaMzn": 4200000000,
+      "ivaPotencialMzn": 890000000,
+      "importacoesCifUsd": 320000000,
+      "exportacoesFobUsd": 85000000,
+      "perdasFiscaisPercent": 12,
+      "evolucaoConsumoPercent": 3.2
+    },
     "receitaPorProduto": [
-      { "produto": "Farinha de Milho", "valorMzn": 1450000000 }, { "produto": "Arroz Importado", "valorMzn": 1200000000 },
-      { "produto": "Óleo Alimentar", "valorMzn": 850000000 }, { "produto": "Trigo Moído", "valorMzn": 520000000 }, { "produto": "Açúcar Refinado", "valorMzn": 310000000 }
+      {
+        "produto": "Farinha de Milho",
+        "valorMzn": 1450000000
+      },
+      {
+        "produto": "Arroz Importado",
+        "valorMzn": 1200000000
+      },
+      {
+        "produto": "Óleo Alimentar",
+        "valorMzn": 850000000
+      },
+      {
+        "produto": "Trigo Moído",
+        "valorMzn": 520000000
+      },
+      {
+        "produto": "Açúcar Refinado",
+        "valorMzn": 310000000
+      }
     ],
     "perdasFiscais": [
-      { "tipo": "Comércio Informal", "valorAnualMzn": 450000000, "descricao": "Estima-se que 45% das transacções de arroz ocorram fora do circuito fiscal registado." },
-      { "tipo": "Isenções Aduaneiras", "valorAnualMzn": 280000000, "descricao": "Impacto de isenções de emergência (adubos, sementes)." },
-      { "tipo": "Evasão Registada", "valorAnualMzn": 160000000, "descricao": "Subfacturação detectada nos portos de Nacala e Beira em produtos refinados." }
+      {
+        "tipo": "Comércio Informal",
+        "valorAnualMzn": 450000000,
+        "descricao": "Estima-se que 45% das transacções de arroz ocorram fora do circuito fiscal registado."
+      },
+      {
+        "tipo": "Isenções Aduaneiras",
+        "valorAnualMzn": 280000000,
+        "descricao": "Impacto de isenções de emergência (adubos, sementes)."
+      },
+      {
+        "tipo": "Evasão Registada",
+        "valorAnualMzn": 160000000,
+        "descricao": "Subfacturação detectada nos portos de Nacala e Beira em produtos refinados."
+      }
     ],
-    "impactoMacro": { "contribuicaoPibPercent": 4.8, "balancaComercialUsd": -235000000 },
-    "recomendacoes": ["Integração de PMEs no canal de facturação electrónica.", "Ajuste de 1,5% na taxa de compensação aduaneira sobre trigo."]
+    "impactoMacro": {
+      "contribuicaoPibPercent": 4.8,
+      "balancaComercialUsd": -235000000
+    },
+    "recomendacoes": [
+      "Integração de PMEs no canal de facturação electrónica.",
+      "Ajuste de 1,5% na taxa de compensação aduaneira sobre trigo."
+    ]
   },
   "dashboardBancoCentral": {
-    "kpis": { "pressaoCambialIndex": 0.67, "necessidadeDivisasMesUsd": 280000000, "reservasCoberturaMeses": 4.8, "nivelCriticoMeses": 3.0, "inflacaoMensalPercent": 1.2, "pressaoImportacoesPercent": 8, "taxaCambio": 63.45 },
+    "kpis": {
+      "pressaoCambialIndex": 0.67,
+      "necessidadeDivisasMesUsd": 280000000,
+      "reservasCoberturaMeses": 4.8,
+      "nivelCriticoMeses": 3.0,
+      "inflacaoMensalPercent": 1.2,
+      "pressaoImportacoesPercent": 8,
+      "taxaCambio": 63.45
+    },
     "intervencao": [
-      { "horizonteDias": 30, "valorUsd": 85000000, "justificacao": "Foco em manter stock de Trigo e combustíveis logísticos." },
-      { "horizonteDias": 60, "valorUsd": 140000000, "justificacao": "Alta sazonal em sementes e óleos vegetais." },
-      { "horizonteDias": 90, "valorUsd": 210000000, "justificacao": "Reposição de reservas antes da época de escassez." }
+      {
+        "horizonteDias": 30,
+        "valorUsd": 85000000,
+        "justificacao": "Foco em manter stock de Trigo e combustíveis logísticos."
+      },
+      {
+        "horizonteDias": 60,
+        "valorUsd": 140000000,
+        "justificacao": "Alta sazonal em sementes e óleos vegetais."
+      },
+      {
+        "horizonteDias": 90,
+        "valorUsd": 210000000,
+        "justificacao": "Reposição de reservas antes da época de escassez."
+      }
     ],
     "demandaCambialProduto": [
-      { "produto": "Arroz", "valorUsd": 120000000, "percentCota": 42.8 }, { "produto": "Trigo Moído", "valorUsd": 80000000, "percentCota": 28.5 },
-      { "produto": "Óleos Crus", "valorUsd": 55000000, "percentCota": 19.6 }, { "produto": "Fertilizantes", "valorUsd": 25000000, "percentCota": 8.9 }
+      {
+        "produto": "Arroz",
+        "valorUsd": 120000000,
+        "percentCota": 42.8
+      },
+      {
+        "produto": "Trigo Moído",
+        "valorUsd": 80000000,
+        "percentCota": 28.5
+      },
+      {
+        "produto": "Óleos Crus",
+        "valorUsd": 55000000,
+        "percentCota": 19.6
+      },
+      {
+        "produto": "Fertilizantes",
+        "valorUsd": 25000000,
+        "percentCota": 8.9
+      }
     ]
   },
   "dashboardTransportes": {
-    "kpis": { "estradasCortadas": 14, "pontesCondicionadas": 8, "portosOperacionaisTotal": "3/3", "aeroportosActivos": 12, "cfmOperacionalPercent": 72, "custoMedioFreteUsd": 1.8 },
-    "tempoDesembaraco": [{ "porto": "Porto de Maputo", "dias": 3.2 }, { "porto": "Porto da Beira", "dias": 4.1 }, { "porto": "Porto de Nacala", "dias": 3.6 }],
+    "kpis": {
+      "estradasCortadas": 14,
+      "pontesCondicionadas": 8,
+      "portosOperacionaisTotal": "3/3",
+      "aeroportosActivos": 12,
+      "cfmOperacionalPercent": 72,
+      "custoMedioFreteUsd": 1.8
+    },
+    "tempoDesembaraco": [
+      {
+        "porto": "Porto de Maputo",
+        "dias": 3.2
+      },
+      {
+        "porto": "Porto da Beira",
+        "dias": 4.1
+      },
+      {
+        "porto": "Porto de Nacala",
+        "dias": 3.6
+      }
+    ],
     "rotasAlternativas": [
-      { "nome": "Bypass Ferroviário CFM", "beneficio": "Redução de Risco de Avaria em 80%" },
-      { "nome": "Cabotagem Marítima Maputo-Beira", "beneficio": "Poupe 12% por tonelada" }
+      {
+        "nome": "Bypass Ferroviário CFM",
+        "beneficio": "Redução de Risco de Avaria em 80%"
+      },
+      {
+        "nome": "Cabotagem Marítima Maputo-Beira",
+        "beneficio": "Poupe 12% por tonelada"
+      }
     ]
   },
   "dashboardIGSAE": {
-    "kpis": { "fiscalizacoesRealizadasMes": 342, "produtosApreendidosT": 18, "alertasEspeculacaoActivos": 7, "alertasContrabandoActivos": 3, "produtosDeterioradosLotes": 12, "casosPendentes": 23 },
+    "kpis": {
+      "fiscalizacoesRealizadasMes": 342,
+      "produtosApreendidosT": 18,
+      "alertasEspeculacaoActivos": 7,
+      "alertasContrabandoActivos": 3,
+      "produtosDeterioradosLotes": 12,
+      "casosPendentes": 23
+    },
     "mapaRisco": [
-      { "local": "Nacala", "tipo": "Contrabando", "nivel": "Risco Extremo" }, { "local": "Tete", "tipo": "Especulação", "nivel": "Alerta/Desvio" },
-      { "local": "Maputo", "tipo": "Fraude de Stock", "nivel": "Risco Extremo" }, { "local": "Beira", "tipo": "—", "nivel": "Fiscalizado Limpo" }
+      {
+        "local": "Nacala",
+        "tipo": "Contrabando",
+        "nivel": "Risco Extremo"
+      },
+      {
+        "local": "Tete",
+        "tipo": "Especulação",
+        "nivel": "Alerta/Desvio"
+      },
+      {
+        "local": "Maputo",
+        "tipo": "Fraude de Stock",
+        "nivel": "Risco Extremo"
+      },
+      {
+        "local": "Beira",
+        "tipo": "—",
+        "nivel": "Fiscalizado Limpo"
+      }
     ],
     "rankingInfracoes": [
-      { "tipo": "Especulação de Preços (Arroz)", "ocorrencias": 142, "tendencia": "↑ Alta", "gravidade": "Crítica" },
-      { "tipo": "Contrabando de Combustíveis", "ocorrencias": 89, "tendencia": "↑ Subida", "gravidade": "Crítica" },
-      { "tipo": "Ocultação de Farinha de Trigo", "ocorrencias": 54, "tendencia": "→ Estável", "gravidade": "Alerta" }
+      {
+        "tipo": "Especulação de Preços (Arroz)",
+        "ocorrencias": 142,
+        "tendencia": "↑ Alta",
+        "gravidade": "Crítica"
+      },
+      {
+        "tipo": "Contrabando de Combustíveis",
+        "ocorrencias": 89,
+        "tendencia": "↑ Subida",
+        "gravidade": "Crítica"
+      },
+      {
+        "tipo": "Ocultação de Farinha de Trigo",
+        "ocorrencias": 54,
+        "tendencia": "→ Estável",
+        "gravidade": "Alerta"
+      }
     ],
     "operadoresSuspeitos": [
-      { "nome": "Distribuidor Alpha-MZ", "provincia": "Sofala", "autosEmitidos": 4, "ultimaVisita": "Há 2 dias", "nivelRisco": "Severo" },
-      { "nome": "Importador Norte-Lda", "provincia": "Nampula", "autosEmitidos": 3, "ultimaVisita": "Há 6 dias", "nivelRisco": "Médio" }
+      {
+        "nome": "Distribuidor Alpha-MZ",
+        "provincia": "Sofala",
+        "autosEmitidos": 4,
+        "ultimaVisita": "Há 2 dias",
+        "nivelRisco": "Severo"
+      },
+      {
+        "nome": "Importador Norte-Lda",
+        "provincia": "Nampula",
+        "autosEmitidos": 3,
+        "ultimaVisita": "Há 6 dias",
+        "nivelRisco": "Médio"
+      }
     ]
   },
   "dashboardARC": {
-    "kpis": { "hhiNacional": 0.42, "mercadosMonitorizados": 24, "alertasConcorrenciaisActivos": 5, "investigacoesActivas": 3 },
+    "kpis": {
+      "hhiNacional": 0.42,
+      "mercadosMonitorizados": 24,
+      "alertasConcorrenciaisActivos": 5,
+      "investigacoesActivas": 3
+    },
     "hhiPorProduto": [
-      { "produto": "Farinha de Milho", "hhi": 0.22 }, { "produto": "Arroz Importado", "hhi": 0.58 },
-      { "produto": "Óleo Alimentar", "hhi": 0.65 }, { "produto": "Açúcar Castanho", "hhi": 0.38 }, { "produto": "Adubos & Insumos", "hhi": 0.78 }
+      {
+        "produto": "Farinha de Milho",
+        "hhi": 0.22
+      },
+      {
+        "produto": "Arroz Importado",
+        "hhi": 0.58
+      },
+      {
+        "produto": "Óleo Alimentar",
+        "hhi": 0.65
+      },
+      {
+        "produto": "Açúcar Castanho",
+        "hhi": 0.38
+      },
+      {
+        "produto": "Adubos & Insumos",
+        "hhi": 0.78
+      }
     ],
     "empresasDominantes": [
-      { "produto": "Adubos NPK", "empresa": "Agrícola Sul Limitada", "quotaPercent": 72, "tendencia": "Estável", "risco": "Crítico" },
-      { "produto": "Óleo Alimentar", "empresa": "Moçambique Óleos SA", "quotaPercent": 58, "tendencia": "Crescente", "risco": "Alto" },
-      { "produto": "Arroz Nacional", "empresa": "Cereal Comercial Norte", "quotaPercent": 21, "tendencia": "Decrescente", "risco": "Baixo" },
-      { "produto": "Farinha de Trigo", "empresa": "Farinhas do Índico", "quotaPercent": 45, "tendencia": "Crescente", "risco": "Médio" }
+      {
+        "produto": "Adubos NPK",
+        "empresa": "Agrícola Sul Limitada",
+        "quotaPercent": 72,
+        "tendencia": "Estável",
+        "risco": "Crítico"
+      },
+      {
+        "produto": "Óleo Alimentar",
+        "empresa": "Moçambique Óleos SA",
+        "quotaPercent": 58,
+        "tendencia": "Crescente",
+        "risco": "Alto"
+      },
+      {
+        "produto": "Arroz Nacional",
+        "empresa": "Cereal Comercial Norte",
+        "quotaPercent": 21,
+        "tendencia": "Decrescente",
+        "risco": "Baixo"
+      },
+      {
+        "produto": "Farinha de Trigo",
+        "empresa": "Farinhas do Índico",
+        "quotaPercent": 45,
+        "tendencia": "Crescente",
+        "risco": "Médio"
+      }
     ],
     "barreirasEntrada": [
-      { "tipo": "Distribuição", "pontuacao": 8.5, "descricao": "Monopólio logístico severo" },
-      { "tipo": "Importação", "pontuacao": 6.2, "descricao": "Barreiras alfandegárias médias" },
-      { "tipo": "Processamento", "pontuacao": 9.0, "descricao": "Alto investimento de capital" }
+      {
+        "tipo": "Distribuição",
+        "pontuacao": 8.5,
+        "descricao": "Monopólio logístico severo"
+      },
+      {
+        "tipo": "Importação",
+        "pontuacao": 6.2,
+        "descricao": "Barreiras alfandegárias médias"
+      },
+      {
+        "tipo": "Processamento",
+        "pontuacao": 9.0,
+        "descricao": "Alto investimento de capital"
+      }
     ],
-    "alertaCartel": { "produto": "Óleo Alimentar", "local": "Beira", "empresasEnvolvidas": 3, "janela": "48h", "descricao": "Aumento concertado de preços entre 3 distribuidores da Beira, com flutuações idênticas a menos de 48h de intervalo, sem justificação de custos reais." }
+    "alertaCartel": {
+      "produto": "Óleo Alimentar",
+      "local": "Beira",
+      "empresasEnvolvidas": 3,
+      "janela": "48h",
+      "descricao": "Aumento concertado de preços entre 3 distribuidores da Beira, com flutuações idênticas a menos de 48h de intervalo, sem justificação de custos reais."
+    }
   },
   "portalBancos": {
     "banco": "Banco Comercial de Moçambique",
-    "kpis": { "procuraFinanciamentoPercent": 12.4, "cadeiasMonitoradas": 8, "empresasRegistadas": 145, "creditoHomologadoMzn": 2100000000, "inadimplenciaMediaPercent": 4.2, "lotesQualificados": 23 },
+    "kpis": {
+      "procuraFinanciamentoPercent": 12.4,
+      "cadeiasMonitoradas": 8,
+      "empresasRegistadas": 145,
+      "creditoHomologadoMzn": 2100000000,
+      "inadimplenciaMediaPercent": 4.2,
+      "lotesQualificados": 23
+    },
     "cadeiaValorTrigo": [
-      { "fase": "Importação de Sementes", "montanteMzn": 45000000, "nota": "Garantia Estatal do Fundo de Fomento" },
-      { "fase": "Moagem e Processamento", "montanteMzn": 120000000, "nota": "Moagem de trigo activa na Província de Sofala" },
-      { "fase": "Distribuição por Grossistas", "montanteMzn": 35000000, "nota": "Rotas de transporte monitoradas por GPS" }
+      {
+        "fase": "Importação de Sementes",
+        "montanteMzn": 45000000,
+        "nota": "Garantia Estatal do Fundo de Fomento"
+      },
+      {
+        "fase": "Moagem e Processamento",
+        "montanteMzn": 120000000,
+        "nota": "Moagem de trigo activa na Província de Sofala"
+      },
+      {
+        "fase": "Distribuição por Grossistas",
+        "montanteMzn": 35000000,
+        "nota": "Rotas de transporte monitoradas por GPS"
+      }
     ],
     "empresasCandidatas": [
-      { "empresa": "Moçambique Cereais Lda", "sector": "Processamento", "montanteMzn": 12000000, "classificacao": "Baixo", "scoreIA": "AA+" },
-      { "empresa": "Agrícola de Chokwé", "sector": "Produção de Arroz", "montanteMzn": 8500000, "classificacao": "Moderado", "scoreIA": "A" },
-      { "empresa": "Armazéns do Centro", "sector": "Logística e Frio", "montanteMzn": 15000000, "classificacao": "Baixo", "scoreIA": "AAA" },
-      { "empresa": "Adubos da Beira Corp", "sector": "Importação Agro", "montanteMzn": 22000000, "classificacao": "Alto", "scoreIA": "BBB" }
+      {
+        "empresa": "Moçambique Cereais Lda",
+        "sector": "Processamento",
+        "montanteMzn": 12000000,
+        "classificacao": "Baixo",
+        "scoreIA": "AA+"
+      },
+      {
+        "empresa": "Agrícola de Chokwé",
+        "sector": "Produção de Arroz",
+        "montanteMzn": 8500000,
+        "classificacao": "Moderado",
+        "scoreIA": "A"
+      },
+      {
+        "empresa": "Armazéns do Centro",
+        "sector": "Logística e Frio",
+        "montanteMzn": 15000000,
+        "classificacao": "Baixo",
+        "scoreIA": "AAA"
+      },
+      {
+        "empresa": "Adubos da Beira Corp",
+        "sector": "Importação Agro",
+        "montanteMzn": 22000000,
+        "classificacao": "Alto",
+        "scoreIA": "BBB"
+      }
     ],
     "riscoSectorial": [
-      { "produto": "Farinha de Milho", "nivel": "Baixo Risco" }, { "produto": "Arroz Importado", "nivel": "Moderado" }, { "produto": "Fertilizantes NPK", "nivel": "Alto Risco" }
+      {
+        "produto": "Farinha de Milho",
+        "nivel": "Baixo Risco"
+      },
+      {
+        "produto": "Arroz Importado",
+        "nivel": "Moderado"
+      },
+      {
+        "produto": "Fertilizantes NPK",
+        "nivel": "Alto Risco"
+      }
     ]
   },
   "portalUniversidades": {
     "instituicao": "Univ. Eduardo Mondlane",
-    "kpis": { "datasetsDisponiveis": 47, "seriesHistoricasAnos": 12, "indicadoresEconomicos": 156, "downloadsMes": 234 },
-    "categorias": [{ "nome": "Preços", "n": 14 }, { "nome": "Produção", "n": 8 }, { "nome": "Comércio", "n": 11 }, { "nome": "Logística", "n": 6 }, { "nome": "Clima", "n": 5 }, { "nome": "Demografia", "n": 3 }],
+    "kpis": {
+      "datasetsDisponiveis": 47,
+      "seriesHistoricasAnos": 12,
+      "indicadoresEconomicos": 156,
+      "downloadsMes": 234
+    },
+    "categorias": [
+      {
+        "nome": "Preços",
+        "n": 14
+      },
+      {
+        "nome": "Produção",
+        "n": 8
+      },
+      {
+        "nome": "Comércio",
+        "n": 11
+      },
+      {
+        "nome": "Logística",
+        "n": 6
+      },
+      {
+        "nome": "Clima",
+        "n": 5
+      },
+      {
+        "nome": "Demografia",
+        "n": 3
+      }
+    ],
     "datasetsCompilados": [
-      { "descricao": "Histórico de Preços de Cereais", "periodo": "2014-2026", "formatos": "CSV, JSON, SPSS, Stata" },
-      { "descricao": "Balanço de Fluxos Logísticos", "periodo": "2020-2025", "formatos": "CSV, JSON" }
+      {
+        "descricao": "Histórico de Preços de Cereais",
+        "periodo": "2014-2026",
+        "formatos": "CSV, JSON, SPSS, Stata"
+      },
+      {
+        "descricao": "Balanço de Fluxos Logísticos",
+        "periodo": "2020-2025",
+        "formatos": "CSV, JSON"
+      }
     ]
   },
   "portalParceiros": {
     "organizacao": "FAO Representação",
     "classificacaoIPC": [
-      { "provincia": "Tete", "fase": 4 }, { "provincia": "Cabo Delgado", "fase": 3 }, { "provincia": "Zambézia", "fase": 3 },
-      { "provincia": "Nampula", "fase": 2 }, { "provincia": "Manica", "fase": 2 }, { "provincia": "Sofala", "fase": 1 },
-      { "provincia": "Gaza", "fase": 1 }, { "provincia": "Inhambane", "fase": 1 }, { "provincia": "Maputo", "fase": 1 }
+      {
+        "provincia": "Tete",
+        "fase": 4
+      },
+      {
+        "provincia": "Cabo Delgado",
+        "fase": 3
+      },
+      {
+        "provincia": "Zambézia",
+        "fase": 3
+      },
+      {
+        "provincia": "Nampula",
+        "fase": 2
+      },
+      {
+        "provincia": "Manica",
+        "fase": 2
+      },
+      {
+        "provincia": "Sofala",
+        "fase": 1
+      },
+      {
+        "provincia": "Gaza",
+        "fase": 1
+      },
+      {
+        "provincia": "Inhambane",
+        "fase": 1
+      },
+      {
+        "provincia": "Maputo",
+        "fase": 1
+      }
     ],
     "eventosClimaticos": [
-      { "nome": "Ciclone Tropical Freddy", "local": "Zambézia", "perdaHa": 45000, "recuperacaoMeses": 6, "estado": "Crítico" },
-      { "nome": "Seca El Niño", "local": "Gaza & Inhambane", "perdaHa": null, "recuperacaoMeses": null, "estado": "Aviso", "nota": "Apoio WFP já iniciado" }
+      {
+        "nome": "Ciclone Tropical Freddy",
+        "local": "Zambézia",
+        "perdaHa": 45000,
+        "recuperacaoMeses": 6,
+        "estado": "Crítico"
+      },
+      {
+        "nome": "Seca El Niño",
+        "local": "Gaza & Inhambane",
+        "perdaHa": null,
+        "recuperacaoMeses": null,
+        "estado": "Aviso",
+        "nota": "Apoio WFP já iniciado"
+      }
     ]
   },
   "marketplace": {
-    "kpis": { "anunciosActivos": 58, "transaccoesEmCurso": 12, "volumeTransaccionadoMzn": 4200000, "taxaConclusaoPercent": 81 },
+    "kpis": {
+      "anunciosActivos": 58,
+      "transaccoesEmCurso": 12,
+      "volumeTransaccionadoMzn": 4200000,
+      "taxaConclusaoPercent": 81
+    },
     "anuncios": [
-      { "id": "MKT-00842", "produto": "Adubo NPK", "vendedor": "Agrícola Sul Limitada", "provincia": "Maputo", "quantidadeT": 40, "precoMznT": 890, "estado": "Em Negociação" },
-      { "id": "MKT-00831", "produto": "Trigo Moído", "vendedor": "Farinhas do Índico", "provincia": "Nampula", "quantidadeT": 18, "precoMznT": 520, "estado": "Activo" },
-      { "id": "MKT-00819", "produto": "Óleo Alimentar (Bruto)", "vendedor": "Moçambique Óleos SA", "provincia": "Beira", "quantidadeT": 25, "precoMznT": 1150, "estado": "Activo" },
-      { "id": "MKT-00805", "produto": "Arroz Extra", "vendedor": "Cereal Comercial Norte", "provincia": "Nampula", "quantidadeT": 30, "precoMznT": 640, "estado": "Vendido" }
+      {
+        "id": "MKT-00842",
+        "produto": "Adubo NPK",
+        "vendedor": "Agrícola Sul Limitada",
+        "provincia": "Maputo",
+        "quantidadeT": 40,
+        "precoMznT": 890,
+        "estado": "Em Negociação"
+      },
+      {
+        "id": "MKT-00831",
+        "produto": "Trigo Moído",
+        "vendedor": "Farinhas do Índico",
+        "provincia": "Nampula",
+        "quantidadeT": 18,
+        "precoMznT": 520,
+        "estado": "Activo"
+      },
+      {
+        "id": "MKT-00819",
+        "produto": "Óleo Alimentar (Bruto)",
+        "vendedor": "Moçambique Óleos SA",
+        "provincia": "Beira",
+        "quantidadeT": 25,
+        "precoMznT": 1150,
+        "estado": "Activo"
+      },
+      {
+        "id": "MKT-00805",
+        "produto": "Arroz Extra",
+        "vendedor": "Cereal Comercial Norte",
+        "provincia": "Nampula",
+        "quantidadeT": 30,
+        "precoMznT": 640,
+        "estado": "Vendido"
+      }
     ],
     "propostas": {
       "MKT-00842": [
-        { "texto": "Comprador propôs 850 MZN/t para 40t", "tempo": "Há 1 dia" },
-        { "texto": "Vendedor contrapropôs 880 MZN/t", "tempo": "Há 6 horas" }
+        {
+          "texto": "Comprador propôs 850 MZN/t para 40t",
+          "tempo": "Há 1 dia"
+        },
+        {
+          "texto": "Vendedor contrapropôs 880 MZN/t",
+          "tempo": "Há 6 horas"
+        }
       ]
     }
   },
   "portalInvestidores": {
     "investidor": "InvestMoz Global",
     "kpis": [
-      { "label": "Produtos em Expansão", "valor": "5 Sectores", "tag": "Forte Incentivo" },
-      { "label": "Distritos Prioritários", "valor": "12 Alvo", "tag": "Benefício Fiscal" },
-      { "label": "Cadeias Activas", "valor": "8 Cadeias", "tag": "Monitorizadas" },
-      { "label": "Retorno Médio Agro", "valor": "22% ROI", "tag": "Histórico Estável" },
-      { "label": "Risco do Investimento", "valor": "Moderado", "tag": "Seguro Garantido", "tipo": "warn" },
-      { "label": "Fluxo FDI Recente", "valor": "+8.2% YoY", "tag": "Nacional" }
+      {
+        "label": "Produtos em Expansão",
+        "valor": "5 Sectores",
+        "tag": "Forte Incentivo"
+      },
+      {
+        "label": "Distritos Prioritários",
+        "valor": "12 Alvo",
+        "tag": "Benefício Fiscal"
+      },
+      {
+        "label": "Cadeias Activas",
+        "valor": "8 Cadeias",
+        "tag": "Monitorizadas"
+      },
+      {
+        "label": "Retorno Médio Agro",
+        "valor": "22% ROI",
+        "tag": "Histórico Estável"
+      },
+      {
+        "label": "Risco do Investimento",
+        "valor": "Moderado",
+        "tag": "Seguro Garantido",
+        "tipo": "warn"
+      },
+      {
+        "label": "Fluxo FDI Recente",
+        "valor": "+8.2% YoY",
+        "tag": "Nacional"
+      }
     ],
     "oportunidades": [
-      { "nome": "Fábrica de Moagem Chimoio", "local": "Manica", "investimento": 45000000, "roi": 24, "risco": "Moderado" },
-      { "nome": "Estufas Hidropónicas", "local": "Gaza (Bilene)", "investimento": 12500000, "roi": 18, "risco": "Baixo" },
-      { "nome": "Refinaria de Óleo de Girassol", "local": "Nampula", "investimento": 85000000, "roi": 29, "risco": "Moderado" },
-      { "nome": "Silos de Grãos Térmicos", "local": "Zambézia", "investimento": 32000000, "roi": 21, "risco": "Baixo" }
+      {
+        "nome": "Fábrica de Moagem Chimoio",
+        "local": "Manica",
+        "investimento": 45000000,
+        "roi": 24,
+        "risco": "Moderado"
+      },
+      {
+        "nome": "Estufas Hidropónicas",
+        "local": "Gaza (Bilene)",
+        "investimento": 12500000,
+        "roi": 18,
+        "risco": "Baixo"
+      },
+      {
+        "nome": "Refinaria de Óleo de Girassol",
+        "local": "Nampula",
+        "investimento": 85000000,
+        "roi": 29,
+        "risco": "Moderado"
+      },
+      {
+        "nome": "Silos de Grãos Térmicos",
+        "local": "Zambézia",
+        "investimento": 32000000,
+        "roi": 21,
+        "risco": "Baixo"
+      }
     ],
     "hotspots": [
-      { "nome": "Silos Centro (Zambézia)", "tipo": "Armazenagem" },
-      { "nome": "Fábrica de Algodão (Nampula)", "tipo": "Processamento" }
+      {
+        "nome": "Silos Centro (Zambézia)",
+        "tipo": "Armazenagem"
+      },
+      {
+        "nome": "Fábrica de Algodão (Nampula)",
+        "tipo": "Processamento"
+      }
     ],
-    "simulador": { "investimentoBaseMzn": 15000000, "anos": 3, "taxaRentabilidadePercent": 21 }
+    "simulador": {
+      "investimentoBaseMzn": 15000000,
+      "anos": 3,
+      "taxaRentabilidadePercent": 21
+    }
   },
   "detalheProvincia": {
     "produtos": [
-      { "produto": "Arroz", "stock": 140, "unidade": "t", "requisitoDiario": 35, "coberturaDias": 4, "estado": "Crítico" },
-      { "produto": "Trigo", "stock": 90, "unidade": "t", "requisitoDiario": 15, "coberturaDias": 6, "estado": "Crítico" },
-      { "produto": "Óleo Alimentar", "stock": 4200, "unidade": "L", "requisitoDiario": 450, "coberturaDias": 9, "estado": "Atenção" },
-      { "produto": "Farinha de Milho", "stock": 1200, "unidade": "t", "requisitoDiario": 40, "coberturaDias": 30, "estado": "Estável" }
+      {
+        "produto": "Arroz",
+        "stock": 140,
+        "unidade": "t",
+        "requisitoDiario": 35,
+        "coberturaDias": 4,
+        "estado": "Crítico"
+      },
+      {
+        "produto": "Trigo",
+        "stock": 90,
+        "unidade": "t",
+        "requisitoDiario": 15,
+        "coberturaDias": 6,
+        "estado": "Crítico"
+      },
+      {
+        "produto": "Óleo Alimentar",
+        "stock": 4200,
+        "unidade": "L",
+        "requisitoDiario": 450,
+        "coberturaDias": 9,
+        "estado": "Atenção"
+      },
+      {
+        "produto": "Farinha de Milho",
+        "stock": 1200,
+        "unidade": "t",
+        "requisitoDiario": 40,
+        "coberturaDias": 30,
+        "estado": "Estável"
+      }
     ],
     "populacaoSobRiscoM": 1.8,
     "distritosAfectados": 9,
     "custosLogisticosAdicionaisPercent": 15,
     "timeline": [
-      { "titulo": "Silo de Tete — Arroz Esgotado", "tempo": "Há 15m", "descricao": "Ruptura crítica identificada no armazém central provincial de Tete.", "severidade": "Crítico" },
-      { "titulo": "Bloqueio Parcial EN103", "tempo": "Há 2h", "descricao": "Trânsito condicionado na via de acesso a Moatize devido a alagamentos.", "severidade": "Atenção" }
+      {
+        "titulo": "Silo de Tete — Arroz Esgotado",
+        "tempo": "Há 15m",
+        "descricao": "Ruptura crítica identificada no armazém central provincial de Tete.",
+        "severidade": "Crítico"
+      },
+      {
+        "titulo": "Bloqueio Parcial EN103",
+        "tempo": "Há 2h",
+        "descricao": "Trânsito condicionado na via de acesso a Moatize devido a alagamentos.",
+        "severidade": "Atenção"
+      }
     ]
   },
   "detalheProduto": {
@@ -1201,14 +2274,38 @@
     "variacaoPrecoMomPercent": 2.4,
     "coberturaDias": 38,
     "distribuicaoRegional": [
-      { "regiao": "Maputo Cidade", "stock": 12400, "estado": "Estável" },
-      { "regiao": "Nampula", "stock": 9200, "estado": "Estável" },
-      { "regiao": "Zambézia", "stock": 3400, "estado": "Atenção" },
-      { "regiao": "Tete", "stock": 140, "estado": "Crítico" }
+      {
+        "regiao": "Maputo Cidade",
+        "stock": 12400,
+        "estado": "Estável"
+      },
+      {
+        "regiao": "Nampula",
+        "stock": 9200,
+        "estado": "Estável"
+      },
+      {
+        "regiao": "Zambézia",
+        "stock": 3400,
+        "estado": "Atenção"
+      },
+      {
+        "regiao": "Tete",
+        "stock": 140,
+        "estado": "Crítico"
+      }
     ],
     "movimentacoes": [
-      { "rota": "Porto da Beira → Chibabava", "quantidadeT": 15, "nota": "Rotulado como desvio de emergência via camião." },
-      { "rota": "Maputo Silos → Gaza", "quantidadeT": 45, "nota": "Abastecimento quinzenal programado." }
+      {
+        "rota": "Porto da Beira → Chibabava",
+        "quantidadeT": 15,
+        "nota": "Rotulado como desvio de emergência via camião."
+      },
+      {
+        "rota": "Maputo Silos → Gaza",
+        "quantidadeT": 45,
+        "nota": "Abastecimento quinzenal programado."
+      }
     ]
   },
   "utilizador": {

@@ -94,15 +94,21 @@ function consolidar(){
     const consumoFAO = fao ? fao.valor*pop/1000/365 : null;                  // t/dia teórico
     const divConsumo = (consumoSin&&consumoFAO) ? (consumoSin-consumoFAO)/consumoFAO*100 : null;
 
+    // Stock externo: cereais vêm do ICM, combustíveis da IMOPETRO/ENAPP
     const icm = FX.icm.stockCereais.linhas.find(x=>x.produto===nome);
-    const divStock = icm ? (b.stock-icm.toneladas)/icm.toneladas*100 : null;
+    const imo = (FX.imopetro && FX.imopetro.stockCombustiveis)
+      ? FX.imopetro.stockCombustiveis.linhas.find(x=>x.produto===nome) : null;
+    const externo = icm ? {t:icm.toneladas, fonte:'ICM', verif:FX.icm.stockCereais.verificado}
+                  : imo ? {t:imo.toneladas, fonte:'IMOPETRO', verif:FX.imopetro.stockCombustiveis.verificado}
+                  : null;
+    const divStock = externo ? (b.stock-externo.t)/externo.t*100 : null;
 
     const ident = FX.gs1.identificacaoProdutos.linhas.find(x=>x.produto===nome);
     const temGTIN = ident && gtinValido(ident.gtin);
 
     const fontes = ['SINAGEPE'];
     if(fao) fontes.push('FAO');
-    if(icm) fontes.push('ICM');
+    if(externo) fontes.push(externo.fonte);
     if(temGTIN) fontes.push('GS1');
     fontes.push('INE');   // o índice de preços aplica-se a todos os produtos da cesta
 
@@ -111,25 +117,28 @@ function consolidar(){
     if(divConsumo!=null && Math.abs(divConsumo)>PRESSUPOSTOS.limiarDivergencia) icd -= 18;
     if(divStock!=null && Math.abs(divStock)>PRESSUPOSTOS.limiarDivergencia) icd -= 18;
     if(!FX.fao.consumoPerCapita.verificado && fao) icd -= 8;
-    if(!FX.icm.stockCereais.verificado && icm) icd -= 8;
+    if(externo && !externo.verif) icd -= 8;
     if(!temGTIN) icd -= 6;
     icd=Math.max(5,Math.min(100,Math.round(icd)));
 
     const coberturaAjustada = b.cobertura/factorProcura;
     return { nome, stock:b.stock, cobertura:b.cobertura, estado:b.estado,
-      consumoSin, consumoFAO, divConsumo, stockICM:icm?icm.toneladas:null, divStock,
+      consumoSin, consumoFAO, divConsumo, stockExterno:externo, divStock, combustivel:!!imo,
       gtin:ident?ident.gtin:'', temGTIN, fontes, icd, coberturaAjustada,
       risco: coberturaAjustada<PRESSUPOSTOS.limiarRupturaDias?'crit':coberturaAjustada<30?'warn':'ok' };
   });
 
   const r=FX.icm.reservaEstrategica;
   const cumprReserva = r.metaToneladas ? r.actualToneladas/r.metaToneladas*100 : null;
-  const exposicao = FX.icm.importacoes.linhas.reduce((a,l)=>a+(l.precoDeclaradoUSDt-l.precoReferenciaUSDt)*l.volumeToneladas,0);
+  const linhasPreco = FX.icm.importacoes.linhas.map(l=>Object.assign({},l,{fonte:'ICM',verif:l.verificado}))
+    .concat(((FX.imopetro && FX.imopetro.paridadeImportacao) ? FX.imopetro.paridadeImportacao.linhas : [])
+      .map(l=>Object.assign({},l,{fonte:'IMOPETRO',verif:FX.imopetro.paridadeImportacao.verificado})));
+  const exposicao = linhasPreco.reduce((a,l)=>a+(l.precoDeclaradoUSDt-l.precoReferenciaUSDt)*l.volumeToneladas,0);
   const identCob = produtos.filter(p=>p.temGTIN).length/produtos.length*100;
   const icdMedio = produtos.reduce((a,p)=>a+p.icd,0)/produtos.length;
 
   return { produtos, premioAlimentar, factorProcura, cumprReserva, deficeReserva:Math.max(0,r.metaToneladas-r.actualToneladas),
-           exposicao, identCob, icdMedio, ult };
+           exposicao, linhasPreco, identCob, icdMedio, ult };
 }
 
 /* ============================================================
@@ -150,10 +159,10 @@ function achados(){
       apr:'Direcção de Estatística + MIC', prod:p.nome, prov:!FX.fao.consumoPerCapita.verificado||!FX.fao.populacao.verificado});
 
     if(p.divStock!=null && Math.abs(p.divStock)>PRESSUPOSTOS.limiarDivergencia)
-      A.push({sev:'crit', t:`Divergência de stock com o ICM — ${p.nome}`,
-      ev:`O SINAGEPE regista <code>${nf(p.stock)} t</code>; o ICM declara <code>${nf(p.stockICM)} t</code>. A diferença é de <code>${pct(p.divStock)}</code>.`,
-      ac:`Reconciliação física com o ICM antes de qualquer decisão sobre ${p.nome}. Duas contagens diferentes do mesmo cereal significa que uma delas está errada.`,
-      apr:'ICM + MIC', prod:p.nome, prov:!FX.icm.stockCereais.verificado});
+      A.push({sev:'crit', t:`Divergência de stock com a ${p.stockExterno.fonte} — ${p.nome}`,
+      ev:`O SINAGEPE regista <code>${nf(p.stock)} t</code>; a ${p.stockExterno.fonte} declara <code>${nf(p.stockExterno.t)} t</code>. A diferença é de <code>${pct(p.divStock)}</code>.`,
+      ac:`Reconciliação física com a ${p.stockExterno.fonte} antes de qualquer decisão sobre ${p.nome}. Duas contagens diferentes do mesmo produto significa que uma delas está errada.`,
+      apr:p.combustivel?'IMOPETRO/ENAPP + MIREME':'ICM + MIC', prod:p.nome, prov:!p.stockExterno.verif});
 
     if(!p.temGTIN) A.push({sev:'info', t:`Produto sem identificação normalizada — ${p.nome}`,
       ev:`Não há GTIN válido associado a ${p.nome}. Sem chave GS1, o mesmo produto no armazém, na alfândega e no retalho fica impossível de casar automaticamente.`,
@@ -167,14 +176,21 @@ function achados(){
       ac:'Programar aquisição faseada para fechar o défice, com prioridade para a região Sul, que é o foco declarado da reserva.',
       apr:'Aprovação ministerial', prov:!FX.icm.reservaEstrategica.actualVerificado});
 
-  FX.icm.importacoes.linhas.forEach(l=>{
+  M.linhasPreco.forEach(l=>{
     const d=(l.precoDeclaradoUSDt-l.precoReferenciaUSDt)/l.precoReferenciaUSDt*100;
     if(d>PRESSUPOSTOS.limiarSobreprecoPct)
       A.push({sev:'crit', t:`Preço de importação declarado acima da referência — ${l.produto}`,
         ev:`Declarado <code>${nf(l.precoDeclaradoUSDt)} USD/t</code> contra referência de <code>${nf(l.precoReferenciaUSDt)} USD/t</code> (<code>${pct(d)}</code>). Sobre um volume de <code>${nf(l.volumeToneladas)} t</code>, a exposição cambial é de <code>${nf((l.precoDeclaradoUSDt-l.precoReferenciaUSDt)*l.volumeToneladas/1e6,2)} milhões de USD</code>.`,
         ac:`Verificação documental das operações de importação de ${l.produto}: facturas, contratos e comprovativos de pagamento. Um desvio desta ordem pode ter explicação legítima — frete, seguro, prazo — mas exige demonstração.`,
-        apr:'MIC + Alfândegas + Banco Central', prod:l.produto, prov:!l.verificado});
+        apr:l.fonte==='IMOPETRO'?'MIREME + ARENE + Banco Central':'MIC + Alfândegas + Banco Central',
+        prod:l.produto, prov:!l.verif});
   });
+
+  const tr = FX.imopetro && FX.imopetro.transicaoInstitucional;
+  if(tr) A.push({sev:'warn', t:'Transição institucional na importação de combustíveis',
+    ev:`${tr.descricao} A mudança está datada de <code>${tr.data}</code>. Fica por esclarecer: ${tr.porEsclarecer.join('; ')}.`,
+    ac:'Confirmar quem é a contraparte do SINAGEPE para dados de combustíveis durante a transição e obter da nova entidade o compromisso de publicar volumes, especificações e terminais de cada concurso. Enquanto isso não estiver definido, os dados de combustível do sistema têm origem incerta.',
+    apr:'MIREME + ARENE', prov:false});
 
   if(M.premioAlimentar>3) A.push({sev:'warn', t:'Inflação alimentar acima do índice geral',
     ev:`No período carregado do INE, o índice de alimentação subiu <code>${nf(M.premioAlimentar,1)} pontos percentuais</code> acima do índice geral. É este diferencial que o motor converte em pressão de procura, com elasticidade de <code>${PRESSUPOSTOS.elasticidadeProcura}</code>.`,
@@ -207,7 +223,7 @@ function renderMatriz(){
   const corRisco={ok:'var(--ok)',warn:'var(--warn)',crit:'var(--crit)'};
   $('matriz').innerHTML=`<table><thead><tr>
     <th>Produto</th><th>Fontes que o cobrem</th><th style="text-align:right">Stock SINAGEPE</th>
-    <th style="text-align:right">Stock ICM</th><th style="text-align:right">Consumo obs. / FAO</th>
+    <th style="text-align:right">Stock sectorial</th><th style="text-align:right">Consumo obs. / FAO</th>
     <th style="text-align:right">Cobertura corrigida</th><th>Confiança</th></tr></thead><tbody>
     ${M.produtos.map(p=>`<tr>
       <td><div class="prodcell">${PRODUTOS.imagem(p.nome,44)}<div><div class="nm">${p.nome}</div>
@@ -215,7 +231,7 @@ function renderMatriz(){
       <td>${p.fontes.map(f=>`<span class="chip" style="background:rgba(34,184,240,.12);color:var(--acc);margin-right:4px">${f}</span>`).join('')}</td>
       <td class="mono" style="text-align:right">${nf(p.stock)} t</td>
       <td class="mono" style="text-align:right;color:${p.divStock!=null&&Math.abs(p.divStock)>PRESSUPOSTOS.limiarDivergencia?'var(--crit)':'var(--ink-dim)'}">
-        ${p.stockICM!=null?nf(p.stockICM)+' t':'—'}${p.divStock!=null?`<div style="font-size:10px">${pct(p.divStock)}</div>`:''}</td>
+        ${p.stockExterno?nf(p.stockExterno.t)+' t':'—'}${p.stockExterno?`<div style="font-size:10px;color:var(--ink-faint)">${p.stockExterno.fonte}${p.divStock!=null?' · '+pct(p.divStock):''}</div>`:''}</td>
       <td class="mono" style="text-align:right">${p.consumoSin!=null?nf(p.consumoSin,1):'—'}
         ${p.consumoFAO!=null?`<span style="color:var(--ink-faint)"> / ${nf(p.consumoFAO,1)}</span>`:''}
         ${p.divConsumo!=null?`<div style="font-size:10px;color:${Math.abs(p.divConsumo)>PRESSUPOSTOS.limiarDivergencia?'var(--warn)':'var(--ink-faint)'}">${pct(p.divConsumo)}</div>`:''}</td>
@@ -280,7 +296,11 @@ function renderProveniencia(){
     {n:'ICM — preços de importação', v:FX.icm.importacoes.verificado, d:'Declaração pública do ICM', nota:'Arroz verificado'},
     {n:'FAO — consumo per capita', v:FX.fao.consumoPerCapita.verificado, d:'FAOSTAT área 144', nota:'Desfasamento 2–3 anos'},
     {n:'FAO — população', v:FX.fao.populacao.verificado, d:'FAOSTAT', nota:String(FX.fao.populacao.ano)},
-    {n:'GS1 — identificação de produto', v:FX.gs1.identificacaoProdutos.verificado, d:'Cadastro interno', nota:'Validação local do GTIN'}
+    {n:'GS1 — identificação de produto', v:FX.gs1.identificacaoProdutos.verificado, d:'Cadastro interno', nota:'Validação local do GTIN'},
+    {n:'IMOPETRO — volumes de importação', v:FX.imopetro?FX.imopetro.importacoes.verificado:false, d:'Concursos públicos internacionais', nota:'Ciclo semestral'},
+    {n:'IMOPETRO — existências nos terminais', v:FX.imopetro?FX.imopetro.stockCombustiveis.verificado:false, d:'Recolha manual', nota:'A confirmar'},
+    {n:'ENAPP — transição institucional', v:(FX.imopetro&&FX.imopetro.transicaoInstitucional)?FX.imopetro.transicaoInstitucional.verificado:false, d:'Conselho de Ministros', nota:'Julho de 2026'},
+    {n:'CTA — sector privado', v:FX.cta?FX.cta.naturezaVerificada:false, d:'Diálogo Público-Privado', nota:'Sem partilha automática'}
   ];
   const nv=F.filter(f=>!f.v).length;
   $('prov-count').textContent=nv?nv+' por verificar':'tudo verificado';
@@ -303,7 +323,7 @@ function gerarRelatorio(){
   el.innerHTML=`
     <div class="eyebrow">Relatório executivo gerado pelo sistema</div>
     <h3 style="font-size:20px;margin-top:10px">Situação consolidada dos produtos estratégicos</h3>
-    <p style="color:var(--ink-faint);font-size:11.5px">Maputo, ${hoje} · SINAGEPE — Sistema Nacional de Gestão de Produtos Estratégicos · Documento gerado automaticamente a partir de ${['SINAGEPE','INE','ICM','FAO','GS1'].join(', ')}</p>
+    <p style="color:var(--ink-faint);font-size:11.5px">Maputo, ${hoje} · SINAGEPE — Sistema Nacional de Gestão de Produtos Estratégicos · Documento gerado automaticamente a partir de ${['SINAGEPE','INE','ICM','IMOPETRO/ENAPP','FAO','GS1','CTA'].join(', ')}</p>
 
     <h3>1. Síntese</h3>
     <p>O cruzamento das fontes disponíveis produziu <b>${A.length} achados</b>, dos quais <b>${crit.length} de natureza crítica</b> e ${aviso.length} de aviso. O índice médio de confiança do dado situa-se em <b>${nf(M.icdMedio,0)} em 100</b>, o que ${M.icdMedio>=75?'permite decidir com margem razoável':M.icdMedio>=50?'aconselha confirmação antes de decisões de valor elevado':'não permite decisões de valor elevado sem verificação prévia'}.</p>
@@ -341,11 +361,11 @@ function gerarRelatorio(){
   if(typeof SINAGEPE!=='undefined'&&SINAGEPE.mountShell) SINAGEPE.mountShell('inteligencia','Inteligência Consolidada','MOTOR MULTI-FONTE');
   const alvo=document.getElementById('content-mount')||document.getElementById('app-shell');
   alvo.innerHTML=`<div class="row" style="justify-content:space-between;margin-bottom:14px">
-      <div class="eyebrow">SINAGEPE · INE · ICM · FAO · GS1 cruzados num só motor</div>
+      <div class="eyebrow">SINAGEPE · INE · ICM · IMOPETRO/ENAPP · FAO · GS1 · CTA num só motor</div>
       <div class="row no-print"><button class="btn acc" onclick="gerarRelatorio()">Gerar relatório executivo</button>
         <button class="btn" onclick="window.print()">Imprimir</button></div></div>
     <div class="kpis" id="kpis"></div>
-    <div class="card frame"><div class="ch"><h2>Matriz de consolidação por produto</h2><span class="tag live">Cruzamento de 5 fontes</span></div>
+    <div class="card frame"><div class="ch"><h2>Matriz de consolidação por produto</h2><span class="tag live">Cruzamento de 7 fontes</span></div>
       <div class="cb" id="matriz"></div></div>
     <div class="grid2" style="margin-top:12px">
       <div class="card frame"><div class="ch"><h2>Achados accionáveis</h2><span class="tag crit" id="achados-count">—</span></div>
