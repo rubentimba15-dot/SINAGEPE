@@ -1,0 +1,201 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "descricao": "Rede logistica nacional: corredores sob tutela do Ministerio dos Transportes e Logistica e cadastro de armazens publicos e privados, com estado de instrumentacao IoT.",
+    "ultimaRecolha": "2026-08-18",
+    "aviso": "AVISO DE PROVENIENCIA. Os corredores, portos, linhas ferreas e a informacao institucional sao reais e verificaveis. O cadastro de armazens privados NAO existe em fonte publica estruturada: as entradas marcadas verificado=false sao registos de trabalho, colocados em localizacoes de infraestrutura real, que servem para desenhar o ecra e planear o cadastro. Nenhum armazem privado deste ficheiro foi confirmado junto do operador. As leituras IoT sao simuladas onde o estado do sensor e 'simulado' e ausentes onde e 'sem-sensor'."
+  },
+
+  "tutela": {
+    "ministerio": "Ministerio dos Transportes e Logistica",
+    "sigla": "MTL",
+    "url": "https://www.mtl.gov.mz/",
+    "nota": "O ministerio passou a designar-se Transportes e Logistica; a designacao anterior era Transportes e Comunicacoes (MTC). O dominio mtc.gov.mz ainda responde.",
+    "verificado": true,
+    "operadorFerroviarioPortuario": {
+      "nome": "Portos e Caminhos de Ferro de Mocambique",
+      "sigla": "CFM",
+      "url": "https://www.cfm.co.mz/",
+      "nota": "Entidade responsavel pela gestao e operacao da infraestrutura ferroviaria e portuaria. Opera comboios nas linhas de Goba, Ressano Garcia e Limpopo. Esta em curso a abertura do mercado ferroviario a operadores privados, ja praticada no transporte mineiro pela Linha de Sena."
+    },
+    "prioridades": [
+      "Requalificacao do corredor da Beira, com construcao de um porto seco e de estrada de ligacao ao Porto da Beira",
+      "Reforco do papel do porto de Nacala na regiao",
+      "Reducao dos tempos de desembaraco de mercadorias nas fronteiras",
+      "Modernizacao das infraestruturas nos corredores de Maputo, Beira e Nacala"
+    ]
+  },
+
+  "corredores": [
+    {
+      "id": "maputo",
+      "nome": "Corredor de Maputo",
+      "porto": "Porto de Maputo",
+      "eixoRodoviario": "N4 — Maputo / Ressano Garcia",
+      "linhasFerreas": ["Ressano Garcia", "Goba", "Limpopo"],
+      "hinterland": ["Africa do Sul", "Eswatini", "Zimbabwe"],
+      "cor": "#12B981",
+      "verificado": true,
+      "tracado": [[32.57, -25.97], [32.13, -25.79], [31.99, -25.71], [31.86, -25.44]],
+      "utilizacaoPercent": 62,
+      "utilizacaoVerificada": false
+    },
+    {
+      "id": "beira",
+      "nome": "Corredor da Beira",
+      "porto": "Porto da Beira",
+      "eixoRodoviario": "N6 — Beira / Machipanda",
+      "linhasFerreas": ["Machipanda", "Sena"],
+      "hinterland": ["Zimbabwe", "Zambia", "Malawi", "RD Congo"],
+      "cor": "#F0A926",
+      "verificado": true,
+      "tracado": [[34.84, -19.84], [34.35, -19.4], [33.48, -19.12], [32.96, -18.95]],
+      "utilizacaoPercent": 81,
+      "utilizacaoVerificada": false
+    },
+    {
+      "id": "sena",
+      "nome": "Linha de Sena — Moatize / Beira",
+      "porto": "Porto da Beira",
+      "eixoRodoviario": "N7 — Beira / Tete",
+      "linhasFerreas": ["Sena"],
+      "hinterland": ["Tete", "Malawi"],
+      "cor": "#C98A3C",
+      "verificado": true,
+      "tracado": [[34.84, -19.84], [34.35, -18.9], [33.9, -17.6], [33.59, -16.16]],
+      "utilizacaoPercent": 74,
+      "utilizacaoVerificada": false
+    },
+    {
+      "id": "nacala",
+      "nome": "Corredor de Nacala",
+      "porto": "Porto de Nacala",
+      "eixoRodoviario": "N13 / N8",
+      "linhasFerreas": ["Nacala", "Corredor Logistico Integrado de Nacala (CLN)"],
+      "hinterland": ["Malawi", "Zambia"],
+      "cor": "#22B8F0",
+      "verificado": true,
+      "nota": "Linha ferrea de Moatize a Nacala passando pelo Malawi, com terminal de carvao em Nacala-a-Velha. Concessionada a CLN, parceria publico-privada entre o CFM e a Vale.",
+      "tracado": [[40.67, -14.54], [39.27, -15.12], [37.5, -14.9], [35.24, -13.31]],
+      "utilizacaoPercent": 93,
+      "utilizacaoVerificada": false
+    },
+    {
+      "id": "n1",
+      "nome": "Eixo Norte-Sul (N1)",
+      "porto": "—",
+      "eixoRodoviario": "N1 — Maputo / Pemba",
+      "linhasFerreas": [],
+      "hinterland": ["Mercado interno"],
+      "cor": "#8FA1B8",
+      "verificado": true,
+      "tracado": [[32.57, -25.97], [33.64, -25.05], [35.38, -23.87], [34.84, -19.84], [36.89, -17.88], [39.27, -15.12], [40.52, -12.97]],
+      "utilizacaoPercent": 68,
+      "utilizacaoVerificada": false
+    }
+  ],
+
+  "iotEspecificacao": {
+    "nota": "Especificacao dos sensores previstos por armazem. Estados possiveis: 'activo' (sensor instalado e a reportar), 'avaria' (instalado, sem leitura recente), 'simulado' (leitura gerada para demonstracao), 'sem-sensor' (nao instalado). O estado por defeito e 'sem-sensor' — e essa a situacao real da maioria da rede.",
+    "sensores": [
+      { "chave": "temperatura", "nome": "Temperatura interior", "unidade": "°C", "limiteMin": 10, "limiteMax": 28 },
+      { "chave": "humidade", "nome": "Humidade relativa", "unidade": "%", "limiteMin": 40, "limiteMax": 65 },
+      { "chave": "nivel", "nome": "Nivel de enchimento", "unidade": "%", "limiteMin": 0, "limiteMax": 95 },
+      { "chave": "porta", "nome": "Estado dos portoes", "unidade": "", "limiteMin": null, "limiteMax": null },
+      { "chave": "energia", "nome": "Alimentacao electrica", "unidade": "", "limiteMin": null, "limiteMax": null }
+    ]
+  },
+
+  "armazens": [
+    {
+      "codigo": "WH-SOF-001", "nome": "Terminal de Graos da Beira", "provincia": "Sofala",
+      "operador": "Cereais Mocambique", "tipo": "Privado", "corredor": "beira",
+      "lat": -19.8256, "lon": 34.8383, "capacidadeT": 120000, "ocupacaoPercent": 96,
+      "produtos": ["Trigo", "Farinha de Milho", "Arroz"], "verificado": false,
+      "iot": { "estado": "simulado", "ultimaLeitura": "há 4 min",
+        "leituras": { "temperatura": 22.4, "humidade": 61, "nivel": 96, "porta": "Fechado", "energia": "Rede" } }
+    },
+    {
+      "codigo": "WH-NAM-002", "nome": "Silo Regional de Nampula", "provincia": "Nampula",
+      "operador": "Logistica Nacional", "tipo": "Privado", "corredor": "nacala",
+      "lat": -15.1165, "lon": 39.2666, "capacidadeT": 85000, "ocupacaoPercent": 88,
+      "produtos": ["Farinha de Milho", "Feijao"], "verificado": false,
+      "iot": { "estado": "simulado", "ultimaLeitura": "há 11 min",
+        "leituras": { "temperatura": 26.9, "humidade": 68, "nivel": 88, "porta": "Aberto", "energia": "Gerador" } }
+    },
+    {
+      "codigo": "WH-TET-003", "nome": "Armazem Central de Tete", "provincia": "Tete",
+      "operador": "ICM", "tipo": "Publico", "corredor": "sena",
+      "lat": -16.1564, "lon": 33.5867, "capacidadeT": 60000, "ocupacaoPercent": 94,
+      "produtos": ["Farinha de Milho", "Arroz"], "verificado": false,
+      "iot": { "estado": "avaria", "ultimaLeitura": "há 3 dias",
+        "leituras": { "temperatura": null, "humidade": null, "nivel": 94, "porta": "Desconhecido", "energia": "Desconhecido" } }
+    },
+    {
+      "codigo": "WH-MPT-004", "nome": "Terminal de Cereais da Matola", "provincia": "Maputo",
+      "operador": "Consorcio privado", "tipo": "Privado", "corredor": "maputo",
+      "lat": -25.9622, "lon": 32.4589, "capacidadeT": 150000, "ocupacaoPercent": 57,
+      "produtos": ["Trigo", "Arroz", "Acucar"], "verificado": false,
+      "iot": { "estado": "simulado", "ultimaLeitura": "há 2 min",
+        "leituras": { "temperatura": 21.1, "humidade": 52, "nivel": 57, "porta": "Fechado", "energia": "Rede" } }
+    },
+    {
+      "codigo": "WH-ZAM-005", "nome": "Entreposto de Quelimane", "provincia": "Zambezia",
+      "operador": "Operador regional", "tipo": "Privado", "corredor": "n1",
+      "lat": -17.8786, "lon": 36.8883, "capacidadeT": 42000, "ocupacaoPercent": 71,
+      "produtos": ["Arroz", "Fertilizantes"], "verificado": false,
+      "iot": { "estado": "sem-sensor", "ultimaLeitura": null, "leituras": {} }
+    },
+    {
+      "codigo": "WH-CDL-006", "nome": "Armazem Portuario de Pemba", "provincia": "Cabo Delgado",
+      "operador": "Operador portuario", "tipo": "Privado", "corredor": "n1",
+      "lat": -12.974, "lon": 40.5178, "capacidadeT": 38000, "ocupacaoPercent": 83,
+      "produtos": ["Arroz", "Oleo Alimentar"], "verificado": false,
+      "iot": { "estado": "sem-sensor", "ultimaLeitura": null, "leituras": {} }
+    },
+    {
+      "codigo": "WH-MAN-007", "nome": "Plataforma Logistica de Chimoio", "provincia": "Manica",
+      "operador": "Operador privado", "tipo": "Privado", "corredor": "beira",
+      "lat": -19.1164, "lon": 33.4835, "capacidadeT": 55000, "ocupacaoPercent": 66,
+      "produtos": ["Farinha de Milho", "Fertilizantes"], "verificado": false,
+      "iot": { "estado": "sem-sensor", "ultimaLeitura": null, "leituras": {} }
+    },
+    {
+      "codigo": "WH-NIA-008", "nome": "Entreposto de Lichinga", "provincia": "Niassa",
+      "operador": "Operador regional", "tipo": "Privado", "corredor": "nacala",
+      "lat": -13.3128, "lon": 35.2406, "capacidadeT": 26000, "ocupacaoPercent": 61,
+      "produtos": ["Farinha de Milho"], "verificado": false,
+      "iot": { "estado": "sem-sensor", "ultimaLeitura": null, "leituras": {} }
+    },
+    {
+      "codigo": "WH-GAZ-009", "nome": "Armazem de Xai-Xai", "provincia": "Gaza",
+      "operador": "Operador privado", "tipo": "Privado", "corredor": "n1",
+      "lat": -25.0519, "lon": 33.6442, "capacidadeT": 31000, "ocupacaoPercent": 54,
+      "produtos": ["Arroz"], "verificado": false,
+      "iot": { "estado": "sem-sensor", "ultimaLeitura": null, "leituras": {} }
+    },
+    {
+      "codigo": "WH-INH-010", "nome": "Entreposto de Inhambane", "provincia": "Inhambane",
+      "operador": "Operador privado", "tipo": "Privado", "corredor": "n1",
+      "lat": -23.865, "lon": 35.3833, "capacidadeT": 24000, "ocupacaoPercent": 63,
+      "produtos": ["Arroz", "Acucar"], "verificado": false,
+      "iot": { "estado": "sem-sensor", "ultimaLeitura": null, "leituras": {} }
+    },
+    {
+      "codigo": "TQ-MPT-011", "nome": "Terminal de Combustiveis da Matola", "provincia": "Maputo",
+      "operador": "Distribuidoras / IMOPETRO", "tipo": "Privado", "corredor": "maputo",
+      "lat": -25.9885, "lon": 32.4747, "capacidadeT": 180000, "ocupacaoPercent": 49,
+      "produtos": ["Gasoleo (Diesel)", "Gasolina"], "verificado": false,
+      "iot": { "estado": "simulado", "ultimaLeitura": "há 1 min",
+        "leituras": { "temperatura": 27.8, "humidade": 44, "nivel": 49, "porta": "Fechado", "energia": "Rede" } }
+    },
+    {
+      "codigo": "TQ-SOF-012", "nome": "Parque de Tanques da Beira", "provincia": "Sofala",
+      "operador": "Operador de armazenagem", "tipo": "Privado", "corredor": "beira",
+      "lat": -19.8436, "lon": 34.8389, "capacidadeT": 120000, "ocupacaoPercent": 58,
+      "produtos": ["Gasoleo (Diesel)", "Gasolina", "Jet A-1"], "verificado": false,
+      "iot": { "estado": "simulado", "ultimaLeitura": "há 6 min",
+        "leituras": { "temperatura": 29.2, "humidade": 47, "nivel": 58, "porta": "Fechado", "energia": "Rede" } }
+    }
+  ]
+}

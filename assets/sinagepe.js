@@ -69,6 +69,7 @@ const SINAGEPE = (() => {
     { key: 'pmes',       label: 'PMEs',        icon: '⛁', href: 'portal-pme.html' },
     { key: 'armazens',   label: 'Armazéns',    icon: '▤', href: 'cadastro-armazens.html', countId: 'nav-armazens-count' },
     { key: 'logistica',  label: 'Logística',   icon: '⇄', href: 'modulo-logistica.html', countId: 'nav-corredores-count' },
+    { key: 'rede',       label: 'Rede Logística', icon: '⌘', href: 'rede-logistica.html' },
     { key: 'relatorios', label: 'Relatórios',  icon: '▧', href: 'relatorios.html' },
     { key: 'config',     label: 'Configurações', icon: '⚙', href: 'administracao-auditoria.html' },
     { key: 'marketplace', label: 'Marketplace B2B', icon: '⬡', href: 'marketplace-b2b.html' },
