@@ -66,6 +66,7 @@ const SINAGEPE = (() => {
     { key: 'alertas',    label: 'Alertas',     icon: '⚠', href: 'alertas.html', countId: 'nav-alertas-count' },
     { key: 'mapa',       label: 'Mapa',        icon: '◎', href: 'mapa-nacional.html' },
     { key: 'simulador',  label: 'Simulador',   icon: '≋', href: 'simulador-importacoes.html' },
+    { key: 'preditivo',  label: 'Simulador Preditivo', icon: '◭', href: 'simulador-preditivo.html' },
     { key: 'pmes',       label: 'PMEs',        icon: '⛁', href: 'portal-pme.html' },
     { key: 'armazens',   label: 'Armazéns',    icon: '▤', href: 'cadastro-armazens.html', countId: 'nav-armazens-count' },
     { key: 'logistica',  label: 'Logística',   icon: '⇄', href: 'modulo-logistica.html', countId: 'nav-corredores-count' },
