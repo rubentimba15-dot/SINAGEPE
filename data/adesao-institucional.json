@@ -5,9 +5,35 @@
     "proposito": "Instrumento de persuasão, não de acusação. Para cada entidade, mostra o que o SINAGEPE já conseguiu montar sobre ela apenas com fontes públicas, onde essa imagem está incompleta ou em contradição, o que a entidade ganha em aderir, e o esforço concreto que a adesão lhe custa.",
     "principio": "Nenhuma entidade foi contactada. Tudo o que está aqui foi recolhido de fontes públicas oficiais, cada uma com ligação. Se a imagem estiver errada, o erro é da informação pública disponível — e corrigi-la é exactamente o que se pede.",
     "avisoTom": "Cuidado com o uso. Mostrar a uma instituição que a sua informação pública está incompleta motiva quando é feito em privado e humilha quando é feito em público. Estes dossiers destinam-se a demonstração reservada, não a divulgação.",
-    "avisoBeneficios": "Os benefícios listados são a leitura do SINAGEPE sobre o que cada entidade ganharia. Não são compromissos assumidos por ninguém, nem foram validados com as entidades."
+    "avisoBeneficios": "Os benefícios listados são a leitura do SINAGEPE sobre o que cada entidade ganharia. Não são compromissos assumidos por ninguém, nem foram validados com as entidades.",
+    "designacoesDesactualizadas": [
+      {
+        "antiga": "IPEX — Instituto para a Promoção de Exportações",
+        "actual": "APIEX",
+        "desde": "Decreto n.º 60/2016, de 12 de Dezembro",
+        "nota": "Extinto como instituto individual, a par do CPI e do GAZEDA."
+      },
+      {
+        "antiga": "MASA — Ministério da Agricultura e Segurança Alimentar",
+        "actual": "MAAP — Ministério da Agricultura, Ambiente e Pescas",
+        "desde": "designação actual",
+        "nota": "Já corrigido no NIVEIS_ACESSO do sistema."
+      },
+      {
+        "antiga": "MTC — Ministério dos Transportes e Comunicações",
+        "actual": "MTL — Ministério dos Transportes e Logística",
+        "desde": "designação actual",
+        "nota": "Verificar se persiste em texto de algum ecrã."
+      },
+      {
+        "antiga": "IMOPETRO",
+        "actual": "ENAPP — Empresa Nacional de Aquisições de Produtos Petrolíferos",
+        "desde": "Julho de 2026",
+        "nota": "Transição em curso; ambas devem ser referidas enquanto durar."
+      }
+    ],
+    "avisoCapacidadeAprovada": "Sempre que entrarem dados da APIEX: capacidade APROVADA nunca pode ser somada à capacidade EXISTENTE. Um registo de investimento é declaração de intenção com incentivo fiscal associado. Somá-las daria números optimistas com aparência de facto — pior do que a cegueira actual, porque a cegueira pelo menos não engana."
   },
-
   "escalas": {
     "esforco": {
       "1": "Muito baixo — publicar um ficheiro que já existe internamente",
@@ -17,11 +43,13 @@
       "5": "Muito alto — exige decisão política ou processo institucional novo"
     },
     "impacto": {
-      "1": "Marginal", "2": "Útil", "3": "Relevante",
-      "4": "Transforma um módulo inteiro", "5": "Desbloqueia o sistema"
+      "1": "Marginal",
+      "2": "Útil",
+      "3": "Relevante",
+      "4": "Transforma um módulo inteiro",
+      "5": "Desbloqueia o sistema"
     }
   },
-
   "entidades": [
     {
       "id": "ane",
@@ -293,9 +321,38 @@
       "custa": "Harmonizar a informação publicada com a dos institutos tutelados.",
       "primeiroPasso": "Reconciliar a lista de complexos concessionados com o ICM.",
       "fonte": "https://www.mic.gov.mz/por/Noticias/Gestao-de-Complexos-de-Silos-e-Armazens-de-Cereais-e-leguminosas"
+    },
+    {
+      "id": "apiex",
+      "nome": "Agência para a Promoção de Investimento e Exportações, IP",
+      "sigla": "APIEX",
+      "tutela": "Ministro responsável pela área da Indústria e Comércio",
+      "baseLegal": "Decreto n.º 60/2016, de 12 de Dezembro; criada a 1 de Novembro de 2016",
+      "esforco": 3,
+      "impacto": 4,
+      "jaTemos": [
+        "Resulta da fusão do CPI, do GAZEDA e do IPEX, que foram extintos como institutos individuais",
+        "É ponto único de contacto para registo de projectos de investimento e acesso a incentivos fiscais",
+        "Tem competência sobre as Zonas Económicas Especiais e as Zonas Francas Industriais",
+        "Está sob a mesma tutela do ICM e da BMM — o Ministério da Indústria e Comércio"
+      ],
+      "lacunas": [
+        "Não há registo público de projectos aprovados com capacidade de armazenagem ou transformação declarada",
+        "A infraestrutura das Zonas Económicas Especiais e Zonas Francas não consta do cadastro nacional de armazenagem",
+        "Não há informação pública sobre exportação de produtos essenciais por província e por corredor"
+      ],
+      "ganha": [
+        "É a única entidade desta lista que olha para a frente. Tudo o resto no SINAGEPE é presente ou passado; o registo de investimento diz que capacidade está a ser construída, onde e com que prazo",
+        "Uma província com exposição elevada e três projectos de armazenagem aprovados deixa de ser tratada como uma província sem nenhum — hoje o sistema não distingue as duas",
+        "O investidor passa a ver, antes de decidir, onde há défice real de armazenagem: deixa de ser promoção genérica e passa a ser oportunidade localizada",
+        "A infraestrutura das Zonas Económicas Especiais ganha visibilidade nacional como capacidade logística, e não apenas como incentivo fiscal"
+      ],
+      "custa": "Publicar um agregado dos projectos aprovados com componente de armazenagem, transformação ou logística, por província e por estado — aprovado, em construção, concluído. Sem valores de investimento nem identificação de promotor.",
+      "primeiroPasso": "Publicar a lista de infraestrutura de armazenagem e transformação existente nas Zonas Económicas Especiais e Zonas Francas Industriais.",
+      "fonte": "https://apiex.gov.mz/sobre-nos/",
+      "chave": "Está sob a mesma tutela do ICM e da BMM. Uma abordagem ao Ministério da Indústria e Comércio pode abrir as três de uma vez, em vez de três conversas separadas. E há um aviso a respeitar: projecto aprovado não é projecto construído — capacidade aprovada nunca pode ser somada à capacidade existente."
     }
   ],
-
   "argumentoTransversal": {
     "titulo": "O argumento que serve para todas",
     "texto": "Cada uma destas entidades já tem, hoje, uma imagem pública de si própria — construída a partir do que publica. O SINAGEPE limitou-se a juntá-la. O que a adesão oferece não é dar dados ao Estado: é passar a controlar a versão da sua própria informação que circula. Quem não publica não fica invisível — fica descrito por terceiros a partir de fragmentos.",
