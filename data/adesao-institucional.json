@@ -1,0 +1,304 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "geradoEm": "2026-08-20",
+    "proposito": "Instrumento de persuasão, não de acusação. Para cada entidade, mostra o que o SINAGEPE já conseguiu montar sobre ela apenas com fontes públicas, onde essa imagem está incompleta ou em contradição, o que a entidade ganha em aderir, e o esforço concreto que a adesão lhe custa.",
+    "principio": "Nenhuma entidade foi contactada. Tudo o que está aqui foi recolhido de fontes públicas oficiais, cada uma com ligação. Se a imagem estiver errada, o erro é da informação pública disponível — e corrigi-la é exactamente o que se pede.",
+    "avisoTom": "Cuidado com o uso. Mostrar a uma instituição que a sua informação pública está incompleta motiva quando é feito em privado e humilha quando é feito em público. Estes dossiers destinam-se a demonstração reservada, não a divulgação.",
+    "avisoBeneficios": "Os benefícios listados são a leitura do SINAGEPE sobre o que cada entidade ganharia. Não são compromissos assumidos por ninguém, nem foram validados com as entidades."
+  },
+
+  "escalas": {
+    "esforco": {
+      "1": "Muito baixo — publicar um ficheiro que já existe internamente",
+      "2": "Baixo — publicar dados que já são produzidos, noutro formato",
+      "3": "Médio — exige acordo interno e rotina nova de publicação",
+      "4": "Alto — exige protocolo formal e tratamento de dados sensíveis",
+      "5": "Muito alto — exige decisão política ou processo institucional novo"
+    },
+    "impacto": {
+      "1": "Marginal", "2": "Útil", "3": "Relevante",
+      "4": "Transforma um módulo inteiro", "5": "Desbloqueia o sistema"
+    }
+  },
+
+  "entidades": [
+    {
+      "id": "ane",
+      "nome": "Administração Nacional de Estradas, IP",
+      "sigla": "ANE",
+      "tutela": "Ministério das Obras Públicas, Habitação e Recursos Hídricos",
+      "baseLegal": "Decreto n.º 15/1999, de 27 de Abril",
+      "esforco": 1,
+      "impacto": 5,
+      "jaTemos": [
+        "Rede classificada de 30.056 km sob gestão da ANE",
+        "Quatro eixos desenhados no mapa: N1, N4, N6 e N13",
+        "N1 com 2.477 km, de Maputo a Pemba, troço Sofala–Inhambane em concessão privada desde 2019",
+        "Três interrupções concretas de Janeiro de 2026, com causa e alternativa"
+      ],
+      "lacunas": [
+        "As ocorrências têm sete meses e não há forma de saber se foram reparadas",
+        "Só quatro eixos dos milhares de quilómetros classificados estão representados",
+        "Os traçados são esquemáticos, não cartografia da ANE"
+      ],
+      "ganha": [
+        "O aviso deixa de morrer no comunicado de imprensa e passa a chegar a quem carrega o camião",
+        "O impacto económico de cada corte fica quantificado — quantos armazéns e que produção agrícola ficam do lado errado da via",
+        "Argumento orçamental: com o impacto medido, o pedido de verba para reabilitação deixa de ser técnico e passa a ser económico",
+        "A restrição de 10 toneladas passa a poder ser dirigida a quem transporta cereal, em vez de apelo genérico"
+      ],
+      "custa": "Um ficheiro JSON com as ocorrências, actualizado quando há corte. A informação já é produzida — falta publicá-la em formato legível por máquina em vez de comunicado de imprensa.",
+      "primeiroPasso": "Publicar o comunicado de interrupções também como ficheiro estruturado no sítio da ANE, com troço, causa, gravidade, alternativa e data.",
+      "fonte": "https://ane.gov.mz/"
+    },
+    {
+      "id": "icm",
+      "nome": "Instituto de Cereais de Moçambique, IP",
+      "sigla": "ICM",
+      "tutela": "Ministério da Indústria e Comércio",
+      "baseLegal": "Decreto n.º 62/2016; Diploma Ministerial n.º 6/2021 para as concessões de silos",
+      "esforco": 2,
+      "impacto": 5,
+      "jaTemos": [
+        "Dez complexos de silos concessionados em 2021 à Agrobusiness e à MozGrain, com 75.500 t no total",
+        "Estado declarado de cada complexo: por reabilitar, por construir ou desconhecido",
+        "Meta pública de reserva estratégica de 20.000 t de cereais com foco no Sul",
+        "Caso de sobredeclaração de preço de arroz documentado"
+      ],
+      "lacunas": [
+        "As capacidades individuais dos dez complexos nunca foram publicadas — só o total",
+        "O estado dos complexos é de 2021; cinco anos depois não se sabe o que foi reabilitado",
+        "Barué consta da lista do MIC e não consta da lista do ICM",
+        "Nenhum dos dez tem telemetria ligada"
+      ],
+      "ganha": [
+        "A contradição com o MIC sobre Barué resolve-se com uma linha, antes que alguém a encontre de fora",
+        "O cumprimento da meta de 20.000 t passa a ser visível e demonstrável, em vez de afirmado",
+        "O mandato de absorção da produção nacional pela indústria torna-se auditável",
+        "Os casos de sobredeclaração passam a ser detectados por confronto automático, não por acaso"
+      ],
+      "custa": "Publicar a capacidade individual e o estado actual de cada complexo. São dez linhas de uma tabela que o ICM já tem de ter para monitorizar as concessões.",
+      "primeiroPasso": "Confirmar o inventário definitivo dos complexos sob concessão e o estado de Barué.",
+      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
+    },
+    {
+      "id": "bmm",
+      "nome": "Bolsa de Mercadorias de Moçambique, IP",
+      "sigla": "BMM",
+      "tutela": "Ministro que superintende a área do Comércio",
+      "baseLegal": "Decreto n.º 36/2012, de 17 de Outubro",
+      "esforco": 3,
+      "impacto": 5,
+      "jaTemos": [
+        "Instituto público com atribuição legal de gerir silos e armazéns a si afectos",
+        "Competência para prestar armazenagem com certificado de depósito",
+        "Competência de registo, compensação e liquidação física e financeira"
+      ],
+      "lacunas": [
+        "O inventário dos silos e armazéns afectos à BMM não é publicado",
+        "Não há informação pública sobre quantos certificados de depósito estão em circulação",
+        "A BMM aparece no cadastro do SINAGEPE como entrada deliberadamente incompleta"
+      ],
+      "ganha": [
+        "O certificado de depósito ganha visibilidade nacional como instrumento de crédito, o que aumenta a procura pelo serviço da própria BMM",
+        "O armazenista privado passa a ver o que ganha em registar — colateral bancário — em vez de o ver como obrigação administrativa",
+        "A BMM passa a ser a fonte de volume armazenado do país, posição institucional que hoje ninguém ocupa"
+      ],
+      "custa": "Publicar o inventário de armazéns afectos e um agregado periódico de certificados emitidos por produto e província. Sem identificar depositantes.",
+      "primeiroPasso": "Publicar a lista de silos e armazéns afectos à BMM, com localização e capacidade.",
+      "fonte": "https://www.linkedin.com/company/bmm-mozambique-commodity-exchange",
+      "chave": "É a única entidade do país com o instrumento legal que resolve o cadastro de armazenagem privada. Nenhuma outra tem esta posição."
+    },
+    {
+      "id": "cedsif",
+      "nome": "Centro de Desenvolvimento de Sistemas de Informação de Finanças, IP",
+      "sigla": "CEDSIF",
+      "tutela": "Ministério das Finanças",
+      "baseLegal": "Lei n.º 14/2020, de 23 de Dezembro (SISTAFE); Lei n.º 9/2002 originária",
+      "esforco": 4,
+      "impacto": 4,
+      "jaTemos": [
+        "Estrutura completa dos seis subsistemas do SISTAFE após a reforma de 2020",
+        "Competências do Subsistema do Património do Estado: tombo dos bens imóveis, inventário consolidado, catálogo de bens e preços de referência",
+        "Existência do Subsistema de Monitoria e Avaliação, criado pela Lei 14/2020",
+        "Precedente de acordo de interoperabilidade com o Tribunal Administrativo, de Maio de 2026"
+      ],
+      "lacunas": [
+        "O e-SISTAFE não tem interface pública; nada da execução é consultável de fora",
+        "Não é possível saber se os complexos de silos estão registados no tombo do Estado",
+        "Os preços de referência do SPE não são públicos"
+      ],
+      "ganha": [
+        "O Subsistema de Monitoria e Avaliação recebe medição de resultado físico para bens essenciais — que é exactamente a sua função e que hoje ninguém lhe fornece",
+        "A reconciliação entre o tombo e o cadastro independente valida o inventário patrimonial sem custo de recolha",
+        "Os preços de referência ganham um mecanismo de confronto automático com preços declarados de importação"
+      ],
+      "custa": "Nada, na primeira fase. O SINAGEPE fornece — não pede. A troca de dados de execução vem depois, e só agregada.",
+      "primeiroPasso": "Apresentar o SINAGEPE como fornecedor de indicadores para o Subsistema de Monitoria e Avaliação.",
+      "fonte": "https://www.cedsif.gov.mz/cedsifportal/sistafe/",
+      "chave": "É a única entidade desta lista a quem o SINAGEPE oferece algo antes de pedir. Deve ser a primeira abordagem, não a última."
+    },
+    {
+      "id": "maap",
+      "nome": "Ministério da Agricultura, Ambiente e Pescas",
+      "sigla": "MAAP",
+      "tutela": "Conselho de Ministros",
+      "baseLegal": null,
+      "esforco": 3,
+      "impacto": 4,
+      "jaTemos": [
+        "Agregados provinciais de explorações agrárias, área cultivada e classificação por dimensão",
+        "Uso de fertilizante químico: 7,8% das explorações em 2020, 9,1% em 2023",
+        "Distância média ao armazém por província",
+        "Existência do CUPA — Cadastro Único de Produtores Agrários"
+      ],
+      "lacunas": [
+        "Os registos do CUPA não são públicos — o produtor nunca aparece como ponto no mapa",
+        "Os agregados são provinciais; não há desagregação distrital",
+        "Não há série temporal suficiente para o modelo deixar de ser determinístico"
+      ],
+      "ganha": [
+        "O CUPA deixa de ser cadastro administrativo e passa a instrumento de decisão: mostra que produtores ficam isolados quando um corredor é interrompido",
+        "A fórmula de resiliência por província transforma os dados de extensão, irrigação e semente certificada em prioridade de intervenção",
+        "Os alertas fitossanitários ganham alcance para lá do comunicado"
+      ],
+      "custa": "Leitura agregada do CUPA ao nível distrital, sem dados pessoais e sem identificação de exploração.",
+      "primeiroPasso": "Publicar o Inquérito Agrário Integrado com desagregação distrital, em formato tabular.",
+      "fonte": "https://www.agricultura.gov.mz/sistemas/"
+    },
+    {
+      "id": "cta",
+      "nome": "Confederação das Associações Económicas de Moçambique",
+      "sigla": "CTA",
+      "tutela": "Organização não-governamental e apartidária",
+      "baseLegal": null,
+      "esforco": 2,
+      "impacto": 4,
+      "jaTemos": [
+        "Estudo próprio da CTA sobre sistema nacional de código de barras, de Junho de 2015",
+        "Confirmação de que não há representante GS1 no país e de que as empresas compram códigos à GS1 África do Sul",
+        "Proposta da própria CTA de registo central de Company Prefixes nacionais",
+        "Candidatura a GS1-Moçambique preparada em 2012 e não concretizada"
+      ],
+      "lacunas": [
+        "O estudo tem onze anos e não se sabe se o processo avançou",
+        "Não há informação pública sobre quantas empresas moçambicanas têm prefixo comprado no estrangeiro"
+      ],
+      "ganha": [
+        "Um processo que a própria CTA propôs em 2015 volta à mesa com evidência de que os vizinhos avançaram e Moçambique não",
+        "O sector privado ganha canal para confirmar ou contestar os números do sistema, em vez de os receber feitos",
+        "O certificado de depósito e o prefixo nacional são ambos ganhos directos para as empresas associadas"
+      ],
+      "custa": "Retomar internamente o processo de 2015 e indicar ponto de situação.",
+      "primeiroPasso": "Confirmar se a candidatura a organização-membro GS1 teve seguimento depois de 2012.",
+      "fonte": "https://cta.org.mz/wp-content/uploads/2023/08/Viabilidade-de-Utilizar-Codigos-de-Barra-de-Sistemas-nao-GS1.v7.pdf",
+      "chave": "É a única entidade que já propôs a solução por iniciativa própria. Não é preciso convencer — é preciso mostrar que alguém pegou na proposta dela."
+    },
+    {
+      "id": "petromoc-enapp",
+      "nome": "Petromoc e a futura ENAPP",
+      "sigla": "PETROMOC / ENAPP",
+      "tutela": "MIREME; regulação da ARENE",
+      "baseLegal": "Decreto 89/2019 para o modelo IMOPETRO; ENAPP aprovada pelo Conselho de Ministros em Julho de 2026",
+      "esforco": 2,
+      "impacto": 4,
+      "jaTemos": [
+        "Parque de 501.923 m³, com 11 depósitos intermédios, 4 instalações oceânicas e 8 aeroinstalações",
+        "Capacidades de Língamo, Nacala, Pemba e do GPL da Beira",
+        "Capacidade de expedição por terminal: camiões por dia, ilhas de enchimento, vagões",
+        "Divergência entre a capacidade de Nacala declarada pela Petromoc e a descrita pelo CFM"
+      ],
+      "lacunas": [
+        "As capacidades dos 11 depósitos intermédios só existem em imagem, não em texto",
+        "Nenhum tanque reporta nível ao SINAGEPE",
+        "A transição IMOPETRO para ENAPP não tem informação pública sobre contratos e trabalhadores"
+      ],
+      "ganha": [
+        "A sonda de nível de tanque é a instrumentação mais barata de todo o cadastro e fecha sozinha a cegueira dos combustíveis, porque aqui não é preciso identificação de produto",
+        "Numa transição institucional, demonstrar continuidade operacional com dados é o melhor argumento de credibilidade",
+        "A divergência com o CFM resolve-se antes de ser levantada por terceiros"
+      ],
+      "custa": "Publicar as capacidades dos depósitos intermédios em texto e, numa segunda fase, nível agregado por terminal.",
+      "primeiroPasso": "Normalizar a unidade de medida e reconciliar a capacidade de Nacala com o CFM.",
+      "fonte": "https://www.petromoc.co.mz/product-service/logistica/"
+    },
+    {
+      "id": "cfm-portos",
+      "nome": "CFM e concessionárias portuárias",
+      "sigla": "CFM / MPDC / Cornelder",
+      "tutela": "Ministério dos Transportes e Logística",
+      "baseLegal": "Concessões: MPDC até 2058; Cornelder desde 1998",
+      "esforco": 3,
+      "impacto": 3,
+      "jaTemos": [
+        "Estrutura accionista de cada concessionária",
+        "Armazéns e áreas de terminal em Maputo, Beira e Nacala",
+        "Investimentos em curso declarados publicamente"
+      ],
+      "lacunas": [
+        "Não há movimento por produto essencial, só totais de carga",
+        "Não há tempo de permanência da mercadoria em terminal"
+      ],
+      "ganha": [
+        "O tempo de desembaraço passa a ser mensurável, que é prioridade declarada do próprio ministério",
+        "A capacidade ociosa fica visível e passa a ser argumento comercial"
+      ],
+      "custa": "Agregado mensal de movimento por família de produto essencial.",
+      "primeiroPasso": "Publicar movimento mensal de cereais e combustíveis por porto.",
+      "fonte": "https://www.cfm.co.mz/en/porto-de-nacala/"
+    },
+    {
+      "id": "ine",
+      "nome": "Instituto Nacional de Estatística",
+      "sigla": "INE",
+      "tutela": "Sistema Estatístico Nacional",
+      "baseLegal": null,
+      "esforco": 2,
+      "impacto": 3,
+      "jaTemos": [
+        "Índices de preços e dados demográficos, obtidos por importação manual de ficheiros"
+      ],
+      "lacunas": [
+        "O INE não disponibiliza interface programática — só PDF e folhas de cálculo",
+        "Cada actualização exige intervenção manual"
+      ],
+      "ganha": [
+        "Os índices de preços ganham uso operacional imediato na projecção de cobertura, em vez de ficarem em relatório",
+        "O SINAGEPE torna-se demonstração de valor do próprio dado estatístico nacional"
+      ],
+      "custa": "Publicar as séries já divulgadas também em formato tabular estável.",
+      "primeiroPasso": "Disponibilizar o índice de preços ao consumidor em CSV com endereço fixo.",
+      "fonte": "https://mozdata.ine.gov.mz/"
+    },
+    {
+      "id": "mic",
+      "nome": "Ministério da Indústria e Comércio",
+      "sigla": "MIC",
+      "tutela": "Conselho de Ministros",
+      "baseLegal": null,
+      "esforco": 3,
+      "impacto": 4,
+      "jaTemos": [
+        "Lista das concessões de silos por concessionária",
+        "Tutela do ICM e da BMM"
+      ],
+      "lacunas": [
+        "A lista do MIC diverge da lista do ICM quanto ao complexo de Barué"
+      ],
+      "ganha": [
+        "Coerência entre o ministério e os seus institutos, verificável antes de o ser por terceiros",
+        "Posição de coordenação sobre três peças que hoje andam separadas: silos do ICM, certificado de depósito da BMM e catálogo de bens do SPE"
+      ],
+      "custa": "Harmonizar a informação publicada com a dos institutos tutelados.",
+      "primeiroPasso": "Reconciliar a lista de complexos concessionados com o ICM.",
+      "fonte": "https://www.mic.gov.mz/por/Noticias/Gestao-de-Complexos-de-Silos-e-Armazens-de-Cereais-e-leguminosas"
+    }
+  ],
+
+  "argumentoTransversal": {
+    "titulo": "O argumento que serve para todas",
+    "texto": "Cada uma destas entidades já tem, hoje, uma imagem pública de si própria — construída a partir do que publica. O SINAGEPE limitou-se a juntá-la. O que a adesão oferece não é dar dados ao Estado: é passar a controlar a versão da sua própria informação que circula. Quem não publica não fica invisível — fica descrito por terceiros a partir de fragmentos.",
+    "ordemSugerida": "Começar pelas que ganham sem dar nada (CEDSIF, pelo Subsistema de Monitoria e Avaliação; CTA, porque a proposta já é dela) e pelas de esforço mínimo e impacto máximo (ANE, ICM). A BMM é a mais transformadora mas exige decisão interna, pelo que deve vir depois de haver dois ou três casos demonstrados."
+  }
+}

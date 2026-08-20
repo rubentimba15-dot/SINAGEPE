@@ -73,6 +73,7 @@ const SINAGEPE = (() => {
     { key: 'ponto-cego', label: 'Ponto Cego Duplo', icon: '◉', href: 'ponto-cego-duplo.html' },
     { key: 'sandbox-epcis', label: 'Sandbox EPCIS', icon: '⇞', href: 'sandbox-rastreabilidade.html' },
     { key: 'mapa-integrado', label: 'Mapa Integrado', icon: '◉', href: 'mapa-integrado.html' },
+    { key: 'adesao', label: 'Adesão Institucional', icon: '☸', href: 'adesao-institucional.html' },
     { key: 'logistica',  label: 'Logística',   icon: '⇄', href: 'modulo-logistica.html', countId: 'nav-corredores-count' },
     { key: 'rede',       label: 'Rede Logística', icon: '⌘', href: 'rede-logistica.html' },
     { key: 'relatorios', label: 'Relatórios',  icon: '▧', href: 'relatorios.html' },
