@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sandbox de Rastreabilidade &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+  --gold-line:rgba(201,138,60,.28);--gold:#C98A3C;--blue:#22B8F0;--teal:#2DD4BF;
+  --amber:#F0A926;--red:#EF4444;--ok:#12B981;--ink:#F3F7FC;--nav-active:#22B8F0;--nav-idle:#111E31;
+  --brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);--accg:rgba(34,184,240,.13);
+  --t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--nav-active);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1500px}
+.eyebrow{font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:22px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:880px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
+.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+
+.alerta{padding:14px 16px;border-radius:12px;border:1px solid rgba(239,68,68,.4);background:rgba(239,68,68,.07);margin-bottom:14px;font-size:12px;line-height:1.6;color:#FFB4B4}
+.alerta b{color:var(--red)}
+
+.cinco{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-bottom:16px}
+.q{padding:13px 15px;cursor:default}
+.q-k{font-size:15px;font-weight:700;letter-spacing:.04em;color:var(--brz);margin-bottom:5px}
+.q-c{font-size:10px;color:var(--blue);margin-bottom:7px}
+.q-e{font-size:11px;color:var(--t3);line-height:1.5}
+
+.grid{display:grid;grid-template-columns:1fr 1.15fr;gap:14px;align-items:start}
+@media(max-width:1150px){.grid{grid-template-columns:1fr}.sidebar{display:none}}
+
+.tl{padding:6px 0}
+.ti{display:flex;gap:12px;padding:11px 17px;cursor:pointer;border-left:3px solid transparent;position:relative}
+.ti:hover{background:var(--cardh)}
+.ti.sel{background:rgba(34,184,240,.08);border-left-color:var(--blue)}
+.ti.dup{opacity:.55}
+.ti-n{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--brzg);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;color:var(--brzl);background:#0A1421}
+.ti-b{flex:1;min-width:0}
+.ti-t{font-size:12.5px;font-weight:600;line-height:1.3}
+.ti-m{font-size:10.5px;color:var(--t4);margin-top:3px;line-height:1.4}
+.ti-q{font-size:11.5px;flex-shrink:0;text-align:right;line-height:1.35}
+.ti-q b{display:block;font-weight:600}
+.ti-q span{font-size:9.5px;color:var(--t4)}
+
+.leitura{padding:15px 17px}
+.lrow{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid rgba(38,56,86,.4)}
+.lrow:last-child{border-bottom:none}
+.lk{width:66px;flex-shrink:0;font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--brz);padding-top:1px}
+.lv{flex:1;font-size:12px;line-height:1.5;color:var(--t2)}
+.lv em{font-style:normal;color:var(--t4);font-size:10.5px;display:block;margin-top:2px}
+.lv .k{color:var(--blue);font-family:'IBM Plex Mono',monospace;font-size:11px}
+
+pre{margin:0;padding:15px 17px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;line-height:1.6;overflow-x:auto;color:var(--t2);max-height:520px}
+.jk{color:var(--brzl)}
+.js{color:#8FD9A8}
+.jn{color:var(--blue)}
+.jc{color:var(--t4)}
+
+.toggle{display:flex;gap:5px}
+.tbtn{font-size:10.5px;padding:5px 11px;border-radius:20px;border:1px solid var(--card-line);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.tbtn.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+
+.pos{padding:6px 0}
+.prow{display:flex;align-items:center;gap:11px;padding:10px 17px;border-bottom:1px solid rgba(38,56,86,.4);font-size:12px}
+.prow:last-child{border-bottom:none}
+.pn{flex:1;line-height:1.35}
+.pm{font-size:10px;color:var(--t4)}
+.pq{font-size:14px;font-weight:600}
+.pbar{height:5px;border-radius:3px;background:#0A1421;overflow:hidden;width:88px;flex-shrink:0}
+.pbar i{display:block;height:100%;background:var(--brz)}
+
+.demo{padding:15px 17px}
+.dbtn{font-size:11.5px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);color:var(--t2);cursor:pointer;font-family:inherit;margin:0 7px 7px 0}
+.dbtn:hover{background:var(--cardh);border-color:var(--brzg)}
+.saida{margin-top:12px;padding:12px 14px;border-radius:9px;font-size:11.5px;line-height:1.6;border:1px solid var(--card-line);background:#0A1421;min-height:52px;color:var(--t3)}
+.saida .ln{display:block;margin-bottom:4px}
+.saida .rej{color:var(--red)}
+.saida .dupl{color:var(--amber)}
+.saida .acc{color:var(--ok)}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+.fonte{padding:12px 17px;border-top:1px solid var(--card-line);font-size:10.5px;color:var(--t4);line-height:1.6}
+.fonte a{color:var(--blue);text-decoration:none}
+.fonte a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-t">SINAGEPE</div><div class="brand-s">Torre de Controlo</div></div>
+    <a class="nav-item" href="index.html"><span class="nav-icon">&#9638;</span><span class="nav-label">PAINEL</span></a>
+    <a class="nav-item" href="alertas.html"><span class="nav-icon">&#9888;</span><span class="nav-label">Alertas</span></a>
+    <a class="nav-item" href="mapa-nacional.html"><span class="nav-icon">&#9678;</span><span class="nav-label">Mapa</span></a>
+    <a class="nav-item" href="simulador-importacoes.html"><span class="nav-icon">&#8779;</span><span class="nav-label">Simulador</span></a>
+    <a class="nav-item" href="simulador-preditivo.html"><span class="nav-icon">&#9709;</span><span class="nav-label">Simulador Preditivo</span></a>
+    <a class="nav-item" href="portal-pme.html"><span class="nav-icon">&#9921;</span><span class="nav-label">PMEs</span></a>
+    <a class="nav-item" href="cadastro-armazens.html"><span class="nav-icon">&#9636;</span><span class="nav-label">Armaz&eacute;ns</span></a>
+    <a class="nav-item" href="armazens-nacionais.html"><span class="nav-icon">&#9707;</span><span class="nav-label">Armaz&eacute;ns Nacionais</span></a>
+    <a class="nav-item" href="ponto-cego-duplo.html"><span class="nav-icon">&#9673;</span><span class="nav-label">Ponto Cego Duplo</span></a>
+    <a class="nav-item active" href="sandbox-rastreabilidade.html"><span class="nav-icon">&#8766;</span><span class="nav-label">Sandbox EPCIS</span></a>
+    <a class="nav-item" href="modulo-logistica.html"><span class="nav-icon">&#8644;</span><span class="nav-label">Log&iacute;stica</span></a>
+    <a class="nav-item" href="rede-logistica.html"><span class="nav-icon">&#8984;</span><span class="nav-label">Rede Log&iacute;stica</span></a>
+    <a class="nav-item" href="relatorios.html"><span class="nav-icon">&#9639;</span><span class="nav-label">Relat&oacute;rios</span></a>
+    <a class="nav-item" href="administracao-auditoria.html"><span class="nav-icon">&#9881;</span><span class="nav-label">Configura&ccedil;&otilde;es</span></a>
+    <a class="nav-item" href="marketplace-b2b.html"><span class="nav-icon">&#11041;</span><span class="nav-label">Marketplace B2B</span></a>
+    <a class="nav-item" href="inteligencia-consolidada.html"><span class="nav-icon">&#9672;</span><span class="nav-label">Intelig&ecirc;ncia</span></a>
+    <a class="nav-item" href="fontes-nacionais.html"><span class="nav-icon">&#11043;</span><span class="nav-label">Fontes Nacionais</span></a>
+    <a class="nav-item" href="fontes-internacionais.html"><span class="nav-icon">&#11042;</span><span class="nav-label">Fontes Internacionais</span></a>
+    <a class="nav-item" href="#" id="btn-logout" style="margin-top:8px;border-top:1px solid var(--gold-line);border-radius:0;padding-top:13px"><span class="nav-icon">&#8617;</span><span class="nav-label" style="color:#EF4444">Sair (Logout)</span></a>
+  </aside>
+
+  <main>
+    <div class="eyebrow">Demonstra&ccedil;&atilde;o conforme GS1 EPCIS 2.0</div>
+    <h1>Sandbox de Rastreabilidade</h1>
+    <p class="sub">Um lote de arroz seguido do porto ao retalhista, evento a evento. Serve para responder a uma pergunta concreta: o que muda na capacidade de decis&atilde;o do Estado quando cada movimento de um produto essencial deixa um registo normalizado.</p>
+
+    <div class="alerta" id="alerta"></div>
+
+    <div class="cinco" id="cinco"></div>
+
+    <div class="grid">
+      <div>
+        <div class="card frame">
+          <div class="ch"><h2>Percurso do lote</h2><span class="tag" id="tl-tag">&mdash;</span></div>
+          <div class="tl" id="linha"></div>
+        </div>
+
+        <div class="card frame" style="margin-top:14px">
+          <div class="ch"><h2>Posi&ccedil;&atilde;o reconstru&iacute;da</h2><span class="tag ok">Projec&ccedil;&atilde;o</span></div>
+          <div class="pos" id="posicao"></div>
+          <div class="fonte" id="nota-proj"></div>
+        </div>
+
+        <div class="card frame" style="margin-top:14px">
+          <div class="ch"><h2>Porque &eacute; que o registo aguenta</h2><span class="tag">Testes ao vivo</span></div>
+          <div class="demo">
+            <button class="dbtn" id="b-dup">Enviar o mesmo evento outra vez</button>
+            <button class="dbtn" id="b-inv">Enviar um evento imposs&iacute;vel</button>
+            <button class="dbtn" id="b-reset">Recome&ccedil;ar</button>
+            <div class="saida" id="saida">Carregue num dos bot&otilde;es. Cada um demonstra uma regra que separa um registo aud&iacute;tavel de uma folha de c&aacute;lculo.</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card frame">
+          <div class="ch"><h2>Leitura do evento</h2><span class="tag" id="ev-tag">&mdash;</span></div>
+          <div class="leitura" id="leitura"></div>
+        </div>
+
+        <div class="card frame" style="margin-top:14px">
+          <div class="ch">
+            <h2>O mesmo evento em c&oacute;digo</h2>
+            <div class="toggle">
+              <button class="tbtn on" data-m="gs1">Chaves GS1</button>
+              <button class="tbtn" data-m="int">IDs internos</button>
+            </div>
+          </div>
+          <pre id="json"></pre>
+          <div class="fonte" id="nota-json"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+var ST = { d:null, sel:0, modo:'gs1', dup:0, rej:0 };
+
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function num(n){ return new Intl.NumberFormat('pt-PT').format(n); }
+
+var PASSO = {
+  receiving:{ r:'Recep\u00e7\u00e3o', d:'A mercadoria entrou e passou a ser responsabilidade de quem a recebeu.' },
+  shipping:{ r:'Expedi\u00e7\u00e3o', d:'A mercadoria saiu. A responsabilidade transfere-se para quem transporta.' },
+  storing:{ r:'Armazenagem', d:'A mercadoria est\u00e1 guardada e em condi\u00e7\u00f5es medidas.' },
+  packing:{ r:'Paletiza\u00e7\u00e3o', d:'V\u00e1rias unidades passaram a viajar como uma s\u00f3, com identificador pr\u00f3prio.' }
+};
+var DISP = {
+  in_progress:'em curso', in_transit:'em tr\u00e2nsito', sellable_accessible:'dispon\u00edvel para venda'
+};
+
+function eventos(){ return ST.d.documento.epcisBody.eventList; }
+function local(sgln){
+  var r = null;
+  Object.keys(ST.d.locais).forEach(function(k){ if(ST.d.locais[k].sgln === sgln) r = ST.d.locais[k]; });
+  return r || { nome:sgln, provincia:'', real:false, operador:'', interno:sgln };
+}
+function quantidade(e){
+  var q = (e.quantityList || e.childQuantityList || [])[0];
+  return q ? q.quantity : null;
+}
+
+function desenharAlerta(){
+  document.getElementById('alerta').innerHTML =
+    '<b>Nada aqui \u00e9 oficial.</b> ' + esc(ST.d.meta.avisoIdentificadores)
+    + '<div style="margin-top:8px;color:var(--t3)">' + esc(ST.d.meta.avisoDados) + '</div>';
+}
+
+function desenharCinco(){
+  var h = '';
+  ST.d.meta.cincoPerguntas.forEach(function(q){
+    h += '<div class="card frame q"><div class="q-k">' + esc(q.chave) + '</div>'
+       + '<div class="q-c mono">' + esc(q.campo) + '</div>'
+       + '<div class="q-e">' + esc(q.explicacao) + '</div></div>';
+  });
+  document.getElementById('cinco').innerHTML = h;
+}
+
+function desenharLinha(){
+  var evs = eventos(), h = '';
+  evs.forEach(function(e, i){
+    var l = local(e.bizLocation.id);
+    var p = PASSO[e.bizStep] || { r:e.bizStep };
+    var q = quantidade(e);
+    var sinal = e.bizStep === 'receiving' ? '+' : (e.bizStep === 'shipping' ? '\u2212' : '');
+    h += '<div class="ti' + (ST.sel === i ? ' sel' : '') + '" data-i="' + i + '">'
+       + '<span class="ti-n mono">' + (i+1) + '</span>'
+       + '<span class="ti-b"><span class="ti-t">' + esc(p.r) + ' \u00b7 ' + esc(l.nome) + '</span>'
+       + '<span class="ti-m">' + esc(e.eventTime.slice(0,10)) + ' \u00b7 ' + esc(e.type)
+       + (l.real ? ' \u00b7 <span style="color:var(--ok)">unidade real do cadastro</span>' : ' \u00b7 <span style="color:var(--amber)">entidade fict\u00edcia</span>')
+       + '</span></span>'
+       + '<span class="ti-q mono">' + (q ? '<b>' + sinal + num(q) + '</b><span>kg</span>' : '<span>sem movimento</span>') + '</span></div>';
+  });
+  document.getElementById('linha').innerHTML = h;
+  document.getElementById('tl-tag').textContent = evs.length + ' eventos';
+  Array.prototype.forEach.call(document.querySelectorAll('#linha .ti'), function(el){
+    el.addEventListener('click', function(){ ST.sel = Number(el.dataset.i); desenharLinha(); desenharLeitura(); desenharJson(); });
+  });
+}
+
+function desenharLeitura(){
+  var e = eventos()[ST.sel], l = local(e.bizLocation.id);
+  var p = PASSO[e.bizStep] || { r:e.bizStep, d:'' };
+  var q = quantidade(e);
+  var h = '';
+
+  h += lrow('O QU&Ecirc;', 'Arroz do lote <span class="k">' + esc(ST.d.meta.cenario.lote) + '</span>'
+    + (q ? ', ' + num(q) + ' kg' : '')
+    + '<em>O LGTIN junta o c\u00f3digo do produto ao n\u00famero do lote. \u00c9 o que distingue esta remessa de qualquer outro arroz.</em>');
+
+  h += lrow('QUANDO', esc(e.eventTime.replace('T', ' \u00e0s ').slice(0,19))
+    + ' <span style="color:var(--t4)">(' + esc(e.eventTimeZoneOffset) + ')</span>'
+    + '<em>O fuso hor\u00e1rio n\u00e3o \u00e9 decorativo: sem ele, eventos de pa\u00edses diferentes deixam de ser compar\u00e1veis.</em>');
+
+  h += lrow('ONDE', esc(l.nome) + (l.provincia ? ', ' + esc(l.provincia) : '')
+    + '<em>Ponto de leitura: <span class="k">' + esc(e.readPoint.id.split('.').pop()) + '</span>. '
+    + 'A norma separa o s\u00edtio exacto da leitura (a balan\u00e7a, o port\u00e3o) do local de neg\u00f3cio a que pertence. '
+    + 'Operador: ' + esc(l.operador) + '.</em>');
+
+  h += lrow('PORQU&Ecirc;', esc(p.r) + (e.disposition ? ' \u2014 fica <b>' + esc(DISP[e.disposition] || e.disposition) + '</b>' : '')
+    + '<em>' + esc(p.d || '') + '</em>');
+
+  if(e.sensorElementList){
+    var rs = e.sensorElementList[0].sensorReport.map(function(r){
+      var nome = r.type.indexOf('Temperature') >= 0 ? 'Temperatura' : 'Humidade relativa';
+      var un = r.uom === 'CEL' ? '\u00b0C' : '%';
+      return nome + ' ' + r.value + ' ' + un;
+    }).join(' \u00b7 ');
+    h += lrow('COMO', esc(rs)
+      + '<em>Esta \u00e9 a dimens\u00e3o acrescentada no EPCIS 2.0. \u00c9 o campo normalizado onde entraria a telemetria que hoje falta em todas as unidades do cadastro nacional.</em>');
+  } else {
+    h += lrow('COMO', '<span style="color:var(--t4)">Sem leitura de sensor neste evento</span>'
+      + '<em>Onde n\u00e3o h\u00e1 sensor instalado, o campo fica vazio \u2014 e a aus\u00eancia fica registada, em vez de ser preenchida por estimativa.</em>');
+  }
+
+  if(e.parentID){
+    h += lrow('PALETE', '<span class="k">' + esc(e.parentID) + '</span>'
+      + '<em>Um AggregationEvent diz que v\u00e1rias unidades passaram a viajar como uma s\u00f3. Basta ler a palete para saber o que vai l\u00e1 dentro.</em>');
+  }
+  if(e.bizTransactionList){
+    h += lrow('DOC.', esc(e.bizTransactionList[0].bizTransaction.split(':').pop())
+      + '<em>Liga o movimento f\u00edsico ao documento comercial ou aduaneiro que o justifica.</em>');
+  }
+
+  document.getElementById('leitura').innerHTML = h;
+  document.getElementById('ev-tag').textContent = 'Evento ' + (ST.sel + 1) + ' \u00b7 ' + e.type;
+}
+function lrow(k, v){ return '<div class="lrow"><div class="lk">' + k + '</div><div class="lv">' + v + '</div></div>'; }
+
+function paraInternos(o){
+  var s = JSON.stringify(o);
+  var mapa = ST.d.locais;
+  Object.keys(mapa).forEach(function(k){
+    s = s.split(mapa[k].sgln).join('sinagepe:local/' + mapa[k].interno);
+  });
+  s = s.split(ST.d.identificadores.lgtin).join('sinagepe:produto/arroz#lote/' + ST.d.meta.cenario.lote);
+  s = s.split(ST.d.identificadores.sscc).join('sinagepe:unidade-logistica/PAL-000001');
+  s = s.split(ST.d.identificadores.importador).join('sinagepe:parte/importador#nuit');
+  s = s.replace(/urn:epc:id:sgtin:[0-9.]+/g, 'sinagepe:item/arroz-saco');
+  return JSON.parse(s);
+}
+
+function pintar(o){
+  var t = JSON.stringify(o, null, 2);
+  return esc(t)
+    .replace(/&quot;([^&]+?)&quot;(\s*:)/g, '<span class="jk">"$1"</span>$2')
+    .replace(/:\s&quot;([^&]*?)&quot;/g, ': <span class="js">"$1"</span>')
+    .replace(/:\s(-?\d+\.?\d*)/g, ': <span class="jn">$1</span>');
+}
+
+function desenharJson(){
+  var e = eventos()[ST.sel];
+  var o = ST.modo === 'gs1' ? e : paraInternos(e);
+  document.getElementById('json').innerHTML = pintar(o);
+  document.getElementById('nota-json').innerHTML = ST.modo === 'gs1'
+    ? 'Esta \u00e9 a forma normalizada. Os campos e os valores de <span class="mono">bizStep</span> e <span class="mono">disposition</span> vêm do vocabul\u00e1rio CBV da GS1 \u2014 n\u00e3o s\u00e3o inventados, e \u00e9 por isso que outro sistema no mundo os l\u00ea sem tradu\u00e7\u00e3o. Os identificadores, esses, s\u00e3o simulados.'
+    : 'A mesma estrutura com os identificadores internos que o SINAGEPE j\u00e1 tem hoje. A gram\u00e1tica do evento \u2014 as cinco perguntas \u2014 continua igual. \u00c9 isto que permite come\u00e7ar sem prefixo GS1 e trocar as chaves mais tarde, sem refazer o sistema.';
+}
+
+function projeccao(){
+  var pos = {};
+  Object.keys(ST.d.locais).forEach(function(k){ pos[k] = 0; });
+  eventos().forEach(function(e){
+    var k = null;
+    Object.keys(ST.d.locais).forEach(function(x){ if(ST.d.locais[x].sgln === e.bizLocation.id) k = x; });
+    var q = quantidade(e) || 0;
+    if(e.bizStep === 'receiving') pos[k] += q;
+    else if(e.bizStep === 'shipping') pos[k] -= q;
+  });
+  return pos;
+}
+
+function desenharPosicao(){
+  var pos = projeccao(), tot = 0;
+  Object.keys(pos).forEach(function(k){ tot += pos[k]; });
+  var max = Math.max.apply(null, Object.keys(pos).map(function(k){ return pos[k]; })) || 1;
+  var h = '';
+  Object.keys(ST.d.locais).forEach(function(k){
+    var l = ST.d.locais[k], v = pos[k];
+    h += '<div class="prow"><span class="pn">' + esc(l.nome)
+       + '<div class="pm">' + esc(l.provincia) + (l.real ? '' : ' \u00b7 fict\u00edcia') + '</div></span>'
+       + '<span class="pbar"><i style="width:' + (v > 0 ? (v/max*100).toFixed(1) : 0) + '%"></i></span>'
+       + '<span class="pq mono" style="color:' + (v > 0 ? 'var(--ink)' : 'var(--t4)') + '">' + num(v) + '</span></div>';
+  });
+  document.getElementById('posicao').innerHTML = h;
+  document.getElementById('nota-proj').innerHTML =
+    'Nenhum destes n\u00fameros foi introduzido por algu\u00e9m. S\u00e3o calculados a partir dos ' + eventos().length
+    + ' eventos, somando recep\u00e7\u00f5es e subtraindo expedi\u00e7\u00f5es: <b class="mono">' + num(tot)
+    + ' kg</b> continuam contabilizados dos ' + num(ST.d.meta.cenario.quantidadeInicial)
+    + ' kg que entraram. \u00c9 esta a diferen\u00e7a entre um stock declarado e um stock derivado \u2014 o segundo n\u00e3o se pode alterar sem deixar rasto.';
+}
+
+function saida(linhas){
+  document.getElementById('saida').innerHTML = linhas.map(function(l){
+    return '<span class="ln ' + (l[0] || '') + '">' + l[1] + '</span>';
+  }).join('');
+}
+
+document.getElementById('b-dup').addEventListener('click', function(){
+  ST.dup++;
+  var e = eventos()[ST.sel];
+  var pos = projeccao();
+  saida([
+    ['', 'Recebido de novo o evento <span class="mono">' + esc(e.eventID.split('-').pop()) + '</span>, id\u00eantico ao anterior.'],
+    ['dupl', 'DUPLICADO \u2014 j\u00e1 existe um evento com este eventID. N\u00e3o \u00e9 processado.'],
+    ['', 'Posi\u00e7\u00e3o depois: <b class="mono">' + num(pos.silo) + ' kg</b> no silo. Inalterada.'],
+    ['', '<span style="color:var(--t4)">Sem esta regra, uma falha de rede que reenviasse a mensagem duplicaria stock nacional. Chama-se idempot\u00eancia e n\u00e3o \u00e9 opcional.</span>']
+  ]);
+});
+
+document.getElementById('b-inv').addEventListener('click', function(){
+  ST.rej++;
+  var inv = ST.d.eventoInvalido, pos = projeccao();
+  saida([
+    ['', 'Recebido: expedi\u00e7\u00e3o de <b class="mono">' + num(inv.quantityList[0].quantity) + ' kg</b> a partir do retalhista.'],
+    ['rej', 'REJEITADO \u2014 ' + esc(inv.motivoRejeicao)],
+    ['rej', 'Valida\u00e7\u00e3o de estrutura: ' + esc(inv.faltaTambem)],
+    ['', 'Posi\u00e7\u00e3o do retalhista: <b class="mono">' + num(pos.retalho) + ' kg</b>. Inalterada.'],
+    ['', '<span style="color:var(--t4)">Um evento inv\u00e1lido \u00e9 guardado tal como chegou, para auditoria, mas n\u00e3o toca no stock. \u00c9 a diferen\u00e7a entre registar e acreditar.</span>']
+  ]);
+});
+
+document.getElementById('b-reset').addEventListener('click', function(){
+  ST.dup = 0; ST.rej = 0;
+  saida([['acc', 'Estado reposto. ' + eventos().length + ' eventos v\u00e1lidos, zero duplicados, zero rejeitados.']]);
+});
+
+Array.prototype.forEach.call(document.querySelectorAll('.tbtn'), function(b){
+  b.addEventListener('click', function(){
+    ST.modo = b.dataset.m;
+    Array.prototype.forEach.call(document.querySelectorAll('.tbtn'), function(x){ x.classList.toggle('on', x === b); });
+    desenharJson();
+  });
+});
+
+var lo = document.getElementById('btn-logout');
+if(lo) lo.addEventListener('click', function(e){
+  e.preventDefault();
+  try { sessionStorage.clear(); } catch(err) {}
+  location.href = 'index.html';
+});
+
+fetch('data/sandbox-rastreabilidade.json')
+  .then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status + ' em data/sandbox-rastreabilidade.json'); return r.json(); })
+  .then(function(d){
+    ST.d = d;
+    desenharAlerta(); desenharCinco(); desenharLinha();
+    desenharLeitura(); desenharJson(); desenharPosicao();
+  })
+  .catch(function(err){
+    document.getElementById('alerta').innerHTML =
+      '<div class="err"><b>N\u00e3o foi poss\u00edvel carregar o cen\u00e1rio.</b><br>' + esc(err.message)
+      + '<br><br>Publique <span class="mono">data/sandbox-rastreabilidade.json</span> na pasta <span class="mono">data/</span>.</div>';
+  });
+</script>
+</body>
+</html>
