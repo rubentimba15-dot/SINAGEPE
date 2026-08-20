@@ -1,0 +1,280 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "geradoEm": "2026-08-20",
+    "gestor": {
+      "nome": "ANE — Administração Nacional de Estradas, IP",
+      "baseLegal": "Decreto n.º 15/1999, de 27 de Abril",
+      "tutela": "Ministério das Obras Públicas, Habitação e Recursos Hídricos",
+      "redeClassificadaKm": 30056,
+      "fonte": "https://ane.gov.mz/"
+    },
+    "avisoTracado": "Os traçados desenhados são ESQUEMÁTICOS. São polilinhas entre localidades conhecidas, calculadas com a mesma projecção do mapa do Painel. Não são cartografia da ANE e não devem ser usados para medir distâncias, planear percursos nem apoiar decisões de engenharia. Servem para mostrar a relação entre corredor, armazém e produtor.",
+    "avisoInterrupcoes": "As interrupções registadas provêm de um comunicado da ANE de 16 de Janeiro de 2026, durante a época chuvosa. NÃO SÃO ESTADO ACTUAL. Sete meses depois, a maior parte terá sido reparada e terão surgido outras. A ANE não publica estas ocorrências em formato consultável por máquina, pelo que não há forma de as manter actualizadas automaticamente.",
+    "lacuna": "Só está desenhada uma fracção da rede. Das estradas classificadas, este ficheiro cobre quatro eixos. Os restantes milhares de quilómetros, incluindo praticamente toda a rede terciária que liga o produtor à estrada nacional, não têm representação aqui."
+  },
+  "estradas": [
+    {
+      "id": "n1",
+      "designacao": "N1",
+      "nome": "Estrada Nacional n.º 1",
+      "extensaoKm": 2477,
+      "liga": "Maputo — Pemba",
+      "classe": "longitudinal principal",
+      "provincias": [
+        "Maputo",
+        "Gaza",
+        "Inhambane",
+        "Sofala",
+        "Zambézia",
+        "Nampula",
+        "Cabo Delgado"
+      ],
+      "nota": "Principal eixo do país, atravessa seis zonas de capitais provinciais. O troço entre Sofala e Inhambane está em regime de concessão privada desde 2019.",
+      "papelSinagepe": "Eixo de escoamento predominante de Cabo Delgado, Zambézia e Inhambane. Uma interrupção aqui não tem alternativa de igual capacidade.",
+      "pontos": [
+        [
+          -25.97,
+          32.58
+        ],
+        [
+          -25.05,
+          33.64
+        ],
+        [
+          -23.86,
+          35.35
+        ],
+        [
+          -22.0,
+          35.31
+        ],
+        [
+          -20.87,
+          33.94
+        ],
+        [
+          -19.13,
+          33.89
+        ],
+        [
+          -17.83,
+          35.33
+        ],
+        [
+          -16.84,
+          36.99
+        ],
+        [
+          -15.62,
+          37.68
+        ],
+        [
+          -15.12,
+          39.27
+        ],
+        [
+          -14.93,
+          39.87
+        ],
+        [
+          -12.97,
+          40.52
+        ]
+      ],
+      "fonte": "https://pt.wikipedia.org/wiki/Estrada_Nacional_n.%C2%BA_1_(Mo%C3%A7ambique)"
+    },
+    {
+      "id": "n4",
+      "designacao": "N4",
+      "nome": "Corredor de Maputo",
+      "extensaoKm": null,
+      "liga": "Maputo — Ressano Garcia (fronteira com a África do Sul)",
+      "classe": "corredor internacional",
+      "provincias": [
+        "Maputo"
+      ],
+      "nota": "Ligação ao hinterland sul-africano. Serve o Porto de Maputo e o Terminal da Matola.",
+      "papelSinagepe": "Via de entrada da maior parte das importações que passam por Maputo e de saída do trânsito para a África do Sul, Eswatini e Zimbabwe.",
+      "pontos": [
+        [
+          -25.97,
+          32.58
+        ],
+        [
+          -25.59,
+          32.24
+        ],
+        [
+          -25.44,
+          31.99
+        ]
+      ],
+      "fonte": "https://ane.gov.mz/"
+    },
+    {
+      "id": "n6",
+      "designacao": "N6",
+      "nome": "Corredor da Beira",
+      "extensaoKm": null,
+      "liga": "Beira — Machipanda (fronteira com o Zimbabwe)",
+      "classe": "corredor internacional",
+      "provincias": [
+        "Sofala",
+        "Manica"
+      ],
+      "nota": "Liga o Porto da Beira ao Zimbabwe, passando por Dondo, Inchope, Chimoio e Manica.",
+      "papelSinagepe": "Corredor de escoamento de Manica e Sofala e via de trânsito para o Zimbabwe, Zâmbia e Malawi. Cruza a N1 em Inchope — nó crítico.",
+      "pontos": [
+        [
+          -19.83,
+          34.84
+        ],
+        [
+          -19.61,
+          34.74
+        ],
+        [
+          -19.13,
+          33.89
+        ],
+        [
+          -19.12,
+          33.48
+        ],
+        [
+          -18.94,
+          32.88
+        ],
+        [
+          -18.93,
+          32.72
+        ]
+      ],
+      "fonte": "https://ane.gov.mz/"
+    },
+    {
+      "id": "n13",
+      "designacao": "N13",
+      "nome": "Cuamba — Mandimba — Lichinga",
+      "extensaoKm": null,
+      "liga": "Cuamba — Lichinga",
+      "classe": "corredor de desenvolvimento de Nacala",
+      "provincias": [
+        "Niassa"
+      ],
+      "nota": "Eixo interior do Corredor de Nacala. Foi objecto de estudo preparatório da JICA sobre melhoramento da via.",
+      "papelSinagepe": "Único acesso rodoviário estruturante de Lichinga ao Corredor de Nacala. Serve os complexos de silos de Cuamba e de Lichinga.",
+      "pontos": [
+        [
+          -14.8,
+          36.54
+        ],
+        [
+          -14.35,
+          35.65
+        ],
+        [
+          -13.31,
+          35.24
+        ]
+      ],
+      "fonte": "https://openjicareport.jica.go.jp/pdf/11991635.pdf"
+    }
+  ],
+  "interrupcoes": [
+    {
+      "id": "int-en1-ribaue-malema",
+      "estrada": "EN1",
+      "estradaId": "n1",
+      "troco": "Ribáuè — Malema",
+      "provincia": "Nampula",
+      "gravidade": "condicionada",
+      "causa": "Erosão no aterro do aqueduto ao quilómetro 6",
+      "alternativa": null,
+      "coordenada": [
+        -14.94,
+        37.85
+      ],
+      "precisao": "ponto-medio-troco",
+      "data": "2026-01-16",
+      "impactoSinagepe": "Atinge o eixo principal do país no ponto que serve os complexos de silos de Malema e de Iapala. Trânsito condicionado significa passagem com restrição de peso — precisamente o que trava camiões de cereal.",
+      "fonte": "https://mznews.co.mz/en/situacao-atual-e-nacional-de-todas-as-estradas-mocambicanas/"
+    },
+    {
+      "id": "int-r698-muecate-imala",
+      "estrada": "R698",
+      "estradaId": null,
+      "troco": "Muecate — Imala",
+      "provincia": "Nampula",
+      "gravidade": "intransitavel",
+      "causa": "Arrastamento da ponte metálica sobre o rio Muecate",
+      "alternativa": "Desvio pela N1/R156",
+      "coordenada": [
+        -14.77,
+        39.3
+      ],
+      "precisao": "ponto-medio-troco",
+      "data": "2026-01-16",
+      "impactoSinagepe": "Corte total com alternativa. O desvio existe, mas alonga o percurso e transfere tráfego pesado para a N1, que no mesmo comunicado já estava condicionada noutro ponto da mesma província.",
+      "fonte": "https://mznews.co.mz/en/situacao-atual-e-nacional-de-todas-as-estradas-mocambicanas/"
+    },
+    {
+      "id": "int-n221-combomune-mapai",
+      "estrada": "N221",
+      "estradaId": null,
+      "troco": "Combomune — Mapai",
+      "provincia": "Gaza",
+      "gravidade": "intransitavel",
+      "causa": "Galgamento e danificação da plataforma",
+      "alternativa": "Nenhuma rota alternativa disponível",
+      "coordenada": [
+        -22.87,
+        32.3
+      ],
+      "precisao": "ponto-medio-troco",
+      "data": "2026-01-16",
+      "impactoSinagepe": "Corte total SEM alternativa. É o caso mais grave dos três: a área servida fica isolada por via rodoviária enquanto durar o corte.",
+      "fonte": "https://mznews.co.mz/en/situacao-atual-e-nacional-de-todas-as-estradas-mocambicanas/"
+    }
+  ],
+  "resumoComunicado": {
+    "data": "2026-01-16",
+    "provinciasAfectadas": 8,
+    "listaProvincias": [
+      "Nampula",
+      "Gaza",
+      "Niassa",
+      "Zambézia",
+      "Sofala",
+      "Inhambane",
+      "Manica",
+      "Maputo"
+    ],
+    "trocosNampula": 8,
+    "trocosGaza": 11,
+    "recomendacaoANE": "A ANE apelou a que se programassem as deslocações com precaução e a que se evitasse a circulação de veículos com peso total acima de 10 toneladas em estradas alagadas.",
+    "leituraSinagepe": "Uma restrição de 10 toneladas é, na prática, a suspensão do transporte de cereal a granel. Dezenas de troços em oito províncias significa que o escoamento agrícola parou em boa parte do país durante dias — e o SINAGEPE não teve forma de o saber em tempo útil, porque estes avisos saem em comunicado de imprensa e não em formato legível por máquina.",
+    "fonte": "https://mznews.co.mz/en/situacao-atual-e-nacional-de-todas-as-estradas-mocambicanas/"
+  },
+  "ausencias": [
+    {
+      "titulo": "Armazéns distritais e pequenos revendedores",
+      "estado": "sem-dados",
+      "descricao": "Não existe registo público de armazenagem distrital nem de retalho alimentar em Moçambique. Nenhuma fonte oficial consultável enumera estas unidades, com ou sem coordenadas. Não são desenhadas no mapa porque não há de onde as tirar — e desenhá-las por estimativa seria inventar cadastro do Estado.",
+      "comoResolver": "Certificado de depósito da BMM para a armazenagem intermédia; licenciamento comercial municipal como fonte para o retalho."
+    },
+    {
+      "titulo": "Produtores e agricultores individuais",
+      "estado": "apenas-agregado",
+      "descricao": "O CUPA — Cadastro Único de Produtores Agrários — existe e é um sistema real do ministério, mas os seus registos não são públicos. O que é público são agregados provinciais do Inquérito Agrário Integrado. Por isso os produtores aparecem por província, nunca como pontos no mapa.",
+      "comoResolver": "Protocolo com o MAAP para leitura agregada do CUPA ao nível distrital, sem dados pessoais."
+    },
+    {
+      "titulo": "Estado actual da rede viária",
+      "estado": "sem-fluxo",
+      "descricao": "A ANE emite comunicados de imprensa. Não há API, feed nem ficheiro estruturado. Sem isso, qualquer estado de estrada que o SINAGEPE mostre está desactualizado no dia seguinte.",
+      "comoResolver": "Protocolo com a ANE para publicação das ocorrências em formato estruturado. É o pedido de integração mais barato e de maior retorno de toda a lista."
+    }
+  ]
+}

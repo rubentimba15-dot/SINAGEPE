@@ -72,6 +72,7 @@ const SINAGEPE = (() => {
     { key: 'armazens-nac', label: 'Armazéns Nacionais', icon: '◫', href: 'armazens-nacionais.html' },
     { key: 'ponto-cego', label: 'Ponto Cego Duplo', icon: '◉', href: 'ponto-cego-duplo.html' },
     { key: 'sandbox-epcis', label: 'Sandbox EPCIS', icon: '⇞', href: 'sandbox-rastreabilidade.html' },
+    { key: 'mapa-integrado', label: 'Mapa Integrado', icon: '◉', href: 'mapa-integrado.html' },
     { key: 'logistica',  label: 'Logística',   icon: '⇄', href: 'modulo-logistica.html', countId: 'nav-corredores-count' },
     { key: 'rede',       label: 'Rede Logística', icon: '⌘', href: 'rede-logistica.html' },
     { key: 'relatorios', label: 'Relatórios',  icon: '▧', href: 'relatorios.html' },
