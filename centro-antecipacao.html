@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Centro de Antecipa&ccedil;&atilde;o &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:14px;max-width:920px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
+.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
+.aviso{padding:13px 16px;border-radius:12px;border:1px solid rgba(201,138,60,.35);background:rgba(201,138,60,.07);margin-bottom:14px;font-size:12px;line-height:1.6;color:var(--brzl)}
+.aviso b{color:var(--brz)}
+
+/* faixa grande de leitura imediata */
+.faixa{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:14px}
+.big{padding:18px 19px;position:relative;overflow:hidden}
+.big-l{font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--t4);margin-bottom:11px}
+.big-v{font-size:38px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.big-u{font-size:13px;font-weight:500;color:var(--t3);margin-left:5px}
+.big-n{font-size:11px;color:var(--t3);margin-top:9px;line-height:1.5}
+
+/* calendario */
+.cal{display:flex;gap:4px;padding:14px 17px}
+.cm{flex:1;text-align:center;cursor:default}
+.cm-b{height:38px;border-radius:5px;margin-bottom:6px;position:relative;transition:.15s}
+.cm.on .cm-b{outline:2px solid var(--ink);outline-offset:2px}
+.cm-m{font-size:10px;color:var(--t4);font-weight:600}
+.cm.on .cm-m{color:var(--ink)}
+.cal-n{padding:0 17px 14px;font-size:11.5px;color:var(--t3);line-height:1.55;min-height:34px}
+
+/* barras de exposicao */
+.pb{display:flex;align-items:center;gap:11px;padding:8px 17px;font-size:11.5px;cursor:pointer;border-bottom:1px solid rgba(38,56,86,.35)}
+.pb:hover{background:var(--cardh)}
+.pb:last-child{border-bottom:none}
+.pb-n{width:96px;flex-shrink:0}
+.pb-t{flex:1;height:16px;background:#0A1421;border-radius:4px;overflow:hidden;position:relative}
+.pb-t i{display:block;height:100%;border-radius:4px}
+.pb-v{width:38px;text-align:right;flex-shrink:0;font-weight:600}
+.pb-d{font-size:10px;color:var(--t4);margin-top:1px}
+
+/* riscos */
+.horiz{display:flex;gap:5px;padding:12px 17px;border-bottom:1px solid var(--card-line);flex-wrap:wrap}
+.hb{font-size:10.5px;padding:6px 13px;border-radius:20px;border:1px solid var(--card-line);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.hb.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+.ri{display:flex;gap:12px;padding:13px 17px;cursor:pointer;border-bottom:1px solid rgba(38,56,86,.4);border-left:3px solid transparent}
+.ri:hover{background:var(--cardh)}
+.ri.sel{background:rgba(34,184,240,.07)}
+.ri-g{width:34px;height:34px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.ri-b{flex:1;min-width:0}
+.ri-t{font-size:13px;font-weight:600;line-height:1.35}
+.ri-m{font-size:10.5px;color:var(--t4);margin-top:3px}
+.ri-c{flex-shrink:0;font-size:10px;color:var(--t4);text-align:right;line-height:1.5}
+
+/* dossier */
+.dz{padding:16px 17px}
+.dt{font-size:16px;font-weight:600;line-height:1.3;margin-bottom:6px}
+.dm{font-size:12px;color:var(--t3);line-height:1.6;margin-bottom:14px}
+.cad{display:flex;flex-direction:column;gap:0;margin:14px 0}
+.cad-i{display:flex;align-items:flex-start;gap:11px;position:relative;padding-bottom:12px}
+.cad-i:last-child{padding-bottom:0}
+.cad-i:not(:last-child):before{content:"";position:absolute;left:9px;top:20px;bottom:0;width:2px;background:linear-gradient(180deg,var(--brzg),rgba(239,68,68,.35))}
+.cad-d{width:20px;height:20px;border-radius:50%;flex-shrink:0;border:2px solid;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;background:#0A1421;z-index:1}
+.cad-t{font-size:11.5px;line-height:1.5;padding-top:2px;color:var(--t2)}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.mp{font-size:10px;padding:5px 10px;border-radius:4px;border:1px solid var(--card-line);color:var(--t3)}
+.mp b{color:var(--t2)}
+.mt{margin-top:12px;padding:13px 15px;border-radius:10px;border:1px solid;position:relative}
+.mt-h{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap}
+.mt-q{font-size:9px;letter-spacing:.13em;text-transform:uppercase;padding:3px 8px;border-radius:3px;font-weight:600}
+.mt-c{font-size:9.5px;color:var(--t4)}
+.mt-a{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:6px}
+.mt-e{font-size:11.5px;line-height:1.55;color:var(--t3)}
+.mt-d{font-size:10.5px;color:var(--brzl);margin-top:7px}
+.ev{margin-top:14px;padding-top:12px;border-top:1px solid rgba(38,56,86,.5);font-size:10.5px;color:var(--t4);line-height:1.55}
+.grid{display:grid;grid-template-columns:1fr 1.1fr;gap:14px;align-items:start}
+@media(max-width:1150px){.grid{grid-template-columns:1fr}.sidebar{display:none}}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-t">SINAGEPE</div><div class="brand-s">Torre de Controlo</div></div>
+    <a class="nav-item" href="index.html"><span class="nav-icon">&#9638;</span><span class="nav-label">PAINEL</span></a>
+    <a class="nav-item active" href="centro-antecipacao.html"><span class="nav-icon">&#9737;</span><span class="nav-label">Centro de Antecipa&ccedil;&atilde;o</span></a>
+    <a class="nav-item" href="mapa-integrado.html"><span class="nav-icon">&#9673;</span><span class="nav-label">Mapa Integrado</span></a>
+    <a class="nav-item" href="adesao-institucional.html"><span class="nav-icon">&#9784;</span><span class="nav-label">Ades&atilde;o Institucional</span></a>
+    <a class="nav-item" href="alertas.html"><span class="nav-icon">&#9888;</span><span class="nav-label">Alertas</span></a>
+    <a class="nav-item" href="simulador-preditivo.html"><span class="nav-icon">&#9709;</span><span class="nav-label">Simulador Preditivo</span></a>
+    <a class="nav-item" href="armazens-nacionais.html"><span class="nav-icon">&#9707;</span><span class="nav-label">Armaz&eacute;ns Nacionais</span></a>
+    <a class="nav-item" href="ponto-cego-duplo.html"><span class="nav-icon">&#9678;</span><span class="nav-label">Ponto Cego Duplo</span></a>
+    <a class="nav-item" href="sandbox-rastreabilidade.html"><span class="nav-icon">&#8766;</span><span class="nav-label">Sandbox EPCIS</span></a>
+    <a class="nav-item" href="inteligencia-consolidada.html"><span class="nav-icon">&#9672;</span><span class="nav-label">Intelig&ecirc;ncia</span></a>
+    <a class="nav-item" href="relatorios.html"><span class="nav-icon">&#9639;</span><span class="nav-label">Relat&oacute;rios</span></a>
+    <a class="nav-item" href="#" id="btn-logout" style="margin-top:8px;border-top:1px solid var(--gold-line);border-radius:0;padding-top:13px"><span class="nav-icon">&#8617;</span><span class="nav-label" style="color:#EF4444">Sair</span></a>
+  </aside>
+  <main>
+    <div class="eyebrow">Intelig&ecirc;ncia consolidada &rarr; ac&ccedil;&atilde;o</div>
+    <h1>Centro de Antecipa&ccedil;&atilde;o</h1>
+    <p class="sub">Tudo o que o sistema sabe, reduzido a uma pergunta: <b>o que pode partir, e o que se faz antes disso.</b> Cada risco tem um gatilho conhecido, uma janela de calend&aacute;rio e mitiga&ccedil;&otilde;es com prazo, custo e quem decide.</p>
+
+    <div class="aviso" id="aviso"></div>
+
+    <div class="faixa" id="faixa"></div>
+
+    <div class="card frame" style="margin-bottom:14px">
+      <div class="ch"><h2>Calend&aacute;rio de risco</h2><span class="tag" id="cal-tag">&mdash;</span></div>
+      <div class="cal" id="cal"></div>
+      <div class="cal-n" id="cal-n"></div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <div class="card frame">
+          <div class="ch"><h2>Riscos por gravidade</h2><span class="tag" id="r-tag">&mdash;</span></div>
+          <div class="horiz" id="horiz"></div>
+          <div id="riscos"></div>
+        </div>
+
+        <div class="card frame" style="margin-top:14px">
+          <div class="ch"><h2>Exposi&ccedil;&atilde;o por prov&iacute;ncia</h2><span class="tag">F&oacute;rmula declarada</span></div>
+          <div id="provincias"></div>
+          <div class="ev" style="padding:12px 17px;margin:0;border-top:1px solid var(--card-line)" id="form-nota"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card frame">
+          <div class="ch"><h2>O que fazer</h2><span class="tag" id="d-tag">&mdash;</span></div>
+          <div class="dz" id="dossier"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+var COR_RISCO={5:'#EF4444',4:'#F0A926',3:'#22B8F0',2:'#2DD4BF',1:'#12B981'};
+var COR_MES={alto:'#EF4444',medio:'#F0A926',baixo:'#12B981'};
+var COR_HOR={agora:'#EF4444','90dias':'#F0A926',estrutural:'#22B8F0'};
+var ROT_HOR={agora:'Agir agora','90dias':'90 dias',estrutural:'Estrutural'};
+var ROT_CUSTO={baixo:'custo baixo',medio:'custo m\u00e9dio',alto:'custo alto'};
+var MES_ACTUAL=new Date().getMonth();
+
+var ST={a:null,prod:null,rede:null,arm:null,sel:null,horiz:'todos',mes:MES_ACTUAL};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(n)}
+function achar(id){var r=null;ST.a.riscos.forEach(function(x){if(x.id===id)r=x});return r}
+
+/* ---------- exposicao por provincia, calculada dos dados reais ---------- */
+function exposicao(){
+  var f=ST.a.meta.formulaExposicao;
+  var carga={},mapa=ST.prod.dependenciaCorredor.mapa;
+  Object.keys(mapa).forEach(function(k){carga[mapa[k]]=(carga[mapa[k]]||0)+1});
+  var ints={};
+  ST.rede.interrupcoes.forEach(function(i){ints[i.provincia]=(ints[i.provincia]||0)+1});
+  return ST.prod.provincias.map(function(p){
+    var res=Math.max(0.35, 1 - (p.irrigacaoPercent/100)*0.45 - (p.sementeCertificadaPercent/100)*0.30 - (p.extensaoPercent/100)*0.20);
+    var dist=Math.min(1,p.distanciaMediaArmazemKm/150);
+    var conc=(carga[mapa[p.nome]]-1)/4;
+    var peq=p.pequenas/100;
+    var itr=Math.min(2,ints[p.nome]||0)/2;
+    var v=0.30*res+0.25*dist+0.20*conc+0.15*peq+0.10*itr;
+    var esc=f.escala.find(function(e){return v<=e.ate})||f.escala[f.escala.length-1];
+    return {nome:p.nome,v:v,cor:esc.cor,rotulo:esc.rotulo,dist:p.distanciaMediaArmazemKm,
+            corr:ST.prod.dependenciaCorredor.mapa[p.nome],peq:p.pequenas,ints:ints[p.nome]||0};
+  }).sort(function(a,b){return b.v-a.v});
+}
+
+function desenharAviso(){
+  document.getElementById('aviso').innerHTML='<b>O que este ecr&atilde; faz e o que n&atilde;o faz.</b> '
+    +esc(ST.a.meta.naturezaDoQueFazemos)
+    +'<div style="margin-top:8px;color:var(--t3)">'+esc(ST.a.meta.comoLer)+'</div>';
+}
+
+function desenharFaixa(){
+  var ex=exposicao();
+  var criticos=ST.a.riscos.filter(function(r){return r.gravidade>=5}).length;
+  var agora=0;ST.a.riscos.forEach(function(r){r.mitigacoes.forEach(function(m){if(m.horizonte==='agora')agora++})});
+  var elev=ex.filter(function(p){return p.v>0.58}).length;
+  var mes=ST.a.calendario[MES_ACTUAL];
+  document.getElementById('faixa').innerHTML=
+     big('Riscos cr&iacute;ticos abertos',criticos,'de '+ST.a.riscos.length+' identificados','Gravidade m&aacute;xima. Nenhum depende de gatilho externo para se manifestar.','#EF4444')
+   + big('Ac&ccedil;&otilde;es execut&aacute;veis j&aacute;',agora,'sem or&ccedil;amento novo','Mitiga&ccedil;&otilde;es que cabem em semanas e n&atilde;o esperam por decis&atilde;o de investimento.','#12B981')
+   + big('Prov&iacute;ncias em exposi&ccedil;&atilde;o elevada',elev,'de 10','Combina&ccedil;&atilde;o de fragilidade produtiva, dist&acirc;ncia ao armaz&eacute;m e corredor &uacute;nico.','#F0A926')
+   + big('M&ecirc;s corrente',mes.mes,mes.risco==='alto'?'risco alto':(mes.risco==='medio'?'risco m&eacute;dio':'risco baixo'),esc(mes.porque),COR_MES[mes.risco]);
+}
+function big(l,v,u,n,c){
+  return '<div class="card frame big"><div class="big-l">'+l+'</div>'
+   +'<div class="big-v mono" style="color:'+c+'">'+v+'<span class="big-u">'+u+'</span></div>'
+   +'<div class="big-n">'+n+'</div></div>';
+}
+
+function desenharCalendario(){
+  document.getElementById('cal').innerHTML=ST.a.calendario.map(function(m,i){
+    return '<div class="cm'+(ST.mes===i?' on':'')+'" data-i="'+i+'">'
+      +'<div class="cm-b" style="background:'+COR_MES[m.risco]+';opacity:'+(m.risco==='alto'?.95:m.risco==='medio'?.7:.45)+'"></div>'
+      +'<div class="cm-m">'+esc(m.mes)+'</div></div>';
+  }).join('');
+  var m=ST.a.calendario[ST.mes];
+  document.getElementById('cal-n').innerHTML='<b style="color:'+COR_MES[m.risco]+'">'+esc(m.mes)+'</b> &mdash; '+esc(m.porque);
+  document.getElementById('cal-tag').textContent='Janelas conhecidas';
+  Array.prototype.forEach.call(document.querySelectorAll('.cm'),function(el){
+    el.addEventListener('click',function(){ST.mes=Number(el.dataset.i);desenharCalendario()});
+  });
+}
+
+function desenharHoriz(){
+  var opts=[['todos','Todos'],['agora','Agir agora'],['90dias','90 dias'],['estrutural','Estrutural']];
+  document.getElementById('horiz').innerHTML=opts.map(function(o){
+    var n=o[0]==='todos'?ST.a.riscos.length:ST.a.riscos.filter(function(r){
+      return r.mitigacoes.some(function(m){return m.horizonte===o[0]})}).length;
+    return '<button class="hb'+(ST.horiz===o[0]?' on':'')+'" data-h="'+o[0]+'">'+o[1]+' ('+n+')</button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.hb'),function(b){
+    b.addEventListener('click',function(){ST.horiz=b.dataset.h;desenharHoriz();desenharRiscos();});
+  });
+}
+
+function riscosVisiveis(){
+  return ST.a.riscos.filter(function(r){
+    return ST.horiz==='todos'||r.mitigacoes.some(function(m){return m.horizonte===ST.horiz});
+  }).sort(function(a,b){return b.gravidade-a.gravidade});
+}
+
+function desenharRiscos(){
+  var vs=riscosVisiveis();
+  document.getElementById('riscos').innerHTML=vs.map(function(r){
+    var c=COR_RISCO[r.gravidade];
+    var nAgora=r.mitigacoes.filter(function(m){return m.horizonte==='agora'}).length;
+    return '<div class="ri'+(ST.sel===r.id?' sel':'')+'" data-i="'+esc(r.id)+'" style="'+(ST.sel===r.id?'border-left-color:'+c:'')+'">'
+     +'<span class="ri-g" style="background:'+c+'1A;color:'+c+';border:1.5px solid '+c+'55">'+r.gravidade+'</span>'
+     +'<span class="ri-b"><span class="ri-t">'+esc(r.titulo)+'</span>'
+     +'<div class="ri-m">'+esc(r.janela)+' &middot; '+r.mitigacoes.length+' mitiga&ccedil;&otilde;es'
+     +(nAgora?' &middot; <span style="color:var(--ok)">'+nAgora+' j&aacute;</span>':'')+'</div></span>'
+     +'<span class="ri-c">'+esc(r.certeza)+'</span></div>';
+  }).join('');
+  document.getElementById('r-tag').textContent=vs.length+' de '+ST.a.riscos.length;
+  Array.prototype.forEach.call(document.querySelectorAll('.ri'),function(el){
+    el.addEventListener('click',function(){ST.sel=el.dataset.i;desenharRiscos();desenharDossier()});
+  });
+}
+
+function desenharProvincias(){
+  var ex=exposicao();
+  document.getElementById('provincias').innerHTML=ex.map(function(p){
+    return '<div class="pb"><span class="pb-n">'+esc(p.nome)
+     +'<div class="pb-d">'+p.dist+' km &middot; '+esc(p.corr)+'</div></span>'
+     +'<span class="pb-t"><i style="width:'+(p.v*100).toFixed(1)+'%;background:'+p.cor+'"></i></span>'
+     +'<span class="pb-v mono" style="color:'+p.cor+'">'+p.v.toFixed(2)+'</span></div>';
+  }).join('');
+  var f=ST.a.meta.formulaExposicao;
+  document.getElementById('form-nota').innerHTML='<b style="color:var(--t3)">C&aacute;lculo:</b> '
+   +f.componentes.map(function(c){return esc(c.nome)+' &times;'+c.peso}).join(' + ')
+   +'. '+esc(f.descricao);
+}
+
+function desenharDossier(){
+  var r=achar(ST.sel);if(!r)return;
+  var c=COR_RISCO[r.gravidade];
+  var h='<div class="dt" style="color:'+c+'">'+esc(r.titulo)+'</div>'
+   +'<div class="dm">'+esc(r.resumo)+'</div>'
+   +'<div class="meta">'
+   +'<span class="mp"><b>Gatilho:</b> '+esc(r.gatilho)+'</span>'
+   +'<span class="mp"><b>Janela:</b> '+esc(r.janela)+'</span>'
+   +'<span class="mp"><b>Afecta:</b> '+esc(r.afecta.join(', '))+'</span></div>';
+
+  h+='<div style="font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brz);margin-top:16px;margin-bottom:10px">Como se chega &agrave; ruptura</div><div class="cad">';
+  r.cadeia.forEach(function(passo,i){
+    var cc=i===r.cadeia.length-1?'#EF4444':(i===0?'#C98A3C':'#8FA1B8');
+    h+='<div class="cad-i"><span class="cad-d" style="border-color:'+cc+';color:'+cc+'">'+(i+1)+'</span>'
+      +'<span class="cad-t"'+(i===r.cadeia.length-1?' style="color:#FFB4B4;font-weight:600"':'')+'>'+esc(passo)+'</span></div>';
+  });
+  h+='</div>';
+
+  var ms=r.mitigacoes.filter(function(m){return ST.horiz==='todos'||m.horizonte===ST.horiz});
+  h+='<div style="font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ok);margin-top:18px;margin-bottom:4px">O que interrompe esta cadeia</div>';
+  ms.forEach(function(m){
+    var hc=COR_HOR[m.horizonte];
+    h+='<div class="mt" style="border-color:'+hc+'44;background:'+hc+'0D">'
+     +'<div class="mt-h"><span class="mt-q" style="background:'+hc+'22;color:'+hc+'">'+ROT_HOR[m.horizonte]+'</span>'
+     +'<span class="mt-c">'+ROT_CUSTO[m.custo]+'</span></div>'
+     +'<div class="mt-a">'+esc(m.accao)+'</div>'
+     +'<div class="mt-e">'+esc(m.efeito)+'</div>'
+     +'<div class="mt-d">Cadeia de decis&atilde;o: '+esc(m.decide)+'</div></div>';
+  });
+  if(!ms.length)h+='<div class="mt" style="border-color:var(--card-line)"><div class="mt-e">Sem mitiga&ccedil;&otilde;es neste horizonte. Mude o filtro para ver as restantes.</div></div>';
+
+  h+='<div class="ev"><b style="color:var(--t3)">Base factual:</b> '+esc(r.evidencia)+'</div>';
+  document.getElementById('dossier').innerHTML=h;
+  document.getElementById('d-tag').textContent='Gravidade '+r.gravidade+'/5';
+}
+
+var lo=document.getElementById('btn-logout');
+if(lo)lo.addEventListener('click',function(e){e.preventDefault();try{sessionStorage.clear()}catch(x){}location.href='index.html'});
+
+Promise.all([
+ fetch('data/antecipacao.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/antecipacao.json');return r.json()}),
+ fetch('data/produtores-agrarios.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/produtores-agrarios.json');return r.json()}),
+ fetch('data/rede-viaria.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/rede-viaria.json');return r.json()}),
+ fetch('data/armazens-nacionais.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/armazens-nacionais.json');return r.json()})
+]).then(function(res){
+ ST.a=res[0];ST.prod=res[1];ST.rede=res[2];ST.arm=res[3];
+ desenharAviso();desenharFaixa();desenharCalendario();desenharHoriz();desenharRiscos();desenharProvincias();
+ ST.sel=ST.a.riscos.slice().sort(function(a,b){return b.gravidade-a.gravidade})[0].id;
+ desenharRiscos();desenharDossier();
+}).catch(function(err){
+ document.getElementById('aviso').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(err.message)
+  +'<br><br>Este ecr&atilde; precisa de quatro ficheiros em <span class="mono">data/</span>: antecipacao.json, produtores-agrarios.json, rede-viaria.json e armazens-nacionais.json.</div>';
+});
+</script>
+</body>
+</html>
