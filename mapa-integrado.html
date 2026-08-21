@@ -137,6 +137,7 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:-.01em}
                 <text class="lbl" x="132" y="680" text-anchor="middle">Maputo</text>
               </g>
               <g id="garm"></g>
+              <g id="gcom"></g>
               <g id="gint"></g>
             </svg>
           </div>
@@ -168,7 +169,7 @@ var ROT_NAT={estatal:'Estatal','ppp-gestao-privada':'PPP \u2014 Estado/gest\u00e
 var ROT_EST={operacional:'Operacional','em-modernizacao':'Em moderniza\u00e7\u00e3o','por-reabilitar':'Por reabilitar','por-construir':'Por construir',desconhecido:'Desconhecido'};
 var COR_ESTRADA={n1:'#E8BE7A',n4:'#12B981',n6:'#F0A926',n13:'#22B8F0'};
 
-var ST={rede:null,arm:null,prod:null,sel:null,camadas:{estradas:1,interrupcoes:1,armazens:1,produtores:1,corredores:1}};
+var ST={rede:null,arm:null,prod:null,com:null,sel:null,camadas:{estradas:1,interrupcoes:1,armazens:1,comercial:1,produtores:1,corredores:1}};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function num(n){return new Intl.NumberFormat('pt-PT').format(n)}
 
@@ -181,8 +182,8 @@ function desenharAviso(){
 
 function desenharCamadas(){
   var defs=[['estradas','Estradas','#E8BE7A'],['interrupcoes','Interrup\u00e7\u00f5es','#EF4444'],
-            ['armazens','Armaz\u00e9ns','#C98A3C'],['produtores','Produ\u00e7\u00e3o agr\u00e1ria','#12B981'],
-            ['corredores','Corredores','#22B8F0']];
+            ['armazens','Armaz\u00e9ns do cadastro','#C98A3C'],['comercial','Rede comercial','#F472B6'],
+            ['produtores','Produ\u00e7\u00e3o agr\u00e1ria','#12B981'],['corredores','Corredores','#22B8F0']];
   document.getElementById('camadas').innerHTML=defs.map(function(d){
     return '<button class="cb'+(ST.camadas[d[0]]?' on':'')+'" data-c="'+d[0]+'"><i style="background:'+d[2]+'"></i>'+d[1]+'</button>';
   }).join('');
@@ -231,6 +232,23 @@ function desenharArmazens(){
   g.innerHTML=h;
 }
 
+function desenharComercial(){
+  var g=document.getElementById('gcom');
+  if(!ST.camadas.comercial||!ST.com){g.innerHTML='';return}
+  var h='';
+  ST.com.unidades.forEach(function(u){
+    var x=X(u.lon),y=Y(u.lat);
+    var central=u.papel.indexOf('central')>=0;
+    var r=central?7:5.5;
+    h+='<g class="mk'+(ST.sel==='co:'+u.id?' sel':'')+'" data-t="co" data-i="'+esc(u.id)+'">'
+      +'<rect x="'+(x-r).toFixed(1)+'" y="'+(y-r).toFixed(1)+'" width="'+(r*2)+'" height="'+(r*2)+'" rx="2" '
+      +'fill="rgba(6,11,22,.85)" stroke="#F472B6" stroke-width="2.2"/>'
+      +(central?'<rect x="'+(x-r*0.4).toFixed(1)+'" y="'+(y-r*0.4).toFixed(1)+'" width="'+(r*0.8).toFixed(1)+'" height="'+(r*0.8).toFixed(1)+'" fill="#F472B6"/>':'')
+      +'</g>';
+  });
+  g.innerHTML=h;
+}
+
 function desenharInterrupcoes(){
   var g=document.getElementById('gint');
   if(!ST.camadas.interrupcoes){g.innerHTML='';return}
@@ -246,12 +264,13 @@ function desenharInterrupcoes(){
 }
 
 function desenharTudo(){
-  desenharCorredores();desenharEstradas();desenharArmazens();desenharInterrupcoes();ligarEventos();
+  desenharCorredores();desenharEstradas();desenharArmazens();desenharComercial();desenharInterrupcoes();ligarEventos();
   var n=(ST.camadas.armazens?ST.arm.armazens.filter(function(a){return a.coordenada&&a.coordenada.lat!=null}).length:0);
   document.getElementById('cont').textContent=
     (ST.camadas.estradas?ST.rede.estradas.length+' estradas \u00b7 ':'')
     +(ST.camadas.interrupcoes?ST.rede.interrupcoes.length+' interrup\u00e7\u00f5es \u00b7 ':'')
-    +(n?n+' armaz\u00e9ns \u00b7 ':'')+'10 prov\u00edncias';
+    +(n?n+' armaz\u00e9ns \u00b7 ':'')
+    +(ST.camadas.comercial&&ST.com?ST.com.unidades.length+' plataformas comerciais \u00b7 ':'')+'10 prov\u00edncias';
   Array.prototype.forEach.call(document.querySelectorAll('.tc-prov'),function(p){
     p.style.pointerEvents=ST.camadas.produtores?'auto':'none';
   });
@@ -259,13 +278,14 @@ function desenharTudo(){
 
 function ligarEventos(){
   var wrap=document.getElementById('mapwrap'),tip=document.getElementById('tip');
-  Array.prototype.forEach.call(document.querySelectorAll('#gestr .mk, #garm .mk, #gint .mk'),function(el){
+  Array.prototype.forEach.call(document.querySelectorAll('#gestr .mk, #garm .mk, #gint .mk, #gcom .mk'),function(el){
     el.addEventListener('click',function(){seleccionar(el.dataset.t+':'+el.dataset.i)});
     el.addEventListener('mousemove',function(ev){
       var r=wrap.getBoundingClientRect(),t=el.dataset.t,i=el.dataset.i,txt='';
       if(t==='rd'){var e=achar(ST.rede.estradas,'id',i);txt='<b>'+esc(e.designacao)+'</b><i>'+esc(e.liga)+'</i>'}
       if(t==='in'){var x=achar(ST.rede.interrupcoes,'id',i);txt='<b>'+esc(x.estrada)+' \u00b7 '+esc(x.troco)+'</b><i>'+(x.gravidade==='intransitavel'?'Intranstiável':'Trânsito condicionado')+'</i>'}
       if(t==='ar'){var a=achar(ST.arm.armazens,'id',i);txt='<b>'+esc(a.nome)+'</b><i>'+esc(ROT_NAT[a.natureza]||a.natureza)+'</i>'}
+      if(t==='co'){var u=achar(ST.com.unidades,'id',i);txt='<b>'+esc(u.nome)+'</b><i>'+esc(u.papel)+' \u00b7 sem stock publicado</i>'}
       tip.innerHTML=txt;tip.style.opacity=1;
       tip.style.left=Math.min(ev.clientX-r.left+14,r.width-262)+'px';
       tip.style.top=(ev.clientY-r.top-12)+'px';
@@ -326,6 +346,25 @@ function desenharDossier(){
      +(a.nota?'<div class="note w">'+esc(a.nota)+'</div>':'')
      +(a.fonte?'<div class="src"><a href="'+esc(a.fonte)+'" target="_blank" rel="noopener">'+esc(a.fonte)+'</a></div>':'');
   }
+  if(t==='co'){
+    var u=achar(ST.com.unidades,'id',i);
+    var op=achar(ST.com.operadores,'id',u.operador);tag='Rede comercial';
+    h='<div class="dname">'+esc(u.nome)+'</div><div class="dsub">'+esc(u.cidade)+', '+esc(u.provincia)+'</div>'
+     +'<span class="pill" style="color:#F472B6;border-color:#F472B655;background:#F472B614">'+esc(u.papel)+'</span>'
+     +'<span class="pill" style="color:var(--red);border-color:#EF444455;background:#EF444414">Privada</span>'
+     +linha('Operador',op?op.nome:'')+linha('Insígnia',op?op.insignia:'')+linha('Grupo',op?op.grupo:'')
+     +(op&&op.sede?linha('Sede',op.sede):'')
+     +(op&&op.escala?linha('Escala',op.escala.plataformas+' plataformas \u00b7 '+op.escala.clientes+' clientes \u00b7 '+op.escala.colaboradores+' colaboradores'):'')
+     +linha('Corredor',u.corredor)
+     +linha('Stock','N\u00e3o publicado')
+     +linha('Pre\u00e7os','N\u00e3o publicados por loja')
+     +linha('Telemetria','Sem reporte ao SINAGEPE')
+     +'<div class="note r"><b>Ponto cego mais fundo do sistema.</b> '+esc(ST.com.meta.avisoStock)+'</div>'
+     +'<div class="note"><b>Onde h\u00e1 pre\u00e7o:</b> '+esc(ST.com.meta.avisoPrecos)+' O SIMA publica o boletim <i>Quente-Quente</i> semanalmente e recolhe tamb\u00e9m a quantidade dispon\u00edvel no mercado grossista \u2014 o indicador de exist\u00eancias mais pr\u00f3ximo que o pa\u00eds tem.</div>'
+     +(op&&op.expansao?'<div class="note w"><b>Expans\u00e3o declarada:</b> '+esc(op.expansao)+'</div>':'')
+     +(op&&op.fonte?'<div class="src"><a href="'+esc(op.fonte)+'" target="_blank" rel="noopener">'+esc(op.fonte)+'</a></div>':'')
+     +'<div class="src"><a href="'+esc(ST.com.fontePrecos.fonte)+'" target="_blank" rel="noopener">'+esc(ST.com.fontePrecos.fonte)+'</a></div>';
+  }
   if(t==='pv'){
     var p=achar(ST.prod.provincias,'nome',i);tag='Produ\u00e7\u00e3o agr\u00e1ria';
     if(!p){h='<div class="empty">Sem dados de produ\u00e7\u00e3o para esta prov\u00edncia.</div>'}
@@ -354,7 +393,10 @@ function desenharDossier(){
 }
 
 function desenharAusencias(){
-  document.getElementById('ausencias').innerHTML=ST.rede.ausencias.map(function(a){
+  var todas=ST.rede.ausencias.concat((ST.com&&ST.com.lacunas)?ST.com.lacunas.map(function(l){
+    return {titulo:l.titulo,estado:l.estado==='inexistente'?'sem-dados':(l.estado==='parcial'?'apenas-agregado':'sem-fluxo'),
+            descricao:l.nota,comoResolver:'Ver o dossier de ades\u00e3o do MIC e da BMM.'};}):[]);
+  document.getElementById('ausencias').innerHTML=todas.map(function(a){
     var c=a.estado==='sem-dados'?'#EF4444':(a.estado==='apenas-agregado'?'#F0A926':'#22B8F0');
     return '<div class="au"><div class="au-t" style="color:'+c+'">'+esc(a.titulo)+'</div>'
       +'<div class="au-d">'+esc(a.descricao)+'</div>'
@@ -365,6 +407,7 @@ function desenharAusencias(){
 function desenharLegenda(){
   var h='';
   Object.keys(COR_NAT).forEach(function(k){h+='<span><i style="border-color:'+COR_NAT[k]+'"></i>'+ROT_NAT[k]+'</span>'});
+  h+='<span><i style="border-color:#F472B6;border-radius:2px"></i>Rede comercial privada</span>';
   h+='<span><i style="border-color:#EF4444"></i>Via intransit\u00e1vel</span><span><i style="border-color:#F0A926"></i>Tr\u00e2nsito condicionado</span>';
   h+='<span style="color:var(--t4)">Prov\u00edncias clic\u00e1veis \u00b7 c\u00edrculo cheio = armaz\u00e9m operacional</span>';
   document.getElementById('legenda').innerHTML=h;
@@ -376,9 +419,10 @@ if(lo)lo.addEventListener('click',function(e){e.preventDefault();try{sessionStor
 Promise.all([
   fetch('data/rede-viaria.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/rede-viaria.json');return r.json()}),
   fetch('data/armazens-nacionais.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/armazens-nacionais.json');return r.json()}),
-  fetch('data/produtores-agrarios.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/produtores-agrarios.json');return r.json()})
+  fetch('data/produtores-agrarios.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/produtores-agrarios.json');return r.json()}),
+  fetch('data/rede-comercial.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/rede-comercial.json');return r.json()})
 ]).then(function(res){
-  ST.rede=res[0];ST.arm=res[1];ST.prod=res[2];
+  ST.rede=res[0];ST.arm=res[1];ST.prod=res[2];ST.com=res[3];
   desenharAviso();desenharCamadas();desenharLegenda();desenharAusencias();desenharTudo();
   Array.prototype.forEach.call(document.querySelectorAll('.tc-prov'),function(p){
     p.addEventListener('click',function(){seleccionar('pv:'+p.dataset.p)});
