@@ -73,8 +73,8 @@ let RL=null, SEL=null, FILTRO='todos';
 const $=id=>document.getElementById(id);
 const nf=(n,d=0)=>(n==null||isNaN(n))?'—':Number(n).toLocaleString('pt-PT',{minimumFractionDigits:d,maximumFractionDigits:d});
 
-const COR_IOT={'activo':'#12B981','simulado':'#22B8F0','avaria':'#F0A926','sem-sensor':'#5E7189'};
-const ROT_IOT={'activo':'Sensores activos','simulado':'Leitura simulada','avaria':'Sensor em avaria','sem-sensor':'Sem sensor instalado'};
+const COR_IOT={'activo':'#12B981','avaria':'#F0A926','sem-sensor':'#5E7189'};
+const ROT_IOT={'activo':'Sensores activos','avaria':'Sensor em avaria','sem-sensor':'Sem sensor instalado'};
 const corOcup=o=>o>95?'#EF4444':o>=80?'#F0A926':o>=60?'#22B8F0':'#12B981';
 
 function aviso(tipo,titulo,texto){
@@ -199,11 +199,12 @@ function abrir(codigo){
       ${a.verificado?'':'<span class="pill" style="background:var(--warn-bg);color:var(--warn)">cadastro por confirmar</span>'}
     </div>
     <div class="kv">
-      <div><div class="l">Capacidade</div><div class="n mono">${nf(a.capacidadeT)} t</div></div>
-      <div><div class="l">Ocupação</div><div class="n mono" style="color:${corOcup(a.ocupacaoPercent)}">${a.ocupacaoPercent}%</div></div>
-      <div><div class="l">Ocupado</div><div class="n mono">${nf(a.capacidadeT*a.ocupacaoPercent/100)} t</div></div>
-      <div><div class="l">Livre</div><div class="n mono" style="color:var(--ok)">${nf(a.capacidadeT*(100-a.ocupacaoPercent)/100)} t</div></div>
+      <div><div class="l">Capacidade</div><div class="n mono">${a.capacidade&&a.capacidade.valor!=null?nf(a.capacidade.valor)+' '+a.capacidade.unidade:'não publicada'}</div></div>
+      <div><div class="l">Ocupação</div><div class="n mono" style="color:var(--ink-faint)">sem leitura</div></div>
+      <div><div class="l">Estado</div><div class="n mono" style="font-size:15px">${a.estado||'—'}</div></div>
+      <div><div class="l">Fonte</div><div class="n mono" style="font-size:12px">${a.fonte?'<a href="'+a.fonte+'" target="_blank" rel="noopener" style="color:var(--acc)">oficial</a>':'—'}</div></div>
     </div>
+    <div class="note" style="margin-top:10px">A ocupação não é conhecida: nenhuma unidade do cadastro reporta nível de enchimento. As capacidades vêm da entidade gestora e estão em unidades diferentes conforme o tipo de instalação, pelo que não são somadas entre si.</div>
     <div class="eyebrow" style="margin-top:16px">Produtos armazenados</div>
     <div class="row" style="margin-top:9px;gap:9px">
       ${a.produtos.map(p=>`<div style="display:flex;align-items:center;gap:8px;background:#080F1C;border-radius:9px;padding:7px 11px 7px 7px">
@@ -222,10 +223,10 @@ function painelCorredores(){
     <div class="rl-item" data-c="${c.id}" onclick="FILTRO='${c.id}';pintarFiltros();desenharMapa();listar()">
       <span class="sw" style="background:${c.cor}"></span>
       <span class="nm">${c.nome}<div style="font-size:10px;color:var(--ink-faint)">${c.eixoRodoviario}</div></span>
-      <span class="pc mono" style="color:${c.utilizacaoPercent>=85?'var(--crit)':c.utilizacaoPercent>=70?'var(--warn)':'var(--ok)'}">${c.utilizacaoPercent}%</span>
+      <span class="pc mono" style="color:var(--ink-faint);font-size:10.5px">${c.utilizacaoPercent==null?'n/p':c.utilizacaoPercent+'%'}</span>
     </div>`).join('')
     + `<div class="note">Tutela: ${t.ministerio} (${t.sigla}). Infraestrutura ferroviária e portuária operada pelo ${t.operadorFerroviarioPortuario.sigla}.
-       As percentagens de utilização são de trabalho e ainda não foram confirmadas junto do ministério.</div>`;
+       A taxa de utilização de cada corredor não é publicada (n/p). Detentor: MTL e CFM. Os valores que aqui estavam antes eram de trabalho e foram retirados.</div>`;
 }
 function painelPrioridades(){
   const t=RL.tutela;
@@ -240,21 +241,21 @@ function painelIoTResumo(){
   const A=RL.armazens, n=A.length;
   const conta=e=>A.filter(a=>a.iot.estado===e).length;
   const cobertos=n-conta('sem-sensor');
-  const capSemSensor=A.filter(a=>a.iot.estado==='sem-sensor').reduce((s,a)=>s+a.capacidadeT,0);
-  const capTotal=A.reduce((s,a)=>s+a.capacidadeT,0);
+  const semSensor=conta('sem-sensor');
   $('rl-iot').innerHTML=`
     <div class="row" style="justify-content:space-between;align-items:baseline">
       <span style="font-size:11.5px;color:var(--ink-dim)">Unidades com instrumentação</span>
       <b class="mono" style="font-size:24px;color:${cobertos/n>=.7?'var(--ok)':cobertos/n>=.4?'var(--warn)':'var(--crit)'}">${nf(cobertos/n*100,0)}%</b></div>
     <div class="bar" style="margin-top:9px;height:8px"><i style="width:${cobertos/n*100}%;background:var(--acc)"></i></div>
     <div class="kv">
-      <div><div class="l">A reportar</div><div class="n mono" style="color:var(--acc)">${conta('activo')+conta('simulado')}</div></div>
+      <div><div class="l">A reportar</div><div class="n mono" style="color:${conta('activo')?'var(--acc)':'var(--crit)'}">${conta('activo')}</div></div>
       <div><div class="l">Em avaria</div><div class="n mono" style="color:var(--warn)">${conta('avaria')}</div></div>
       <div><div class="l">Sem sensor</div><div class="n mono" style="color:var(--ink-faint)">${conta('sem-sensor')}</div></div>
-      <div><div class="l">Capacidade cega</div><div class="n mono" style="color:var(--crit)">${nf(capSemSensor/capTotal*100,0)}%</div></div>
+      <div><div class="l">Capacidade cega</div><div class="n mono" style="color:var(--crit)">${nf(semSensor/n*100,0)}%</div></div>
     </div>
-    <div class="note">Capacidade cega é a fatia da capacidade nacional sem qualquer leitura automática — ${nf(capSemSensor)} t de ${nf(capTotal)} t.
-    Sobre essa fatia, o sistema só sabe o que o operador declara. É aí que a instrumentação compra mais verdade por metical investido.</div>`;
+    <div class="note"><b style="color:var(--crit)">${semSensor} de ${n} unidades sem qualquer leitura automática.</b>
+    A métrica é o número de unidades e não a tonelagem, porque as capacidades do cadastro estão em unidades incompatíveis — metros cúbicos, toneladas, toneladas por ano, TEU e metros quadrados não se somam.
+    Sobre esta fatia, o sistema só sabe o que o operador declara. É aqui que a instrumentação compra mais verdade por metical investido.</div>`;
 }
 
 /* ---------- arranque ---------- */
@@ -285,10 +286,10 @@ function painelIoTResumo(){
         <div class="cb" style="border-top:1px solid var(--card-line);padding-top:12px">
           <div class="row" style="font-size:10.5px;color:var(--ink-dim)">
             <span style="display:flex;align-items:center;gap:6px"><i class="led" style="background:#12B981"></i>Sensor activo</span>
-            <span style="display:flex;align-items:center;gap:6px"><i class="led" style="background:#22B8F0"></i>Leitura simulada</span>
+            
             <span style="display:flex;align-items:center;gap:6px"><i class="led" style="background:#F0A926"></i>Avaria</span>
             <span style="display:flex;align-items:center;gap:6px"><i class="led" style="background:#5E7189"></i>Sem sensor</span>
-            <span style="margin-left:auto;color:var(--ink-faint)">O tamanho do círculo é a capacidade; a cor é a ocupação</span>
+            <span style="margin-left:auto;color:var(--ink-faint)">Cadastro lido de armazens-nacionais.json &middot; nenhuma unidade reporta</span>
           </div></div></div>
       <div>
         <div class="card frame"><div class="ch"><h2>Armazém seleccionado</h2></div>
@@ -305,6 +306,25 @@ function painelIoTResumo(){
     const bruto=await r.text();
     if(!r.ok || /^\s*</.test(bruto)) throw new Error(r.ok?'o servidor devolveu HTML em vez de JSON':'HTTP '+r.status);
     RL=JSON.parse(bruto);
+
+    /* As unidades deixaram de viver neste ficheiro. Passam a ser lidas do cadastro
+       nacional, que e a unica fonte de verdade sobre armazenagem. */
+    const rc=await fetch('data/armazens-nacionais.json',{cache:'no-store'});
+    if(!rc.ok) throw new Error('HTTP '+rc.status+' em data/armazens-nacionais.json');
+    const CAD=await rc.json();
+    const PUBLICO={'estatal':1,'ppp-gestao-privada':1,'participacao-estatal':1,'concessao-privada':1};
+    RL.armazens=CAD.armazens
+      .filter(a=>a.coordenada&&a.coordenada.lat!=null)
+      .map(a=>({
+        codigo:a.id, nome:a.nome, provincia:a.provincia||'—',
+        operador:a.operador||a.proprietario||'—',
+        tipo:PUBLICO[a.natureza]?'Publico':'Privado',
+        natureza:a.natureza, estado:a.estado,
+        corredor:a.corredor||null, lat:a.coordenada.lat, lon:a.coordenada.lon,
+        capacidade:a.capacidade||null, capacidadeT:null, ocupacaoPercent:null,
+        produtos:a.produtos||[], verificado:!!a.verificado, fonte:a.fonte||null,
+        iot:{estado:'sem-sensor', ultimaLeitura:null, leituras:{}}
+      }));
   }catch(e){
     alvo.innerHTML=`<div class="card frame"><div class="cb">${aviso('crit','Não foi possível carregar a rede',
       `O ecrã precisa de <span class="mono">data/rede-logistica.json</span>. Confirme que o ficheiro está publicado nessa pasta. Detalhe: ${e.message}`)}</div></div>`;

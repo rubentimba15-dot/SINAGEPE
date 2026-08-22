@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ponto Cego Duplo &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#060B16; --sidebar-bg:#080E1B; --card-bg:#0C1626;
+  --card-line:rgba(38,56,86,.75); --gold-line:rgba(201,138,60,.28);
+  --gold:#C98A3C; --blue:#22B8F0; --teal:#2DD4BF; --amber:#F0A926; --red:#EF4444; --ok:#12B981;
+  --ink:#F3F7FC; --ink-dim:#8FA1B8; --ink-faint:#5E7189;
+  --nav-active:#22B8F0; --nav-idle:#111E31;
+  --brz:#C98A3C; --brzl:#E8BE7A; --brzg:rgba(201,138,60,.30);
+  --accg:rgba(34,184,240,.13); --t2:#C3D0E0; --t3:#8FA1B8; --t4:#5E7189; --cardh:#111E31;
+  --g3:#EF4444; --g2:#F0A926; --g1:#22B8F0; --g0:#12B981;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--nav-active);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1500px}
+.eyebrow{font-size:9.5px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:22px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:18px;max-width:860px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
+.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+
+.aviso{padding:13px 16px;border-radius:12px;border:1px solid rgba(201,138,60,.35);background:rgba(201,138,60,.07);margin-bottom:16px;font-size:12px;line-height:1.6;color:var(--brzl)}
+.aviso b{color:var(--brz)}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.kpi{padding:15px 17px}
+.kpi-l{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--t4);margin-bottom:9px}
+.kpi-v{font-size:26px;font-weight:600;letter-spacing:-.02em}
+.kpi-n{font-size:10.5px;color:var(--t4);margin-top:6px;line-height:1.45}
+
+.grid{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.grid{grid-template-columns:1fr}.sidebar{display:none}}
+
+table{width:100%;border-collapse:collapse}
+th{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);text-align:left;padding:10px 12px;border-bottom:1px solid var(--card-line);font-weight:500;white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid rgba(38,56,86,.4);font-size:11.5px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr.prod{cursor:pointer}
+tr.prod:hover td{background:var(--cardh)}
+tr.prod.sel td{background:rgba(34,184,240,.08)}
+.pname{font-weight:600;font-size:12.5px}
+.pmeta{font-size:10px;color:var(--t4);margin-top:2px}
+.badge{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.gcell{display:flex;align-items:center;gap:7px}
+.gdot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+.gtxt{font-size:10.5px}
+
+.sim{padding:15px 17px}
+.simrow{display:flex;align-items:center;gap:13px;margin-bottom:11px;flex-wrap:wrap}
+.simrow label{font-size:11px;color:var(--t3);min-width:190px}
+input[type=range]{flex:1;min-width:160px;accent-color:var(--blue)}
+.simval{font-size:19px;font-weight:600;min-width:44px;text-align:right}
+.simnote{font-size:11px;color:var(--t4);line-height:1.55;margin-top:8px}
+.bar{height:11px;border-radius:6px;background:#0A1421;border:1px solid var(--card-line);overflow:hidden;display:flex;margin-top:11px}
+.bar i{display:block;height:100%}
+.barleg{display:flex;flex-wrap:wrap;gap:13px;margin-top:9px;font-size:10.5px;color:var(--t3)}
+.barleg i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+.dz{padding:15px 17px}
+.empty{color:var(--t4);font-size:12px;padding:26px 17px;text-align:center;line-height:1.6}
+.dname{font-size:15px;font-weight:600;margin-bottom:3px}
+.dsub{font-size:11px;color:var(--t4);margin-bottom:12px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid rgba(38,56,86,.4);font-size:11.5px}
+.row:last-child{border-bottom:none}
+.row span:first-child{color:var(--t4);flex-shrink:0}
+.row span:last-child{text-align:right;color:var(--t2)}
+.note{margin-top:12px;padding:10px 12px;border-radius:8px;background:rgba(240,169,38,.07);border:1px solid rgba(240,169,38,.24);font-size:11px;color:var(--amber);line-height:1.5}
+.fix{margin-top:11px;padding:11px 13px;border-radius:8px;background:rgba(18,185,129,.07);border:1px solid rgba(18,185,129,.26);font-size:11.5px;color:#7EE2C0;line-height:1.55}
+.fix b{color:var(--ok);display:block;margin-bottom:4px;font-size:10px;letter-spacing:.13em;text-transform:uppercase}
+.unids{margin-top:12px;max-height:230px;overflow-y:auto;border-top:1px solid var(--card-line);padding-top:9px}
+.uni{display:flex;align-items:center;gap:9px;padding:6px 0;font-size:11px;border-bottom:1px solid rgba(38,56,86,.3)}
+.uni:last-child{border-bottom:none}
+.uni-n{flex:1;line-height:1.35}
+.uni-m{font-size:9.5px;color:var(--t4)}
+
+.ach{padding:13px 17px;border-bottom:1px solid rgba(38,56,86,.4)}
+.ach:last-child{border-bottom:none}
+.ach-t{font-size:12.5px;font-weight:600;margin-bottom:5px;line-height:1.35}
+.ach-d{font-size:11.5px;color:var(--t3);line-height:1.55}
+.ach-a{font-size:11px;color:var(--brzl);margin-top:7px;line-height:1.5}
+.src{margin-top:10px;font-size:10.5px}
+.src a{color:var(--blue);text-decoration:none;word-break:break-all;display:block}
+.src a:hover{text-decoration:underline}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-t">SINAGEPE</div><div class="brand-s">Torre de Controlo</div></div>
+    <a class="nav-item" href="index.html"><span class="nav-icon">&#9638;</span><span class="nav-label">PAINEL</span></a>
+    <a class="nav-item" href="alertas.html"><span class="nav-icon">&#9888;</span><span class="nav-label">Alertas</span></a>
+    <a class="nav-item" href="mapa-nacional.html"><span class="nav-icon">&#9678;</span><span class="nav-label">Mapa</span></a>
+    <a class="nav-item" href="simulador-importacoes.html"><span class="nav-icon">&#8779;</span><span class="nav-label">Simulador</span></a>
+    <a class="nav-item" href="simulador-preditivo.html"><span class="nav-icon">&#9709;</span><span class="nav-label">Simulador Preditivo</span></a>
+    <a class="nav-item" href="portal-pme.html"><span class="nav-icon">&#9921;</span><span class="nav-label">PMEs</span></a>
+    <a class="nav-item" href="cadastro-armazens.html"><span class="nav-icon">&#9636;</span><span class="nav-label">Armaz&eacute;ns</span></a>
+    <a class="nav-item" href="armazens-nacionais.html"><span class="nav-icon">&#9707;</span><span class="nav-label">Armaz&eacute;ns Nacionais</span></a>
+    <a class="nav-item active" href="ponto-cego-duplo.html"><span class="nav-icon">&#9673;</span><span class="nav-label">Ponto Cego Duplo</span></a>
+    <a class="nav-item" href="modulo-logistica.html"><span class="nav-icon">&#8644;</span><span class="nav-label">Log&iacute;stica</span></a>
+    <a class="nav-item" href="rede-logistica.html"><span class="nav-icon">&#8984;</span><span class="nav-label">Rede Log&iacute;stica</span></a>
+    <a class="nav-item" href="relatorios.html"><span class="nav-icon">&#9639;</span><span class="nav-label">Relat&oacute;rios</span></a>
+    <a class="nav-item" href="administracao-auditoria.html"><span class="nav-icon">&#9881;</span><span class="nav-label">Configura&ccedil;&otilde;es</span></a>
+    <a class="nav-item" href="marketplace-b2b.html"><span class="nav-icon">&#11041;</span><span class="nav-label">Marketplace B2B</span></a>
+    <a class="nav-item" href="inteligencia-consolidada.html"><span class="nav-icon">&#9672;</span><span class="nav-label">Intelig&ecirc;ncia</span></a>
+    <a class="nav-item" href="fontes-nacionais.html"><span class="nav-icon">&#11043;</span><span class="nav-label">Fontes Nacionais</span></a>
+    <a class="nav-item" href="fontes-internacionais.html"><span class="nav-icon">&#11042;</span><span class="nav-label">Fontes Internacionais</span></a>
+    <a class="nav-item" href="#" id="btn-logout" style="margin-top:8px;border-top:1px solid var(--gold-line);border-radius:0;padding-top:13px"><span class="nav-icon">&#8617;</span><span class="nav-label" style="color:#EF4444">Sair (Logout)</span></a>
+  </aside>
+
+  <main>
+    <div class="eyebrow">Cruzamento identifica&ccedil;&atilde;o &times; telemetria</div>
+    <h1>Ponto Cego Duplo</h1>
+    <p class="sub">Onde um produto sem identifica&ccedil;&atilde;o entra num armaz&eacute;m sem telemetria, o Estado deixa de conseguir responder a tr&ecirc;s perguntas: o que l&aacute; est&aacute;, quanto est&aacute;, e se saiu. Este ecr&atilde; cruza o estado de identifica&ccedil;&atilde;o de cada produto essencial com o estado de instrumenta&ccedil;&atilde;o das unidades que o guardam.</p>
+
+    <div class="aviso" id="aviso"></div>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="card frame" style="margin-bottom:14px">
+      <div class="ch"><h2>Simulador de instrumenta&ccedil;&atilde;o</h2><span class="tag">Determin&iacute;stico</span></div>
+      <div class="sim">
+        <div class="simrow">
+          <label for="sl-tel">Unidades com telemetria instalada</label>
+          <input type="range" id="sl-tel" min="0" max="29" value="0" step="1">
+          <span class="simval mono" id="v-tel">0</span>
+        </div>
+        <div class="simrow">
+          <label for="sl-id">Produtos com identifica&ccedil;&atilde;o nacional</label>
+          <input type="range" id="sl-id" min="0" max="12" value="0" step="1">
+          <span class="simval mono" id="v-id">0</span>
+        </div>
+        <div class="bar" id="bar"></div>
+        <div class="barleg">
+          <span><i style="background:var(--g3)"></i>Cego total</span>
+          <span><i style="background:var(--g2)"></i>Cego de um lado</span>
+          <span><i style="background:var(--g1)"></i>Parcial</span>
+          <span><i style="background:var(--g0)"></i>Fechado</span>
+        </div>
+        <div class="simnote" id="sim-nota"></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <div class="card frame">
+          <div class="ch"><h2>Matriz por produto</h2><span class="tag" id="mat-tag">&mdash;</span></div>
+          <div style="overflow-x:auto"><table id="matriz"></table></div>
+        </div>
+
+        <div class="card frame" style="margin-top:14px">
+          <div class="ch"><h2>Achados accion&aacute;veis</h2><span class="tag crit">Para decis&atilde;o</span></div>
+          <div id="achados"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card frame">
+          <div class="ch"><h2>Dossier do produto</h2><span class="tag" id="d-tag">Nenhum seleccionado</span></div>
+          <div class="dz" id="dossier"><div class="empty">Escolha um produto na matriz para ver a chave de identifica&ccedil;&atilde;o aplic&aacute;vel, as unidades que o guardam e o que resolveria a cegueira.</div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+var GRAU = {
+  3:{ cor:'var(--g3)', rotulo:'Cego total' },
+  2:{ cor:'var(--g2)', rotulo:'Cego de um lado' },
+  1:{ cor:'var(--g1)', rotulo:'Parcial' },
+  0:{ cor:'var(--g0)', rotulo:'Fechado' }
+};
+var ROTULO_ID = { nenhuma:'Sem identifica\u00e7\u00e3o', estrangeira:'Identifica\u00e7\u00e3o estrangeira', nacional:'Identifica\u00e7\u00e3o nacional' };
+var COR_ID = { nenhuma:'#EF4444', estrangeira:'#F0A926', nacional:'#12B981' };
+
+var ST = { ident:null, arm:null, sel:null, nTel:0, nId:0, ordemTel:[], ordemId:[] };
+
+function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function num(n){ return new Intl.NumberFormat('pt-PT').format(n); }
+
+/* Une produto e armaz\u00e9m pelas fam\u00edlias declaradas no cadastro. */
+function unidadesDe(p){
+  return ST.arm.armazens.filter(function(a){
+    return (a.produtos||[]).some(function(f){ return p.familiasArmazem.indexOf(f) >= 0; });
+  });
+}
+
+/* Ordem de instrumenta\u00e7\u00e3o: estrat\u00e9gicos primeiro, depois maior capacidade dentro da fam\u00edlia. */
+function calcularOrdens(){
+  var estrat = {};
+  ST.ident.produtos.forEach(function(p){ if(p.estrategico) p.familiasArmazem.forEach(function(f){ estrat[f] = true; }); });
+  ST.ordemTel = ST.arm.armazens.slice().sort(function(a,b){
+    var ea = (a.produtos||[]).some(function(f){ return estrat[f]; }) ? 1 : 0;
+    var eb = (b.produtos||[]).some(function(f){ return estrat[f]; }) ? 1 : 0;
+    if(ea !== eb) return eb - ea;
+    var ca = a.capacidade && a.capacidade.valor != null ? a.capacidade.valor : 0;
+    var cb = b.capacidade && b.capacidade.valor != null ? b.capacidade.valor : 0;
+    return cb - ca;
+  }).map(function(a){ return a.id; });
+
+  ST.ordemId = ST.ident.produtos.slice().sort(function(a,b){
+    var pa = a.prioridade === 'maxima' ? 2 : (a.estrategico ? 1 : 0);
+    var pb = b.prioridade === 'maxima' ? 2 : (b.estrategico ? 1 : 0);
+    return pb - pa;
+  }).map(function(p){ return p.slug; });
+}
+
+function temTelemetria(id){ return ST.ordemTel.indexOf(id) < ST.nTel; }
+function temIdNacional(slug){ return ST.ordemId.indexOf(slug) < ST.nId; }
+
+function identificacaoEfectiva(p){ return temIdNacional(p.slug) ? 'nacional' : p.identificacao; }
+
+function grau(p, a){
+  var id = identificacaoEfectiva(p), tel = temTelemetria(a.id);
+  if(id === 'nacional' && tel) return 0;
+  if(id === 'nenhuma' && !tel) return 3;
+  if(id === 'estrangeira' && tel) return 1;
+  return 2;
+}
+
+/* Todos os pares produto x unidade que o guarda. */
+function pares(){
+  var out = [];
+  ST.ident.produtos.forEach(function(p){
+    unidadesDe(p).forEach(function(a){ out.push({ p:p, a:a, g:grau(p,a) }); });
+  });
+  return out;
+}
+
+function desenharAviso(){
+  var f = ST.ident.meta.factoEstruturante;
+  document.getElementById('aviso').innerHTML =
+    '<b>' + esc(f.titulo) + '.</b> ' + esc(f.descricao) + ' ' + esc(f.consequencia)
+    + '<div style="margin-top:9px;color:var(--t4);font-size:11px;line-height:1.55">'
+    + esc(ST.ident.meta.metodo.naoMedido) + '</div>';
+}
+
+function desenharKpis(){
+  var ps = pares();
+  var g3 = ps.filter(function(x){ return x.g === 3; }).length;
+  var semId = ST.ident.produtos.filter(function(p){ return identificacaoEfectiva(p) === 'nenhuma'; }).length;
+  var semTel = ST.arm.armazens.filter(function(a){ return !temTelemetria(a.id); }).length;
+  document.getElementById('kpis').innerHTML =
+      kpi('Pares em cego total', g3 + ' <span style="font-size:14px;color:var(--t4)">de ' + ps.length + '</span>',
+          'Cada par \u00e9 um produto essencial guardado numa unidade concreta. Cego total significa que nem o produto nem a unidade reportam.', g3 ? 'var(--g3)' : 'var(--g0)')
+    + kpi('Produtos sem identifica\u00e7\u00e3o', semId + ' de ' + ST.ident.produtos.length,
+          'Circulam a granel ou em embalagem industrial sem chave unit\u00e1ria em uso.', semId ? 'var(--g2)' : 'var(--g0)')
+    + kpi('Unidades sem telemetria', semTel + ' de ' + ST.arm.armazens.length,
+          'Sem leitura autom\u00e1tica de n\u00edvel, temperatura ou movimento.', semTel ? 'var(--g2)' : 'var(--g0)')
+    + kpi('Prefixo nacional', '602', 'Por atribuir. Nenhum produto fabricado em Mo\u00e7ambique pode receber hoje um GTIN emitido no pa\u00eds.', 'var(--brz)');
+}
+function kpi(l, v, n, cor){
+  return '<div class="card frame kpi"><div class="kpi-l">' + l + '</div>'
+       + '<div class="kpi-v mono" style="color:' + (cor||'var(--ink)') + '">' + v + '</div>'
+       + '<div class="kpi-n">' + n + '</div></div>';
+}
+
+function desenharBarra(){
+  var ps = pares(), t = ps.length || 1;
+  var c = [0,0,0,0];
+  ps.forEach(function(x){ c[x.g]++; });
+  var h = '';
+  [3,2,1,0].forEach(function(g){
+    if(c[g]) h += '<i style="background:' + GRAU[g].cor + ';width:' + (c[g]/t*100).toFixed(2) + '%" title="' + GRAU[g].rotulo + ': ' + c[g] + '"></i>';
+  });
+  document.getElementById('bar').innerHTML = h;
+
+  var nota;
+  if(ST.nTel === 0 && ST.nId === 0){
+    nota = 'Situa\u00e7\u00e3o real de hoje: ' + c[3] + ' dos ' + t + ' pares em cego total. Mova os cursores para ver o que muda com instrumenta\u00e7\u00e3o e com identifica\u00e7\u00e3o nacional.';
+  } else {
+    nota = 'Com ' + ST.nTel + ' unidade(s) instrumentada(s) e ' + ST.nId + ' produto(s) com identifica\u00e7\u00e3o nacional, os pares em cego total passam de '
+         + paresBase() + ' para ' + c[3] + '. As unidades s\u00e3o instrumentadas por ordem de import\u00e2ncia estrat\u00e9gica e depois por capacidade; os produtos come\u00e7am pelos medicamentos.';
+  }
+  nota += ' As capacidades n\u00e3o s\u00e3o somadas entre si porque est\u00e3o em unidades diferentes \u2014 a m\u00e9trica \u00e9 o n\u00famero de pares.';
+  document.getElementById('sim-nota').textContent = nota;
+}
+function paresBase(){
+  var n = 0;
+  ST.ident.produtos.forEach(function(p){
+    if(p.identificacao === 'nenhuma') n += unidadesDe(p).length;
+  });
+  return n;
+}
+
+function desenharMatriz(){
+  var h = '<thead><tr><th>Produto</th><th>Identifica\u00e7\u00e3o</th><th>Chave aplic\u00e1vel</th><th>Unidades</th><th>Situa\u00e7\u00e3o</th></tr></thead><tbody>';
+  ST.ident.produtos.forEach(function(p){
+    var us = unidadesDe(p);
+    var gs = us.map(function(a){ return grau(p,a); });
+    var pior = gs.length ? Math.max.apply(null, gs) : 2;
+    var nPior = gs.filter(function(g){ return g === pior; }).length;
+    var id = identificacaoEfectiva(p);
+    h += '<tr class="prod' + (ST.sel === p.slug ? ' sel' : '') + '" data-s="' + esc(p.slug) + '">'
+       + '<td><div class="pname">' + esc(p.nome) + (p.prioridade === 'maxima' ? ' <span style="color:var(--red);font-size:10px">\u25c6</span>' : '') + '</div>'
+       + '<div class="pmeta">' + esc(p.formaCirculacao) + '</div></td>'
+       + '<td><span class="badge" style="color:' + COR_ID[id] + ';border-color:' + COR_ID[id] + '55;background:' + COR_ID[id] + '14">' + ROTULO_ID[id] + '</span></td>'
+       + '<td style="color:var(--t3)">' + esc(p.chaveAplicavel) + '</td>'
+       + '<td class="mono">' + us.length + '</td>'
+       + '<td><div class="gcell"><span class="gdot" style="background:' + GRAU[pior].cor + '"></span>'
+       + '<span class="gtxt">' + GRAU[pior].rotulo + '<span style="color:var(--t4)"> \u00b7 ' + nPior + '</span></span></div></td></tr>';
+  });
+  h += '</tbody>';
+  var tb = document.getElementById('matriz');
+  tb.innerHTML = h;
+  document.getElementById('mat-tag').textContent = ST.ident.produtos.length + ' produtos \u00b7 ' + pares().length + ' pares';
+  Array.prototype.forEach.call(tb.querySelectorAll('tr.prod'), function(tr){
+    tr.addEventListener('click', function(){ ST.sel = tr.dataset.s; desenharMatriz(); desenharDossier(); });
+  });
+}
+
+function desenharDossier(){
+  var p = null;
+  ST.ident.produtos.forEach(function(x){ if(x.slug === ST.sel) p = x; });
+  if(!p) return;
+  var us = unidadesDe(p);
+  var id = identificacaoEfectiva(p);
+  var g3 = us.filter(function(a){ return grau(p,a) === 3; }).length;
+
+  var h = '<div class="dname">' + esc(p.nome) + '</div>'
+        + '<div class="dsub">' + esc(p.formaCirculacao) + (p.estrategico ? ' \u00b7 produto estrat\u00e9gico' : '') + '</div>';
+  h += '<div class="row"><span>Identifica\u00e7\u00e3o</span><span style="color:' + COR_ID[id] + '">' + ROTULO_ID[id] + '</span></div>';
+  h += '<div class="row"><span>Chave aplic\u00e1vel</span><span>' + esc(p.chaveAplicavel) + '</span></div>';
+  h += '<div class="row"><span>Unidades que o guardam</span><span class="mono">' + us.length + '</span></div>';
+  h += '<div class="row"><span>Em cego total</span><span class="mono" style="color:' + (g3 ? 'var(--g3)' : 'var(--g0)') + '">' + g3 + '</span></div>';
+  h += '<div class="row"><span>Fam\u00edlias de armazenagem</span><span>' + esc(p.familiasArmazem.join(', ')) + '</span></div>';
+
+  if(p.nota) h += '<div class="note">' + esc(p.nota) + '</div>';
+
+  h += '<div class="fix"><b>O que resolveria</b>' + esc(comoResolver(p)) + '</div>';
+
+  if(us.length){
+    h += '<div class="unids">';
+    us.forEach(function(a){
+      var g = grau(p,a);
+      h += '<div class="uni"><span class="gdot" style="background:' + GRAU[g].cor + '"></span>'
+         + '<span class="uni-n">' + esc(a.nome) + '<div class="uni-m">' + esc(a.provincia || 'sem prov\u00edncia') + ' \u00b7 ' + GRAU[g].rotulo + '</div></span></div>';
+    });
+    h += '</div>';
+  }
+  document.getElementById('dossier').innerHTML = h;
+  document.getElementById('d-tag').textContent = us.length + ' unidades';
+}
+
+function comoResolver(p){
+  var id = identificacaoEfectiva(p);
+  if(p.chaveAplicavel.indexOf('n\u00e3o aplic\u00e1vel') >= 0 || p.slug === 'gasoleo' || p.slug === 'gasolina'){
+    return 'A identifica\u00e7\u00e3o unit\u00e1ria n\u00e3o se aplica a granel l\u00edquido. Aqui a cegueira resolve-se s\u00f3 pelo lado do armaz\u00e9m: sonda de n\u00edvel no tanque. \u00c9 barato, imediato e fecha a quest\u00e3o sozinho.';
+  }
+  if(id === 'nenhuma'){
+    return 'Dois passos. No armaz\u00e9m, sensor de n\u00edvel de enchimento. No produto, chave log\u00edstica na palete ou na consigna\u00e7\u00e3o \u2014 e o caminho mais curto para isso \u00e9 o certificado de dep\u00f3sito da BMM, que obriga a descrever e quantificar o lote para poder ser negociado.';
+  }
+  if(id === 'estrangeira'){
+    return 'O produto j\u00e1 tem GTIN, mas emitido fora do pa\u00eds \u2014 rastreia at\u00e9 ao dono da marca, n\u00e3o at\u00e9 ao lote nacional. Falta instrumentar o armaz\u00e9m e ligar o GTIN ao registo de dep\u00f3sito para saber onde esteve.';
+  }
+  return 'Identifica\u00e7\u00e3o nacional e telemetria activas. Situa\u00e7\u00e3o-alvo.';
+}
+
+function desenharAchados(){
+  var h = '';
+  (ST.ident.achados||[]).forEach(function(x){
+    var cor = x.gravidade === 'alta' ? 'var(--g3)' : 'var(--g2)';
+    h += '<div class="ach"><div class="ach-t" style="color:' + cor + '">' + esc(x.titulo) + '</div>'
+       + '<div class="ach-d">' + esc(x.descricao) + '</div>'
+       + '<div class="ach-a"><b>Ac\u00e7\u00e3o:</b> ' + esc(x.accao)
+       + ' <span style="color:var(--t4)">\u2014 cadeia: ' + esc(x.cadeiaAprovacao.join(' \u2192 ')) + '</span></div></div>';
+  });
+  var f = ST.ident.meta.factoEstruturante;
+  if(f.fontes && f.fontes.length){
+    h += '<div class="ach"><div class="ach-t" style="color:var(--t2)">Fontes</div><div class="src">';
+    f.fontes.forEach(function(u){ h += '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + esc(u) + '</a>'; });
+    h += '</div></div>';
+  }
+  document.getElementById('achados').innerHTML = h;
+}
+
+function redesenhar(){ desenharKpis(); desenharBarra(); desenharMatriz(); if(ST.sel) desenharDossier(); }
+
+var lo = document.getElementById('btn-logout');
+if(lo) lo.addEventListener('click', function(e){
+  e.preventDefault();
+  try { sessionStorage.clear(); } catch(err) {}
+  location.href = 'index.html';
+});
+
+Promise.all([
+  fetch('data/identificacao-gs1.json').then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status + ' em data/identificacao-gs1.json'); return r.json(); }),
+  fetch('data/armazens-nacionais.json').then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status + ' em data/armazens-nacionais.json'); return r.json(); })
+]).then(function(res){
+  ST.ident = res[0]; ST.arm = res[1];
+  calcularOrdens();
+  document.getElementById('sl-tel').max = ST.arm.armazens.length;
+  document.getElementById('sl-id').max = ST.ident.produtos.length;
+  desenharAviso(); desenharAchados(); redesenhar();
+
+  document.getElementById('sl-tel').addEventListener('input', function(e){
+    ST.nTel = Number(e.target.value);
+    document.getElementById('v-tel').textContent = ST.nTel;
+    redesenhar();
+  });
+  document.getElementById('sl-id').addEventListener('input', function(e){
+    ST.nId = Number(e.target.value);
+    document.getElementById('v-id').textContent = ST.nId;
+    redesenhar();
+  });
+}).catch(function(err){
+  document.getElementById('kpis').innerHTML =
+    '<div class="card frame err"><b>N\u00e3o foi poss\u00edvel carregar os dados.</b><br>' + esc(err.message)
+    + '<br><br>Este ecr\u00e3 precisa de <span class="mono">data/identificacao-gs1.json</span> e de <span class="mono">data/armazens-nacionais.json</span> publicados na pasta <span class="mono">data/</span>.</div>';
+});
+</script>
+</body>
+</html>

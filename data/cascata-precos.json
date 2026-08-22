@@ -1,0 +1,201 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "geradoEm": "2026-08-21",
+    "ambito": "Cascata de formação do preço dos combustíveis — o único produto essencial em Moçambique cuja estrutura de preço é regulada, calculada por uma entidade pública e publicada mensalmente.",
+    "baseLegal": "Decreto n.º 89/2019 estabelece a metodologia de cálculo. A ARENE efectua os cálculos ao abrigo da Lei n.º 11/2017 e publica os preços mensalmente, normalmente na terceira ou quarta semana.",
+    "porquePorAqui": "O documento de expansão pede a cascata completa — produção, custo, transporte, impostos, margem, preço ao consumidor — para todos os produtos essenciais. Para quase todos, os dados não existem publicamente. Para os combustíveis existem, por imposição legal. É por isso o produto onde a metodologia se prova antes de se prometer.",
+    "avisoComponentes": "Os valores por componente (CIF, direitos, taxas, margens de distribuição e de retalho) constam dos quadros mensais em PDF da ARENE e ainda não foram extraídos. O que está aqui são os preços finais publicados e os diferenciais entre regiões, que são calculáveis a partir deles.",
+    "fontes": [
+      "https://arene.org.mz/",
+      "https://moz24h.co.mz/a-factura-dos-combustiveis-escassez-impostos-e-margens-o-que-pesa-no-preco-dos-combustiveis/",
+      "https://mznews.co.mz/arene-fixa-novos-precos-de-combustiveis-por-regiao/"
+    ]
+  },
+  "cascata": [
+    {
+      "etapa": 1,
+      "nome": "Preço internacional",
+      "descricao": "Referência Brent e cotações dos produtos refinados. A gasolina e o gasóleo acompanham o Brent porque ambos resultam da refinação do crude.",
+      "dado": "publico-externo",
+      "valor": null
+    },
+    {
+      "etapa": 2,
+      "nome": "Prémio de importação",
+      "descricao": "Acrescento sobre a cotação internacional, por produto.",
+      "dado": "parcial",
+      "valor": "Gasolina 67,63 USD/m³ · Petróleo de iluminação 89,99 USD/m³"
+    },
+    {
+      "etapa": 3,
+      "nome": "CIF",
+      "descricao": "Custo, seguro e frete até ao porto. Forma o preço base na estrutura da ARENE.",
+      "dado": "publicado-em-pdf",
+      "valor": null
+    },
+    {
+      "etapa": 4,
+      "nome": "Direitos e impostos",
+      "descricao": "Encargos aduaneiros e fiscais aplicáveis.",
+      "dado": "publicado-em-pdf",
+      "valor": null
+    },
+    {
+      "etapa": 5,
+      "nome": "Taxas e sobretaxas",
+      "descricao": "Encargos sectoriais e regulatórios.",
+      "dado": "publicado-em-pdf",
+      "valor": null
+    },
+    {
+      "etapa": 6,
+      "nome": "Armazenagem e movimentação",
+      "descricao": "Custo nos terminais oceânicos e depósitos intermédios.",
+      "dado": "publicado-em-pdf",
+      "valor": null
+    },
+    {
+      "etapa": 7,
+      "nome": "Transporte interno",
+      "descricao": "Do terminal portuário ao ponto de venda. É a componente que produz a diferença entre regiões — e a única que este ficheiro consegue medir hoje.",
+      "dado": "calculavel",
+      "valor": "Ver diferenciais regionais"
+    },
+    {
+      "etapa": 8,
+      "nome": "Margens de distribuição e retalho",
+      "descricao": "Remuneração dos operadores ao longo da cadeia.",
+      "dado": "publicado-em-pdf",
+      "valor": null
+    },
+    {
+      "etapa": 9,
+      "nome": "Preço de venda ao público",
+      "descricao": "Fixado por região. Publicado mensalmente.",
+      "dado": "publicado",
+      "valor": "Ver tabela"
+    }
+  ],
+  "revisao": {
+    "data": "2026-05-07",
+    "entrada": "00h00",
+    "abrangencia": "Maputo, Matola, Beira, Nacala e Pemba (cidades com terminais de distribuição)",
+    "fundamentacao": "A ARENE apontou volatilidade internacional, agravamento do conflito no Médio Oriente com impacto na segurança do transporte marítimo no Estreito de Ormuz, subida dos custos de transporte e dos prémios de seguro, e o Brent acima dos 100 dólares por barril.",
+    "produtos": [
+      {
+        "produto": "Gasóleo",
+        "unidade": "MT/L",
+        "antes": 79.88,
+        "depois": 116.25
+      },
+      {
+        "produto": "Gasolina",
+        "unidade": "MT/L",
+        "antes": 83.57,
+        "depois": 93.69
+      },
+      {
+        "produto": "Petróleo de iluminação",
+        "unidade": "MT/L",
+        "antes": 66.86,
+        "depois": 97.56
+      },
+      {
+        "produto": "GPL",
+        "unidade": "MT/kg",
+        "antes": 86.05,
+        "depois": 87.82
+      },
+      {
+        "produto": "GNV",
+        "unidade": "MT/Leq",
+        "antes": 41.11,
+        "depois": 52.73
+      }
+    ]
+  },
+  "regioes": [
+    {
+      "local": "Maputo, Matola, Beira, Nacala, Pemba",
+      "tipo": "terminal",
+      "provincia": "—",
+      "gasolina": 93.69,
+      "gasoleo": 116.25,
+      "referencia": true
+    },
+    {
+      "local": "Quelimane",
+      "tipo": "capital provincial",
+      "provincia": "Zambézia",
+      "gasolina": 98.14,
+      "gasoleo": 120.7
+    },
+    {
+      "local": "Tete",
+      "tipo": "capital provincial",
+      "provincia": "Tete",
+      "gasolina": 99.08,
+      "gasoleo": 121.64
+    },
+    {
+      "local": "Lichinga",
+      "tipo": "capital provincial",
+      "provincia": "Niassa",
+      "gasolina": 100.71,
+      "gasoleo": 123.27
+    },
+    {
+      "local": "Zumbo",
+      "tipo": "distrito remoto",
+      "provincia": "Tete",
+      "gasolina": 101.67,
+      "gasoleo": null
+    },
+    {
+      "local": "Mecula",
+      "tipo": "distrito remoto",
+      "provincia": "Niassa",
+      "gasolina": null,
+      "gasoleo": 126.27
+    },
+    {
+      "local": "Mueda e Palma",
+      "tipo": "zona de cabotagem",
+      "provincia": "Cabo Delgado",
+      "gasolina": null,
+      "gasoleo": 131.85
+    }
+  ],
+  "leitura": {
+    "titulo": "O preço da distância está publicado e ninguém o lê assim",
+    "texto": "A ARENE publica preços diferentes por região precisamente porque o transporte interno a partir dos terminais portuários é um custo real. A diferença entre o preço de referência e o preço de cada região É a factura da geografia — e é calculável com uma subtracção. Nunca foi cruzada com o estado das estradas nem com a distância ao terminal, que é o que o SINAGEPE já tem no mapa."
+  },
+  "aplicabilidadeOutrosProdutos": [
+    {
+      "produto": "Combustíveis",
+      "cascataPublica": "quase completa",
+      "razao": "Preço regulado por Decreto 89/2019, calculado pela ARENE, publicado mensalmente."
+    },
+    {
+      "produto": "Cimento",
+      "cascataPublica": "nenhuma",
+      "razao": "Preço livre. Não há publicação de estrutura de custo, preço à saída de fábrica nem margens."
+    },
+    {
+      "produto": "Açúcar",
+      "cascataPublica": "parcial",
+      "razao": "Produção e exportação existem em estatística agregada; preço à saída de fábrica e margens não são públicos."
+    },
+    {
+      "produto": "Arroz, trigo, óleo alimentar",
+      "cascataPublica": "parcial",
+      "razao": "O SIMA dá preço ao produtor, grossista e retalhista por praça. Falta CIF, impostos e margens."
+    },
+    {
+      "produto": "Medicamentos",
+      "cascataPublica": "nenhuma",
+      "razao": "Preços de aquisição pública não são publicados por lote."
+    }
+  ]
+}
