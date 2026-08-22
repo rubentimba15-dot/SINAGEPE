@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verificador de Ecrãs — SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#040712;--sup:#0C1626;--lin:rgba(38,56,86,.75);--brz:#C98A3C;--brzl:#E8BE7A;
+--ok:#12B981;--warn:#F0A926;--crit:#EF4444;--t1:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189}
+*{box-sizing:border-box}
+body{margin:0;padding:34px 26px 70px;background:var(--bg);color:var(--t1);font-family:Inter,sans-serif;font-size:13px}
+.wrap{max-width:1080px;margin:0 auto}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.back{color:var(--brz);font-size:13px;text-decoration:none;display:inline-block;margin-bottom:18px}
+h1{font-size:22px;margin:0 0 5px}
+.sub{color:var(--t3);font-size:12.5px;line-height:1.6;max-width:760px;margin-bottom:20px}
+.card{background:var(--sup);border:1px solid var(--lin);border-radius:14px;position:relative;margin-bottom:14px}
+.card:before,.card:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none}
+.card:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.card:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{padding:13px 17px;border-bottom:1px solid var(--lin);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
+.bd{padding:15px 17px}
+.btn{padding:10px 17px;border-radius:9px;border:1px solid rgba(201,138,60,.35);background:rgba(201,138,60,.12);
+ color:var(--brzl);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.btn:hover{background:rgba(201,138,60,.2)}
+.btn[disabled]{opacity:.5;cursor:default}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0}
+.kpi{padding:14px 17px;border-right:1px solid var(--lin)}
+.kpi:last-child{border-right:none}
+.kpi-l{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--t4);margin-bottom:7px}
+.kpi-v{font-size:27px;font-weight:600}
+.barra{height:9px;display:flex;border-radius:5px;overflow:hidden;background:#0A1421;margin:0 17px 15px}
+.barra i{display:block;height:100%}
+.lista{max-height:none}
+.it{display:flex;align-items:center;gap:11px;padding:8px 17px;border-bottom:1px solid rgba(38,56,86,.4);font-size:12px}
+.it:last-child{border-bottom:none}
+.pt{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.nm{flex:1;font-family:'IBM Plex Mono',monospace;font-size:11.5px}
+.st{font-size:10.5px;flex-shrink:0}
+.qm{font-size:10px;color:var(--t4);flex-shrink:0;max-width:290px;text-align:right;line-height:1.4}
+.filtro{display:flex;gap:5px;padding:11px 17px;border-bottom:1px solid var(--lin);flex-wrap:wrap}
+.fb{font-size:10.5px;padding:5px 12px;border-radius:20px;border:1px solid var(--lin);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.fb.on{background:rgba(34,184,240,.13);border-color:rgba(34,184,240,.45);color:#22B8F0;font-weight:600}
+.nota{padding:13px 17px;border-top:1px solid var(--lin);font-size:11.5px;color:var(--t3);line-height:1.6}
+.nota b{color:var(--t2)}
+pre{margin:12px 17px 15px;padding:13px;background:#0A1421;border:1px solid var(--lin);border-radius:9px;
+ font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.6;color:var(--brzl);white-space:pre-wrap;max-height:280px;overflow:auto}
+.err{padding:20px;color:#fca5a5;font-size:13px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Voltar ao Painel</a>
+  <h1>Verificador de Ecrãs</h1>
+  <p class="sub">Vai buscar a lista de ecrãs ao <span class="mono">index.html</span> publicado e tenta abrir cada um. Diz quais existem, quais faltam e quais dão erro. Faz o mesmo aos ficheiros de dados. Não altera nada — só lê.</p>
+
+  <div class="card">
+    <div class="ch"><h2>Diagnóstico</h2><button class="btn" id="b-correr">Verificar tudo</button></div>
+    <div class="kpis" id="kpis"><div class="kpi"><div class="kpi-l">Estado</div><div class="kpi-v" style="font-size:15px;color:var(--t4)">à espera</div></div></div>
+    <div class="barra" id="barra" style="display:none"></div>
+  </div>
+
+  <div class="card">
+    <div class="ch"><h2>Ecrãs</h2><span class="mono" style="font-size:11px;color:var(--t4)" id="c-ecras">—</span></div>
+    <div class="filtro" id="filtro"></div>
+    <div class="lista" id="lista"></div>
+  </div>
+
+  <div class="card">
+    <div class="ch"><h2>Ficheiros de dados</h2><span class="mono" style="font-size:11px;color:var(--t4)" id="c-dados">—</span></div>
+    <div class="lista" id="dados"></div>
+  </div>
+
+  <div class="card" id="c-resumo" style="display:none">
+    <div class="ch"><h2>Lista do que falta</h2><span style="font-size:10px;color:var(--t4)">copie e envie</span></div>
+    <pre id="resumo"></pre>
+    <div class="nota"><b>O que fazer com isto.</b> Um ecrã em falta pode significar duas coisas: o ficheiro nunca foi construído, ou existe e não foi publicado. A diferença vê-se na pasta do repositório. Os que dão erro de leitura existem mas têm um problema dentro — normalmente um ficheiro de dados que falta.</div>
+  </div>
+</div>
+
+<script>
+var R=[],D=[],FILT='todos';
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+var COR={ok:'#12B981',vazio:'#F0A926',falta:'#EF4444',erro:'#EF4444'};
+var ROT={ok:'abre',vazio:'abre mas vem vazio',falta:'não existe',erro:'erro'};
+
+async function testar(url){
+  try{
+    var r=await fetch(url,{cache:'no-store'});
+    if(r.status===404)return{estado:'falta',detalhe:'HTTP 404'};
+    if(!r.ok)return{estado:'erro',detalhe:'HTTP '+r.status};
+    var t=await r.text();
+    if(t.length<200)return{estado:'vazio',detalhe:'ficheiro com '+t.length+' bytes'};
+    // o GitHub Pages devolve a página 404 com estado 200 em certas configurações
+    if(/<title>[^<]*404/i.test(t)||/Page not found/i.test(t))return{estado:'falta',detalhe:'devolveu a página 404 do servidor'};
+    var d=[];
+    if(url.endsWith('.html')){
+      var m=t.match(/data\/[a-z0-9\-]+\.json/g);
+      if(m)d=Array.from(new Set(m));
+      if(!/access-control\.js/.test(t)&&url!=='index.html')d.push('SEM access-control.js');
+    }else{
+      try{JSON.parse(t)}catch(e){return{estado:'erro',detalhe:'JSON inválido: '+e.message}}
+    }
+    return{estado:'ok',detalhe:d.join(' · '),bytes:t.length};
+  }catch(e){return{estado:'erro',detalhe:e.message}}
+}
+
+function desenhar(){
+  var vis=R.filter(function(x){return FILT==='todos'||x.estado===FILT});
+  document.getElementById('lista').innerHTML=vis.map(function(x){
+    return '<div class="it"><span class="pt" style="background:'+COR[x.estado]+'"></span>'
+      +'<span class="nm">'+esc(x.url)+'</span>'
+      +'<span class="st" style="color:'+COR[x.estado]+'">'+ROT[x.estado]+'</span>'
+      +'<span class="qm">'+esc(x.detalhe||'')+'</span></div>';
+  }).join('')||'<div class="it" style="color:var(--t4)">Nada nesta categoria.</div>';
+  document.getElementById('c-ecras').textContent=vis.length+' de '+R.length;
+
+  var c={ok:0,vazio:0,falta:0,erro:0};R.forEach(function(x){c[x.estado]++});
+  document.getElementById('filtro').innerHTML=
+    [['todos','Todos',R.length],['falta','Não existem',c.falta],['erro','Com erro',c.erro],
+     ['vazio','Vazios',c.vazio],['ok','A abrir',c.ok]]
+    .map(function(f){return '<button class="fb'+(FILT===f[0]?' on':'')+'" data-f="'+f[0]+'">'+f[1]+' ('+f[2]+')</button>'}).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.fb'),function(b){
+    b.addEventListener('click',function(){FILT=b.dataset.f;desenhar()});
+  });
+
+  var t=R.length||1;
+  document.getElementById('barra').style.display='flex';
+  document.getElementById('barra').innerHTML=
+    ['ok','vazio','erro','falta'].filter(function(k){return c[k]}).map(function(k){
+      return '<i style="width:'+(c[k]/t*100).toFixed(2)+'%;background:'+COR[k]+'" title="'+ROT[k]+': '+c[k]+'"></i>'}).join('');
+
+  document.getElementById('kpis').innerHTML=
+     kpi('Ecrãs a abrir',c.ok+' <span style="font-size:14px;color:var(--t4)">de '+R.length+'</span>',c.ok===R.length?'var(--ok)':'var(--t1)')
+    +kpi('Não existem',c.falta,c.falta?'var(--crit)':'var(--ok)')
+    +kpi('Com erro',c.erro,c.erro?'var(--crit)':'var(--ok)')
+    +kpi('Vazios',c.vazio,c.vazio?'var(--warn)':'var(--ok)');
+
+  var faltam=R.filter(function(x){return x.estado!=='ok'});
+  var faltamD=D.filter(function(x){return x.estado!=='ok'});
+  var semGuarda=R.filter(function(x){return (x.detalhe||'').indexOf('SEM access-control')>=0});
+  if(faltam.length||faltamD.length||semGuarda.length){
+    document.getElementById('c-resumo').style.display='block';
+    var txt='';
+    if(faltam.length){txt+='ECRÃS COM PROBLEMA ('+faltam.length+'):\n'+faltam.map(function(x){return '  '+x.url+' — '+ROT[x.estado]+(x.detalhe?' ('+x.detalhe+')':'')}).join('\n')+'\n\n'}
+    if(faltamD.length){txt+='FICHEIROS DE DADOS COM PROBLEMA ('+faltamD.length+'):\n'+faltamD.map(function(x){return '  '+x.url+' — '+ROT[x.estado]+(x.detalhe?' ('+x.detalhe+')':'')}).join('\n')+'\n\n'}
+    if(semGuarda.length){txt+='ECRÃS SEM access-control.js — abrem sem sessão ('+semGuarda.length+'):\n'+semGuarda.map(function(x){return '  '+x.url}).join('\n')+'\n'}
+    document.getElementById('resumo').textContent=txt;
+  }
+}
+function kpi(l,v,c){return '<div class="kpi"><div class="kpi-l">'+l+'</div><div class="kpi-v mono" style="color:'+(c||'var(--t1)')+'">'+v+'</div></div>'}
+
+document.getElementById('b-correr').addEventListener('click',async function(){
+  var b=this;b.disabled=true;b.textContent='A verificar…';
+  R=[];D=[];
+  var pg=[],dd=[];
+  try{
+    var r=await fetch('index.html',{cache:'no-store'});
+    var t=await r.text();
+    var m=t.match(/const NIVEIS_ACESSO = (\[[\s\S]*?\n\]);/);
+    if(!m)throw new Error('não encontrei o NIVEIS_ACESSO no index.html');
+    var nv=JSON.parse(m[1]),set={};
+    nv.forEach(function(n){(n.paginas||[]).forEach(function(p){set[p]=1})});
+    (t.match(/href="([a-z0-9\-]+\.html)"/g)||[]).forEach(function(h){set[h.slice(6,-1)]=1});
+    pg=Object.keys(set).sort();
+  }catch(e){
+    document.getElementById('lista').innerHTML='<div class="err"><b>Não consegui ler o index.html.</b><br>'+esc(e.message)+'</div>';
+    b.disabled=false;b.textContent='Verificar tudo';return;
+  }
+
+  for(var i=0;i<pg.length;i++){
+    b.textContent='A verificar… '+(i+1)+'/'+pg.length;
+    var res=await testar(pg[i]);
+    R.push({url:pg[i],estado:res.estado,detalhe:res.detalhe});
+    (res.detalhe||'').split(' · ').forEach(function(x){if(x.indexOf('data/')===0)dd.push(x)});
+    if(i%6===0)desenhar();
+  }
+  dd=Array.from(new Set(dd)).sort();
+  document.getElementById('dados').innerHTML='<div class="it" style="color:var(--t4)">A verificar '+dd.length+' ficheiros…</div>';
+  for(var j=0;j<dd.length;j++){
+    var rd=await testar(dd[j]);
+    D.push({url:dd[j],estado:rd.estado,detalhe:rd.detalhe||(rd.bytes?rd.bytes+' bytes':'')});
+  }
+  document.getElementById('dados').innerHTML=D.map(function(x){
+    return '<div class="it"><span class="pt" style="background:'+COR[x.estado]+'"></span>'
+      +'<span class="nm">'+esc(x.url)+'</span>'
+      +'<span class="st" style="color:'+COR[x.estado]+'">'+ROT[x.estado]+'</span>'
+      +'<span class="qm">'+esc(x.detalhe)+'</span></div>';
+  }).join('')||'<div class="it" style="color:var(--t4)">Nenhum ficheiro de dados referenciado.</div>';
+  document.getElementById('c-dados').textContent=D.filter(function(x){return x.estado==='ok'}).length+' de '+D.length;
+
+  desenhar();
+  b.disabled=false;b.textContent='Verificar outra vez';
+});
+</script>
+</body>
+</html>

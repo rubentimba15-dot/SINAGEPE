@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relatório Executivo — SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* AZUL · OURO · CINZENTO — pensada para ecrã e para papel */
+  --azul:#16324F;        /* azul institucional, quase tinta */
+  --azul-m:#2C5F8A;      /* azul médio, ligações e ênfase */
+  --azul-c:#5B8FB9;      /* azul claro, apoio */
+  --azul-v:#EAF1F7;      /* véu azul, fundos de bloco */
+  --ouro:#9C7B21;        /* ouro legível sobre branco */
+  --ouro-c:#C9A227;      /* ouro vivo, só em filete e realce */
+  --ouro-v:#F6F0DC;      /* véu de ouro */
+  --pag:#F7F7F5; --sup:#FFFFFF;
+  --lin:#E3E2DD; --lin2:#C8C6C0;
+  --t1:#26251F; --t2:#4A4842; --t3:#75726B; --t4:#A3A099;
+  --grave:#A33326;       /* excepção crítica, contida */
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--pag);color:var(--t1);font-family:Inter,sans-serif;font-size:13.5px;line-height:1.6}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.serif{font-family:'Source Serif 4',Georgia,serif}
+
+.barra{position:sticky;top:0;z-index:50;background:var(--azul);color:#fff;padding:11px 22px;
+ display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-bottom:3px solid var(--ouro-c)}
+.barra a{color:#BFD6EA;font-size:12.5px;text-decoration:none}
+.barra .sp{flex:1}
+.bt{padding:8px 15px;border-radius:6px;border:1px solid rgba(201,162,39,.5);background:rgba(201,162,39,.16);
+ color:#F0DFA8;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.bt:hover{background:rgba(201,162,39,.28)}
+.bt.sec{border-color:rgba(191,214,234,.35);background:transparent;color:#BFD6EA;font-weight:400}
+
+.folha{max-width:900px;margin:22px auto;background:var(--sup);box-shadow:0 1px 3px rgba(38,37,31,.12);
+ border:1px solid var(--lin);padding:0 0 46px}
+
+/* ---- cabeçalho do documento ---- */
+.cab{padding:34px 46px 24px;border-bottom:2px solid var(--azul);position:relative}
+.cab:after{content:"";position:absolute;left:0;bottom:-2px;width:150px;height:2px;background:var(--ouro-c)}
+.org{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--t3)}
+.tit{font-family:'Source Serif 4',Georgia,serif;font-size:31px;font-weight:600;line-height:1.15;margin:9px 0 6px;color:var(--azul)}
+.sub{font-size:13.5px;color:var(--t2);max-width:620px}
+.ref{margin-top:16px;display:flex;gap:26px;flex-wrap:wrap;font-size:11px;color:var(--t3)}
+.ref b{display:block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--t4);margin-bottom:2px;font-weight:600}
+
+/* ---- secções ---- */
+section{padding:26px 46px 0}
+h2{font-family:'Source Serif 4',Georgia,serif;font-size:19px;font-weight:600;color:var(--azul);
+ margin:0 0 4px;padding-bottom:7px;border-bottom:1px solid var(--lin);display:flex;align-items:baseline;gap:11px}
+h2 .num{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ouro);font-weight:600}
+h3{font-size:13.5px;font-weight:600;margin:20px 0 6px;color:var(--t1)}
+p{margin:11px 0}
+.lead{font-family:'Source Serif 4',Georgia,serif;font-size:15.5px;line-height:1.65;color:var(--t2)}
+
+/* ---- números ---- */
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:0;margin:18px 0;
+ border:1px solid var(--lin);border-radius:3px;overflow:hidden}
+.nu{padding:15px 17px;border-right:1px solid var(--lin);background:var(--sup)}
+.nu:last-child{border-right:none}
+.nu-l{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t3);margin-bottom:7px}
+.nu-v{font-size:29px;font-weight:600;line-height:1;color:var(--azul)}
+.nu-v.al{color:var(--grave)}
+.nu-n{font-size:10.5px;color:var(--t3);margin-top:6px;line-height:1.45}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:12px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t3);
+ padding:8px 10px;border-bottom:1.5px solid var(--azul);font-weight:600}
+td{padding:8px 10px;border-bottom:1px solid var(--lin);vertical-align:top}
+tbody tr:nth-child(even) td{background:#FAFAF8}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.tagx{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:2px 7px;
+ border-radius:2px;border:1px solid;white-space:nowrap}
+
+.bloco{margin:16px 0;padding:15px 18px;border-left:3px solid var(--azul-m);background:var(--azul-v);font-size:12.5px}
+.bloco.ouro{border-left-color:var(--ouro-c);background:var(--ouro-v)}
+.bloco.grave{border-left-color:var(--grave);background:#FBEEEC}
+.bloco b{display:block;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;color:var(--azul)}
+.bloco.ouro b{color:var(--ouro)}
+.bloco.grave b{color:var(--grave)}
+
+.risco{border:1px solid var(--lin);border-left:3px solid var(--t4);padding:14px 17px;margin:11px 0;border-radius:2px}
+.risco.g5{border-left-color:var(--grave)}
+.risco.g4{border-left-color:var(--ouro-c)}
+.risco-t{font-weight:600;font-size:14px;display:flex;gap:10px;align-items:baseline}
+.risco-g{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--t3)}
+.risco-d{font-size:12.5px;color:var(--t2);margin-top:5px}
+.acc{margin-top:9px;padding-top:9px;border-top:1px dotted var(--lin2);font-size:12px}
+.acc-i{display:flex;gap:10px;margin-bottom:5px}
+.acc-h{font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px;
+ flex-shrink:0;height:fit-content;font-weight:600}
+
+.fontes{font-size:11px;line-height:1.7;color:var(--t2)}
+.fontes li{margin-bottom:5px;word-break:break-word}
+.fontes a{color:var(--azul-m)}
+
+.rodape{margin-top:30px;padding:18px 46px 0;border-top:1px solid var(--lin);font-size:10.5px;color:var(--t3);line-height:1.65}
+
+/* ---- IMPRESSÃO: é aqui que um relatório se ganha ou se perde ---- */
+@page{size:A4;margin:16mm 14mm 18mm}
+@media print{
+  body{background:#fff;font-size:10.5pt}
+  .barra,.no-print{display:none!important}
+  .folha{max-width:none;margin:0;box-shadow:none;border:none;padding:0}
+  .cab,section,.rodape{padding-left:0;padding-right:0}
+  section{page-break-inside:auto}
+  h2{page-break-after:avoid}
+  .risco,.nu,.bloco{page-break-inside:avoid}
+  table{page-break-inside:auto}
+  tr{page-break-inside:avoid}
+  thead{display:table-header-group}
+  a{color:var(--azul);text-decoration:none}
+  .fontes a:after{content:" (" attr(href) ")";font-size:8pt;color:#666;word-break:break-all}
+  .tit{font-size:24pt}
+}
+.err{padding:30px 46px;color:var(--grave)}
+</style>
+</head>
+<body>
+<div class="barra no-print">
+  <a href="index.html">← Painel</a>
+  <span style="font-size:12.5px;color:#BFD6EA">Relatório Executivo</span>
+  <span class="sp"></span>
+  <button class="bt" onclick="window.print()">Imprimir ou guardar em PDF</button>
+  <button class="bt sec" id="b-csv">Exportar cadastro (CSV)</button>
+  <button class="bt sec" id="b-json">Exportar dados (JSON)</button>
+</div>
+
+<div class="folha" id="folha"><div class="err">A carregar os dados do sistema…</div></div>
+
+<script>
+var DATA={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(n)}
+function hoje(){return new Date().toLocaleDateString('pt-PT',{day:'2-digit',month:'long',year:'numeric'})}
+
+var ROT_NAT={estatal:'Estatal','ppp-gestao-privada':'PPP',"concessao-privada":'Concessão',
+ 'participacao-estatal':'Particip. estatal',privada:'Privada',internacional:'Internacional'};
+
+function descarregar(nome,texto,tipo){
+  var b=new Blob([texto],{type:tipo+';charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(b);a.download=nome;document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},500);
+}
+
+function montar(){
+  var A=DATA.arm.armazens, ANT=DATA.ant, RV=DATA.rv, COM=DATA.com;
+  var semSensor=A.filter(function(a){return a.sensor==='sem-sensor'}).length;
+  var porVerificar=A.filter(function(a){return !a.verificado}).length;
+  var criticos=ANT.riscos.filter(function(r){return r.gravidade>=5}).length;
+  var agora=0;ANT.riscos.forEach(function(r){r.mitigacoes.forEach(function(m){if(m.horizonte==='agora')agora++})});
+
+  var h='';
+  h+='<div class="cab">'
+   +'<div class="org">República de Moçambique · Sistema Nacional de Gestão de Produtos Essenciais</div>'
+   +'<div class="tit">Estado do abastecimento e capacidade de resposta</div>'
+   +'<div class="sub">Relatório executivo gerado a partir dos cadastros do sistema. Todos os números têm fonte declarada; onde não há fonte, o relatório di-lo em vez de estimar.</div>'
+   +'<div class="ref">'
+   +'<div><b>Emitido</b>'+hoje()+'</div>'
+   +'<div><b>Âmbito</b>Armazenagem, rede viária, identificação e risco</div>'
+   +'<div><b>Fontes</b>Públicas e oficiais, listadas no anexo</div>'
+   +'<div><b>Natureza</b>Documento de trabalho</div>'
+   +'</div></div>';
+
+  /* 1 — sumário */
+  h+='<section><h2><span class="num">01</span>Sumário executivo</h2>'
+   +'<p class="lead">O sistema tem hoje '+A.length+' unidades de armazenagem cadastradas com fonte oficial. '
+   +'Nenhuma reporta existências. Isso significa que, perante um choque de abastecimento, a primeira pergunta de quem decide '
+   +'— quanto temos e onde — não tem resposta em tempo útil.</p>'
+   +'<div class="nums">'
+   + nu('Unidades cadastradas',A.length,'Silos do Estado, terminais de combustível e terminais portuários, todas com fonte oficial.')
+   + nu('Sem telemetria',semSensor+' de '+A.length,'Nenhuma leitura automática de nível, temperatura ou movimento.',true)
+   + nu('Riscos críticos',criticos,'Gravidade máxima. Nenhum depende de gatilho externo para se manifestar.',true)
+   + nu('Acções imediatas',agora,'Executáveis em semanas, sem orçamento novo.')
+   +'</div>'
+   +'<div class="bloco ouro"><b>O que este relatório não faz</b>Não estima o que não é medido. Onde a fonte não existe, '
+   +'o campo aparece como não publicado e identifica-se quem detém o dado. Um valor em falta, declarado, é preferível a uma estimativa com aparência de facto.</div>'
+   +'</section>';
+
+  /* 2 — armazenagem */
+  var porNat={};A.forEach(function(a){porNat[a.natureza]=(porNat[a.natureza]||0)+1});
+  h+='<section><h2><span class="num">02</span>Capacidade de armazenagem</h2>'
+   +'<p>A distribuição por natureza mostra onde está a responsabilidade pública. '
+   +'As capacidades não são somadas entre si porque estão em unidades incompatíveis — metros cúbicos, toneladas, toneladas por ano, TEU e metros quadrados.</p>'
+   +'<table><thead><tr><th>Natureza</th><th class="n">Unidades</th><th>Leitura</th></tr></thead><tbody>';
+  Object.keys(ROT_NAT).forEach(function(k){
+    if(!porNat[k])return;
+    h+='<tr><td>'+ROT_NAT[k]+'</td><td class="n">'+porNat[k]+'</td><td style="color:var(--t3);font-size:11.5px">'
+      +(k.indexOf('estatal')>=0||k==='ppp-gestao-privada'?'Responsabilidade pública directa':'Operação privada ou concessionada')+'</td></tr>';
+  });
+  h+='</tbody></table>';
+  var pend=A.filter(function(a){return a.estado==='por-reabilitar'||a.estado==='por-construir'});
+  if(pend.length){
+    h+='<div class="bloco grave"><b>Capacidade nominal e capacidade real</b>'
+     +pend.length+' unidades constam do cadastro como por reabilitar ou por construir, segundo informação de 2021. '
+     +'Se a situação se mantiver, a capacidade declarada não existe fisicamente e todo o planeamento de reserva assenta em número não confirmado.</div>';
+  }
+  if(porVerificar) h+='<p style="font-size:12px;color:var(--t3)">'+porVerificar+' unidades estão marcadas como por verificar: a existência, a natureza ou o estado não constam de fonte oficial actual.</p>';
+  h+='</section>';
+
+  /* 3 — riscos */
+  h+='<section><h2><span class="num">03</span>Riscos e mitigações</h2>'
+   +'<p>Cada risco tem um gatilho conhecido e uma janela de calendário. A antecedência não vem de prever datas — vem de a vulnerabilidade ser estrutural e permanente.</p>';
+  ANT.riscos.slice().sort(function(a,b){return b.gravidade-a.gravidade}).slice(0,5).forEach(function(r){
+    h+='<div class="risco g'+r.gravidade+'"><div class="risco-t">'+esc(r.titulo)
+     +'<span class="risco-g">gravidade '+r.gravidade+'/5 · '+esc(r.janela)+'</span></div>'
+     +'<div class="risco-d">'+esc(r.resumo)+'</div><div class="acc">';
+    r.mitigacoes.slice(0,2).forEach(function(m){
+      var c=m.horizonte==='agora'?'var(--grave)':m.horizonte==='90dias'?'var(--ouro)':'var(--azul-m)';
+      var rot=m.horizonte==='agora'?'Agir já':m.horizonte==='90dias'?'90 dias':'Estrutural';
+      h+='<div class="acc-i"><span class="acc-h" style="color:'+c+';border:1px solid '+c+'55;background:'+c+'11">'+rot+'</span>'
+       +'<span><b style="font-weight:600">'+esc(m.accao)+'</b><br><span style="color:var(--t3);font-size:11.5px">'+esc(m.decide)+'</span></span></div>';
+    });
+    h+='</div></div>';
+  });
+  h+='</section>';
+
+  /* 4 — o que falta */
+  h+='<section><h2><span class="num">04</span>O que não é conhecido</h2>'
+   +'<p>Esta secção existe de propósito. Um relatório que só mostra o que sabe induz em erro quem decide sobre o que não sabe.</p>'
+   +'<table><thead><tr><th>Lacuna</th><th>Situação</th><th>Como se resolve</th></tr></thead><tbody>';
+  (RV.ausencias||[]).concat((COM&&COM.lacunas)?COM.lacunas.map(function(l){
+    return {titulo:l.titulo,descricao:l.nota,comoResolver:'Ver dossier de adesão do MIC e da BMM.'}}):[])
+   .forEach(function(a){
+     h+='<tr><td style="font-weight:600">'+esc(a.titulo)+'</td>'
+      +'<td style="font-size:11.5px;color:var(--t2)">'+esc((a.descricao||'').slice(0,150))+'…</td>'
+      +'<td style="font-size:11.5px;color:var(--t3)">'+esc(a.comoResolver||'—')+'</td></tr>';
+   });
+  h+='</tbody></table></section>';
+
+  /* 5 — fontes */
+  var fontes={};
+  A.forEach(function(a){if(a.fonte)fontes[a.fonte]=1});
+  (RV.estradas||[]).forEach(function(e){if(e.fonte)fontes[e.fonte]=1});
+  if(COM&&COM.fontePrecos)fontes[COM.fontePrecos.fonte]=1;
+  h+='<section><h2><span class="num">05</span>Anexo — fontes utilizadas</h2>'
+   +'<p style="font-size:12px;color:var(--t3)">Cada ligação foi consultada na construção dos cadastros. Ao imprimir, o endereço completo aparece a seguir a cada entrada.</p>'
+   +'<ol class="fontes">';
+  Object.keys(fontes).sort().forEach(function(u){
+    h+='<li><a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(u.replace(/^https?:\/\//,'').split('/')[0])+'</a> — '+esc(u.length>92?u.slice(0,92)+'…':u)+'</li>';
+  });
+  h+='</ol></section>';
+
+  h+='<div class="rodape"><b>Limite estrutural, a repetir em cada emissão.</b> O SINAGEPE funciona hoje como sítio estático. '
+   +'Os dados são carregados de ficheiros publicados e a validação de acesso é feita do lado do navegador. '
+   +'Para dados reais do Estado, a recolha e a validação têm de passar para o lado do servidor. '
+   +'Este documento serve para preparar decisões; não substitui verificação junto das entidades gestoras.</div>';
+
+  document.getElementById('folha').innerHTML=h;
+}
+function nu(l,v,n,al){
+  return '<div class="nu"><div class="nu-l">'+esc(l)+'</div><div class="nu-v mono'+(al?' al':'')+'">'+v+'</div>'
+   +'<div class="nu-n">'+esc(n)+'</div></div>';
+}
+
+document.getElementById('b-csv').addEventListener('click',function(){
+  var A=DATA.arm.armazens;
+  var col=['id','nome','tipo','provincia','distrito','natureza','estado','proprietario','operador',
+           'capacidade_valor','capacidade_unidade','sensor','verificado','corredor','latitude','longitude','fonte'];
+  var linhas=[col.join(';')];
+  A.forEach(function(a){
+    var c=a.capacidade||{};
+    linhas.push([a.id,a.nome,a.tipo,a.provincia,a.distrito,a.natureza,a.estado,a.proprietario,a.operador,
+      c.valor,c.unidade,a.sensor,a.verificado,a.corredor,
+      a.coordenada?a.coordenada.lat:'',a.coordenada?a.coordenada.lon:'',a.fonte]
+      .map(function(x){x=(x==null?'':String(x));return /[;"\n]/.test(x)?'"'+x.replace(/"/g,'""')+'"':x}).join(';'));
+  });
+  descarregar('sinagepe-cadastro-armazens.csv','\ufeff'+linhas.join('\r\n'),'text/csv');
+});
+document.getElementById('b-json').addEventListener('click',function(){
+  descarregar('sinagepe-dados.json',JSON.stringify(DATA,null,2),'application/json');
+});
+
+Promise.all(['armazens-nacionais','antecipacao','rede-viaria','rede-comercial'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  DATA={arm:res[0],ant:res[1],rv:res[2],com:res[3]};
+  montar();
+}).catch(function(e){
+  document.getElementById('folha').innerHTML='<div class="err"><b>Não foi possível gerar o relatório.</b><br>'
+   +esc(e.message)+'<br><br>Confirme que os ficheiros estão publicados na pasta <span class="mono">data/</span>.</div>';
+});
+</script>
+</body>
+</html>

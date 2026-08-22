@@ -69,6 +69,7 @@ table.risco tr:hover td{background:var(--cardh)}
    no bloco "elasticidades". Alterar lá altera o modelo inteiro.
    ============================================================ */
 let D=null, FX=null, RL=null, PA=null;
+let CAD=null;
 let CEN='seca', PAR={}, DRILL={produto:null, provincia:null};
 const $=id=>document.getElementById(id);
 const nf=(n,d=0)=>(n==null||isNaN(n))?'—':Number(n).toLocaleString('pt-PT',{minimumFractionDigits:d,maximumFractionDigits:d});
@@ -131,10 +132,16 @@ function provinciasOrdenadasPorExposicao(){
 function simular(){
   const e=PA.elasticidades, s=CENARIOS[CEN], p=PAR;
   const faseP=PESO_SAZONAL[faseSazonal().pressaoAbastecimento];
-  const ipcSerie=FX.ine.ipc.serie;
-  const premio=((ipcSerie[ipcSerie.length-1].indiceAlimentar/ipcSerie[0].indiceAlimentar-1)
-              -(ipcSerie[ipcSerie.length-1].indiceGeral/ipcSerie[0].indiceGeral-1))*100;
+  /* O prémio alimentar sai da série do IPC. Se a série não estiver carregada,
+     o factor fica NEUTRO e o ecrã di-lo — em vez de correr com um número assumido. */
+  const ipcSerie=(FX.ine&&FX.ine.ipc&&Array.isArray(FX.ine.ipc.serie))?FX.ine.ipc.serie:[];
+  const temIPC = ipcSerie.length>=2;
+  const premio = temIPC
+    ? ((ipcSerie[ipcSerie.length-1].indiceAlimentar/ipcSerie[0].indiceAlimentar-1)
+      -(ipcSerie[ipcSerie.length-1].indiceGeral/ipcSerie[0].indiceGeral-1))*100
+    : 0;
   const fProcuraBase = 1 + (premio/100)*e.procuraPorInflacaoAlimentarFactor;
+  window.__SP_IPC = { tem:temIPC, premio:premio };
 
   let perdaColheitaPct=0, provAfectadas=[], diasLogisticos=0, custoLogFactor=1,
       cortesImportPct=0, subidaCustoPct=0, capacidadeArmazemPerdidaPct=0, corredoresAfectados=[];
@@ -222,9 +229,12 @@ function intervencoes(R){
     const faltaDias = 30-p.cobCen;
     const toneladas = Math.max(0, faltaDias*p.consumoCen);
     I.push({ pri:1, t:`Libertar reserva estratégica — ${p.nome}`,
-      p:`Repor ${nf(faltaDias,0)} dias de cobertura exige cerca de ${nf(toneladas)} t. A reserva do ICM tem ${nf(meta.actualToneladas)} t registadas, pelo que esta operação consome ${nf(toneladas/meta.actualToneladas*100,1)}% do que existe.`,
+      p:`Repor ${nf(faltaDias,0)} dias de cobertura exige cerca de ${nf(toneladas)} t. `
+        +(meta.actualToneladas!=null
+          ? `A reserva do ICM tem ${nf(meta.actualToneladas)} t registadas, pelo que esta operação consome ${nf(toneladas/meta.actualToneladas*100,1)}% do que existe.`
+          : `As existências actuais da reserva NÃO SÃO CONHECIDAS — o ICM publica a meta de ${nf(meta.metaToneladas)} t mas não o saldo, e nenhuma unidade reporta nível. Sem esse número não se sabe se a operação é possível: é preciso verificação física antes de decidir.`),
       efeito:`+${nf(faltaDias,0)} dias`, prazo:'7 a 14 dias', custo:toneladas>20000?'Alto':'Médio',
-      apr:'Aprovação ministerial', ok:toneladas<=meta.actualToneladas });
+      apr:'Aprovação ministerial', ok:(meta.actualToneladas!=null && toneladas<=meta.actualToneladas) });
   });
 
   if(R.cortesImportPct>0){
@@ -258,7 +268,7 @@ function intervencoes(R){
       apr:'MIC + MIREME + ARENE', ok:true });
   }
   if(R.capacidadeArmazemPerdidaPct>0){
-    const cegos=RL?RL.armazens.filter(a=>a.iot.estado==='sem-sensor').length:0;
+    const cegos=(CAD&&CAD.armazens)?CAD.armazens.filter(a=>a.sensor==='sem-sensor').length:0;
     I.push({ pri:1, t:'Verificação física dos armazéns na zona de impacto',
       p:`O cenário retira ${nf(R.capacidadeArmazemPerdidaPct,1)}% da capacidade útil. ${cegos} unidades da rede não têm sensor instalado, pelo que o dano nessas só se conhece por inspecção presencial — o sistema não o vai detectar. Enviar equipas às unidades sem instrumentação é a primeira acção, não a última.`,
       efeito:'Recupera visibilidade', prazo:'72 horas', custo:'Baixo',
@@ -432,7 +442,7 @@ function renderDrill(R){
     {n:'Médias explorações', q:p.medias, nota:'Já compra insumos e vende excedente. É aqui que a extensão e a semente certificada rendem mais por metical.'},
     {n:'Grandes explorações', q:p.grandes, nota:'Poucas unidades, peso desproporcionado na produção comercializada. Uma perda aqui move o balanço nacional.'}
   ];
-  const cegos = RL ? RL.armazens.filter(a=>a.provincia===p.nome).length : 0;
+  const cegos = (CAD&&CAD.armazens) ? CAD.armazens.filter(a=>a.provincia===p.nome).length : 0;
   $('sp-drill').innerHTML=`
     <div class="dd" style="margin-bottom:14px">
       <div class="nivel"><div class="t">Capacidade de resposta</div>
@@ -486,6 +496,7 @@ function renderDrill(R){
       <div class="cb"><div class="crumb" id="sp-crumb"></div><div id="sp-drill"></div></div></div>
     <div class="card frame" style="margin-top:12px"><div class="ch"><h2>Intervenções sugeridas</h2>
       <span class="tag crit" id="sp-conta-int">—</span></div><div id="sp-intervencoes"></div></div>
+    <div class="card frame" style="margin-top:12px" id="sp-aviso-ipc"></div>
     <div class="card frame" style="margin-top:12px"><div class="cb">
       <div class="eyebrow">Natureza do modelo</div>
       <div style="font-size:12px;color:var(--ink-dim);line-height:1.75;margin-top:10px">
@@ -507,6 +518,8 @@ function renderDrill(R){
   try{
     [D,FX,PA]=await Promise.all([ler('data/sinagepe-data.json'),ler('data/fontes-externas.json'),ler('data/produtores-agrarios.json')]);
     try{ RL=await ler('data/rede-logistica.json'); }catch(e){ RL=null; }
+    /* As unidades passaram a viver no cadastro nacional. */
+    try{ CAD=await ler('data/armazens-nacionais.json'); }catch(e){ CAD=null; }
   }catch(e){
     alvo.innerHTML=`<div class="card frame"><div class="cb"><div class="msg">
       <span class="ic" style="background:var(--crit-bg);color:var(--crit)">✕</span>
@@ -517,6 +530,21 @@ function renderDrill(R){
 
   CENARIOS[CEN].params.forEach(p=>PAR[p.k]=p.val);
   renderCenarios(); renderParams(); correr();
+  const av=document.getElementById('sp-aviso-ipc');
+  if(av){
+    const i=window.__SP_IPC||{};
+    av.innerHTML = i.tem
+      ? `<div class="cb" style="font-size:11.5px;color:var(--ink-dim);line-height:1.7">
+          <div class="eyebrow">Prémio de inflação alimentar</div>
+          <div style="margin-top:8px">A série do IPC está carregada. O prémio alimentar sobre a inflação geral é de
+          <b class="mono" style="color:var(--brzl)">${nf(i.premio,2)} pontos percentuais</b> e está a ser aplicado ao factor de procura.</div></div>`
+      : `<div class="cb" style="font-size:11.5px;color:var(--warn);line-height:1.7">
+          <div class="eyebrow" style="color:var(--warn)">Prémio de inflação alimentar — não aplicado</div>
+          <div style="margin-top:8px">A série do IPC não está carregada, pelo que o factor de procura corre <b>neutro</b>.
+          Os resultados subestimam a pressão do lado da procura. A série anterior foi retirada do
+          <span class="mono">fontes-externas.json</span> por ser de demonstração; a real tem de ser importada do INE,
+          que publica em PDF e folha de cálculo.</div></div>`;
+  }
   if(typeof SINAGEPE!=='undefined'&&SINAGEPE.renderUserFooter) SINAGEPE.renderUserFooter(D);
 })();
 </script>
