@@ -1,0 +1,197 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "geradoEm": "2026-08-21",
+    "ambito": "Rede comercial grossista e retalhista de produtos alimentares — o elo entre o armazém do Estado e o consumidor, que até agora não existia no sistema.",
+    "avisoStock": "NENHUM operador privado publica stock por loja. Não há, em Moçambique ou em quase parte nenhuma, obrigação de o fazer. O que estas unidades mostram é presença e papel na cadeia, não existências. Qualquer número de stock que aparecesse aqui seria inventado.",
+    "avisoPrecos": "Os preços NÃO são por loja. Vêm do SIMA, que recolhe em mercados de referência ao nível do produtor, do grossista e do retalhista. Servem para saber o preço praticado numa praça, não numa insígnia.",
+    "avisoCoordenadas": "Coordenadas ao nível do centro da cidade onde a plataforma opera, excepto o armazém central de Maputo, cuja morada é pública. Não são a porta da instalação.",
+    "porqueImporta": "O cadastro nacional cobre silos do Estado, terminais portuários e combustíveis. Para lá disso, o produto desaparece. Esta camada mostra por onde ele passa depois — e é também onde o ponto cego é mais fundo, porque nenhuma destas unidades reporta o que quer que seja."
+  },
+  "fontePrecos": {
+    "nome": "SIMA — Sistema de Informação de Mercados Agrícolas",
+    "tutela": "Direcção de Cooperação e Mercados, MAAP",
+    "desde": 1991,
+    "boletim": "Quente-Quente, semanal, às sextas-feiras",
+    "cobertura": "Recolha em mercados de referência em distritos e cidades; cerca de 21 locais e 28 produtos alimentares básicos",
+    "niveis": [
+      "produtor",
+      "grossista",
+      "retalhista",
+      "mercado internacional"
+    ],
+    "recolheTambem": [
+      "custo de transporte do local de aquisição ao local de venda",
+      "quantidade do produto disponível para compra e venda no mercado grossista"
+    ],
+    "produtos": [
+      "milho",
+      "arroz",
+      "amendoim",
+      "feijões",
+      "hortícolas",
+      "carne de vaca",
+      "porco",
+      "cabrito",
+      "galinha",
+      "carvão",
+      "farinha de milho",
+      "farinha de trigo",
+      "açúcar"
+    ],
+    "referenciasInternacionais": [
+      "SAFEX (Randfontein, África do Sul)",
+      "Banco de Moçambique para câmbios"
+    ],
+    "fonte": "https://www.agricultura.gov.mz/sima/",
+    "portalDedicado": "https://www.sima.gov.mz/",
+    "problema": "O arquivo de boletins em agricultura.gov.mz pára em Agosto de 2023, na edição 1464, e tem meses inteiros marcados como sem informação. Os boletins são PDF — não são legíveis por máquina. Existe um portal próprio, sima.gov.mz, que deve ser verificado antes de se assumir que o serviço parou.",
+    "achado": "O SIMA já recolhe QUANTIDADE DISPONÍVEL no mercado grossista. É o indicador de existências mais próximo que o país tem, e está a ser publicado em PDF desde 1991 sem ninguém o cruzar com armazenagem."
+  },
+  "operadores": [
+    {
+      "id": "mega-grupo",
+      "nome": "Mega — Distribuição de Moçambique, S.A.",
+      "insignia": "MEGA CASH & CARRY",
+      "grupo": "DESFO Holding",
+      "tipo": "grossista-alimentar",
+      "sede": "Av. da OUA n.º 1095, Maputo",
+      "escala": {
+        "clientes": "mais de 1.500",
+        "colaboradores": "mais de 300",
+        "plataformas": 7
+      },
+      "marcas": [
+        "Nestlé (Ricoffy, Cremora, Milo, Cerevita, Nido, Kit Kat, Smarties)",
+        "Upfield (Rama, Flora)",
+        "Lactalis (Parmalat, Santal)",
+        "Delta Cafés (Grupo Nabeiro)"
+      ],
+      "expansao": "Abertura prevista de pequenos cash & carry junto aos mercados informais em Maputo, com intenção de alargar a todas as cidades. Em 2023 criou a Mega Distribuição para representação de marcas no mercado informal, servindo por cash vans e camião a partir da rede de armazéns.",
+      "marcaProximidade": "LOKAL — lojas de proximidade em zonas residenciais, em fase de expansão",
+      "fonte": "https://megamocambique.com/pt-mz/pages/quem-somos"
+    }
+  ],
+  "unidades": [
+    {
+      "id": "mega-maputo",
+      "operador": "mega-grupo",
+      "nome": "Mega — Armazém central de Maputo",
+      "papel": "armazém central, aberto ao público",
+      "provincia": "Maputo",
+      "cidade": "Maputo",
+      "lat": -25.9722,
+      "lon": 32.58,
+      "precisao": "morada-publica",
+      "corredor": "maputo"
+    },
+    {
+      "id": "mega-beira",
+      "operador": "mega-grupo",
+      "nome": "Mega — Centro de distribuição da Beira",
+      "papel": "centro de distribuição",
+      "provincia": "Sofala",
+      "cidade": "Beira",
+      "lat": -19.83,
+      "lon": 34.84,
+      "precisao": "centro-cidade",
+      "corredor": "beira"
+    },
+    {
+      "id": "mega-nampula",
+      "operador": "mega-grupo",
+      "nome": "Mega — Centro de distribuição de Nampula",
+      "papel": "centro de distribuição",
+      "provincia": "Nampula",
+      "cidade": "Nampula",
+      "lat": -15.1165,
+      "lon": 39.2666,
+      "precisao": "centro-cidade",
+      "corredor": "nacala"
+    },
+    {
+      "id": "mega-tete",
+      "operador": "mega-grupo",
+      "nome": "Mega — Centro de distribuição de Tete",
+      "papel": "centro de distribuição",
+      "provincia": "Tete",
+      "cidade": "Tete",
+      "lat": -16.1564,
+      "lon": 33.5867,
+      "precisao": "centro-cidade",
+      "corredor": "sena"
+    },
+    {
+      "id": "mega-quelimane",
+      "operador": "mega-grupo",
+      "nome": "Mega — Centro de distribuição de Quelimane",
+      "papel": "centro de distribuição",
+      "provincia": "Zambézia",
+      "cidade": "Quelimane",
+      "lat": -17.8786,
+      "lon": 36.8883,
+      "precisao": "centro-cidade",
+      "corredor": "beira"
+    },
+    {
+      "id": "mega-chimoio",
+      "operador": "mega-grupo",
+      "nome": "Mega — Centro de distribuição de Chimoio",
+      "papel": "centro de distribuição",
+      "provincia": "Manica",
+      "cidade": "Chimoio",
+      "lat": -19.1164,
+      "lon": 33.4833,
+      "precisao": "centro-cidade",
+      "corredor": "beira"
+    },
+    {
+      "id": "mega-pemba",
+      "operador": "mega-grupo",
+      "nome": "Mega — Centro de distribuição de Pemba",
+      "papel": "centro de distribuição",
+      "provincia": "Cabo Delgado",
+      "cidade": "Pemba",
+      "lat": -12.974,
+      "lon": 40.5178,
+      "precisao": "centro-cidade",
+      "corredor": "nacala"
+    }
+  ],
+  "outrosOperadores": [
+    {
+      "nome": "Recheio Cash & Carry, S.A.",
+      "tipo": "grossista-alimentar",
+      "estado": "identificado, rede não publicada",
+      "fonte": "https://recheio.co.mz/"
+    },
+    {
+      "nome": "LOKAL",
+      "tipo": "retalho de proximidade",
+      "estado": "marca do mesmo grupo, lojas não enumeradas publicamente",
+      "fonte": "https://www.desfo.com/distribuicao-retalho"
+    }
+  ],
+  "lacunas": [
+    {
+      "titulo": "Stock por loja",
+      "estado": "inexistente",
+      "nota": "Nenhum operador publica. Não há obrigação legal. Só um sistema de reporte com contrapartida — como o certificado de depósito da BMM — muda isto."
+    },
+    {
+      "titulo": "Preço por insígnia",
+      "estado": "inexistente",
+      "nota": "O SIMA dá preço por praça, não por cadeia. Comparar Mega com Recheio não é possível com fonte pública."
+    },
+    {
+      "titulo": "Lojas individuais",
+      "estado": "parcial",
+      "nota": "São mapeadas as sete plataformas que o próprio operador publica. As lojas de rua, os LOKAL e os cash & carry junto aos mercados informais não estão enumerados em lado nenhum."
+    },
+    {
+      "titulo": "Boletim SIMA actualizado",
+      "estado": "a confirmar",
+      "nota": "O arquivo público pára em Agosto de 2023. Verificar sima.gov.mz antes de concluir que o serviço parou."
+    }
+  ]
+}

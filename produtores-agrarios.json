@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "fonte": "CUPA — Cadastro Unico de Produtores Agrarios, sistema do Ministerio da Agricultura, Ambiente e Pescas",
+    "urlSistema": "https://www.agricultura.gov.mz/sistemas/",
+    "fonteEstatistica": "IAI — Inquerito Agrario Integrado, MADER/DPP",
+    "urlEstatistica": "https://www.agricultura.gov.mz/wp-content/uploads/2024/09/Inquerito-Agrario-Integrado-IAI-2023.pdf",
+    "ultimaRecolha": "2026-08-18",
+    "aviso": "AVISO DE PROVENIENCIA. O CUPA existe e e um sistema real do ministerio, mas nao expoe API publica. Os agregados provinciais deste ficheiro sao de trabalho (verificado=false) e servem para desenhar e calibrar o modelo. O unico valor ancorado em fonte publica e a percentagem nacional de exploracoes que usam fertilizante quimico. Substituir por extraccao oficial do CUPA antes de qualquer uso em decisao.",
+    "tutela": {
+      "ministerio": "Ministerio da Agricultura, Ambiente e Pescas",
+      "sigla": "MAAP",
+      "nota": "A designacao mudou ao longo do tempo: MASA (Agricultura e Seguranca Alimentar), depois MADER (Agricultura e Desenvolvimento Rural), agora MAAP. O SINAGEPE tem o parceiro registado como MASA e deve ser actualizado.",
+      "verificado": true
+    }
+  },
+
+  "ancorasNacionais": {
+    "usoFertilizanteQuimicoPercent": { "valor": 9.1, "ano": 2023, "anterior": 7.8, "anoAnterior": 2020, "verificado": true,
+      "nota": "Percentagem de exploracoes que usaram fertilizante quimico. Subiu de 7,8% em 2020 para 9,1% em 2023 (IAI 2023)." },
+    "classificacaoExploracoes": { "verificado": true,
+      "nota": "O IAI classifica as exploracoes em Pequenas, Medias e Grandes segundo limites de area, efectivo pecuario e irrigacao." },
+    "sinaisRecentes": [
+      { "data": "2026-05", "tipo": "fitossanitario", "verificado": true,
+        "texto": "O MAAP alertou para perdas agricolas causadas por pragas e reforcou a vigilancia fitossanitaria no pais." },
+      { "data": "2026-07", "tipo": "precos", "verificado": true,
+        "texto": "Alcancado consenso sobre novos precos minimos de algodao e oleaginosas." }
+    ]
+  },
+
+  "calendarioAgricola": {
+    "verificado": true,
+    "nota": "Calendario de referencia para o modelo. A primeira campanha semeia com as chuvas (Outubro a Dezembro) e colhe de Abril a Julho. O periodo critico de abastecimento e a epoca de escassez sazonal, entre Novembro e Fevereiro, quando as reservas domesticas dos produtores estao no minimo e a colheita ainda nao chegou.",
+    "fases": [
+      { "meses": [10, 11, 12], "fase": "Sementeira", "pressaoAbastecimento": "alta" },
+      { "meses": [1, 2], "fase": "Crescimento", "pressaoAbastecimento": "critica" },
+      { "meses": [3], "fase": "Maturacao", "pressaoAbastecimento": "media" },
+      { "meses": [4, 5, 6, 7], "fase": "Colheita", "pressaoAbastecimento": "baixa" },
+      { "meses": [8, 9], "fase": "Pos-colheita", "pressaoAbastecimento": "media" }
+    ]
+  },
+
+  "provincias": [
+    { "nome": "Niassa", "exploracoes": 268000, "areaCultivadaHa": 412000, "pequenas": 96.1, "medias": 3.4, "grandes": 0.5,
+      "fertilizantePercent": 6.2, "sementeCertificadaPercent": 11.4, "extensaoPercent": 14.8, "irrigacaoPercent": 2.1,
+      "associadoPercent": 18.3, "creditoPercent": 3.9, "distanciaMediaArmazemKm": 118,
+      "culturas": ["Milho", "Feijao", "Tabaco"], "verificado": false },
+    { "nome": "Cabo Delgado", "exploracoes": 341000, "areaCultivadaHa": 468000, "pequenas": 97.4, "medias": 2.3, "grandes": 0.3,
+      "fertilizantePercent": 4.1, "sementeCertificadaPercent": 7.8, "extensaoPercent": 9.2, "irrigacaoPercent": 1.4,
+      "associadoPercent": 12.6, "creditoPercent": 2.1, "distanciaMediaArmazemKm": 142,
+      "culturas": ["Milho", "Mandioca", "Caju"], "verificado": false },
+    { "nome": "Nampula", "exploracoes": 812000, "areaCultivadaHa": 976000, "pequenas": 96.8, "medias": 2.9, "grandes": 0.3,
+      "fertilizantePercent": 8.4, "sementeCertificadaPercent": 13.1, "extensaoPercent": 16.4, "irrigacaoPercent": 3.2,
+      "associadoPercent": 21.7, "creditoPercent": 5.2, "distanciaMediaArmazemKm": 74,
+      "culturas": ["Milho", "Mandioca", "Feijao", "Algodao"], "verificado": false },
+    { "nome": "Zambezia", "exploracoes": 894000, "areaCultivadaHa": 1042000, "pequenas": 97.1, "medias": 2.6, "grandes": 0.3,
+      "fertilizantePercent": 7.6, "sementeCertificadaPercent": 12.2, "extensaoPercent": 13.9, "irrigacaoPercent": 4.6,
+      "associadoPercent": 19.4, "creditoPercent": 4.4, "distanciaMediaArmazemKm": 96,
+      "culturas": ["Milho", "Arroz", "Mandioca", "Coco"], "verificado": false },
+    { "nome": "Tete", "exploracoes": 396000, "areaCultivadaHa": 604000, "pequenas": 95.2, "medias": 4.1, "grandes": 0.7,
+      "fertilizantePercent": 11.8, "sementeCertificadaPercent": 18.6, "extensaoPercent": 21.2, "irrigacaoPercent": 3.8,
+      "associadoPercent": 26.1, "creditoPercent": 7.8, "distanciaMediaArmazemKm": 68,
+      "culturas": ["Milho", "Tabaco", "Feijao", "Algodao"], "verificado": false },
+    { "nome": "Manica", "exploracoes": 284000, "areaCultivadaHa": 468000, "pequenas": 93.8, "medias": 5.2, "grandes": 1.0,
+      "fertilizantePercent": 14.2, "sementeCertificadaPercent": 22.4, "extensaoPercent": 24.6, "irrigacaoPercent": 8.1,
+      "associadoPercent": 29.8, "creditoPercent": 9.6, "distanciaMediaArmazemKm": 52,
+      "culturas": ["Milho", "Horticolas", "Soja", "Feijao"], "verificado": false },
+    { "nome": "Sofala", "exploracoes": 312000, "areaCultivadaHa": 442000, "pequenas": 95.6, "medias": 3.8, "grandes": 0.6,
+      "fertilizantePercent": 10.4, "sementeCertificadaPercent": 16.8, "extensaoPercent": 19.4, "irrigacaoPercent": 6.2,
+      "associadoPercent": 24.2, "creditoPercent": 6.9, "distanciaMediaArmazemKm": 44,
+      "culturas": ["Milho", "Arroz", "Mandioca", "Sesamo"], "verificado": false },
+    { "nome": "Inhambane", "exploracoes": 298000, "areaCultivadaHa": 386000, "pequenas": 97.8, "medias": 2.0, "grandes": 0.2,
+      "fertilizantePercent": 5.4, "sementeCertificadaPercent": 9.6, "extensaoPercent": 11.8, "irrigacaoPercent": 3.4,
+      "associadoPercent": 16.4, "creditoPercent": 3.2, "distanciaMediaArmazemKm": 88,
+      "culturas": ["Mandioca", "Milho", "Coco", "Amendoim"], "verificado": false },
+    { "nome": "Gaza", "exploracoes": 246000, "areaCultivadaHa": 398000, "pequenas": 94.4, "medias": 4.8, "grandes": 0.8,
+      "fertilizantePercent": 13.6, "sementeCertificadaPercent": 20.8, "extensaoPercent": 22.8, "irrigacaoPercent": 12.4,
+      "associadoPercent": 28.4, "creditoPercent": 8.8, "distanciaMediaArmazemKm": 58,
+      "culturas": ["Arroz", "Milho", "Horticolas", "Amendoim"], "verificado": false },
+    { "nome": "Maputo", "exploracoes": 138000, "areaCultivadaHa": 164000, "pequenas": 91.2, "medias": 6.9, "grandes": 1.9,
+      "fertilizantePercent": 19.8, "sementeCertificadaPercent": 31.2, "extensaoPercent": 28.4, "irrigacaoPercent": 21.6,
+      "associadoPercent": 34.6, "creditoPercent": 14.2, "distanciaMediaArmazemKm": 26,
+      "culturas": ["Horticolas", "Milho", "Batata-doce"], "verificado": false }
+  ],
+
+  "dependenciaCorredor": {
+    "verificado": false,
+    "nota": "Corredor de escoamento predominante por provincia. Usado pelo modelo para propagar o efeito de uma interrupcao de corredor sobre os produtores a montante.",
+    "mapa": {
+      "Niassa": "nacala", "Cabo Delgado": "n1", "Nampula": "nacala", "Zambezia": "n1",
+      "Tete": "sena", "Manica": "beira", "Sofala": "beira", "Inhambane": "n1",
+      "Gaza": "maputo", "Maputo": "maputo"
+    }
+  },
+
+  "elasticidades": {
+    "nota": "Coeficientes do modelo, todos declarados e alteraveis. Nao sao estimativas econometricas: sao pressupostos de trabalho que traduzem relacoes plausiveis e devem ser calibrados com dados reais.",
+    "perdaColheitaPorDeficitChuvaPercent": 1.6,
+    "perdaColheitaPorPragaPercent": 0.9,
+    "reducaoPerdaPorIrrigacaoFactor": 0.45,
+    "reducaoPerdaPorSementeCertificadaFactor": 0.30,
+    "reducaoPerdaPorExtensaoFactor": 0.20,
+    "custoLogisticoPorSubidaCombustivelFactor": 0.62,
+    "procuraPorInflacaoAlimentarFactor": 0.60,
+    "diasAdicionaisPorDesvioCorredor": 3.5
+  }
+}
