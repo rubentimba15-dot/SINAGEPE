@@ -89,6 +89,7 @@ tr:last-child td{border-bottom:none}
     <p class="sub">O SINAGEPE n&atilde;o pede dados primeiro. Esta p&aacute;gina mostra o que qualquer produtor recebe <b>hoje</b>, sem ter fornecido nada &mdash; s&oacute; com fontes p&uacute;blicas oficiais. Escolha a prov&iacute;ncia.</p>
 
     <div class="oferta" id="oferta"></div>
+    <div id="aviso-fonte" style="padding:14px 16px;border-radius:12px;border:1px solid rgba(240,169,38,.42);background:rgba(240,169,38,.08);margin-bottom:16px;font-size:12.5px;line-height:1.65;color:#F3D9A6"></div>
 
     <div class="card frame" style="margin-bottom:14px">
       <div class="ch"><h2>A minha prov&iacute;ncia</h2><span class="tag ok">Sem registo necess&aacute;rio</span></div>
@@ -160,6 +161,21 @@ function desenharOferta(){
    +'Esses blocos foram retirados e est&atilde;o registados na tabela do fim, com a entidade que poderia fornec&ecirc;-los.</div>';
 }
 
+function desenharFonte(){
+  var m=ST.pa.meta, a=ST.pa.ancorasNacionais.usoFertilizanteQuimicoPercent;
+  var verif=ST.pa.provincias.filter(function(p){return p.verificado}).length;
+  document.getElementById('aviso-fonte').innerHTML=
+    '<b style="color:var(--amber)">Os n&uacute;meros por prov&iacute;ncia ainda n&atilde;o s&atilde;o oficiais.</b> '
+   +verif+' das '+ST.pa.provincias.length+' prov&iacute;ncias t&ecirc;m os agregados confirmados. '
+   +'O CUPA existe e &eacute; um sistema real do minist&eacute;rio, mas n&atilde;o exp&otilde;e os registos, '
+   +'pelo que estes valores s&atilde;o de trabalho e servem para calibrar o modelo &mdash; n&atilde;o para decidir. '
+   +'Substituir por extrac&ccedil;&atilde;o oficial antes de qualquer uso em decis&atilde;o.'
+   +'<div style="margin-top:9px;color:#8FE3C4"><b style="color:var(--ok)">O que est&aacute; confirmado:</b> '
+   +'o uso de fertilizante qu&iacute;mico subiu de '+p1(a.anterior)+'% das explora&ccedil;&otilde;es em '+a.anoAnterior
+   +' para '+p1(a.valor)+'% em '+a.ano+', segundo o Inqu&eacute;rito Agr&aacute;rio Integrado. '
+   +'&Eacute; o &uacute;nico valor deste ficheiro ancorado em fonte p&uacute;blica. Tamb&eacute;m o calend&aacute;rio agr&iacute;cola est&aacute; confirmado.</div>';
+}
+
 function desenharSel(){
   document.getElementById('sel').innerHTML=ST.pa.provincias.map(function(p){
     return '<button class="sb'+(ST.prov===p.nome?' on':'')+'" data-p="'+esc(p.nome)+'">'+esc(p.nome)+'</button>';
@@ -175,8 +191,8 @@ function desenharKpis(){
   var arm=ST.arm.armazens.filter(function(a){return mesmaProv(a.provincia,p.nome)});
   var ints=ST.rv.interrupcoes.filter(function(i){return mesmaProv(i.provincia,p.nome)});
   document.getElementById('kpis').innerHTML=
-     kpi('Explora&ccedil;&otilde;es na prov&iacute;ncia',num(p.exploracoes),p.pequenas+'% s&atilde;o pequenas explora&ccedil;&otilde;es.')
-   + kpi('Dist&acirc;ncia ao armaz&eacute;m',p.distanciaMediaArmazemKm+' km',p.distanciaMediaArmazemKm>=100?'Barreira f&iacute;sica ao escoamento, n&atilde;o inconveni&ecirc;ncia.':'M&eacute;dia provincial publicada.',p.distanciaMediaArmazemKm>=100?'var(--red)':null)
+     kpi('Explora&ccedil;&otilde;es na prov&iacute;ncia',num(p.exploracoes)+' <span style="font-size:11px;color:var(--amber)">?</span>',p.pequenas+'% s&atilde;o pequenas explora&ccedil;&otilde;es. Valor de trabalho, por confirmar no CUPA.')
+   + kpi('Dist&acirc;ncia ao armaz&eacute;m',p.distanciaMediaArmazemKm+' km <span style="font-size:11px;color:var(--amber)">?</span>',(p.distanciaMediaArmazemKm>=100?'Barreira f&iacute;sica ao escoamento, n&atilde;o inconveni&ecirc;ncia. ':'')+'Valor de trabalho, por confirmar.',p.distanciaMediaArmazemKm>=100?'var(--red)':null)
    + kpi('Armaz&eacute;ns cadastrados',arm.length,arm.length?'Com fonte oficial. Ver lista ao lado.':'Nenhuma unidade documentada nesta prov&iacute;ncia.',arm.length?null:'var(--amber)')
    + kpi('Corredor de escoamento',String(corr||'&mdash;').toUpperCase(),ints.length?ints.length+' interrup&ccedil;&atilde;o registada na prov&iacute;ncia.':'Sem interrup&ccedil;&atilde;o registada no &uacute;ltimo comunicado.',ints.length?'var(--amber)':null);
 }
@@ -215,7 +231,7 @@ function desenharComparacao(){
      ? '<b>Abaixo da m&eacute;dia nacional em: '+abaixo.join(', ')+'.</b> Cada um destes reduz a perda em caso de choque &mdash; a irriga&ccedil;&atilde;o &eacute; a que mais pesa, seguida da semente certificada e da extens&atilde;o.'
      : 'Acima da m&eacute;dia nacional em todos os indicadores medidos.')
    +'</div>'
-   +'<div style="font-size:10.5px;color:var(--t4);margin-top:9px;line-height:1.55">Estes valores s&atilde;o agregados provinciais do Inqu&eacute;rito Agr&aacute;rio Integrado. N&atilde;o s&atilde;o a sua explora&ccedil;&atilde;o &mdash; s&atilde;o a refer&ecirc;ncia contra a qual se pode comparar.</div>';
+   +'<div style="font-size:10.5px;color:var(--amber);margin-top:9px;line-height:1.55">Valores de trabalho por prov&iacute;ncia, ainda n&atilde;o confirmados pelo CUPA. Servem para mostrar a ORDEM de grandeza e a posi&ccedil;&atilde;o relativa entre prov&iacute;ncias, n&atilde;o para citar como estat&iacute;stica. Nunca s&atilde;o a sua explora&ccedil;&atilde;o.</div>';
   document.getElementById('cmp-tag').textContent=esc(p.nome)+' vs nacional';
 }
 
@@ -315,6 +331,8 @@ var LACUNAS=[
   'S&oacute; existe se produtores declararem colheitas. Regra a fixar antes de come&ccedil;ar: nunca mostrar agregado constru&iacute;do a partir de menos de cinco explora&ccedil;&otilde;es, sen&atilde;o a m&eacute;dia revela cada uma.','Produtores &middot; CUPA'],
  ['Alertas clim&aacute;ticos por localidade','Por integrar','var(--blue)',
   'O INAM publica avisos meteorol&oacute;gicos e o INGD alertas de desastre. Nenhum est&aacute; ligado ao sistema.','INAM &middot; INGD'],
+ ['Agregados provinciais confirmados','Depende de ades&atilde;o','var(--red)',
+  'Zero das dez prov&iacute;ncias tem os agregados confirmados. O CUPA &eacute; um sistema real do minist&eacute;rio mas n&atilde;o exp&otilde;e os registos. Basta leitura agregada ao n&iacute;vel distrital, sem dados pessoais e sem identificar explora&ccedil;&otilde;es.','MAAP &middot; CUPA'],
  ['Previs&atilde;o meteorol&oacute;gica a 7 dias','Retirado','var(--red)',
   'A vers&atilde;o anterior deste portal mostrava previs&atilde;o de temperatura e recomenda&ccedil;&atilde;o agr&iacute;cola por dia. N&atilde;o existe integra&ccedil;&atilde;o meteorol&oacute;gica no sistema &mdash; os valores eram de demonstra&ccedil;&atilde;o. Ligar ao INAM resolve.','INAM'],
  ['Pre&ccedil;o futuro estimado','Retirado','var(--red)',
@@ -343,7 +361,7 @@ Promise.all(['produtores-agrarios','armazens-nacionais','rede-viaria','cascata-p
     if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
 })).then(function(res){
   ST.pa=res[0];ST.arm=res[1];ST.rv=res[2];ST.cp=res[3];ST.ant=res[4];
-  desenharOferta();desenharLacunas();desenharTudo();
+  desenharOferta();desenharFonte();desenharLacunas();desenharTudo();
 }).catch(function(e){
   document.getElementById('oferta').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)
    +'<br><br>Este ecr&atilde; precisa de cinco ficheiros em <span class="mono">data/</span>: produtores-agrarios, armazens-nacionais, rede-viaria, cascata-precos e antecipacao.</div>';

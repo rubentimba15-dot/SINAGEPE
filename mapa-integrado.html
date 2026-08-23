@@ -369,7 +369,7 @@ function desenharDossier(){
        +linha('Dist\u00e2ncia m\u00e9dia ao armaz\u00e9m',p.distanciaMediaArmazemKm+' km')
        +linha('Corredor de escoamento',corr)
        +(p.culturas?linha('Culturas',p.culturas.join(', ')):'')
-       +'<div class="note"><b>Porque \u00e9 que isto est\u00e1 por prov\u00edncia e n\u00e3o por explora\u00e7\u00e3o:</b> o CUPA existe e \u00e9 um sistema real do minist\u00e9rio, mas os registos individuais n\u00e3o s\u00e3o p\u00fablicos. O que se publica s\u00e3o agregados do Inqu\u00e9rito Agr\u00e1rio Integrado.</div>';
+       +'<div class="note"><b>Porque \u00e9 que isto est\u00e1 por prov\u00edncia e n\u00e3o por explora\u00e7\u00e3o:</b> o CUPA existe e \u00e9 um sistema real do minist\u00e9rio, mas n\u00e3o exp\u00f5e os registos. Estes agregados provinciais est\u00e3o marcados POR CONFIRMAR no pr\u00f3prio ficheiro de dados \u2014 s\u00e3o valores de trabalho para calibrar o modelo, n\u00e3o extrac\u00e7\u00e3o oficial. S\u00f3 o uso nacional de fertilizante qu\u00edmico (9,1% em 2023, contra 7,8% em 2020) est\u00e1 ancorado no Inqu\u00e9rito Agr\u00e1rio Integrado.</div>';
       var d=p.distanciaMediaArmazemKm;
       if(d>=100)h+='<div class="note r"><b>'+d+' km de dist\u00e2ncia m\u00e9dia ao armaz\u00e9m.</b> Com '+p.pequenas+'% de explora\u00e7\u00f5es pequenas, esta dist\u00e2ncia \u00e9 uma barreira f\u00edsica ao escoamento, n\u00e3o um inconveniente. Uma interrup\u00e7\u00e3o no corredor '+esc(corr)+' agrava-a.</div>';
     }
