@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Governa&ccedil;&atilde;o do Dado &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1500px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:920px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
+.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
+.bd{padding:15px 17px}
+.nota{padding:13px 16px;border-radius:12px;border:1px solid var(--brzg);background:rgba(201,138,60,.07);margin-bottom:16px;font-size:12.5px;line-height:1.65;color:var(--brzl)}
+.nota b{color:var(--brz)}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:14px}
+.kpi{padding:15px 17px}
+.kpi-l{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--t4);margin-bottom:8px}
+.kpi-v{font-size:26px;font-weight:600;letter-spacing:-.02em}
+.kpi-n{font-size:10.5px;color:var(--t4);margin-top:6px;line-height:1.45}
+
+.regra{padding:15px 17px;border-bottom:1px solid rgba(38,56,86,.4)}
+.regra:last-child{border-bottom:none}
+.regra-h{display:flex;align-items:baseline;gap:11px;margin-bottom:6px;flex-wrap:wrap}
+.regra-n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--brz);font-weight:600}
+.regra-t{font-size:14.5px;font-weight:600}
+.regra-r{font-size:12.5px;color:var(--t2);line-height:1.6;margin-bottom:8px}
+.regra-c{font-size:11.5px;color:var(--t3);line-height:1.6;padding-left:13px;border-left:2px solid var(--brzg)}
+.regra-f{font-size:11px;color:var(--amber);margin-top:8px}
+.est{display:inline-block;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:3px;border:1px solid;white-space:nowrap}
+
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 14px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 14px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.filtro{display:flex;gap:5px;padding:12px 17px;border-bottom:1px solid var(--card-line);flex-wrap:wrap}
+.fb{font-size:10.5px;padding:5px 12px;border-radius:20px;border:1px solid var(--card-line);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.fb.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+
+.cad{padding:14px 17px;border-bottom:1px solid rgba(38,56,86,.4)}
+.cad:last-child{border-bottom:none}
+.cad-t{font-size:13.5px;font-weight:600;margin-bottom:9px}
+.cad-p{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin-bottom:8px}
+.cad-i{font-size:11px;padding:5px 11px;border-radius:5px;background:#0A1421;border:1px solid var(--card-line);color:var(--t2)}
+.cad-s{color:var(--brz);font-size:12px}
+.cad-n{font-size:11px;color:var(--t4);line-height:1.55}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Auditar antes de mexer</div>
+    <h1>Governa&ccedil;&atilde;o do Dado</h1>
+    <p class="sub">Cinco regras de disciplina de dados, e a verifica&ccedil;&atilde;o de que est&atilde;o a ser cumpridas. Os n&uacute;meros desta p&aacute;gina s&atilde;o contados nos pr&oacute;prios ficheiros ao carregar &mdash; n&atilde;o est&atilde;o escritos &agrave; m&atilde;o.</p>
+
+    <div class="nota" id="nota"></div>
+    <div class="kpis" id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><h2>As cinco regras</h2><span class="tag" id="r-tag">&mdash;</span></div>
+      <div id="regras"></div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><h2>Cada n&uacute;mero, e o que ele &eacute;</h2><span class="tag" id="c-tag">&mdash;</span></div>
+      <div class="filtro" id="filtro"></div>
+      <table id="classificacao"></table>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><h2>Linhagem &mdash; da fonte ao resultado</h2><span class="tag">Como se chega ao n&uacute;mero</span></div>
+      <div id="linhagem"></div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><h2>Matriz de funcionalidades</h2><span class="tag" id="m-tag">&mdash;</span></div>
+      <table id="matriz"></table>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><h2>O que foi recusado, e porqu&ecirc;</h2><span class="tag">Honestidade de m&eacute;todo</span></div>
+      <table id="recusado"></table>
+      <div class="bd" style="border-top:1px solid var(--card-line);font-size:11.5px;color:var(--t3);line-height:1.6" id="recusado-nota"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+if(window.SinagepeNav) SinagepeNav.montar('governanca');
+
+var ST={g:null,arm:null,pa:null,fx:null,filtro:'todos'};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+var COR_CAT={FACTO:'#12B981',ESTIMATIVA:'#F0A926','CEN\u00c1RIO':'#22B8F0','RECOMENDA\u00c7\u00c3O':'#A78BFA',PROIBIDO:'#EF4444'};
+var COR_EST={aplicada:'#12B981',parcial:'#F0A926'};
+var COR_MAT={ACTIVO:'#12B981',PARCIALMENTE_ACTIVO:'#F0A926',INCOMPLETO:'#F0A926',POR_VERIFICAR:'#5E7189',PARTIDO:'#EF4444',DUPLICADO:'#A78BFA'};
+
+/* ---- as contagens saem dos ficheiros, nao de texto escrito a mao ---- */
+function contar(){
+  var A=ST.arm.armazens;
+  var comFonte=A.filter(function(a){return !!a.fonte}).length;
+  var verif=A.filter(function(a){return a.verificado}).length;
+  var provVerif=ST.pa.provincias.filter(function(p){return p.verificado}).length;
+  var fontes=Object.keys(ST.fx).filter(function(k){return k!=='meta'});
+  var comPorObter=0;
+  fontes.forEach(function(k){
+    var s=JSON.stringify(ST.fx[k]);
+    if(s.indexOf('porObter')>=0) comPorObter++;
+  });
+  return {unidades:A.length,comFonte:comFonte,verif:verif,
+          provincias:ST.pa.provincias.length,provVerif:provVerif,
+          fontes:fontes.length,comPorObter:comPorObter};
+}
+
+function desenharNota(){
+  document.getElementById('nota').innerHTML='<b>Onde isto vem.</b> '+esc(ST.g.meta.origem)
+   +'<div style="margin-top:8px;color:var(--t3)">'+esc(ST.g.meta.naturezaDestaPagina)+'</div>';
+}
+
+function desenharKpis(){
+  var c=contar();
+  document.getElementById('kpis').innerHTML=
+     kpi('Unidades com fonte',c.comFonte+' de '+c.unidades,c.comFonte===c.unidades?'Regra 3 cumprida: nenhuma entrou sem URL cit&aacute;vel.':'H&aacute; unidades sem fonte declarada.',c.comFonte===c.unidades?'var(--ok)':'var(--red)')
+   + kpi('Unidades verificadas',c.verif+' de '+c.unidades,'As restantes t&ecirc;m exist&ecirc;ncia, natureza ou estado por confirmar &mdash; e di-lo no pr&oacute;prio dossier.','var(--amber)')
+   + kpi('Prov&iacute;ncias confirmadas',c.provVerif+' de '+c.provincias,c.provVerif===0?'Zero. Os agregados s&atilde;o valores de trabalho e est&atilde;o marcados como tal em todos os ecr&atilde;s que os mostram.':'Parcialmente confirmados.',c.provVerif===0?'var(--red)':'var(--amber)')
+   + kpi('Fontes no registo',c.fontes,c.comPorObter+' t&ecirc;m campos por obter, com o detentor nomeado. Nenhuma foi eliminada.','var(--ok)');
+}
+function kpi(l,v,n,c){
+  return '<div class="card frame kpi" style="margin-bottom:0"><div class="kpi-l">'+l+'</div>'
+   +'<div class="kpi-v mono" style="color:'+(c||'var(--ink)')+'">'+v+'</div><div class="kpi-n">'+n+'</div></div>';
+}
+
+function desenharRegras(){
+  document.getElementById('regras').innerHTML=ST.g.regras.map(function(r){
+    var c=COR_EST[r.estado]||'#5E7189';
+    return '<div class="regra"><div class="regra-h"><span class="regra-n">0'+r.n+'</span>'
+     +'<span class="regra-t">'+esc(r.titulo)+'</span>'
+     +'<span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'+esc(r.estado)+'</span></div>'
+     +'<div class="regra-r">'+esc(r.regra)+'</div>'
+     +'<div class="regra-c"><b style="color:var(--brzl)">Como se aplica aqui:</b> '+esc(r.comoAplicamos)+'</div>'
+     +(r.porFechar?'<div class="regra-f"><b>Por fechar:</b> '+esc(r.porFechar)+'</div>':'')
+     +'</div>';
+  }).join('');
+  var ap=ST.g.regras.filter(function(r){return r.estado==='aplicada'}).length;
+  document.getElementById('r-tag').textContent=ap+' de '+ST.g.regras.length+' aplicadas';
+}
+
+function desenharClassificacao(){
+  var cats={};ST.g.classificacao.forEach(function(c){cats[c[1]]=(cats[c[1]]||0)+1});
+  document.getElementById('filtro').innerHTML=
+    '<button class="fb'+(ST.filtro==='todos'?' on':'')+'" data-f="todos">Todos ('+ST.g.classificacao.length+')</button>'
+   +Object.keys(cats).map(function(k){
+      return '<button class="fb'+(ST.filtro===k?' on':'')+'" data-f="'+esc(k)+'" style="'+(ST.filtro===k?'':'border-color:'+COR_CAT[k]+'44;color:'+COR_CAT[k])+'">'+esc(k)+' ('+cats[k]+')</button>';
+    }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.fb'),function(b){
+    b.addEventListener('click',function(){ST.filtro=b.dataset.f;desenharClassificacao()});
+  });
+
+  var vis=ST.g.classificacao.filter(function(c){return ST.filtro==='todos'||c[1]===ST.filtro});
+  var h='<thead><tr><th>N&uacute;mero que o sistema mostra</th><th>&Eacute;</th><th>Porqu&ecirc;</th><th>Ficheiro</th></tr></thead><tbody>';
+  vis.forEach(function(c){
+    var cor=COR_CAT[c[1]]||'#5E7189';
+    h+='<tr><td style="font-weight:600">'+esc(c[0])+'</td>'
+     +'<td><span class="est" style="color:'+cor+';border-color:'+cor+'55;background:'+cor+'12">'+esc(c[1])+'</span></td>'
+     +'<td style="color:var(--t3);max-width:430px">'+esc(c[2])+'</td>'
+     +'<td class="mono" style="color:var(--t4);font-size:10px;white-space:nowrap">'+esc(c[3]||'&mdash;')+'</td></tr>';
+  });
+  document.getElementById('classificacao').innerHTML=h+'</tbody>';
+  document.getElementById('c-tag').textContent=vis.length+' de '+ST.g.classificacao.length;
+}
+
+function desenharLinhagem(){
+  document.getElementById('linhagem').innerHTML=ST.g.linhagem.map(function(l){
+    var passos=l.cadeia.map(function(p,i){
+      return (i?'<span class="cad-s">&rarr;</span>':'')+'<span class="cad-i">'+esc(p)+'</span>';
+    }).join('');
+    return '<div class="cad"><div class="cad-t">'+esc(l.indicador)+'</div>'
+     +'<div class="cad-p">'+passos+'</div>'
+     +'<div class="cad-n">'+esc(l.nota)+'</div></div>';
+  }).join('');
+}
+
+function desenharMatriz(){
+  var h='<thead><tr><th>Ecr&atilde;</th><th>Fun&ccedil;&atilde;o</th><th>Estado</th><th>Nota</th></tr></thead><tbody>';
+  ST.g.matriz.forEach(function(m){
+    var c=COR_MAT[m[2]]||'#5E7189';
+    h+='<tr><td class="mono" style="font-size:10.5px">'+esc(m[0])+'</td>'
+     +'<td style="color:var(--t2)">'+esc(m[1])+'</td>'
+     +'<td><span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'+esc(m[2]).replace(/_/g,' ')+'</span></td>'
+     +'<td style="color:var(--t3);max-width:360px">'+esc(m[3])+'</td></tr>';
+  });
+  var pv=ST.g.matriz.filter(function(m){return m[2]==='POR_VERIFICAR'}).length;
+  document.getElementById('matriz').innerHTML=h+'</tbody>';
+  document.getElementById('m-tag').textContent=pv+' por verificar';
+}
+
+function desenharRecusado(){
+  var r=ST.g.recusado;
+  var h='<thead><tr><th>Pedido pelo documento</th><th>Porque foi recusado</th></tr></thead><tbody>';
+  r.itens.forEach(function(i){
+    h+='<tr><td style="font-weight:600;color:var(--red)">'+esc(i[0])+'</td>'
+     +'<td style="color:var(--t3)">'+esc(i[1])+'</td></tr>';
+  });
+  document.getElementById('recusado').innerHTML=h+'</tbody>';
+  document.getElementById('recusado-nota').innerHTML='<b style="color:var(--t2)">Uma excep&ccedil;&atilde;o.</b> '+esc(r.nota);
+}
+
+Promise.all(['governanca-dado','armazens-nacionais','produtores-agrarios','fontes-externas'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.g=res[0];ST.arm=res[1];ST.pa=res[2];ST.fx=res[3];
+  desenharNota();desenharKpis();desenharRegras();desenharClassificacao();
+  desenharLinhagem();desenharMatriz();desenharRecusado();
+}).catch(function(e){
+  document.getElementById('nota').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+});
+</script>
+</body>
+</html>

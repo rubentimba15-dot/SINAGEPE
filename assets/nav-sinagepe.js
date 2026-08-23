@@ -39,6 +39,7 @@
     { key: 'rede-logistica',icon: '\u2318', label: 'Rede Log\u00edstica',   href: 'rede-logistica.html' },
     { key: 'relatorio-exec',icon: '\u25A4', label: 'Relat\u00f3rio Executivo', href: 'relatorio-executivo.html' },
     { key: 'relatorios',    icon: '\u25A7', label: 'Relat\u00f3rios',       href: 'relatorios.html' },
+    { key: 'governanca',    icon: '\u2696', label: 'Governa\u00e7\u00e3o do Dado', href: 'governanca-dado.html' },
     { key: 'config',        icon: '\u2699', label: 'Configura\u00e7\u00f5es', href: 'administracao-auditoria.html' },
     { key: 'marketplace',   icon: '\u2B21', label: 'Marketplace B2B',       href: 'marketplace-b2b.html' },
     { key: 'inteligencia',  icon: '\u25C8', label: 'Intelig\u00eancia',     href: 'inteligencia-consolidada.html' },

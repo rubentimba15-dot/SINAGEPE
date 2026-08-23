@@ -1,0 +1,325 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "geradoEm": "2026-08-23",
+    "origem": "Cinco regras aproveitadas do prompt operacional de diagnóstico e consolidação. As restantes onze fases desse documento pressupõem base de dados, APIs, jobs e modelos de IA que o SINAGEPE não tem, e foram deixadas de fora deliberadamente.",
+    "naturezaDestaPagina": "Esta página VERIFICA, não declara. Os números de conformidade são contados nos próprios ficheiros de dados ao carregar, não escritos à mão."
+  },
+  "regras": [
+    {
+      "n": 1,
+      "titulo": "Matriz de funcionalidades",
+      "regra": "Cada funcionalidade tem estado declarado: activa, parcialmente activa, partida, incompleta, duplicada ou não usada. Nada se remove sem evidência técnica.",
+      "comoAplicamos": "O verificador de ecrãs testa os 81 ecrãs no ar e classifica cada um. A matriz abaixo é a parte que já se pode afirmar sem correr nada.",
+      "estado": "parcial",
+      "porFechar": "Correr o verificador-ecras.html no site publicado."
+    },
+    {
+      "n": 2,
+      "titulo": "Fonte indisponível não se apaga",
+      "regra": "Uma fonte que deixa de responder fica marcada como temporariamente indisponível, nunca eliminada. Não reduzir a diversidade de fontes.",
+      "comoAplicamos": "O fontes-externas.json passou de 7 para 13 fontes e nenhuma foi retirada. Cada bloco sem dados tem um campo porObter que nomeia quem detém o dado.",
+      "estado": "aplicada",
+      "porFechar": null
+    },
+    {
+      "n": 3,
+      "titulo": "Linhagem do dado",
+      "regra": "Para cada indicador deve ser possível seguir: fonte, dado bruto, normalização, validação, transformação, resultado.",
+      "comoAplicamos": "Cada unidade do cadastro tem a URL da fonte oficial. A cadeia de transformação está declarada por indicador na secção de linhagem.",
+      "estado": "parcial",
+      "porFechar": "Registar a data de recolha por registo, não só por ficheiro."
+    },
+    {
+      "n": 4,
+      "titulo": "O dado original nunca é sobrescrito",
+      "regra": "Separar dado bruto, dado normalizado e dado analítico. A normalização nunca destrói o original.",
+      "comoAplicamos": "Regra adoptada depois de uma falha real: ao limpar valores inventados do fontes-externas.json esvaziei uma série de que o simulador preditivo dependia, e o ecrã ficou em branco. Antes de esvaziar um campo, procurar quem o lê.",
+      "estado": "aplicada",
+      "porFechar": "Guardar o valor retirado num bloco de auditoria em vez de o apagar — já feito no fontes-externas e no rede-logistica."
+    },
+    {
+      "n": 5,
+      "titulo": "Facto, estimativa, previsão, cenário, recomendação",
+      "regra": "Nunca confundir previsão com realidade observada. Cada número apresentado deve declarar a que categoria pertence.",
+      "comoAplicamos": "Classificação completa na secção própria. Nota: o documento de origem pedia percentagens de confiança e de qualidade do dado — recusadas, porque não há série histórica que as sustente e seriam elas próprias números inventados.",
+      "estado": "aplicada",
+      "porFechar": null
+    }
+  ],
+  "classificacao": [
+    [
+      "29 unidades no cadastro nacional",
+      "FACTO",
+      "Cada uma com URL de fonte oficial (ICM, MIC, Petromoc, CFM, MPDC).",
+      "armazens-nacionais.json"
+    ],
+    [
+      "75.500 t nos silos do Estado",
+      "FACTO",
+      "Total publicado pelo MIC para os dez complexos concessionados.",
+      "armazens-nacionais.json"
+    ],
+    [
+      "501.923 m³ de parque de combustíveis",
+      "FACTO",
+      "Publicado pela Petromoc.",
+      "armazens-nacionais.json"
+    ],
+    [
+      "Capacidade cega de 100%",
+      "FACTO",
+      "Contagem directa: nenhuma das 29 unidades tem sensor.",
+      "armazens-nacionais.json"
+    ],
+    [
+      "Gasóleo a 116,25 MT/L nas cidades com terminal",
+      "FACTO",
+      "Preço regulado, fixado pela ARENE, Decreto 89/2019, revisão de 7 Maio 2026.",
+      "cascata-precos.json"
+    ],
+    [
+      "Mueda e Palma pagam mais 15,60 MT/L",
+      "FACTO",
+      "Subtracção entre dois preços publicados. Aritmética sobre factos.",
+      "cascata-precos.json"
+    ],
+    [
+      "Prefixo GS1 602 por atribuir",
+      "FACTO",
+      "Verificado na lista de códigos de país da GS1.",
+      "identificacao-gs1.json"
+    ],
+    [
+      "9,1% das explorações usam fertilizante químico",
+      "FACTO",
+      "Inquérito Agrário Integrado 2023, contra 7,8% em 2020.",
+      "produtores-agrarios.json"
+    ],
+    [
+      "812.000 explorações em Nampula",
+      "ESTIMATIVA",
+      "Valor de trabalho. Zero das dez províncias tem agregados confirmados pelo CUPA.",
+      "produtores-agrarios.json"
+    ],
+    [
+      "142 km de distância média ao armazém",
+      "ESTIMATIVA",
+      "Valor de trabalho, mesma origem.",
+      "produtores-agrarios.json"
+    ],
+    [
+      "Índice de exposição por província",
+      "ESTIMATIVA",
+      "Fórmula com pesos declarados sobre valores de trabalho. Os limiares são tercis da distribuição, não normas.",
+      "antecipacao.json"
+    ],
+    [
+      "82 de 119 pares em cego total",
+      "FACTO",
+      "Contagem de cruzamentos, não estimativa. Ambos os lados são binários e verificáveis.",
+      "identificacao-gs1.json"
+    ],
+    [
+      "Perda de colheita por défice de chuva",
+      "CENÁRIO",
+      "Coeficiente assumido de 1,6% por ponto. Não é econometria: é pressuposto declarado e alterável.",
+      "produtores-agrarios.json"
+    ],
+    [
+      "Resultado dos sete cenários do simulador",
+      "CENÁRIO",
+      "Modelo determinístico. Proibido apresentar com intervalo de confiança ou percentagem de certeza.",
+      "produtores-agrarios.json"
+    ],
+    [
+      "Ordem de instrumentação das unidades",
+      "RECOMENDAÇÃO",
+      "Prioridade proposta: estratégicos primeiro, depois maior capacidade. É critério, não facto.",
+      "antecipacao.json"
+    ],
+    [
+      "Mitigações do Centro de Antecipação",
+      "RECOMENDAÇÃO",
+      "Cada uma com horizonte, custo relativo e cadeia de decisão. Nenhuma é ordem.",
+      "antecipacao.json"
+    ],
+    [
+      "Preço futuro estimado",
+      "PROIBIDO",
+      "Retirado do Portal do Produtor. Não há série histórica que permita projectar preço. Com o SIMA passa a haver tendência observada, que é coisa diferente.",
+      null
+    ],
+    [
+      "Previsão meteorológica",
+      "PROIBIDO",
+      "Retirada. Não existe integração meteorológica no sistema.",
+      null
+    ],
+    [
+      "Percentagem de confiança da previsão",
+      "PROIBIDO",
+      "Pedida pelo documento de origem, recusada. Sem série histórica, a própria confiança seria inventada.",
+      null
+    ]
+  ],
+  "linhagem": [
+    {
+      "indicador": "Capacidade cega",
+      "cadeia": [
+        "Fontes oficiais: ICM, MIC, Petromoc, CFM",
+        "Recolha manual com URL por unidade",
+        "Campo sensor = sem-sensor por omissão",
+        "Contagem de unidades sem sensor",
+        "Percentagem sobre o total de unidades"
+      ],
+      "nota": "Conta unidades, nunca tonelagem: as capacidades estão em m³, t, t/ano, TEU e m², que não se somam."
+    },
+    {
+      "indicador": "Factura da geografia (combustíveis)",
+      "cadeia": [
+        "ARENE publica preços por região",
+        "Transcrição da tabela mensal",
+        "Preço da região menos preço de referência",
+        "Diferença em MT/L e em percentagem"
+      ],
+      "nota": "Aritmética simples sobre dois números publicados. Não há modelo pelo meio."
+    },
+    {
+      "indicador": "Índice de exposição por província",
+      "cadeia": [
+        "Agregados provinciais por confirmar",
+        "Fórmula com cinco componentes de peso declarado",
+        "Limiares fixados nos tercis da distribuição real",
+        "Escalão contida / moderada / elevada"
+      ],
+      "nota": "A componente de corredor foi corrigida: a versão inicial dava o mesmo valor a todas as províncias e punha as dez a vermelho."
+    },
+    {
+      "indicador": "Pares em cego total",
+      "cadeia": [
+        "Identificação por produto: nenhuma, estrangeira ou nacional",
+        "Telemetria por unidade: sim ou não",
+        "Junção produto-armazém pelas famílias declaradas",
+        "Grau 3 quando ambos os lados são negativos"
+      ],
+      "nota": "Binário dos dois lados. É o indicador do sistema com menos suposição."
+    }
+  ],
+  "matriz": [
+    [
+      "index.html",
+      "Painel executivo",
+      "ACTIVO",
+      "Autenticação PBKDF2 e balanço nacional."
+    ],
+    [
+      "armazens-nacionais.html",
+      "Cadastro com fonte",
+      "ACTIVO",
+      "29 unidades, todas com URL."
+    ],
+    [
+      "mapa-integrado.html",
+      "Seis camadas",
+      "ACTIVO",
+      "Estradas, interrupções, armazéns, comercial, produção, corredores."
+    ],
+    [
+      "ponto-cego-duplo.html",
+      "Cruzamento identificação × telemetria",
+      "ACTIVO",
+      "119 pares."
+    ],
+    [
+      "centro-antecipacao.html",
+      "Riscos e mitigações",
+      "ACTIVO",
+      "Dez riscos com gatilho e janela."
+    ],
+    [
+      "sandbox-rastreabilidade.html",
+      "EPCIS 2.0",
+      "ACTIVO",
+      "Identificadores marcados como simulados."
+    ],
+    [
+      "adesao-institucional.html",
+      "Dossiers por entidade",
+      "ACTIVO",
+      "Restrito a administrador e governo."
+    ],
+    [
+      "relatorio-executivo.html",
+      "Relatório imprimível",
+      "ACTIVO",
+      "Exportação CSV e JSON."
+    ],
+    [
+      "portal-produtores.html",
+      "Reciprocidade ao produtor",
+      "ACTIVO",
+      "Blocos inventados substituídos por fontes reais."
+    ],
+    [
+      "rede-logistica.html",
+      "Corredores",
+      "ACTIVO",
+      "Cadastro próprio removido; lê o cadastro nacional."
+    ],
+    [
+      "simulador-preditivo.html",
+      "Sete cenários",
+      "PARCIALMENTE_ACTIVO",
+      "Corre sem a série do IPC, com o factor de procura neutro e aviso visível."
+    ],
+    [
+      "inteligencia-consolidada.html",
+      "Motor de cruzamento",
+      "POR_VERIFICAR",
+      "Nunca foi possível abrir o ficheiro. Estado desconhecido."
+    ],
+    [
+      "portal-pme.html",
+      "Portal PME",
+      "INCOMPLETO",
+      "Devolveu conteúdo quase vazio quando lido do site publicado."
+    ],
+    [
+      "Os restantes 60 ecrãs",
+      "Vários",
+      "POR_VERIFICAR",
+      "Só o verificador no site publicado pode classificar."
+    ]
+  ],
+  "recusado": {
+    "titulo": "O que foi recusado do documento de origem, e porquê",
+    "itens": [
+      [
+        "Previsões a 7, 30, 90, 180 e 365 dias",
+        "Não há série histórica em Moçambique que permita estimar probabilidades a qualquer destes horizontes."
+      ],
+      [
+        "Percentagem de confiança da previsão",
+        "Seria um número inventado sobre outro número inventado."
+      ],
+      [
+        "Percentagem de qualidade do dado",
+        "O que se pode afirmar é binário: tem fonte ou não tem. Uma percentagem sugere uma medição que não existe."
+      ],
+      [
+        "Auditoria de base de dados, schemas, índices e dados órfãos",
+        "Não existe base de dados. O sistema são ficheiros JSON num sítio estático."
+      ],
+      [
+        "Auditoria de APIs, serviços e jobs",
+        "Não existem."
+      ],
+      [
+        "Auditoria de modelos de IA e prompts",
+        "Não existe modelo de IA no sistema."
+      ]
+    ],
+    "nota": "O monitor de precisão de previsão, que o documento pede na secção 22, é a única parte preditiva que faz sentido começar já: guardar o que se previu e comparar com o que aconteceu. Ao fim de dois anos passa a haver base para falar de probabilidades. Antes disso, não."
+  }
+}
