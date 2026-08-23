@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Centro de Antecipa&ccedil;&atilde;o &mdash; SINAGEPE</title>
 <script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
@@ -108,21 +109,7 @@ h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
 </head>
 <body>
 <div class="app">
-  <aside class="sidebar">
-    <div class="brand"><div class="brand-t">SINAGEPE</div><div class="brand-s">Torre de Controlo</div></div>
-    <a class="nav-item" href="index.html"><span class="nav-icon">&#9638;</span><span class="nav-label">PAINEL</span></a>
-    <a class="nav-item active" href="centro-antecipacao.html"><span class="nav-icon">&#9737;</span><span class="nav-label">Centro de Antecipa&ccedil;&atilde;o</span></a>
-    <a class="nav-item" href="mapa-integrado.html"><span class="nav-icon">&#9673;</span><span class="nav-label">Mapa Integrado</span></a>
-    <a class="nav-item" href="adesao-institucional.html"><span class="nav-icon">&#9784;</span><span class="nav-label">Ades&atilde;o Institucional</span></a>
-    <a class="nav-item" href="alertas.html"><span class="nav-icon">&#9888;</span><span class="nav-label">Alertas</span></a>
-    <a class="nav-item" href="simulador-preditivo.html"><span class="nav-icon">&#9709;</span><span class="nav-label">Simulador Preditivo</span></a>
-    <a class="nav-item" href="armazens-nacionais.html"><span class="nav-icon">&#9707;</span><span class="nav-label">Armaz&eacute;ns Nacionais</span></a>
-    <a class="nav-item" href="ponto-cego-duplo.html"><span class="nav-icon">&#9678;</span><span class="nav-label">Ponto Cego Duplo</span></a>
-    <a class="nav-item" href="sandbox-rastreabilidade.html"><span class="nav-icon">&#8766;</span><span class="nav-label">Sandbox EPCIS</span></a>
-    <a class="nav-item" href="inteligencia-consolidada.html"><span class="nav-icon">&#9672;</span><span class="nav-label">Intelig&ecirc;ncia</span></a>
-    <a class="nav-item" href="relatorios.html"><span class="nav-icon">&#9639;</span><span class="nav-label">Relat&oacute;rios</span></a>
-    <a class="nav-item" href="#" id="btn-logout" style="margin-top:8px;border-top:1px solid var(--gold-line);border-radius:0;padding-top:13px"><span class="nav-icon">&#8617;</span><span class="nav-label" style="color:#EF4444">Sair</span></a>
-  </aside>
+  <aside class="sidebar" id="nav-mount"></aside>
   <main>
     <div class="eyebrow">Intelig&ecirc;ncia consolidada &rarr; ac&ccedil;&atilde;o</div>
     <h1>Centro de Antecipa&ccedil;&atilde;o</h1>
@@ -319,8 +306,7 @@ function desenharDossier(){
   document.getElementById('d-tag').textContent='Gravidade '+r.gravidade+'/5';
 }
 
-var lo=document.getElementById('btn-logout');
-if(lo)lo.addEventListener('click',function(e){e.preventDefault();try{sessionStorage.clear()}catch(x){}location.href='index.html'});
+if(window.SinagepeNav) SinagepeNav.montar('antecipacao');
 
 Promise.all([
  fetch('data/antecipacao.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/antecipacao.json');return r.json()}),

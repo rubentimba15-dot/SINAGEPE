@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ponto Cego Duplo &mdash; SINAGEPE</title>
 <script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -112,27 +113,7 @@ input[type=range]{flex:1;min-width:160px;accent-color:var(--blue)}
 </head>
 <body>
 <div class="app">
-  <aside class="sidebar">
-    <div class="brand"><div class="brand-t">SINAGEPE</div><div class="brand-s">Torre de Controlo</div></div>
-    <a class="nav-item" href="index.html"><span class="nav-icon">&#9638;</span><span class="nav-label">PAINEL</span></a>
-    <a class="nav-item" href="alertas.html"><span class="nav-icon">&#9888;</span><span class="nav-label">Alertas</span></a>
-    <a class="nav-item" href="mapa-nacional.html"><span class="nav-icon">&#9678;</span><span class="nav-label">Mapa</span></a>
-    <a class="nav-item" href="simulador-importacoes.html"><span class="nav-icon">&#8779;</span><span class="nav-label">Simulador</span></a>
-    <a class="nav-item" href="simulador-preditivo.html"><span class="nav-icon">&#9709;</span><span class="nav-label">Simulador Preditivo</span></a>
-    <a class="nav-item" href="portal-pme.html"><span class="nav-icon">&#9921;</span><span class="nav-label">PMEs</span></a>
-    <a class="nav-item" href="cadastro-armazens.html"><span class="nav-icon">&#9636;</span><span class="nav-label">Armaz&eacute;ns</span></a>
-    <a class="nav-item" href="armazens-nacionais.html"><span class="nav-icon">&#9707;</span><span class="nav-label">Armaz&eacute;ns Nacionais</span></a>
-    <a class="nav-item active" href="ponto-cego-duplo.html"><span class="nav-icon">&#9673;</span><span class="nav-label">Ponto Cego Duplo</span></a>
-    <a class="nav-item" href="modulo-logistica.html"><span class="nav-icon">&#8644;</span><span class="nav-label">Log&iacute;stica</span></a>
-    <a class="nav-item" href="rede-logistica.html"><span class="nav-icon">&#8984;</span><span class="nav-label">Rede Log&iacute;stica</span></a>
-    <a class="nav-item" href="relatorios.html"><span class="nav-icon">&#9639;</span><span class="nav-label">Relat&oacute;rios</span></a>
-    <a class="nav-item" href="administracao-auditoria.html"><span class="nav-icon">&#9881;</span><span class="nav-label">Configura&ccedil;&otilde;es</span></a>
-    <a class="nav-item" href="marketplace-b2b.html"><span class="nav-icon">&#11041;</span><span class="nav-label">Marketplace B2B</span></a>
-    <a class="nav-item" href="inteligencia-consolidada.html"><span class="nav-icon">&#9672;</span><span class="nav-label">Intelig&ecirc;ncia</span></a>
-    <a class="nav-item" href="fontes-nacionais.html"><span class="nav-icon">&#11043;</span><span class="nav-label">Fontes Nacionais</span></a>
-    <a class="nav-item" href="fontes-internacionais.html"><span class="nav-icon">&#11042;</span><span class="nav-label">Fontes Internacionais</span></a>
-    <a class="nav-item" href="#" id="btn-logout" style="margin-top:8px;border-top:1px solid var(--gold-line);border-radius:0;padding-top:13px"><span class="nav-icon">&#8617;</span><span class="nav-label" style="color:#EF4444">Sair (Logout)</span></a>
-  </aside>
+  <aside class="sidebar" id="nav-mount"></aside>
 
   <main>
     <div class="eyebrow">Cruzamento identifica&ccedil;&atilde;o &times; telemetria</div>
@@ -403,12 +384,7 @@ function desenharAchados(){
 
 function redesenhar(){ desenharKpis(); desenharBarra(); desenharMatriz(); if(ST.sel) desenharDossier(); }
 
-var lo = document.getElementById('btn-logout');
-if(lo) lo.addEventListener('click', function(e){
-  e.preventDefault();
-  try { sessionStorage.clear(); } catch(err) {}
-  location.href = 'index.html';
-});
+if(window.SinagepeNav) SinagepeNav.montar('ponto-cego');
 
 Promise.all([
   fetch('data/identificacao-gs1.json').then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status + ' em data/identificacao-gs1.json'); return r.json(); }),
