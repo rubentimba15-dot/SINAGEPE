@@ -74,6 +74,7 @@ const SINAGEPE = (() => {
     { key: 'sandbox-epcis', label: 'Sandbox EPCIS', icon: '⇞', href: 'sandbox-rastreabilidade.html' },
     { key: 'mapa-integrado', label: 'Mapa Integrado', icon: '◉', href: 'mapa-integrado.html' },
     { key: 'antecipacao', label: 'Centro de Antecipação', icon: '☉', href: 'centro-antecipacao.html' },
+    { key: 'portal-produtores', label: 'Portal do Produtor', icon: '☘', href: 'portal-produtores.html' },
     { key: 'relatorio-exec', label: 'Relatório Executivo', icon: '▤', href: 'relatorio-executivo.html' },
     { key: 'adesao', label: 'Adesão Institucional', icon: '☸', href: 'adesao-institucional.html' },
     { key: 'logistica',  label: 'Logística',   icon: '⇄', href: 'modulo-logistica.html', countId: 'nav-corredores-count' },

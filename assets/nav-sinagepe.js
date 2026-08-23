@@ -29,6 +29,7 @@
     { key: 'mapa',          icon: '\u25CE', label: 'Mapa Nacional',         href: 'mapa-nacional.html' },
     { key: 'simulador',     icon: '\u224B', label: 'Simulador',             href: 'simulador-importacoes.html' },
     { key: 'preditivo',     icon: '\u25AD', label: 'Simulador Preditivo',   href: 'simulador-preditivo.html' },
+    { key: 'portal-produtores', icon: '\u2618', label: 'Portal do Produtor',  href: 'portal-produtores.html' },
     { key: 'pme',           icon: '\u26C1', label: 'PMEs',                  href: 'portal-pme.html' },
     { key: 'armazens',      icon: '\u25A4', label: 'Armaz\u00e9ns',         href: 'cadastro-armazens.html' },
     { key: 'armazens-nac',  icon: '\u25EB', label: 'Armaz\u00e9ns Nacionais', href: 'armazens-nacionais.html' },
