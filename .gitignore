@@ -26,7 +26,7 @@ credenciais-*.txt
 # --- Ferramentas temporárias de manutenção --------------------
 # Expõem a estrutura de acessos ou permitem testar palavras-passe
 # contra os hashes. Usar e apagar; se ficarem por engano, não sobem.
-verificador-ecras.html
+#verificador-ecras.html
 diagnostico-credencial.html
 gerar-credencial.html
 
