@@ -6,6 +6,7 @@
 <title>Armazéns Nacionais — SINAGEPE</title>
 <script src="assets/access-control.js"></script>
 <script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -470,6 +471,7 @@ function desenharDivergencias(){
 
 /* ---- logout partilhado: limpa a sessão antes de voltar ---- */
 if(window.SinagepeNav) SinagepeNav.montar('armazens-nac');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
 
 fetch('data/armazens-nacionais.json')
   .then(function(r){

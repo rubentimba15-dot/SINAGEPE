@@ -6,6 +6,7 @@
 <title>Portal do Transportador &mdash; SINAGEPE</title>
 <script src="assets/access-control.js"></script>
 <script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
@@ -134,6 +135,7 @@ input[type=range]{flex:1;min-width:150px;accent-color:var(--brz)}
 
 <script>
 if(window.SinagepeNav) SinagepeNav.montar('portal-transportadores');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
 
 var ST={cp:null,rv:null,rl:null,arm:null,pa:null,reg:0,km:400,consumo:32};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}

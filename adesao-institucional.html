@@ -6,6 +6,7 @@
 <title>Ades&atilde;o Institucional &mdash; SINAGEPE</title>
 <script src="assets/access-control.js"></script>
 <script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
@@ -236,6 +237,7 @@ function desenharArg(){
 }
 
 if(window.SinagepeNav) SinagepeNav.montar('adesao');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
 
 fetch('data/adesao-institucional.json')
  .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/adesao-institucional.json');return r.json()})

@@ -6,6 +6,7 @@
 <title>Ponto Cego Duplo &mdash; SINAGEPE</title>
 <script src="assets/access-control.js"></script>
 <script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -385,6 +386,7 @@ function desenharAchados(){
 function redesenhar(){ desenharKpis(); desenharBarra(); desenharMatriz(); if(ST.sel) desenharDossier(); }
 
 if(window.SinagepeNav) SinagepeNav.montar('ponto-cego');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
 
 Promise.all([
   fetch('data/identificacao-gs1.json').then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status + ' em data/identificacao-gs1.json'); return r.json(); }),

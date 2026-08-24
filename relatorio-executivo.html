@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Relatório Executivo — SINAGEPE</title>
 <script src="assets/access-control.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -133,6 +134,7 @@ td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 
 <script>
 var DATA={};
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar({alvo:"nao-existe"});
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function num(n){return new Intl.NumberFormat('pt-PT').format(n)}
 function hoje(){return new Date().toLocaleDateString('pt-PT',{day:'2-digit',month:'long',year:'numeric'})}
