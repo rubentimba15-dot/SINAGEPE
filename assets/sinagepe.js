@@ -76,6 +76,7 @@ const SINAGEPE = (() => {
     { key: 'antecipacao', label: 'Centro de Antecipação', icon: '☉', href: 'centro-antecipacao.html' },
     { key: 'governanca', label: 'Governação do Dado', icon: '⚖', href: 'governanca-dado.html' },
     { key: 'portal-produtores', label: 'Portal do Produtor', icon: '☘', href: 'portal-produtores.html' },
+    { key: 'portal-transportadores', label: 'Portal do Transportador', icon: '⛟', href: 'portal-transportadores.html' },
     { key: 'relatorio-exec', label: 'Relatório Executivo', icon: '▤', href: 'relatorio-executivo.html' },
     { key: 'adesao', label: 'Adesão Institucional', icon: '☸', href: 'adesao-institucional.html' },
     { key: 'logistica',  label: 'Logística',   icon: '⇄', href: 'modulo-logistica.html', countId: 'nav-corredores-count' },

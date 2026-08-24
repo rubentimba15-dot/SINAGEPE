@@ -1,83 +1,327 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Portal de Transportadores — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Portal do Transportador &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1500px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:900px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
+.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.oferta{padding:15px 18px;border-radius:12px;border:1px solid rgba(18,185,129,.32);background:rgba(18,185,129,.07);margin-bottom:16px;font-size:12.5px;line-height:1.65;color:#8FE3C4}
+.oferta b{color:var(--ok)}
+.sel{display:flex;gap:6px;flex-wrap:wrap;padding:12px 17px;border-bottom:1px solid var(--card-line)}
+.sb{font-size:11px;padding:6px 12px;border-radius:20px;border:1px solid var(--card-line);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.sb.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.grid{grid-template-columns:1fr}.sidebar{display:none}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px;margin-bottom:14px}
+.kpi{padding:15px 17px}
+.kpi-l{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--t4);margin-bottom:8px}
+.kpi-v{font-size:26px;font-weight:600;letter-spacing:-.02em}
+.kpi-n{font-size:10.5px;color:var(--t4);margin-top:6px;line-height:1.45}
+.bd{padding:15px 17px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid rgba(38,56,86,.4);font-size:12px}
+.row:last-child{border-bottom:none}
+.row span:first-child{color:var(--t4)}
+.row span:last-child{text-align:right;color:var(--t2)}
+.aviso{margin-top:12px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.55;border:1px solid}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.aviso.g{background:rgba(18,185,129,.07);border-color:rgba(18,185,129,.26);color:#8FE3C4}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 14px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 14px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.barra{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:11.5px}
+.barra-n{width:120px;flex-shrink:0;color:var(--t3)}
+.barra-t{flex:1;height:14px;background:#0A1421;border-radius:3px;overflow:hidden}
+.barra-t i{display:block;height:100%;border-radius:3px}
+.barra-v{width:78px;text-align:right;flex-shrink:0}
+.calc{padding:15px 17px}
+.calc-l{display:flex;align-items:center;gap:12px;margin-bottom:11px;flex-wrap:wrap}
+.calc-l label{font-size:11.5px;color:var(--t3);min-width:150px}
+input[type=range]{flex:1;min-width:150px;accent-color:var(--brz)}
+.calc-v{font-size:17px;font-weight:600;min-width:78px;text-align:right}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Reciprocidade &mdash; o que o sistema devolve</div>
+    <h1>Portal do Transportador</h1>
+    <p class="sub">O que qualquer transportador recebe <b>hoje</b>, sem se registar e sem fornecer dados: o pre&ccedil;o do gas&oacute;leo onde carrega, os cortes de estrada conhecidos, e o custo da viagem calculado com pre&ccedil;os regulados.</p>
 
-<div class="app-shell">
-  <aside class="sidebar">
-    <div class="sidebar-top">
-      <div class="brand"><div class="brand-mark">P</div><div class="brand-text"><div class="brand-title">Portal Privado</div><div class="brand-sub">SINAGEPE — Transportadores</div></div></div>
-      <nav class="nav-list">
-        <a class="nav-item active" href="portal-transportadores.html"><span class="nav-icon">▦</span> PAINEL</a>
-        <a class="nav-item" href="marketplace-b2b.html"><span class="nav-icon">◎</span> Mercado</a>
-        <a class="nav-item" href="#"><span class="nav-icon">⇄</span> Logística</a>
-        <a class="nav-item" href="#"><span class="nav-icon">▤</span> Armazéns</a>
-        <a class="nav-item" href="#"><span class="nav-icon">≋</span> Simulador</a>
-        <a class="nav-item" href="#"><span class="nav-icon">▧</span> Relatórios</a>
-        <a class="nav-item" href="#"><span class="nav-icon">⚙</span> Configurações</a>
-        <a class="nav-item" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="margin-top:8px;border-top:1px solid rgba(212,165,116,0.15);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:#ef4444">Sair (Logout)</span></a>
-      </nav>
+    <div class="oferta" id="oferta"></div>
+
+    <div class="card frame" style="margin-bottom:14px">
+      <div class="ch"><h2>Onde carrego</h2><span class="tag ok">Sem registo necess&aacute;rio</span></div>
+      <div class="sel" id="sel"></div>
     </div>
-    <div class="sidebar-footer"><div class="avatar-dot" id="user-initials">TM</div><div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div></div>
-  </aside>
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-title-group"><div class="topbar-title">Portal de Transportadores</div><div class="topbar-badge">Ministério dos Transportes — Acesso Privado</div></div>
-      <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="grid">
+      <div>
+        <div class="card frame">
+          <div class="ch"><h2>Calculadora de combust&iacute;vel</h2><span class="tag">Pre&ccedil;o regulado ARENE</span></div>
+          <div class="calc" id="calc"></div>
+        </div>
+        <div class="card frame" style="margin-top:14px">
+          <div class="ch"><h2>O que custa carregar em cada regi&atilde;o</h2><span class="tag">Diferencial</span></div>
+          <div class="bd" id="regioes"></div>
+        </div>
+      </div>
+      <div>
+        <div class="card frame">
+          <div class="ch"><h2>Cortes de estrada conhecidos</h2><span class="tag" id="int-tag">&mdash;</span></div>
+          <div id="interrupcoes"></div>
+        </div>
+        <div class="card frame" style="margin-top:14px">
+          <div class="ch"><h2>Corredores e eixos</h2><span class="tag" id="corr-tag">&mdash;</span></div>
+          <div id="corredores"></div>
+        </div>
+      </div>
     </div>
-    <div class="content" id="content-mount"></div>
-    <div class="footer"><span>© 2026 SINAGEPE Moçambique — Ministério dos Transportes e Comunicações</span><span id="footer-updated">—</span></div>
-  </div>
+
+    <div class="card frame" style="margin-top:14px">
+      <div class="ch"><h2>O que ainda n&atilde;o consigo dar-lhe &mdash; e quem o det&eacute;m</h2><span class="tag">Honestidade de dados</span></div>
+      <table id="lacunas"></table>
+      <div class="bd" style="border-top:1px solid var(--card-line);font-size:11.5px;color:var(--t3);line-height:1.6">
+        <b style="color:var(--t2)">A troca que se prop&otilde;e.</b> Nada do que est&aacute; em cima exigiu que o transportador desse alguma coisa.
+        O que est&aacute; nesta tabela s&oacute; existe quando as entidades publicarem o que t&ecirc;m &mdash; e quando quem transporta declarar
+        que rotas faz e com que capacidade, deixa de andar vazio no regresso porque o sistema passa a saber quem precisa de carga no sentido inverso.
+      </div>
+    </div>
+  </main>
 </div>
 
-<script src="assets/sinagepe.js"></script>
 <script>
-SINAGEPE.load().then(data => {
-  const t = data.portalTransportadores;
-  SINAGEPE.renderUserFooter({ utilizador: { nome: t.frota, instituicao: 'Sector de Transportes', direccao: 'Gestor de Frota' } });
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+if(window.SinagepeNav) SinagepeNav.montar('portal-transportadores');
 
-  document.getElementById('content-mount').innerHTML = `
-    <div class="card">
-      <div class="card-title">Cargas Disponíveis SINAGEPE</div>
-      <div class="card-subtitle">Correspondência entre carga disponível e capacidade de transporte</div>
-      <table class="balance-table">
-        <thead><tr><th>Origem</th><th>Destino</th><th>Produto</th><th>Peso</th><th>Frete</th><th>Prazo</th><th>Estado</th></tr></thead>
-        <tbody id="cargas-body"></tbody>
-      </table>
-    </div>
+var ST={cp:null,rv:null,rl:null,arm:null,pa:null,reg:0,km:400,consumo:32};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return n.toFixed(2).replace('.',',')}
 
-    <div class="row-2">
-      <div class="card" style="background:var(--navy-800);border-color:var(--bronze-dim)">
-        <div class="kpi-label">Maior Lucro Previsto</div>
-        <p style="font-size:12.5px;color:var(--ink-dim);line-height:1.6;margin:8px 0 0" id="subsidio-texto"></p>
-      </div>
-      <div class="card" style="background:var(--navy-800)">
-        <div class="kpi-label">Alerta de Retorno Vazio</div>
-        <p style="font-size:12.5px;color:var(--ink-dim);line-height:1.6;margin:8px 0 0" id="retorno-texto"></p>
-      </div>
-    </div>
-  `;
+function reg(){return ST.cp.regioes[ST.reg]}
+function ref(){return ST.cp.regioes[0]}
+/* Comparar sempre gasóleo com gasóleo. O Zumbo só tem gasolina publicada;
+   misturar os dois produzia um diferencial falso. */
+function precoRegiao(r){return r.gasoleo!=null?r.gasoleo:null}
+function soGasolina(r){return r.gasoleo==null&&r.gasolina!=null}
+function mesmaProv(a,b){function n(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}return n(a)===n(b)}
 
-  const ESTADO_TIPO = { 'Excelente': 'ok', 'Estável': 'info', 'Urgente': 'crit' };
-  document.getElementById('cargas-body').innerHTML = t.cargasDisponiveis.map(c => `
-    <tr><td>${c.origem}</td><td>${c.destino}</td><td>${c.produto}</td><td>${c.pesoT} t</td>
-    <td>${c.valorFreteUsdTKm} USD/t·km</td><td>${c.prazoDias} dias</td>
-    <td><span class="state-tag" style="background:var(--${ESTADO_TIPO[c.estado]}-bg);color:var(--${ESTADO_TIPO[c.estado]})">${c.estado}</span></td></tr>`).join('');
+function desenharOferta(){
+  document.getElementById('oferta').innerHTML=
+   '<b>Isto n&atilde;o &eacute; um formul&aacute;rio.</b> Os pre&ccedil;os dos combust&iacute;veis s&atilde;o regulados pelo Estado: a metodologia est&aacute; no '
+   +'Decreto n.&ordm; 89/2019 e a ARENE calcula e publica mensalmente, com valores diferentes por regi&atilde;o. '
+   +'Essa diferen&ccedil;a &eacute; o custo do transporte interno &mdash; e &eacute; calcul&aacute;vel com uma subtrac&ccedil;&atilde;o.'
+   +'<div style="margin-top:9px;color:var(--t3)">Os cortes de estrada v&ecirc;m de comunicado da ANE. N&atilde;o s&atilde;o estado actual: a ANE publica em comunicado de imprensa, sem formato que permita actualiza&ccedil;&atilde;o autom&aacute;tica.</div>';
+}
 
-  document.getElementById('subsidio-texto').textContent =
-    `Subsídio SINAGEPE activo de +${t.subsidio.valorAdicionalPercentKm}% por km para transporte de ${t.subsidio.produto} até ${t.subsidio.destino} — rota considerada estratégica.`;
-  document.getElementById('retorno-texto').textContent =
-    `Rota ${t.retornoVazio.rota}: ${t.retornoVazio.sugestao}.`;
+function desenharSel(){
+  document.getElementById('sel').innerHTML=ST.cp.regioes.map(function(r,i){
+    var nome=i===0?'Cidades com terminal':r.local;
+    return '<button class="sb'+(ST.reg===i?' on':'')+'" data-i="'+i+'">'+esc(nome)+'</button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.sb'),function(b){
+    b.addEventListener('click',function(){ST.reg=Number(b.dataset.i);desenharTudo()});
+  });
+}
+
+function desenharKpis(){
+  var r=reg(),p=precoRegiao(r),pr=precoRegiao(ref());
+  var dif=p!=null?p-pr:0;
+  var ints=ST.rv.interrupcoes.filter(function(i){return mesmaProv(i.provincia,r.provincia)});
+  var semAlt=ST.rv.interrupcoes.filter(function(i){return !i.alternativa}).length;
+  document.getElementById('kpis').innerHTML=
+     kpi('Gas&oacute;leo aqui',p!=null?p2(p)+' <span style="font-size:13px">MT/L</span>':'n/p',
+       p!=null?'Pre&ccedil;o regulado em vigor desde '+esc(ST.cp.revisao.data)+'.'
+             :'A ARENE n&atilde;o publica gas&oacute;leo para esta localidade'+(soGasolina(r)?' — s&oacute; gasolina, a '+p2(r.gasolina)+' MT/L.':'.'),
+       p!=null?null:'var(--amber)')
+   + kpi('Acr&eacute;scimo face ao terminal',p==null?'&mdash;':(dif>0?'+'+p2(dif):'&mdash;'),
+       p==null?'Sem pre&ccedil;o de gas&oacute;leo publicado, n&atilde;o h&aacute; diferencial a calcular.'
+              :(dif>0?'Por cada litro. &Eacute; a factura da dist&acirc;ncia ao porto.':'Est&aacute; junto a um terminal de distribui&ccedil;&atilde;o.'),
+       dif>0?'var(--amber)':(p==null?'var(--t4)':'var(--ok)'))
+   + kpi('Cortes nesta prov&iacute;ncia',ints.length,ints.length?'Registados no &uacute;ltimo comunicado da ANE.':'Nenhum no &uacute;ltimo comunicado. N&atilde;o &eacute; garantia de via aberta.',ints.length?'var(--red)':'var(--ok)')
+   + kpi('Cortes sem alternativa',semAlt+' no pa&iacute;s','Quando n&atilde;o h&aacute; desvio, a carga fica parada at&eacute; reabrir.',semAlt?'var(--red)':'var(--ok)');
+}
+function kpi(l,v,n,c){
+  return '<div class="card frame kpi"><div class="kpi-l">'+l+'</div>'
+   +'<div class="kpi-v mono" style="color:'+(c||'var(--ink)')+'">'+v+'</div><div class="kpi-n">'+n+'</div></div>';
+}
+
+function desenharCalc(){
+  var r=reg(),p=precoRegiao(r),pr=precoRegiao(ref());
+  var litros=ST.km*ST.consumo/100;
+  if(p==null){
+    document.getElementById('calc').innerHTML=
+      '<div class="aviso w"><b>Sem pre&ccedil;o de gas&oacute;leo publicado para '+esc(r.local)+'.</b> '
+      +'A ARENE publica aqui apenas gasolina'+(soGasolina(r)?', a '+p2(r.gasolina)+' MT/L':'')+'. '
+      +'N&atilde;o se compara gasolina com gas&oacute;leo &mdash; seria um diferencial falso. '
+      +'Escolha uma regi&atilde;o com gas&oacute;leo publicado para usar a calculadora.</div>';
+    return;
+  }
+  var custo=litros*p;
+  var custoRef=litros*pr;
+  var extra=custo-custoRef;
+  document.getElementById('calc').innerHTML=
+   '<div class="calc-l"><label for="c-km">Dist&acirc;ncia da viagem</label>'
+   +'<input type="range" id="c-km" min="50" max="2500" step="50" value="'+ST.km+'">'
+   +'<span class="calc-v mono">'+num(ST.km)+' km</span></div>'
+   +'<div class="calc-l"><label for="c-cons">Consumo do ve&iacute;culo</label>'
+   +'<input type="range" id="c-cons" min="15" max="55" step="1" value="'+ST.consumo+'">'
+   +'<span class="calc-v mono">'+ST.consumo+' L/100km</span></div>'
+   +'<div class="row"><span>Combust&iacute;vel necess&aacute;rio</span><span class="mono">'+num(litros)+' L</span></div>'
+   +'<div class="row"><span>Custo a carregar aqui</span><span class="mono" style="font-size:16px;color:var(--brzl)">'+num(custo)+' MT</span></div>'
+   +'<div class="row"><span>Custo se carregasse junto ao terminal</span><span class="mono">'+num(custoRef)+' MT</span></div>'
+   +(extra>0
+     ? '<div class="aviso w"><b>Paga mais '+num(extra)+' MT nesta viagem</b> por carregar aqui em vez de junto ao porto. '
+       +'Em vinte viagens iguais s&atilde;o '+num(extra*20)+' MT. N&atilde;o &eacute; margem de ningu&eacute;m: &eacute; o custo do transporte interno do combust&iacute;vel at&eacute; c&aacute;.</div>'
+     : '<div class="aviso g">Est&aacute; a carregar ao pre&ccedil;o de refer&ecirc;ncia, sem acr&eacute;scimo de transporte interno.</div>')
+   +'<div style="font-size:10.5px;color:var(--t4);margin-top:9px;line-height:1.55">'
+   +'C&aacute;lculo simples: dist&acirc;ncia &times; consumo &times; pre&ccedil;o publicado. N&atilde;o inclui portagens, salários, manuten&ccedil;&atilde;o nem tempo parado. '
+   +'Serve para comparar o custo de carregar em s&iacute;tios diferentes, n&atilde;o para or&ccedil;amentar a viagem.</div>';
+  document.getElementById('c-km').addEventListener('input',function(e){ST.km=Number(e.target.value);desenharCalc()});
+  document.getElementById('c-cons').addEventListener('input',function(e){ST.consumo=Number(e.target.value);desenharCalc()});
+}
+
+function desenharRegioes(){
+  var pr=precoRegiao(ref()),h='';
+  var max=0;ST.cp.regioes.forEach(function(r){var p=precoRegiao(r);if(p&&p-pr>max)max=p-pr});
+  ST.cp.regioes.forEach(function(r,i){
+    var p=precoRegiao(r);
+    if(p==null){
+      h+='<div class="barra"><span class="barra-n" style="color:var(--t4)">'+esc(r.local)+'</span>'
+       +'<span class="barra-t"></span><span class="barra-v" style="color:var(--t4);font-size:10px">s/ gas&oacute;leo</span></div>';
+      return;
+    }
+    var d=p-pr;
+    var cor=d===0?'#12B981':d<6?'#F0A926':'#EF4444';
+    h+='<div class="barra"><span class="barra-n" style="'+(ST.reg===i?'color:var(--brzl);font-weight:600':'')+'">'
+     +esc(i===0?'Terminal':r.local)+'</span>'
+     +'<span class="barra-t"><i style="width:'+(max?Math.max(d/max*100,2):2).toFixed(1)+'%;background:'+cor+'"></i></span>'
+     +'<span class="barra-v mono" style="color:'+cor+'">'+(d>0?'+'+p2(d):'ref.')+'</span></div>';
+  });
+  document.getElementById('regioes').innerHTML=h
+   +'<div class="aviso i">Diferen&ccedil;a de gas&oacute;leo por litro face &agrave;s cidades com terminal de distribui&ccedil;&atilde;o. '
+   +'A ARENE publica estes valores porque o transporte interno &eacute; custo real e reconhecido.</div>';
+}
+
+function desenharInterrupcoes(){
+  var h='';
+  ST.rv.interrupcoes.forEach(function(i){
+    var c=i.gravidade==='intransitavel'?'#EF4444':'#F0A926';
+    h+='<div class="bd" style="border-bottom:1px solid rgba(38,56,86,.4)">'
+     +'<div style="display:flex;gap:9px;align-items:baseline;flex-wrap:wrap;margin-bottom:5px">'
+     +'<b style="font-size:13.5px">'+esc(i.estrada)+' &middot; '+esc(i.troco)+'</b>'
+     +'<span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'
+     +(i.gravidade==='intransitavel'?'Intransit&aacute;vel':'Condicionada')+'</span></div>'
+     +'<div style="font-size:11.5px;color:var(--t3);line-height:1.55">'+esc(i.causa)+'</div>'
+     +'<div style="font-size:11.5px;margin-top:6px;color:'+(i.alternativa?'var(--t2)':'#FFB4B4')+'">'
+     +'<b>Alternativa:</b> '+esc(i.alternativa||'nenhuma dispon&iacute;vel')+'</div>'
+     +'<div style="font-size:10px;color:var(--t4);margin-top:5px">'+esc(i.provincia)+' &middot; registado em '+esc(i.data)+'</div></div>';
+  });
+  h+='<div class="bd"><div class="aviso w"><b>Estas ocorr&ecirc;ncias t&ecirc;m meses.</b> '
+   +'A ANE publica em comunicado de imprensa, n&atilde;o em formato actualiz&aacute;vel. '
+   +'Confirme sempre antes de partir.</div>'
+   +'<div class="aviso r"><b>Regra da &eacute;poca chuvosa.</b> A ANE desaconselha ve&iacute;culos acima de 10 toneladas em estradas alagadas. '
+   +'Entre Novembro e Mar&ccedil;o, isso trava o transporte de cereal a granel.</div></div>';
+  document.getElementById('interrupcoes').innerHTML=h;
+  document.getElementById('int-tag').textContent=ST.rv.interrupcoes.length+' registados';
+}
+
+function desenharCorredores(){
+  var h='<table><thead><tr><th>Corredor</th><th>Liga</th><th>Utiliza&ccedil;&atilde;o</th></tr></thead><tbody>';
+  ST.rl.corredores.forEach(function(c){
+    h+='<tr><td><b style="font-weight:600">'+esc(c.nome)+'</b>'
+     +'<div style="color:var(--t4);font-size:10px">'+esc(c.eixoRodoviario||'')+'</div></td>'
+     +'<td style="color:var(--t3)">'+esc((c.hinterland||[]).join(', '))+'</td>'
+     +'<td class="n" style="color:var(--t4)">'+(c.utilizacaoPercent==null?'n/p':c.utilizacaoPercent+'%')+'</td></tr>';
+  });
+  h+='</tbody></table>'
+   +'<div class="bd" style="border-top:1px solid var(--card-line)"><div class="aviso i">'
+   +'A taxa de utiliza&ccedil;&atilde;o de cada corredor n&atilde;o &eacute; publicada. Sab&ecirc;-la permitiria escolher o corredor menos congestionado &mdash; '
+   +'quem a det&eacute;m &eacute; o Minist&eacute;rio dos Transportes e Log&iacute;stica e o CFM.</div></div>';
+  document.getElementById('corredores').innerHTML=h;
+  document.getElementById('corr-tag').textContent=ST.rl.corredores.length+' eixos';
+}
+
+var LACUNAS=[
+ ['Estado actual das estradas','Por integrar','var(--blue)',
+  'A ANE publica ocorr&ecirc;ncias em comunicado de imprensa. Um ficheiro estruturado, actualizado quando h&aacute; corte, e o planeamento de rota deixa de ser adivinha&ccedil;&atilde;o. &Eacute; a integra&ccedil;&atilde;o mais barata de toda a lista.','ANE &middot; MOPHRH'],
+ ['Carga dispon&iacute;vel para transporte','Depende de ades&atilde;o','var(--red)',
+  'Saber quem tem carga e para onde exige que produtores, armazenistas e comerciantes a declarem. &Eacute; o Marketplace B2B a funcionar, com contrapartida para quem se inscreve.','Sector privado &middot; CTA'],
+ ['Viagens de regresso vazias','Depende de ades&atilde;o','var(--red)',
+  'O maior desperd&iacute;cio do sector. S&oacute; se resolve quando houver rotas declaradas dos dois lados &mdash; quem leva e quem precisa no sentido inverso.','Transportadores'],
+ ['Utiliza&ccedil;&atilde;o real dos corredores','Depende de ades&atilde;o','var(--red)',
+  'Permitiria escolher o corredor menos congestionado. Os valores que existiam neste sistema eram de trabalho e foram retirados.','MTL &middot; CFM'],
+ ['Tempo de desembara&ccedil;o nos portos','Por integrar','var(--blue)',
+  'O pr&oacute;prio minist&eacute;rio declara a redu&ccedil;&atilde;o de tempos de desembara&ccedil;o como prioridade, mas o tempo m&eacute;dio n&atilde;o &eacute; publicado.','MTL &middot; concession&aacute;rias'],
+ ['Estado das pontes e limites de peso','Por integrar','var(--blue)',
+  'Uma ponte com limite de tonelagem muda a rota inteira. N&atilde;o h&aacute; registo p&uacute;blico consult&aacute;vel.','ANE'],
+ ['Pre&ccedil;o do gas&oacute;leo por posto','Retirado','var(--red)',
+  'A ARENE publica por regi&atilde;o, n&atilde;o por posto. Qualquer diferen&ccedil;a entre postos da mesma regi&atilde;o seria inventada.','ARENE']
+];
+
+function desenharLacunas(){
+  var h='<thead><tr><th>O que o transportador pediria</th><th>Situa&ccedil;&atilde;o</th><th>Porqu&ecirc;</th><th>Quem det&eacute;m</th></tr></thead><tbody>';
+  LACUNAS.forEach(function(l){
+    h+='<tr><td style="font-weight:600">'+l[0]+'</td>'
+     +'<td><span class="est" style="color:'+l[2]+';border-color:'+l[2]+'55;background:'+l[2]+'12">'+l[1]+'</span></td>'
+     +'<td style="color:var(--t3);max-width:420px">'+l[3]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+l[4]+'</td></tr>';
+  });
+  document.getElementById('lacunas').innerHTML=h+'</tbody>';
+}
+
+function desenharTudo(){desenharSel();desenharKpis();desenharCalc();desenharRegioes()}
+
+Promise.all(['cascata-precos','rede-viaria','rede-logistica','armazens-nacionais'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.cp=res[0];ST.rv=res[1];ST.rl=res[2];ST.arm=res[3];
+  desenharOferta();desenharLacunas();desenharInterrupcoes();desenharCorredores();desenharTudo();
+}).catch(function(e){
+  document.getElementById('oferta').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
 });
 </script>
 </body>

@@ -21,29 +21,30 @@
   'use strict';
 
   var ITENS = [
-    { key: 'painel',        icon: '\u25A6', label: 'PAINEL',                href: 'index.html' },
-    { key: 'mapa-integrado',icon: '\u25C9', label: 'Mapa Integrado',        href: 'mapa-integrado.html' },
-    { key: 'antecipacao',   icon: '\u2609', label: 'Centro de Antecipa\u00e7\u00e3o', href: 'centro-antecipacao.html' },
-    { key: 'adesao',        icon: '\u2638', label: 'Ades\u00e3o Institucional', href: 'adesao-institucional.html' },
-    { key: 'alertas',       icon: '\u26A0', label: 'Alertas',               href: 'alertas.html' },
-    { key: 'mapa',          icon: '\u25CE', label: 'Mapa Nacional',         href: 'mapa-nacional.html' },
-    { key: 'simulador',     icon: '\u224B', label: 'Simulador',             href: 'simulador-importacoes.html' },
-    { key: 'preditivo',     icon: '\u25AD', label: 'Simulador Preditivo',   href: 'simulador-preditivo.html' },
-    { key: 'portal-produtores', icon: '\u2618', label: 'Portal do Produtor',  href: 'portal-produtores.html' },
-    { key: 'pme',           icon: '\u26C1', label: 'PMEs',                  href: 'portal-pme.html' },
-    { key: 'armazens',      icon: '\u25A4', label: 'Armaz\u00e9ns',         href: 'cadastro-armazens.html' },
-    { key: 'armazens-nac',  icon: '\u25EB', label: 'Armaz\u00e9ns Nacionais', href: 'armazens-nacionais.html' },
-    { key: 'ponto-cego',    icon: '\u25CE', label: 'Ponto Cego Duplo',      href: 'ponto-cego-duplo.html' },
-    { key: 'sandbox-epcis', icon: '\u223E', label: 'Sandbox EPCIS',         href: 'sandbox-rastreabilidade.html' },
-    { key: 'logistica',     icon: '\u21C4', label: 'Log\u00edstica',        href: 'modulo-logistica.html' },
-    { key: 'rede-logistica',icon: '\u2318', label: 'Rede Log\u00edstica',   href: 'rede-logistica.html' },
-    { key: 'relatorio-exec',icon: '\u25A4', label: 'Relat\u00f3rio Executivo', href: 'relatorio-executivo.html' },
-    { key: 'relatorios',    icon: '\u25A7', label: 'Relat\u00f3rios',       href: 'relatorios.html' },
-    { key: 'governanca',    icon: '\u2696', label: 'Governa\u00e7\u00e3o do Dado', href: 'governanca-dado.html' },
-    { key: 'config',        icon: '\u2699', label: 'Configura\u00e7\u00f5es', href: 'administracao-auditoria.html' },
-    { key: 'marketplace',   icon: '\u2B21', label: 'Marketplace B2B',       href: 'marketplace-b2b.html' },
-    { key: 'inteligencia',  icon: '\u25C8', label: 'Intelig\u00eancia',     href: 'inteligencia-consolidada.html' },
-    { key: 'fontes-nac',    icon: '\u2B23', label: 'Fontes Nacionais',      href: 'fontes-nacionais.html' },
+    { key: 'painel',        icon: '\u25A6', label: 'PAINEL',                href: 'index.html', grupo: 'PAINEL' },
+    { key: 'mapa-integrado',icon: '\u25C9', label: 'Mapa Integrado',        href: 'mapa-integrado.html', grupo: 'TERRITORIO' },
+    { key: 'antecipacao',   icon: '\u2609', label: 'Centro de Antecipa\u00e7\u00e3o', href: 'centro-antecipacao.html', grupo: 'INTELIGENCIA' },
+    { key: 'adesao',        icon: '\u2638', label: 'Ades\u00e3o Institucional', href: 'adesao-institucional.html', grupo: 'GOVERNACAO' },
+    { key: 'alertas',       icon: '\u26A0', label: 'Alertas',               href: 'alertas.html', grupo: 'INTELIGENCIA' },
+    { key: 'mapa',          icon: '\u25CE', label: 'Mapa Nacional',         href: 'mapa-nacional.html', grupo: 'TERRITORIO' },
+    { key: 'simulador',     icon: '\u224B', label: 'Simulador',             href: 'simulador-importacoes.html', grupo: 'INTELIGENCIA' },
+    { key: 'preditivo',     icon: '\u25AD', label: 'Simulador Preditivo',   href: 'simulador-preditivo.html', grupo: 'INTELIGENCIA' },
+    { key: 'portal-produtores', icon: '\u2618', label: 'Portal do Produtor',  href: 'portal-produtores.html', grupo: 'PORTAIS' },
+    { key: 'portal-transportadores', icon: '\u26DF', label: 'Portal do Transportador', href: 'portal-transportadores.html', grupo: 'PORTAIS' },
+    { key: 'pme',           icon: '\u26C1', label: 'PMEs',                  href: 'portal-pme.html', grupo: 'PORTAIS' },
+    { key: 'armazens',      icon: '\u25A4', label: 'Armaz\u00e9ns',         href: 'cadastro-armazens.html', grupo: 'CADEIA' },
+    { key: 'armazens-nac',  icon: '\u25EB', label: 'Armaz\u00e9ns Nacionais', href: 'armazens-nacionais.html', grupo: 'CADEIA' },
+    { key: 'ponto-cego',    icon: '\u25CE', label: 'Ponto Cego Duplo',      href: 'ponto-cego-duplo.html', grupo: 'INTELIGENCIA' },
+    { key: 'sandbox-epcis', icon: '\u223E', label: 'Sandbox EPCIS',         href: 'sandbox-rastreabilidade.html', grupo: 'CADEIA' },
+    { key: 'logistica',     icon: '\u21C4', label: 'Log\u00edstica',        href: 'modulo-logistica.html', grupo: 'CADEIA' },
+    { key: 'rede-logistica',icon: '\u2318', label: 'Rede Log\u00edstica',   href: 'rede-logistica.html', grupo: 'CADEIA' },
+    { key: 'relatorio-exec',icon: '\u25A4', label: 'Relat\u00f3rio Executivo', href: 'relatorio-executivo.html', grupo: 'RELATORIOS' },
+    { key: 'relatorios',    icon: '\u25A7', label: 'Relat\u00f3rios',       href: 'relatorios.html', grupo: 'RELATORIOS' },
+    { key: 'governanca',    icon: '\u2696', label: 'Governa\u00e7\u00e3o do Dado', href: 'governanca-dado.html', grupo: 'GOVERNACAO' },
+    { key: 'config',        icon: '\u2699', label: 'Configura\u00e7\u00f5es', href: 'administracao-auditoria.html', grupo: 'GOVERNACAO' },
+    { key: 'marketplace',   icon: '\u2B21', label: 'Marketplace B2B',       href: 'marketplace-b2b.html', grupo: 'PORTAIS' },
+    { key: 'inteligencia',  icon: '\u25C8', label: 'Intelig\u00eancia',     href: 'inteligencia-consolidada.html', grupo: 'INTELIGENCIA' },
+    { key: 'fontes-nac',    icon: '\u2B23', label: 'Fontes Nacionais',      href: 'fontes-nacionais.html', grupo: 'GOVERNACAO' },
     { key: 'fontes-int',    icon: '\u2B22', label: 'Fontes Internacionais', href: 'fontes-internacionais.html' }
   ];
 
@@ -71,12 +72,31 @@
       return !lista || i.href === 'index.html' || lista.indexOf(i.href) >= 0;
     });
 
-    var nav = itens.map(function (i) {
-      var act = i.key === activeKey ? ' active' : '';
-      return '<a class="nav-item' + act + '" href="' + esc(i.href) + '">'
-           + '<span class="nav-icon">' + i.icon + '</span>'
-           + '<span class="nav-label">' + esc(i.label) + '</span></a>';
-    }).join('');
+    /* Vinte e cinco itens numa lista plana não se lêem. Agrupam-se em famílias,
+       pela ordem em que se usam: onde estou, onde é, o que vai acontecer,
+       por onde passa, quem recebe, o que levo, e como se governa isto. */
+    var ORDEM = ['PAINEL','TERRITORIO','INTELIGENCIA','CADEIA','PORTAIS','RELATORIOS','GOVERNACAO'];
+    var ROTULO = {
+      PAINEL: null,
+      TERRITORIO: 'Territ\u00f3rio',
+      INTELIGENCIA: 'Intelig\u00eancia',
+      CADEIA: 'Cadeia de abastecimento',
+      PORTAIS: 'Portais por perfil',
+      RELATORIOS: 'Relat\u00f3rios',
+      GOVERNACAO: 'Governa\u00e7\u00e3o e fontes'
+    };
+    var nav = '';
+    ORDEM.forEach(function (g) {
+      var doGrupo = itens.filter(function (i) { return (i.grupo || 'GOVERNACAO') === g; });
+      if (!doGrupo.length) return;
+      if (ROTULO[g]) nav += '<div class="nav-grupo">' + ROTULO[g] + '</div>';
+      nav += doGrupo.map(function (i) {
+        var act = i.key === activeKey ? ' active' : '';
+        return '<a class="nav-item' + act + '" href="' + esc(i.href) + '">'
+             + '<span class="nav-icon">' + i.icon + '</span>'
+             + '<span class="nav-label">' + esc(i.label) + '</span></a>';
+      }).join('');
+    });
 
     return '<div class="brand"><div class="brand-t">SINAGEPE</div>'
          + '<div class="brand-s">Torre de Controlo</div></div>'
@@ -87,7 +107,19 @@
          + '<span class="nav-label" style="color:#EF4444">Sair (Logout)</span></a>';
   }
 
+  /* O CSS dos cabeçalhos é injectado aqui, para nenhum ecrã ter de o declarar. */
+  function estilo() {
+    if (document.getElementById('nav-sinagepe-css')) return;
+    var e = document.createElement('style');
+    e.id = 'nav-sinagepe-css';
+    e.textContent = '.nav-grupo{font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;'
+      + 'color:#5E7189;padding:14px 14px 6px;font-weight:600}'
+      + '.nav-grupo:first-child{padding-top:4px}';
+    document.head.appendChild(e);
+  }
+
   function montar(activeKey, idAlvo) {
+    estilo();
     var alvo = document.getElementById(idAlvo || 'nav-mount');
     if (!alvo) return false;
     alvo.innerHTML = html(activeKey);
