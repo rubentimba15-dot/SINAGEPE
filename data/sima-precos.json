@@ -1,0 +1,435 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "geradoEm": "2026-08-25",
+    "fonte": "SIMA — Sistema de Informação de Mercados Agrícolas",
+    "publicacao": "Quente-Quente, boletim semanal, Direcção de Cooperação e Mercados",
+    "edicao": 1445,
+    "semana": "20 a 26 de Março de 2023",
+    "url": "https://www.agricultura.gov.mz/wp-content/uploads/2023/04/Informacao-Semanal-de-Mercados-Agrarios-20-a-26-de-Marco-de-2023-QQ-1445.pdf",
+    "contacto": "simamoc@gmail.com · Tel 823260810",
+    "verificado": true,
+    "avisoRecencia": "Esta é a edição mais recente que foi possível obter e extrair. O boletim é semanal e o SIMA publica desde 1991; edições posteriores existirão mas não estavam acessíveis para extracção automática. Os preços são de Março de 2023 e NÃO são preço corrente — servem para provar o método e a estrutura, não para decidir hoje.",
+    "porqueImporta": "É a primeira vez que o SINAGEPE tem preço real por mercado, com data e fonte citável. E traz o que faltava a todo o sistema: FLUXO — produto que se move de um sítio para outro, com origem, destino e preço de compra."
+  },
+  "retalho": [
+    {
+      "produto": "Milho",
+      "unidade": "MT/kg",
+      "media": 29.65,
+      "mediaSemanaAnterior": 27.46,
+      "maximo": {
+        "valor": 34.0,
+        "mercados": [
+          "Mandimba",
+          "Panda"
+        ]
+      },
+      "minimo": {
+        "valor": 25.0,
+        "mercados": [
+          "Zavala"
+        ]
+      },
+      "outros": [
+        {
+          "mercado": "Nhamatanda",
+          "valor": 33.0
+        },
+        {
+          "mercado": "Manjacaze",
+          "valor": 26.0
+        },
+        {
+          "mercado": "Chokwé",
+          "valor": 26.0
+        }
+      ],
+      "notaBoletim": "Subida em Montepuez e Maputo; descida em Manjacaze e Nhamatanda."
+    },
+    {
+      "produto": "Arroz",
+      "unidade": "MT/kg",
+      "media": 55.9,
+      "mediaSemanaAnterior": 58.44,
+      "maximo": {
+        "valor": 70.0,
+        "mercados": [
+          "Cidade de Inhambane"
+        ]
+      },
+      "minimo": {
+        "valor": 50.0,
+        "mercados": [
+          "Cidade de Maputo",
+          "Chokwé",
+          "Nhamatanda",
+          "Mandimba",
+          "Cidade de Quelimane"
+        ]
+      },
+      "outros": [
+        {
+          "mercado": "Manhiça",
+          "valor": 65.0
+        }
+      ],
+      "notaBoletim": "O boletim diz que não houve variação em nenhum mercado monitorado, mas a média desceu 4,3%. A diferença explica-se pela composição dos mercados incluídos, não por variação de preço."
+    },
+    {
+      "produto": "Feijão nhemba",
+      "unidade": "MT/kg",
+      "media": 68.77,
+      "mediaSemanaAnterior": null,
+      "maximo": {
+        "valor": 121.0,
+        "mercados": [
+          "Mandimba"
+        ]
+      },
+      "minimo": {
+        "valor": 35.0,
+        "mercados": [
+          "Mocuba"
+        ]
+      },
+      "outros": [
+        {
+          "mercado": "Manhiça",
+          "valor": 96.0
+        },
+        {
+          "mercado": "Chokwé",
+          "valor": 40.0
+        }
+      ],
+      "notaBoletim": "Subida em Nhamatanda e Cidade de Maputo."
+    },
+    {
+      "produto": "Feijão manteiga",
+      "unidade": "MT/kg",
+      "media": 103.58,
+      "mediaSemanaAnterior": null,
+      "maximo": {
+        "valor": 162.0,
+        "mercados": [
+          "Mandimba"
+        ]
+      },
+      "minimo": {
+        "valor": 80.0,
+        "mercados": [
+          "Montepuez"
+        ]
+      },
+      "outros": [
+        {
+          "mercado": "Nhamatanda",
+          "valor": 87.0
+        },
+        {
+          "mercado": "Manjacaze",
+          "valor": 120.0
+        },
+        {
+          "mercado": "Zavala",
+          "valor": 120.0
+        }
+      ],
+      "notaBoletim": "Ligeira descida em Nhamatanda."
+    },
+    {
+      "produto": "Amendoim pequeno",
+      "unidade": "MT/kg",
+      "media": 114.7,
+      "mediaSemanaAnterior": 113.34,
+      "maximo": {
+        "valor": 180.0,
+        "mercados": [
+          "Manhiça"
+        ]
+      },
+      "minimo": {
+        "valor": 65.0,
+        "mercados": [
+          "Mocuba"
+        ]
+      },
+      "outros": [
+        {
+          "mercado": "Nhamatanda",
+          "valor": 72.0
+        },
+        {
+          "mercado": "Manjacaze",
+          "valor": 130.0
+        }
+      ],
+      "notaBoletim": "Ligeira subida em Vilankulo, Manjacaze e Zavala."
+    }
+  ],
+  "fluxos": [
+    {
+      "zona": "Sul",
+      "produto": "Milho",
+      "destino": "Chokwé",
+      "origem": "produção local",
+      "preco": 400,
+      "unidade": "MT por lata de 20 litros"
+    },
+    {
+      "zona": "Sul",
+      "produto": "Milho",
+      "destino": "Manjacaze",
+      "origem": "Nampula",
+      "preco": 900,
+      "unidade": "MT por saco de 50 kg"
+    },
+    {
+      "zona": "Sul",
+      "produto": "Milho",
+      "destino": "Panda",
+      "origem": "Homoine",
+      "preco": 400,
+      "unidade": "MT por lata de 20 litros"
+    },
+    {
+      "zona": "Centro",
+      "produto": "Milho",
+      "destino": "Nhamatanda",
+      "origem": "Tete — distrito de Angónia",
+      "preco": 980,
+      "unidade": "MT por saco de 60 kg"
+    },
+    {
+      "zona": "Centro",
+      "produto": "Milho",
+      "destino": "Mocuba",
+      "origem": "zonas circunvizinhas",
+      "preco": 25,
+      "unidade": "MT/kg"
+    },
+    {
+      "zona": "Norte",
+      "produto": "Milho",
+      "destino": "Mandimba",
+      "origem": "Congerenge",
+      "preco": 550,
+      "unidade": "MT por lata de 20 litros"
+    },
+    {
+      "zona": "Sul",
+      "produto": "Feijão manteiga",
+      "destino": "Manjacaze",
+      "origem": "Quelimane",
+      "preco": 3500,
+      "unidade": "MT por saco de 50 kg"
+    },
+    {
+      "zona": "Sul",
+      "produto": "Feijão catarino",
+      "destino": "Manjacaze",
+      "origem": "Nampula",
+      "preco": 3000,
+      "unidade": "MT por saco de 50 kg"
+    },
+    {
+      "zona": "Sul",
+      "produto": "Feijão manteiga, catarino e magnum",
+      "destino": "Vilanculo",
+      "origem": "Nampula",
+      "preco": 5500,
+      "unidade": "MT por saco de 50 kg"
+    },
+    {
+      "zona": "Sul",
+      "produto": "Feijão manteiga",
+      "destino": "Panda",
+      "origem": "Nampula",
+      "preco": 4600,
+      "unidade": "MT por saco de 50 kg"
+    },
+    {
+      "zona": "Sul",
+      "produto": "Feijão manteiga, catarino e magnum",
+      "destino": "Zavala",
+      "origem": "Nampula",
+      "preco": 3800,
+      "unidade": "MT por saco de 50 kg"
+    },
+    {
+      "zona": "Centro",
+      "produto": "Feijão manteiga e catarino",
+      "destino": "Nhamatanda",
+      "origem": "Tete — distrito de Angónia",
+      "preco": 3000,
+      "unidade": "MT por saco de 60 kg"
+    },
+    {
+      "zona": "Norte",
+      "produto": "Feijão manteiga",
+      "destino": "Mandimba",
+      "origem": "Lichinga",
+      "preco": 1000,
+      "unidade": "MT por lata de 20 litros"
+    },
+    {
+      "zona": "Sul",
+      "produto": "Amendoim pequeno sem casca",
+      "destino": "Vilanculo",
+      "origem": "Nampula",
+      "preco": 6000,
+      "unidade": "MT por saco de 50 kg"
+    },
+    {
+      "zona": "Sul",
+      "produto": "Amendoim pequeno sem casca",
+      "destino": "Panda",
+      "origem": "mercado grossista de Maxixe",
+      "preco": 4600,
+      "unidade": "MT por saco de 50 kg"
+    },
+    {
+      "zona": "Sul",
+      "produto": "Amendoim pequeno sem casca",
+      "destino": "Zavala",
+      "origem": "mercado grossista de Maxixe",
+      "preco": 5000,
+      "unidade": "MT por saco de 50 kg"
+    },
+    {
+      "zona": "Norte",
+      "produto": "Amendoim pequeno sem casca",
+      "destino": "Montepuez",
+      "origem": "distrito de Namuno",
+      "preco": 65,
+      "unidade": "MT/kg"
+    }
+  ],
+  "nivelProdutor": [
+    {
+      "mercado": "Nhamatanda",
+      "produto": "Feijão boer",
+      "nivel": "produtor",
+      "preco": 22.5,
+      "unidade": "MT/kg"
+    },
+    {
+      "mercado": "Nhamatanda",
+      "produto": "Feijão boer",
+      "nivel": "retalhista em mercado",
+      "preco": 31.67,
+      "unidade": "MT/kg"
+    },
+    {
+      "mercado": "Nhamatanda",
+      "produto": "Gergelim",
+      "nivel": "retalhista em mercado",
+      "preco": 121.67,
+      "unidade": "MT/kg"
+    }
+  ],
+  "internacional": {
+    "fonte": "SAFEX, Randfontein, África do Sul — compilado pelo SIMA",
+    "unidade": "Rand/tonelada FOB",
+    "linhas": [
+      {
+        "produto": "Milho branco",
+        "anterior": 3995.0,
+        "recente": 3980.0,
+        "variacao": -15
+      },
+      {
+        "produto": "Milho amarelo",
+        "anterior": 3999.0,
+        "recente": 3940.0,
+        "variacao": -59
+      },
+      {
+        "produto": "Trigo",
+        "anterior": 6390.0,
+        "recente": 6680.0,
+        "variacao": 290
+      },
+      {
+        "produto": "Girassol",
+        "anterior": 8600.0,
+        "recente": 8950.0,
+        "variacao": 350
+      }
+    ]
+  },
+  "cambio": {
+    "fonte": "Banco de Moçambique, Boletim n.º 067/23",
+    "data": "24 de Março de 2023",
+    "linhas": [
+      {
+        "moeda": "Dólar americano",
+        "anterior": 64.51,
+        "recente": 64.51
+      },
+      {
+        "moeda": "Rand sul-africano",
+        "anterior": 3.57,
+        "recente": 3.54
+      },
+      {
+        "moeda": "Kwacha zambiano",
+        "anterior": 3.07,
+        "recente": 3.26
+      },
+      {
+        "moeda": "Kwacha malawiano",
+        "anterior": 63.74,
+        "recente": 63.74
+      }
+    ]
+  },
+  "achados": [
+    {
+      "titulo": "O mesmo produto, o dobro do preço a 600 km",
+      "texto": "Arroz a 50 MT/kg em Maputo, Chokwé, Nhamatanda, Mandimba e Quelimane; 70 MT/kg na Cidade de Inhambane. Quarenta por cento acima, no mesmo país e na mesma semana.",
+      "tipo": "FACTO"
+    },
+    {
+      "titulo": "O feijão de Mandimba custa quatro vezes o de Mocuba",
+      "texto": "Feijão nhemba a 35 MT/kg em Mocuba e 121 MT/kg em Mandimba. É a maior dispersão de todos os produtos medidos.",
+      "tipo": "FACTO"
+    },
+    {
+      "titulo": "A cadeia vista de uma só vez, em Nhamatanda",
+      "texto": "Feijão boer a 22,50 MT/kg ao produtor e 31,67 MT/kg ao retalhista, no mesmo mercado e na mesma semana. São 41% de diferença entre quem produz e quem vende ao consumidor.",
+      "tipo": "FACTO"
+    },
+    {
+      "titulo": "O Centro alimenta o Sul",
+      "texto": "Nampula abastece Manjacaze, Vilanculo, Panda e Zavala com feijão e amendoim. Tete abastece Nhamatanda com milho e feijão. É a primeira prova documental de dependência inter-provincial no sistema.",
+      "tipo": "FACTO"
+    },
+    {
+      "titulo": "Unidades incompatíveis dentro do mesmo boletim",
+      "texto": "Os fluxos vêm em latas de 20 litros, sacos de 50 kg, sacos de 60 kg e MT/kg. Comparar preços exige normalizar — e o próprio boletim não o faz.",
+      "tipo": "LIMITAÇÃO"
+    },
+    {
+      "titulo": "Uma contradição no texto do boletim",
+      "texto": "Diz que o arroz não variou em nenhum mercado, mas a média desceu de 58,44 para 55,90 MT/kg. A diferença vem da composição dos mercados incluídos, não de variação de preço. O sistema mostra os dois números.",
+      "tipo": "LIMITAÇÃO"
+    }
+  ],
+  "mercados": [
+    "Chokwé",
+    "Cidade de Inhambane",
+    "Cidade de Maputo",
+    "Cidade de Quelimane",
+    "Mandimba",
+    "Manhiça",
+    "Manjacaze",
+    "Mocuba",
+    "Montepuez",
+    "Nhamatanda",
+    "Panda",
+    "Vilankulo",
+    "Zavala"
+  ]
+}
