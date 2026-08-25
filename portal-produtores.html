@@ -126,6 +126,23 @@ tr:last-child td{border-bottom:none}
     </div>
 
     <div class="card frame" style="margin-top:14px">
+      <div class="ch"><h2>Quanto vale o que produzo</h2><span class="tag ok" id="sima-tag">&mdash;</span></div>
+      <div class="bd" id="sima-nota" style="border-bottom:1px solid var(--card-line)"></div>
+      <table id="sima-precos"></table>
+    </div>
+
+    <div class="grid" style="margin-top:14px">
+      <div class="card frame">
+        <div class="ch"><h2>O que recebo e o que o consumidor paga</h2><span class="tag ok">SIMA</span></div>
+        <div id="sima-cadeia"></div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><h2>Para onde vai o produto da minha zona</h2><span class="tag" id="fluxo-tag">&mdash;</span></div>
+        <div id="sima-fluxos"></div>
+      </div>
+    </div>
+
+    <div class="card frame" style="margin-top:14px">
       <div class="ch"><h2>O que ainda n&atilde;o consigo dar-lhe &mdash; e porqu&ecirc;</h2><span class="tag">Honestidade de dados</span></div>
       <table id="lacunas"></table>
       <div class="bd" style="border-top:1px solid var(--card-line);font-size:11.5px;color:var(--t3);line-height:1.6">
@@ -143,6 +160,10 @@ var ST={pa:null,arm:null,rv:null,cp:null,ant:null,prov:'Nampula'};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function num(n){return new Intl.NumberFormat('pt-PT').format(n)}
 function p1(n){return n.toFixed(1).replace('.',',')}
+function p2(n){return n.toFixed(2).replace('.',',')}
+/* Este ecrã usa linhas rótulo/valor em vários sítios; a função vive aqui
+   para não haver duas versões da mesma marcação espalhadas pelo ficheiro. */
+function linha(l,v){return (v==null||v==='')?'':'<div class="row"><span>'+l+'</span><span>'+v+'</span></div>'}
 
 function prov(){var r=null;ST.pa.provincias.forEach(function(p){if(p.nome===ST.prov)r=p});return r}
 
@@ -318,11 +339,112 @@ function desenharRiscos(){
   document.getElementById('riscos').innerHTML=h;
 }
 
+/* ---- SIMA: preço real por praça, primeiro dado do sistema que se move ---- */
+function desenharSima(){
+  var S=ST.sima, m=S.meta;
+  document.getElementById('sima-tag').textContent='Edição '+m.edicao;
+  document.getElementById('sima-nota').innerHTML=
+     '<div style="font-size:12.5px;line-height:1.65;color:var(--t2)">O SIMA visita mercados de refer&ecirc;ncia e publica o boletim '
+    +'<b>Quente-Quente</b> todas as sextas-feiras desde 1991. Estes s&atilde;o pre&ccedil;os a retalho, medidos, com data e fonte.</div>'
+    +'<div class="aviso w" style="margin-top:11px"><b>N&Atilde;O &eacute; pre&ccedil;o corrente.</b> '+esc(m.avisoRecencia)+'</div>';
+
+  var h='<thead><tr><th>Produto</th><th class="n">M&eacute;dia</th><th class="n">Mais barato</th><th class="n">Mais caro</th>'
+   +'<th class="n">Diferen&ccedil;a</th></tr></thead><tbody>';
+  S.retalho.forEach(function(r){
+    var mx=r.maximo.valor, mn=r.minimo.valor, dif=(mx/mn-1)*100;
+    var c=dif>150?'var(--red)':dif>60?'var(--amber)':'var(--t2)';
+    h+='<tr><td><b style="font-weight:600">'+esc(r.produto)+'</b>'
+     +(r.mediaSemanaAnterior?'<div style="color:var(--t4);font-size:10px">semana anterior '+p2(r.mediaSemanaAnterior)+'</div>':'')+'</td>'
+     +'<td class="n" style="font-size:13px">'+p2(r.media)+'</td>'
+     +'<td class="n"><span style="color:var(--ok)">'+p2(mn)+'</span>'
+     +'<div style="color:var(--t4);font-size:10px">'+esc(r.minimo.mercados.slice(0,2).join(', '))+'</div></td>'
+     +'<td class="n"><span style="color:var(--amber)">'+p2(mx)+'</span>'
+     +'<div style="color:var(--t4);font-size:10px">'+esc(r.maximo.mercados.slice(0,2).join(', '))+'</div></td>'
+     +'<td class="n" style="color:'+c+';font-weight:600">+'+dif.toFixed(0)+'%</td></tr>';
+  });
+  document.getElementById('sima-precos').innerHTML=h+'</tbody>';
+}
+
+function desenharCadeia(){
+  var N=ST.sima.nivelProdutor;
+  var prod={}, ret={};
+  N.forEach(function(x){ (x.nivel==='produtor'?prod:ret)[x.produto+'|'+x.mercado]=x; });
+  var pares=[];
+  Object.keys(prod).forEach(function(k){ if(ret[k]) pares.push({p:prod[k],r:ret[k]}); });
+  var h='';
+  if(pares.length){
+    pares.forEach(function(x){
+      var d=(x.r.preco/x.p.preco-1)*100;
+      h+='<div class="bd" style="border-bottom:1px solid rgba(38,56,86,.4)">'
+       +'<div style="font-weight:600;font-size:13.5px;margin-bottom:9px">'+esc(x.p.produto)+' &middot; '+esc(x.p.mercado)+'</div>'
+       +'<div class="barra"><span class="barra-n">Ao produtor</span>'
+       +'<span class="barra-t"><i style="width:'+(x.p.preco/x.r.preco*100).toFixed(0)+'%;background:var(--ok)"></i></span>'
+       +'<span class="barra-v mono" style="color:var(--ok)">'+p2(x.p.preco)+'</span></div>'
+       +'<div class="barra"><span class="barra-n">Ao retalho</span>'
+       +'<span class="barra-t"><i style="width:100%;background:var(--amber)"></i></span>'
+       +'<span class="barra-v mono" style="color:var(--amber)">'+p2(x.r.preco)+'</span></div>'
+       +'<div class="aviso w"><b>'+d.toFixed(0)+'% entre o que recebe e o que o consumidor paga</b>, no mesmo mercado e na mesma semana. '
+       +'O que est&aacute; nesse intervalo &eacute; transporte, armazenagem, perdas e margem &mdash; e o boletim n&atilde;o os separa.</div></div>';
+    });
+  }
+  var so=ST.sima.nivelProdutor.filter(function(x){return x.nivel!=='produtor'&&!pares.some(function(y){return y.r===x})});
+  if(so.length){
+    h+='<div class="bd">'+so.map(function(x){
+      return linha(esc(x.produto)+' &middot; '+esc(x.mercado),'<span class="mono">'+p2(x.preco)+' MT/kg</span> <span style="color:var(--t4);font-size:10px">retalho</span>');
+    }).join('')+'</div>';
+  }
+  h+='<div class="bd" style="border-top:1px solid var(--card-line)"><div class="aviso i">'
+   +'<b>Isto &eacute; o que faltava ao sistema.</b> A compara&ccedil;&atilde;o entre o pre&ccedil;o ao produtor e o pre&ccedil;o final estava marcada '
+   +'como <i>poss&iacute;vel j&aacute;</i> na tabela abaixo. Passou a existir. S&oacute; um mercado a publica nesta edi&ccedil;&atilde;o &mdash; '
+   +'com o protocolo com o MAAP, passaria a haver para os 21 mercados monitorados.</div></div>';
+  document.getElementById('sima-cadeia').innerHTML=h;
+}
+
+function desenharFluxosSima(){
+  var p=prov();
+  /* fluxos com origem OU destino nesta província, pelas localidades conhecidas */
+  var L=ST.sima.locais||{};
+  function provDe(nome){
+    /* aproximação: o mapa de localidades não guarda província, usa-se o nome da praça */
+    var mapa={'Chokwé':'Gaza','Manjacaze':'Gaza','Panda':'Inhambane','Homoine':'Inhambane',
+      'Vilanculo':'Inhambane','Vilankulo':'Inhambane','Zavala':'Inhambane','mercado grossista de Maxixe':'Inhambane',
+      'Cidade de Inhambane':'Inhambane','Nhamatanda':'Sofala','Mocuba':'Zambezia','Quelimane':'Zambezia',
+      'Cidade de Quelimane':'Zambezia','Mandimba':'Niassa','Lichinga':'Niassa','Montepuez':'Cabo Delgado',
+      'distrito de Namuno':'Cabo Delgado','Nampula':'Nampula','Tete — distrito de Angónia':'Tete',
+      'Cidade de Maputo':'Maputo','Manhiça':'Maputo'};
+    return mapa[nome]||null;
+  }
+  var saem=ST.sima.fluxos.filter(function(f){return provDe(f.origem)===p.nome});
+  var entram=ST.sima.fluxos.filter(function(f){return provDe(f.destino)===p.nome});
+  document.getElementById('fluxo-tag').textContent=(saem.length+entram.length)+' fluxos';
+  var h='';
+  function lista(t,arr,cor,seta){
+    if(!arr.length)return '';
+    var x='<div class="bd" style="border-bottom:1px solid rgba(38,56,86,.4)">'
+      +'<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:'+cor+';margin-bottom:8px">'+t+'</div>';
+    arr.forEach(function(f){
+      x+='<div class="row"><span>'+esc(f.produto)+' '+seta+' '+esc(seta==='→'?f.destino:f.origem)+'</span>'
+       +'<span class="mono">'+(f.precoPorKg?p2(f.precoPorKg)+' MT/kg':num(f.preco)+' MT')+'</span></div>';
+    });
+    return x+'</div>';
+  }
+  h+=lista('Sai desta prov&iacute;ncia',saem,'var(--amber)','→');
+  h+=lista('Entra nesta prov&iacute;ncia',entram,'var(--ok)','←');
+  if(!saem.length&&!entram.length){
+    h='<div class="bd"><div class="aviso i">Nenhum fluxo com origem ou destino nesta prov&iacute;ncia consta desta edi&ccedil;&atilde;o do boletim. '
+     +'O SIMA monitoriza cerca de 21 mercados; nem todas as prov&iacute;ncias t&ecirc;m praça monitorada em todas as semanas.</div></div>';
+  } else {
+    h+='<div class="bd"><div class="aviso i">Movimenta&ccedil;&otilde;es reais de produto registadas pelo SIMA. '
+     +'Pre&ccedil;os normalizados por quilo onde a unidade original permitia a convers&atilde;o.</div></div>';
+  }
+  document.getElementById('sima-fluxos').innerHTML=h;
+}
+
 var LACUNAS=[
- ['Pre&ccedil;o do meu produto no mercado','Poss&iacute;vel j&aacute;','var(--amber)',
-  'O SIMA recolhe pre&ccedil;os a quatro n&iacute;veis &mdash; produtor, grossista, retalhista e mercado internacional &mdash; em cerca de 21 locais e 28 produtos, e publica o boletim Quente-Quente todas as sextas-feiras. Falta ligar ao sistema.','MAAP &middot; Direc&ccedil;&atilde;o de Coopera&ccedil;&atilde;o e Mercados'],
- ['Compara&ccedil;&atilde;o entre o que recebo e o pre&ccedil;o final','Poss&iacute;vel j&aacute;','var(--amber)',
-  'Sai directamente do SIMA, que publica os tr&ecirc;s n&iacute;veis lado a lado. &Eacute; a informa&ccedil;&atilde;o que mais muda o poder negocial do produtor.','MAAP'],
+ ['Pre&ccedil;o do meu produto no mercado','RESOLVIDO','var(--ok)',
+  'Ligado. O boletim Quente-Quente est&aacute; no ecr&atilde; acima, com cinco produtos e o mercado onde cada pre&ccedil;o &eacute; praticado. Falta a actualiza&ccedil;&atilde;o semanal autom&aacute;tica, que exige protocolo.','MAAP &middot; Direc&ccedil;&atilde;o de Coopera&ccedil;&atilde;o e Mercados'],
+ ['Compara&ccedil;&atilde;o entre o que recebo e o pre&ccedil;o final','RESOLVIDO','var(--ok)',
+  'Ligado. Nhamatanda publica pre&ccedil;o ao produtor e ao retalho no mesmo boletim. Falta alargar aos 21 mercados, o que exige protocolo com o MAAP.','MAAP'],
  ['Quantidade dispon&iacute;vel no mercado grossista','Poss&iacute;vel j&aacute;','var(--amber)',
   'O SIMA j&aacute; recolhe este dado desde 1991. &Eacute; o indicador de exist&ecirc;ncias mais pr&oacute;ximo que o pa&iacute;s tem, e est&aacute; em PDF sem ningu&eacute;m o cruzar com armazenagem.','MAAP'],
  ['Ocupa&ccedil;&atilde;o e espa&ccedil;o livre nos armaz&eacute;ns','Depende de ades&atilde;o','var(--red)',
@@ -356,14 +478,15 @@ function desenharLacunas(){
 
 function desenharTudo(){
   desenharSel();desenharKpis();desenharComparacao();desenharCusto();desenharArmazens();desenharRiscos();
+  if(ST.sima) desenharFluxosSima();
 }
 
-Promise.all(['produtores-agrarios','armazens-nacionais','rede-viaria','cascata-precos','antecipacao'].map(function(f){
+Promise.all(['produtores-agrarios','armazens-nacionais','rede-viaria','cascata-precos','antecipacao','sima-precos'].map(function(f){
   return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
     if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
 })).then(function(res){
-  ST.pa=res[0];ST.arm=res[1];ST.rv=res[2];ST.cp=res[3];ST.ant=res[4];
-  desenharOferta();desenharFonte();desenharLacunas();desenharTudo();
+  ST.pa=res[0];ST.arm=res[1];ST.rv=res[2];ST.cp=res[3];ST.ant=res[4];ST.sima=res[5];
+  desenharOferta();desenharFonte();desenharSima();desenharCadeia();desenharLacunas();desenharTudo();
 }).catch(function(e){
   document.getElementById('oferta').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)
    +'<br><br>Este ecr&atilde; precisa de cinco ficheiros em <span class="mono">data/</span>: produtores-agrarios, armazens-nacionais, rede-viaria, cascata-precos e antecipacao.</div>';
