@@ -354,8 +354,7 @@ svg.tc-map{width:100%;height:auto;display:block}
       </div>
       <div class="login-error" id="login-error" style="text-align:center;margin-top:10px"></div>
       <div class="login-support-row">Suporte Técnico do MIC: <b>+258 21 480 000</b> · <a href="#">ajuda@sinagepe.gov.mz</a></div>
-      <div class="login-legal-row"><span>© 2026 SINAGEPE Moçambique — Ministério da Indústria e Comércio</span><span>v3.4.1 — Oficial</span></div>
-      <div id="aviso-demo" style="display:none;margin-top:14px;padding:11px 13px;border-radius:9px;border:1px solid rgba(240,169,38,.45);background:rgba(240,169,38,.10);color:#F0A926;font-size:11.5px;line-height:1.55;text-align:center"><b>MODO DEMONSTRAÇÃO ACTIVO</b><br>A palavra-passe não está a ser verificada. Escolha uma das contas e entre com qualquer texto. Não usar com dados reais do Estado.</div>
+      <div class="login-legal-row"><span>© 2026 SINAGEPE Moçambique — Ministério da Indústria e Comércio</span><span title="Protótipo em sítio estático: sem servidor, validação de acesso do lado do navegador.">v3.4.1 — Protótipo de demonstração</span></div>
       <div style="margin-top:18px;font-size:10.5px;color:var(--ink-faint);text-align:center">18 contas institucionais, cada uma com acesso limitado à sua área. As credenciais são distribuídas por via institucional e não são publicadas neste ecrã.</div>
     </div>
   </div>
@@ -1096,8 +1095,21 @@ function registarFalha() {
 }
 
 if (MODO_DEMO) {
-  const av = document.getElementById('aviso-demo');
-  if (av) av.style.display = 'block';
+  /* O aviso é CRIADO aqui, não escondido no HTML. Enquanto vivia no
+     ficheiro com display:none, quem lesse o código — ou uma ferramenta
+     que extraia texto sem executar JavaScript — via "MODO DEMONSTRAÇÃO
+     ACTIVO" mesmo com o interruptor desligado. Já induziu em erro duas
+     leituras externas do sistema. Agora, se não está ligado, não existe. */
+  var av = document.createElement('div');
+  av.id = 'aviso-demo';
+  av.style.cssText = 'margin-top:14px;padding:11px 13px;border-radius:9px;'
+    + 'border:1px solid rgba(240,169,38,.45);background:rgba(240,169,38,.10);'
+    + 'color:#F0A926;font-size:11.5px;line-height:1.55;text-align:center';
+  av.innerHTML = '<b>MODO DEMONSTRAÇÃO ACTIVO</b><br>A palavra-passe não está a ser '
+    + 'verificada. Escolha uma das contas e entre com qualquer texto. '
+    + 'Não usar com dados reais do Estado.';
+  var legal = document.querySelector('.login-legal-row');
+  if (legal && legal.parentNode) legal.parentNode.insertBefore(av, legal);
   const campo = document.getElementById('login-pass');
   if (campo) campo.placeholder = 'Modo demonstração — qualquer texto serve';
   // faixa fina e permanente no topo, para ninguém confundir isto com um sistema autenticado

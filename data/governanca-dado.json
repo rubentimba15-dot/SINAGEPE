@@ -45,6 +45,14 @@
       "comoAplicamos": "Classificação completa na secção própria. Nota: o documento de origem pedia percentagens de confiança e de qualidade do dado — recusadas, porque não há série histórica que as sustente e seriam elas próprias números inventados.",
       "estado": "aplicada",
       "porFechar": null
+    },
+    {
+      "n": 6,
+      "titulo": "Interface, dados e integração são três coisas",
+      "regra": "Não concluir que uma funcionalidade está implementada só porque existe um ecrã com esse nome, ou porque o código tem um componente assim chamado.",
+      "comoAplicamos": "Matriz de três colunas na secção própria. Regra adoptada depois de uma leitura externa do sistema ter concluído, a partir do código, que o modo demonstração estava activo — quando o aviso estava apenas escondido por CSS. O aviso passou a ser criado por código: se não está ligado, não existe no ficheiro.",
+      "estado": "aplicada",
+      "porFechar": null
     }
   ],
   "classificacao": [
@@ -321,5 +329,139 @@
       ]
     ],
     "nota": "O monitor de precisão de previsão, que o documento pede na secção 22, é a única parte preditiva que faz sentido começar já: guardar o que se previu e comparar com o que aconteceu. Ao fim de dois anos passa a haver base para falar de probabilidades. Antes disso, não."
+  },
+  "camadas": {
+    "titulo": "Interface, dados e integração — três coisas diferentes",
+    "porque": "Um ecrã pode existir visualmente, ter dados a sério por trás, e mesmo assim não estar ligado a nenhuma fonte que se actualize sozinha. Confundir os três é como se prometeu o que não há: \"Recomendações de IA\" sobre texto escrito à mão, sensores a reportar \"há 4 min\" onde não há sensor nenhum, códigos de barras inventados com prefixo real de outro país. Todos esses casos tinham interface. Nenhum tinha integração.",
+    "definicoes": [
+      [
+        "INTERFACE",
+        "O ecrã existe, abre e mostra alguma coisa."
+      ],
+      [
+        "DADOS",
+        "O que mostra vem de ficheiro com fonte declarada, não de valores escritos no código."
+      ],
+      [
+        "INTEGRAÇÃO",
+        "A fonte actualiza-se sem ninguém copiar nada à mão."
+      ]
+    ],
+    "estadoGlobal": "Nenhum ecrã do SINAGEPE tem integração. Todas as fontes são importadas manualmente, porque nenhuma das entidades publica em formato legível por máquina — e porque um sítio estático não tem onde correr a recolha.",
+    "matriz": [
+      [
+        "index.html",
+        "sim",
+        "sim",
+        "nao",
+        "Lê sinagepe-data.json, importado à mão."
+      ],
+      [
+        "armazens-nacionais.html",
+        "sim",
+        "sim",
+        "nao",
+        "29 unidades, todas com URL de fonte oficial."
+      ],
+      [
+        "mapa-integrado.html",
+        "sim",
+        "sim",
+        "nao",
+        "Seis camadas, quatro ficheiros de dados."
+      ],
+      [
+        "ponto-cego-duplo.html",
+        "sim",
+        "sim",
+        "nao",
+        "Cruzamento binário, sem suposição."
+      ],
+      [
+        "centro-antecipacao.html",
+        "sim",
+        "sim",
+        "nao",
+        "Riscos e mitigações declarados."
+      ],
+      [
+        "portal-produtores.html",
+        "sim",
+        "parcial",
+        "nao",
+        "Agregados provinciais por confirmar no CUPA."
+      ],
+      [
+        "portal-transportadores.html",
+        "sim",
+        "sim",
+        "nao",
+        "Preços da ARENE e cortes da ANE, ambos manuais."
+      ],
+      [
+        "relatorio-executivo.html",
+        "sim",
+        "sim",
+        "nao",
+        "Deriva dos mesmos ficheiros."
+      ],
+      [
+        "governanca-dado.html",
+        "sim",
+        "sim",
+        "nao",
+        "Conta nos próprios ficheiros ao carregar."
+      ],
+      [
+        "sandbox-rastreabilidade.html",
+        "sim",
+        "simulado",
+        "nao",
+        "Identificadores deliberadamente inválidos, declarados como tal."
+      ],
+      [
+        "simulador-preditivo.html",
+        "sim",
+        "parcial",
+        "nao",
+        "Corre sem a série do IPC, com aviso visível."
+      ],
+      [
+        "rede-logistica.html",
+        "sim",
+        "sim",
+        "nao",
+        "Passou a ler o cadastro nacional; deixou de ter cadastro próprio."
+      ],
+      [
+        "adesao-institucional.html",
+        "sim",
+        "sim",
+        "nao",
+        "Dossiers construídos de fontes públicas."
+      ],
+      [
+        "marketplace-b2b.html",
+        "sim",
+        "nao",
+        "nao",
+        "Diz \"Dados em tempo real\" e tem cinco links mortos. Interface sem dados."
+      ],
+      [
+        "portal-pme.html",
+        "parcial",
+        "nao",
+        "nao",
+        "Devolveu conteúdo quase vazio quando lido do site."
+      ],
+      [
+        "Os restantes ecrãs",
+        "por verificar",
+        "por verificar",
+        "nao",
+        "Só o verificador no site publicado pode classificar."
+      ]
+    ],
+    "regra": "Antes de dizer que uma funcionalidade está implementada, responder às três perguntas em separado. Ter interface não é ter dados; ter dados não é ter integração."
   }
 }

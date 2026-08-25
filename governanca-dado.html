@@ -100,6 +100,12 @@ tr:last-child td{border-bottom:none}
     </div>
 
     <div class="card frame">
+      <div class="ch"><h2>Interface, dados e integra&ccedil;&atilde;o</h2><span class="tag crit" id="cam-tag">&mdash;</span></div>
+      <div class="bd" id="cam-nota" style="border-bottom:1px solid var(--card-line)"></div>
+      <table id="camadas"></table>
+    </div>
+
+    <div class="card frame">
       <div class="ch"><h2>Linhagem &mdash; da fonte ao resultado</h2><span class="tag">Como se chega ao n&uacute;mero</span></div>
       <div id="linhagem"></div>
     </div>
@@ -156,7 +162,9 @@ function desenharKpis(){
      kpi('Unidades com fonte',c.comFonte+' de '+c.unidades,c.comFonte===c.unidades?'Regra 3 cumprida: nenhuma entrou sem URL cit&aacute;vel.':'H&aacute; unidades sem fonte declarada.',c.comFonte===c.unidades?'var(--ok)':'var(--red)')
    + kpi('Unidades verificadas',c.verif+' de '+c.unidades,'As restantes t&ecirc;m exist&ecirc;ncia, natureza ou estado por confirmar &mdash; e di-lo no pr&oacute;prio dossier.','var(--amber)')
    + kpi('Prov&iacute;ncias confirmadas',c.provVerif+' de '+c.provincias,c.provVerif===0?'Zero. Os agregados s&atilde;o valores de trabalho e est&atilde;o marcados como tal em todos os ecr&atilde;s que os mostram.':'Parcialmente confirmados.',c.provVerif===0?'var(--red)':'var(--amber)')
-   + kpi('Fontes no registo',c.fontes,c.comPorObter+' t&ecirc;m campos por obter, com o detentor nomeado. Nenhuma foi eliminada.','var(--ok)');
+   + kpi('Fontes no registo',c.fontes,c.comPorObter+' t&ecirc;m campos por obter, com o detentor nomeado. Nenhuma foi eliminada.','var(--ok)')
+   + kpi('Ecr&atilde;s com integra&ccedil;&atilde;o',(ST.g.camadas?ST.g.camadas.matriz.filter(function(r){return r[3]==='sim'}).length:0)+' de '+(ST.g.camadas?ST.g.camadas.matriz.length:0),
+       'Nenhuma fonte se actualiza sozinha. Ter ecr&atilde; n&atilde;o &eacute; ter dados; ter dados n&atilde;o &eacute; ter integra&ccedil;&atilde;o.','var(--red)');
 }
 function kpi(l,v,n,c){
   return '<div class="card frame kpi" style="margin-bottom:0"><div class="kpi-l">'+l+'</div>'
@@ -202,6 +210,41 @@ function desenharClassificacao(){
   document.getElementById('c-tag').textContent=vis.length+' de '+ST.g.classificacao.length;
 }
 
+var COR_CAM={sim:'#12B981',parcial:'#F0A926',simulado:'#A78BFA',nao:'#EF4444','por verificar':'#5E7189'};
+function pt(v){
+  var c=COR_CAM[v]||'#5E7189';
+  var r=v==='sim'?'✓':v==='nao'?'✕':v==='parcial'?'~':v==='simulado'?'sim.':'?';
+  return '<span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12;min-width:26px;text-align:center">'+r+'</span>';
+}
+
+function desenharCamadas(){
+  var c=ST.g.camadas;
+  if(!c){return}
+  var m=c.matriz;
+  var integ=m.filter(function(r){return r[3]==='sim'}).length;
+  document.getElementById('cam-tag').textContent=integ+' de '+m.length+' com integração';
+  document.getElementById('cam-nota').innerHTML=
+     '<div style="font-size:12.5px;line-height:1.65;color:var(--t2)">'+esc(c.porque)+'</div>'
+    +'<div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-size:11.5px">'
+    +c.definicoes.map(function(d){
+        return '<span><b style="color:var(--brzl)">'+esc(d[0])+'</b> &mdash; <span style="color:var(--t3)">'+esc(d[1])+'</span></span>';
+      }).join('')
+    +'</div>'
+    +'<div class="aviso" style="margin-top:12px;padding:11px 13px;border-radius:9px;background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.28);color:#FFB4B4;font-size:11.5px;line-height:1.55">'
+    +'<b>'+esc(c.estadoGlobal)+'</b></div>';
+
+  var h='<thead><tr><th>Ecr&atilde;</th><th style="text-align:center">Interface</th>'
+   +'<th style="text-align:center">Dados</th><th style="text-align:center">Integra&ccedil;&atilde;o</th><th>Nota</th></tr></thead><tbody>';
+  m.forEach(function(r){
+    h+='<tr><td class="mono" style="font-size:10.5px">'+esc(r[0])+'</td>'
+     +'<td style="text-align:center">'+pt(r[1])+'</td>'
+     +'<td style="text-align:center">'+pt(r[2])+'</td>'
+     +'<td style="text-align:center">'+pt(r[3])+'</td>'
+     +'<td style="color:var(--t3);max-width:340px">'+esc(r[4])+'</td></tr>';
+  });
+  document.getElementById('camadas').innerHTML=h+'</tbody>';
+}
+
 function desenharLinhagem(){
   document.getElementById('linhagem').innerHTML=ST.g.linhagem.map(function(l){
     var passos=l.cadeia.map(function(p,i){
@@ -243,7 +286,7 @@ Promise.all(['governanca-dado','armazens-nacionais','produtores-agrarios','fonte
     if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
 })).then(function(res){
   ST.g=res[0];ST.arm=res[1];ST.pa=res[2];ST.fx=res[3];
-  desenharNota();desenharKpis();desenharRegras();desenharClassificacao();
+  desenharNota();desenharKpis();desenharRegras();desenharCamadas();desenharClassificacao();
   desenharLinhagem();desenharMatriz();desenharRecusado();
 }).catch(function(e){
   document.getElementById('nota').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
