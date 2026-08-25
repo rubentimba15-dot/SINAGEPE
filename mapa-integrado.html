@@ -124,6 +124,7 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:-.01em}
                 <text class="lbl" x="132" y="680" text-anchor="middle">Maputo</text>
               </g>
               <g id="garm"></g>
+              <g id="gflux"></g>
               <g id="gcom"></g>
               <g id="gint"></g>
             </svg>
@@ -147,6 +148,8 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:-.01em}
   </main>
 </div>
 <script>
+if(window.SinagepeNav) SinagepeNav.montar('mapa-integrado');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
 var P={ax:42.172680,bx:-1238.548340,ay:-2413.365083,by:-429.122552};
 function X(lo){return P.ax*lo+P.bx}
 function Y(la){return P.ay*Math.log(Math.tan(Math.PI/4+la*Math.PI/360))+P.by}
@@ -156,7 +159,7 @@ var ROT_NAT={estatal:'Estatal','ppp-gestao-privada':'PPP \u2014 Estado/gest\u00e
 var ROT_EST={operacional:'Operacional','em-modernizacao':'Em moderniza\u00e7\u00e3o','por-reabilitar':'Por reabilitar','por-construir':'Por construir',desconhecido:'Desconhecido'};
 var COR_ESTRADA={n1:'#E8BE7A',n4:'#12B981',n6:'#F0A926',n13:'#22B8F0'};
 
-var ST={rede:null,arm:null,prod:null,com:null,sel:null,camadas:{estradas:1,interrupcoes:1,armazens:1,comercial:1,produtores:1,corredores:1}};
+var ST={rede:null,arm:null,prod:null,com:null,sima:null,sel:null,camadas:{estradas:1,interrupcoes:1,armazens:1,comercial:1,fluxos:1,produtores:1,corredores:1}};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function num(n){return new Intl.NumberFormat('pt-PT').format(n)}
 
@@ -169,7 +172,7 @@ function desenharAviso(){
 
 function desenharCamadas(){
   var defs=[['estradas','Estradas','#E8BE7A'],['interrupcoes','Interrup\u00e7\u00f5es','#EF4444'],
-            ['armazens','Armaz\u00e9ns do cadastro','#C98A3C'],['comercial','Rede comercial','#F472B6'],
+            ['armazens','Armaz\u00e9ns do cadastro','#C98A3C'],['comercial','Rede comercial','#F472B6'],['fluxos','Fluxos de mercado','#A78BFA'],
             ['produtores','Produ\u00e7\u00e3o agr\u00e1ria','#12B981'],['corredores','Corredores','#22B8F0']];
   document.getElementById('camadas').innerHTML=defs.map(function(d){
     return '<button class="cb'+(ST.camadas[d[0]]?' on':'')+'" data-c="'+d[0]+'"><i style="background:'+d[2]+'"></i>'+d[1]+'</button>';
@@ -219,6 +222,35 @@ function desenharArmazens(){
   g.innerHTML=h;
 }
 
+function desenharFluxos(){
+  var g=document.getElementById('gflux');
+  if(!ST.camadas.fluxos||!ST.sima){g.innerHTML='';return}
+  var h='<defs><marker id="pta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">'
+       +'<path d="M0,0 L10,5 L0,10 z" fill="#A78BFA"/></marker></defs>';
+  ST.sima.fluxos.forEach(function(f,i){
+    if(!f.desenhavel)return;
+    var x1=X(f.origemCoord.lon),y1=Y(f.origemCoord.lat);
+    var x2=X(f.destinoCoord.lon),y2=Y(f.destinoCoord.lat);
+    if(f.local){
+      /* origem igual ao destino: produção local, desenha-se como anel e não como seta */
+      h+='<g class="mk'+(ST.sel==='fl:'+i?' sel':'')+'" data-t="fl" data-i="'+i+'">'
+        +'<circle cx="'+x2.toFixed(1)+'" cy="'+y2.toFixed(1)+'" r="8" fill="none" stroke="#A78BFA" stroke-width="1.6" stroke-dasharray="3 3"/></g>';
+      return;
+    }
+    /* curva suave, para vários fluxos entre os mesmos pontos não se sobreporem */
+    var mx=(x1+x2)/2, my=(y1+y2)/2;
+    var dx=x2-x1, dy=y2-y1, L=Math.sqrt(dx*dx+dy*dy)||1;
+    var desvio=Math.min(26,L*0.14)*(i%2?1:-1);
+    var cx=mx-dy/L*desvio, cy=my+dx/L*desvio;
+    h+='<g class="mk'+(ST.sel==='fl:'+i?' sel':'')+'" data-t="fl" data-i="'+i+'">'
+      +'<path d="M'+x1.toFixed(1)+','+y1.toFixed(1)+' Q'+cx.toFixed(1)+','+cy.toFixed(1)+' '+x2.toFixed(1)+','+y2.toFixed(1)+'" '
+      +'fill="none" stroke="#A78BFA" stroke-width="1.8" opacity=".78" marker-end="url(#pta)"/>'
+      +'<circle cx="'+x1.toFixed(1)+'" cy="'+y1.toFixed(1)+'" r="3" fill="#A78BFA"/>'
+      +'</g>';
+  });
+  g.innerHTML=h;
+}
+
 function desenharComercial(){
   var g=document.getElementById('gcom');
   if(!ST.camadas.comercial||!ST.com){g.innerHTML='';return}
@@ -251,13 +283,14 @@ function desenharInterrupcoes(){
 }
 
 function desenharTudo(){
-  desenharCorredores();desenharEstradas();desenharArmazens();desenharComercial();desenharInterrupcoes();ligarEventos();
+  desenharCorredores();desenharEstradas();desenharArmazens();desenharFluxos();desenharComercial();desenharInterrupcoes();ligarEventos();
   var n=(ST.camadas.armazens?ST.arm.armazens.filter(function(a){return a.coordenada&&a.coordenada.lat!=null}).length:0);
   document.getElementById('cont').textContent=
     (ST.camadas.estradas?ST.rede.estradas.length+' estradas \u00b7 ':'')
     +(ST.camadas.interrupcoes?ST.rede.interrupcoes.length+' interrup\u00e7\u00f5es \u00b7 ':'')
     +(n?n+' armaz\u00e9ns \u00b7 ':'')
-    +(ST.camadas.comercial&&ST.com?ST.com.unidades.length+' plataformas comerciais \u00b7 ':'')+'10 prov\u00edncias';
+    +(ST.camadas.comercial&&ST.com?ST.com.unidades.length+' plataformas comerciais \u00b7 ':'')
+    +(ST.camadas.fluxos&&ST.sima?ST.sima.fluxos.filter(function(f){return f.desenhavel}).length+' fluxos \u00b7 ':'')+'10 prov\u00edncias';
   Array.prototype.forEach.call(document.querySelectorAll('.tc-prov'),function(p){
     p.style.pointerEvents=ST.camadas.produtores?'auto':'none';
   });
@@ -265,14 +298,15 @@ function desenharTudo(){
 
 function ligarEventos(){
   var wrap=document.getElementById('mapwrap'),tip=document.getElementById('tip');
-  Array.prototype.forEach.call(document.querySelectorAll('#gestr .mk, #garm .mk, #gint .mk, #gcom .mk'),function(el){
+  Array.prototype.forEach.call(document.querySelectorAll('#gestr .mk, #garm .mk, #gint .mk, #gcom .mk, #gflux .mk'),function(el){
     el.addEventListener('click',function(){seleccionar(el.dataset.t+':'+el.dataset.i)});
     el.addEventListener('mousemove',function(ev){
       var r=wrap.getBoundingClientRect(),t=el.dataset.t,i=el.dataset.i,txt='';
       if(t==='rd'){var e=achar(ST.rede.estradas,'id',i);txt='<b>'+esc(e.designacao)+'</b><i>'+esc(e.liga)+'</i>'}
       if(t==='in'){var x=achar(ST.rede.interrupcoes,'id',i);txt='<b>'+esc(x.estrada)+' \u00b7 '+esc(x.troco)+'</b><i>'+(x.gravidade==='intransitavel'?'Intranstiável':'Trânsito condicionado')+'</i>'}
       if(t==='ar'){var a=achar(ST.arm.armazens,'id',i);txt='<b>'+esc(a.nome)+'</b><i>'+esc(ROT_NAT[a.natureza]||a.natureza)+'</i>'}
-      if(t==='co'){var u=achar(ST.com.unidades,'id',i);txt='<b>'+esc(u.nome)+'</b><i>'+esc(u.papel)+' \u00b7 sem stock publicado</i>'}
+  if(t==='co'){var u=achar(ST.com.unidades,'id',i);txt='<b>'+esc(u.nome)+'</b><i>'+esc(u.papel)+' \u00b7 sem stock publicado</i>'}
+      if(t==='fl'){var f=ST.sima.fluxos[Number(i)];txt='<b>'+esc(f.produto)+'</b><i>'+esc(f.origem)+' \u2192 '+esc(f.destino)+'</i>'}
       tip.innerHTML=txt;tip.style.opacity=1;
       tip.style.left=Math.min(ev.clientX-r.left+14,r.width-262)+'px';
       tip.style.top=(ev.clientY-r.top-12)+'px';
@@ -333,6 +367,25 @@ function desenharDossier(){
      +(a.nota?'<div class="note w">'+esc(a.nota)+'</div>':'')
      +(a.fonte?'<div class="src"><a href="'+esc(a.fonte)+'" target="_blank" rel="noopener">'+esc(a.fonte)+'</a></div>':'');
   }
+  if(t==='fl'){
+    var f=ST.sima.fluxos[Number(i)];tag='Fluxo de mercado';
+    var mesmo=ST.sima.fluxos.filter(function(x){return x.destino===f.destino});
+    h='<div class="dname">'+esc(f.produto)+'</div>'
+     +'<div class="dsub">'+esc(f.origem)+' \u2192 '+esc(f.destino)+'</div>'
+     +'<span class="pill" style="color:#A78BFA;border-color:#A78BFA55;background:#A78BFA14">Zona '+esc(f.zona)+'</span>'
+     +(f.local?'<span class="pill" style="color:var(--ok);border-color:#12B98155;background:#12B98114">Produ\u00e7\u00e3o local</span>':'')
+     +linha('Pre\u00e7o de compra',num(f.preco)+' '+esc(f.unidade.replace('MT ','')))
+     +(f.precoPorKg?linha('Normalizado',f.precoPorKg.toFixed(2).replace('.',',')+' MT/kg'):'')
+     +linha('Origem',esc(f.origem))+linha('Destino',esc(f.destino))
+     +(f.conversaoAssumida?'<div class="note w"><b>Convers\u00e3o assumida:</b> '+esc(f.conversaoAssumida)+'</div>':'')
+     +(mesmo.length>1?'<div class="note"><b>'+esc(f.destino)+' recebe '+mesmo.length+' fluxos documentados</b> nesta semana: '
+        +esc(mesmo.map(function(x){return x.produto+' de '+x.origem}).join('; '))+'.</div>':'')
+     +'<div class="note"><b>O que isto \u00e9.</b> Uma movimenta\u00e7\u00e3o real de produto registada pelo SIMA na semana de '
+     +esc(ST.sima.meta.semana)+', edi\u00e7\u00e3o '+ST.sima.meta.edicao+' do boletim Quente-Quente. '
+     +'\u00c9 o \u00fanico dado do sistema que mostra produto a mover-se, com origem, destino e pre\u00e7o.</div>'
+     +'<div class="note w"><b>N\u00c3O \u00e9 pre\u00e7o corrente.</b> '+esc(ST.sima.meta.avisoRecencia)+'</div>'
+     +'<div class="src"><a href="'+esc(ST.sima.meta.url)+'" target="_blank" rel="noopener">Boletim Quente-Quente n.\u00ba '+ST.sima.meta.edicao+'</a></div>';
+  }
   if(t==='co'){
     var u=achar(ST.com.unidades,'id',i);
     var op=achar(ST.com.operadores,'id',u.operador);tag='Rede comercial';
@@ -370,7 +423,7 @@ function desenharDossier(){
        +linha('Dist\u00e2ncia m\u00e9dia ao armaz\u00e9m',p.distanciaMediaArmazemKm+' km')
        +linha('Corredor de escoamento',corr)
        +(p.culturas?linha('Culturas',p.culturas.join(', ')):'')
-       +'<div class="note"><b>Porque \u00e9 que isto est\u00e1 por prov\u00edncia e n\u00e3o por explora\u00e7\u00e3o:</b> o CUPA existe e \u00e9 um sistema real do minist\u00e9rio, mas n\u00e3o exp\u00f5e os registos. Estes agregados provinciais est\u00e3o marcados POR CONFIRMAR no pr\u00f3prio ficheiro de dados \u2014 s\u00e3o valores de trabalho para calibrar o modelo, n\u00e3o extrac\u00e7\u00e3o oficial. S\u00f3 o uso nacional de fertilizante qu\u00edmico (9,1% em 2023, contra 7,8% em 2020) est\u00e1 ancorado no Inqu\u00e9rito Agr\u00e1rio Integrado.</div>';
+       +'<div class="note"><b>Porque \u00e9 que isto est\u00e1 por prov\u00edncia e n\u00e3o por explora\u00e7\u00e3o:</b> o CUPA existe e \u00e9 um sistema real do minist\u00e9rio, mas os registos individuais n\u00e3o s\u00e3o p\u00fablicos. O que se publica s\u00e3o agregados do Inqu\u00e9rito Agr\u00e1rio Integrado.</div>';
       var d=p.distanciaMediaArmazemKm;
       if(d>=100)h+='<div class="note r"><b>'+d+' km de dist\u00e2ncia m\u00e9dia ao armaz\u00e9m.</b> Com '+p.pequenas+'% de explora\u00e7\u00f5es pequenas, esta dist\u00e2ncia \u00e9 uma barreira f\u00edsica ao escoamento, n\u00e3o um inconveniente. Uma interrup\u00e7\u00e3o no corredor '+esc(corr)+' agrava-a.</div>';
     }
@@ -400,16 +453,17 @@ function desenharLegenda(){
   document.getElementById('legenda').innerHTML=h;
 }
 
-if(window.SinagepeNav) SinagepeNav.montar('mapa-integrado');
-if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+var lo=document.getElementById('btn-logout');
+if(lo)lo.addEventListener('click',function(e){e.preventDefault();try{sessionStorage.clear()}catch(x){}location.href='index.html'});
 
 Promise.all([
   fetch('data/rede-viaria.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/rede-viaria.json');return r.json()}),
   fetch('data/armazens-nacionais.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/armazens-nacionais.json');return r.json()}),
   fetch('data/produtores-agrarios.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/produtores-agrarios.json');return r.json()}),
-  fetch('data/rede-comercial.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/rede-comercial.json');return r.json()})
+  fetch('data/rede-comercial.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/rede-comercial.json');return r.json()}),
+  fetch('data/sima-precos.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/sima-precos.json');return r.json()})
 ]).then(function(res){
-  ST.rede=res[0];ST.arm=res[1];ST.prod=res[2];ST.com=res[3];
+  ST.rede=res[0];ST.arm=res[1];ST.prod=res[2];ST.com=res[3];ST.sima=res[4];
   desenharAviso();desenharCamadas();desenharLegenda();desenharAusencias();desenharTudo();
   Array.prototype.forEach.call(document.querySelectorAll('.tc-prov'),function(p){
     p.addEventListener('click',function(){seleccionar('pv:'+p.dataset.p)});
