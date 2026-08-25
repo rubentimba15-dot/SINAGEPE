@@ -77,7 +77,7 @@ pre{margin:12px 17px 15px;padding:13px;background:#0A1421;border:1px solid var(-
   <div class="card" id="c-resumo" style="display:none">
     <div class="ch"><h2>Lista do que falta</h2><span style="font-size:10px;color:var(--t4)">copie e envie</span></div>
     <pre id="resumo"></pre>
-    <div class="nota"><b>O que fazer com isto.</b> Um ecrã em falta pode significar duas coisas: o ficheiro nunca foi construído, ou existe e não foi publicado. A diferença vê-se na pasta do repositório. Os que dão erro de leitura existem mas têm um problema dentro — normalmente um ficheiro de dados que falta.</div>
+    <div class="nota"><b>Nota.</b> O próprio verificador é excluído da lista: enquanto corre, o servidor devolve 404 ao pedido dele e o resultado seria acusar-se de não existir.<br><br><b>O que fazer com isto.</b> Um ecrã em falta pode significar duas coisas: o ficheiro nunca foi construído, ou existe e não foi publicado. A diferença vê-se na pasta do repositório. Os que dão erro de leitura existem mas têm um problema dentro — normalmente um ficheiro de dados que falta.</div>
   </div>
 </div>
 
@@ -170,6 +170,12 @@ document.getElementById('b-correr').addEventListener('click',async function(){
     document.getElementById('lista').innerHTML='<div class="err"><b>Não consegui ler o index.html.</b><br>'+esc(e.message)+'</div>';
     b.disabled=false;b.textContent='Verificar tudo';return;
   }
+
+  /* O próprio verificador não se testa a si mesmo: o servidor devolve a
+     página 404 para o pedido dele enquanto ele está a correr, e o resultado
+     era acusar-se de não existir. Se está a correr, existe. */
+  var eu=(location.pathname.split('/').pop()||'').toLowerCase();
+  pg=pg.filter(function(x){return x.toLowerCase()!==eu});
 
   for(var i=0;i<pg.length;i++){
     b.textContent='A verificar… '+(i+1)+'/'+pg.length;

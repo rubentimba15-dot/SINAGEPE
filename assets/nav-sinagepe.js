@@ -45,6 +45,10 @@
     { key: 'governanca',    icon: '\u2696', label: 'Governa\u00e7\u00e3o do Dado', href: 'governanca-dado.html', grupo: 'GOVERNACAO' },
     { key: 'config',        icon: '\u2699', label: 'Configura\u00e7\u00f5es', href: 'administracao-auditoria.html', grupo: 'GOVERNACAO' },
     { key: 'marketplace',   icon: '\u2B21', label: 'Marketplace B2B',       href: 'marketplace-b2b.html', grupo: 'PORTAIS' },
+    { key: 'portal-bancos', icon: '\u26C3', label: 'Portal dos Bancos', href: 'portal-bancos.html', grupo: 'FINANCIAMENTO' },
+    { key: 'portal-investidores', icon: '\u25C6', label: 'Portal dos Investidores', href: 'portal-investidores.html', grupo: 'FINANCIAMENTO' },
+    { key: 'portal-empresas', icon: '\u25A0', label: 'Portal das Empresas', href: 'portal-empresas.html', grupo: 'FINANCIAMENTO' },
+    { key: 'banco-central', icon: '\u2696', label: 'Banco Central \u2014 regulador', href: 'dashboard-banco-central.html', grupo: 'GOVERNACAO' },
     { key: 'inteligencia',  icon: '\u25C8', label: 'Intelig\u00eancia',     href: 'inteligencia-consolidada.html', grupo: 'INTELIGENCIA' },
     { key: 'fontes-nac',    icon: '\u2B23', label: 'Fontes Nacionais',      href: 'fontes-nacionais.html', grupo: 'GOVERNACAO' },
     { key: 'fontes-int',    icon: '\u2B22', label: 'Fontes Internacionais', href: 'fontes-internacionais.html' }
@@ -77,13 +81,14 @@
     /* Vinte e cinco itens numa lista plana não se lêem. Agrupam-se em famílias,
        pela ordem em que se usam: onde estou, onde é, o que vai acontecer,
        por onde passa, quem recebe, o que levo, e como se governa isto. */
-    var ORDEM = ['PAINEL','TERRITORIO','INTELIGENCIA','CADEIA','PORTAIS','RELATORIOS','GOVERNACAO'];
+    var ORDEM = ['PAINEL','TERRITORIO','INTELIGENCIA','CADEIA','PORTAIS','FINANCIAMENTO','RELATORIOS','GOVERNACAO'];
     var ROTULO = {
       PAINEL: null,
       TERRITORIO: 'Territ\u00f3rio',
       INTELIGENCIA: 'Intelig\u00eancia',
       CADEIA: 'Cadeia de abastecimento',
       PORTAIS: 'Portais por perfil',
+      FINANCIAMENTO: 'Financiamento',
       RELATORIOS: 'Relat\u00f3rios',
       GOVERNACAO: 'Governa\u00e7\u00e3o e fontes'
     };

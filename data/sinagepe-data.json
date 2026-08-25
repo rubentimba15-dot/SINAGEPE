@@ -2,7 +2,9 @@
   "meta": {
     "sistema": "SINAGEPE",
     "ultimaActualizacao": "Há 5 min",
-    "modo": "SIMULADO"
+    "modo": "SIMULADO",
+    "aviso": "Ficheiro em modo SIMULADO. Os valores e as entidades nomeadas são de demonstração. Os ecrãs que o leem mostram uma faixa de aviso gerada a partir deste campo modo — quando os dados forem reais, mude modo para REAL e a faixa desaparece em todos ao mesmo tempo.",
+    "decisaoNomes": "Os nomes de entidades são mantidos com aparência realista por decisão de apresentação: designações como \"Empresa A\" fazem o sistema parecer maqueta. O aviso de simulação é dado pela faixa no topo de cada ecrã e verbalmente em cada demonstração. Excepção: nomes de instituições que existam ou tenham existido não são usados, para não atribuir números inventados a entidades reais."
   },
   "kpis": {
     "disponibilidadeNacional": {
@@ -1897,7 +1899,7 @@
     }
   },
   "portalBancos": {
-    "banco": "Banco Comercial de Moçambique",
+    "banco": "Banco Agro-Industrial de Moçambique",
     "kpis": {
       "procuraFinanciamentoPercent": 12.4,
       "cadeiasMonitoradas": 8,

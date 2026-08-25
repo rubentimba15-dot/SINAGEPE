@@ -2,6 +2,7 @@
 <html lang="pt-PT">
 <head>
 <script src="assets/access-control.js"></script>
+<script src="assets/selo-proveniencia.js"></script>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +73,15 @@ document.getElementById('content-mount').innerHTML = `
 `;
 
 SINAGEPE.load().then(data => {
+  /* A fonte declara-se simulada; o ecrã tem de o dizer. Os nomes das entidades
+     mantêm-se com aparência realista por decisão de apresentação — o aviso de
+     simulação é dado por esta faixa e verbalmente em cada demonstração. */
+  if (window.SeloProveniencia) SeloProveniencia.aplicar({
+    modo: (data.meta && data.meta.modo) || null,
+    bloco: 'portalEmpresas',
+    quando: data.meta && data.meta.ultimaActualizacao
+  });
+
   SINAGEPE.renderUserFooter({ utilizador: { nome: data.portalEmpresas.empresa, instituicao: 'Sector Privado', direccao: 'Administrador' } });
   document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
 
