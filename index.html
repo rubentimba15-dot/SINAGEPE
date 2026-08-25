@@ -1003,13 +1003,23 @@ const NIVEIS_ACESSO = [
   }
 ];
 
-document.getElementById('btn-logout').addEventListener('click', (e) => {
+/* O botão de sair passou a ser criado pela navegação partilhada
+   (assets/nav-sinagepe.js), pelo que já não existe no HTML quando este
+   bloco corre. Em vez de o procurar directamente — que devolvia null e
+   travava todo o script, incluindo o login —, escuta-se o clique no
+   documento. Funciona haja ou não navegação montada. */
+document.addEventListener('click', function (e) {
+  var alvo = e.target && e.target.closest ? e.target.closest('#btn-logout') : null;
+  if (!alvo) return;
   e.preventDefault();
   sessionStorage.removeItem('sinagepe_nivel');
-  document.querySelector('.app').classList.remove('visible');
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('login-email').value = '';
-  document.getElementById('login-pass').value = '';
+  var app = document.querySelector('.app');
+  if (app) app.classList.remove('visible');
+  var ls = document.getElementById('login-screen');
+  if (ls) ls.style.display = 'flex';
+  var em = document.getElementById('login-email'); if (em) em.value = '';
+  var pa = document.getElementById('login-pass');  if (pa) pa.value = '';
+  var er = document.getElementById('login-error'); if (er) er.textContent = '';
 });
 
 function entrarNoSistema(nivel) {
