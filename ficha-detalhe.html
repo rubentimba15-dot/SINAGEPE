@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ficha de Detalhe &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/produtos-visual.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:14px;max-width:920px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
+.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.bd{padding:15px 17px}
+
+/* selector */
+.abas{display:flex;gap:5px;padding:12px 17px;border-bottom:1px solid var(--card-line);flex-wrap:wrap}
+.ab{font-size:11.5px;padding:7px 15px;border-radius:20px;border:1px solid var(--card-line);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.ab.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+.lista-sel{max-height:220px;overflow-y:auto;padding:8px 0}
+.ls{display:flex;align-items:center;gap:10px;padding:8px 17px;cursor:pointer;font-size:12px;border-bottom:1px solid rgba(38,56,86,.3)}
+.ls:hover{background:var(--cardh)}
+.ls.on{background:rgba(34,184,240,.09)}
+.ls-d{width:9px;height:9px;border-radius:50%;flex-shrink:0;border:2px solid}
+.ls-n{flex:1;line-height:1.35}
+.ls-m{font-size:10px;color:var(--t4)}
+
+/* cabeçalho da ficha */
+.hero{display:flex;gap:20px;align-items:flex-start;padding:20px;flex-wrap:wrap}
+.hero-img{flex-shrink:0}
+.hero-b{flex:1;min-width:250px}
+.hero-t{font-size:22px;font-weight:700;letter-spacing:-.015em;line-height:1.2}
+.hero-s{font-size:12.5px;color:var(--t3);margin-top:5px}
+.pill{display:inline-block;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:3px;margin:9px 6px 0 0;border:1px solid}
+.hero-k{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:0;border-top:1px solid var(--card-line)}
+.hk{padding:13px 20px;border-right:1px solid var(--card-line)}
+.hk:last-child{border-right:none}
+.hk-l{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--t4);margin-bottom:6px}
+.hk-v{font-size:19px;font-weight:600}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1100px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid rgba(38,56,86,.4);font-size:12px}
+.row:last-child{border-bottom:none}
+.row span:first-child{color:var(--t4);flex-shrink:0}
+.row span:last-child{text-align:right;color:var(--t2)}
+.it{display:flex;align-items:center;gap:10px;padding:9px 17px;border-bottom:1px solid rgba(38,56,86,.4);font-size:12px;cursor:pointer}
+.it:hover{background:var(--cardh)}
+.it:last-child{border-bottom:none}
+.it-d{width:9px;height:9px;border-radius:50%;flex-shrink:0;border:2px solid}
+.it-n{flex:1;line-height:1.35}
+.it-m{font-size:10px;color:var(--t4)}
+.it-v{font-size:11px;color:var(--t3);flex-shrink:0;text-align:right}
+.aviso{margin:12px 17px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.55;border:1px solid}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.aviso.g{background:rgba(18,185,129,.07);border-color:rgba(18,185,129,.26);color:#8FE3C4}
+.src{padding:11px 17px;border-top:1px solid var(--card-line);font-size:10.5px}
+.src a{color:var(--blue);text-decoration:none;word-break:break-all}
+.vazio{padding:22px 17px;color:var(--t4);font-size:12px;text-align:center;line-height:1.6}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Um n&iacute;vel abaixo</div>
+    <h1>Ficha de Detalhe</h1>
+    <p class="sub">Tudo o que o sistema sabe sobre uma coisa, num s&oacute; s&iacute;tio. Cruza os onze ficheiros de dados: a unidade com o corredor, o corredor com os cortes de estrada, a prov&iacute;ncia com o pre&ccedil;o do combust&iacute;vel e com o perfil produtivo, o produto com a identifica&ccedil;&atilde;o e com os riscos que o afectam.</p>
+
+    <div class="card frame">
+      <div class="abas" id="abas"></div>
+      <div class="lista-sel" id="selector"></div>
+    </div>
+
+    <div id="ficha"></div>
+  </main>
+</div>
+
+<script>
+if(window.SinagepeNav) SinagepeNav.montar('ficha-detalhe');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+
+var ST={modo:'unidade',sel:null};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return n.toFixed(2).replace('.',',')}
+function p1(n){return n.toFixed(1).replace('.',',')}
+function sp(a,b){function n(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}return n(a)===n(b)}
+
+var COR_NAT={estatal:'#7A5F17','ppp-gestao-privada':'#C98A3C','concessao-privada':'#22B8F0',
+ 'participacao-estatal':'#2DD4BF',privada:'#F0A926',internacional:'#A78BFA'};
+var ROT_NAT={estatal:'Estatal','ppp-gestao-privada':'PPP \u2014 Estado/gest\u00e3o privada','concessao-privada':'Concess\u00e3o',
+ 'participacao-estatal':'Participa\u00e7\u00e3o estatal',privada:'Privada',internacional:'Internacional'};
+var COR_EST={operacional:'#12B981','em-modernizacao':'#22B8F0','por-reabilitar':'#EF4444','por-construir':'#EF4444',desconhecido:'#5E7189'};
+var COR_ID={nenhuma:'#EF4444',estrangeira:'#F0A926',nacional:'#12B981'};
+var ROT_ID={nenhuma:'Sem identifica\u00e7\u00e3o em uso',estrangeira:'Identifica\u00e7\u00e3o estrangeira',nacional:'Identifica\u00e7\u00e3o nacional'};
+
+function cap(a){
+  if(!a.capacidade||a.capacidade.valor==null)return 'n&atilde;o publicada';
+  return num(a.capacidade.valor)+' '+a.capacidade.unidade;
+}
+function precoProv(prov){
+  var r=null;ST.cp.regioes.forEach(function(x){if(sp(x.provincia,prov)&&x.gasoleo!=null)r=x});
+  return r;
+}
+function exposicao(p){
+  var carga={},mapa=ST.pa.dependenciaCorredor.mapa;
+  Object.keys(mapa).forEach(function(k){carga[mapa[k]]=(carga[mapa[k]]||0)+1});
+  var ints={};ST.rv.interrupcoes.forEach(function(i){ints[i.provincia]=(ints[i.provincia]||0)+1});
+  var res=Math.max(0.35,1-(p.irrigacaoPercent/100)*0.45-(p.sementeCertificadaPercent/100)*0.30-(p.extensaoPercent/100)*0.20);
+  var dist=Math.min(1,p.distanciaMediaArmazemKm/150);
+  var conc=(carga[mapa[p.nome]]-1)/4;
+  return 0.30*res+0.25*dist+0.20*conc+0.15*(p.pequenas/100)+0.10*(Math.min(2,ints[p.nome]||0)/2);
+}
+
+/* ---------------- selector ---------------- */
+function desenharAbas(){
+  var m=[['unidade','Unidade de armazenagem',ST.arm.armazens.length],
+         ['produto','Produto essencial',ST.gs1.produtos.length],
+         ['provincia','Prov&iacute;ncia',ST.pa.provincias.length]];
+  document.getElementById('abas').innerHTML=m.map(function(x){
+    return '<button class="ab'+(ST.modo===x[0]?' on':'')+'" data-m="'+x[0]+'">'+x[1]+' <span style="opacity:.6">'+x[2]+'</span></button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.ab'),function(b){
+    b.addEventListener('click',function(){ST.modo=b.dataset.m;ST.sel=null;desenharAbas();desenharSelector();desenharFicha()});
+  });
+}
+function desenharSelector(){
+  var h='';
+  if(ST.modo==='unidade'){
+    ST.arm.armazens.forEach(function(a){
+      var c=COR_NAT[a.natureza]||'#5E7189';
+      h+='<div class="ls'+(ST.sel===a.id?' on':'')+'" data-i="'+esc(a.id)+'">'
+       +'<span class="ls-d" style="border-color:'+c+';background:'+(a.estado==='operacional'?c:'transparent')+'"></span>'
+       +'<span class="ls-n">'+esc(a.nome)+'<div class="ls-m">'+esc(a.provincia||'')+' \u00b7 '+(ROT_NAT[a.natureza]||'')+'</div></span></div>';
+    });
+  } else if(ST.modo==='produto'){
+    ST.gs1.produtos.forEach(function(p){
+      var c=COR_ID[p.identificacao];
+      h+='<div class="ls'+(ST.sel===p.slug?' on':'')+'" data-i="'+esc(p.slug)+'">'
+       +'<span class="ls-d" style="border-color:'+c+';background:'+c+'"></span>'
+       +'<span class="ls-n">'+esc(p.nome)+'<div class="ls-m">'+esc(p.formaCirculacao)+'</div></span></div>';
+    });
+  } else {
+    ST.pa.provincias.forEach(function(p){
+      var v=exposicao(p), c=v>0.67?'#EF4444':v>0.54?'#F0A926':'#12B981';
+      h+='<div class="ls'+(ST.sel===p.nome?' on':'')+'" data-i="'+esc(p.nome)+'">'
+       +'<span class="ls-d" style="border-color:'+c+';background:'+c+'"></span>'
+       +'<span class="ls-n">'+esc(p.nome)+'<div class="ls-m">exposi&ccedil;&atilde;o '+v.toFixed(2).replace('.',',')
+       +' \u00b7 '+p.distanciaMediaArmazemKm+' km ao armaz&eacute;m</div></span></div>';
+    });
+  }
+  document.getElementById('selector').innerHTML=h;
+  Array.prototype.forEach.call(document.querySelectorAll('.ls'),function(el){
+    el.addEventListener('click',function(){ST.sel=el.dataset.i;desenharSelector();desenharFicha();window.scrollTo({top:260,behavior:'smooth'})});
+  });
+}
+
+function bloco(titulo,tag,corpo,fonte){
+  return '<div class="card frame"><div class="ch"><h2>'+titulo+'</h2>'
+    +(tag?'<span class="tag'+(tag[1]?' '+tag[1]:'')+'">'+tag[0]+'</span>':'')+'</div>'
+    +corpo+(fonte?'<div class="src"><span style="color:var(--t4)">Fonte: </span><a href="'+esc(fonte)+'" target="_blank" rel="noopener">'+esc(fonte)+'</a></div>':'')
+    +'</div>';
+}
+function linha(l,v){return v==null||v===''?'':'<div class="row"><span>'+l+'</span><span>'+v+'</span></div>'}
+
+/* ---------------- ficha de UNIDADE ---------------- */
+function fichaUnidade(id){
+  var a=null;ST.arm.armazens.forEach(function(x){if(x.id===id)a=x});
+  if(!a)return '';
+  var cn=COR_NAT[a.natureza]||'#5E7189', ce=COR_EST[a.estado]||'#5E7189';
+  var h='';
+
+  /* cabeçalho */
+  h+='<div class="card frame"><div class="hero">'
+   +'<div class="hero-b"><div class="hero-t">'+esc(a.nome)+'</div>'
+   +'<div class="hero-s">'+esc(a.provincia||'')+(a.distrito?', '+esc(a.distrito):'')+' \u00b7 '+esc(a.tipo||'')+'</div>'
+   +'<span class="pill" style="color:'+cn+';border-color:'+cn+'55;background:'+cn+'14">'+(ROT_NAT[a.natureza]||a.natureza)+'</span>'
+   +'<span class="pill" style="color:'+ce+';border-color:'+ce+'55;background:'+ce+'14">'+esc(a.estado)+'</span>'
+   +(a.verificado?'':'<span class="pill" style="color:#F0A926;border-color:#F0A92655;background:#F0A92614">Por verificar</span>')
+   +'</div></div>'
+   +'<div class="hero-k">'
+   +'<div class="hk"><div class="hk-l">Capacidade</div><div class="hk-v mono">'+cap(a)+'</div></div>'
+   +'<div class="hk"><div class="hk-l">Telemetria</div><div class="hk-v mono" style="color:var(--red)">'+(a.sensor==='sem-sensor'?'nenhuma':a.sensor)+'</div></div>'
+   +'<div class="hk"><div class="hk-l">Corredor</div><div class="hk-v mono">'+esc(a.corredor||'\u2014')+'</div></div>'
+   +'<div class="hk"><div class="hk-l">Estado em</div><div class="hk-v mono">'+esc(a.estadoDataFonte||'\u2014')+'</div></div>'
+   +'</div></div>';
+
+  /* identidade + operação */
+  var det=linha('Propriet&aacute;rio',esc(a.proprietario))
+   +linha('Operador',esc(a.operador))
+   +(a.concessao?linha('Concess&atilde;o',esc([a.concessao.regime,a.concessao.prazoAnos?a.concessao.prazoAnos+' anos':null,a.concessao.assinatura?'assinada '+a.concessao.assinatura:null,a.concessao.termo?'at&eacute; '+a.concessao.termo:null].filter(Boolean).join(' \u00b7 '))):'')
+   +(a.baseLegal?linha('Base legal',esc(a.baseLegal)):'')
+   +(a.infraestrutura?linha('Infraestrutura',esc(a.infraestrutura)):'')
+   +(a.equipamento?linha('Equipamento',esc(a.equipamento)):'')
+   +(a.hinterland?linha('Hinterland',esc(a.hinterland.join(', '))):'')
+   +(a.investimentoEmCurso?linha('Investimento em curso',esc(a.investimentoEmCurso)):'')
+   +(a.coordenada&&a.coordenada.lat!=null?linha('Coordenada',a.coordenada.lat.toFixed(4)+', '+a.coordenada.lon.toFixed(4)+' <span style="color:var(--t4)">('+(a.coordenada.precisao==='instalacao'?'instala&ccedil;&atilde;o':'centro da localidade')+')</span>'):'');
+  h+='<div class="g2"><div>'
+   +bloco('Identidade e opera&ccedil;&atilde;o',null,'<div class="bd">'+det+'</div>'
+     +(a.nota?'<div class="aviso w">'+esc(a.nota)+'</div>':''),a.fonte);
+
+  /* divergência */
+  if(a.divergencia){
+    var dv=null;(ST.arm.divergencias||[]).forEach(function(x){if(x.id===a.divergencia)dv=x});
+    if(dv) h+=bloco('Diverg&ecirc;ncia registada',['A resolver','crit'],
+      '<div class="bd"><div style="font-weight:600;color:var(--red);margin-bottom:6px">'+esc(dv.titulo)+'</div>'
+      +'<div style="font-size:12px;color:var(--t3);line-height:1.6">'+esc(dv.descricao)+'</div>'
+      +'<div style="margin-top:9px;font-size:11.5px;color:var(--brzl)"><b>Ac&ccedil;&atilde;o:</b> '+esc(dv.accao)
+      +' <span style="color:var(--t4)">\u2014 cadeia: '+esc((dv.cadeiaAprovacao||[]).join(' \u2192 '))+'</span></div></div>');
+  }
+
+  /* histórico: era um dos 12 registos retirados? */
+  var rec=(ST.rl.reconciliacao&&ST.rl.reconciliacao.entradas||[]).filter(function(r){return r.correspondenteReal===a.id});
+  if(rec.length){
+    h+=bloco('Hist&oacute;rico no sistema',['Reconcilia&ccedil;&atilde;o'],
+      '<div class="bd">'+rec.map(function(r){
+        return '<div style="margin-bottom:9px"><div style="font-size:12px"><span class="mono" style="color:var(--t4);text-decoration:line-through">'
+        +esc(r.codigoRetirado)+' \u00b7 '+esc(r.nomeRetirado)+'</span></div>'
+        +'<div style="font-size:11.5px;color:var(--t3);line-height:1.55;margin-top:4px">'+esc(r.nota)+'</div></div>';
+      }).join('')+'</div>');
+  }
+  h+='</div><div>';
+
+  /* produtos que guarda + identificação */
+  var prods=ST.gs1.produtos.filter(function(p){
+    return (a.produtos||[]).some(function(f){return p.familiasArmazem.indexOf(f)>=0});
+  });
+  if(prods.length){
+    h+=bloco('O que guarda, e se &eacute; identific&aacute;vel',[prods.length+' produtos'],
+      prods.map(function(p){
+        var c=COR_ID[p.identificacao];
+        var cego=(a.sensor==='sem-sensor'&&p.identificacao==='nenhuma');
+        return '<div class="it" data-ir="prod:'+esc(p.slug)+'">'
+         +'<span class="it-d" style="border-color:'+c+';background:'+c+'"></span>'
+         +'<span class="it-n">'+esc(p.nome)+'<div class="it-m">'+ROT_ID[p.identificacao]+'</div></span>'
+         +'<span class="it-v" style="color:'+(cego?'var(--red)':'var(--amber)')+'">'+(cego?'cego total':'cego de um lado')+'</span></div>';
+      }).join('')
+      +'<div class="aviso r">Esta unidade n&atilde;o reporta exist&ecirc;ncias. Para os produtos sem identifica&ccedil;&atilde;o em uso, '
+      +'o cruzamento d&aacute; <b>cego total</b>: n&atilde;o se sabe o que l&aacute; est&aacute;, quanto est&aacute;, nem se saiu.</div>');
+  }
+
+  /* vizinhança: mesmo corredor */
+  if(a.corredor){
+    var viz=ST.arm.armazens.filter(function(x){return x.corredor===a.corredor&&x.id!==a.id});
+    if(viz.length) h+=bloco('Outras unidades no corredor '+esc(a.corredor),[viz.length+' unidades'],
+      viz.map(function(x){
+        var c=COR_NAT[x.natureza]||'#5E7189';
+        return '<div class="it" data-ir="un:'+esc(x.id)+'">'
+         +'<span class="it-d" style="border-color:'+c+';background:'+(x.estado==='operacional'?c:'transparent')+'"></span>'
+         +'<span class="it-n">'+esc(x.nome)+'<div class="it-m">'+esc(x.provincia||'')+'</div></span>'
+         +'<span class="it-v">'+cap(x)+'</span></div>';
+      }).join(''));
+  }
+  h+='</div></div>';
+
+  /* contexto territorial */
+  var prov=null;ST.pa.provincias.forEach(function(p){if(sp(p.nome,a.provincia))prov=p});
+  var ints=ST.rv.interrupcoes.filter(function(i){return sp(i.provincia,a.provincia)});
+  var pr=precoProv(a.provincia), ref=ST.cp.regioes[0];
+  var ctx='';
+  if(prov){
+    var v=exposicao(prov), cv=v>0.67?'var(--red)':v>0.54?'var(--amber)':'var(--ok)';
+    ctx+='<div class="bd">'+linha('Explora&ccedil;&otilde;es na prov&iacute;ncia','<span class="mono">'+num(prov.exploracoes)+'</span> <span style="color:var(--amber)">?</span>')
+     +linha('Dist&acirc;ncia m&eacute;dia ao armaz&eacute;m','<span class="mono">'+prov.distanciaMediaArmazemKm+' km</span>')
+     +linha('&Iacute;ndice de exposi&ccedil;&atilde;o','<span class="mono" style="color:'+cv+'">'+v.toFixed(2).replace('.',',')+'</span>')
+     +linha('Corredor de escoamento',esc(ST.pa.dependenciaCorredor.mapa[prov.nome]||''))+'</div>';
+  }
+  if(pr){
+    var d=pr.gasoleo-ref.gasoleo;
+    ctx+='<div class="aviso '+(d>0?'w':'i')+'"><b>Gas&oacute;leo na regi&atilde;o: '+p2(pr.gasoleo)+' MT/L.</b> '
+     +(d>0?'Mais '+p2(d)+' MT do que nas cidades com terminal \u2014 '+p1(d/ref.gasoleo*100)+'% acima. Isso encarece cada carga que sai daqui.'
+          :'Ao pre&ccedil;o de refer&ecirc;ncia.')+'</div>';
+  }
+  if(ints.length){
+    ctx+=ints.map(function(i){
+      return '<div class="aviso r"><b>'+esc(i.estrada)+' \u00b7 '+esc(i.troco)+'</b> \u2014 '+esc(i.causa)
+       +'<br><span style="color:var(--t3)">Alternativa: '+esc(i.alternativa||'nenhuma dispon&iacute;vel')+' \u00b7 registado em '+esc(i.data)+'</span></div>';
+    }).join('');
+  } else {
+    ctx+='<div class="aviso i">Sem interrup&ccedil;&otilde;es registadas nesta prov&iacute;ncia no &uacute;ltimo comunicado da ANE obtido.</div>';
+  }
+  h+=bloco('Contexto territorial \u2014 o que rodeia esta unidade',['Cruzamento'],ctx);
+
+  /* riscos que a tocam */
+  var fam=a.produtos||[];
+  var riscos=ST.ant.riscos.filter(function(r){
+    var af=(r.afecta||[]).join(' ').toLowerCase();
+    if(af.indexOf('todos')>=0)return true;
+    return prods.some(function(p){return af.indexOf(p.nome.toLowerCase())>=0});
+  }).slice(0,4);
+  if(riscos.length) h+=bloco('Riscos que atingem esta unidade',[riscos.length+' de '+ST.ant.riscos.length],
+    riscos.map(function(r){
+      var c=r.gravidade>=5?'var(--red)':'var(--amber)';
+      var ag=r.mitigacoes.filter(function(m){return m.horizonte==='agora'});
+      return '<div class="bd" style="border-bottom:1px solid rgba(38,56,86,.4)">'
+       +'<div style="font-weight:600;color:'+c+';font-size:13px">'+esc(r.titulo)+'</div>'
+       +'<div style="font-size:11.5px;color:var(--t3);margin-top:4px;line-height:1.55">'+esc(r.resumo)+'</div>'
+       +(ag.length?'<div style="margin-top:8px;font-size:11.5px;color:#8FE3C4"><b>Agir j&aacute;:</b> '+esc(ag[0].accao)
+         +' <span style="color:var(--t4)">\u2014 '+esc(ag[0].decide)+'</span></div>':'')
+       +'</div>';
+    }).join(''));
+  return h;
+}
+
+/* ---------------- ficha de PRODUTO ---------------- */
+function fichaProduto(slug){
+  var p=null;ST.gs1.produtos.forEach(function(x){if(x.slug===slug)p=x});
+  if(!p)return '';
+  var c=COR_ID[p.identificacao];
+  var uns=ST.arm.armazens.filter(function(a){return (a.produtos||[]).some(function(f){return p.familiasArmazem.indexOf(f)>=0})});
+  var cegos=uns.filter(function(a){return a.sensor==='sem-sensor'&&p.identificacao==='nenhuma'}).length;
+  var img=window.ProdutosVisual?ProdutosVisual.render(p.nome,120):'';
+  var h='<div class="card frame"><div class="hero">'
+   +'<div class="hero-img">'+img+'</div>'
+   +'<div class="hero-b"><div class="hero-t">'+esc(p.nome)+'</div>'
+   +'<div class="hero-s">'+esc(p.formaCirculacao)+(p.estrategico?' \u00b7 produto estrat&eacute;gico':'')+'</div>'
+   +'<span class="pill" style="color:'+c+';border-color:'+c+'55;background:'+c+'14">'+ROT_ID[p.identificacao]+'</span>'
+   +(p.prioridade==='maxima'?'<span class="pill" style="color:#EF4444;border-color:#EF444455;background:#EF444414">Prioridade m&aacute;xima</span>':'')
+   +'</div></div>'
+   +'<div class="hero-k">'
+   +'<div class="hk"><div class="hk-l">Unidades que o guardam</div><div class="hk-v mono">'+uns.length+'</div></div>'
+   +'<div class="hk"><div class="hk-l">Em cego total</div><div class="hk-v mono" style="color:'+(cegos?'var(--red)':'var(--ok)')+'">'+cegos+'</div></div>'
+   +'<div class="hk"><div class="hk-l">Chave aplic&aacute;vel</div><div class="hk-v" style="font-size:12.5px">'+esc(p.chaveAplicavel)+'</div></div>'
+   +'</div></div>';
+
+  h+='<div class="g2"><div>'
+   +bloco('Identifica&ccedil;&atilde;o',null,'<div class="bd">'
+     +linha('Estado',ROT_ID[p.identificacao])
+     +linha('Chave aplic&aacute;vel',esc(p.chaveAplicavel))
+     +linha('Fam&iacute;lias de armazenagem',esc(p.familiasArmazem.join(', ')))
+     +'</div>'+(p.nota?'<div class="aviso w">'+esc(p.nota)+'</div>':'')
+     +'<div class="aviso i"><b>Porqu&ecirc; nenhuma identifica&ccedil;&atilde;o nacional:</b> n&atilde;o existe organiza&ccedil;&atilde;o-membro GS1 em Mo&ccedil;ambique '
+     +'e o prefixo 602 continua por atribuir. Nenhum produto fabricado no pa&iacute;s pode receber hoje um GTIN emitido c&aacute;.</div>');
+
+  var riscos=ST.ant.riscos.filter(function(r){
+    var af=(r.afecta||[]).join(' ').toLowerCase();
+    return af.indexOf('todos')>=0||af.indexOf(p.nome.toLowerCase())>=0;
+  });
+  if(riscos.length) h+=bloco('Riscos que o afectam',[riscos.length+' riscos'],
+    riscos.map(function(r){
+      var cc=r.gravidade>=5?'var(--red)':'var(--amber)';
+      return '<div class="it"><span class="it-d" style="border-color:'+cc+';background:'+cc+'"></span>'
+       +'<span class="it-n">'+esc(r.titulo)+'<div class="it-m">'+esc(r.janela)+'</div></span>'
+       +'<span class="it-v">'+r.gravidade+'/5</span></div>';
+    }).join(''));
+  h+='</div><div>';
+
+  h+=bloco('Onde est&aacute; guardado',[uns.length+' unidades'],
+    uns.length?uns.map(function(a){
+      var cn=COR_NAT[a.natureza]||'#5E7189';
+      return '<div class="it" data-ir="un:'+esc(a.id)+'">'
+       +'<span class="it-d" style="border-color:'+cn+';background:'+(a.estado==='operacional'?cn:'transparent')+'"></span>'
+       +'<span class="it-n">'+esc(a.nome)+'<div class="it-m">'+esc(a.provincia||'')+' \u00b7 '+esc(a.estado)+'</div></span>'
+       +'<span class="it-v">'+cap(a)+'</span></div>';
+    }).join(''):'<div class="vazio">Nenhuma unidade do cadastro declara guardar este produto.</div>');
+
+  /* combustíveis: cascata de preço */
+  if(p.slug==='gasoleo'||p.slug==='gasolina'){
+    var campo=p.slug;
+    var regs=ST.cp.regioes.filter(function(r){return r[campo]!=null});
+    if(regs.length) h+=bloco('Pre&ccedil;o regulado por regi&atilde;o',['ARENE'],
+      '<div class="bd">'+regs.map(function(r,i){
+        var d=r[campo]-regs[0][campo];
+        return linha(esc(i===0?'Cidades com terminal':r.local),
+          '<span class="mono" style="color:'+(d>0?'var(--amber)':'var(--t2)')+'">'+p2(r[campo])+' MT/L'
+          +(d>0?' <span style="font-size:10px">+'+p2(d)+'</span>':'')+'</span>');
+      }).join('')+'</div>'
+      +'<div class="aviso i">Metodologia no Decreto n.&ordm; 89/2019. A ARENE calcula e publica mensalmente. '
+      +'A diferen&ccedil;a entre regi&otilde;es &eacute; o custo do transporte interno.</div>');
+  }
+  h+='</div></div>';
+  return h;
+}
+
+/* ---------------- ficha de PROVÍNCIA ---------------- */
+function fichaProvincia(nome){
+  var p=null;ST.pa.provincias.forEach(function(x){if(x.nome===nome)p=x});
+  if(!p)return '';
+  var v=exposicao(p), cv=v>0.67?'var(--red)':v>0.54?'var(--amber)':'var(--ok)';
+  var uns=ST.arm.armazens.filter(function(a){return sp(a.provincia,p.nome)});
+  var com=ST.com.unidades.filter(function(u){return sp(u.provincia,p.nome)});
+  var ints=ST.rv.interrupcoes.filter(function(i){return sp(i.provincia,p.nome)});
+  var pr=precoProv(p.nome), ref=ST.cp.regioes[0];
+  var corr=ST.pa.dependenciaCorredor.mapa[p.nome];
+  var irmas=Object.keys(ST.pa.dependenciaCorredor.mapa).filter(function(k){
+    return ST.pa.dependenciaCorredor.mapa[k]===corr&&k!==p.nome;});
+
+  var h='<div class="card frame"><div class="hero">'
+   +'<div class="hero-b"><div class="hero-t">'+esc(p.nome)+'</div>'
+   +'<div class="hero-s">Corredor de escoamento: '+esc(corr||'\u2014')
+   +(irmas.length?' \u00b7 partilhado com '+esc(irmas.join(', ')):'')+'</div>'
+   +'<span class="pill" style="color:'+cv+';border-color:'+cv+'55;background:'+cv+'14">Exposi&ccedil;&atilde;o '+v.toFixed(2).replace('.',',')+'</span>'
+   +'<span class="pill" style="color:var(--amber);border-color:#F0A92655;background:#F0A92614">Agregados por confirmar</span>'
+   +'</div></div>'
+   +'<div class="hero-k">'
+   +'<div class="hk"><div class="hk-l">Explora&ccedil;&otilde;es</div><div class="hk-v mono">'+num(p.exploracoes)+'</div></div>'
+   +'<div class="hk"><div class="hk-l">Ao armaz&eacute;m</div><div class="hk-v mono" style="color:'+(p.distanciaMediaArmazemKm>=100?'var(--red)':'var(--ink)')+'">'+p.distanciaMediaArmazemKm+' km</div></div>'
+   +'<div class="hk"><div class="hk-l">Unidades</div><div class="hk-v mono">'+uns.length+'</div></div>'
+   +'<div class="hk"><div class="hk-l">Cortes registados</div><div class="hk-v mono" style="color:'+(ints.length?'var(--red)':'var(--ok)')+'">'+ints.length+'</div></div>'
+   +'</div></div>';
+
+  h+='<div class="g2"><div>'
+   +bloco('Perfil produtivo',['IAI \u00b7 por confirmar'],'<div class="bd">'
+     +linha('&Aacute;rea cultivada','<span class="mono">'+num(p.areaCultivadaHa)+' ha</span>')
+     +linha('Pequenas / m&eacute;dias / grandes',p.pequenas+'% / '+p.medias+'% / '+p.grandes+'%')
+     +linha('Irriga&ccedil;&atilde;o',p1(p.irrigacaoPercent)+'%')
+     +linha('Semente certificada',p1(p.sementeCertificadaPercent)+'%')
+     +linha('Extens&atilde;o agr&aacute;ria',p1(p.extensaoPercent)+'%')
+     +linha('Fertilizante qu&iacute;mico',p1(p.fertilizantePercent)+'%')
+     +linha('Associativismo',p1(p.associadoPercent)+'%')
+     +linha('Acesso a cr&eacute;dito',p1(p.creditoPercent)+'%')
+     +(p.culturas?linha('Culturas',esc(p.culturas.join(', '))):'')
+     +'</div>'
+     +'<div class="aviso w">Estes agregados n&atilde;o est&atilde;o confirmados pelo CUPA. Servem para mostrar ordem de grandeza e posi&ccedil;&atilde;o relativa entre prov&iacute;ncias.</div>');
+
+  if(pr){
+    var d=pr.gasoleo-ref.gasoleo;
+    h+=bloco('Custo do combust&iacute;vel',['ARENE'],'<div class="bd">'
+      +linha('Gas&oacute;leo aqui','<span class="mono" style="font-size:15px">'+p2(pr.gasoleo)+' MT/L</span>')
+      +linha('Cidades com terminal','<span class="mono">'+p2(ref.gasoleo)+' MT/L</span>')
+      +linha('Diferen&ccedil;a','<span class="mono" style="color:'+(d>0?'var(--amber)':'var(--ok)')+'">'+(d>0?'+'+p2(d)+' ('+p1(d/ref.gasoleo*100)+'%)':'\u2014')+'</span>')
+      +'</div>');
+  } else {
+    /* Sem preço publicado para esta província, declara-se em vez de omitir. */
+    var temTerminal=/Maputo|Matola|Beira|Nacala|Pemba/i.test(p.nome);
+    h+=bloco('Custo do combust&iacute;vel',['ARENE'],'<div class="bd">'
+      +linha('Gas&oacute;leo aqui','<span style="color:var(--t4)">n&atilde;o publicado para esta prov&iacute;ncia</span>')
+      +linha('Cidades com terminal','<span class="mono">'+p2(ref.gasoleo)+' MT/L</span>')
+      +'</div>'
+      +'<div class="aviso i">A ARENE publica pre&ccedil;o para as cidades com terminal de distribui&ccedil;&atilde;o e para localidades '
+      +'onde o acr&eacute;scimo de transporte &eacute; reconhecido. Esta prov&iacute;ncia n&atilde;o consta da tabela consultada. '
+      +(temTerminal?'Tem terminal de distribui&ccedil;&atilde;o, pelo que pratica o pre&ccedil;o de refer&ecirc;ncia.'
+                   :'O pre&ccedil;o local ser&aacute; igual ou superior ao de refer&ecirc;ncia \u2014 nunca inferior.')+'</div>');
+  }
+  h+='</div><div>';
+
+  h+=bloco('Unidades de armazenagem',[uns.length+' no cadastro'],
+    uns.length?uns.map(function(a){
+      var cn=COR_NAT[a.natureza]||'#5E7189';
+      return '<div class="it" data-ir="un:'+esc(a.id)+'">'
+       +'<span class="it-d" style="border-color:'+cn+';background:'+(a.estado==='operacional'?cn:'transparent')+'"></span>'
+       +'<span class="it-n">'+esc(a.nome)+'<div class="it-m">'+(ROT_NAT[a.natureza]||'')+' \u00b7 '+esc(a.estado)+'</div></span>'
+       +'<span class="it-v">'+cap(a)+'</span></div>';
+    }).join(''):'<div class="vazio">Nenhuma unidade documentada em fonte p&uacute;blica nesta prov&iacute;ncia.<br>N&atilde;o quer dizer que n&atilde;o exista.</div>');
+
+  if(com.length) h+=bloco('Rede comercial',[com.length+' plataformas'],
+    com.map(function(u){
+      return '<div class="it"><span class="it-d" style="border-color:#F472B6;background:#F472B6"></span>'
+       +'<span class="it-n">'+esc(u.nome)+'<div class="it-m">'+esc(u.papel)+'</div></span>'
+       +'<span class="it-v" style="color:var(--t4)">sem stock publicado</span></div>';
+    }).join(''));
+
+  if(ints.length) h+=bloco('Cortes de estrada',['Jan 2026','crit'],
+    ints.map(function(i){
+      var c=i.gravidade==='intransitavel'?'var(--red)':'var(--amber)';
+      return '<div class="bd" style="border-bottom:1px solid rgba(38,56,86,.4)">'
+       +'<div style="font-weight:600;color:'+c+'">'+esc(i.estrada)+' \u00b7 '+esc(i.troco)+'</div>'
+       +'<div style="font-size:11.5px;color:var(--t3);margin-top:4px">'+esc(i.causa)+'</div>'
+       +'<div style="font-size:11.5px;margin-top:5px;color:'+(i.alternativa?'var(--t2)':'#FFB4B4')+'"><b>Alternativa:</b> '+esc(i.alternativa||'nenhuma')+'</div>'
+       +'</div>';
+    }).join('')
+    +'<div class="aviso w">Ocorr&ecirc;ncias do comunicado da ANE de Janeiro de 2026. N&Atilde;O s&atilde;o estado actual.</div>');
+  h+='</div></div>';
+  return h;
+}
+
+function desenharFicha(){
+  var el=document.getElementById('ficha');
+  if(!ST.sel){
+    el.innerHTML='<div class="card frame"><div class="vazio">Escolha acima uma unidade, um produto ou uma prov&iacute;ncia.<br><br>'
+     +'A ficha cruza os onze ficheiros de dados do sistema e mostra tudo o que se sabe sobre essa coisa, incluindo o que a rodeia.</div></div>';
+    return;
+  }
+  var h=ST.modo==='unidade'?fichaUnidade(ST.sel):ST.modo==='produto'?fichaProduto(ST.sel):fichaProvincia(ST.sel);
+  el.innerHTML=h||'<div class="card frame"><div class="vazio">Sem ficha para este item.</div></div>';
+  /* saltar de ficha para ficha sem sair do ecrã */
+  Array.prototype.forEach.call(el.querySelectorAll('[data-ir]'),function(x){
+    x.addEventListener('click',function(){
+      var v=x.dataset.ir.split(':');
+      ST.modo=v[0]==='un'?'unidade':'produto';ST.sel=v[1];
+      desenharAbas();desenharSelector();desenharFicha();window.scrollTo({top:260,behavior:'smooth'});
+    });
+  });
+}
+
+Promise.all(['armazens-nacionais','identificacao-gs1','produtores-agrarios','rede-viaria',
+             'cascata-precos','antecipacao','rede-comercial','rede-logistica'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.arm=res[0];ST.gs1=res[1];ST.pa=res[2];ST.rv=res[3];ST.cp=res[4];ST.ant=res[5];ST.com=res[6];ST.rl=res[7];
+  desenharAbas();desenharSelector();desenharFicha();
+}).catch(function(e){
+  document.getElementById('ficha').innerHTML='<div class="card frame"><div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div></div>';
+});
+</script>
+</body>
+</html>
