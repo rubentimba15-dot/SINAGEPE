@@ -124,6 +124,7 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:-.01em}
                 <text class="lbl" x="132" y="680" text-anchor="middle">Maputo</text>
               </g>
               <g id="garm"></g>
+              <g id="gnav"></g>
               <g id="gflux"></g>
               <g id="gcom"></g>
               <g id="gint"></g>
@@ -222,6 +223,50 @@ function desenharArmazens(){
   g.innerHTML=h;
 }
 
+/* ---- NAVIOS NOS PORTOS ----
+   Ilustração, não informação. Marcam que aquele ponto é porto marítimo —
+   coisa que é verdade e está no cadastro. NÃO representam navio nenhum
+   em concreto: não temos dados de escalas, chegadas nem descargas.
+   Por isso não têm nome, nem carga, nem contagem, nem são clicáveis. */
+var PORTOS_NAV=[
+  /* Maputo e Matola ficam a 4 px um do outro na projecção; só se desenha
+     um navio para o complexo, senão sobrepõem-se e parecem um borrão. */
+  {n:'Complexo portuário de Maputo e Matola', lat:-25.972, lon:32.571, g:1.0},
+  {n:'Porto da Beira',    lat:-19.829, lon:34.834, g:1.0},
+  {n:'Porto de Nacala',   lat:-14.542, lon:40.673, g:1.0},
+  {n:'Porto de Pemba',    lat:-12.974, lon:40.518, g:0.75}
+];
+function navio(x,y,e){
+  var c='#8FA1B8', d='#5E7189';
+  return '<g transform="translate('+x.toFixed(1)+','+y.toFixed(1)+') scale('+e.toFixed(2)+')" opacity=".92">'
+    /* casco */
+    +'<path d="M-15 3 L15 3 L11 9 L-11 9 Z" fill="'+d+'"/>'
+    +'<path d="M-15 3 L15 3 L15 1 L-15 1 Z" fill="'+c+'"/>'
+    /* superstrutura */
+    +'<rect x="4" y="-4" width="7" height="5" fill="'+c+'"/>'
+    +'<rect x="5.5" y="-6.5" width="4" height="2.5" fill="'+d+'"/>'
+    /* contentores empilhados */
+    +'<rect x="-13" y="-1.5" width="4" height="2.5" fill="#C98A3C" opacity=".85"/>'
+    +'<rect x="-8.5" y="-1.5" width="4" height="2.5" fill="#22B8F0" opacity=".7"/>'
+    +'<rect x="-4" y="-1.5" width="4" height="2.5" fill="#C98A3C" opacity=".7"/>'
+    +'<rect x="-13" y="-4" width="4" height="2.5" fill="#22B8F0" opacity=".6"/>'
+    +'<rect x="-8.5" y="-4" width="4" height="2.5" fill="#C98A3C" opacity=".6"/>'
+    /* mastro */
+    +'<line x1="1" y1="1" x2="1" y2="-8" stroke="'+d+'" stroke-width="1"/>'
+    /* linha de água */
+    +'<path d="M-19 11 q4 -1.6 8 0 t8 0 t8 0" fill="none" stroke="#22B8F0" stroke-width="1.2" opacity=".45"/>'
+    +'<path d="M-16 14 q4 -1.4 8 0 t8 0" fill="none" stroke="#22B8F0" stroke-width="1" opacity=".3"/>'
+    +'</g>';
+}
+function desenharNavios(){
+  var g=document.getElementById('gnav');
+  if(!ST.camadas.armazens){g.innerHTML='';return}
+  g.innerHTML=PORTOS_NAV.map(function(p){
+    /* deslocado para o mar, a leste do marcador, para não o tapar */
+    return navio(X(p.lon)+17,Y(p.lat)+3,p.g);
+  }).join('');
+}
+
 function desenharFluxos(){
   var g=document.getElementById('gflux');
   if(!ST.camadas.fluxos||!ST.sima){g.innerHTML='';return}
@@ -283,7 +328,7 @@ function desenharInterrupcoes(){
 }
 
 function desenharTudo(){
-  desenharCorredores();desenharEstradas();desenharArmazens();desenharFluxos();desenharComercial();desenharInterrupcoes();ligarEventos();
+  desenharCorredores();desenharEstradas();desenharArmazens();desenharNavios();desenharFluxos();desenharComercial();desenharInterrupcoes();ligarEventos();
   var n=(ST.camadas.armazens?ST.arm.armazens.filter(function(a){return a.coordenada&&a.coordenada.lat!=null}).length:0);
   document.getElementById('cont').textContent=
     (ST.camadas.estradas?ST.rede.estradas.length+' estradas \u00b7 ':'')
@@ -305,6 +350,25 @@ function ligarEventos(){
       if(t==='rd'){var e=achar(ST.rede.estradas,'id',i);txt='<b>'+esc(e.designacao)+'</b><i>'+esc(e.liga)+'</i>'}
       if(t==='in'){var x=achar(ST.rede.interrupcoes,'id',i);txt='<b>'+esc(x.estrada)+' \u00b7 '+esc(x.troco)+'</b><i>'+(x.gravidade==='intransitavel'?'Intranstiável':'Trânsito condicionado')+'</i>'}
       if(t==='ar'){var a=achar(ST.arm.armazens,'id',i);txt='<b>'+esc(a.nome)+'</b><i>'+esc(ROT_NAT[a.natureza]||a.natureza)+'</i>'}
+      if(t==='fl'){
+    var f=ST.sima.fluxos[Number(i)];tag='Fluxo de mercado';
+    var mesmo=ST.sima.fluxos.filter(function(x){return x.destino===f.destino});
+    h='<div class="dname">'+esc(f.produto)+'</div>'
+     +'<div class="dsub">'+esc(f.origem)+' \u2192 '+esc(f.destino)+'</div>'
+     +'<span class="pill" style="color:#A78BFA;border-color:#A78BFA55;background:#A78BFA14">Zona '+esc(f.zona)+'</span>'
+     +(f.local?'<span class="pill" style="color:var(--ok);border-color:#12B98155;background:#12B98114">Produ\u00e7\u00e3o local</span>':'')
+     +linha('Pre\u00e7o de compra',nf(f.preco)+' '+esc(f.unidade.replace('MT ','')))
+     +(f.precoPorKg?linha('Normalizado','<b style="color:var(--brzl)">'+f.precoPorKg.toFixed(2).replace('.',',')+' MT/kg</b>'):'')
+     +linha('Origem',esc(f.origem))+linha('Destino',esc(f.destino))
+     +(f.conversaoAssumida?'<div class="note w"><b>Convers\u00e3o assumida:</b> '+esc(f.conversaoAssumida)+'</div>':'')
+     +(mesmo.length>1?'<div class="note"><b>'+esc(f.destino)+' recebe '+mesmo.length+' fluxos documentados</b> nesta semana: '
+        +esc(mesmo.map(function(x){return x.produto+' de '+x.origem}).join('; '))+'.</div>':'')
+     +'<div class="note"><b>O que isto \u00e9.</b> Uma movimenta\u00e7\u00e3o real de produto registada pelo SIMA na semana de '
+     +esc(ST.sima.meta.semana)+', edi\u00e7\u00e3o '+ST.sima.meta.edicao+' do boletim Quente-Quente. '
+     +'\u00c9 o \u00fanico dado do sistema que mostra produto a mover-se, com origem, destino e pre\u00e7o.</div>'
+     +'<div class="note w"><b>N\u00c3O \u00e9 pre\u00e7o corrente.</b> '+esc(ST.sima.meta.avisoRecencia)+'</div>'
+     +'<div class="src"><a href="'+esc(ST.sima.meta.url)+'" target="_blank" rel="noopener">Boletim Quente-Quente n.\u00ba '+ST.sima.meta.edicao+'</a></div>';
+  }
   if(t==='co'){var u=achar(ST.com.unidades,'id',i);txt='<b>'+esc(u.nome)+'</b><i>'+esc(u.papel)+' \u00b7 sem stock publicado</i>'}
       if(t==='fl'){var f=ST.sima.fluxos[Number(i)];txt='<b>'+esc(f.produto)+'</b><i>'+esc(f.origem)+' \u2192 '+esc(f.destino)+'</i>'}
       tip.innerHTML=txt;tip.style.opacity=1;
@@ -374,8 +438,8 @@ function desenharDossier(){
      +'<div class="dsub">'+esc(f.origem)+' \u2192 '+esc(f.destino)+'</div>'
      +'<span class="pill" style="color:#A78BFA;border-color:#A78BFA55;background:#A78BFA14">Zona '+esc(f.zona)+'</span>'
      +(f.local?'<span class="pill" style="color:var(--ok);border-color:#12B98155;background:#12B98114">Produ\u00e7\u00e3o local</span>':'')
-     +linha('Pre\u00e7o de compra',num(f.preco)+' '+esc(f.unidade.replace('MT ','')))
-     +(f.precoPorKg?linha('Normalizado',f.precoPorKg.toFixed(2).replace('.',',')+' MT/kg'):'')
+     +linha('Pre\u00e7o de compra',nf(f.preco)+' '+esc(f.unidade.replace('MT ','')))
+     +(f.precoPorKg?linha('Normalizado','<b style="color:var(--brzl)">'+f.precoPorKg.toFixed(2).replace('.',',')+' MT/kg</b>'):'')
      +linha('Origem',esc(f.origem))+linha('Destino',esc(f.destino))
      +(f.conversaoAssumida?'<div class="note w"><b>Convers\u00e3o assumida:</b> '+esc(f.conversaoAssumida)+'</div>':'')
      +(mesmo.length>1?'<div class="note"><b>'+esc(f.destino)+' recebe '+mesmo.length+' fluxos documentados</b> nesta semana: '
