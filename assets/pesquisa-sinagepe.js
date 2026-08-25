@@ -26,6 +26,8 @@
   var ECRAS = [
     { h:'index.html', n:'Painel Executivo', d:'Balanço nacional, mapa, alertas e tendência de preços',
       t:'painel dashboard inicio principal kpi balanço executivo torre controlo' },
+    { h:'balanco-visual.html', n:'Balanço Visual', d:'Galeria de produtos com imagem, gráficos de preço, capacidade e exposição',
+      t:'visual balanco galeria imagem foto grafico produto saco arroz cimento combustivel' },
     { h:'mapa-integrado.html', n:'Mapa Integrado', d:'Seis camadas: estradas, interrupções, armazéns, rede comercial, produção, corredores',
       t:'mapa camadas estradas ane interrupcoes corredores territorio geografia' },
     { h:'centro-antecipacao.html', n:'Centro de Antecipação', d:'Dez riscos com gatilho, janela de calendário e mitigações',

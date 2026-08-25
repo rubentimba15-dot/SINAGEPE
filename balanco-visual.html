@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balan&ccedil;o Visual &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/produtos-visual.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:24px;margin:0 0 5px;letter-spacing:-.015em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:900px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:16px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
+.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.nota{padding:13px 16px;border-radius:12px;border:1px solid var(--brzg);background:rgba(201,138,60,.07);margin-bottom:16px;font-size:12px;line-height:1.6;color:var(--brzl)}
+.nota b{color:var(--brz)}
+
+/* ---- galeria de produtos ---- */
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));gap:14px;padding:18px}
+.pd{background:linear-gradient(160deg,#101B2E 0%,#0A1220 100%);border:1px solid var(--card-line);
+ border-radius:13px;overflow:hidden;transition:.2s;cursor:default;position:relative}
+.pd:hover{border-color:var(--brzg);transform:translateY(-2px)}
+.pd-img{height:158px;display:flex;align-items:center;justify-content:center;position:relative;
+ background:radial-gradient(ellipse at 50% 62%,rgba(201,138,60,.10),transparent 68%)}
+.pd-img:after{content:"";position:absolute;inset:0;
+ background:linear-gradient(180deg,transparent 55%,rgba(6,11,22,.72) 100%)}
+.pd-b{padding:13px 15px 15px}
+.pd-n{font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.pd-e{font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-top:3px}
+.pd-d{display:flex;align-items:baseline;gap:6px;margin-top:11px}
+.pd-d b{font-size:27px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.pd-d span{font-size:10px;color:var(--t4)}
+.pd-bar{height:5px;border-radius:3px;background:#0A1421;overflow:hidden;margin-top:11px}
+.pd-bar i{display:block;height:100%;border-radius:3px}
+.pd-s{display:flex;justify-content:space-between;font-size:10.5px;color:var(--t4);margin-top:7px}
+.pd-s b{color:var(--t2);font-family:'IBM Plex Mono',monospace;font-weight:500}
+.pd-tag{position:absolute;top:11px;right:11px;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;
+ padding:3px 8px;border-radius:3px;z-index:3;font-weight:600}
+
+/* ---- gráficos ---- */
+.g2{display:grid;grid-template-columns:1.15fr 1fr;gap:16px;align-items:start}
+@media(max-width:1100px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+.bd{padding:18px}
+.bar{display:flex;align-items:center;gap:12px;padding:9px 0}
+.bar-n{width:118px;flex-shrink:0;font-size:11.5px;color:var(--t2)}
+.bar-t{flex:1;height:26px;background:#0A1421;border-radius:5px;overflow:hidden;position:relative}
+.bar-t i{display:block;height:100%;border-radius:5px;position:relative;
+ background-image:linear-gradient(90deg,rgba(255,255,255,.10),transparent)}
+.bar-v{width:96px;text-align:right;flex-shrink:0;font-size:12.5px;font-weight:600}
+.don{display:flex;align-items:center;gap:22px;flex-wrap:wrap;justify-content:center}
+.don-l{font-size:11.5px;line-height:1.9}
+.don-l i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:8px;vertical-align:-1px}
+.leg{padding:12px 18px;border-top:1px solid var(--card-line);font-size:11px;color:var(--t4);line-height:1.6}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Demonstra&ccedil;&atilde;o visual</div>
+    <h1>Balan&ccedil;o Visual</h1>
+    <p class="sub">O mesmo conte&uacute;do do Balan&ccedil;o Nacional, desenhado para ser lido de longe. Os produtos t&ecirc;m imagem, os n&uacute;meros t&ecirc;m peso, e os gr&aacute;ficos usam dados reais com fonte declarada.</p>
+
+    <div class="nota" id="nota"></div>
+
+    <div class="card frame">
+      <div class="ch"><h2>Produtos essenciais</h2><span class="tag" id="p-tag">&mdash;</span></div>
+      <div class="gal" id="galeria"></div>
+      <div class="leg" id="p-leg"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><h2>O que custa o gas&oacute;leo em cada regi&atilde;o</h2><span class="tag">ARENE &middot; pre&ccedil;o regulado</span></div>
+        <div class="bd" id="gcombustivel"></div>
+        <div class="leg" id="l-comb"></div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><h2>De quem &eacute; a capacidade</h2><span class="tag" id="c-tag">&mdash;</span></div>
+        <div class="bd don" id="gdonut"></div>
+        <div class="leg" id="l-don"></div>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><h2>Exposi&ccedil;&atilde;o por prov&iacute;ncia</h2><span class="tag crit">Valores por confirmar</span></div>
+      <div class="bd" id="gexp"></div>
+      <div class="leg" id="l-exp"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+if(window.SinagepeNav) SinagepeNav.montar('balanco-visual');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return n.toFixed(2).replace('.',',')}
+function p1(n){return n.toFixed(1).replace('.',',')}
+
+var COR_ID={nenhuma:'#EF4444',estrangeira:'#F0A926',nacional:'#12B981'};
+var ROT_ID={nenhuma:'Sem identifica\u00e7\u00e3o',estrangeira:'Identifica\u00e7\u00e3o estrangeira',nacional:'Identifica\u00e7\u00e3o nacional'};
+
+function desenharNota(){
+  document.getElementById('nota').innerHTML=
+    '<b>Sobre as imagens.</b> As ilustra&ccedil;&otilde;es s&atilde;o vectoriais, desenhadas para este sistema. '
+   +'Se colocar fotografias em <span class="mono">assets/img/produtos/</span> com o nome do produto &mdash; '
+   +'<span class="mono">arroz.jpg</span>, <span class="mono">cimento.jpg</span>, <span class="mono">gasoleo.jpg</span> &mdash; '
+   +'a fotografia entra sozinha no lugar da ilustra&ccedil;&atilde;o, sem tocar em c&oacute;digo.'
+   +'<div style="margin-top:8px;color:var(--t3)">Nenhum n&uacute;mero foi acrescentado para o ecr&atilde; ficar bonito. '
+   +'S&atilde;o os mesmos dados dos outros ecr&atilde;s, com a fonte declarada em cada gr&aacute;fico.</div>';
+}
+
+function desenharGaleria(){
+  var P=ST.gs1.produtos;
+  document.getElementById('galeria').innerHTML=P.map(function(p){
+    var c=COR_ID[p.identificacao]||'#5E7189';
+    var img=window.ProdutosVisual?ProdutosVisual.render(p.nome,150):'';
+    var arm=ST.arm.armazens.filter(function(a){
+      return (a.produtos||[]).some(function(f){return p.familiasArmazem.indexOf(f)>=0});
+    });
+    var cegos=arm.filter(function(a){return a.sensor==='sem-sensor'}).length;
+    var pct=arm.length?Math.round(cegos/arm.length*100):0;
+    return '<div class="pd">'
+     +(p.prioridade==='maxima'?'<span class="pd-tag" style="background:rgba(239,68,68,.9);color:#fff">Prioridade</span>':'')
+     +'<div class="pd-img">'+img+'</div>'
+     +'<div class="pd-b"><div class="pd-n">'+esc(p.nome)+'</div>'
+     +'<div class="pd-e" style="color:'+c+'">'+ROT_ID[p.identificacao]+'</div>'
+     +'<div class="pd-d"><b class="mono" style="color:'+(pct===100?'var(--red)':'var(--amber)')+'">'+pct+'%</b>'
+     +'<span>da capacidade que o guarda est&aacute; cega</span></div>'
+     +'<div class="pd-bar"><i style="width:'+pct+'%;background:'+(pct===100?'var(--red)':'var(--amber)')+'"></i></div>'
+     +'<div class="pd-s"><span>Unidades</span><b>'+arm.length+'</b></div>'
+     +'<div class="pd-s"><span>Circula&ccedil;&atilde;o</span><b style="font-family:Inter;font-size:10px;color:var(--t3)">'
+     +esc(p.formaCirculacao.split(',')[0])+'</b></div>'
+     +'</div></div>';
+  }).join('');
+  document.getElementById('p-tag').textContent=P.length+' produtos';
+  document.getElementById('p-leg').innerHTML=
+    'A percentagem &eacute; a fatia das unidades que guardam esse produto sem qualquer leitura autom&aacute;tica. '
+   +'A cor sob o nome diz o estado da identifica&ccedil;&atilde;o: vermelho sem chave em uso, &acirc;mbar com c&oacute;digo emitido fora do pa&iacute;s. '
+   +'Nenhum produto tem identifica&ccedil;&atilde;o nacional, porque n&atilde;o h&aacute; prefixo GS1 atribu&iacute;do a Mo&ccedil;ambique.';
+}
+
+function desenharCombustivel(){
+  var R=ST.cp.regioes.filter(function(r){return r.gasoleo!=null});
+  var ref=R[0].gasoleo, max=Math.max.apply(null,R.map(function(r){return r.gasoleo}));
+  document.getElementById('gcombustivel').innerHTML=R.map(function(r,i){
+    var d=r.gasoleo-ref;
+    var c=d===0?'#12B981':d<6?'#F0A926':'#EF4444';
+    return '<div class="bar"><span class="bar-n">'+esc(i===0?'Cidades c/ terminal':r.local)+'</span>'
+     +'<span class="bar-t"><i style="width:'+(r.gasoleo/max*100).toFixed(1)+'%;background:'+c+'"></i></span>'
+     +'<span class="bar-v mono" style="color:'+c+'">'+p2(r.gasoleo)
+     +(d>0?' <span style="font-size:10px;opacity:.75">+'+p2(d)+'</span>':'')+'</span></div>';
+  }).join('');
+  var pior=R[R.length-1];
+  document.getElementById('l-comb').innerHTML=
+    'Meticais por litro. Pre&ccedil;os regulados pela ARENE ao abrigo do Decreto n.&ordm; 89/2019, revis&atilde;o de '+esc(ST.cp.revisao.data)+'. '
+   +'<b style="color:var(--t2)">'+esc(pior.local)+' paga mais '+p2(pior.gasoleo-ref)+' MT por litro</b> do que quem carrega junto ao porto — '
+   +p1((pior.gasoleo-ref)/ref*100)+'% acima. N&atilde;o &eacute; margem: &eacute; o custo do transporte interno, reconhecido pelo regulador.';
+}
+
+function desenharDonut(){
+  var A=ST.arm.armazens, cont={};
+  A.forEach(function(a){cont[a.natureza]=(cont[a.natureza]||0)+1});
+  var COR={estatal:'#7A5F17','ppp-gestao-privada':'#C98A3C','concessao-privada':'#22B8F0',
+           'participacao-estatal':'#2DD4BF',privada:'#F0A926',internacional:'#A78BFA'};
+  var ROT={estatal:'Estatal','ppp-gestao-privada':'PPP \u2014 Estado/gest\u00e3o privada','concessao-privada':'Concess\u00e3o',
+           'participacao-estatal':'Participa\u00e7\u00e3o estatal',privada:'Privada',internacional:'Internacional'};
+  var ks=Object.keys(cont).sort(function(a,b){return cont[b]-cont[a]});
+  var tot=A.length, ang=-90, seg='';
+  ks.forEach(function(k){
+    var frac=cont[k]/tot, a2=ang+frac*360;
+    var r1=68,r2=44,cx=90,cy=90;
+    function pt(r,a){var t=a*Math.PI/180;return [cx+r*Math.cos(t),cy+r*Math.sin(t)]}
+    var p1a=pt(r1,ang),p2a=pt(r1,a2),p3=pt(r2,a2),p4=pt(r2,ang);
+    var big=frac>0.5?1:0;
+    seg+='<path d="M'+p1a[0].toFixed(1)+','+p1a[1].toFixed(1)
+      +' A'+r1+','+r1+' 0 '+big+' 1 '+p2a[0].toFixed(1)+','+p2a[1].toFixed(1)
+      +' L'+p3[0].toFixed(1)+','+p3[1].toFixed(1)
+      +' A'+r2+','+r2+' 0 '+big+' 0 '+p4[0].toFixed(1)+','+p4[1].toFixed(1)+' Z" '
+      +'fill="'+COR[k]+'" stroke="#0C1626" stroke-width="2"/>';
+    ang=a2;
+  });
+  var pub=ks.filter(function(k){return k==='estatal'||k==='ppp-gestao-privada'||k==='participacao-estatal'||k==='concessao-privada'})
+            .reduce(function(s,k){return s+cont[k]},0);
+  document.getElementById('gdonut').innerHTML=
+    '<svg viewBox="0 0 180 180" width="180" height="180">'+seg
+   +'<text x="90" y="84" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="30" font-weight="600" fill="#F3F7FC">'+tot+'</text>'
+   +'<text x="90" y="102" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#5E7189" letter-spacing="1.6">UNIDADES</text></svg>'
+   +'<div class="don-l">'+ks.map(function(k){
+       return '<div><i style="background:'+COR[k]+'"></i>'+ROT[k]+' <b class="mono" style="color:var(--t2)">'+cont[k]+'</b></div>';
+     }).join('')+'</div>';
+  document.getElementById('c-tag').textContent=tot+' unidades';
+  document.getElementById('l-don').innerHTML=
+    '<b style="color:var(--t2)">'+pub+' das '+tot+' unidades t&ecirc;m responsabilidade p&uacute;blica</b> &mdash; s&atilde;o do Estado, '
+   +'geridas em parceria ou concessionadas. Todas com fonte oficial citada no dossier. As capacidades n&atilde;o s&atilde;o somadas entre si: '
+   +'est&atilde;o em metros c&uacute;bicos, toneladas, toneladas por ano, TEU e metros quadrados.';
+}
+
+function desenharExposicao(){
+  var carga={},mapa=ST.pa.dependenciaCorredor.mapa;
+  Object.keys(mapa).forEach(function(k){carga[mapa[k]]=(carga[mapa[k]]||0)+1});
+  var ints={};ST.rv.interrupcoes.forEach(function(i){ints[i.provincia]=(ints[i.provincia]||0)+1});
+  var lista=ST.pa.provincias.map(function(p){
+    var res=Math.max(0.35,1-(p.irrigacaoPercent/100)*0.45-(p.sementeCertificadaPercent/100)*0.30-(p.extensaoPercent/100)*0.20);
+    var dist=Math.min(1,p.distanciaMediaArmazemKm/150);
+    var conc=(carga[mapa[p.nome]]-1)/4;
+    var v=0.30*res+0.25*dist+0.20*conc+0.15*(p.pequenas/100)+0.10*(Math.min(2,ints[p.nome]||0)/2);
+    return {n:p.nome,v:v,km:p.distanciaMediaArmazemKm,c:mapa[p.nome]};
+  }).sort(function(a,b){return b.v-a.v});
+  var max=lista[0].v;
+  document.getElementById('gexp').innerHTML=lista.map(function(x){
+    var c=x.v>0.67?'#EF4444':x.v>0.54?'#F0A926':'#12B981';
+    return '<div class="bar"><span class="bar-n">'+esc(x.n)+'</span>'
+     +'<span class="bar-t"><i style="width:'+(x.v/max*100).toFixed(1)+'%;background:'+c+'"></i></span>'
+     +'<span class="bar-v mono" style="color:'+c+'">'+x.v.toFixed(2).replace('.',',')
+     +' <span style="font-size:10px;color:var(--t4)">'+x.km+' km</span></span></div>';
+  }).join('');
+  document.getElementById('l-exp').innerHTML=
+    '&Iacute;ndice com cinco componentes de peso declarado: fragilidade produtiva, dist&acirc;ncia ao armaz&eacute;m, '
+   +'concentra&ccedil;&atilde;o no corredor, peso das pequenas explora&ccedil;&otilde;es e interrup&ccedil;&otilde;es registadas. '
+   +'<b style="color:var(--amber)">Os agregados provinciais est&atilde;o por confirmar no CUPA</b> &mdash; servem para mostrar a ordem de grandeza '
+   +'e a posi&ccedil;&atilde;o relativa, n&atilde;o para citar como estat&iacute;stica. Os limiares s&atilde;o tercis da distribui&ccedil;&atilde;o real, n&atilde;o normas.';
+}
+
+Promise.all(['identificacao-gs1','armazens-nacionais','cascata-precos','produtores-agrarios','rede-viaria'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.gs1=res[0];ST.arm=res[1];ST.cp=res[2];ST.pa=res[3];ST.rv=res[4];
+  desenharNota();desenharGaleria();desenharCombustivel();desenharDonut();desenharExposicao();
+}).catch(function(e){
+  document.getElementById('nota').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+});
+</script>
+</body>
+</html>

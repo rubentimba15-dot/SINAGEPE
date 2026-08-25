@@ -22,6 +22,7 @@
 
   var ITENS = [
     { key: 'painel',        icon: '\u25A6', label: 'PAINEL',                href: 'index.html', grupo: 'PAINEL' },
+    { key: 'balanco-visual', icon: '\u25A3', label: 'Balan\u00e7o Visual', href: 'balanco-visual.html', grupo: 'TERRITORIO' },
     { key: 'mapa-integrado',icon: '\u25C9', label: 'Mapa Integrado',        href: 'mapa-integrado.html', grupo: 'TERRITORIO' },
     { key: 'antecipacao',   icon: '\u2609', label: 'Centro de Antecipa\u00e7\u00e3o', href: 'centro-antecipacao.html', grupo: 'INTELIGENCIA' },
     { key: 'adesao',        icon: '\u2638', label: 'Ades\u00e3o Institucional', href: 'adesao-institucional.html', grupo: 'GOVERNACAO' },
