@@ -232,63 +232,38 @@ var PORTOS_NAV=[
   /* Maputo e Matola ficam a 4 px um do outro na projecção; só se desenha
      um navio para o complexo, senão sobrepõem-se e parecem um borrão. */
   {n:'Complexo portuário de Maputo e Matola', lat:-25.972, lon:32.571, g:1.0},
-  {n:'Porto da Beira',    lat:-19.829, lon:34.834, g:1.30},
-  {n:'Porto de Nacala',   lat:-14.542, lon:40.673, g:1.35},
-  {n:'Porto de Pemba',    lat:-12.974, lon:40.518, g:1.05}
+  {n:'Porto da Beira',    lat:-19.829, lon:34.834, g:1.0},
+  {n:'Porto de Nacala',   lat:-14.542, lon:40.673, g:1.0},
+  {n:'Porto de Pemba',    lat:-12.974, lon:40.518, g:0.75}
 ];
 function navio(x,y,e){
-  /* Cores próprias do sistema, com contraste suficiente sobre o fundo escuro.
-     Casco em bronze, contentores em bronze e azul, água em azul técnico. */
-  var casco='#8A6A2E', cascoT='#C98A3C', sup='#E8EEF6', vidro='#22B8F0', linha='#2A3B52';
-  var g='<g transform="translate('+x.toFixed(1)+','+y.toFixed(1)+') scale('+e.toFixed(2)+')">';
-  /* sombra na água */
-  g+='<ellipse cx="0" cy="13" rx="24" ry="3.4" fill="#000" opacity=".28"/>';
-  /* ondas atrás */
-  g+='<path d="M-26 10 q5 -2.2 10 0 t10 0 t10 0 t10 0" fill="none" stroke="'+vidro+'" stroke-width="1.5" opacity=".38"/>';
-  /* casco: proa inclinada, popa recta */
-  g+='<path d="M-21 1 L20 1 L15 11 L-16 11 Z" fill="'+casco+'"/>';
-  g+='<path d="M-21 1 L20 1 L20 -1.5 L-21 -1.5 Z" fill="'+cascoT+'"/>';
-  /* linha de flutuação */
-  g+='<path d="M-18.5 6 L17.5 6" stroke="#F3F7FC" stroke-width="0.9" opacity=".35"/>';
-  /* castelo de popa, três pisos */
-  g+='<rect x="8" y="-8" width="10" height="6.5" rx="1" fill="'+sup+'"/>';
-  g+='<rect x="10" y="-12" width="6" height="4" rx="1" fill="'+sup+'"/>';
-  /* janelas da ponte */
-  g+='<rect x="10.8" y="-11" width="4.4" height="1.6" fill="'+vidro+'"/>';
-  g+='<rect x="9" y="-6.6" width="2" height="1.6" fill="'+vidro+'" opacity=".8"/>';
-  g+='<rect x="12" y="-6.6" width="2" height="1.6" fill="'+vidro+'" opacity=".8"/>';
-  g+='<rect x="15" y="-6.6" width="2" height="1.6" fill="'+vidro+'" opacity=".8"/>';
-  /* chaminé */
-  g+='<rect x="16.5" y="-16" width="3" height="4.5" rx="0.6" fill="'+casco+'"/>';
-  g+='<rect x="16.5" y="-16" width="3" height="1.4" fill="'+cascoT+'"/>';
-  /* contentores: três colunas, duas e três de altura */
-  var cor=[cascoT,vidro,cascoT,vidro];
-  for(var col=0;col<5;col++){
-    var alt=(col===1||col===3)?3:2;
-    for(var r=0;r<alt;r++){
-      g+='<rect x="'+(-19+col*4.6).toFixed(1)+'" y="'+(-1.5-r*3).toFixed(1)+'" width="4" height="2.6" rx="0.4" '
-        +'fill="'+cor[col%4]+'" opacity="'+(0.95-r*0.14).toFixed(2)+'" stroke="'+linha+'" stroke-width="0.35"/>';
-    }
-  }
-  /* grua de bordo */
-  g+='<line x1="4" y1="-1.5" x2="4" y2="-14" stroke="'+sup+'" stroke-width="1.2"/>';
-  g+='<line x1="4" y1="-14" x2="-3" y2="-10" stroke="'+sup+'" stroke-width="1.2"/>';
-  g+='<circle cx="4" cy="-14" r="1.1" fill="'+cascoT+'"/>';
-  /* onda à frente da proa */
-  g+='<path d="M18 8 q5 -1.6 9 0" fill="none" stroke="'+vidro+'" stroke-width="1.3" opacity=".5"/>';
-  g+='<path d="M-24 14 q6 -1.8 12 0 t12 0" fill="none" stroke="'+vidro+'" stroke-width="1.1" opacity=".26"/>';
-  return g+'</g>';
+  var c='#8FA1B8', d='#5E7189';
+  return '<g transform="translate('+x.toFixed(1)+','+y.toFixed(1)+') scale('+e.toFixed(2)+')" opacity=".92">'
+    /* casco */
+    +'<path d="M-15 3 L15 3 L11 9 L-11 9 Z" fill="'+d+'"/>'
+    +'<path d="M-15 3 L15 3 L15 1 L-15 1 Z" fill="'+c+'"/>'
+    /* superstrutura */
+    +'<rect x="4" y="-4" width="7" height="5" fill="'+c+'"/>'
+    +'<rect x="5.5" y="-6.5" width="4" height="2.5" fill="'+d+'"/>'
+    /* contentores empilhados */
+    +'<rect x="-13" y="-1.5" width="4" height="2.5" fill="#C98A3C" opacity=".85"/>'
+    +'<rect x="-8.5" y="-1.5" width="4" height="2.5" fill="#22B8F0" opacity=".7"/>'
+    +'<rect x="-4" y="-1.5" width="4" height="2.5" fill="#C98A3C" opacity=".7"/>'
+    +'<rect x="-13" y="-4" width="4" height="2.5" fill="#22B8F0" opacity=".6"/>'
+    +'<rect x="-8.5" y="-4" width="4" height="2.5" fill="#C98A3C" opacity=".6"/>'
+    /* mastro */
+    +'<line x1="1" y1="1" x2="1" y2="-8" stroke="'+d+'" stroke-width="1"/>'
+    /* linha de água */
+    +'<path d="M-19 11 q4 -1.6 8 0 t8 0 t8 0" fill="none" stroke="#22B8F0" stroke-width="1.2" opacity=".45"/>'
+    +'<path d="M-16 14 q4 -1.4 8 0 t8 0" fill="none" stroke="#22B8F0" stroke-width="1" opacity=".3"/>'
+    +'</g>';
 }
 function desenharNavios(){
   var g=document.getElementById('gnav');
   if(!ST.camadas.armazens){g.innerHTML='';return}
   g.innerHTML=PORTOS_NAV.map(function(p){
     /* deslocado para o mar, a leste do marcador, para não o tapar */
-    /* Nacala e Pemba ficam junto à margem direita do viewBox; nesses o navio
-       desenha-se para dentro, senão fica cortado pela borda. */
-    var x=X(p.lon), meia=25*p.g+6;
-    var desvio=(x+24+meia>514)?-(24):24;
-    return navio(x+desvio,Y(p.lat)+4,p.g);
+    return navio(X(p.lon)+17,Y(p.lat)+3,p.g);
   }).join('');
 }
 
