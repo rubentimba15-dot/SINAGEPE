@@ -48,6 +48,8 @@
       t:'produtor agricultor exploracao cultura colheita reciprocidade portal' },
     { h:'portal-transportadores.html', n:'Portal do Transportador', d:'Preço do gasóleo por região, cortes de estrada e calculadora de viagem',
       t:'transportador camiao viagem gasoleo combustivel rota corte estrada portal' },
+    { h:'relatorios-central.html', n:'Central de Relatórios', d:'Doze relatórios imprimíveis e exportáveis, filtrados pelo nível de acesso',
+      t:'relatorio central imprimir exportar csv json pdf documento gerar' },
     { h:'relatorio-executivo.html', n:'Relatório Executivo', d:'Documento imprimível em A4, com exportação CSV e JSON',
       t:'relatorio pdf imprimir exportar csv json executivo documento' },
     { h:'governanca-dado.html', n:'Governação do Dado', d:'Cinco regras de disciplina e classificação de cada número do sistema',

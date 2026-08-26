@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Central de Relat&oacute;rios &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1500px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:920px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
+.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.bd{padding:15px 17px}
+.ident{padding:14px 17px;border-radius:12px;border:1px solid rgba(34,184,240,.32);background:rgba(34,184,240,.07);
+ margin-bottom:16px;font-size:12.5px;line-height:1.6;color:#9EDCF7;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.ident b{color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px;padding:16px}
+.rl{background:linear-gradient(160deg,#101B2E 0%,#0A1220 100%);border:1px solid var(--card-line);
+ border-radius:13px;padding:16px;display:flex;flex-direction:column;gap:9px;transition:.18s}
+.rl:hover{border-color:var(--brzg)}
+.rl.bloq{opacity:.42}
+.rl-t{font-size:14.5px;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+.rl-d{font-size:11.5px;color:var(--t3);line-height:1.5;flex:1}
+.rl-m{display:flex;gap:8px;flex-wrap:wrap;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
+.rl-m span{border:1px solid var(--card-line);padding:3px 8px;border-radius:3px;color:var(--t4)}
+.rl-b{display:flex;gap:7px;flex-wrap:wrap;margin-top:3px}
+button{font-family:inherit;font-size:11px;padding:7px 13px;border-radius:7px;border:1px solid var(--card-line);
+ background:var(--nav-idle);color:var(--t2);cursor:pointer}
+button:hover:not(:disabled){background:var(--cardh);border-color:var(--brzg)}
+button:disabled{opacity:.35;cursor:not-allowed}
+button.p{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+.sem{padding:26px 17px;color:var(--t4);font-size:12.5px;text-align:center;line-height:1.65}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 14px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 14px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.aviso{margin:12px 17px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.55;border:1px solid}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+
+/* ---- visor do relatório gerado ---- */
+#visor{display:none;position:fixed;inset:0;background:rgba(4,7,18,.86);z-index:9500;
+ align-items:flex-start;justify-content:center;padding:5vh 20px 20px;overflow-y:auto}
+#visor.on{display:flex}
+#folha{width:100%;max-width:860px;background:#FFF;color:#141A24;border-radius:8px;padding:34px 40px;
+ font-size:12px;line-height:1.6;box-shadow:0 20px 70px rgba(0,0,0,.6)}
+#folha h1{font-size:20px;color:#0B1A2E;margin:0 0 4px}
+#folha h2{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A6A2E;
+ border-bottom:1px solid #D8D2C4;padding-bottom:6px;margin:22px 0 11px}
+#folha table{font-size:11px}
+#folha th{color:#5A6472;border-bottom:1px solid #C9CFD8}
+#folha td{border-bottom:1px solid #E6E9ED;color:#141A24}
+#folha .cab{border-bottom:2px solid #8A6A2E;padding-bottom:12px;margin-bottom:18px}
+#folha .meta{font-size:10px;color:#5A6472;margin-top:6px}
+#folha .nota{background:#FBF6EA;border-left:3px solid #8A6A2E;padding:10px 13px;margin:12px 0;font-size:11px;color:#4A3A1E}
+#folha .rodape{border-top:1px solid #D8D2C4;margin-top:26px;padding-top:11px;font-size:9.5px;color:#7A8494}
+.vb{position:sticky;top:0;display:flex;gap:8px;justify-content:flex-end;margin-bottom:12px;width:100%;max-width:860px}
+@media print{
+  body *{visibility:hidden}
+  #visor,#visor *{visibility:visible}
+  #visor{position:absolute;inset:0;background:#FFF;padding:0;display:block}
+  #folha{box-shadow:none;max-width:100%;padding:0}
+  .vb{display:none}
+  @page{size:A4;margin:16mm}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Relat&oacute;rios</div>
+    <h1>Central de Relat&oacute;rios</h1>
+    <p class="sub">Todos os relat&oacute;rios que o sistema consegue gerar a partir dos dados que tem. Cada um declara a fonte e a data de refer&ecirc;ncia. O que aparece depende do n&iacute;vel de acesso da conta.</p>
+
+    <div class="ident" id="ident"></div>
+
+    <div class="card frame">
+      <div class="ch"><h2>Dispon&iacute;veis para si</h2><span class="tag ok" id="d-tag">&mdash;</span></div>
+      <div class="grid" id="disponiveis"></div>
+    </div>
+
+    <div class="card frame" id="bloco-bloq">
+      <div class="ch"><h2>Fora do seu n&iacute;vel de acesso</h2><span class="tag crit" id="b-tag">&mdash;</span></div>
+      <div class="grid" id="bloqueados"></div>
+      <div class="aviso i">Estes relat&oacute;rios existem mas exigem ecr&atilde;s a que a sua conta n&atilde;o tem acesso.
+      A separa&ccedil;&atilde;o &eacute; a mesma que rege o resto do sistema: cada parceiro v&ecirc; o que lhe diz respeito.</div>
+    </div>
+  </main>
+</div>
+
+<div id="visor">
+  <div style="width:100%;max-width:860px">
+    <div class="vb">
+      <button class="p" id="b-imprimir">Imprimir</button>
+      <button id="b-csv">Exportar CSV</button>
+      <button id="b-json">Exportar JSON</button>
+      <button id="b-fechar">Fechar</button>
+    </div>
+    <div id="folha"></div>
+  </div>
+</div>
+
+<script>
+if(window.SinagepeNav) SinagepeNav.montar('relatorios-central');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+
+var ST={d:{},actual:null};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
+function hoje(){return new Date().toLocaleDateString('pt-PT',{day:'2-digit',month:'long',year:'numeric'})}
+
+function nivel(){
+  try{var b=sessionStorage.getItem('sinagepe_nivel');return b?JSON.parse(b):null}catch(e){return null}
+}
+function podeVer(ecra){
+  var n=nivel();
+  if(!n||!n.paginas||!n.paginas.length)return true;   /* sem sess\u00e3o, mostra tudo em leitura */
+  return n.paginas.indexOf(ecra)>=0;
+}
+function eAdministrador(){var n=nivel();return !n||n.chave==='administrador'}
+
+/* ============================================================
+   OS RELAT\u00d3RIOS
+   Cada um declara: que ecr\u00e3 exige (para o filtro de acesso),
+   que ficheiros de dados usa, e a fun\u00e7\u00e3o que o constr\u00f3i.
+   ============================================================ */
+var RELATORIOS=[
+ {id:'cadastro-armazenagem',titulo:'Cadastro Nacional de Armazenagem',
+  desc:'As 30 unidades documentadas, com natureza, propriet\u00e1rio, estado, capacidade e fonte oficial de cada uma.',
+  ecra:'armazens-nacionais.html',dados:['armazens-nacionais'],idade:'Cadastro verificado em Agosto de 2026',
+  gerar:relCadastro},
+
+ {id:'capacidade-por-natureza',titulo:'Capacidade por Natureza Jur\u00eddica',
+  desc:'Quanto da armazenagem \u00e9 do Estado, quanto est\u00e1 concessionada e quanto \u00e9 privada. Com a nota sobre unidades incompar\u00e1veis.',
+  ecra:'armazens-nacionais.html',dados:['armazens-nacionais'],idade:'Cadastro verificado em Agosto de 2026',
+  gerar:relNatureza},
+
+ {id:'precos-mercados',titulo:'Pre\u00e7os por Mercado \u2014 SIMA',
+  desc:'Pre\u00e7o a retalho de cinco produtos, com m\u00e9dia, mercado mais barato e mais caro, e dispers\u00e3o entre pra\u00e7as.',
+  ecra:'portal-produtores.html',dados:['sima-precos'],idade:'Boletim de Julho de 2023',
+  gerar:relPrecos},
+
+ {id:'serie-precos',titulo:'S\u00e9rie de Pre\u00e7os \u2014 dez meses',
+  desc:'Quatro edi\u00e7\u00f5es do boletim Quente-Quente, de Setembro de 2022 a Julho de 2023, com varia\u00e7\u00e3o por produto.',
+  ecra:'portal-produtores.html',dados:['sima-precos'],idade:'Setembro de 2022 a Julho de 2023',
+  gerar:relSerie},
+
+ {id:'fluxos-mercado',titulo:'Fluxos de Mercado entre Pra\u00e7as',
+  desc:'Movimenta\u00e7\u00f5es documentadas de produto, com origem, destino e pre\u00e7o normalizado por quilo.',
+  ecra:'mapa-integrado.html',dados:['sima-precos'],idade:'Boletins de Mar\u00e7o e Julho de 2023',
+  gerar:relFluxos},
+
+ {id:'combustiveis',titulo:'Combust\u00edveis \u2014 a Factura da Geografia',
+  desc:'Pre\u00e7o regulado do gas\u00f3leo por regi\u00e3o e diferencial face \u00e0s cidades com terminal. Com as nove etapas da cascata.',
+  ecra:'portal-transportadores.html',dados:['cascata-precos'],idade:'Revis\u00e3o ARENE de Maio de 2026',
+  gerar:relCombustiveis},
+
+ {id:'rede-viaria',titulo:'Estado da Rede Vi\u00e1ria',
+  desc:'Estradas principais, interrup\u00e7\u00f5es registadas, causa, alternativa e o que a ANE n\u00e3o publica.',
+  ecra:'mapa-integrado.html',dados:['rede-viaria'],idade:'Comunicado ANE de Janeiro de 2026',
+  gerar:relViaria},
+
+ {id:'riscos',titulo:'Riscos e Mitiga\u00e7\u00f5es',
+  desc:'Os dez riscos identificados, com gravidade, janela de calend\u00e1rio, ac\u00e7\u00e3o imediata e quem decide.',
+  ecra:'centro-antecipacao.html',dados:['antecipacao'],idade:'Constru\u00eddo em Agosto de 2026',
+  gerar:relRiscos},
+
+ {id:'adesao',titulo:'Dossier de Ades\u00e3o Institucional',
+  desc:'As 13 entidades, com esfor\u00e7o, impacto, o que j\u00e1 t\u00eam, o que ganham e o primeiro passo de cada uma.',
+  ecra:'adesao-institucional.html',dados:['adesao-institucional'],idade:'Constru\u00eddo em Agosto de 2026',
+  gerar:relAdesao},
+
+ {id:'governanca',titulo:'Governa\u00e7\u00e3o do Dado',
+  desc:'As seis regras, a classifica\u00e7\u00e3o de cada n\u00famero do sistema e a matriz de interface, dados e integra\u00e7\u00e3o.',
+  ecra:'governanca-dado.html',dados:['governanca-dado'],idade:'Constru\u00eddo em Agosto de 2026',
+  gerar:relGovernanca},
+
+ {id:'identificacao',titulo:'Identifica\u00e7\u00e3o de Produto e Ponto Cego',
+  desc:'Os 12 produtos essenciais, estado da identifica\u00e7\u00e3o e grau de cegueira por cruzamento com telemetria.',
+  ecra:'ponto-cego-duplo.html',dados:['identificacao-gs1','armazens-nacionais'],idade:'Constru\u00eddo em Agosto de 2026',
+  gerar:relIdentificacao},
+
+ {id:'medicamentos',titulo:'Cadeia de Medicamentos \u2014 estado da liga\u00e7\u00e3o',
+  desc:'Sistemas existentes, indicadores por ligar e o que o sistema recusa fazer. Sem dados: a liga\u00e7\u00e3o est\u00e1 por fazer.',
+  ecra:'medicamentos-cadeia.html',dados:['medicamentos-cadeia'],idade:'Estrutura de Agosto de 2026',
+  gerar:relMedicamentos}
+];
+
+/* ---------------- construtores ---------------- */
+function cabecalho(titulo,idade,fontes){
+  return '<div class="cab"><h1>'+titulo+'</h1>'
+   +'<div class="meta">SINAGEPE &middot; Sistema Nacional de Gest\u00e3o de Produtos Essenciais &middot; Rep\u00fablica de Mo\u00e7ambique</div>'
+   +'<div class="meta"><b>Gerado em:</b> '+hoje()+' &nbsp;&middot;&nbsp; <b>Dados de:</b> '+idade+'</div>'
+   +(fontes?'<div class="meta"><b>Fontes:</b> '+fontes+'</div>':'')+'</div>';
+}
+function rodape(){
+  return '<div class="rodape">Documento gerado pelo SINAGEPE a partir de dados com fonte declarada. '
+   +'Prot\u00f3tipo de demonstra\u00e7\u00e3o: nenhum indicador se actualiza automaticamente. '
+   +'Verifique a data de refer\u00eancia antes de citar.</div>';
+}
+function tab(cols,linhas){
+  return '<table><thead><tr>'+cols.map(function(c){
+    return '<th'+(c[1]==='n'?' style="text-align:right"':'')+'>'+c[0]+'</th>';
+  }).join('')+'</tr></thead><tbody>'+linhas.map(function(l){
+    return '<tr>'+l.map(function(v,i){
+      return '<td'+(cols[i]&&cols[i][1]==='n'?' style="text-align:right;font-family:monospace"':'')+'>'+v+'</td>';
+    }).join('')+'</tr>';
+  }).join('')+'</tbody></table>';
+}
+
+function relCadastro(){
+  var A=ST.d['armazens-nacionais'].armazens;
+  var ROT={estatal:'Estatal','ppp-gestao-privada':'PPP','concessao-privada':'Concess\u00e3o',
+   'participacao-estatal':'Part. estatal',privada:'Privada',internacional:'Internacional'};
+  var linhas=A.map(function(a){
+    return [esc(a.nome),esc(a.provincia||'\u2014'),ROT[a.natureza]||a.natureza,esc(a.estado),
+      a.capacidade&&a.capacidade.valor!=null?num(a.capacidade.valor)+' '+a.capacidade.unidade:'n\u00e3o publicada',
+      a.verificado?'sim':'por verificar'];
+  });
+  var csv=[['Nome','Prov\u00edncia','Natureza','Estado','Capacidade','Unidade','Verificado','Fonte']]
+   .concat(A.map(function(a){return [a.nome,a.provincia||'',a.natureza,a.estado,
+     a.capacidade?a.capacidade.valor:'',a.capacidade?a.capacidade.unidade:'',a.verificado?'sim':'nao',a.fonte||''];}));
+  return {
+    html: cabecalho('Cadastro Nacional de Armazenagem','Agosto de 2026','Fonte oficial declarada por unidade')
+      +'<h2>Resumo</h2>'
+      +'<p>'+A.length+' unidades documentadas. '+A.filter(function(a){return a.fonte}).length+' com fonte oficial citada. '
+      +A.filter(function(a){return a.verificado}).length+' verificadas. '
+      +'<b>'+A.filter(function(a){return a.sensor==='sem-sensor'}).length+' sem qualquer leitura autom\u00e1tica.</b></p>'
+      +'<div class="nota">Nenhuma unidade do pa\u00eds reporta exist\u00eancias em tempo real. O cadastro diz o que existe e de quem \u00e9, n\u00e3o o que l\u00e1 est\u00e1 dentro.</div>'
+      +'<h2>Unidades</h2>'
+      +tab([['Unidade'],['Prov\u00edncia'],['Natureza'],['Estado'],['Capacidade','n'],['Verif.']],linhas)
+      +rodape(),
+    csv: csv, json: {armazens:A}
+  };
+}
+
+function relNatureza(){
+  var A=ST.d['armazens-nacionais'].armazens, c={};
+  A.forEach(function(a){c[a.natureza]=(c[a.natureza]||0)+1});
+  var ROT={estatal:'Estatal','ppp-gestao-privada':'PPP \u2014 Estado com gest\u00e3o privada','concessao-privada':'Concess\u00e3o privada',
+   'participacao-estatal':'Participa\u00e7\u00e3o estatal',privada:'Privada',internacional:'Internacional'};
+  var ks=Object.keys(c).sort(function(a,b){return c[b]-c[a]});
+  var pub=ks.filter(function(k){return k!=='privada'&&k!=='internacional'}).reduce(function(s,k){return s+c[k]},0);
+  var ton=A.filter(function(a){return a.capacidade&&a.capacidade.unidade==='t'&&a.capacidade.valor});
+  var somaT=ton.reduce(function(s,a){return s+a.capacidade.valor},0);
+  return {
+    html: cabecalho('Capacidade por Natureza Jur\u00eddica','Agosto de 2026','Cadastro Nacional de Armazenagem')
+      +'<h2>Distribui\u00e7\u00e3o</h2>'
+      +tab([['Natureza'],['Unidades','n'],['Fatia','n']],ks.map(function(k){
+         return [ROT[k]||k,c[k],(c[k]/A.length*100).toFixed(0)+'%'];}))
+      +'<p><b>'+pub+' das '+A.length+' unidades t\u00eam responsabilidade p\u00fablica</b> \u2014 s\u00e3o do Estado, geridas em parceria ou concessionadas.</p>'
+      +'<h2>Capacidade em toneladas</h2>'
+      +'<p>'+ton.length+' unidades declaram capacidade em toneladas, somando '+num(somaT)+' t.</p>'
+      +'<div class="nota"><b>As capacidades n\u00e3o s\u00e3o som\u00e1veis entre si.</b> O cadastro tem metros c\u00fabicos, toneladas, toneladas por ano, TEU e metros quadrados. '
+      +'Somar tudo produziria um n\u00famero sem significado. Este total cobre apenas as unidades medidas em toneladas.</div>'
+      +tab([['Unidade'],['Prov\u00edncia'],['Toneladas','n']],ton.sort(function(a,b){return b.capacidade.valor-a.capacidade.valor})
+         .map(function(a){return [esc(a.nome),esc(a.provincia||''),num(a.capacidade.valor)];}))
+      +rodape(),
+    csv:[['Natureza','Unidades']].concat(ks.map(function(k){return [ROT[k]||k,c[k]];})),
+    json:{porNatureza:c,capacidadeToneladas:somaT,unidadesEmToneladas:ton.length}
+  };
+}
+
+function relPrecos(){
+  var S=ST.d['sima-precos'], R=S.retalho1462||S.retalho;
+  var linhas=R.map(function(r){
+    var d=(r.maximo.valor/r.minimo.valor-1)*100;
+    return [esc(r.produto),p2(r.media),p2(r.minimo.valor)+' ('+esc(r.minimo.mercados[0])+')',
+      p2(r.maximo.valor)+' ('+esc(r.maximo.mercados[0])+')','+'+d.toFixed(0)+'%'];
+  });
+  return {
+    html: cabecalho('Pre\u00e7os por Mercado','Boletim SIMA n.\u00ba '+(S.series?S.series.edicoes[S.series.edicoes.length-1].edicao:S.meta.edicao),
+        'SIMA \u2014 boletim Quente-Quente, MAAP')
+      +'<h2>Pre\u00e7o a retalho, meticais por quilograma</h2>'
+      +tab([['Produto'],['M\u00e9dia','n'],['Mais barato'],['Mais caro'],['Dispers\u00e3o','n']],linhas)
+      +'<div class="nota"><b>A dispers\u00e3o \u00e9 o achado.</b> O mesmo produto custa at\u00e9 tr\u00eas vezes mais consoante a pra\u00e7a, na mesma semana. '
+      +'Isso n\u00e3o \u00e9 varia\u00e7\u00e3o de qualidade: \u00e9 custo de transporte, isolamento de mercado e aus\u00eancia de alternativa de compra.</div>'
+      +'<h2>O que este relat\u00f3rio n\u00e3o diz</h2>'
+      +'<p>N\u00e3o \u00e9 pre\u00e7o corrente. '+esc(S.meta.avisoRecencia)+'</p>'
+      +rodape(),
+    csv:[['Produto','Media','Minimo','Mercado minimo','Maximo','Mercado maximo','Unidade']]
+      .concat(R.map(function(r){return [r.produto,r.media,r.minimo.valor,r.minimo.mercados.join('; '),
+        r.maximo.valor,r.maximo.mercados.join('; '),r.unidade];})),
+    json:{edicao:S.meta.edicao,retalho:R}
+  };
+}
+
+function relSerie(){
+  var S=ST.d['sima-precos'];
+  if(!S.series)return {html:'<p>Sem s\u00e9rie dispon\u00edvel.</p>',csv:[],json:{}};
+  var E=S.series.edicoes;
+  var cols=[['Produto']].concat(E.map(function(e){return [e.mes,'n'];})).concat([['Amplitude','n']]);
+  var linhas=S.series.precoMedio.map(function(x){
+    var v=E.map(function(e){return x.valores[String(e.edicao)]});
+    var vv=v.filter(function(y){return y!=null});
+    var amp=(Math.max.apply(null,vv)/Math.min.apply(null,vv)-1)*100;
+    return [esc(x.produto)].concat(v.map(function(y){return y==null?'\u2014':p2(y)})).concat(['+'+amp.toFixed(0)+'%']);
+  });
+  var sf=S.series.safexMilhoBranco, cb=S.series.cambioUSD;
+  return {
+    html: cabecalho('S\u00e9rie de Pre\u00e7os \u2014 dez meses','Setembro de 2022 a Julho de 2023',
+        'SIMA \u2014 quatro edi\u00e7\u00f5es do boletim Quente-Quente')
+      +'<h2>Pre\u00e7o m\u00e9dio a retalho, MT/kg</h2>'
+      +tab(cols,linhas)
+      +'<h2>Contexto</h2>'
+      +tab([['Refer\u00eancia']].concat(E.map(function(e){return [e.mes,'n'];})),[
+        ['Milho branco SAFEX, Rand/t'].concat(E.map(function(e){return num(sf.valores[String(e.edicao)])})),
+        ['C\u00e2mbio, MT por d\u00f3lar'].concat(E.map(function(e){return p2(cb.valores[String(e.edicao)])}))
+      ])
+      +'<div class="nota"><b>O c\u00e2mbio esteve parado enquanto os pre\u00e7os se moveram 53%.</b> '
+      +'O d\u00f3lar variou dois c\u00eantimos em dez meses. O que move o pre\u00e7o da comida em Mo\u00e7ambique n\u00e3o \u00e9 o c\u00e2mbio.</div>'
+      +'<div class="nota"><b>O arroz n\u00e3o se mexe.</b> Cinco por cento de amplitude contra 53% no milho. '
+      +'\u00c9 a diferen\u00e7a entre um produto colhido c\u00e1 e um produto importado.</div>'
+      +'<h2>Limita\u00e7\u00e3o</h2>'
+      +'<p>'+esc(S.series.nota)+'</p>'
+      +rodape(),
+    csv:[['Produto'].concat(E.map(function(e){return e.mes}))]
+      .concat(S.series.precoMedio.map(function(x){
+        return [x.produto].concat(E.map(function(e){return x.valores[String(e.edicao)]}));})),
+    json:S.series
+  };
+}
+
+function relFluxos(){
+  var S=ST.d['sima-precos'];
+  var F=(S.fluxos||[]).concat(S.fluxos1462||[]);
+  var linhas=F.map(function(f){
+    return [esc(f.produto),esc(f.origem),esc(f.destino),num(f.preco)+' '+esc(f.unidade.replace('MT ','')),
+      f.precoPorKg?p2(f.precoPorKg):'\u2014'];
+  });
+  var dest={};F.forEach(function(f){dest[f.destino]=(dest[f.destino]||0)+1});
+  var top=Object.keys(dest).sort(function(a,b){return dest[b]-dest[a]}).slice(0,6);
+  return {
+    html: cabecalho('Fluxos de Mercado entre Pra\u00e7as','Mar\u00e7o e Julho de 2023','SIMA \u2014 boletim Quente-Quente')
+      +'<h2>Resumo</h2>'
+      +'<p>'+F.length+' movimenta\u00e7\u00f5es documentadas. \u00c9 o \u00fanico dado do sistema que mostra produto a mover-se, '
+      +'com origem, destino e pre\u00e7o de compra.</p>'
+      +'<h2>Pra\u00e7as que mais recebem</h2>'
+      +tab([['Pra\u00e7a'],['Fluxos','n']],top.map(function(k){return [esc(k),dest[k]];}))
+      +'<h2>Movimenta\u00e7\u00f5es</h2>'
+      +tab([['Produto'],['Origem'],['Destino'],['Pre\u00e7o'],['MT/kg','n']],linhas)
+      +'<div class="nota"><b>As unidades vinham incompat\u00edveis.</b> Latas de 5 e 20 litros, sacos de 50 e 60 kg, e MT por quilo. '
+      +'A coluna MT/kg normaliza o que era convert\u00edvel; a convers\u00e3o da lata \u00e9 assumida e vem declarada no ficheiro de dados.</div>'
+      +rodape(),
+    csv:[['Produto','Origem','Destino','Preco','Unidade','MT por kg','Zona']]
+      .concat(F.map(function(f){return [f.produto,f.origem,f.destino,f.preco,f.unidade,f.precoPorKg||'',f.zona];})),
+    json:{fluxos:F}
+  };
+}
+
+function relCombustiveis(){
+  var C=ST.d['cascata-precos'], R=C.regioes.filter(function(r){return r.gasoleo!=null});
+  var ref=R[0].gasoleo;
+  return {
+    html: cabecalho('Combust\u00edveis \u2014 a Factura da Geografia',esc(C.revisao.data),
+        'ARENE \u2014 pre\u00e7os regulados, Decreto n.\u00ba 89/2019')
+      +'<h2>Gas\u00f3leo por regi\u00e3o, MT por litro</h2>'
+      +tab([['Regi\u00e3o'],['Pre\u00e7o','n'],['Face ao terminal','n'],['%','n']],R.map(function(r,i){
+        var d=r.gasoleo-ref;
+        return [esc(i===0?'Cidades com terminal':r.local),p2(r.gasoleo),d>0?'+'+p2(d):'refer\u00eancia',
+          d>0?'+'+(d/ref*100).toFixed(1).replace('.',',')+'%':'\u2014'];
+      }))
+      +'<div class="nota"><b>N\u00e3o \u00e9 margem de ningu\u00e9m.</b> A diferen\u00e7a entre regi\u00f5es \u00e9 o custo do transporte interno do combust\u00edvel, '
+      +'reconhecido pelo pr\u00f3prio regulador na metodologia de forma\u00e7\u00e3o do pre\u00e7o.</div>'
+      +'<h2>As nove etapas da cascata</h2>'
+      +tab([['#'],['Etapa'],['Quem determina']],C.cascata.map(function(e,i){
+        return [(i+1),esc(e.etapa||e.nome||''),esc(e.determinadoPor||e.responsavel||'\u2014')];
+      }))
+      +'<div class="nota">Os combust\u00edveis s\u00e3o o \u00fanico produto de Mo\u00e7ambique com cascata de pre\u00e7o p\u00fablica por lei. '
+      +'Nenhum produto alimentar tem equivalente.</div>'
+      +rodape(),
+    csv:[['Regiao','Provincia','Gasoleo','Gasolina','Diferenca face ao terminal']]
+      .concat(C.regioes.map(function(r){return [r.local,r.provincia||'',r.gasoleo||'',r.gasolina||'',
+        r.gasoleo?p2(r.gasoleo-ref):''];})),
+    json:{revisao:C.revisao,regioes:C.regioes,cascata:C.cascata}
+  };
+}
+
+function relViaria(){
+  var V=ST.d['rede-viaria'];
+  return {
+    html: cabecalho('Estado da Rede Vi\u00e1ria','Comunicado ANE de Janeiro de 2026','ANE \u2014 Administra\u00e7\u00e3o Nacional de Estradas')
+      +'<h2>Estradas principais</h2>'
+      +tab([['Designa\u00e7\u00e3o'],['Nome'],['Liga']],V.estradas.map(function(e){
+        return [esc(e.designacao),esc(e.nome),esc(e.liga)];}))
+      +'<h2>Interrup\u00e7\u00f5es registadas</h2>'
+      +tab([['Estrada'],['Tro\u00e7o'],['Prov\u00edncia'],['Gravidade'],['Alternativa']],V.interrupcoes.map(function(i){
+        return [esc(i.estrada),esc(i.troco),esc(i.provincia),
+          i.gravidade==='intransitavel'?'Intransit\u00e1vel':'Condicionada',esc(i.alternativa||'nenhuma')];}))
+      +'<div class="nota"><b>Estas ocorr\u00eancias t\u00eam meses.</b> A ANE publica em comunicado de imprensa, n\u00e3o em formato '
+      +'actualiz\u00e1vel por m\u00e1quina. Confirme sempre antes de planear rota.</div>'
+      +'<h2>O que a ANE n\u00e3o publica</h2>'
+      +'<ul>'+(V.ausencias||[]).map(function(a){return '<li>'+esc(typeof a==='string'?a:(a.item||a.descricao||''))+'</li>';}).join('')+'</ul>'
+      +rodape(),
+    csv:[['Estrada','Troco','Provincia','Gravidade','Causa','Alternativa','Data']]
+      .concat(V.interrupcoes.map(function(i){return [i.estrada,i.troco,i.provincia,i.gravidade,i.causa,i.alternativa||'',i.data];})),
+    json:V
+  };
+}
+
+function relRiscos(){
+  var A=ST.d['antecipacao'];
+  return {
+    html: cabecalho('Riscos e Mitiga\u00e7\u00f5es','Agosto de 2026','Centro de Antecipa\u00e7\u00e3o do SINAGEPE')
+      +'<h2>Riscos identificados</h2>'
+      +A.riscos.map(function(r){
+        var ag=(r.mitigacoes||[]).filter(function(m){return m.horizonte==='agora'});
+        return '<div style="margin-bottom:16px"><b style="font-size:13px">'+esc(r.titulo)+'</b>'
+         +' <span style="color:#8A6A2E">gravidade '+r.gravidade+'/5 &middot; '+esc(r.janela)+'</span>'
+         +'<div style="margin-top:4px">'+esc(r.resumo)+'</div>'
+         +(ag.length?'<div class="nota"><b>Agir j\u00e1:</b> '+esc(ag[0].accao)
+           +'<br><b>Decide:</b> '+esc(ag[0].decide)+'</div>':'')+'</div>';
+      }).join('')
+      +'<div class="nota">Estes riscos s\u00e3o hip\u00f3teses fundamentadas em estrutura conhecida \u2014 cadastro, rede vi\u00e1ria, '
+      +'concentra\u00e7\u00e3o em corredores. N\u00e3o s\u00e3o previs\u00f5es probabil\u00edsticas: o sistema n\u00e3o tem s\u00e9rie hist\u00f3rica para as calcular.</div>'
+      +rodape(),
+    csv:[['Titulo','Gravidade','Janela','Resumo']]
+      .concat(A.riscos.map(function(r){return [r.titulo,r.gravidade,r.janela,r.resumo];})),
+    json:A
+  };
+}
+
+function relAdesao(){
+  var E=ST.d['adesao-institucional'].entidades.slice()
+    .sort(function(a,b){return (b.impacto-b.esforco)-(a.impacto-a.esforco)});
+  return {
+    html: cabecalho('Dossier de Ades\u00e3o Institucional','Agosto de 2026','Constru\u00eddo de fontes p\u00fablicas')
+      +'<h2>Prioridade por esfor\u00e7o e impacto</h2>'
+      +tab([['Entidade'],['Esfor\u00e7o','n'],['Impacto','n'],['Prioridade','n'],['Primeiro passo']],
+        E.map(function(e){return [esc(e.sigla),e.esforco,e.impacto,
+          (e.impacto-e.esforco>0?'+':'')+(e.impacto-e.esforco),esc(e.primeiroPasso||'\u2014')];}))
+      +'<h2>Dossiers</h2>'
+      +E.map(function(e){
+        return '<div style="margin-bottom:16px"><b style="font-size:13px">'+esc(e.sigla)+'</b> \u2014 '+esc(e.nome)
+         +'<div style="color:#5A6472;font-size:10.5px;margin:3px 0">'+esc(e.tutela||'')+'</div>'
+         +'<div><b>O que custa:</b> '+esc(e.custa||'\u2014')+'</div>'
+         +(e.chave?'<div class="nota">'+esc(e.chave)+'</div>':'')+'</div>';
+      }).join('')
+      +rodape(),
+    csv:[['Sigla','Nome','Esforco','Impacto','Prioridade','Primeiro passo']]
+      .concat(E.map(function(e){return [e.sigla,e.nome,e.esforco,e.impacto,e.impacto-e.esforco,e.primeiroPasso||''];})),
+    json:{entidades:E}
+  };
+}
+
+function relGovernanca(){
+  var G=ST.d['governanca-dado'];
+  /* classificacao vem como lista [descricao, tipo, nota, ficheiro], nao objecto */
+  var c={};G.classificacao.forEach(function(x){var t=Array.isArray(x)?x[1]:x.tipo;c[t]=(c[t]||0)+1});
+  return {
+    html: cabecalho('Governa\u00e7\u00e3o do Dado','Agosto de 2026','Registo interno do SINAGEPE')
+      +'<h2>As '+G.regras.length+' regras</h2>'
+      +G.regras.map(function(r){
+        return '<div style="margin-bottom:12px"><b>'+r.n+'. '+esc(r.titulo)+'</b>'
+         +'<div>'+esc(r.regra)+'</div>'
+         +'<div style="color:#5A6472;font-size:10.5px;margin-top:3px">Estado: '+esc(r.estado)+'</div></div>';
+      }).join('')
+      +'<h2>Classifica\u00e7\u00e3o dos n\u00fameros do sistema</h2>'
+      +tab([['Tipo'],['Quantos','n']],Object.keys(c).map(function(k){return [k,c[k]];}))
+      +'<h2>Interface, dados e integra\u00e7\u00e3o</h2>'
+      +tab([['Ecr\u00e3'],['Interface'],['Dados'],['Integra\u00e7\u00e3o']],G.camadas.matriz.map(function(r){
+        return [esc(r[0]),r[1],r[2],r[3]];}))
+      +'<div class="nota"><b>'+esc(G.camadas.estadoGlobal)+'</b></div>'
+      +rodape(),
+    csv:[['Ecra','Interface','Dados','Integracao','Nota']].concat(G.camadas.matriz),
+    json:G
+  };
+}
+
+function relIdentificacao(){
+  var P=ST.d['identificacao-gs1'].produtos, A=ST.d['armazens-nacionais'].armazens;
+  var ROT={nenhuma:'Sem identifica\u00e7\u00e3o',estrangeira:'Estrangeira',nacional:'Nacional'};
+  var linhas=P.map(function(p){
+    var uns=A.filter(function(a){return (a.produtos||[]).some(function(f){return p.familiasArmazem.indexOf(f)>=0})});
+    var cegos=uns.filter(function(a){return a.sensor==='sem-sensor'&&p.identificacao==='nenhuma'}).length;
+    return [esc(p.nome),ROT[p.identificacao],esc(p.chaveAplicavel),uns.length,cegos];
+  });
+  return {
+    html: cabecalho('Identifica\u00e7\u00e3o de Produto e Ponto Cego','Agosto de 2026','GS1 e Cadastro Nacional de Armazenagem')
+      +'<h2>Produtos essenciais</h2>'
+      +tab([['Produto'],['Identifica\u00e7\u00e3o'],['Chave aplic\u00e1vel'],['Unidades','n'],['Cego total','n']],linhas)
+      +'<div class="nota"><b>Nenhum produto tem identifica\u00e7\u00e3o nacional.</b> N\u00e3o existe organiza\u00e7\u00e3o-membro GS1 em Mo\u00e7ambique '
+      +'e o prefixo 602 continua por atribuir. Nenhum produto fabricado no pa\u00eds pode receber hoje um c\u00f3digo emitido c\u00e1.</div>'
+      +'<div class="nota"><b>Cego total</b> \u00e9 o cruzamento de produto sem identifica\u00e7\u00e3o com armaz\u00e9m sem telemetria: '
+      +'n\u00e3o se sabe o que l\u00e1 est\u00e1, quanto est\u00e1, nem se saiu.</div>'
+      +rodape(),
+    csv:[['Produto','Identificacao','Chave','Forma de circulacao','Prioridade']]
+      .concat(P.map(function(p){return [p.nome,p.identificacao,p.chaveAplicavel,p.formaCirculacao,p.prioridade||''];})),
+    json:{produtos:P}
+  };
+}
+
+function relMedicamentos(){
+  var M=ST.d['medicamentos-cadeia'];
+  return {
+    html: cabecalho('Cadeia de Medicamentos \u2014 estado da liga\u00e7\u00e3o','Agosto de 2026','MISAU, CMAM, ANARME')
+      +'<div class="nota"><b>Este relat\u00f3rio n\u00e3o tem dados. De prop\u00f3sito.</b> '+esc(M.meta.avisoPrincipal)+'</div>'
+      +'<h2>Sistemas que j\u00e1 produzem estes dados</h2>'
+      +tab([['Sistema'],['Detentor'],['O que tem']],M.sistemasExistentes.map(function(s){
+        return [esc(s.sigla),esc(s.detentor),esc(s.oQueTem)];}))
+      +'<h2>Indicadores</h2>'
+      +tab([['Indicador'],['Estado'],['Quem det\u00e9m']],M.indicadores.map(function(i){
+        return [esc(i.nome),esc(i.estado),esc(i.detentor)];}))
+      +'<h2>O que o sistema recusa fazer</h2>'
+      +M.recusado.map(function(r){
+        return '<div style="margin-bottom:10px"><b>'+esc(r.item)+'</b><div>'+esc(r.razao)+'</div></div>';}).join('')
+      +'<div class="nota">'+esc(M.meta.semDadosDeDoente)+'</div>'
+      +rodape(),
+    csv:[['Indicador','Estado','Detentor','O que precisa']]
+      .concat(M.indicadores.map(function(i){return [i.nome,i.estado,i.detentor,i.oQuePrecisa];})),
+    json:M
+  };
+}
+
+/* ---------------- interface ---------------- */
+function desenhar(){
+  var n=nivel();
+  var adm=eAdministrador();
+  document.getElementById('ident').innerHTML=
+     '<b>Conta:</b> '+esc(n&&n.nome?n.nome:'sem sess\u00e3o (leitura completa)')
+    +' &nbsp;&middot;&nbsp; <b>Ecr\u00e3s a que tem acesso:</b> '+(n&&n.paginas?n.paginas.length:'todos')
+    +' &nbsp;&middot;&nbsp; <b>Imprimir e exportar:</b> '
+    +(adm?'<span style="color:var(--ok)">todos os relat\u00f3rios</span>'
+        :'<span style="color:var(--amber)">apenas os do seu n\u00edvel</span>');
+
+  var disp=[],bloq=[];
+  RELATORIOS.forEach(function(r){
+    var temDados=r.dados.every(function(f){return ST.d[f]});
+    if(!temDados)return;
+    (podeVer(r.ecra)?disp:bloq).push(r);
+  });
+
+  document.getElementById('disponiveis').innerHTML=disp.length?disp.map(function(r){
+    return cartao(r,false,adm);
+  }).join(''):'<div class="sem">Nenhum relat\u00f3rio dispon\u00edvel para este n\u00edvel de acesso.</div>';
+  document.getElementById('d-tag').textContent=disp.length+' relat\u00f3rios';
+
+  if(bloq.length){
+    document.getElementById('bloqueados').innerHTML=bloq.map(function(r){return cartao(r,true,adm)}).join('');
+    document.getElementById('b-tag').textContent=bloq.length+' bloqueados';
+  } else {
+    document.getElementById('bloco-bloq').style.display='none';
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-r]'),function(b){
+    b.addEventListener('click',function(){abrir(b.dataset.r,b.dataset.acc)});
+  });
+}
+
+function cartao(r,bloqueado,adm){
+  var podeExportar=adm;
+  return '<div class="rl'+(bloqueado?' bloq':'')+'">'
+   +'<div class="rl-t">'+r.titulo+'</div>'
+   +'<div class="rl-d">'+r.desc+'</div>'
+   +'<div class="rl-m"><span>'+r.idade+'</span></div>'
+   +'<div class="rl-b">'
+   +'<button class="p" data-r="'+r.id+'" data-acc="ver"'+(bloqueado?' disabled':'')+'>Ver</button>'
+   +'<button data-r="'+r.id+'" data-acc="imprimir"'+(bloqueado?' disabled':'')+'>Imprimir</button>'
+   +'<button data-r="'+r.id+'" data-acc="csv"'+((bloqueado||!podeExportar)?' disabled':'')+'>CSV</button>'
+   +'<button data-r="'+r.id+'" data-acc="json"'+((bloqueado||!podeExportar)?' disabled':'')+'>JSON</button>'
+   +'</div>'
+   +(bloqueado?'<div style="font-size:10px;color:var(--red)">Exige acesso a '+r.ecra+'</div>'
+     :(!podeExportar?'<div style="font-size:10px;color:var(--t4)">Exporta\u00e7\u00e3o reservada ao administrador</div>':''))
+   +'</div>';
+}
+
+function abrir(id,acc){
+  var r=null;RELATORIOS.forEach(function(x){if(x.id===id)r=x});
+  if(!r||!podeVer(r.ecra))return;
+  if((acc==='csv'||acc==='json')&&!eAdministrador())return;
+  var out=r.gerar();
+  ST.actual={r:r,out:out};
+  if(acc==='csv'){descarregarCSV(r.id,out.csv);return}
+  if(acc==='json'){descarregarJSON(r.id,out.json);return}
+  document.getElementById('folha').innerHTML=out.html;
+  document.getElementById('visor').classList.add('on');
+  document.getElementById('b-csv').disabled=!eAdministrador();
+  document.getElementById('b-json').disabled=!eAdministrador();
+  if(acc==='imprimir') setTimeout(function(){window.print()},260);
+}
+
+function descarregarCSV(nome,linhas){
+  var txt=linhas.map(function(l){return l.map(function(c){
+    var s=String(c==null?'':c);
+    return (s.indexOf(';')>=0||s.indexOf('"')>=0||s.indexOf('\n')>=0)?'"'+s.replace(/"/g,'""')+'"':s;
+  }).join(';')}).join('\n');
+  baixar(nome+'.csv','\ufeff'+txt,'text/csv;charset=utf-8');
+}
+function descarregarJSON(nome,obj){
+  baixar(nome+'.json',JSON.stringify(obj,null,2),'application/json');
+}
+function baixar(nome,txt,tipo){
+  var b=new Blob([txt],{type:tipo}), u=URL.createObjectURL(b);
+  var a=document.createElement('a');a.href=u;a.download='sinagepe-'+nome;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(u)},900);
+}
+
+document.getElementById('b-fechar').addEventListener('click',function(){
+  document.getElementById('visor').classList.remove('on');
+});
+document.getElementById('b-imprimir').addEventListener('click',function(){window.print()});
+document.getElementById('b-csv').addEventListener('click',function(){
+  if(ST.actual&&eAdministrador())descarregarCSV(ST.actual.r.id,ST.actual.out.csv);
+});
+document.getElementById('b-json').addEventListener('click',function(){
+  if(ST.actual&&eAdministrador())descarregarJSON(ST.actual.r.id,ST.actual.out.json);
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape')document.getElementById('visor').classList.remove('on');
+});
+
+var FICHEIROS=['armazens-nacionais','antecipacao','rede-viaria','cascata-precos','sima-precos',
+ 'adesao-institucional','governanca-dado','identificacao-gs1','medicamentos-cadeia'];
+Promise.all(FICHEIROS.map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'})
+    .then(function(r){return r.ok?r.json():null}).catch(function(){return null});
+})).then(function(res){
+  FICHEIROS.forEach(function(f,i){if(res[i])ST.d[f]=res[i]});
+  desenhar();
+}).catch(function(e){
+  document.getElementById('ident').innerHTML='<div class="err">N\u00e3o foi poss\u00edvel carregar: '+esc(e.message)+'</div>';
+});
+</script>
+</body>
+</html>

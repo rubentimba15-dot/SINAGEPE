@@ -42,6 +42,7 @@
     { key: 'logistica',     icon: '\u21C4', label: 'Log\u00edstica',        href: 'modulo-logistica.html', grupo: 'CADEIA' },
     { key: 'rede-logistica',icon: '\u2318', label: 'Rede Log\u00edstica',   href: 'rede-logistica.html', grupo: 'CADEIA' },
     { key: 'relatorio-exec',icon: '\u25A4', label: 'Relat\u00f3rio Executivo', href: 'relatorio-executivo.html', grupo: 'RELATORIOS' },
+    { key: 'relatorios-central', icon: '\u2637', label: 'Central de Relat\u00f3rios', href: 'relatorios-central.html', grupo: 'RELATORIOS' },
     { key: 'relatorios',    icon: '\u25A7', label: 'Relat\u00f3rios',       href: 'relatorios.html', grupo: 'RELATORIOS' },
     { key: 'governanca',    icon: '\u2696', label: 'Governa\u00e7\u00e3o do Dado', href: 'governanca-dado.html', grupo: 'GOVERNACAO' },
     { key: 'config',        icon: '\u2699', label: 'Configura\u00e7\u00f5es', href: 'administracao-auditoria.html', grupo: 'GOVERNACAO' },
