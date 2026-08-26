@@ -351,6 +351,38 @@
       "primeiroPasso": "Publicar a lista de infraestrutura de armazenagem e transformação existente nas Zonas Económicas Especiais e Zonas Francas Industriais.",
       "fonte": "https://apiex.gov.mz/sobre-nos/",
       "chave": "Está sob a mesma tutela do ICM e da BMM. Uma abordagem ao Ministério da Indústria e Comércio pode abrir as três de uma vez, em vez de três conversas separadas. E há um aviso a respeitar: projecto aprovado não é projecto construído — capacidade aprovada nunca pode ser somada à capacidade existente."
+    },
+    {
+      "id": "alfandegas-jue",
+      "nome": "Autoridade Tributária de Moçambique — Direcção-Geral das Alfândegas, com a MCNet, S.A.",
+      "sigla": "ALFÂNDEGAS · JUE",
+      "tutela": "Ministério da Economia e Finanças. A MCNet opera em regime de parceria público-privada, fundada em 2009.",
+      "baseLegal": "A Janela Única Electrónica é a plataforma nacional de desembaraço aduaneiro. Está em operação há mais de quinze anos.",
+      "esforco": 5,
+      "impacto": 5,
+      "jaTemos": [
+        "A JUE é o ponto por onde passa toda a mercadoria importada e exportada do país",
+        "Dois subsistemas: o CMS, de uso exclusivo das Alfândegas, e o TradeNet, que liga despachantes, empresas de navegação, operadores portuários, terminais e bancos comerciais",
+        "A informação é fornecida pelo utente uma única vez e fica disponível a todas as entidades do processo",
+        "Sede da Direcção-Geral das Alfândegas: Rua de Timor Leste n.º 95, 6.º andar, Maputo"
+      ],
+      "lacunas": [
+        "Não há qualquer dado de importação ou exportação no SINAGEPE. O Balanço Nacional assume volumes de importação em vez de os conhecer",
+        "A cascata de preços dos combustíveis tem a etapa CIF por preencher — o valor real está nas declarações aduaneiras",
+        "Não se sabe quanto de cada produto essencial entrou, por que posto fronteiriço, nem em que mês",
+        "O tempo médio de desembaraço não é publicado, apesar de o Ministério dos Transportes declarar a sua redução como prioridade"
+      ],
+      "ganha": [
+        "O agregado de importações por produto e por mês passa a estar cruzado com capacidade de armazenagem, estado das estradas e preço de mercado — coisa que a JUE, sozinha, não faz",
+        "A Autoridade Tributária ganha um instrumento de leitura económica dos seus próprios dados, sem ter de o construir",
+        "Passa a ser possível detectar sobredeclaração de preço na importação comparando o valor declarado com a cotação internacional na mesma semana — foi assim que o caso do arroz a 470 dólares por tonelada apareceu",
+        "O SINAGEPE deixa de assumir importações e passa a conhecê-las: é a diferença entre estimativa e facto em metade dos indicadores do sistema"
+      ],
+      "custa": "Publicar um agregado mensal, por produto e por posto fronteiriço: quantidade e valor total. Sem identificação de operador, sem número de declaração, sem factura.",
+      "primeiroPasso": "Um único ficheiro mensal com quantidade importada dos doze produtos essenciais, por posto fronteiriço. Nada mais.",
+      "fonte": "https://jue.mcnet.co.mz/mcnet/portal/homepage",
+      "chave": "É a fonte de maior valor de toda a lista e também a mais difícil. Difícil não por ser técnica, mas por ser jurídica: os dados são de operadores privados e estão protegidos por sigilo aduaneiro e comercial. A chave é NÃO PEDIR DADOS POR OPERADOR. Pedir por produto, por posto e por mês, sem nome de empresa. Isso resolve o sigilo, resolve o problema de concorrência, e dá ao sistema noventa por cento do valor: a segurança alimentar precisa de saber que entraram cinquenta mil toneladas de trigo por Maputo em Março — não precisa de saber quem as importou.",
+      "avisoConcorrencia": "Publicar quantidades e valores por operador é publicar a posição competitiva de empresas concretas numa plataforma acessível a concorrentes. É matéria de direito da concorrência, e a ARC é parceira do sistema. O agregado anónimo evita o problema por inteiro."
     }
   ],
   "argumentoTransversal": {
