@@ -383,6 +383,38 @@
       "fonte": "https://jue.mcnet.co.mz/mcnet/portal/homepage",
       "chave": "É a fonte de maior valor de toda a lista e também a mais difícil. Difícil não por ser técnica, mas por ser jurídica: os dados são de operadores privados e estão protegidos por sigilo aduaneiro e comercial. A chave é NÃO PEDIR DADOS POR OPERADOR. Pedir por produto, por posto e por mês, sem nome de empresa. Isso resolve o sigilo, resolve o problema de concorrência, e dá ao sistema noventa por cento do valor: a segurança alimentar precisa de saber que entraram cinquenta mil toneladas de trigo por Maputo em Março — não precisa de saber quem as importou.",
       "avisoConcorrencia": "Publicar quantidades e valores por operador é publicar a posição competitiva de empresas concretas numa plataforma acessível a concorrentes. É matéria de direito da concorrência, e a ARC é parceira do sistema. O agregado anónimo evita o problema por inteiro."
+    },
+    {
+      "id": "setsan",
+      "nome": "SETSAN — Secretariado Técnico de Segurança Alimentar e Nutricional",
+      "sigla": "SETSAN",
+      "tutela": "Coordenação do Ministro da Agricultura, ao abrigo do Decreto n.º 24/2010. Responde ao CONSAN — Conselho Nacional de Segurança Alimentar e Nutricional.",
+      "baseLegal": "Decreto n.º 24/2010. Mandato de coordenar a Estratégia e Plano de Acção de Segurança Alimentar e Nutricional numa abordagem multissectorial, produzir informação para acção e apoiar a formulação de políticas.",
+      "esforco": 2,
+      "impacto": 5,
+      "jaTemos": [
+        "Realiza a Avaliação de Segurança Alimentar e Nutricional Aguda pós-colheita, anualmente, com cobertura urbana, peri-urbana e rural",
+        "Produz estimativas de população em privação alimentar aguda por província — na avaliação de 2021 foram cerca de 1.857.642 pessoas, menos 31% do que no ano anterior",
+        "Coordena o Grupo de Análise da Vulnerabilidade, que junta Agricultura, Indústria e Comércio, Saúde, Finanças, Obras Públicas e o INGD, com FAO, PAM, FEWS NET, UNICEF e outros parceiros",
+        "Os seus relatórios alimentam os principais veículos de dados nacionais, regionais e internacionais sobre segurança alimentar",
+        "Sede: Av. das FPLM n.º 2698, recinto do IIAM, Maputo. Sítio: setsan.gov.mz"
+      ],
+      "lacunas": [
+        "O SINAGEPE não tem um único indicador de vulnerabilidade alimentar. Sabe onde estão os armazéns e as estradas; não sabe onde estão as pessoas em privação",
+        "Os relatórios do SETSAN são PDF anuais. Não há série estruturada por província nem formato legível por máquina",
+        "A classificação IPC — fases internacionais de insegurança alimentar — não consta do sistema",
+        "O Centro de Antecipação identifica risco logístico e produtivo, mas não risco alimentar sobre população"
+      ],
+      "ganha": [
+        "É a peça que falta ao Centro de Antecipação. Hoje o sistema diz onde a rede vai partir; com o SETSAN passaria a dizer quem fica sem comer quando partir",
+        "O SETSAN avalia anualmente. O SINAGEPE tem preços semanais do SIMA, estado das estradas e cadastro de armazenagem — cruzar os dois dá leitura contínua entre avaliações",
+        "A avaliação pós-colheita ganha contexto logístico: uma província vulnerável a 140 km do armazém mais próximo e com corredor cortado é caso diferente de uma vulnerável com via aberta",
+        "O SETSAN mobiliza fundos com os seus relatórios. Um relatório com camada logística e de preço é mais forte perante doadores"
+      ],
+      "custa": "Publicar a tabela de população em privação alimentar por província e por fase, em ficheiro estruturado, no momento em que já publica o relatório anual. O dado já existe; muda apenas o formato.",
+      "primeiroPasso": "Uma tabela com província, número de pessoas em privação alimentar e fase de classificação, da avaliação mais recente. Uma linha por província.",
+      "fonte": "https://www.setsan.gov.mz/",
+      "chave": "É o organismo cuja função é exactamente aquilo que o SINAGEPE tenta fazer, e não estava no sistema. Não é concorrente: é a fonte que falta. O SETSAN diz quantas pessoas estão em privação e onde; o SINAGEPE diz porquê e por onde chegar até elas. Nenhum dos dois responde sozinho. O esforço é baixo porque o dado já é produzido e publicado — muda o formato, não o trabalho."
     }
   ],
   "argumentoTransversal": {

@@ -84,6 +84,7 @@
 
   /* ---- 2. CONCEITOS: vocabulário do sistema e onde ele vive ---- */
   var CONCEITOS = [
+    { n:'Vulnerabilidade alimentar', d:'O SETSAN avalia quantas pessoas estão em privação alimentar aguda, por província. Ainda não ligado.', h:'adesao-institucional.html', t:'setsan vulnerabilidade fome privacao alimentar consan ipc avaliacao' },
     { n:'Capacidade cega', d:'Fatia da capacidade sem leitura automática. Hoje: 100%.', h:'ponto-cego-duplo.html', t:'cega cego sensor telemetria' },
     { n:'Certificado de depósito', d:'Título negociável da BMM. A via legal para o cadastro de armazenagem privada.', h:'adesao-institucional.html', t:'certificado deposito bmm colateral bolsa' },
     { n:'Factura da geografia', d:'Diferença de preço do gasóleo entre regiões. Mueda paga mais 15,60 MT/L.', h:'portal-transportadores.html', t:'factura geografia gasoleo diferencial arene preco regiao' },
