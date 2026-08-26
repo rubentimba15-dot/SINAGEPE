@@ -34,7 +34,6 @@
       "Nenhum operador foi contactado. Este cadastro é documental, não declarativo."
     ]
   },
-
   "resumo": {
     "unidadesRegistadas": 29,
     "silosCereaisEstatais": {
@@ -50,7 +49,6 @@
       "fonte": "https://www.petromoc.co.mz/product-service/logistica/"
     }
   },
-
   "divergencias": [
     {
       "id": "div-barue",
@@ -61,7 +59,10 @@
         "https://www.mic.gov.mz/por/Noticias/Gestao-de-Complexos-de-Silos-e-Armazens-de-Cereais-e-leguminosas",
         "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
       ],
-      "cadeiaAprovacao": ["MIC", "ICM"],
+      "cadeiaAprovacao": [
+        "MIC",
+        "ICM"
+      ],
       "accao": "Pedido formal de esclarecimento ao ICM sobre o inventário definitivo dos complexos sob concessão e o estado de Barué."
     },
     {
@@ -73,7 +74,10 @@
         "https://www.petromoc.co.mz/product-service/logistica/",
         "https://www.cfm.co.mz/en/porto-de-nacala/"
       ],
-      "cadeiaAprovacao": ["MIREME", "ARENE"],
+      "cadeiaAprovacao": [
+        "MIREME",
+        "ARENE"
+      ],
       "accao": "Normalizar a unidade de medida do cadastro de combustíveis (m³) e obter conversão oficial junto da Petromoc."
     },
     {
@@ -82,11 +86,24 @@
       "titulo": "Não existe registo público de armazéns privados fora dos portos e dos silos do Estado",
       "descricao": "A totalidade das unidades verificáveis pertence a três universos: silos do Estado, terminais portuários concessionados e instalações de combustíveis. A armazenagem privada dispersa — comercial, agroindustrial, cooperativa — não tem registo público consultável.",
       "fontes": [],
-      "cadeiaAprovacao": ["MIC", "BMM", "CTA"],
+      "cadeiaAprovacao": [
+        "MIC",
+        "BMM",
+        "CTA"
+      ],
       "accao": "Usar o instrumento legal que já existe: o certificado de depósito da Bolsa de Mercadorias de Moçambique. Ver bloco viaLegalCadastro."
+    },
+    {
+      "id": "divergencia-terminais-matola",
+      "titulo": "Dois terminais de cereais na mesma área portuária",
+      "descricao": "O Porto de Maputo lista, no mesmo local de Língamo/Matola, a STEMA e um \"Maputo Grain Terminal\" descrito como de propriedade privada, com 25.000 t em silos e 30.000 t em armazém plano. Não é claro se são a mesma instalação com dois nomes comerciais, se são vizinhas e distintas, ou se uma opera parte da outra. A STEMA é indiscutivelmente estatal — IGEPE e Tesouro detêm 100%.",
+      "accao": "Confirmar junto do IGEPE e do MPDC se são uma ou duas instalações. Enquanto não estiver confirmado, só a STEMA consta do cadastro, para não contar capacidade duas vezes.",
+      "cadeiaAprovacao": [
+        "IGEPE",
+        "MPDC — Maputo Port Development Company"
+      ]
     }
   ],
-
   "viaLegalCadastro": {
     "instituicao": "BMM — Bolsa de Mercadorias de Moçambique, IP",
     "baseLegal": "Decreto n.º 36/2012, de 17 de Outubro",
@@ -100,7 +117,6 @@
     "fonte": "https://www.linkedin.com/company/bmm-mozambique-commodity-exchange",
     "porConfirmar": "A BMM não publica a lista de silos e armazéns que lhe estão afectos. É preciso pedido institucional."
   },
-
   "armazens": [
     {
       "id": "silo-iapala",
@@ -108,16 +124,28 @@
       "tipo": "silo-cereais",
       "provincia": "Nampula",
       "distrito": "Ribáuè",
-      "coordenada": { "lat": -15.16, "lon": 37.07, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -15.16,
+        "lon": 37.07,
+        "precisao": "sede-localidade"
+      },
       "natureza": "ppp-gestao-privada",
       "proprietario": "Estado de Moçambique (registo assegurado pelo ICM)",
       "operador": "Agrobusiness, Mozambique Limitada",
       "sedeOperador": "Cidade de Nampula",
-      "concessao": { "regime": "PPP", "prazoAnos": "15 a 20", "assinatura": "2021-03-12" },
+      "concessao": {
+        "regime": "PPP",
+        "prazoAnos": "15 a 20",
+        "assinatura": "2021-03-12"
+      },
       "estado": "por-construir",
       "estadoDataFonte": "2021",
       "capacidade": null,
-      "produtos": ["cereais", "leguminosas", "oleaginosas"],
+      "produtos": [
+        "cereais",
+        "leguminosas",
+        "oleaginosas"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
@@ -128,16 +156,28 @@
       "tipo": "silo-cereais",
       "provincia": "Niassa",
       "distrito": "Cuamba",
-      "coordenada": { "lat": -14.8031, "lon": 36.5372, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -14.8031,
+        "lon": 36.5372,
+        "precisao": "sede-localidade"
+      },
       "natureza": "ppp-gestao-privada",
       "proprietario": "Estado de Moçambique (registo assegurado pelo ICM)",
       "operador": "Agrobusiness, Mozambique Limitada",
       "sedeOperador": "Cidade de Nampula",
-      "concessao": { "regime": "PPP", "prazoAnos": "15 a 20", "assinatura": "2021-03-12" },
+      "concessao": {
+        "regime": "PPP",
+        "prazoAnos": "15 a 20",
+        "assinatura": "2021-03-12"
+      },
       "estado": "por-construir",
       "estadoDataFonte": "2021",
       "capacidade": null,
-      "produtos": ["cereais", "leguminosas", "oleaginosas"],
+      "produtos": [
+        "cereais",
+        "leguminosas",
+        "oleaginosas"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
@@ -148,16 +188,28 @@
       "tipo": "silo-cereais",
       "provincia": "Nampula",
       "distrito": "Malema",
-      "coordenada": { "lat": -14.95, "lon": 37.4167, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -14.95,
+        "lon": 37.4167,
+        "precisao": "sede-localidade"
+      },
       "natureza": "ppp-gestao-privada",
       "proprietario": "Estado de Moçambique (registo assegurado pelo ICM)",
       "operador": "Agrobusiness, Mozambique Limitada",
       "sedeOperador": "Cidade de Nampula",
-      "concessao": { "regime": "PPP", "prazoAnos": "15 a 20", "assinatura": "2021-03-12" },
+      "concessao": {
+        "regime": "PPP",
+        "prazoAnos": "15 a 20",
+        "assinatura": "2021-03-12"
+      },
       "estado": "por-reabilitar",
       "estadoDataFonte": "2021",
       "capacidade": null,
-      "produtos": ["cereais", "leguminosas", "oleaginosas"],
+      "produtos": [
+        "cereais",
+        "leguminosas",
+        "oleaginosas"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
@@ -168,16 +220,28 @@
       "tipo": "silo-cereais",
       "provincia": "Sofala",
       "distrito": "Gorongosa",
-      "coordenada": { "lat": -18.6833, "lon": 34.0667, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -18.6833,
+        "lon": 34.0667,
+        "precisao": "sede-localidade"
+      },
       "natureza": "ppp-gestao-privada",
       "proprietario": "Estado de Moçambique (registo assegurado pelo ICM)",
       "operador": "Mozgrain, Limitada",
       "sedeOperador": "Cidade da Beira",
-      "concessao": { "regime": "PPP", "prazoAnos": "15 a 20", "assinatura": "2021-03-12" },
+      "concessao": {
+        "regime": "PPP",
+        "prazoAnos": "15 a 20",
+        "assinatura": "2021-03-12"
+      },
       "estado": "por-reabilitar",
       "estadoDataFonte": "2021",
       "capacidade": null,
-      "produtos": ["cereais", "leguminosas", "oleaginosas"],
+      "produtos": [
+        "cereais",
+        "leguminosas",
+        "oleaginosas"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "beira",
@@ -189,16 +253,28 @@
       "tipo": "silo-cereais",
       "provincia": "Sofala",
       "distrito": "Nhamatanda",
-      "coordenada": { "lat": -19.2833, "lon": 34.2167, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -19.2833,
+        "lon": 34.2167,
+        "precisao": "sede-localidade"
+      },
       "natureza": "ppp-gestao-privada",
       "proprietario": "Estado de Moçambique (registo assegurado pelo ICM)",
       "operador": "Mozgrain, Limitada",
       "sedeOperador": "Cidade da Beira",
-      "concessao": { "regime": "PPP", "prazoAnos": "15 a 20", "assinatura": "2021-03-12" },
+      "concessao": {
+        "regime": "PPP",
+        "prazoAnos": "15 a 20",
+        "assinatura": "2021-03-12"
+      },
       "estado": "por-reabilitar",
       "estadoDataFonte": "2021",
       "capacidade": null,
-      "produtos": ["cereais", "leguminosas", "oleaginosas"],
+      "produtos": [
+        "cereais",
+        "leguminosas",
+        "oleaginosas"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "beira",
@@ -210,16 +286,28 @@
       "tipo": "silo-cereais",
       "provincia": "Niassa",
       "distrito": "Lichinga",
-      "coordenada": { "lat": -13.3128, "lon": 35.2406, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -13.3128,
+        "lon": 35.2406,
+        "precisao": "sede-localidade"
+      },
       "natureza": "ppp-gestao-privada",
       "proprietario": "Estado de Moçambique (registo assegurado pelo ICM)",
       "operador": "Mozgrain, Limitada",
       "sedeOperador": "Cidade da Beira",
-      "concessao": { "regime": "PPP", "prazoAnos": "15 a 20", "assinatura": "2021-03-12" },
+      "concessao": {
+        "regime": "PPP",
+        "prazoAnos": "15 a 20",
+        "assinatura": "2021-03-12"
+      },
       "estado": "por-reabilitar",
       "estadoDataFonte": "2021",
       "capacidade": null,
-      "produtos": ["cereais", "leguminosas", "oleaginosas"],
+      "produtos": [
+        "cereais",
+        "leguminosas",
+        "oleaginosas"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "nacala",
@@ -231,16 +319,28 @@
       "tipo": "silo-cereais",
       "provincia": "Tete",
       "distrito": "Angónia",
-      "coordenada": { "lat": -14.7167, "lon": 34.35, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -14.7167,
+        "lon": 34.35,
+        "precisao": "sede-localidade"
+      },
       "natureza": "ppp-gestao-privada",
       "proprietario": "Estado de Moçambique (registo assegurado pelo ICM)",
       "operador": "Mozgrain, Limitada",
       "sedeOperador": "Cidade da Beira",
-      "concessao": { "regime": "PPP", "prazoAnos": "15 a 20", "assinatura": "2021-03-12" },
+      "concessao": {
+        "regime": "PPP",
+        "prazoAnos": "15 a 20",
+        "assinatura": "2021-03-12"
+      },
       "estado": "por-reabilitar",
       "estadoDataFonte": "2021",
       "capacidade": null,
-      "produtos": ["cereais", "leguminosas", "oleaginosas"],
+      "produtos": [
+        "cereais",
+        "leguminosas",
+        "oleaginosas"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "sena",
@@ -252,16 +352,28 @@
       "tipo": "silo-cereais",
       "provincia": "Zambézia",
       "distrito": null,
-      "coordenada": { "lat": null, "lon": null, "precisao": "desconhecida" },
+      "coordenada": {
+        "lat": null,
+        "lon": null,
+        "precisao": "desconhecida"
+      },
       "natureza": "ppp-gestao-privada",
       "proprietario": "Estado de Moçambique (registo assegurado pelo ICM)",
       "operador": "Mozgrain, Limitada",
       "sedeOperador": "Cidade da Beira",
-      "concessao": { "regime": "PPP", "prazoAnos": "15 a 20", "assinatura": "2021-03-12" },
+      "concessao": {
+        "regime": "PPP",
+        "prazoAnos": "15 a 20",
+        "assinatura": "2021-03-12"
+      },
       "estado": "por-reabilitar",
       "estadoDataFonte": "2021",
       "capacidade": null,
-      "produtos": ["cereais", "leguminosas", "oleaginosas"],
+      "produtos": [
+        "cereais",
+        "leguminosas",
+        "oleaginosas"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "nota": "Localidade confirmada pelas duas fontes governamentais, mas sem coordenada fiável. Não deve ser desenhada no mapa até o distrito ser confirmado pelo ICM.",
@@ -273,16 +385,28 @@
       "tipo": "silo-cereais",
       "provincia": "Zambézia",
       "distrito": "Milange",
-      "coordenada": { "lat": -16.0958, "lon": 35.7758, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -16.0958,
+        "lon": 35.7758,
+        "precisao": "sede-localidade"
+      },
       "natureza": "ppp-gestao-privada",
       "proprietario": "Estado de Moçambique (registo assegurado pelo ICM)",
       "operador": "Mozgrain, Limitada",
       "sedeOperador": "Cidade da Beira",
-      "concessao": { "regime": "PPP", "prazoAnos": "15 a 20", "assinatura": "2021-03-12" },
+      "concessao": {
+        "regime": "PPP",
+        "prazoAnos": "15 a 20",
+        "assinatura": "2021-03-12"
+      },
       "estado": "por-construir",
       "estadoDataFonte": "2021",
       "capacidade": null,
-      "produtos": ["cereais", "leguminosas", "oleaginosas"],
+      "produtos": [
+        "cereais",
+        "leguminosas",
+        "oleaginosas"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
@@ -293,16 +417,28 @@
       "tipo": "silo-cereais",
       "provincia": "Manica",
       "distrito": "Barué",
-      "coordenada": { "lat": -18.05, "lon": 33.1833, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -18.05,
+        "lon": 33.1833,
+        "precisao": "sede-localidade"
+      },
       "natureza": "ppp-gestao-privada",
       "proprietario": "Estado de Moçambique (registo assegurado pelo ICM)",
       "operador": "Mozgrain, Limitada",
       "sedeOperador": "Cidade da Beira",
-      "concessao": { "regime": "PPP", "prazoAnos": "15 a 20", "assinatura": "2021-03-12" },
+      "concessao": {
+        "regime": "PPP",
+        "prazoAnos": "15 a 20",
+        "assinatura": "2021-03-12"
+      },
       "estado": "desconhecido",
       "estadoDataFonte": "2021",
       "capacidade": null,
-      "produtos": ["cereais", "leguminosas", "oleaginosas"],
+      "produtos": [
+        "cereais",
+        "leguminosas",
+        "oleaginosas"
+      ],
       "sensor": "sem-sensor",
       "verificado": false,
       "divergencia": "div-barue",
@@ -310,24 +446,50 @@
       "corredor": "beira",
       "fonte": "https://www.mic.gov.mz/por/Noticias/Gestao-de-Complexos-de-Silos-e-Armazens-de-Cereais-e-leguminosas"
     },
-
     {
       "id": "petromoc-lingamo-liquidos",
       "nome": "Terminal Oceânico de Língamo — combustíveis líquidos",
       "tipo": "terminal-combustivel",
       "provincia": "Maputo",
       "distrito": "Matola",
-      "coordenada": { "lat": -25.98, "lon": 32.47, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -25.98,
+        "lon": 32.47,
+        "precisao": "sede-localidade"
+      },
       "natureza": "participacao-estatal",
       "proprietario": "Petromoc SA",
       "operador": "Petromoc SA",
       "estado": "operacional",
       "estadoDataFonte": "2026",
-      "capacidade": { "valor": 390000, "unidade": "m3" },
-      "produtos": ["gasolina", "gasoleo", "jet-a1", "petroleo-iluminacao"],
-      "expedicao": { "camioesDia": 60, "minutosPorCamiao": 35, "ilhasEnchimento": 8, "vagoesSimultaneos": 6 },
-      "subTerminal": { "nome": "Zona C", "camioesDia": 80, "minutosPorCamiao": 45, "ilhasEnchimento": 8 },
-      "hinterland": ["África do Sul", "Eswatini", "Zimbabwe", "Botswana"],
+      "capacidade": {
+        "valor": 390000,
+        "unidade": "m3"
+      },
+      "produtos": [
+        "gasolina",
+        "gasoleo",
+        "jet-a1",
+        "petroleo-iluminacao"
+      ],
+      "expedicao": {
+        "camioesDia": 60,
+        "minutosPorCamiao": 35,
+        "ilhasEnchimento": 8,
+        "vagoesSimultaneos": 6
+      },
+      "subTerminal": {
+        "nome": "Zona C",
+        "camioesDia": 80,
+        "minutosPorCamiao": 45,
+        "ilhasEnchimento": 8
+      },
+      "hinterland": [
+        "África do Sul",
+        "Eswatini",
+        "Zimbabwe",
+        "Botswana"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "maputo",
@@ -339,15 +501,27 @@
       "tipo": "terminal-gpl",
       "provincia": "Maputo",
       "distrito": "Matola",
-      "coordenada": { "lat": -25.98, "lon": 32.47, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -25.98,
+        "lon": 32.47,
+        "precisao": "sede-localidade"
+      },
       "natureza": "participacao-estatal",
       "proprietario": "Petromoc SA",
       "operador": "Petromoc SA",
       "estado": "operacional",
       "estadoDataFonte": "2026",
-      "capacidade": { "valor": 8200, "unidade": "m3", "equivalenteToneladas": 4100 },
-      "produtos": ["gpl"],
-      "expedicao": { "camioes24tPorHoraEMeia": 6 },
+      "capacidade": {
+        "valor": 8200,
+        "unidade": "m3",
+        "equivalenteToneladas": 4100
+      },
+      "produtos": [
+        "gpl"
+      ],
+      "expedicao": {
+        "camioes24tPorHoraEMeia": 6
+      },
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "maputo",
@@ -359,15 +533,32 @@
       "tipo": "terminal-gpl",
       "provincia": "Sofala",
       "distrito": "Beira",
-      "coordenada": { "lat": -19.8175, "lon": 34.842, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -19.8175,
+        "lon": 34.842,
+        "precisao": "sede-localidade"
+      },
       "natureza": "participacao-estatal",
       "proprietario": "Petromoc SA",
       "operador": "Petromoc SA",
       "estado": "operacional",
       "estadoDataFonte": "2026",
-      "capacidade": { "valor": 6000, "unidade": "m3", "equivalenteToneladas": 3000, "tanques": 3 },
-      "produtos": ["gpl"],
-      "hinterland": ["Zimbabwe", "Malawi", "Zâmbia", "Botswana", "RDC"],
+      "capacidade": {
+        "valor": 6000,
+        "unidade": "m3",
+        "equivalenteToneladas": 3000,
+        "tanques": 3
+      },
+      "produtos": [
+        "gpl"
+      ],
+      "hinterland": [
+        "Zimbabwe",
+        "Malawi",
+        "Zâmbia",
+        "Botswana",
+        "RDC"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "beira",
@@ -379,17 +570,37 @@
       "tipo": "terminal-combustivel",
       "provincia": "Nampula",
       "distrito": "Nacala",
-      "coordenada": { "lat": -14.5417, "lon": 40.6733, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -14.5417,
+        "lon": 40.6733,
+        "precisao": "sede-localidade"
+      },
       "natureza": "participacao-estatal",
       "proprietario": "Petromoc SA",
       "operador": "Petromoc SA",
       "estado": "em-modernizacao",
       "estadoDataFonte": "2026",
-      "capacidade": { "valor": 47500, "unidade": "m3" },
-      "produtos": ["gasolina", "gasoleo", "jet-a1", "petroleo-iluminacao"],
+      "capacidade": {
+        "valor": 47500,
+        "unidade": "m3"
+      },
+      "produtos": [
+        "gasolina",
+        "gasoleo",
+        "jet-a1",
+        "petroleo-iluminacao"
+      ],
       "infraestrutura": "3 oleodutos segregados com cerca de 4 km, propriedade da Petromoc",
-      "expedicao": { "camioesDia": 50, "minutosPorCamiao": 35, "ilhasEnchimento": 4, "vagoesPorTurno": 40 },
-      "hinterland": ["Malawi", "Zâmbia"],
+      "expedicao": {
+        "camioesDia": 50,
+        "minutosPorCamiao": 35,
+        "ilhasEnchimento": 4,
+        "vagoesPorTurno": 40
+      },
+      "hinterland": [
+        "Malawi",
+        "Zâmbia"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "divergencia": "div-nacala-combustivel",
@@ -402,15 +613,31 @@
       "tipo": "terminal-combustivel",
       "provincia": "Cabo Delgado",
       "distrito": "Pemba",
-      "coordenada": { "lat": -12.974, "lon": 40.5178, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -12.974,
+        "lon": 40.5178,
+        "precisao": "sede-localidade"
+      },
       "natureza": "participacao-estatal",
       "proprietario": "Petromoc SA",
       "operador": "Petromoc SA",
       "estado": "operacional",
       "estadoDataFonte": "2026",
-      "capacidade": { "valor": 18000, "unidade": "m3" },
-      "produtos": ["gasolina", "gasoleo", "jet-a1", "petroleo-iluminacao"],
-      "expedicao": { "camioesDia": 40, "minutosPorCamiao": 25, "ilhasEnchimento": 3 },
+      "capacidade": {
+        "valor": 18000,
+        "unidade": "m3"
+      },
+      "produtos": [
+        "gasolina",
+        "gasoleo",
+        "jet-a1",
+        "petroleo-iluminacao"
+      ],
+      "expedicao": {
+        "camioesDia": 40,
+        "minutosPorCamiao": 25,
+        "ilhasEnchimento": 3
+      },
       "nota": "Serve Cabo Delgado e parte do Niassa; abastece plataformas da Bacia do Rovuma por oleoduto próprio.",
       "sensor": "sem-sensor",
       "verificado": true,
@@ -422,15 +649,24 @@
       "tipo": "enchimento-gpl",
       "provincia": "Nampula",
       "distrito": "Nampula",
-      "coordenada": { "lat": -15.15, "lon": 39.4, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -15.15,
+        "lon": 39.4,
+        "precisao": "sede-localidade"
+      },
       "natureza": "participacao-estatal",
       "proprietario": "Petromoc SA",
       "operador": "Petromoc SA",
       "estado": "operacional",
       "estadoDataFonte": "2026",
       "capacidade": null,
-      "capacidadeEnchimento": { "toneladasDia": 35, "botijasDia": 5500 },
-      "produtos": ["gpl"],
+      "capacidadeEnchimento": {
+        "toneladasDia": 35,
+        "botijasDia": 5500
+      },
+      "produtos": [
+        "gpl"
+      ],
       "inauguracao": "2022-04-02",
       "nota": "Primeira instalação de GPL na província de Nampula. O valor publicado é capacidade de enchimento, não de armazenagem.",
       "sensor": "sem-sensor",
@@ -444,14 +680,25 @@
       "tipo": "terminal-combustivel",
       "provincia": "Sofala",
       "distrito": "Beira",
-      "coordenada": { "lat": -19.8175, "lon": 34.842, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -19.8175,
+        "lon": 34.842,
+        "precisao": "sede-localidade"
+      },
       "natureza": "participacao-estatal",
       "proprietario": "Petromoc 20%, NOIC (National Oil Company of Zimbabwe) 40%, IPG (Independent Petroleum Group) 40%",
       "operador": "Sociedade participada",
       "estado": "operacional",
       "estadoDataFonte": "2026",
-      "capacidade": { "valor": 95300, "unidade": "m3", "tanques": 9, "notaUnidade": "Fonte indica 95,3 milhões de litros, convertido para m³" },
-      "produtos": ["produtos-petroliferos"],
+      "capacidade": {
+        "valor": 95300,
+        "unidade": "m3",
+        "tanques": 9,
+        "notaUnidade": "Fonte indica 95,3 milhões de litros, convertido para m³"
+      },
+      "produtos": [
+        "produtos-petroliferos"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "beira",
@@ -463,37 +710,72 @@
       "tipo": "terminal-combustivel",
       "provincia": "Nampula",
       "distrito": "Nacala",
-      "coordenada": { "lat": -14.5417, "lon": 40.6733, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -14.5417,
+        "lon": 40.6733,
+        "precisao": "sede-localidade"
+      },
       "natureza": "privada",
       "proprietario": "BP-Moçambique",
       "operador": "BP-Moçambique",
       "estado": "desconhecido",
       "estadoDataFonte": "anterior a 2023",
-      "capacidade": { "valor": 18000, "unidade": "t" },
-      "produtos": ["produtos-petroliferos"],
+      "capacidade": {
+        "valor": 18000,
+        "unidade": "t"
+      },
+      "produtos": [
+        "produtos-petroliferos"
+      ],
       "nota": "Ligado ao terminal de granéis líquidos do porto por oleoduto de 3,5 km. Estado actual não confirmado.",
       "sensor": "sem-sensor",
       "verificado": false,
       "corredor": "nacala",
       "fonte": "https://www.cfm.co.mz/en/porto-de-nacala/"
     },
-
     {
       "id": "porto-maputo-mpdc",
       "nome": "Porto de Maputo — terminais e armazéns MPDC",
       "tipo": "terminal-portuario",
       "provincia": "Maputo",
       "distrito": "Maputo",
-      "coordenada": { "lat": -25.9722, "lon": 32.5714, "precisao": "instalacao" },
+      "coordenada": {
+        "lat": -25.9722,
+        "lon": 32.5714,
+        "precisao": "instalacao"
+      },
       "natureza": "concessao-privada",
       "proprietario": "Estado, através do CFM",
       "operador": "MPDC — Sociedade de Desenvolvimento do Porto de Maputo (parceria CFM + Portus Indico, que integra Grindrod, DP World e Mozambique Gestores)",
-      "concessao": { "inicio": "2003-04-15", "termo": "2058-04-13", "notaAdenda": "Adenda aprovada em Abril de 2024" },
+      "concessao": {
+        "inicio": "2003-04-15",
+        "termo": "2058-04-13",
+        "notaAdenda": "Adenda aprovada em Abril de 2024"
+      },
       "estado": "em-modernizacao",
       "estadoDataFonte": "2026",
-      "capacidade": { "valor": 32000000, "unidade": "t/ano", "notaUnidade": "Volume de carga movimentada em 2025, não capacidade estática de armazenagem" },
-      "terminais": ["pesca", "cabotagem", "carga-geral", "carvao", "fruta", "acucar", "contentores", "aco", "tanques-melaco"],
-      "produtos": ["carga-geral", "acucar", "cereais", "contentores"],
+      "capacidade": {
+        "valor": 32000000,
+        "unidade": "t/ano",
+        "notaUnidade": "Volume de carga movimentada em 2025, não capacidade estática de armazenagem"
+      },
+      "terminais": [
+        "pesca",
+        "cabotagem",
+        "carga-geral",
+        "carvao",
+        "fruta",
+        "acucar",
+        "contentores",
+        "aco",
+        "tanques-melaco"
+      ],
+      "produtos": [
+        "carga-geral",
+        "acucar",
+        "cereais",
+        "contentores"
+      ],
       "poderesAutoridade": "A MPDC detém poderes de autoridade portuária, incluindo operação de terminais e armazéns",
       "investimentoEmCurso": "Cerca de 500 milhões de USD entre 2024 e 2027; terminal de contentores de 225 mil para 530 mil TEU/ano, conclusão prevista no 1.º trimestre de 2027",
       "sensor": "sem-sensor",
@@ -507,14 +789,25 @@
       "tipo": "terminal-portuario",
       "provincia": "Maputo",
       "distrito": "Maputo",
-      "coordenada": { "lat": -25.9722, "lon": 32.5714, "precisao": "instalacao" },
+      "coordenada": {
+        "lat": -25.9722,
+        "lon": 32.5714,
+        "precisao": "instalacao"
+      },
       "natureza": "participacao-estatal",
       "proprietario": "MIPS — Mozambique International Port Services (Rennies 37%, CFM 33%, P&O 30%)",
       "operador": "MIPS",
       "estado": "operacional",
       "estadoDataFonte": "2025",
-      "capacidade": { "valor": 1000, "unidade": "TEU", "areaM2": 40000, "armazemCobertoM2": 3920 },
-      "produtos": ["contentores"],
+      "capacidade": {
+        "valor": 1000,
+        "unidade": "TEU",
+        "areaM2": 40000,
+        "armazemCobertoM2": 3920
+      },
+      "produtos": [
+        "contentores"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "maputo",
@@ -526,14 +819,23 @@
       "tipo": "terminal-granel",
       "provincia": "Maputo",
       "distrito": "Matola",
-      "coordenada": { "lat": -25.9689, "lon": 32.4726, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -25.9689,
+        "lon": 32.4726,
+        "precisao": "sede-localidade"
+      },
       "natureza": "concessao-privada",
       "proprietario": "Estado, através do CFM",
       "operador": "MPDC",
       "estado": "operacional",
       "estadoDataFonte": "2026",
-      "capacidade": { "valor": 1000000, "unidade": "t/ano" },
-      "produtos": ["minerios"],
+      "capacidade": {
+        "valor": 1000000,
+        "unidade": "t/ano"
+      },
+      "produtos": [
+        "minerios"
+      ],
       "nota": "Investimento de cerca de 9,9 milhões de USD. Não é armazenagem de bens essenciais — entra no cadastro por ocupar capacidade do corredor de Maputo.",
       "sensor": "sem-sensor",
       "verificado": true,
@@ -546,14 +848,26 @@
       "tipo": "terminal-granel",
       "provincia": "Maputo",
       "distrito": "Matola",
-      "coordenada": { "lat": -25.9689, "lon": 32.4726, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -25.9689,
+        "lon": 32.4726,
+        "precisao": "sede-localidade"
+      },
       "natureza": "privada",
       "proprietario": "Grindrod",
       "operador": "Grindrod",
       "estado": "em-modernizacao",
       "estadoDataFonte": "2026",
-      "capacidade": { "valor": 18000000, "unidade": "t/ano", "notaUnidade": "Capacidade final prevista, atingida em três fases" },
-      "produtos": ["carvao", "magnetite", "minerios"],
+      "capacidade": {
+        "valor": 18000000,
+        "unidade": "t/ano",
+        "notaUnidade": "Capacidade final prevista, atingida em três fases"
+      },
+      "produtos": [
+        "carvao",
+        "magnetite",
+        "minerios"
+      ],
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "maputo",
@@ -565,14 +879,27 @@
       "tipo": "terminal-granel",
       "provincia": "Maputo",
       "distrito": "Matola",
-      "coordenada": { "lat": -25.9689, "lon": 32.4726, "precisao": "sede-localidade" },
+      "coordenada": {
+        "lat": -25.9689,
+        "lon": 32.4726,
+        "precisao": "sede-localidade"
+      },
       "natureza": "privada",
       "proprietario": "Mozal",
       "operador": "Mozal",
       "estado": "operacional",
       "estadoDataFonte": "anterior a 2025",
-      "capacidade": { "valor": 1600000, "unidade": "t/ano", "notaUnidade": "Matéria-prima em bruto; adicionalmente 560.000 t/ano de alumínio para exportação" },
-      "produtos": ["alumina", "breu", "coque", "aluminio"],
+      "capacidade": {
+        "valor": 1600000,
+        "unidade": "t/ano",
+        "notaUnidade": "Matéria-prima em bruto; adicionalmente 560.000 t/ano de alumínio para exportação"
+      },
+      "produtos": [
+        "alumina",
+        "breu",
+        "coque",
+        "aluminio"
+      ],
       "inauguracao": "2000-03",
       "sensor": "sem-sensor",
       "verificado": true,
@@ -580,20 +907,78 @@
       "fonte": "https://www.manicaterminais.co.mz/original/Portos.html"
     },
     {
+      "id": "stema-matola",
+      "nome": "STEMA — Silos e Terminal Graneleiro da Matola",
+      "tipo": "terminal-graneleiro",
+      "provincia": "Maputo",
+      "distrito": "Matola",
+      "natureza": "estatal",
+      "proprietario": "IGEPE 56% · Tesouro Nacional, Ministério da Economia e Finanças 44%",
+      "operador": "STEMA, S.A.",
+      "estado": "operacional",
+      "estadoDataFonte": "2024-08",
+      "capacidade": {
+        "valor": 45000,
+        "unidade": "t",
+        "nota": "45.000 t distribuídas por 27 silos de betão, dispostos em três linhas de nove."
+      },
+      "sensor": "sem-sensor",
+      "verificado": true,
+      "corredor": "maputo",
+      "coordenada": {
+        "lat": -25.98,
+        "lon": 32.472,
+        "precisao": "area-portuaria"
+      },
+      "produtos": [
+        "cereais",
+        "leguminosas",
+        "oleaginosas"
+      ],
+      "baseLegal": "Sociedade anónima constituída em 1996. Nasceu de um projecto de segurança alimentar financiado pelo Governo alemão depois das cheias de 1991.",
+      "infraestrutura": "27 silos de betão em três linhas de nove. Cais de 55 metros, com capacidade para receber navios até cerca de 40.000 toneladas. Transportador de correia coberto de 700 metros a ligar o cais ao terminal.",
+      "equipamento": "Descarga de navio, limpeza, fumigação, ensacagem e expedição para caminho-de-ferro ou rodovia.",
+      "hinterland": [
+        "África do Sul",
+        "Zimbabwe",
+        "Botswana",
+        "Eswatini"
+      ],
+      "investimentoEmCurso": "O IGEPE anunciou em Agosto de 2024 estar a mobilizar financiamento no mercado sul-africano para construir um silo novo e reabilitar os existentes. A própria empresa referiu necessidade na ordem dos 14 milhões de dólares para reabilitação de equipamento.",
+      "nota": "Movimenta trigo, milho, arroz, soja, farinha de soja, cascas de girassol, aparas de madeira e malte para cerveja. É apontada como líder no manuseamento de carga cerealífera a granel no país. Serve o mercado nacional e o trânsito de e para a África Austral.",
+      "contacto": "Língamo 729, Matola · stema@stema.co.mz · stema.co.mz",
+      "divergencia": "divergencia-terminais-matola",
+      "fonte": "https://igepe.org.mz/stema/"
+    },
+    {
       "id": "porto-beira-contentores",
       "nome": "Terminal de Contentores e Propósitos Múltiplos — Porto da Beira",
       "tipo": "terminal-portuario",
       "provincia": "Sofala",
       "distrito": "Beira",
-      "coordenada": { "lat": -19.8286, "lon": 34.8339, "precisao": "instalacao" },
+      "coordenada": {
+        "lat": -19.8286,
+        "lon": 34.8339,
+        "precisao": "instalacao"
+      },
       "natureza": "concessao-privada",
       "proprietario": "Estado, através do CFM",
       "operador": "Cornelder de Moçambique SARL (Cornelder B.V. 70%, CFM 30%)",
-      "concessao": { "inicio": "1998-10" },
+      "concessao": {
+        "inicio": "1998-10"
+      },
       "estado": "em-modernizacao",
       "estadoDataFonte": "2026",
-      "capacidade": { "areaM2": 200000, "unidade": "m2", "notaUnidade": "Área do recinto de contentores; 144 pontos de referência e área para granito" },
-      "produtos": ["contentores", "carga-geral", "granito"],
+      "capacidade": {
+        "areaM2": 200000,
+        "unidade": "m2",
+        "notaUnidade": "Área do recinto de contentores; 144 pontos de referência e área para granito"
+      },
+      "produtos": [
+        "contentores",
+        "carga-geral",
+        "granito"
+      ],
       "investimentoEmCurso": "Duas gruas ship-to-shore da SANY, contrato de cerca de 25 milhões de USD assinado em Dezembro de 2025; ampliação de armazéns em cerca de 3.000 m² e aquisição de 30 empilhadoras",
       "sensor": "sem-sensor",
       "verificado": true,
@@ -606,14 +991,22 @@
       "tipo": "terminal-portuario",
       "provincia": "Sofala",
       "distrito": "Beira",
-      "coordenada": { "lat": -19.8286, "lon": 34.8339, "precisao": "instalacao" },
+      "coordenada": {
+        "lat": -19.8286,
+        "lon": 34.8339,
+        "precisao": "instalacao"
+      },
       "natureza": "concessao-privada",
       "proprietario": "Estado, através do CFM",
       "operador": "Cornelder de Moçambique SARL",
       "estado": "em-modernizacao",
       "estadoDataFonte": "2026",
       "capacidade": null,
-      "produtos": ["carga-geral", "cereais", "graneis-liquidos"],
+      "produtos": [
+        "carga-geral",
+        "cereais",
+        "graneis-liquidos"
+      ],
       "nota": "Porto com 12 cais, profundidades entre 8 e 10 m. Em curso aquisição de dois guindastes móveis e de um sistema de carregamento de granéis.",
       "sensor": "sem-sensor",
       "verificado": true,
@@ -626,14 +1019,26 @@
       "tipo": "terminal-portuario",
       "provincia": "Nampula",
       "distrito": "Nacala",
-      "coordenada": { "lat": -14.5417, "lon": 40.6733, "precisao": "instalacao" },
+      "coordenada": {
+        "lat": -14.5417,
+        "lon": 40.6733,
+        "precisao": "instalacao"
+      },
       "natureza": "concessao-privada",
       "proprietario": "Estado, através do CFM",
       "operador": "Concessionária do Porto de Nacala",
       "estado": "operacional",
       "estadoDataFonte": "2025",
-      "capacidade": { "valor": 2000000, "unidade": "t/ano", "armazens": 8, "areaM2": 21000 },
-      "produtos": ["carga-geral", "cereais"],
+      "capacidade": {
+        "valor": 2000000,
+        "unidade": "t/ano",
+        "armazens": 8,
+        "areaM2": 21000
+      },
+      "produtos": [
+        "carga-geral",
+        "cereais"
+      ],
       "equipamento": "Nove guindastes eléctricos de 5 a 20 t, três empilhadoras de 5 t, duas evacuadoras para cereais de 40 t/hora cada",
       "sensor": "sem-sensor",
       "verificado": true,
@@ -646,14 +1051,25 @@
       "tipo": "terminal-portuario",
       "provincia": "Nampula",
       "distrito": "Nacala",
-      "coordenada": { "lat": -14.5417, "lon": 40.6733, "precisao": "instalacao" },
+      "coordenada": {
+        "lat": -14.5417,
+        "lon": 40.6733,
+        "precisao": "instalacao"
+      },
       "natureza": "concessao-privada",
       "proprietario": "Estado, através do CFM",
       "operador": "Concessionária do Porto de Nacala",
       "estado": "operacional",
       "estadoDataFonte": "2025",
-      "capacidade": { "valor": 2750, "unidade": "TEU", "areaM2": 62000, "movimentacaoAnualTEU": 30000 },
-      "produtos": ["contentores"],
+      "capacidade": {
+        "valor": 2750,
+        "unidade": "TEU",
+        "areaM2": 62000,
+        "movimentacaoAnualTEU": 30000
+      },
+      "produtos": [
+        "contentores"
+      ],
       "nota": "Após as obras de modernização concluídas em finais de 2023, a carga contentorizada passou de 100 mil para 252 mil toneladas.",
       "sensor": "sem-sensor",
       "verificado": true,
@@ -666,14 +1082,24 @@
       "tipo": "terminal-granel-liquido",
       "provincia": "Nampula",
       "distrito": "Nacala",
-      "coordenada": { "lat": -14.5417, "lon": 40.6733, "precisao": "instalacao" },
+      "coordenada": {
+        "lat": -14.5417,
+        "lon": 40.6733,
+        "precisao": "instalacao"
+      },
       "natureza": "internacional",
       "proprietario": "Lever Brothers (Malawi)",
       "operador": "Lever Brothers (Malawi)",
       "estado": "desconhecido",
       "estadoDataFonte": "anterior a 2023",
-      "capacidade": { "valor": 2400, "unidade": "t" },
-      "produtos": ["oleo-alimentar", "oleo-palma"],
+      "capacidade": {
+        "valor": 2400,
+        "unidade": "t"
+      },
+      "produtos": [
+        "oleo-alimentar",
+        "oleo-palma"
+      ],
       "nota": "Único activo de armazenagem de óleo alimentar identificado em fonte pública. Bem essencial do SINAGEPE em mãos de operador estrangeiro, para trânsito para o Malawi. Estado actual não confirmado.",
       "sensor": "sem-sensor",
       "verificado": false,
@@ -686,7 +1112,11 @@
       "tipo": "silo-cereais",
       "provincia": null,
       "distrito": null,
-      "coordenada": { "lat": null, "lon": null, "precisao": "desconhecida" },
+      "coordenada": {
+        "lat": null,
+        "lon": null,
+        "precisao": "desconhecida"
+      },
       "natureza": "estatal",
       "proprietario": "BMM — Bolsa de Mercadorias de Moçambique, IP",
       "operador": "BMM",
@@ -694,14 +1124,16 @@
       "estado": "desconhecido",
       "estadoDataFonte": "2026",
       "capacidade": null,
-      "produtos": ["cereais", "leguminosas"],
+      "produtos": [
+        "cereais",
+        "leguminosas"
+      ],
       "nota": "A BMM tem atribuição legal de gestão de silos e armazéns a ela afectos e de armazenagem com certificado de depósito, mas não publica o inventário. Entrada deliberadamente incompleta, para não desaparecer do radar.",
       "sensor": "sem-sensor",
       "verificado": false,
       "fonte": "https://www.linkedin.com/company/bmm-mozambique-commodity-exchange"
     }
   ],
-
   "capacidadeCega": {
     "definicao": "Fatia da capacidade registada sem leitura automática de sensor.",
     "unidadesComSensor": 0,
