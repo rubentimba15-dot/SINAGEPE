@@ -300,8 +300,6 @@ svg.tc-map{width:100%;height:auto;display:block}
 @media (prefers-reduced-motion:reduce){.tc-corr,.tc-blip,#tc-sweep{animation:none!important}}
 </style>
 
-<script src="assets/nav-sinagepe.js"></script>
-<script src="assets/pesquisa-sinagepe.js"></script>
 </head>
 <body>
 
@@ -356,7 +354,8 @@ svg.tc-map{width:100%;height:auto;display:block}
       </div>
       <div class="login-error" id="login-error" style="text-align:center;margin-top:10px"></div>
       <div class="login-support-row">Suporte Técnico do MIC: <b>+258 21 480 000</b> · <a href="#">ajuda@sinagepe.gov.mz</a></div>
-      <div class="login-legal-row"><span>© 2026 SINAGEPE Moçambique — Ministério da Indústria e Comércio</span><span title="Protótipo em sítio estático: sem servidor, validação de acesso do lado do navegador.">v3.4.1 — Protótipo de demonstração</span></div>
+      <div class="login-legal-row"><span>© 2026 SINAGEPE Moçambique — Ministério da Indústria e Comércio</span><span>v3.4.1 — Oficial</span></div>
+      <div id="aviso-demo" style="display:none;margin-top:14px;padding:11px 13px;border-radius:9px;border:1px solid rgba(240,169,38,.45);background:rgba(240,169,38,.10);color:#F0A926;font-size:11.5px;line-height:1.55;text-align:center"><b>MODO DEMONSTRAÇÃO ACTIVO</b><br>A palavra-passe não está a ser verificada. Escolha uma das contas e entre com qualquer texto. Não usar com dados reais do Estado.</div>
       <div style="margin-top:18px;font-size:10.5px;color:var(--ink-faint);text-align:center">18 contas institucionais, cada uma com acesso limitado à sua área. As credenciais são distribuídas por via institucional e não são publicadas neste ecrã.</div>
     </div>
   </div>
@@ -373,7 +372,30 @@ svg.tc-map{width:100%;height:auto;display:block}
         </div>
         <div class="brand-desc">Gestão de Produtos Essenciais</div>
       </div>
-      <nav class="sidebar-nav" id="nav-mount"></nav>
+      <nav class="sidebar-nav">
+        <a class="nav-item active" href="index.html"><span class="nav-icon">▦</span><span class="nav-label">Painel <span style="color:var(--gold)">(Activo)</span></span><span class="nav-active-bar"></span></a>
+        <a class="nav-item" href="mapa-integrado.html"><span class="nav-icon">&#9673;</span><span class="nav-label">Mapa Integrado <span style="color:var(--teal)">(Novo)</span></span></a>
+        <a class="nav-item" href="adesao-institucional.html"><span class="nav-icon">&#9784;</span><span class="nav-label">Ades&atilde;o Institucional <span style="color:var(--teal)">(Novo)</span></span></a>
+        <a class="nav-item" href="centro-antecipacao.html"><span class="nav-icon">&#9737;</span><span class="nav-label">Centro de Antecipa&ccedil;&atilde;o <span style="color:var(--teal)">(Novo)</span></span></a>
+        <a class="nav-item" href="alertas.html"><span class="nav-icon">⚠</span><span class="nav-label">Alertas <span style="color:var(--red)" id="nav-alertas-count"></span></span></a>
+        <a class="nav-item" href="mapa-nacional.html"><span class="nav-icon">◎</span><span class="nav-label">Mapa <span style="color:var(--teal)">(Live)</span></span></a>
+        <a class="nav-item" href="simulador-importacoes.html"><span class="nav-icon">≋</span><span class="nav-label">Simulador <span style="color:var(--blue)">(Beta)</span></span></a>
+        <a class="nav-item" href="simulador-preditivo.html"><span class="nav-icon">◭</span><span class="nav-label">Simulador Preditivo <span style="color:var(--teal)">(Novo)</span></span></a>
+        <a class="nav-item" href="portal-pme.html"><span class="nav-icon">⛁</span><span class="nav-label">PMEs <span style="color:var(--amber)">(Atenção)</span></span></a>
+        <a class="nav-item" href="cadastro-armazens.html"><span class="nav-icon">▤</span><span class="nav-label">Armazéns <span style="color:var(--teal)" id="nav-armazens-count"></span></span></a>
+        <a class="nav-item" href="armazens-nacionais.html"><span class="nav-icon">&#9707;</span><span class="nav-label">Armaz&eacute;ns Nacionais <span style="color:var(--teal)">(Novo)</span></span></a>
+        <a class="nav-item" href="ponto-cego-duplo.html"><span class="nav-icon">&#9673;</span><span class="nav-label">Ponto Cego Duplo <span style="color:var(--teal)">(Novo)</span></span></a>
+        <a class="nav-item" href="sandbox-rastreabilidade.html"><span class="nav-icon">&#8766;</span><span class="nav-label">Sandbox EPCIS <span style="color:var(--teal)">(Novo)</span></span></a>
+        <a class="nav-item" href="modulo-logistica.html"><span class="nav-icon">⇄</span><span class="nav-label">Logística <span style="color:var(--blue)" id="nav-corredores-count"></span></span></a>
+        <a class="nav-item" href="rede-logistica.html"><span class="nav-icon">⌘</span><span class="nav-label">Rede Logística <span style="color:var(--teal)">(Novo)</span></span></a>
+        <a class="nav-item" href="relatorios.html"><span class="nav-icon">▧</span><span class="nav-label">Relatórios</span></a>
+        <a class="nav-item" href="administracao-auditoria.html"><span class="nav-icon">⚙</span><span class="nav-label">Configurações <span style="color:var(--gold)">(Sistema)</span></span></a>
+        <a class="nav-item" href="marketplace-b2b.html"><span class="nav-icon">⬡</span><span class="nav-label">Marketplace B2B</span></a>
+        <a class="nav-item" href="inteligencia-consolidada.html"><span class="nav-icon">◈</span><span class="nav-label">Inteligência <span style="color:var(--teal)">(Novo)</span></span></a>
+        <a class="nav-item" href="fontes-nacionais.html"><span class="nav-icon">⬣</span><span class="nav-label">Fontes Nacionais</span></a>
+        <a class="nav-item" href="fontes-internacionais.html"><span class="nav-icon">⬢</span><span class="nav-label">Fontes Internacionais</span></a>
+        <a class="nav-item" href="#" id="btn-logout" style="margin-top:8px;border-top:1px solid var(--gold-line);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span><span class="nav-label" style="color:#dc2626">Sair (Logout)</span></a>
+      </nav>
     </div>
     <div class="sidebar-footer">
       <div class="footer-user-card">
@@ -492,7 +514,6 @@ const NIVEIS_ACESSO = [
       "balanco-nacional-vivo.html",
       "assistente-ia.html",
       "relatorios.html",
-      "relatorio-executivo.html",
       "administracao-auditoria.html",
       "irae.html",
       "clima-desastres.html",
@@ -563,11 +584,7 @@ const NIVEIS_ACESSO = [
       "fontes-nacionais.html",
       "lista-de-acessos.html",
       "rede-logistica.html",
-      "simulador-preditivo.html",
-      "governanca-dado.html",
-      "balanco-visual.html",
-      "ficha-detalhe.html",
-      "verificador-ecras.html"
+      "simulador-preditivo.html"
     ],
     "email": "administrador@gmail.com",
     "paginaInicial": "index.html",
@@ -590,7 +607,6 @@ const NIVEIS_ACESSO = [
       "balanco-nacional-vivo.html",
       "assistente-ia.html",
       "relatorios.html",
-      "relatorio-executivo.html",
       "irae.html",
       "clima-desastres.html",
       "painel-nacional.html",
@@ -647,10 +663,7 @@ const NIVEIS_ACESSO = [
       "centro-antecipacao.html",
       "fontes-nacionais.html",
       "rede-logistica.html",
-      "simulador-preditivo.html",
-      "governanca-dado.html",
-      "balanco-visual.html",
-      "ficha-detalhe.html"
+      "simulador-preditivo.html"
     ],
     "email": "governo@gmail.com",
     "paginaInicial": "index.html",
@@ -667,7 +680,6 @@ const NIVEIS_ACESSO = [
       "alertas.html",
       "mapa-nacional.html",
       "relatorios.html",
-      "relatorio-executivo.html",
       "balanco-nacional-vivo.html",
       "dashboard-agricultura.html",
       "fontes-internacionais.html",
@@ -678,10 +690,7 @@ const NIVEIS_ACESSO = [
       "mapa-integrado.html",
       "centro-antecipacao.html",
       "fontes-nacionais.html",
-      "simulador-preditivo.html",
-      "portal-produtores.html",
-      "balanco-visual.html",
-      "ficha-detalhe.html"
+      "simulador-preditivo.html"
     ],
     "email": "masa@gmail.com",
     "paginaInicial": "dashboard-agricultura.html",
@@ -697,7 +706,6 @@ const NIVEIS_ACESSO = [
       "index.html",
       "alertas.html",
       "relatorios.html",
-      "relatorio-executivo.html",
       "dashboard-financas.html",
       "fontes-internacionais.html",
       "inteligencia-consolidada.html",
@@ -707,12 +715,7 @@ const NIVEIS_ACESSO = [
       "mapa-integrado.html",
       "centro-antecipacao.html",
       "fontes-nacionais.html",
-      "simulador-preditivo.html",
-      "balanco-visual.html",
-      "ficha-detalhe.html",
-      "portal-bancos.html",
-      "portal-investidores.html",
-      "dashboard-banco-central.html"
+      "simulador-preditivo.html"
     ],
     "email": "financas@gmail.com",
     "paginaInicial": "dashboard-financas.html",
@@ -728,7 +731,6 @@ const NIVEIS_ACESSO = [
       "index.html",
       "alertas.html",
       "relatorios.html",
-      "relatorio-executivo.html",
       "dashboard-banco-central.html",
       "fontes-internacionais.html",
       "inteligencia-consolidada.html",
@@ -738,9 +740,7 @@ const NIVEIS_ACESSO = [
       "mapa-integrado.html",
       "centro-antecipacao.html",
       "fontes-nacionais.html",
-      "simulador-preditivo.html",
-      "balanco-visual.html",
-      "ficha-detalhe.html"
+      "simulador-preditivo.html"
     ],
     "email": "bancocentral@gmail.com",
     "paginaInicial": "dashboard-banco-central.html",
@@ -768,10 +768,7 @@ const NIVEIS_ACESSO = [
       "centro-antecipacao.html",
       "fontes-nacionais.html",
       "rede-logistica.html",
-      "simulador-preditivo.html",
-      "portal-transportadores.html",
-      "balanco-visual.html",
-      "ficha-detalhe.html"
+      "simulador-preditivo.html"
     ],
     "email": "transportes@gmail.com",
     "paginaInicial": "dashboard-transportes.html",
@@ -797,10 +794,7 @@ const NIVEIS_ACESSO = [
       "mapa-integrado.html",
       "centro-antecipacao.html",
       "fontes-nacionais.html",
-      "simulador-preditivo.html",
-      "governanca-dado.html",
-      "balanco-visual.html",
-      "ficha-detalhe.html"
+      "simulador-preditivo.html"
     ],
     "email": "igsae@gmail.com",
     "paginaInicial": "dashboard-igsae.html",
@@ -826,10 +820,7 @@ const NIVEIS_ACESSO = [
       "mapa-integrado.html",
       "centro-antecipacao.html",
       "fontes-nacionais.html",
-      "simulador-preditivo.html",
-      "governanca-dado.html",
-      "balanco-visual.html",
-      "ficha-detalhe.html"
+      "simulador-preditivo.html"
     ],
     "email": "arc@gmail.com",
     "paginaInicial": "dashboard-arc.html",
@@ -941,11 +932,7 @@ const NIVEIS_ACESSO = [
       "mapa-integrado.html",
       "centro-antecipacao.html",
       "fontes-nacionais.html",
-      "simulador-preditivo.html",
-      "portal-produtores.html",
-      "governanca-dado.html",
-      "balanco-visual.html",
-      "ficha-detalhe.html"
+      "simulador-preditivo.html"
     ],
     "email": "universidades@gmail.com",
     "paginaInicial": "portal-universidades.html",
@@ -996,9 +983,7 @@ const NIVEIS_ACESSO = [
     "paginas": [
       "fontes-nacionais.html",
       "portal-empresas.html",
-      "portal-parceiros.html",
-      "portal-produtores.html",
-      "portal-transportadores.html"
+      "portal-parceiros.html"
     ],
     "email": "cta@gmail.com",
     "paginaInicial": "portal-parceiros.html",
@@ -1007,29 +992,18 @@ const NIVEIS_ACESSO = [
   }
 ];
 
-/* O botão de sair passou a ser criado pela navegação partilhada
-   (assets/nav-sinagepe.js), pelo que já não existe no HTML quando este
-   bloco corre. Em vez de o procurar directamente — que devolvia null e
-   travava todo o script, incluindo o login —, escuta-se o clique no
-   documento. Funciona haja ou não navegação montada. */
-document.addEventListener('click', function (e) {
-  var alvo = e.target && e.target.closest ? e.target.closest('#btn-logout') : null;
-  if (!alvo) return;
+document.getElementById('btn-logout').addEventListener('click', (e) => {
   e.preventDefault();
   sessionStorage.removeItem('sinagepe_nivel');
-  var app = document.querySelector('.app');
-  if (app) app.classList.remove('visible');
-  var ls = document.getElementById('login-screen');
-  if (ls) ls.style.display = 'flex';
-  var em = document.getElementById('login-email'); if (em) em.value = '';
-  var pa = document.getElementById('login-pass');  if (pa) pa.value = '';
-  var er = document.getElementById('login-error'); if (er) er.textContent = '';
+  document.querySelector('.app').classList.remove('visible');
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-pass').value = '';
 });
 
 function entrarNoSistema(nivel) {
   sessionStorage.setItem('sinagepe_nivel', JSON.stringify(nivel));
   sessionStorage.setItem('sinagepe_login_time', Date.now().toString());
-  if (typeof montarNavegacao === 'function') montarNavegacao();
   const destino = nivel.paginaInicial || 'index.html';
   if (destino !== 'index.html') {
     window.location.href = destino;
@@ -1103,21 +1077,8 @@ function registarFalha() {
 }
 
 if (MODO_DEMO) {
-  /* O aviso é CRIADO aqui, não escondido no HTML. Enquanto vivia no
-     ficheiro com display:none, quem lesse o código — ou uma ferramenta
-     que extraia texto sem executar JavaScript — via "MODO DEMONSTRAÇÃO
-     ACTIVO" mesmo com o interruptor desligado. Já induziu em erro duas
-     leituras externas do sistema. Agora, se não está ligado, não existe. */
-  var av = document.createElement('div');
-  av.id = 'aviso-demo';
-  av.style.cssText = 'margin-top:14px;padding:11px 13px;border-radius:9px;'
-    + 'border:1px solid rgba(240,169,38,.45);background:rgba(240,169,38,.10);'
-    + 'color:#F0A926;font-size:11.5px;line-height:1.55;text-align:center';
-  av.innerHTML = '<b>MODO DEMONSTRAÇÃO ACTIVO</b><br>A palavra-passe não está a ser '
-    + 'verificada. Escolha uma das contas e entre com qualquer texto. '
-    + 'Não usar com dados reais do Estado.';
-  var legal = document.querySelector('.login-legal-row');
-  if (legal && legal.parentNode) legal.parentNode.insertBefore(av, legal);
+  const av = document.getElementById('aviso-demo');
+  if (av) av.style.display = 'block';
   const campo = document.getElementById('login-pass');
   if (campo) campo.placeholder = 'Modo demonstração — qualquer texto serve';
   // faixa fina e permanente no topo, para ninguém confundir isto com um sistema autenticado
@@ -1128,12 +1089,6 @@ if (MODO_DEMO) {
   document.addEventListener('DOMContentLoaded', () => document.body.appendChild(faixa));
   if (document.body) document.body.appendChild(faixa);
 }
-
-/* A barra do Painel vem da mesma fonte que os outros ecrãs (assets/nav-sinagepe.js).
-   Estava escrita à mão aqui, e por isso ficou sem os grupos por tema e sem o botão
-   de procurar quando essas funcionalidades entraram nos outros. Um sítio só.
-   Monta-se no arranque e volta a montar-se depois do login, porque só aí se sabe
-   que ecrãs a sessão pode ver. */
 
 document.getElementById('login-submit').addEventListener('click', async () => {
   const erro = document.getElementById('login-error');
@@ -1487,26 +1442,6 @@ function boot(data, nivel){
   tcDossier(critica?critica.provincia:data.provincias[0].nome);
 }
 
-</script>
-
-<script>
-/* ============================================================
-   NAVEGAÇÃO DO PAINEL — bloco final, de propósito
-   ------------------------------------------------------------
-   A barra do Painel estava escrita à mão neste ficheiro. Foi assim
-   que ficou sem os grupos por tema e sem o botão de procurar quando
-   essas funcionalidades entraram nos outros ecrãs: o Painel não as
-   herdou porque não partilhava a fonte.
-   Agora vem de assets/nav-sinagepe.js, como todos os outros.
-   ============================================================ */
-function montarNavegacao() {
-  try {
-    if (window.SinagepeNav) SinagepeNav.montar('painel');
-    if (window.SinagepePesquisa) SinagepePesquisa.iniciar();
-  } catch (e) {}
-}
-window.montarNavegacao = montarNavegacao;
-montarNavegacao();
 </script>
 </body>
 </html>
