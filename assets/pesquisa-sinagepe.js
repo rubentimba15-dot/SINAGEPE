@@ -34,6 +34,8 @@
       t:'mapa camadas estradas ane interrupcoes corredores territorio geografia' },
     { h:'centro-antecipacao.html', n:'Centro de Antecipação', d:'Dez riscos com gatilho, janela de calendário e mitigações',
       t:'risco antecipacao mitigacao calendario gatilho crise ruptura prevencao' },
+    { h:'medicamentos-cadeia.html', n:'Cadeia de Medicamentos', d:'Estrutura da cadeia de medicamentos e estado da ligação ao MISAU, CMAM e ANARME',
+      t:'medicamento saude misau cmam siglus simam anarme rastreio farmaco ruptura stock redistribuicao' },
     { h:'ponto-cego-duplo.html', n:'Ponto Cego Duplo', d:'Cruza identificação de produto com telemetria de armazém',
       t:'cego identificacao telemetria sensor gs1 gtin matriz pares' },
     { h:'armazens-nacionais.html', n:'Armazéns Nacionais', d:'Cadastro de 29 unidades com fonte oficial, natureza e estado',

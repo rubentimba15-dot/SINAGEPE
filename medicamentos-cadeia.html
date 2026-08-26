@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadeia Nacional de Medicamentos &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1500px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:920px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
+.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:15px 17px}
+.aviso-topo{padding:15px 18px;border-radius:12px;border:1px solid rgba(240,169,38,.45);
+ background:rgba(240,169,38,.09);margin-bottom:16px;font-size:12.5px;line-height:1.65;color:#F3D9A6}
+.aviso-topo b{color:var(--amber)}
+.principio{padding:15px 18px;border-radius:12px;border:1px solid rgba(34,184,240,.32);
+ background:rgba(34,184,240,.07);margin-bottom:16px;font-size:12.5px;line-height:1.65;color:#9EDCF7}
+.principio b{color:var(--blue)}
+.estados{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0}
+.es{padding:14px 17px;border-right:1px solid var(--card-line);border-bottom:1px solid var(--card-line)}
+.es-t{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;margin-bottom:6px}
+.es-d{width:11px;height:11px;border-radius:50%;flex-shrink:0}
+.es-x{font-size:11.5px;color:var(--t3);line-height:1.5}
+.es-l{font-size:10px;color:var(--t4);margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 14px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 14px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.g2{display:grid;grid-template-columns:1.1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+.aviso{margin-top:12px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.55;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.g{background:rgba(18,185,129,.07);border-color:rgba(18,185,129,.26);color:#8FE3C4}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Cadeia de abastecimento &mdash; sa&uacute;de</div>
+    <h1>Cadeia Nacional de Medicamentos</h1>
+    <p class="sub">Estrutura constru&iacute;da e a aguardar liga&ccedil;&atilde;o. Mostra o que o sistema far&aacute; quando o agregado do MISAU e da ANARME estiver ligado, e declara em cada indicador o que falta e quem o det&eacute;m.</p>
+
+    <div class="aviso-topo" id="aviso"></div>
+    <div class="principio" id="principio"></div>
+
+    <div class="card frame">
+      <div class="ch"><h2>Sistemas que j&aacute; produzem estes dados</h2><span class="tag ok" id="s-tag">&mdash;</span></div>
+      <table id="sistemas"></table>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><h2>Os seis estados</h2><span class="tag">Limiares da CMAM</span></div>
+      <div class="estados" id="estados"></div>
+      <div class="bd"><div class="aviso i">Os limiares s&atilde;o da CMAM, n&atilde;o do SINAGEPE. O sistema n&atilde;o inventa crit&eacute;rios cl&iacute;nicos nem log&iacute;sticos: aplica os que a autoridade competente definir, e declara qual usou.</div></div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><h2>Indicadores &mdash; estado da liga&ccedil;&atilde;o</h2><span class="tag crit" id="i-tag">&mdash;</span></div>
+      <table id="indicadores"></table>
+    </div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><h2>Redistribui&ccedil;&atilde;o inteligente</h2><span class="tag">A fun&ccedil;&atilde;o que justifica o painel</span></div>
+        <div class="bd" id="redistribuicao"></div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><h2>O que este ecr&atilde; recusa fazer</h2><span class="tag crit" id="r-tag">&mdash;</span></div>
+        <table id="recusado"></table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+if(window.SinagepeNav) SinagepeNav.montar('medicamentos');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function desenhar(){
+  var m=ST.d.meta;
+  document.getElementById('aviso').innerHTML=
+    '<b>Sem dados. De prop&oacute;sito.</b> '+esc(m.avisoPrincipal)
+   +'<div style="margin-top:9px;color:var(--t3)">'+esc(m.semDadosDeDoente)+'</div>';
+  document.getElementById('principio').innerHTML=
+    '<b>O princ&iacute;pio.</b> '+esc(m.principio);
+
+  var h='<thead><tr><th>Sistema</th><th>Quem o det&eacute;m</th><th>O que tem</th></tr></thead><tbody>';
+  ST.d.sistemasExistentes.forEach(function(s){
+    h+='<tr><td><b style="font-weight:600">'+esc(s.sigla)+'</b>'
+     +'<div style="color:var(--t4);font-size:10px">'+esc(s.nome)+'</div></td>'
+     +'<td style="color:var(--t2);white-space:nowrap">'+esc(s.detentor)+'</td>'
+     +'<td style="color:var(--t3);max-width:520px">'+esc(s.oQueTem)
+     +(s.fonte?' <a href="'+esc(s.fonte)+'" target="_blank" rel="noopener" style="color:var(--blue)">fonte</a>':'')+'</td></tr>';
+  });
+  document.getElementById('sistemas').innerHTML=h+'</tbody>';
+  document.getElementById('s-tag').textContent=ST.d.sistemasExistentes.length+' sistemas';
+
+  document.getElementById('estados').innerHTML=ST.d.estados.map(function(e){
+    return '<div class="es"><div class="es-t"><span class="es-d" style="background:'+e.cor+'"></span>'+esc(e.rotulo)+'</div>'
+     +'<div class="es-x">'+esc(e.definicao)+'</div>'
+     +'<div class="es-l">Limiar definido por: '+esc(e.limiarDefinidoPor)+'</div></div>';
+  }).join('');
+
+  var COR={'POR LIGAR':'#EF4444','CALCULÁVEL':'#12B981'};
+  var h2='<thead><tr><th>Indicador</th><th>Estado</th><th>O que precisa</th><th>Quem det&eacute;m</th><th>Cruza com</th></tr></thead><tbody>';
+  ST.d.indicadores.forEach(function(i){
+    var c=COR[i.estado]||'#5E7189';
+    h2+='<tr><td style="font-weight:600">'+esc(i.nome)+'</td>'
+     +'<td><span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'+esc(i.estado)+'</span></td>'
+     +'<td style="color:var(--t3);max-width:400px">'+esc(i.oQuePrecisa)+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+esc(i.detentor)+'</td>'
+     +'<td style="color:var(--t4);font-size:10.5px">'+esc(i.cruzaCom)+'</td></tr>';
+  });
+  document.getElementById('indicadores').innerHTML=h2+'</tbody>';
+  var pl=ST.d.indicadores.filter(function(i){return i.estado==='POR LIGAR'}).length;
+  document.getElementById('i-tag').textContent=pl+' de '+ST.d.indicadores.length+' por ligar';
+
+  var r=ST.d.redistribuicao;
+  document.getElementById('redistribuicao').innerHTML=
+     '<div style="font-size:13px;line-height:1.65;color:var(--t2)">'+esc(r.comoFunciona)+'</div>'
+    +'<div class="aviso g"><b>Porque importa.</b> '+esc(r.porqueImporta)+'</div>'
+    +'<div class="aviso i"><b>N&atilde;o &eacute; intelig&ecirc;ncia artificial.</b> '+esc(r.naoEIA)+'</div>'
+    +'<div class="aviso i"><b>Recomenda, n&atilde;o ordena.</b> '+esc(r.recomendaNaoOrdena)+'</div>'
+    +'<div class="aviso r"><b>E declara o que n&atilde;o sabe.</b> '+esc(r.declaraOQueNaoSabe)+'</div>'
+    +'<div style="margin-top:12px;font-size:10.5px;color:var(--t4);line-height:1.55">'+esc(r.exemploIlustrativo)+'</div>';
+
+  var h3='<thead><tr><th>Recusado</th><th>Porqu&ecirc;</th></tr></thead><tbody>';
+  ST.d.recusado.forEach(function(x){
+    h3+='<tr><td style="font-weight:600;color:var(--red);max-width:190px">'+esc(x.item)+'</td>'
+     +'<td style="color:var(--t3)">'+esc(x.razao)+'</td></tr>';
+  });
+  document.getElementById('recusado').innerHTML=h3+'</tbody>';
+  document.getElementById('r-tag').textContent=ST.d.recusado.length+' itens';
+}
+
+fetch('data/medicamentos-cadeia.json',{cache:'no-store'})
+ .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/medicamentos-cadeia.json');return r.json()})
+ .then(function(j){ST.d=j;desenhar()})
+ .catch(function(e){
+   document.getElementById('aviso').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+ });
+</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "geradoEm": "2026-08-25",
+    "titulo": "Cadeia Nacional de Medicamentos",
+    "principio": "O SINAGEPE é o cérebro de integração. O MISAU, a CMAM, o SIGLUS, o SIMAM e a ANARME são os produtores oficiais dos dados operacionais. Este ecrã não recolhe, não gere e não substitui nenhum deles: lê agregados e cruza-os com o que mais nenhum sistema tem.",
+    "estadoDaLigacao": "POR LIGAR",
+    "avisoPrincipal": "Nenhum indicador desta página tem dados. A estrutura está construída e a aguardar o agregado do MISAU e da CMAM. Cada indicador declara o que precisa e quem o detém. Não há um único número inventado.",
+    "semDadosDeDoente": "Este ecrã nunca receberá nem apresentará dado de doente, de prescrição ou de profissional de saúde. Trabalha exclusivamente sobre agregados de existência e consumo."
+  },
+  "sistemasExistentes": [
+    {
+      "sigla": "SIGLUS",
+      "nome": "Sistema de Informação de Gestão Logística",
+      "detentor": "MISAU",
+      "oQueTem": "Recolhe existências e consumo nas unidades sanitárias e sincroniza com o SIMAM nos depósitos distritais.",
+      "verificado": true
+    },
+    {
+      "sigla": "SIMAM",
+      "nome": "Sistema de Informação para a Gestão de Medicamentos",
+      "detentor": "CMAM",
+      "oQueTem": "Gestão nos depósitos distritais e provinciais.",
+      "verificado": true
+    },
+    {
+      "sigla": "CMAM",
+      "nome": "Central de Medicamentos e Artigos Médicos",
+      "detentor": "MISAU",
+      "oQueTem": "Catálogo de medicamentos essenciais, limiares de stock mínimo e aquisição centralizada.",
+      "verificado": true
+    },
+    {
+      "sigla": "SRM · Track & Trace",
+      "nome": "Sistema Nacional de Rastreabilidade de Medicamentos e Produtos de Saúde",
+      "detentor": "ANARME",
+      "oQueTem": "Selo de rastreio aplicado do fabrico ao paciente. Lançado oficialmente a 30 de Julho de 2025. Sala de controlo instalada em Junho de 2026.",
+      "verificado": true,
+      "fonte": "https://misau.gov.mz/mocambique-lanca-sistema-nacional-de-rastreabilidade-de-medicamentos-para-combater-contrabando-e-falsificacao/"
+    }
+  ],
+  "estados": [
+    {
+      "chave": "disponivel",
+      "rotulo": "Disponível",
+      "cor": "#12B981",
+      "definicao": "Cobertura acima do mínimo definido pela CMAM.",
+      "limiarDefinidoPor": "CMAM"
+    },
+    {
+      "chave": "critico",
+      "rotulo": "Stock crítico",
+      "cor": "#F0A926",
+      "definicao": "Cobertura abaixo do mínimo, ainda com existência.",
+      "limiarDefinidoPor": "CMAM"
+    },
+    {
+      "chave": "ruptura",
+      "rotulo": "Ruptura",
+      "cor": "#EF4444",
+      "definicao": "Existência zero.",
+      "limiarDefinidoPor": "definição objectiva"
+    },
+    {
+      "chave": "transito",
+      "rotulo": "Em trânsito",
+      "cor": "#22B8F0",
+      "definicao": "Expedido e ainda não recebido.",
+      "limiarDefinidoPor": "SIGLUS"
+    },
+    {
+      "chave": "validade",
+      "rotulo": "Próximo da validade",
+      "cor": "#F59E0B",
+      "definicao": "Lotes a expirar dentro do prazo definido pela CMAM.",
+      "limiarDefinidoPor": "CMAM"
+    },
+    {
+      "chave": "bloqueado",
+      "rotulo": "Bloqueado ou recall",
+      "cor": "#5E7189",
+      "definicao": "Retirado de circulação por decisão da ANARME.",
+      "limiarDefinidoPor": "ANARME"
+    }
+  ],
+  "indicadores": [
+    {
+      "nome": "Existência por província",
+      "estado": "POR LIGAR",
+      "detentor": "MISAU · SIGLUS",
+      "oQuePrecisa": "Agregado mensal de existência por medicamento e por província.",
+      "cruzaCom": "Cadastro de armazenagem, rede viária"
+    },
+    {
+      "nome": "Consumo médio no período",
+      "estado": "POR LIGAR",
+      "detentor": "MISAU · SIGLUS",
+      "oQuePrecisa": "Consumo registado no mesmo período, para calcular dias de cobertura.",
+      "cruzaCom": "—"
+    },
+    {
+      "nome": "Dias de cobertura ao ritmo actual",
+      "estado": "CALCULÁVEL",
+      "detentor": "—",
+      "oQuePrecisa": "Sai da divisão de existência por consumo médio. Aritmética, não previsão.",
+      "cruzaCom": "Limiares da CMAM"
+    },
+    {
+      "nome": "Lotes próximos da validade",
+      "estado": "POR LIGAR",
+      "detentor": "CMAM · SIMAM",
+      "oQuePrecisa": "Quantidade a expirar dentro do prazo definido pela CMAM, por província.",
+      "cruzaCom": "Recomendação de redistribuição"
+    },
+    {
+      "nome": "Medicamentos em trânsito",
+      "estado": "POR LIGAR",
+      "detentor": "MISAU · SIGLUS",
+      "oQuePrecisa": "Expedido e não recebido, com origem e destino.",
+      "cruzaCom": "Cortes de estrada da ANE"
+    },
+    {
+      "nome": "Volume selado",
+      "estado": "POR LIGAR",
+      "detentor": "ANARME · SRM",
+      "oQuePrecisa": "Volume com selo de rastreio aplicado, por medicamento e por mês.",
+      "cruzaCom": "Ponto Cego Duplo"
+    },
+    {
+      "nome": "Anomalias de rastreabilidade",
+      "estado": "POR LIGAR",
+      "detentor": "ANARME · SRM",
+      "oQuePrecisa": "Número de anomalias detectadas por província, sem identificar operador nem lote.",
+      "cruzaCom": "Mapa territorial"
+    },
+    {
+      "nome": "Recomendação de redistribuição",
+      "estado": "CALCULÁVEL",
+      "detentor": "—",
+      "oQuePrecisa": "Existência e consumo em dois pontos. A distância e o estado da via já existem no sistema.",
+      "cruzaCom": "Cadastro, rede viária, cascata de preços"
+    }
+  ],
+  "redistribuicao": {
+    "titulo": "Redistribuição — a função que justifica o painel",
+    "comoFunciona": "Se uma unidade tem excesso e outra está em ruptura do mesmo medicamento, o sistema assinala e recomenda transferência antes de nova aquisição.",
+    "porqueImporta": "É a única funcionalidade de todo o projecto que poupa dinheiro em vez de o gastar, e é medível: a diferença entre o custo de aquisição e o custo de transporte.",
+    "naoEIA": "Não exige inteligência artificial. É aritmética sobre dois números — dias de cobertura na origem e no destino — mais a distância, que o SINAGEPE já tem.",
+    "recomendaNaoOrdena": "Cada sugestão sai com origem, destino, quantidade, distância, estado da estrada nesse troço e quem tem de aprovar. A decisão é do MISAU e da CMAM.",
+    "declaraOQueNaoSabe": "Se o troço entre as duas unidades tiver corte registado pela ANE, a recomendação di-lo em vez de o esconder.",
+    "exemploIlustrativo": "Com dados ligados, uma recomendação teria esta forma: transferir X unidades de A para B, distância Y km pelo corredor Z, sem cortes registados, poupança estimada face a aquisição nova. Nenhum número deste tipo é apresentado enquanto a fonte não estiver ligada."
+  },
+  "recusado": [
+    {
+      "item": "Previsão de ruptura a 7, 30 e 90 dias",
+      "razao": "Uma previsão exige série histórica que permita estimar probabilidade. O que se faz em vez disso é dias de cobertura ao ritmo actual — extrapolação declarada, não previsão. Diz \"ao ritmo das últimas semanas dura 41 dias\", não \"67% de probabilidade de ruptura\"."
+    },
+    {
+      "item": "Tempo real",
+      "razao": "Nada no SINAGEPE é tempo real. A periodicidade de cada indicador fica declarada no próprio ecrã."
+    },
+    {
+      "item": "Limiares próprios de stock mínimo",
+      "razao": "Os critérios clínicos e logísticos são da CMAM. O sistema aplica os que a autoridade competente definir e declara qual usou."
+    }
+  ]
+}
