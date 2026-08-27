@@ -2,65 +2,114 @@
 <html lang="pt-PT">
 <head>
 <script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/selo-proveniencia.js"></script>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Perfil de Empresa — SINAGEPE</title>
+<title>Portal de Empresas — SINAGEPE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/sinagepe.css">
-<style>
-  .breadcrumb { font-size: 12px; color: var(--ink-faint); margin-bottom: 4px; }
-  .page-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-  .page-title { font-size: 24px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 14px; }
-  .back-btn { background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 8px; padding: 9px 16px; font-size: 13px; font-weight: 600; color: var(--bronze); }
-</style>
 </head>
 <body>
-<div class="app-shell" id="app-shell"></div>
+
+<div class="app-shell">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title-group"><div class="topbar-title">Portal de Empresas</div><div class="topbar-badge">Inteligência de Mercado</div></div>
+      <div class="live-indicator" style="color:var(--amber)">Dados de demonstra&ccedil;&atilde;o</div>
+    </div>
+    <div class="content" id="content-mount"></div>
+    <div class="footer"><span>© 2026 SINAGEPE Moçambique — Acesso Privado</span><span id="footer-updated">—</span></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
 <script src="assets/sinagepe.js"></script>
 <script>
-SINAGEPE.mountShell('painel', 'Atlas de Monitoria de Mercadorias e Corredores', 'Sistema Vivo');
-
 document.getElementById('content-mount').innerHTML = `
-  <div class="page-title-row">
-    <div><div class="breadcrumb">Marketplace B2B &gt; Perfil de Empresa</div>
-    <div class="page-title">Importadora Silva Lda. <span class="pill pill-ok">Verificada</span></div></div>
-    <a class="back-btn" href="marketplace-b2b.html">← Voltar ao Marketplace</a>
-  </div>
-  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)" id="kpi-row"></div>
+  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)" id="kpi-row"></div>
   <div class="row-2">
     <div class="card">
-      <div class="card-title">Anúncios Publicados</div>
-      <div id="anuncios-list"></div>
+      <div class="card-title">Concorrentes &amp; Benchmarks (Faixas)</div>
+      <div class="card-subtitle">Faixas largas — não percentagens exactas — para proteger a identidade de mercados com poucos operadores</div>
+      <table class="balance-table">
+        <thead><tr><th>Operador</th><th>Quota</th><th>Preço</th><th>Tendência</th></tr></thead>
+        <tbody id="bench-body"></tbody>
+      </table>
     </div>
     <div class="card">
-      <div class="card-title">Sobre a Empresa</div>
-      <div class="medida-row"><span>Sector</span><span>Importação de Produtos Essenciais</span></div>
-      <div class="medida-row"><span>Sede</span><span>Maputo</span></div>
-      <div class="medida-row"><span>No sistema desde</span><span>2024</span></div>
+      <div class="card-title">Divisão de Custos Logísticos</div>
+      <canvas id="chart-custos" height="180"></canvas>
     </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Recomendações de IA</div>
+    <div class="card-subtitle">Orientadas a resultado comercial — não à mesma finalidade da IA interna do Governo</div>
+    <div class="row-3" id="recomendacoes-grid" style="grid-template-columns:repeat(2,1fr)"></div>
   </div>
 `;
 
 SINAGEPE.load().then(data => {
-  SINAGEPE.renderUserFooter(data);
-  document.getElementById('footer-updated').textContent = data.meta.ultimaActualizacao;
+  /* A fonte declara-se simulada; o ecrã tem de o dizer. Os nomes das entidades
+     mantêm-se com aparência realista por decisão de apresentação — o aviso de
+     simulação é dado por esta faixa e verbalmente em cada demonstração. */
+  if (window.SeloProveniencia) SeloProveniencia.aplicar({
+    modo: (data.meta && data.meta.modo) || null,
+    bloco: 'portalEmpresas',
+    quando: data.meta && data.meta.ultimaActualizacao
+  });
 
-  const anuncios = data.marketplace.anuncios.filter(a => a.vendedor === 'Importadora Silva Lda.').length || 1;
-  const kpis = [
-    { label: 'Anúncios Activos', valor: anuncios, estado: 'No Marketplace', tipo: 'info' },
-    { label: 'Transacções Concluídas', valor: '18', estado: 'Histórico', tipo: 'ok' },
-    { label: 'Taxa de Cumprimento', valor: '96%', estado: 'Fiável', tipo: 'ok' },
-    { label: 'Avaliação Média', valor: '4.7/5', estado: 'Boa Reputação', tipo: 'ok' },
+  SINAGEPE.renderUserFooter({ utilizador: { nome: data.portalEmpresas.empresa, instituicao: 'Sector Privado', direccao: 'Administrador' } });
+  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+
+  const e = data.portalEmpresas;
+  const kpiDefs = [
+    { label: 'Evolução do Mercado', valor: '+' + e.kpis.evolucaoMercadoPercent + '%', estado: 'Alta Mensal', tipo: 'ok' },
+    { label: 'Preço Médio (Arroz)', valor: e.kpis.precoMedioArroz + ' MZN/kg', estado: 'Estável', tipo: 'info' },
+    { label: 'Margem Estimada', valor: e.kpis.margemEstimadaPercent + '%', estado: 'Adequado', tipo: 'ok' },
   ];
-  document.getElementById('kpi-row').innerHTML = kpis.map(SINAGEPE.kpiCard).join('');
+  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
 
-  const meus = data.marketplace.anuncios.filter(a => a.vendedor === 'Importadora Silva Lda.');
-  const ESTADO_TIPO = { 'Activo': 'ok', 'Em Negociação': 'warn', 'Vendido': 'info' };
-  document.getElementById('anuncios-list').innerHTML = (meus.length ? meus : data.marketplace.anuncios.slice(0,1)).map(a => `
-    <div class="medida-row"><span>${a.produto} — ${a.quantidadeT} t</span><span class="state-tag" style="background:var(--${ESTADO_TIPO[a.estado]}-bg);color:var(--${ESTADO_TIPO[a.estado]})">${a.estado}</span></div>`).join('');
+  document.getElementById('bench-body').innerHTML = e.benchmarks.map(b => `
+    <tr><td>${b.operador}${b.operador === 'Sua Empresa' ? ' <span class="pill pill-info" style="font-size:9px">Você</span>' : ''}</td>
+    <td>${b.faixaQuota}</td><td>${b.faixaPreco}</td><td>${b.tendencia}</td></tr>`).join('');
+
+  new Chart(document.getElementById('chart-custos'), {
+    type: 'doughnut',
+    data: { labels: e.custosLogisticos.map(c => c.categoria), datasets: [{ data: e.custosLogisticos.map(c => c.percent), backgroundColor: ['#d9a441', '#5b8ac9', '#3ecf8e'], borderWidth: 0 }] },
+    options: { plugins: { legend: { position: 'bottom', labels: { color: '#97a3c2', font: { size: 10.5 }, boxWidth: 10 } } }, cutout: '62%' }
+  });
+
+  document.getElementById('recomendacoes-grid').innerHTML = e.recomendacoes.map(r => `
+    <div class="card" style="background:var(--navy-800)">
+      <div class="pill pill-info" style="margin-bottom:8px">${r.tipo}</div>
+      <p style="font-size:12.5px;color:var(--ink-dim);line-height:1.5;margin:0 0 8px">${r.texto}</p>
+      <div style="font-size:10.5px;color:var(--ink-faint)">Confiança: ${r.confianca}%</div>
+    </div>`).join('');
 });
+</script>
+
+<script>
+/* A barra deste portal estava escrita \u00e0 mão, com sete destinos por preencher.
+   Passa a vir de assets/nav-sinagepe.js, como os outros ecr\u00e3s: os itens s\u00e3o
+   gerados de uma lista \u00fanica, sempre com destino real, e filtrados pelo acesso
+   da conta. Um banco v\u00ea o que lhe diz respeito, n\u00e3o portas fechadas. */
+(function(){
+  function montar(){
+    try{
+      if(window.SinagepeNav) SinagepeNav.montar('portal-empresas');
+      if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+    }catch(e){}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',montar);
+  else montar();
+  /* o Banco Central constr\u00f3i a casca por c\u00f3digo; volta a montar quando ela existir */
+  setTimeout(montar,400);
+})();
 </script>
 </body>
 </html>
