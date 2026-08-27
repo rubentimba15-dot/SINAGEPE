@@ -26,6 +26,8 @@
   var ECRAS = [
     { h:'index.html', n:'Painel Executivo', d:'Balanço nacional, mapa, alertas e tendência de preços',
       t:'painel dashboard inicio principal kpi balanço executivo torre controlo' },
+    { h:'indicadores-painel.html', n:'Indicadores do Painel', d:'Como se chega a cada número do Painel: fórmula, componentes, fonte e data',
+      t:'indicador kpi numero formula origem fonte painel dispersao capacidade cega' },
     { h:'ficha-detalhe.html', n:'Ficha de Detalhe', d:'Tudo o que o sistema sabe sobre uma unidade, produto ou província, cruzando os onze ficheiros',
       t:'ficha detalhe drill dossier cruzamento unidade produto provincia aprofundar' },
     { h:'balanco-visual.html', n:'Balanço Visual', d:'Galeria de produtos com imagem, gráficos de preço, capacidade e exposição',

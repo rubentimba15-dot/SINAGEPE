@@ -1,0 +1,213 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "geradoEm": "2026-08-25",
+    "nota": "Os seis indicadores do Painel. Cada um declara a origem, a fórmula quando existe, e a data dos dados. Nenhum é escrito à mão.",
+    "regra": "Um indicador só entra aqui se derivar de dados com fonte. Se um valor for de demonstração, é marcado como tal e a ficha di-lo à cabeça."
+  },
+  "indicadores": [
+    {
+      "id": "dispersao-preco",
+      "rotulo": "Dispersão de preço",
+      "valor": 341,
+      "unidade": "%",
+      "estado": "Milho",
+      "cor": "red",
+      "classificacao": "FACTO",
+      "resumo": "Diferença entre a praça mais barata e a mais cara para o mesmo produto, na mesma semana.",
+      "formula": "máximo dividido pelo mínimo, menos um",
+      "componentes": [
+        [
+          "Milho em Mandimba",
+          17.0,
+          "MT/kg"
+        ],
+        [
+          "Milho em Búzi",
+          75.0,
+          "MT/kg"
+        ]
+      ],
+      "leitura": "Não é variação de qualidade. É custo de transporte, isolamento de mercado e ausência de alternativa de compra. É o maior indicador de ineficiência de mercado que o sistema mede.",
+      "fonte": "SIMA — boletim Quente-Quente n.º 1445",
+      "dataDados": "Julho de 2023",
+      "ecra": "marketplace-b2b.html"
+    },
+    {
+      "id": "variacao-milho",
+      "rotulo": "Variação do milho",
+      "valor": -17.2,
+      "unidade": "%",
+      "estado": "Março a Julho de 2023",
+      "cor": "ok",
+      "classificacao": "FACTO",
+      "resumo": "Variação do preço médio a retalho do milho entre duas edições do boletim, com quatro meses de intervalo.",
+      "formula": "preço em Julho dividido pelo preço em Março, menos um",
+      "componentes": [
+        [
+          "Março de 2023",
+          29.65,
+          "MT/kg"
+        ],
+        [
+          "Julho de 2023",
+          24.55,
+          "MT/kg"
+        ]
+      ],
+      "leitura": "A descida coincide com o período pós-colheita. No mesmo intervalo o arroz, maioritariamente importado, subiu 2,4%. É a diferença entre o que se colhe cá e o que vem de fora, medida em preço.",
+      "fonte": "SIMA — edições 1445 e 1462",
+      "dataDados": "Setembro de 2022 a Julho de 2023",
+      "ecra": "portal-produtores.html"
+    },
+    {
+      "id": "factura-geografia",
+      "rotulo": "Factura da geografia",
+      "valor": 15.6,
+      "unidade": "MT/L",
+      "estado": "Mueda e Palma",
+      "cor": "amber",
+      "classificacao": "FACTO",
+      "resumo": "Quanto mais custa o litro de gasóleo na região mais cara do país, face às cidades com terminal de distribuição.",
+      "formula": "preço na região menos preço de referência",
+      "componentes": [
+        [
+          "Cidades com terminal",
+          116.25,
+          "MT/L"
+        ],
+        [
+          "Mueda e Palma",
+          131.85,
+          "MT/L"
+        ]
+      ],
+      "leitura": "Não é margem de ninguém. É o custo do transporte interno do combustível, reconhecido pelo próprio regulador na metodologia de formação do preço. Numa viagem de 400 km com camião de consumo médio, são cerca de 1997 MT de acréscimo.",
+      "fonte": "ARENE — Decreto n.º 89/2019, revisão de 2026-05-07",
+      "dataDados": "2026-05-07",
+      "ecra": "portal-transportadores.html"
+    },
+    {
+      "id": "capacidade-cega",
+      "rotulo": "Capacidade cega",
+      "valor": 100,
+      "unidade": "%",
+      "estado": "30 de 30 unidades",
+      "cor": "red",
+      "classificacao": "FACTO",
+      "resumo": "Fatia da capacidade de armazenagem cadastrada que não reporta existências por qualquer meio automático.",
+      "formula": "unidades sem sensor a dividir pelo total do cadastro",
+      "componentes": [
+        [
+          "Unidades no cadastro",
+          30,
+          ""
+        ],
+        [
+          "Sem qualquer leitura automática",
+          30,
+          ""
+        ],
+        [
+          "Com fonte oficial citada",
+          30,
+          ""
+        ]
+      ],
+      "leitura": "O sistema sabe onde estão os armazéns, de quem são e que capacidade declaram. Não sabe o que lá está dentro. Nenhuma unidade do país reporta existências.",
+      "fonte": "Cadastro Nacional de Armazenagem — fonte oficial por unidade",
+      "dataDados": "Agosto de 2026",
+      "ecra": "armazens-nacionais.html"
+    },
+    {
+      "id": "identificacao-nacional",
+      "rotulo": "Produtos com identificação nacional",
+      "valor": 0,
+      "unidade": "de 12",
+      "estado": "Prefixo GS1 602 por atribuir",
+      "cor": "red",
+      "classificacao": "FACTO",
+      "resumo": "Quantos dos produtos essenciais têm identificação emitida em Moçambique.",
+      "formula": "contagem directa no cadastro de identificação",
+      "componentes": [
+        [
+          "Sem identificação em uso",
+          8,
+          ""
+        ],
+        [
+          "Com identificação estrangeira",
+          4,
+          ""
+        ],
+        [
+          "Com identificação nacional",
+          0,
+          ""
+        ]
+      ],
+      "leitura": "Não existe organização-membro GS1 em Moçambique e o prefixo 602 continua por atribuir. Nenhum produto fabricado no país pode receber hoje um código emitido cá.",
+      "fonte": "GS1 e cadastro de identificação do SINAGEPE",
+      "dataDados": "Agosto de 2026",
+      "ecra": "ponto-cego-duplo.html"
+    },
+    {
+      "id": "riscos-graves",
+      "rotulo": "Riscos de gravidade máxima",
+      "valor": 3,
+      "unidade": "de 10",
+      "estado": "Com acção imediata definida",
+      "cor": "amber",
+      "classificacao": "ESTIMATIVA",
+      "resumo": "Riscos identificados com gravidade 5 em 5, cada um com gatilho, janela de calendário e quem decide.",
+      "formula": "contagem dos riscos com gravidade máxima",
+      "componentes": [
+        [
+          "Não se sabe o que está nos armazéns do país",
+          5,
+          "/5"
+        ],
+        [
+          "Cortes de estrada sem rota alternativa isolam regiões inteiras",
+          5,
+          "/5"
+        ],
+        [
+          "Medicamentos sem cadeia de frio monitorizada",
+          5,
+          "/5"
+        ]
+      ],
+      "leitura": "São hipóteses fundamentadas em estrutura conhecida — cadastro, rede viária, concentração em corredores. Não são previsões probabilísticas: o sistema não tem série histórica para as calcular.",
+      "fonte": "Centro de Antecipação do SINAGEPE",
+      "dataDados": "Agosto de 2026",
+      "ecra": "centro-antecipacao.html"
+    }
+  ],
+  "retirados": [
+    {
+      "rotulo": "Disponibilidade nacional",
+      "valor": "87%",
+      "razao": "Valor escrito à mão no ficheiro de demonstração. Não derivava de contagem nem de fonte. Para o calcular a sério é preciso saber as existências — e nenhuma unidade do país as reporta.",
+      "oQueFaltaPara": "Existências declaradas pelos armazenistas, ou telemetria instalada."
+    },
+    {
+      "rotulo": "Cobertura média",
+      "valor": "42 dias",
+      "razao": "Mesma origem. Dias de cobertura exigem existência e consumo; o sistema não tem nenhum dos dois.",
+      "oQueFaltaPara": "Existências e consumo médio nacional."
+    },
+    {
+      "rotulo": "Importações em trânsito",
+      "valor": "28,45 mil ton",
+      "razao": "Valor de demonstração. O dado real está nas declarações aduaneiras da Janela Única Electrónica.",
+      "oQueFaltaPara": "Agregado mensal das Alfândegas, por produto e posto fronteiriço."
+    },
+    {
+      "rotulo": "Índice logístico nacional",
+      "valor": "0,72",
+      "razao": "Valor escrito à mão, sem fórmula declarada. Diferente do IPL, que tem componentes e pesos definidos.",
+      "oQueFaltaPara": "Definição de componentes e pesos, ou substituição pelo IPL, que já os tem."
+    }
+  ]
+}
