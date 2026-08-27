@@ -1,153 +1,339 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Marketplace B2B — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Marketplace B2B &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/selo-proveniencia.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/produtos-visual.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  .listing-card { background: var(--card-bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px; cursor: pointer; transition: border-color 0.15s; }
-  .listing-card:hover { border-color: var(--bronze); }
-  .listing-card.selected { border-color: var(--bronze); box-shadow: 0 0 0 1px var(--bronze); }
-  .listing-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; }
-  .listing-name { font-size: 13.5px; font-weight: 700; color: var(--ink); }
-  .listing-seller { font-size: 10.5px; color: var(--ink-faint); margin-bottom: 8px; }
-  .listing-price { display: flex; gap: 12px; font-size: 12px; }
-  .filter-chip { background: var(--card-bg); border: 1px solid var(--line); border-radius: 7px; padding: 7px 12px; font-size: 11px; color: var(--ink-dim); cursor: pointer; }
-  .publish-btn { background: var(--bronze); color: #ffffff; border: none; border-radius: 8px; padding: 10px 18px; font-weight: 700; font-size: 12.5px; cursor: pointer; }
-  .proposta-row { background: var(--navy-800); border-radius: 6px; padding: 8px 12px; display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 8px; }
-  .neg-btn { border: 1px solid var(--bronze); color: var(--bronze); border-radius: 7px; padding: 7px 0; text-align: center; font-size: 11.5px; font-weight: 700; margin-top: 8px; }
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:940px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
+.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.bd{padding:15px 17px}
+.oferta{padding:15px 18px;border-radius:12px;border:1px solid rgba(18,185,129,.32);background:rgba(18,185,129,.07);
+ margin-bottom:16px;font-size:12.5px;line-height:1.65;color:#8FE3C4}
+.oferta b{color:var(--ok)}
+.abas{display:flex;gap:5px;padding:12px 17px;border-bottom:1px solid var(--card-line);flex-wrap:wrap}
+.ab{font-size:11.5px;padding:7px 15px;border-radius:20px;border:1px solid var(--card-line);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.ab.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+.g2{display:grid;grid-template-columns:1.25fr 1fr;gap:14px;align-items:start}
+@media(max-width:1100px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 14px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 14px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.arb{padding:14px 17px;border-bottom:1px solid rgba(38,56,86,.4)}
+.arb-t{display:flex;align-items:center;gap:10px;margin-bottom:7px;flex-wrap:wrap}
+.arb-n{font-size:14px;font-weight:600}
+.arb-r{display:flex;align-items:center;gap:10px;font-size:12px;margin:7px 0}
+.arb-c{flex:1;height:22px;background:#0A1421;border-radius:5px;position:relative;overflow:hidden}
+.arb-c i{position:absolute;top:0;bottom:0;border-radius:5px}
+.arb-v{width:96px;text-align:right;flex-shrink:0}
+.an{background:linear-gradient(160deg,#101B2E 0%,#0A1220 100%);border:1px solid var(--card-line);
+ border-radius:11px;padding:14px;cursor:pointer;transition:.15s}
+.an:hover{border-color:var(--brzg)}
+.an.on{border-color:var(--brz);box-shadow:0 0 0 1px var(--brzg)}
+.an-t{display:flex;justify-content:space-between;gap:9px;align-items:flex-start;margin-bottom:5px}
+.an-n{font-size:13.5px;font-weight:600;line-height:1.25}
+.an-v{font-size:10.5px;color:var(--t4);margin-bottom:9px}
+.an-p{display:flex;gap:14px;font-size:12px;align-items:baseline}
+.grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:12px;padding:15px 17px}
+.aviso{margin:12px 17px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.55;border:1px solid}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.aviso.g{background:rgba(18,185,129,.07);border-color:rgba(18,185,129,.26);color:#8FE3C4}
+button{font-family:inherit;font-size:11.5px;padding:9px 16px;border-radius:8px;border:1px solid var(--card-line);
+ background:var(--nav-idle);color:var(--t2);cursor:pointer}
+button:hover:not(:disabled){background:var(--cardh)}
+button:disabled{opacity:.35;cursor:not-allowed}
+button.p{background:var(--ok);border-color:transparent;color:#04231A;font-weight:600}
+button.s{border-color:var(--brzg);color:var(--brzl)}
+.prop{background:#0A1421;border-radius:7px;padding:9px 13px;display:flex;justify-content:space-between;
+ gap:12px;font-size:11.5px;margin-bottom:7px}
+.campo{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid rgba(38,56,86,.4);font-size:12px}
+.campo:last-child{border-bottom:none}
+.campo span:first-child{color:var(--t4)}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
 </style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Mercado</div>
+    <h1>Marketplace B2B</h1>
+    <p class="sub">Duas coisas separadas neste ecr&atilde;: <b>intelig&ecirc;ncia de mercado com dados reais do SIMA</b>, que qualquer operador pode usar hoje; e uma <b>demonstra&ccedil;&atilde;o de negocia&ccedil;&atilde;o</b>, que mostra o que existiria se houvesse operadores registados. As duas est&atilde;o marcadas.</p>
 
-<div class="app-shell">
-  <aside class="sidebar">
-    <div class="sidebar-top">
-      <div class="brand"><div class="brand-mark">M</div><div class="brand-text"><div class="brand-title">Portal Privado</div><div class="brand-sub">SINAGEPE — Marketplace B2B</div></div></div>
-      <nav class="nav-list">
-        <a class="nav-item" href="index.html"><span class="nav-icon">▦</span> PAINEL</a>
-        <a class="nav-item active" href="marketplace-b2b.html"><span class="nav-icon">◎</span> Marketplace</a>
-        <a class="nav-item" href="#"><span class="nav-icon">⇄</span> Logística</a>
-        <a class="nav-item" href="#"><span class="nav-icon">▤</span> Armazéns</a>
-        <a class="nav-item" href="#"><span class="nav-icon">≋</span> Simulador</a>
-        <a class="nav-item" href="#"><span class="nav-icon">▧</span> Relatórios</a>
-        <a class="nav-item" href="#"><span class="nav-icon">⚙</span> Configurações</a>
-      </nav>
-      <a class="nav-item" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="margin:8px 16px 0;border-top:1px solid var(--card-line);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:var(--red)">Sair (Logout)</span></a>
+    <div class="oferta" id="oferta"></div>
+
+    <div class="card frame">
+      <div class="abas" id="abas"></div>
+      <div id="painel"></div>
     </div>
-    <div class="sidebar-footer"><div class="avatar-dot" id="user-initials">MP</div><div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div></div>
-  </aside>
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-title-group"><div class="topbar-title">Marketplace B2B</div><div class="topbar-badge">Transacções entre Empresas Registadas</div></div>
-      <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
-    </div>
-    <div class="content" id="content-mount"></div>
-    <div class="footer"><span>© 2026 SINAGEPE Moçambique — Acesso Privado</span><span id="footer-updated">—</span></div>
-  </div>
+  </main>
 </div>
 
-<script src="assets/sinagepe.js"></script>
 <script>
-SINAGEPE.load().then(renderMarketplace);
+if(window.SinagepeNav) SinagepeNav.montar('marketplace');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
 
-let DATA;
-let SELECCIONADO = null;
+var ST={aba:'arbitragem',sel:null};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
 
-function renderMarketplace(data) {
-  DATA = data;
-  SINAGEPE.renderUserFooter({ utilizador: { nome: 'Importadora Silva Lda.', instituicao: 'Sector Privado', direccao: 'Administrador' } });
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
-
-  const m = data.marketplace;
-  document.getElementById('content-mount').innerHTML = `
-    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
-      ${SINAGEPE.kpiCard({ label: 'Anúncios Activos', valor: m.kpis.anunciosActivos, estado: 'Normal', tipo: 'info' })}
-      ${SINAGEPE.kpiCard({ label: 'Transacções em Curso', valor: m.kpis.transaccoesEmCurso, estado: 'Em Negociação', tipo: 'warn' })}
-      ${SINAGEPE.kpiCard({ label: 'Volume Transaccionado (Mês)', valor: (m.kpis.volumeTransaccionadoMzn / 1e6).toFixed(1) + 'M MZN', estado: 'Crescente', tipo: 'ok' })}
-      ${SINAGEPE.kpiCard({ label: 'Taxa de Conclusão', valor: m.kpis.taxaConclusaoPercent + '%', estado: 'Saudável', tipo: 'ok' })}
-    </div>
-
-    <div class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
-        <div style="display:flex;gap:8px" id="filters"></div>
-        <button class="publish-btn">+ Publicar Novo Anúncio</button>
-      </div>
-      <div class="row-3" id="listings-grid" style="grid-template-columns:repeat(3,1fr)"></div>
-    </div>
-
-    <div class="card" id="negociacao-panel"></div>
-  `;
-
-  document.getElementById('filters').innerHTML = ['Todos os Produtos', 'Todas as Províncias', 'Todos os Estados']
-    .map(f => `<div class="filter-chip">${f} ▾</div>`).join('');
-
-  renderListings(m.anuncios);
-  SELECCIONADO = m.anuncios.find(a => a.estado === 'Em Negociação')?.id || m.anuncios[0].id;
-  renderNegociacao(SELECCIONADO);
+function desenharOferta(){
+  document.getElementById('oferta').innerHTML=
+     '<b>O que este ecr&atilde; d&aacute; sem exigir registo.</b> Pre&ccedil;o real por pra&ccedil;a em 13 mercados e '
+    + (ST.sima.fluxos.length+(ST.sima.fluxos1462||[]).length) + ' movimenta&ccedil;&otilde;es de produto documentadas pelo SIMA. '
+    +'&Eacute; a informa&ccedil;&atilde;o comercial mais completa que existe reunida sobre mercados agr&iacute;colas mo&ccedil;ambicanos &mdash; '
+    +'e n&atilde;o est&aacute; em mais lado nenhum.'
+    +'<div style="margin-top:9px;color:var(--t3)">A negocia&ccedil;&atilde;o entre empresas est&aacute; como demonstra&ccedil;&atilde;o. '
+    +'Publicar an&uacute;ncios e trocar propostas exige registo de operadores e servidor &mdash; nenhum dos dois existe hoje.</div>';
 }
 
-const ESTADO_TIPO = { 'Activo': 'ok', 'Em Negociação': 'warn', 'Vendido': 'info' };
-
-function renderListings(anuncios) {
-  document.getElementById('listings-grid').innerHTML = anuncios.map(a => `
-    <div class="listing-card ${a.id === SELECCIONADO ? 'selected' : ''}" data-id="${a.id}">
-      <div class="listing-top">
-        <span class="listing-name">${a.produto}</span>
-        <span class="state-tag" style="background:var(--${ESTADO_TIPO[a.estado]}-bg);color:var(--${ESTADO_TIPO[a.estado]})">${a.estado}</span>
-      </div>
-      <div class="listing-seller">${a.vendedor} · ${a.provincia}</div>
-      <div class="listing-price">
-        <span style="font-weight:600;color:var(--ink)">${a.quantidadeT} t</span>
-        <span style="font-weight:700;color:var(--bronze)">${SINAGEPE.fmt(a.precoMznT)} MZN/t</span>
-      </div>
-      <div class="neg-btn">Ver e Negociar</div>
-    </div>`).join('');
-
-  document.querySelectorAll('.listing-card').forEach(card => card.addEventListener('click', () => {
-    SELECCIONADO = card.dataset.id;
-    renderListings(DATA.marketplace.anuncios);
-    renderNegociacao(SELECCIONADO);
-  }));
+function desenharAbas(){
+  var m=[['arbitragem','Onde comprar e onde vender',null],
+         ['fluxos','Quem abastece quem',(ST.sima.fluxos.length+(ST.sima.fluxos1462||[]).length)],
+         ['anuncios','Negocia&ccedil;&atilde;o',ST.mk.anuncios.length],
+         ['falta','O que falta para funcionar',null]];
+  document.getElementById('abas').innerHTML=m.map(function(x){
+    return '<button class="ab'+(ST.aba===x[0]?' on':'')+'" data-a="'+x[0]+'">'+x[1]
+      +(x[2]?' <span style="opacity:.6">'+x[2]+'</span>':'')+'</button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.ab'),function(b){
+    b.addEventListener('click',function(){ST.aba=b.dataset.a;desenharAbas();desenharPainel()});
+  });
 }
 
-function renderNegociacao(id) {
-  const a = DATA.marketplace.anuncios.find(x => x.id === id);
-  const propostas = DATA.marketplace.propostas[id] || [];
-  const panel = document.getElementById('negociacao-panel');
+/* ---------------- 1. ARBITRAGEM: o achado comercial ---------------- */
+function painelArbitragem(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var h='<div class="aviso g"><b>A oportunidade est&aacute; na dist&acirc;ncia entre pra&ccedil;as.</b> '
+   +'O mesmo produto, na mesma semana, custa at&eacute; tr&ecirc;s vezes mais consoante o mercado. '
+   +'Quem compra onde &eacute; barato e vende onde &eacute; caro tem margem antes de qualquer transforma&ccedil;&atilde;o.</div>';
+  R.slice().sort(function(a,b){
+    return (b.maximo.valor/b.minimo.valor)-(a.maximo.valor/a.minimo.valor);
+  }).forEach(function(r){
+    var mn=r.minimo.valor, mx=r.maximo.valor, d=(mx/mn-1)*100;
+    var c=d>150?'var(--red)':d>60?'var(--amber)':'var(--ok)';
+    var img=window.ProdutosVisual?ProdutosVisual.render(r.produto,42):'';
+    h+='<div class="arb"><div class="arb-t">'+img
+     +'<span class="arb-n">'+esc(r.produto)+'</span>'
+     +'<span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">+'+d.toFixed(0)+'% entre pra&ccedil;as</span></div>'
+     +'<div class="arb-r"><span style="width:88px;color:var(--ok)">Comprar em</span>'
+     +'<span class="arb-c"><i style="left:0;width:'+(mn/mx*100).toFixed(0)+'%;background:var(--ok)"></i></span>'
+     +'<span class="arb-v mono" style="color:var(--ok)">'+p2(mn)+' MT/kg</span></div>'
+     +'<div style="font-size:11px;color:var(--t4);margin:-3px 0 7px 98px">'+esc(r.minimo.mercados.join(', '))+'</div>'
+     +'<div class="arb-r"><span style="width:88px;color:var(--amber)">Vender em</span>'
+     +'<span class="arb-c"><i style="left:0;width:100%;background:var(--amber)"></i></span>'
+     +'<span class="arb-v mono" style="color:var(--amber)">'+p2(mx)+' MT/kg</span></div>'
+     +'<div style="font-size:11px;color:var(--t4);margin:-3px 0 7px 98px">'+esc(r.maximo.mercados.join(', '))+'</div>'
+     +'<div style="font-size:11.5px;color:var(--t3);line-height:1.55">'
+     +'Diferen&ccedil;a bruta de <b style="color:'+c+'">'+p2(mx-mn)+' MT por quilograma</b>. '
+     +'Numa tonelada s&atilde;o '+num((mx-mn)*1000)+' MT antes de transporte, perdas e margem.</div></div>';
+  });
+  h+='<div class="aviso w"><b>Isto n&atilde;o &eacute; recomenda&ccedil;&atilde;o de compra.</b> '
+   +'A diferen&ccedil;a bruta n&atilde;o desconta transporte, perdas, armazenagem nem risco de mercado. '
+   +'E os pre&ccedil;os s&atilde;o de '+esc(ST.sima.meta.periodo||'2023')+' &mdash; n&atilde;o s&atilde;o correntes.</div>'
+   +'<div class="aviso i">Fonte: SIMA, boletim Quente-Quente, edi&ccedil;&atilde;o '+ST.sima.meta.edicao+'. '
+   +'O transporte entre pra&ccedil;as pode ser estimado com o pre&ccedil;o do gas&oacute;leo por regi&atilde;o, no Portal do Transportador.</div>';
+  return h;
+}
 
-  if (a.estado === 'Vendido') {
-    panel.innerHTML = `<div class="card-title">Negociação — ${a.produto} (${a.vendedor})</div><div class="card-subtitle" style="margin-bottom:0">#${a.id} · Transacção concluída — não há acções disponíveis.</div>`;
-    return;
+/* ---------------- 2. FLUXOS: quem abastece quem ---------------- */
+function painelFluxos(){
+  var F=(ST.sima.fluxos||[]).concat(ST.sima.fluxos1462||[]);
+  var orig={},dest={};
+  F.forEach(function(f){orig[f.origem]=(orig[f.origem]||0)+1;dest[f.destino]=(dest[f.destino]||0)+1});
+  function top(o,n){return Object.keys(o).sort(function(a,b){return o[b]-o[a]}).slice(0,n)}
+  var h='<div class="aviso g"><b>Quem abastece quem, documentado.</b> '
+   +F.length+' movimenta&ccedil;&otilde;es reais de produto registadas pelo SIMA, com origem, destino e pre&ccedil;o de compra. '
+   +'Para um comerciante, isto diz onde h&aacute; oferta e quem j&aacute; a est&aacute; a comprar.</div>'
+   +'<div class="g2" style="padding:0 17px 8px">'
+   +'<div><div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brz);margin:12px 0 8px">Maiores fornecedores</div>'
+   +'<table><tbody>'+top(orig,6).map(function(k){
+      return '<tr><td>'+esc(k)+'</td><td class="n">'+orig[k]+' fluxos</td></tr>';}).join('')+'</tbody></table></div>'
+   +'<div><div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brz);margin:12px 0 8px">Maiores compradores</div>'
+   +'<table><tbody>'+top(dest,6).map(function(k){
+      return '<tr><td>'+esc(k)+'</td><td class="n">'+dest[k]+' fluxos</td></tr>';}).join('')+'</tbody></table></div>'
+   +'</div>'
+   +'<table><thead><tr><th>Produto</th><th>De</th><th>Para</th><th class="n">Pre&ccedil;o</th><th class="n">MT/kg</th></tr></thead><tbody>'
+   + F.sort(function(a,b){return (b.precoPorKg||0)-(a.precoPorKg||0)}).map(function(f){
+      return '<tr><td>'+esc(f.produto)+'</td><td style="color:var(--t3)">'+esc(f.origem)+'</td>'
+       +'<td style="color:var(--t3)">'+esc(f.destino)+'</td>'
+       +'<td class="n" style="color:var(--t4)">'+num(f.preco)+' '+esc(f.unidade.replace('MT ',''))+'</td>'
+       +'<td class="n">'+(f.precoPorKg?p2(f.precoPorKg):'&mdash;')+'</td></tr>';
+     }).join('')
+   +'</tbody></table>'
+   +'<div class="aviso i">As unidades originais eram incompat&iacute;veis &mdash; latas de 5 e 20 litros, sacos de 50 e 60 kg. '
+   +'A coluna MT/kg normaliza o que era convert&iacute;vel; a convers&atilde;o da lata &eacute; assumida e vem declarada nos dados.</div>';
+  return h;
+}
+
+/* ---------------- 3. ANÚNCIOS: a demonstração, marcada ---------------- */
+var COR_EST={'Activo':'#12B981','Em Negociação':'#F0A926','Vendido':'#22B8F0'};
+function painelAnuncios(){
+  var A=ST.mk.anuncios;
+  if(!ST.sel) ST.sel=(A.filter(function(a){return a.estado==='Em Negociação'})[0]||A[0]).id;
+  var h='<div class="aviso r"><b>Esta sec&ccedil;&atilde;o &eacute; demonstra&ccedil;&atilde;o.</b> '
+   +'Os an&uacute;ncios e as propostas n&atilde;o s&atilde;o reais e n&atilde;o s&atilde;o guardados: ao recarregar a p&aacute;gina, tudo volta ao in&iacute;cio. '
+   +'Publicar an&uacute;ncios exige registo de operadores e servidor.</div>'
+   +'<div class="grid3">'+A.map(function(a){
+      var c=COR_EST[a.estado]||'#5E7189';
+      return '<div class="an'+(ST.sel===a.id?' on':'')+'" data-i="'+esc(a.id)+'">'
+       +'<div class="an-t"><span class="an-n">'+esc(a.produto)+'</span>'
+       +'<span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'+esc(a.estado)+'</span></div>'
+       +'<div class="an-v">'+esc(a.vendedor)+' &middot; '+esc(a.provincia)+'</div>'
+       +'<div class="an-p"><b class="mono">'+a.quantidadeT+' t</b>'
+       +'<b class="mono" style="color:var(--brzl)">'+num(a.precoMznT)+' MT/t</b></div>'
+       +'<div style="font-size:10px;color:var(--t4);margin-top:5px">'+p2(a.precoMznT/1000)+' MT/kg</div></div>';
+     }).join('')+'</div>'
+   +'<div id="neg"></div>';
+  return h;
+}
+function desenharNegociacao(){
+  var A=ST.mk.anuncios, a=null;
+  A.forEach(function(x){if(x.id===ST.sel)a=x});
+  if(!a)return;
+  var props=(ST.mk.propostas&&ST.mk.propostas[a.id])||[];
+  var el=document.getElementById('neg');
+  if(!el)return;
+  var h='<div style="border-top:1px solid var(--card-line);padding:15px 17px">'
+   +'<div style="font-size:14px;font-weight:600;margin-bottom:3px">'+esc(a.produto)+' &mdash; '+esc(a.vendedor)+'</div>'
+   +'<div style="font-size:11px;color:var(--t4);margin-bottom:12px">'+esc(a.id)+' &middot; '+esc(a.provincia)+'</div>'
+   +'<div class="campo"><span>Quantidade</span><span class="mono">'+a.quantidadeT+' toneladas</span></div>'
+   +'<div class="campo"><span>Pre&ccedil;o pedido</span><span class="mono">'+num(a.precoMznT)+' MT/t &middot; '+p2(a.precoMznT/1000)+' MT/kg</span></div>'
+   +'<div class="campo"><span>Valor total</span><span class="mono">'+num(a.precoMznT*a.quantidadeT)+' MT</span></div>'
+   +(a.ancoragem?'<div class="campo"><span>Ancoragem do pre&ccedil;o</span><span style="max-width:340px;color:var(--t3)">'+esc(a.ancoragem)+'</span></div>':'');
+  if(a.estado==='Vendido'){
+    h+='<div class="aviso i" style="margin:12px 0 0">Transac&ccedil;&atilde;o conclu&iacute;da. N&atilde;o h&aacute; ac&ccedil;&otilde;es dispon&iacute;veis.</div>';
+  } else {
+    h+='<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brz);margin:16px 0 8px">Propostas</div>'
+     + (props.length?props.map(function(p){
+        return '<div class="prop"><span>'+esc(p.texto)+'</span><span style="color:var(--t4)">'+esc(p.tempo)+'</span></div>';
+       }).join(''):'<div style="font-size:11.5px;color:var(--t4);padding:6px 0">Sem propostas neste an&uacute;ncio.</div>')
+     +'<div style="display:flex;gap:9px;margin-top:12px;flex-wrap:wrap">'
+     +'<button class="p" id="b-aceitar">Aceitar e fechar venda</button>'
+     +'<button class="s" id="b-contra">Fazer contraproposta</button></div>'
+     +'<div id="neg-estado" style="margin-top:10px;font-size:11.5px;color:var(--t4)"></div>';
   }
-
-  panel.innerHTML = `
-    <div class="card-title">Negociação — ${a.produto} (${a.vendedor})</div>
-    <div class="card-subtitle">#${a.id} ${propostas.length ? '· Aberta há 2 dias' : '· Sem propostas ainda — envia a primeira'} · <a href="detalhe-oferta-marketplace.html?id=${a.id}" style="color:var(--bronze)">Ver Oferta Completa</a> · <a href="perfil-empresa.html" style="color:var(--bronze)">Ver Perfil do Vendedor</a></div>
-    <div id="propostas-list">${propostas.map(p => `<div class="proposta-row"><span>${p.texto}</span><span style="color:var(--ink-faint)">${p.tempo}</span></div>`).join('')}</div>
-    <div style="display:flex;gap:10px;margin-top:10px">
-      <button style="background:var(--ok);color:#fff;border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:12px;cursor:pointer" id="btn-aceitar">Aceitar e Fechar Venda</button>
-      <button style="background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:10px 20px;font-weight:700;font-size:12px;cursor:pointer" id="btn-contraproposta">Fazer Contraproposta</button>
-    </div>
-    <div id="neg-status" style="margin-top:10px;font-size:11.5px;color:var(--ink-faint)"></div>
-  `;
-
-  document.getElementById('btn-aceitar').addEventListener('click', function () {
-    this.disabled = true;
-    document.getElementById('neg-status').textContent = '✔ Venda fechada — transacção registada. (Simulação, sem backend real neste protótipo.)';
+  h+='</div>';
+  el.innerHTML=h;
+  var ba=document.getElementById('b-aceitar');
+  if(ba) ba.addEventListener('click',function(){
+    this.disabled=true;
+    document.getElementById('neg-estado').innerHTML=
+      '<span style="color:var(--amber)"><b>Nada foi registado.</b> Esta ac&ccedil;&atilde;o precisa de servidor para guardar a transac&ccedil;&atilde;o, '
+      +'de identidade verificada dos dois operadores e de valor legal para o compromisso. Nenhum dos tr&ecirc;s existe neste prot&oacute;tipo.</span>';
   });
-  document.getElementById('btn-contraproposta').addEventListener('click', () => {
-    const valor = prompt('Valor da contraproposta (MZN/t):', a.precoMznT);
-    if (!valor) return;
-    DATA.marketplace.propostas[id] = propostas.concat([{ texto: `Contraproposta enviada: ${valor} MZN/t`, tempo: 'Agora' }]);
-    renderNegociacao(id);
+  var bc=document.getElementById('b-contra');
+  if(bc) bc.addEventListener('click',function(){
+    var v=prompt('Valor da contraproposta, em MT por tonelada:',a.precoMznT);
+    if(!v)return;
+    ST.mk.propostas=ST.mk.propostas||{};
+    ST.mk.propostas[a.id]=props.concat([{texto:'Contraproposta enviada: '+num(Number(v))+' MT/t',tempo:'agora, s&oacute; nesta sess&atilde;o'}]);
+    desenharNegociacao();
   });
 }
+
+/* ---------------- 4. O QUE FALTA ---------------- */
+var FALTA=[
+ ['Publicar an&uacute;ncio','Depende de servidor','var(--red)',
+  'Guardar uma oferta exige base de dados. Num s&iacute;tio est&aacute;tico n&atilde;o h&aacute; onde escrever.','Infraestrutura'],
+ ['Identidade do operador','Depende de ades&atilde;o','var(--red)',
+  'Um marketplace sem identidade verificada &eacute; um quadro de avisos. Exige registo com NUIT e valida&ccedil;&atilde;o.','CTA &middot; MIC'],
+ ['Valor legal da proposta','Depende de enquadramento','var(--red)',
+  'Uma contraproposta aceite tem de vincular alguma coisa. Sem isso, &eacute; conversa registada.','Assessoria jur&iacute;dica'],
+ ['Stock real dispon&iacute;vel','Depende de ades&atilde;o','var(--red)',
+  'Nenhum armaz&eacute;m do pa&iacute;s reporta exist&ecirc;ncias. Um an&uacute;ncio de 40 t n&atilde;o pode ser confirmado contra nada.','Armazenistas'],
+ ['Pre&ccedil;o grossista por pra&ccedil;a','Poss&iacute;vel j&aacute;','var(--amber)',
+  'O SIMA recolhe pre&ccedil;o ao grossista, al&eacute;m do retalho. As edi&ccedil;&otilde;es extra&iacute;das trazem sobretudo retalho; o grossista est&aacute; na fonte.','MAAP &middot; SIMA'],
+ ['Quantidade dispon&iacute;vel no grossista','Poss&iacute;vel j&aacute;','var(--amber)',
+  'O SIMA recolhe este indicador. &Eacute; o mais pr&oacute;ximo de exist&ecirc;ncias que o pa&iacute;s tem, e n&atilde;o est&aacute; ligado.','MAAP &middot; SIMA'],
+ ['Custo de transporte entre pra&ccedil;as','Calcul&aacute;vel','var(--ok)',
+  'Com o pre&ccedil;o do gas&oacute;leo por regi&atilde;o e a dist&acirc;ncia, o custo de mover carga entre duas pra&ccedil;as &eacute; aritm&eacute;tica.','&mdash;']
+];
+function painelFalta(){
+  var h='<div class="aviso i"><b>A tabela honesta.</b> Um marketplace sem operadores registados n&atilde;o &eacute; um marketplace. '
+   +'Isto declara exactamente o que falta, de quem depende, e o que j&aacute; &eacute; poss&iacute;vel sem esperar por ningu&eacute;m.</div>'
+   +'<table><thead><tr><th>O que falta</th><th>Situa&ccedil;&atilde;o</th><th>Porqu&ecirc;</th><th>Quem det&eacute;m</th></tr></thead><tbody>';
+  FALTA.forEach(function(f){
+    h+='<tr><td style="font-weight:600">'+f[0]+'</td>'
+     +'<td><span class="est" style="color:'+f[2]+';border-color:'+f[2]+'55;background:'+f[2]+'12">'+f[1]+'</span></td>'
+     +'<td style="color:var(--t3);max-width:420px">'+f[3]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+f[4]+'</td></tr>';
+  });
+  h+='</tbody></table>'
+   +'<div class="aviso g"><b>A troca que se prop&otilde;e.</b> Nada do que est&aacute; nas outras tr&ecirc;s abas exigiu que algu&eacute;m desse alguma coisa. '
+   +'Quando um operador declarar o que tem e a que pre&ccedil;o, deixa de procurar comprador &agrave;s cegas &mdash; e o sistema passa a saber '
+   +'onde est&aacute; o produto antes de haver ruptura.</div>';
+  return h;
+}
+
+function desenharPainel(){
+  var el=document.getElementById('painel');
+  el.innerHTML= ST.aba==='arbitragem'?painelArbitragem()
+              : ST.aba==='fluxos'?painelFluxos()
+              : ST.aba==='anuncios'?painelAnuncios()
+              : painelFalta();
+  if(ST.aba==='anuncios'){
+    Array.prototype.forEach.call(document.querySelectorAll('.an'),function(x){
+      x.addEventListener('click',function(){ST.sel=x.dataset.i;desenharPainel()});
+    });
+    desenharNegociacao();
+  }
+}
+
+Promise.all([
+  fetch('data/sima-precos.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/sima-precos.json');return r.json()}),
+  fetch('data/sinagepe-data.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/sinagepe-data.json');return r.json()})
+]).then(function(res){
+  ST.sima=res[0]; ST.d=res[1]; ST.mk=res[1].marketplace;
+  if(window.SeloProveniencia) SeloProveniencia.aplicar({
+    modo:(ST.d.meta&&ST.d.meta.modo)||null, bloco:'marketplace',
+    quando:ST.d.meta&&ST.d.meta.ultimaActualizacao});
+  desenharOferta();desenharAbas();desenharPainel();
+}).catch(function(e){
+  document.getElementById('oferta').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+});
 </script>
 </body>
 </html>

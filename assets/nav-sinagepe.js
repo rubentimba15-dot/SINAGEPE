@@ -33,6 +33,10 @@
     { key: 'preditivo',     icon: '\u25AD', label: 'Simulador Preditivo',   href: 'simulador-preditivo.html', grupo: 'INTELIGENCIA' },
     { key: 'portal-produtores', icon: '\u2618', label: 'Portal do Produtor',  href: 'portal-produtores.html', grupo: 'PORTAIS' },
     { key: 'portal-transportadores', icon: '\u26DF', label: 'Portal do Transportador', href: 'portal-transportadores.html', grupo: 'PORTAIS' },
+    { key: 'portal-comerciantes', icon: '\u2696', label: 'Portal do Comerciante', href: 'portal-comerciantes.html', grupo: 'PORTAIS' },
+    { key: 'portal-parceiros', icon: '\u2723', label: 'Portal dos Parceiros', href: 'portal-parceiros.html', grupo: 'PORTAIS' },
+    { key: 'portal-publico', icon: '\u25CB', label: 'Portal P\u00fablico', href: 'portal-publico.html', grupo: 'PORTAIS' },
+    { key: 'portal-universidades', icon: '\u2637', label: 'Portal das Universidades', href: 'portal-universidades.html', grupo: 'PORTAIS' },
     { key: 'pme',           icon: '\u26C1', label: 'PMEs',                  href: 'portal-pme.html', grupo: 'PORTAIS' },
     { key: 'armazens',      icon: '\u25A4', label: 'Armaz\u00e9ns',         href: 'cadastro-armazens.html', grupo: 'CADEIA' },
     { key: 'armazens-nac',  icon: '\u25EB', label: 'Armaz\u00e9ns Nacionais', href: 'armazens-nacionais.html', grupo: 'CADEIA' },
@@ -64,6 +68,25 @@
   /* Só mostra os ecrãs a que a sessão tem direito. Sem sessão
      (ou sem lista de páginas), mostra tudo — o access-control.js
      é que decide se a pessoa pode lá entrar. */
+  /* Ecrãs a que se chega clicando dentro de outro ecrã, nunca pelo menu.
+     Continuam acessíveis a quem tem permissão — apenas não ocupam
+     espaço na barra lateral, que é para navegação e não para inventário. */
+  var SO_POR_LIGACAO = [
+    'detalhe-alerta.html','detalhe-armazem.html','detalhe-corredor.html','detalhe-kpi.html',
+    'detalhe-oferta-marketplace.html','detalhe-produto.html','detalhe-provincia.html',
+    'perfil-empresa.html','formulario-registar-armazem.html','modal-confirmacao-accao.html',
+    'estado-erro.html','estado-sucesso.html','estado-vazio-armazens.html',
+    'loading-mapa.html','loading-marketplace.html','loading-painel-nacional.html',
+    'app-consumidor.html','app-consumidor-home.html','app-consumidor-precos.html',
+    'app-consumidor-mapa.html','app-consumidor-alertas.html','app-consumidor-perfil.html',
+    'app-consumidor-comparador.html','app-consumidor-produto-detalhe.html',
+    'app-consumidor-loja-detalhe.html','app-consumidor-alerta-detalhe.html',
+    'mobile-painel-nacional.html','mobile-centro-alertas.html','mobile-marketplace.html',
+    'mobile-notificacoes.html','mobile-configuracoes.html',
+    'tablet-painel-nacional.html','tablet-centro-alertas.html','tablet-cadastro-armazens.html',
+    'gerar-credencial.html','diagnostico-credencial.html','verificador-ecras.html'
+  ];
+
   function permitidas() {
     try {
       var bruto = sessionStorage.getItem('sinagepe_nivel');
@@ -96,7 +119,9 @@
     };
     var nav = '';
     ORDEM.forEach(function (g) {
-      var doGrupo = itens.filter(function (i) { return (i.grupo || 'GOVERNACAO') === g; });
+      var doGrupo = itens.filter(function (i) {
+        return (i.grupo || 'GOVERNACAO') === g && SO_POR_LIGACAO.indexOf(i.href) < 0;
+      });
       if (!doGrupo.length) return;
       if (ROTULO[g]) nav += '<div class="nav-grupo">' + ROTULO[g] + '</div>';
       nav += doGrupo.map(function (i) {

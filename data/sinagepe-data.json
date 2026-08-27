@@ -2089,8 +2089,9 @@
         "vendedor": "Agrícola Sul Limitada",
         "provincia": "Maputo",
         "quantidadeT": 40,
-        "precoMznT": 890,
-        "estado": "Em Negociação"
+        "precoMznT": 55000,
+        "estado": "Em Negociação",
+        "ancoragem": "Ordem de grandeza plausível para venda a granel; sem fonte de mercado grossista publicada"
       },
       {
         "id": "MKT-00831",
@@ -2098,8 +2099,9 @@
         "vendedor": "Farinhas do Índico",
         "provincia": "Nampula",
         "quantidadeT": 18,
-        "precoMznT": 520,
-        "estado": "Activo"
+        "precoMznT": 42000,
+        "estado": "Activo",
+        "ancoragem": "Ordem de grandeza plausível para venda a granel; sem fonte de mercado grossista publicada"
       },
       {
         "id": "MKT-00819",
@@ -2107,8 +2109,9 @@
         "vendedor": "Moçambique Óleos SA",
         "provincia": "Beira",
         "quantidadeT": 25,
-        "precoMznT": 1150,
-        "estado": "Activo"
+        "precoMznT": 98000,
+        "estado": "Activo",
+        "ancoragem": "Ordem de grandeza plausível para venda a granel; sem fonte de mercado grossista publicada"
       },
       {
         "id": "MKT-00805",
@@ -2116,22 +2119,24 @@
         "vendedor": "Cereal Comercial Norte",
         "provincia": "Nampula",
         "quantidadeT": 30,
-        "precoMznT": 640,
-        "estado": "Vendido"
+        "precoMznT": 41198,
+        "estado": "Vendido",
+        "ancoragem": "Ancorado no retalho SIMA menos margem de grosso"
       }
     ],
     "propostas": {
       "MKT-00842": [
         {
-          "texto": "Comprador propôs 850 MZN/t para 40t",
+          "texto": "Comprador propôs 52.000 MZN/t para 40 t",
           "tempo": "Há 1 dia"
         },
         {
-          "texto": "Vendedor contrapropôs 880 MZN/t",
+          "texto": "Vendedor contrapropôs 54.500 MZN/t",
           "tempo": "Há 6 horas"
         }
       ]
-    }
+    },
+    "nota": "Os preços destes anúncios foram corrigidos em Agosto de 2026. Os valores anteriores — entre 520 e 1.150 MZN por tonelada — correspondiam a menos de 1,20 MT por quilograma, cerca de noventa vezes abaixo do preço real medido pelo SIMA. Eram implausíveis para qualquer pessoa do sector. Os valores actuais estão na ordem de grandeza correcta e, no caso do arroz, ancorados no retalho do SIMA menos margem de grosso. Continuam a ser dados de demonstração."
   },
   "portalInvestidores": {
     "investidor": "InvestMoz Global",

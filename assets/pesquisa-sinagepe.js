@@ -86,6 +86,7 @@
 
   /* ---- 2. CONCEITOS: vocabulário do sistema e onde ele vive ---- */
   var CONCEITOS = [
+    { n:'Arbitragem entre praças', d:'Feijão nhemba a 30 MT/kg em Panda e 121 em Mandimba. A diferença é margem antes de qualquer transformação.', h:'marketplace-b2b.html', t:'arbitragem comprar vender praca margem dispersao preco' },
     { n:'Vulnerabilidade alimentar', d:'O SETSAN avalia quantas pessoas estão em privação alimentar aguda, por província. Ainda não ligado.', h:'adesao-institucional.html', t:'setsan vulnerabilidade fome privacao alimentar consan ipc avaliacao' },
     { n:'Capacidade cega', d:'Fatia da capacidade sem leitura automática. Hoje: 100%.', h:'ponto-cego-duplo.html', t:'cega cego sensor telemetria' },
     { n:'Certificado de depósito', d:'Título negociável da BMM. A via legal para o cadastro de armazenagem privada.', h:'adesao-institucional.html', t:'certificado deposito bmm colateral bolsa' },
