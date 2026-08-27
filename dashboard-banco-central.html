@@ -2,6 +2,8 @@
 <html lang="pt-PT">
 <head>
 <script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
 <script src="assets/selo-proveniencia.js"></script>
 
 <meta charset="utf-8">
@@ -80,6 +82,25 @@ function renderDashboardBC(data) {
       <div class="util-track"><div class="util-fill" style="width:${d.percentCota}%;background:var(--bronze)"></div></div>
     </div>`).join('');
 }
+</script>
+
+<script>
+/* A barra deste portal estava escrita \u00e0 mão, com sete destinos por preencher.
+   Passa a vir de assets/nav-sinagepe.js, como os outros ecr\u00e3s: os itens s\u00e3o
+   gerados de uma lista \u00fanica, sempre com destino real, e filtrados pelo acesso
+   da conta. Um banco v\u00ea o que lhe diz respeito, n\u00e3o portas fechadas. */
+(function(){
+  function montar(){
+    try{
+      if(window.SinagepeNav) SinagepeNav.montar('banco-central','sidebar-mount');
+      if(window.SinagepePesquisa) SinagepePesquisa.iniciar({alvo:'sidebar-mount'});
+    }catch(e){}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',montar);
+  else montar();
+  /* o Banco Central constr\u00f3i a casca por c\u00f3digo; volta a montar quando ela existir */
+  setTimeout(montar,400);
+})();
 </script>
 </body>
 </html>
