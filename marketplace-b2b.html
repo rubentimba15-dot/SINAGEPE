@@ -130,7 +130,8 @@ function desenharOferta(){
 }
 
 function desenharAbas(){
-  var m=[['arbitragem','Onde comprar e onde vender',null],
+  var m=[['comparador','Como estou perante o mercado',null],
+         ['arbitragem','Onde comprar e onde vender',null],
          ['fluxos','Quem abastece quem',(ST.sima.fluxos.length+(ST.sima.fluxos1462||[]).length)],
          ['anuncios','Negocia&ccedil;&atilde;o',ST.mk.anuncios.length],
          ['falta','O que falta para funcionar',null]];
@@ -176,6 +177,96 @@ function painelArbitragem(){
    +'<div class="aviso i">Fonte: SIMA, boletim Quente-Quente, edi&ccedil;&atilde;o '+ST.sima.meta.edicao+'. '
    +'O transporte entre pra&ccedil;as pode ser estimado com o pre&ccedil;o do gas&oacute;leo por regi&atilde;o, no Portal do Transportador.</div>';
   return h;
+}
+
+/* ---------------- COMPARADOR: a única parte da privacidade comercial
+   que funciona sem servidor. O preço que o operador escreve NUNCA sai
+   do navegador: não é enviado, não é guardado, não é partilhado.
+   Compara-se contra a média medida pelo SIMA na praça escolhida. ---- */
+function mercadosDe(r){
+  var m=[];
+  (r.minimo.mercados||[]).forEach(function(x){m.push({n:x,v:r.minimo.valor})});
+  (r.outros||[]).forEach(function(x){m.push({n:x.mercado,v:x.valor})});
+  (r.maximo.mercados||[]).forEach(function(x){m.push({n:x,v:r.maximo.valor})});
+  return m;
+}
+function painelComparador(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var h='<div class="aviso g"><b>O seu pre&ccedil;o n&atilde;o sai deste ecr&atilde;.</b> '
+   +'N&atilde;o &eacute; enviado, n&atilde;o &eacute; guardado, n&atilde;o &eacute; partilhado com ningu&eacute;m. '
+   +'A compara&ccedil;&atilde;o &eacute; feita no seu navegador contra a m&eacute;dia medida pelo SIMA na pra&ccedil;a que escolher.</div>'
+   +'<div class="bd" style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end;border-bottom:1px solid var(--card-line)">'
+   +'<div><div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--t4);margin-bottom:6px">Produto</div>'
+   +'<select id="cmp-produto" style="font-family:inherit;font-size:12.5px;padding:9px 12px;border-radius:8px;'
+   +'border:1px solid var(--card-line);background:var(--nav-idle);color:var(--ink);min-width:180px">'
+   + R.map(function(r,i){return '<option value="'+i+'">'+esc(r.produto)+'</option>'}).join('')+'</select></div>'
+   +'<div><div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--t4);margin-bottom:6px">Pra&ccedil;a</div>'
+   +'<select id="cmp-mercado" style="font-family:inherit;font-size:12.5px;padding:9px 12px;border-radius:8px;'
+   +'border:1px solid var(--card-line);background:var(--nav-idle);color:var(--ink);min-width:200px"></select></div>'
+   +'<div><div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--t4);margin-bottom:6px">O seu pre&ccedil;o, MT/kg</div>'
+   +'<input id="cmp-preco" type="number" step="0.5" min="0" placeholder="ex.: 60"'
+   +' style="font-family:IBM Plex Mono,monospace;font-size:15px;padding:9px 12px;border-radius:8px;'
+   +'border:1px solid var(--brzg);background:var(--nav-idle);color:var(--ink);width:130px"></div>'
+   +'</div>'
+   +'<div id="cmp-resultado"></div>';
+  return h;
+}
+function compararAgora(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var iP=Number(document.getElementById('cmp-produto').value||0);
+  var r=R[iP];
+  var mercados=mercadosDe(r);
+  var sel=document.getElementById('cmp-mercado');
+  if(sel.dataset.p!==String(iP)){
+    sel.innerHTML='<option value="-1">M&eacute;dia nacional ('+mercados.length+' pra&ccedil;as medidas)</option>'
+      + mercados.map(function(m,i){return '<option value="'+i+'">'+esc(m.n)+'</option>'}).join('');
+    sel.dataset.p=String(iP);
+  }
+  var iM=Number(sel.value);
+  var ref = iM<0 ? r.media : mercados[iM].v;
+  var rotulo = iM<0 ? 'm&eacute;dia nacional' : 'pre&ccedil;o medido em '+esc(mercados[iM].n);
+  var meu=parseFloat(document.getElementById('cmp-preco').value);
+  var el=document.getElementById('cmp-resultado');
+
+  /* Praça com poucas observações: não se compara individualmente. */
+  var poucos = iM>=0 && mercados.length<5;
+
+  if(isNaN(meu)||meu<=0){
+    el.innerHTML='<div class="bd"><div class="campo"><span>'+rotulo.charAt(0).toUpperCase()+rotulo.slice(1)+'</span>'
+     +'<span class="mono" style="font-size:15px;color:var(--brzl)">'+p2(ref)+' MT/kg</span></div>'
+     +'<div class="campo"><span>Amplitude entre pra&ccedil;as</span><span class="mono">'
+     +p2(r.minimo.valor)+' a '+p2(r.maximo.valor)+' MT/kg</span></div></div>'
+     +'<div class="aviso i">Escreva o pre&ccedil;o a que vende para ver a sua posi&ccedil;&atilde;o.</div>';
+    return;
+  }
+  var d=(meu/ref-1)*100;
+  var c=Math.abs(d)<8?'var(--ok)':Math.abs(d)<25?'var(--amber)':'var(--red)';
+  var frase = Math.abs(d)<2 ? 'O seu pre&ccedil;o est&aacute; praticamente na '+rotulo+'.'
+    : 'O seu pre&ccedil;o est&aacute; <b style="color:'+c+'">'+Math.abs(d).toFixed(0)+'% '
+      +(d>0?'acima':'abaixo')+'</b> da '+rotulo+'.';
+  var esc2=Math.max(r.maximo.valor,meu);
+  el.innerHTML='<div class="bd">'
+   +'<div style="font-size:15px;line-height:1.6;margin-bottom:14px">'+frase+'</div>'
+   +'<div class="arb-r"><span style="width:96px;color:var(--t3)">Refer&ecirc;ncia</span>'
+   +'<span class="arb-c"><i style="left:0;width:'+(ref/esc2*100).toFixed(0)+'%;background:var(--t4)"></i></span>'
+   +'<span class="arb-v mono">'+p2(ref)+'</span></div>'
+   +'<div class="arb-r"><span style="width:96px;color:'+c+'">O seu pre&ccedil;o</span>'
+   +'<span class="arb-c"><i style="left:0;width:'+(meu/esc2*100).toFixed(0)+'%;background:'+c+'"></i></span>'
+   +'<span class="arb-v mono" style="color:'+c+'">'+p2(meu)+'</span></div>'
+   +'<div class="campo" style="margin-top:12px"><span>Numa tonelada, a diferen&ccedil;a &eacute;</span>'
+   +'<span class="mono" style="color:'+c+'">'+(d>0?'+':'')+num((meu-ref)*1000)+' MT</span></div>'
+   +'<div class="campo"><span>Pra&ccedil;a mais barata medida</span><span class="mono">'
+   +p2(r.minimo.valor)+' &middot; '+esc(r.minimo.mercados[0])+'</span></div>'
+   +'<div class="campo"><span>Pra&ccedil;a mais cara medida</span><span class="mono">'
+   +p2(r.maximo.valor)+' &middot; '+esc(r.maximo.mercados[0])+'</span></div>'
+   +'</div>'
+   +(poucos?'<div class="aviso w"><b>Poucas observa&ccedil;&otilde;es nesta pra&ccedil;a.</b> '
+     +'Com poucos operadores medidos, uma compara&ccedil;&atilde;o individual aproxima-se de identificar cada um deles. '
+     +'Prefira a m&eacute;dia nacional para leitura de posi&ccedil;&atilde;o.</div>':'')
+   +'<div class="aviso i"><b>O que isto n&atilde;o diz.</b> Estar acima da m&eacute;dia n&atilde;o significa pre&ccedil;o excessivo, '
+   +'nem estar abaixo significa pr&aacute;tica an&oacute;mala. A diferen&ccedil;a pode ser custo de transporte, qualidade, escala ou '
+   +'momento de escoamento. O sistema mostra a posi&ccedil;&atilde;o; a qualifica&ccedil;&atilde;o cabe a quem tem compet&ecirc;ncia para a fazer.</div>'
+   +'<div class="aviso w">Pre&ccedil;os do SIMA, edi&ccedil;&atilde;o '+ST.sima.meta.edicao+'. N&atilde;o s&atilde;o correntes.</div>';
 }
 
 /* ---------------- 2. FLUXOS: quem abastece quem ---------------- */
@@ -310,10 +401,18 @@ function painelFalta(){
 
 function desenharPainel(){
   var el=document.getElementById('painel');
-  el.innerHTML= ST.aba==='arbitragem'?painelArbitragem()
+  el.innerHTML= ST.aba==='comparador'?painelComparador()
+              : ST.aba==='arbitragem'?painelArbitragem()
               : ST.aba==='fluxos'?painelFluxos()
               : ST.aba==='anuncios'?painelAnuncios()
               : painelFalta();
+  if(ST.aba==='comparador'){
+    var sel=document.getElementById('cmp-mercado'), inp=document.getElementById('cmp-preco');
+    var prod=document.getElementById('cmp-produto');
+    function recalc(){compararAgora()}
+    [sel,inp,prod].forEach(function(x){if(x){x.addEventListener('input',recalc);x.addEventListener('change',recalc)}});
+    compararAgora();
+  }
   if(ST.aba==='anuncios'){
     Array.prototype.forEach.call(document.querySelectorAll('.an'),function(x){
       x.addEventListener('click',function(){ST.sel=x.dataset.i;desenharPainel()});
