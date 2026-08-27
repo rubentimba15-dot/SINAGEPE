@@ -2,6 +2,8 @@
 <html lang="pt-PT">
 <head>
 <script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
 <script src="assets/selo-proveniencia.js"></script>
 
 <meta charset="utf-8">
@@ -25,33 +27,11 @@
 <body>
 
 <div class="app-shell">
-  <aside class="sidebar">
-    <div class="sidebar-top">
-      <div class="brand">
-        <div class="brand-mark" style="background:linear-gradient(90deg,#009739,#d11119)">I</div>
-        <div class="brand-text"><div class="brand-title">Portal Privado</div><div class="brand-sub">SINAGEPE — Investidores</div></div>
-      </div>
-      <nav class="nav-list">
-        <a class="nav-item active" href="portal-investidores.html"><span class="nav-icon">▦</span> PAINEL</a>
-        <a class="nav-item" href="alertas.html"><span class="nav-icon">⚠</span> Alertas</a>
-        <a class="nav-item" href="mapa-nacional.html"><span class="nav-icon">◎</span> Mapa</a>
-        <a class="nav-item" href="simulador-importacoes.html"><span class="nav-icon">≋</span> Simulador</a>
-        <a class="nav-item" href="portal-parceiros.html"><span class="nav-icon">🤝</span> Parceiros</a>
-        <a class="nav-item" href="portal-investidores.html"><span class="nav-icon">▤</span> Investimentos</a>
-        <a class="nav-item" href="modulo-logistica.html"><span class="nav-icon">⇄</span> Logística</a>
-        <a class="nav-item" href="relatorios.html"><span class="nav-icon">▧</span> Relatórios</a>
-        <a class="nav-item" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="margin-top:8px;border-top:1px solid rgba(212,165,116,0.15);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:#ef4444">Sair (Logout)</span></a>
-      </nav>
-    </div>
-    <div class="sidebar-footer">
-      <div class="avatar-dot" id="user-initials">IM</div>
-      <div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div>
-    </div>
-  </aside>
+  <aside class="sidebar" id="nav-mount"></aside>
   <div class="main">
     <div class="topbar">
       <div class="topbar-title-group"><div class="topbar-title">Portal de Investimento Agro-Industrial Moçambicano</div><div class="topbar-badge">Investidor Privado</div></div>
-      <div class="live-indicator"><span class="live-dot"></span> Conexão Segura · API Activa</div>
+      <div class="live-indicator" style="color:var(--amber)">Dados de demonstra&ccedil;&atilde;o</div>
     </div>
     <div class="content" id="content-mount"></div>
     <div class="footer"><span>© 2026 Agência para a Promoção de Investimento e Exportações (APIEX) — Acesso Privado SINAGEPE</span><span id="footer-updated">—</span></div>
@@ -120,6 +100,25 @@ SINAGEPE.load().then(data => {
   document.getElementById('sim-retorno').textContent = SINAGEPE.fmt(retorno) + ' MZN';
   document.getElementById('sim-taxa').textContent = 'Taxa interna de rentabilidade de ' + p.simulador.taxaRentabilidadePercent + '%';
 });
+</script>
+
+<script>
+/* A barra deste portal estava escrita \u00e0 mão, com sete destinos por preencher.
+   Passa a vir de assets/nav-sinagepe.js, como os outros ecr\u00e3s: os itens s\u00e3o
+   gerados de uma lista \u00fanica, sempre com destino real, e filtrados pelo acesso
+   da conta. Um banco v\u00ea o que lhe diz respeito, n\u00e3o portas fechadas. */
+(function(){
+  function montar(){
+    try{
+      if(window.SinagepeNav) SinagepeNav.montar('portal-investidores');
+      if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+    }catch(e){}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',montar);
+  else montar();
+  /* o Banco Central constr\u00f3i a casca por c\u00f3digo; volta a montar quando ela existir */
+  setTimeout(montar,400);
+})();
 </script>
 </body>
 </html>
