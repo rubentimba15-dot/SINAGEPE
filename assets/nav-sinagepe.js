@@ -23,6 +23,7 @@
   var ITENS = [
     { key: 'painel',        icon: '\u25A6', label: 'PAINEL',                href: 'index.html', grupo: 'PAINEL' },
     { key: 'indicadores', icon: '\u25EB', label: 'Indicadores do Painel', href: 'indicadores-painel.html', grupo: 'PAINEL' },
+    { key: 'apresentacao', icon: '\u25C8', label: 'Apresenta\u00e7\u00e3o', href: 'apresentacao.html', grupo: 'PAINEL' },
     { key: 'balanco-visual', icon: '\u25A3', label: 'Balan\u00e7o Visual', href: 'balanco-visual.html', grupo: 'TERRITORIO' },
     { key: 'ficha-detalhe', icon: '\u26AF', label: 'Ficha de Detalhe', href: 'ficha-detalhe.html', grupo: 'TERRITORIO' },
     { key: 'mapa-integrado',icon: '\u25C9', label: 'Mapa Integrado',        href: 'mapa-integrado.html', grupo: 'TERRITORIO' },
@@ -149,8 +150,58 @@
     e.id = 'nav-sinagepe-css';
     e.textContent = '.nav-grupo{font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;'
       + 'color:#5E7189;padding:14px 14px 6px;font-weight:600}'
-      + '.nav-grupo:first-child{padding-top:4px}';
+      + '.nav-grupo:first-child{padding-top:4px}'
+      + '@media(max-width:1080px){'
+      + '#nav-abrir{display:flex !important}'
+      + '.sidebar,#nav-mount{display:block !important;position:fixed !important;top:0;left:0;bottom:0;'
+      + 'width:270px;max-width:84vw;z-index:99000;overflow-y:auto;'
+      + 'transform:translateX(-102%);transition:transform .22s ease;'
+      + 'box-shadow:14px 0 40px rgba(0,0,0,.55)}'
+      + '.sidebar.nav-aberta,#nav-mount.nav-aberta{transform:translateX(0)}'
+      + '#nav-veu{position:fixed;inset:0;background:rgba(4,7,18,.68);z-index:98000;display:none}'
+      + '#nav-veu.on{display:block}'
+      + 'main{padding-top:56px !important}'
+      + '#nav-fechar{display:block;width:calc(100% - 24px);margin:10px 12px 4px;padding:9px;'
+      + 'border-radius:8px;border:1px solid rgba(38,56,86,.9);background:#111E31;color:#8FA1B8;'
+      + 'font-family:Inter,sans-serif;font-size:11.5px;cursor:pointer}'
+      + '}'
+      + '#nav-abrir{display:none;position:fixed;top:11px;left:11px;z-index:99500;'
+      + 'align-items:center;gap:8px;padding:9px 14px;border-radius:9px;'
+      + 'border:1px solid rgba(201,138,60,.42);background:#0C1626;color:#E8BE7A;'
+      + 'font-family:Inter,sans-serif;font-size:12.5px;cursor:pointer;'
+      + 'box-shadow:0 4px 16px rgba(0,0,0,.4)}'
+      + '#nav-fechar{display:none}';
     document.head.appendChild(e);
+  }
+
+  /* ---- Telemovel ----
+     Abaixo de 1080px os ecras escondiam a barra lateral, e quem entrava pelo
+     telemovel ficava sem forma de navegar. Passa a haver um botao fixo no
+     canto, que faz deslizar a mesma barra sobre o conteudo. E a mesma lista
+     e a mesma filtragem por acesso: muda so a apresentacao. */
+  function montarTelemovel(alvo) {
+    if (!alvo || document.getElementById('nav-abrir')) return;
+    var b = document.createElement('button');
+    b.id = 'nav-abrir';
+    b.setAttribute('aria-label', 'Abrir menu');
+    b.innerHTML = '<span style="font-size:15px">\u2630</span><span>Menu</span>';
+    var v = document.createElement('div');
+    v.id = 'nav-veu';
+    function abrir() { alvo.classList.add('nav-aberta'); v.classList.add('on'); }
+    function fechar() { alvo.classList.remove('nav-aberta'); v.classList.remove('on'); }
+    b.addEventListener('click', abrir);
+    v.addEventListener('click', fechar);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fechar(); });
+    alvo.addEventListener('click', function (e) {
+      if (e.target && e.target.closest && e.target.closest('.nav-item')) fechar();
+    });
+    document.body.appendChild(v);
+    document.body.appendChild(b);
+    var f = document.createElement('button');
+    f.id = 'nav-fechar';
+    f.textContent = 'Fechar menu';
+    f.addEventListener('click', fechar);
+    alvo.appendChild(f);
   }
 
   function montar(activeKey, idAlvo) {
@@ -158,6 +209,7 @@
     var alvo = document.getElementById(idAlvo || 'nav-mount');
     if (!alvo) return false;
     alvo.innerHTML = html(activeKey);
+    montarTelemovel(alvo);
     var sair = document.getElementById('btn-logout');
     if (sair) sair.addEventListener('click', function (e) {
       e.preventDefault();
