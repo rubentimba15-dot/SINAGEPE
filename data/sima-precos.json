@@ -11,8 +11,9 @@
     "verificado": true,
     "avisoRecencia": "Quatro edições extraídas, de Setembro de 2022 a Julho de 2023. São as mais recentes que foi possível obter e ler em formato extraível. Os preços NÃO são correntes. Servem para mostrar variação real entre datas e provar o método — não para decidir hoje.",
     "porqueImporta": "É a primeira vez que o SINAGEPE tem preço real por mercado, com data e fonte citável. E traz o que faltava a todo o sistema: FLUXO — produto que se move de um sítio para outro, com origem, destino e preço de compra.",
-    "edicoesExtraidas": 5,
-    "periodo": "Setembro de 2022 a Julho de 2023"
+    "edicoesExtraidas": 8,
+    "periodo": "Setembro de 2022 a Julho de 2023",
+    "notaExtraccao": "As edições 1444, 1446 e 1460 foram extraídas com a ferramenta automática em Agosto de 2026. Três valores de milho vieram errados — a expressão apanhou o bloco do feijão nhemba. O de 1444 foi corrigido contra o PDF (27,46 MT/kg). Os de 1446 e 1460 ficaram a null até confirmação no documento original: não se inventa um valor para preencher uma casa. Fluxos com origem truncada foram retirados pela mesma razão. Na edição 1446, quatro produtos vieram com valores idênticos aos da 1445 — sinal de que a expressão leu o bloco errado. Ficaram todos a null até confirmação no PDF. O milho de 1460 (25,44 MT/kg) foi confirmado no PDF original e a causa corrigida na ferramenta: o texto vinha partido em três linhas e a expressão não o alcançava. A edição 1446 ficou sem valores: o boletim repete o texto da 1445, verificado no PDF original em Agosto de 2026. Registar os mesmos números duas vezes criaria uma falsa semana estável na série."
   },
   "retalho": [
     {
@@ -584,6 +585,11 @@
   },
   "achados": [
     {
+      "titulo": "A edição 1446 do boletim repete o texto da 1445",
+      "texto": "O boletim de 27 de Março a 2 de Abril de 2023 apresenta, na secção do milho, o mesmo preço médio, o mesmo máximo e o mesmo mínimo da edição anterior — 29,65 contra 27,46 da semana anterior, máximo em Mandimba e Panda a 34,00, mínimo em Zavala a 25,00. A comparação interna é a da semana 1445 com a 1444. É repetição de conteúdo na edição, não variação de preço. Os valores dessa edição ficam por confirmar no sistema.",
+      "tipo": "ANOMALIA"
+    },
+    {
       "titulo": "Milho a 9 MT/kg em Lichinga, 34 em Mandimba — na mesma província",
       "texto": "Na edição 1449, o milho custava 9,00 MT/kg em Lichinga e 34,00 em Mandimba. Ambos os mercados ficam no Niassa, a cerca de 200 km um do outro. É 278% de diferença dentro da mesma província, e o maior desnível intra-provincial que o sistema mediu.",
       "tipo": "FACTO"
@@ -805,17 +811,31 @@
         "url": "https://www.agricultura.gov.mz/wp-content/uploads/2022/10/Informacao-Semanal-de-Mercados-Agrarios-05-a-11-de-Setembro-de-2022-QQ-1417-2.pdf"
       },
       {
+        "edicao": 1444,
+        "semana": "13 a 19 de Março de 2023",
+        "mes": "2023-03a",
+        "ordem": 2,
+        "url": ""
+      },
+      {
         "edicao": 1445,
         "semana": "20 a 26 de Março de 2023",
         "mes": "2023-03",
-        "ordem": 2,
+        "ordem": 3,
         "url": "https://www.agricultura.gov.mz/wp-content/uploads/2023/04/Informacao-Semanal-de-Mercados-Agrarios-20-a-26-de-Marco-de-2023-QQ-1445.pdf"
+      },
+      {
+        "edicao": 1446,
+        "semana": "27 de Março a 02 de Abril de 2023",
+        "mes": "2023-03c",
+        "ordem": 4,
+        "url": ""
       },
       {
         "edicao": 1448,
         "semana": "10 a 16 de Abril de 2023",
         "mes": "2023-04",
-        "ordem": 3,
+        "ordem": 5,
         "nota": "O nome do ficheiro diz Março mas o cabeçalho do boletim diz 10 a 16 de Abril. Vale o cabeçalho.",
         "url": "https://www.agricultura.gov.mz/wp-content/uploads/2023/05/Informacao-Semanal-de-Mercados-Agrarios-10-a-16-de-Marco-de-2023-QQ-1448.pdf"
       },
@@ -823,14 +843,21 @@
         "edicao": 1449,
         "semana": "17 a 23 de Abril de 2023",
         "mes": "2023-04b",
-        "ordem": 4,
+        "ordem": 6,
         "url": "https://www.agricultura.gov.mz/wp-content/uploads/2023/05/Informacao-Semanal-de-Mercados-Agrarios-17-a-23-de-Abril-de-2023-QQ-1449.pdf"
+      },
+      {
+        "edicao": 1460,
+        "semana": "03 a 09 de Julho de 2023",
+        "mes": "2023-07a",
+        "ordem": 7,
+        "url": ""
       },
       {
         "edicao": 1462,
         "semana": "17 a 23 de Julho de 2023",
         "mes": "2023-07",
-        "ordem": 5,
+        "ordem": 8,
         "url": "https://www.agricultura.gov.mz/wp-content/uploads/2023/08/Informacao-Semanal-de-Mercados-Agrarios-17-a-23-de-Julho-de-2023-QQ-1462.pdf"
       }
     ],
@@ -843,7 +870,10 @@
           "1445": 29.65,
           "1448": 24.52,
           "1462": 24.55,
-          "1449": 22.63
+          "1449": 22.63,
+          "1460": 25.44,
+          "1444": 27.46,
+          "1446": null
         }
       },
       {
@@ -854,7 +884,10 @@
           "1445": 55.9,
           "1448": 58.93,
           "1462": 57.22,
-          "1449": 57.44
+          "1449": 57.44,
+          "1460": 54.87,
+          "1444": 58.44,
+          "1446": null
         }
       },
       {
@@ -865,7 +898,10 @@
           "1445": 68.77,
           "1448": 75.19,
           "1462": 55.73,
-          "1449": 71.19
+          "1449": 71.19,
+          "1460": 59.4,
+          "1444": 56.08,
+          "1446": null
         }
       },
       {
@@ -876,7 +912,10 @@
           "1445": 103.58,
           "1448": 106.49,
           "1462": 97.54,
-          "1449": 103.58
+          "1449": 103.58,
+          "1460": 101.55,
+          "1444": 93.04,
+          "1446": null
         }
       },
       {
@@ -887,7 +926,10 @@
           "1445": 114.7,
           "1448": 114.8,
           "1462": 95.18,
-          "1449": 100.79
+          "1449": 100.79,
+          "1460": 95.48,
+          "1444": 113.34,
+          "1446": null
         }
       }
     ],
@@ -971,6 +1013,102 @@
         "minMercado": "cinco mercados",
         "max": 75.0,
         "maxMercado": "Zavala"
+      },
+      {
+        "produto": "Arroz",
+        "edicao": 1460,
+        "min": 45.0,
+        "minMercado": "Panda",
+        "max": 70.0,
+        "maxMercado": "Cidade de Inhamban"
+      },
+      {
+        "produto": "Feijão nhemba",
+        "edicao": 1460,
+        "min": 25.44,
+        "minMercado": "praticado em Panda a Vilanculos a 50",
+        "max": 50.0,
+        "maxMercado": "praticado em Panda a Vilanculos"
+      },
+      {
+        "produto": "Feijão manteiga",
+        "edicao": 1460,
+        "min": 80.0,
+        "minMercado": "Nhamatanda",
+        "max": 162.0,
+        "maxMercado": "Mandimba"
+      },
+      {
+        "produto": "Amendoim pequeno",
+        "edicao": 1460,
+        "min": 65.0,
+        "minMercado": "Mocuba, seguido da Maxixe a 90",
+        "max": 140.0,
+        "maxMercado": "Guvuro"
+      },
+      {
+        "produto": "Arroz",
+        "edicao": 1444,
+        "min": null,
+        "minMercado": null,
+        "max": 72.0,
+        "maxMercado": "Mutarara"
+      },
+      {
+        "produto": "Feijão nhemba",
+        "edicao": 1444,
+        "min": 35.0,
+        "minMercado": "Mocuba a O preço médio deste cereal na presente semana é d",
+        "max": 40.0,
+        "maxMercado": "Mandimba a 1 Nhamatanda"
+      },
+      {
+        "produto": "Feijão manteiga",
+        "edicao": 1444,
+        "min": null,
+        "minMercado": null,
+        "max": 162.0,
+        "maxMercado": "Mandimba"
+      },
+      {
+        "produto": "Amendoim pequeno",
+        "edicao": 1444,
+        "min": 60.0,
+        "minMercado": "Mocuba, seguido da cidade de Nhamatanda a 72",
+        "max": 180.0,
+        "maxMercado": "Chicualacuala"
+      },
+      {
+        "produto": "Milho",
+        "edicao": 1446,
+        "min": 50.0,
+        "minMercado": "Cidade de Maputo, Chokwé, mercados, apesar de registo Nhamatanda, Mandimba e Cidade de Qu",
+        "max": 70.0,
+        "maxMercado": "Cidade de comercializado nos mercados monitorados pelo SIMA Inhamban"
+      },
+      {
+        "produto": "Feijão nhemba",
+        "edicao": 1446,
+        "min": 35.0,
+        "minMercado": "Mocuba",
+        "max": 121.0,
+        "maxMercado": "d"
+      },
+      {
+        "produto": "Feijão manteiga",
+        "edicao": 1446,
+        "min": null,
+        "minMercado": null,
+        "max": 162.0,
+        "maxMercado": "Mandimba"
+      },
+      {
+        "produto": "Amendoim pequeno",
+        "edicao": 1446,
+        "min": 65.0,
+        "minMercado": "Mocuba",
+        "max": 180.0,
+        "maxMercado": "Manhiça"
       }
     ],
     "safexMilhoBranco": {
@@ -981,7 +1119,10 @@
         "1445": 3980.0,
         "1448": 3665.0,
         "1462": 3839.8,
-        "1449": 3538.0
+        "1449": 3538.0,
+        "1460": 3478.2,
+        "1444": 3995.0,
+        "1446": 3830.0
       }
     },
     "cambioUSD": {
@@ -1552,6 +1693,221 @@
       "unidade": "MT por saco de 50 kg",
       "precoPorKg": 120.0,
       "conversaoAssumida": null,
+      "desenhavel": false
+    }
+  ],
+  "fluxos1460": [
+    {
+      "zona": "Sul",
+      "produto": "Milho",
+      "destino": "Vilanculos",
+      "origem": "Nampula ao\nde Chibabava",
+      "preco": 4800.0,
+      "unidade": "MT por saco de 50 kg",
+      "precoPorKg": 96.0,
+      "conversaoAssumida": null,
+      "desenhavel": false
+    },
+    {
+      "zona": "Sul",
+      "produto": "Milho",
+      "destino": "Xai-Xai",
+      "origem": "Lichinga",
+      "preco": 1000.0,
+      "unidade": "MT por saco de 50 kg",
+      "precoPorKg": 20.0,
+      "conversaoAssumida": null,
+      "desenhavel": false
+    },
+    {
+      "zona": "Sul",
+      "produto": "Milho",
+      "destino": "Maxixe",
+      "origem": "Distrito de Homoine",
+      "preco": 250.0,
+      "unidade": "MT por saco de 50 kg",
+      "precoPorKg": 5.0,
+      "conversaoAssumida": null,
+      "desenhavel": false
+    },
+    {
+      "zona": "Centro",
+      "produto": "Feijão",
+      "destino": "Inharrime",
+      "origem": "Província de Tete distrito\nMocumbi localidade de Mahalamba",
+      "preco": 3600.0,
+      "unidade": "MT por lata de 20 litros",
+      "precoPorKg": 300.0,
+      "conversaoAssumida": "lata tratada como 12 kg de grão — conversão assumida, não medida",
+      "desenhavel": false
+    },
+    {
+      "zona": "Norte",
+      "produto": "Feijão",
+      "destino": "Panda",
+      "origem": "O mercado de Panda recebeu milho proveniente Lichinga",
+      "preco": 1000.0,
+      "unidade": "MT por lata de 20 litros",
+      "precoPorKg": 83.33,
+      "conversaoAssumida": "lata tratada como 12 kg de grão — conversão assumida, não medida",
+      "desenhavel": false
+    },
+    {
+      "zona": "Centro",
+      "produto": "Amendoim na Zona Sul O mercado de\nFluxo de Milho",
+      "destino": "Mocuba",
+      "origem": "mercado grossista de\nproveniente do distrito de Lugela",
+      "preco": 3200.0,
+      "unidade": "MT por saco de 50 kg",
+      "precoPorKg": 64.0,
+      "conversaoAssumida": null,
+      "desenhavel": false
+    },
+    {
+      "zona": "Norte",
+      "produto": "Milho",
+      "destino": "Panda",
+      "origem": "localidade de Congerenge\namendoim pequeno e grande sem casca",
+      "preco": 250.0,
+      "unidade": "MT por saco de 50 kg",
+      "precoPorKg": 5.0,
+      "conversaoAssumida": null,
+      "desenhavel": false
+    },
+    {
+      "zona": "Centro",
+      "produto": "Amendoim",
+      "destino": "Nhamatanda",
+      "origem": "produção local",
+      "preco": 60.0,
+      "unidade": "MT por lata de 5 litros",
+      "precoPorKg": 20.0,
+      "conversaoAssumida": "lata tratada como 3 kg de grão — conversão assumida, não medida",
+      "desenhavel": false
+    },
+    {
+      "zona": "Norte",
+      "produto": "Amendoim",
+      "destino": "Montepuez",
+      "origem": "casca proveniente do Distrito de Namuno",
+      "preco": 45.0,
+      "unidade": "MT/kg",
+      "precoPorKg": 45.0,
+      "conversaoAssumida": null,
+      "desenhavel": false
+    }
+  ],
+  "fluxos1444": [
+    {
+      "zona": "Sul",
+      "produto": "Milho",
+      "destino": "Panga",
+      "origem": "Lichinga\nfeijão manteiga proveniente de Nampula",
+      "preco": 900.0,
+      "unidade": "MT por saco de 50 kg",
+      "precoPorKg": 18.0,
+      "conversaoAssumida": null,
+      "desenhavel": false
+    },
+    {
+      "zona": "Centro",
+      "produto": "Feijão Manteiga",
+      "destino": "Maxixe",
+      "origem": "Homoine",
+      "preco": 4.8,
+      "unidade": "MT por lata de 20 litros",
+      "precoPorKg": 0.4,
+      "conversaoAssumida": "lata tratada como 12 kg de grão — conversão assumida, não medida",
+      "desenhavel": false
+    },
+    {
+      "zona": "Centro",
+      "produto": "Feijão Manteiga",
+      "destino": "Angónia",
+      "origem": "feijão manteiga proveniente de Posto\nlocalidade de Mahalamba",
+      "preco": 350.0,
+      "unidade": "MT por lata de 20 litros",
+      "precoPorKg": 29.17,
+      "conversaoAssumida": "lata tratada como 12 kg de grão — conversão assumida, não medida",
+      "desenhavel": false
+    },
+    {
+      "zona": "Centro",
+      "produto": "Milho",
+      "destino": "Manjacaze",
+      "origem": "Tete distrito de Angónia",
+      "preco": 980.0,
+      "unidade": "MT por saco de 50 kg",
+      "precoPorKg": 19.6,
+      "conversaoAssumida": null,
+      "desenhavel": false
+    },
+    {
+      "zona": "Sul",
+      "produto": "Feijão Manteiga",
+      "destino": "Xai-Xai",
+      "origem": "Nampula",
+      "preco": 3500.0,
+      "unidade": "MT por saco de 50 kg",
+      "precoPorKg": 70.0,
+      "conversaoAssumida": null,
+      "desenhavel": false
+    },
+    {
+      "zona": "Centro",
+      "produto": "Amendoim",
+      "destino": "Montepuez",
+      "origem": "casca proveniente do distrito de\nNamuno",
+      "preco": 65.0,
+      "unidade": "MT/kg",
+      "precoPorKg": 65.0,
+      "conversaoAssumida": null,
+      "desenhavel": false
+    }
+  ],
+  "fluxos1446": [
+    {
+      "zona": "Norte",
+      "produto": "Feijão Manteiga",
+      "destino": "Panda",
+      "origem": "Lichinga",
+      "preco": 180.0,
+      "unidade": "MT por lata de 20 litros",
+      "precoPorKg": 15.0,
+      "conversaoAssumida": "lata tratada como 12 kg de grão — conversão assumida, não medida",
+      "desenhavel": false
+    },
+    {
+      "zona": "Centro",
+      "produto": "Milho",
+      "destino": "Manjacaze",
+      "origem": "distrito\namendoim pequeno sem casca proveniente de\nde Morrumbala",
+      "preco": 600.0,
+      "unidade": "MT por saco de 50 kg",
+      "precoPorKg": 12.0,
+      "conversaoAssumida": null,
+      "desenhavel": false
+    },
+    {
+      "zona": "Norte",
+      "produto": "Milho",
+      "destino": "Vilanculo",
+      "origem": "diversas\nproveniente de Nampula",
+      "preco": 5500.0,
+      "unidade": "MT por saco de 50 kg",
+      "precoPorKg": 110.0,
+      "conversaoAssumida": null,
+      "desenhavel": false
+    },
+    {
+      "zona": "Sul",
+      "produto": "Feijão Manteiga",
+      "destino": "Quelimane",
+      "origem": "Mulevala\nMaputo recebeu feijão manteiga e catarino",
+      "preco": 60.0,
+      "unidade": "MT por lata de 20 litros",
+      "precoPorKg": 5.0,
+      "conversaoAssumida": "lata tratada como 12 kg de grão — conversão assumida, não medida",
       "desenhavel": false
     }
   ]
