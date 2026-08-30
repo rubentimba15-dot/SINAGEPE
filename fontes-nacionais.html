@@ -17,6 +17,8 @@
 <div id="app-shell"></div>
 
 <script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
 <script src="assets/sinagepe.js"></script>
 <script>
 /* ============================================================
@@ -318,6 +320,23 @@ function abrir(id){
   if(typeof SINAGEPE!=='undefined'&&SINAGEPE.load){
     SINAGEPE.load().then(d=>SINAGEPE.renderUserFooter(d)).catch(()=>{});
   }
+})();
+</script>
+
+<script>
+/* A barra deste ecr\u00e3 vinha da casca antiga. Passa a vir de
+   assets/nav-sinagepe.js, como os restantes: mesma lista, mesma
+   filtragem por acesso, e navega\u00e7\u00e3o de telem\u00f3vel inclu\u00edda. */
+(function(){
+  function montar(){
+    try{
+      if(window.SinagepeNav) SinagepeNav.montar('nacionais','sidebar-mount');
+      if(window.SinagepePesquisa) SinagepePesquisa.iniciar({alvo:'sidebar-mount'});
+    }catch(e){}
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',montar);
+  else montar();
+  setTimeout(montar,450);
 })();
 </script>
 </body>
