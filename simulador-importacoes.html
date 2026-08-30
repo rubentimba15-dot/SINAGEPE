@@ -1,131 +1,352 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Simulador de Importações — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Simulador de Custo de Importa&ccedil;&atilde;o &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  .form-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
-  .form-field label { font-size: 11px; color: var(--ink-faint); font-weight: 600; }
-  .form-field input, .form-field select {
-    background: var(--navy-900); color: var(--ink); border: 1px solid var(--line);
-    border-radius: 7px; padding: 9px 11px; font-size: 12.5px; font-family: var(--font-body);
-  }
-  .radio-group { display: flex; gap: 8px; }
-  .radio-opt { flex: 1; text-align: center; padding: 9px; border: 1px solid var(--line); border-radius: 7px; font-size: 12px; cursor: pointer; color: var(--ink-dim); }
-  .radio-opt.selected { background: var(--bronze); color: var(--navy-950); border-color: var(--bronze); font-weight: 700; }
-  .cobertura-compare { display: flex; align-items: center; gap: 18px; margin: 14px 0; }
-  .cobertura-box { flex: 1; text-align: center; padding: 16px; border-radius: 10px; }
-  .zona-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .zona-label { width: 60px; font-size: 12px; color: var(--ink-dim); }
-  .zona-bar-track { flex: 1; height: 10px; background: var(--navy-800); border-radius: 6px; overflow: hidden; }
-  .zona-bar-fill { height: 100%; background: var(--bronze); border-radius: 6px; }
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1500px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:930px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 17px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:16px 17px}
+.g2{display:grid;grid-template-columns:1fr 1.25fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+.campo{margin-bottom:14px}
+.campo label{display:block;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);margin-bottom:6px}
+.campo input,.campo select{width:100%;background:#0A1421;color:var(--ink);border:1px solid var(--card-line);
+ border-radius:8px;padding:10px 12px;font-size:13px;font-family:'IBM Plex Mono',monospace}
+.campo select{font-family:Inter,sans-serif}
+.campo input:focus,.campo select:focus{outline:none;border-color:var(--brzg)}
+.campo .dica{font-size:10.5px;color:var(--t4);margin-top:5px;line-height:1.5}
+.res{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:11px 0;
+ border-bottom:1px solid rgba(38,56,86,.4);font-size:12.5px}
+.res:last-of-type{border-bottom:none}
+.res-e{color:var(--t3)}
+.res-e small{display:block;font-size:10.5px;color:var(--t4);margin-top:3px;line-height:1.45}
+.res-v{font-family:'IBM Plex Mono',monospace;text-align:right;white-space:nowrap;flex-shrink:0}
+.total{background:linear-gradient(160deg,#101B2E,#0A1220);border:1px solid var(--brzg);border-radius:12px;
+ padding:17px;margin-top:15px}
+.total-l{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--t4);margin-bottom:8px}
+.total-v{font-size:31px;font-weight:600;letter-spacing:-.03em;font-family:'IBM Plex Mono',monospace;color:var(--brzl)}
+.total-s{font-size:11.5px;color:var(--t3);margin-top:9px;line-height:1.6}
+.comp{margin-top:15px;padding-top:14px;border-top:1px solid var(--card-line)}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 15px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 15px;border-bottom:1px solid rgba(38,56,86,.4)}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.aviso{margin:12px 17px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.6;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
 </style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Simulador</div>
+    <h1>Custo de importa&ccedil;&atilde;o at&eacute; ao mercado</h1>
+    <p class="sub">Calcula quanto custa trazer um produto e lev&aacute;-lo at&eacute; uma pra&ccedil;a do interior, e compara com o pre&ccedil;o a que esse produto foi medido nessa pra&ccedil;a. <b>Cada pressuposto est&aacute; &agrave; vista e pode ser alterado.</b></p>
 
-<div class="app-shell" id="app-shell"></div>
+    <div class="aviso r" style="margin:0 0 16px"><b>Este simulador foi reconstru&iacute;do em Agosto de 2026.</b>
+    O anterior calculava o impacto na &laquo;cobertura nacional em dias&raquo; dividindo um stock por um consumo &mdash;
+    ambos n&uacute;meros escritos &agrave; m&atilde;o, porque nenhum armaz&eacute;m do pa&iacute;s reporta exist&ecirc;ncias.
+    E apresentava o resultado como &laquo;Recomenda&ccedil;&atilde;o de Intelig&ecirc;ncia&raquo;, quando era uma frase montada com o que o utilizador escreveu.</div>
 
-<script src="assets/sinagepe.js"></script>
+    <div id="kpis"></div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Pressupostos</h2>
+          <p>Altere qualquer valor. O c&aacute;lculo refaz-se.</p></div></div>
+        <div class="bd" id="form"></div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>Cascata de custo</h2>
+          <p>Cada etapa com a sua origem declarada</p></div>
+          <span class="tag ok" id="r-tag">&mdash;</span></div>
+        <div class="bd" id="resultado"></div>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>A cascata dos combust&iacute;veis, por lei</h2>
+        <p>O &uacute;nico produto de Mo&ccedil;ambique com estrutura de pre&ccedil;o p&uacute;blica &mdash; o molde deste c&aacute;lculo</p></div>
+        <span class="tag ok">Facto legal</span></div>
+      <table id="cascata"></table>
+      <div class="aviso i">Nenhum produto alimentar tem equivalente. Um comerciante que importe arroz n&atilde;o tem
+      onde consultar a estrutura do pre&ccedil;o que paga &mdash; e &eacute; por isso que este simulador existe.</div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O que este simulador n&atilde;o faz</h2>
+        <p>Limites do c&aacute;lculo</p></div></div>
+      <table id="naofaz"></table>
+    </div>
+  </main>
+</div>
+
 <script>
-SINAGEPE.mountShell('simulador', 'Simulador de Importações', 'Impacto na Cobertura e Distribuição Nacional');
+if(window.SinagepeNav) SinagepeNav.montar('simulador');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-document.getElementById('content-mount').innerHTML = `
-  <div class="row-2">
-    <div class="card">
-      <div class="card-title">Parâmetros da Simulação</div>
-      <div class="form-field"><label>Produto Essencial</label><select id="s-produto"></select></div>
-      <div class="form-field"><label>Quantidade (toneladas)</label><input type="number" id="s-quantidade" value="15000" min="0"></div>
-      <div class="form-field"><label>Preço CIF Estimado (USD/ton)</label><input type="number" id="s-preco" value="420" min="0"></div>
-      <div class="form-field"><label>País de Origem</label><select id="s-pais"></select></div>
-      <div class="form-field"><label>Porto ou Fronteira de Entrada</label><select id="s-porto"></select></div>
-      <div class="form-field"><label>Modalidade de Entrada</label>
-        <div class="radio-group" id="s-modalidade">
-          <div class="radio-opt selected" data-v="Imediata">Imediata</div>
-          <div class="radio-opt" data-v="Faseada">Faseada</div>
-          <div class="radio-opt" data-v="Adiada">Adiada</div>
-        </div>
-      </div>
-      <button id="btn-simular" style="width:100%;background:var(--bronze);color:var(--navy-950);border:none;border-radius:8px;padding:11px;font-weight:700;font-size:13px;cursor:pointer;margin-top:6px">Simular Impacto Logístico</button>
-    </div>
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
 
-    <div class="card">
-      <div class="card-title">Impacto na Cobertura Nacional</div>
-      <div class="cobertura-compare">
-        <div class="cobertura-box" style="background:var(--navy-800)">
-          <div class="kpi-label">Cobertura Actual</div>
-          <div class="kpi-value" id="cob-actual" style="font-size:26px">—</div>
-          <div style="font-size:11px;color:var(--ink-faint);margin-top:4px">dias</div>
-        </div>
-        <div style="font-size:22px;color:var(--ink-faint)">→</div>
-        <div class="cobertura-box" style="background:var(--ok-bg)">
-          <div class="kpi-label">Cobertura Projectada</div>
-          <div class="kpi-value" id="cob-projectada" style="font-size:26px;color:var(--ok)">—</div>
-          <div style="font-size:11px;color:var(--ok)" id="cob-delta">—</div>
-        </div>
-      </div>
+/* Pressupostos com origem declarada. Os que vêm de fonte oficial estão
+   marcados; os que são convenção do utilizador dizem-no. */
+var CAMPOS=[
+ {id:'produto',rot:'Produto',tipo:'select',fonte:'produtos medidos pelo SIMA'},
+ {id:'praca',rot:'Pra&ccedil;a de destino',tipo:'select',fonte:'mercados medidos pelo SIMA'},
+ {id:'toneladas',rot:'Quantidade, toneladas',tipo:'number',v:100,passo:10,
+  dica:'Quantidade a importar. Escolha sua.'},
+ {id:'cif',rot:'Pre&ccedil;o CIF, USD por tonelada',tipo:'number',v:520,passo:10,
+  dica:'Custo, seguro e frete at&eacute; ao porto. <b>Valor seu</b> &mdash; o sistema n&atilde;o tem cota&ccedil;&otilde;es internacionais ligadas.'},
+ {id:'cambio',rot:'C&acirc;mbio, MT por USD',tipo:'number',v:64.52,passo:.5,
+  dica:'Medido pelo SIMA no boletim: 64,52 em Julho de 2023. <b>Desactualizado</b> &mdash; confirme o c&acirc;mbio corrente.'},
+ {id:'direitos',rot:'Direitos e IVA, %',tipo:'number',v:22,passo:1,
+  dica:'Encargos aduaneiros e fiscais. <b>Valor seu</b> &mdash; varia por posi&ccedil;&atilde;o pautal e o sistema n&atilde;o tem a pauta ligada.'},
+ {id:'distancia',rot:'Dist&acirc;ncia do porto, km',tipo:'number',v:400,passo:50,
+  dica:'Do porto de entrada at&eacute; &agrave; pra&ccedil;a de destino. <b>Valor seu.</b>'},
+ {id:'consumo',rot:'Consumo do cami&atilde;o, L por 100 km',tipo:'number',v:32,passo:2,
+  dica:'Consumo m&eacute;dio de um cami&atilde;o carregado. <b>Valor seu</b> &mdash; conven&ccedil;&atilde;o para o c&aacute;lculo.'},
+ {id:'carga',rot:'Carga por viagem, toneladas',tipo:'number',v:25,passo:5,
+  dica:'Capacidade do cami&atilde;o. <b>Valor seu.</b>'},
+ {id:'regiao',rot:'Regi&atilde;o para o pre&ccedil;o do gas&oacute;leo',tipo:'select',fonte:'pre&ccedil;os regulados ARENE'}
+];
 
-      <div class="kpi-label" style="margin:18px 0 10px">Distribuição Territorial Sugerida</div>
-      <div id="zonas-list"></div>
-
-      <div class="card" style="background:var(--navy-800);border-color:var(--bronze-dim);margin-top:14px">
-        <div class="kpi-label">Recomendação de Inteligência MIC</div>
-        <p id="recomendacao-ia" style="font-size:12.5px;color:var(--ink-dim);line-height:1.6;margin:6px 0 0"></p>
-      </div>
-    </div>
-  </div>
-`;
-
-SINAGEPE.load().then(renderSimulador);
-
-function renderSimulador(data) {
-  SINAGEPE.renderUserFooter(data);
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
-
-  document.getElementById('s-produto').innerHTML = data.balancoNacional.map(p => `<option>${p.produto}</option>`).join('');
-  document.getElementById('s-pais').innerHTML = data.paisesOrigem.map(p => `<option>${p}</option>`).join('');
-  document.getElementById('s-porto').innerHTML = data.portosEntrada.map(p => `<option>${p}</option>`).join('');
-
-  document.getElementById('zonas-list').innerHTML = data.distribuicaoZonas.map(z => `
-    <div class="zona-bar-row">
-      <div class="zona-label">${z.zona}</div>
-      <div class="zona-bar-track"><div class="zona-bar-fill" style="width:${z.percentagem}%"></div></div>
-      <div style="font-family:var(--font-data);font-size:12px;width:36px;text-align:right">${z.percentagem}%</div>
-    </div>`).join('');
-
-  document.querySelectorAll('#s-modalidade .radio-opt').forEach(opt =>
-    opt.addEventListener('click', () => {
-      document.querySelectorAll('#s-modalidade .radio-opt').forEach(o => o.classList.remove('selected'));
-      opt.classList.add('selected');
-    }));
-
-  function simular() {
-    const produtoNome = document.getElementById('s-produto').value;
-    const quantidade = Number(document.getElementById('s-quantidade').value) || 0;
-    const p = data.balancoNacional.find(x => x.produto === produtoNome);
-
-    // consumo diário derivado da cobertura já confirmada, para nunca desalinhar do Painel Nacional
-    const consumoDiario = p.stock / p.cobertura;
-    const coberturaProjectada = Math.round((p.stock + quantidade) / consumoDiario);
-
-    document.getElementById('cob-actual').textContent = p.cobertura;
-    document.getElementById('cob-projectada').textContent = coberturaProjectada;
-    document.getElementById('cob-delta').textContent = `+${coberturaProjectada - p.cobertura} Dias (Seguro)`;
-
-    const modalidade = document.querySelector('#s-modalidade .selected').dataset.v;
-    document.getElementById('recomendacao-ia').textContent =
-      `Com ${SINAGEPE.fmt(quantidade)} t de ${produtoNome} a entrar de forma ${modalidade.toLowerCase()}, a cobertura nacional sobe de ${p.cobertura} para ${coberturaProjectada} dias. ` +
-      `Recomenda-se distribuição prioritária pela Zona Sul (maior consumo histórico) e monitorização da Zona Norte nas duas semanas seguintes à chegada.`;
-  }
-
-  document.getElementById('btn-simular').addEventListener('click', simular);
-  simular();
+function desenharForm(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var pracas={};
+  R.forEach(function(r){
+    (r.minimo.mercados||[]).forEach(function(x){pracas[x]=1});
+    (r.outros||[]).forEach(function(x){pracas[x.mercado]=1});
+    (r.maximo.mercados||[]).forEach(function(x){pracas[x]=1});
+  });
+  var Rg=ST.cp.regioes.filter(function(x){return x.gasoleo!=null});
+  var h='';
+  CAMPOS.forEach(function(c){
+    h+='<div class="campo"><label>'+c.rot+'</label>';
+    if(c.tipo==='select'){
+      var ops='';
+      if(c.id==='produto') ops=R.map(function(r,i){return '<option value="'+i+'">'+esc(r.produto)+'</option>'}).join('');
+      else if(c.id==='praca') ops=Object.keys(pracas).sort().map(function(p){return '<option>'+esc(p)+'</option>'}).join('');
+      else ops=Rg.map(function(r,i){return '<option value="'+i+'"'+(i===0?' selected':'')+'>'
+        +esc(i===0?'Cidades com terminal':r.local)+'</option>'}).join('');
+      h+='<select id="f-'+c.id+'">'+ops+'</select>';
+    } else {
+      h+='<input type="number" id="f-'+c.id+'" value="'+c.v+'" step="'+(c.passo||1)+'" min="0">';
+    }
+    if(c.dica) h+='<div class="dica">'+c.dica+'</div>';
+    else if(c.fonte) h+='<div class="dica">Op&ccedil;&otilde;es de '+c.fonte+'.</div>';
+    h+='</div>';
+  });
+  document.getElementById('form').innerHTML=h;
+  CAMPOS.forEach(function(c){
+    var el=document.getElementById('f-'+c.id);
+    if(el){el.addEventListener('input',calcular);el.addEventListener('change',calcular)}
+  });
 }
+
+function v(id){return Number(document.getElementById('f-'+id).value)||0}
+
+function calcular(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var Rg=ST.cp.regioes.filter(function(x){return x.gasoleo!=null});
+  var prod=R[Number(document.getElementById('f-produto').value)||0];
+  var praca=document.getElementById('f-praca').value;
+  var reg=Rg[Number(document.getElementById('f-regiao').value)||0];
+
+  var t=v('toneladas'), cif=v('cif'), cam=v('cambio'), dir=v('direitos');
+  var km=v('distancia'), cons=v('consumo'), carga=v('carga');
+
+  var cifMt=cif*cam;                       /* MT por tonelada */
+  var impostos=cifMt*dir/100;
+  var viagens=carga>0?Math.ceil(t/carga):0;
+  var litros=km*cons/100;
+  var gasoleoViagem=litros*reg.gasoleo;
+  var gasoleoTotal=gasoleoViagem*viagens;
+  var gasoleoPorT=t>0?gasoleoTotal/t:0;
+  var totalPorT=cifMt+impostos+gasoleoPorT;
+  var porKg=totalPorT/1000;
+
+  /* preço medido nessa praça, se existir */
+  var medido=null;
+  if((prod.minimo.mercados||[]).indexOf(praca)>=0) medido=prod.minimo.valor;
+  else if((prod.maximo.mercados||[]).indexOf(praca)>=0) medido=prod.maximo.valor;
+  else (prod.outros||[]).forEach(function(x){if(x.mercado===praca)medido=x.valor});
+
+  var h='';
+  function linha(e,sub,val,cor){
+    h+='<div class="res"><span class="res-e">'+e+(sub?'<small>'+sub+'</small>':'')+'</span>'
+     +'<span class="res-v"'+(cor?' style="color:'+cor+'"':'')+'>'+val+'</span></div>';
+  }
+  linha('CIF por tonelada','Valor seu, convertido ao c&acirc;mbio de '+p2(cam),num(cifMt)+' MT');
+  linha('Direitos e IVA','Valor seu: '+dir+'% sobre o CIF',num(impostos)+' MT');
+  linha('Transporte at&eacute; '+esc(praca),
+    viagens+' viagem'+(viagens===1?'':'s')+' &middot; '+num(litros)+' L por viagem &middot; gas&oacute;leo a '+p2(reg.gasoleo)+' MT/L',
+    num(gasoleoPorT)+' MT');
+
+  h+='<div class="total"><div class="total-l">Custo por tonelada, posto na pra&ccedil;a</div>'
+   +'<div class="total-v">'+num(totalPorT)+' MT</div>'
+   +'<div class="total-s">S&atilde;o <b>'+p2(porKg)+' MT por quilograma</b>, antes de armazenagem, perdas e margem. '
+   +'Para '+num(t)+' toneladas, o total &eacute; '+num(totalPorT*t)+' MT.</div></div>';
+
+  if(medido!=null){
+    var d=(medido/porKg-1)*100;
+    var c=d>0?'var(--ok)':'var(--red)';
+    h+='<div class="comp">'
+     +'<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brz);margin-bottom:10px">'
+     +'Compara&ccedil;&atilde;o com o pre&ccedil;o medido</div>'
+     +'<div class="res"><span class="res-e">'+esc(prod.produto)+' a retalho em '+esc(praca)
+     +'<small>SIMA, edi&ccedil;&atilde;o '+ST.sima.meta.edicao+' &mdash; Julho de 2023</small></span>'
+     +'<span class="res-v">'+p2(medido)+' MT/kg</span></div>'
+     +'<div class="res"><span class="res-e">Custo calculado</span>'
+     +'<span class="res-v">'+p2(porKg)+' MT/kg</span></div>'
+     +'<div class="res"><span class="res-e">Diferen&ccedil;a<small>'
+     +(d>0?'H&aacute; margem entre o custo e o pre&ccedil;o de retalho medido.'
+         :'O custo calculado excede o pre&ccedil;o medido. Reveja os pressupostos ou a viabilidade.')
+     +'</small></span><span class="res-v" style="color:'+c+'">'+(d>0?'+':'')+d.toFixed(0)+'%</span></div>'
+     +'</div>'
+     +'<div class="aviso w" style="margin:14px 0 0"><b>Aten&ccedil;&atilde;o &agrave; data.</b> O pre&ccedil;o de compara&ccedil;&atilde;o '
+     +'&eacute; de Julho de 2023 e o c&acirc;mbio predefinido tamb&eacute;m. A diferen&ccedil;a serve para perceber a ordem de grandeza, '
+     +'n&atilde;o para decidir uma importa&ccedil;&atilde;o.</div>';
+  } else {
+    h+='<div class="aviso i" style="margin:14px 0 0">O SIMA n&atilde;o mediu pre&ccedil;o de '+esc(prod.produto)
+     +' em '+esc(praca)+' nesta edi&ccedil;&atilde;o. Escolha outra pra&ccedil;a para ver a compara&ccedil;&atilde;o.</div>';
+  }
+  document.getElementById('resultado').innerHTML=h;
+  document.getElementById('r-tag').textContent=num(porKg*100)/100+' MT/kg';
+}
+
+function desenharKpis(){
+  var Rg=ST.cp.regioes.filter(function(x){return x.gasoleo!=null});
+  var ref=Rg[0].gasoleo, pior=Rg[Rg.length-1];
+  var C=ST.cp.cascata;
+  var lista=[
+   {id:'si-etapas',rotulo:'Etapas na cascata dos combust&iacute;veis',valor:C.length,unidade:'',
+    estado:'estrutura p&uacute;blica por lei',tipo:'FACTO',cor:'var(--brzl)',
+    resumo:'As etapas que formam o pre&ccedil;o regulado dos combust&iacute;veis em Mo&ccedil;ambique.',
+    formula:'contagem das etapas declaradas na metodologia da ARENE',
+    componentes:C.map(function(e,i){return [(e.nome||e.etapa),i+1,'']}),
+    leitura:'&Eacute; o &uacute;nico produto do pa&iacute;s com estrutura de pre&ccedil;o publicada. Serve de molde a este simulador &mdash; e mostra o que falta a todos os outros produtos.',
+    fonte:'ARENE &mdash; Decreto n.&ordm; 89/2019',dataDados:ST.cp.revisao.data,
+    ecra:'portal-transportadores.html'},
+
+   {id:'si-gasoleo',rotulo:'Gas&oacute;leo &mdash; amplitude entre regi&otilde;es',valor:p2(pior.gasoleo-ref),unidade:'MT/L',
+    estado:pior.local+' face ao terminal',tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Diferen&ccedil;a de pre&ccedil;o do gas&oacute;leo entre a regi&atilde;o mais cara e as cidades com terminal.',
+    formula:'pre&ccedil;o na regi&atilde;o menos pre&ccedil;o de refer&ecirc;ncia',
+    componentes:Rg.map(function(r,i){return [i===0?'Cidades com terminal':r.local,r.gasoleo,'MT/L']}),
+    leitura:'Entra directamente neste c&aacute;lculo: quanto mais longe for o destino, mais pesa o combust&iacute;vel no custo por tonelada.',
+    fonte:'ARENE &mdash; pre&ccedil;os regulados',dataDados:ST.cp.revisao.data},
+
+   {id:'si-cambio',rotulo:'C&acirc;mbio usado por omiss&atilde;o',valor:'64,52',unidade:'MT/USD',
+    estado:'medido em Julho de 2023',tipo:'FACTO',cor:'var(--blue)',
+    resumo:'Taxa de c&acirc;mbio que o simulador usa se n&atilde;o for alterada.',
+    formula:'valor publicado no boletim do SIMA',
+    componentes:[['Setembro de 2022',64.50,'MT/USD'],['Julho de 2023',64.52,'MT/USD'],
+                 ['Varia&ccedil;&atilde;o em dez meses','+0,03','%']],
+    leitura:'O c&acirc;mbio esteve praticamente parado no per&iacute;odo medido. Ainda assim, &eacute; de 2023: confirme o valor corrente antes de usar o resultado.',
+    fonte:'SIMA &mdash; boletim Quente-Quente',dataDados:'Julho de 2023'},
+
+   {id:'si-cobertura',rotulo:'Impacto na cobertura nacional',valor:'\u2014',unidade:'',estado:'retirado',
+    tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Quantos dias de consumo nacional uma importa&ccedil;&atilde;o acrescentaria.',
+    porqueNaoEReal:'O c&aacute;lculo anterior dividia um stock nacional por um consumo di&aacute;rio. Ambos os n&uacute;meros estavam escritos &agrave; m&atilde;o: nenhum armaz&eacute;m do pa&iacute;s reporta exist&ecirc;ncias e n&atilde;o h&aacute; estimativa de consumo ligada ao sistema.',
+    oQueFalta:'Exist&ecirc;ncias declaradas e estimativa de consumo nacional por produto',
+    quemDetem:'Armazenistas &middot; INE &middot; MIC'},
+
+   {id:'si-recomendacao',rotulo:'Recomenda&ccedil;&atilde;o de intelig&ecirc;ncia',valor:'\u2014',unidade:'',estado:'retirado',
+    tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Sugest&atilde;o de distribui&ccedil;&atilde;o territorial da mercadoria importada.',
+    porqueNaoEReal:'O texto apresentado como recomenda&ccedil;&atilde;o de intelig&ecirc;ncia era uma frase fixa, montada com os valores que o pr&oacute;prio utilizador tinha escrito. N&atilde;o havia an&aacute;lise, modelo nem dados por tr&aacute;s &mdash; e as percentagens de distribui&ccedil;&atilde;o por zona eram tamb&eacute;m de demonstra&ccedil;&atilde;o.',
+    oQueFalta:'Consumo e exist&ecirc;ncias por regi&atilde;o, e capacidade de recep&ccedil;&atilde;o por armaz&eacute;m',
+    quemDetem:'Armazenistas &middot; INE &middot; MIC'}
+  ];
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
+}
+
+function desenharCascata(){
+  var C=ST.cp.cascata;
+  var h='<thead><tr><th style="width:34px">#</th><th>Etapa</th><th>O que &eacute;</th><th>Quem determina</th></tr></thead><tbody>';
+  C.forEach(function(e,i){
+    h+='<tr><td class="n" style="color:var(--t4)">'+(i+1)+'</td>'
+     +'<td style="font-weight:600">'+esc(e.nome||('Etapa '+e.etapa))+'</td>'
+     +'<td style="color:var(--t3);max-width:420px">'+esc(String(e.descricao||'').slice(0,120))+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+esc(e.determinadoPor||e.responsavel||e.dado||'&mdash;')+'</td></tr>';
+  });
+  document.getElementById('cascata').innerHTML=h+'</tbody>';
+}
+
+var NAO_FAZ=[
+ ['Cota&ccedil;&otilde;es internacionais','O pre&ccedil;o CIF &eacute; escrito por si. O sistema n&atilde;o tem bolsas nem cota&ccedil;&otilde;es ligadas.','Bolsas &middot; fornecedores'],
+ ['Pauta aduaneira','A percentagem de direitos &eacute; escrita por si. A pauta varia por posi&ccedil;&atilde;o e n&atilde;o est&aacute; ligada.','Alf&acirc;ndegas'],
+ ['Dist&acirc;ncias reais','A dist&acirc;ncia &eacute; escrita por si. O sistema n&atilde;o calcula rotas.','ANE &middot; cartografia'],
+ ['Custo de armazenagem','N&atilde;o entra no c&aacute;lculo. Nenhum armaz&eacute;m publica tarif&aacute;rio.','Armazenistas'],
+ ['Perdas em tr&acirc;nsito','N&atilde;o entram. N&atilde;o h&aacute; taxa de perdas medida em Mo&ccedil;ambique.','Operadores'],
+ ['Viabilidade do neg&oacute;cio','O simulador calcula custo, n&atilde;o decide. A margem, o risco e o financiamento s&atilde;o de quem decide.','&mdash;']
+];
+function desenharNaoFaz(){
+  var h='<thead><tr><th>O que n&atilde;o entra no c&aacute;lculo</th><th>Porqu&ecirc;</th><th>Quem det&eacute;m</th></tr></thead><tbody>';
+  NAO_FAZ.forEach(function(x){
+    h+='<tr><td style="font-weight:600">'+x[0]+'</td>'
+     +'<td style="color:var(--t3);max-width:480px">'+x[1]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+x[2]+'</td></tr>';
+  });
+  document.getElementById('naofaz').innerHTML=h+'</tbody>';
+}
+
+Promise.all(['sima-precos','cascata-precos'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.sima=res[0];ST.cp=res[1];
+  desenharKpis();desenharForm();desenharCascata();desenharNaoFaz();calcular();
+}).catch(function(e){
+  document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+});
 </script>
 </body>
 </html>

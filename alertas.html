@@ -1,165 +1,302 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gestão de Alertas — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Centro de Alertas &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:940px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 17px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.filtros{display:flex;gap:6px;flex-wrap:wrap;padding:12px 17px;border-bottom:1px solid var(--card-line)}
+.fb{font-size:11px;padding:6px 12px;border-radius:20px;border:1px solid var(--card-line);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.fb.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+.g2{display:grid;grid-template-columns:1fr 1.15fr;gap:14px;align-items:start}
+@media(max-width:1180px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+.al{background:linear-gradient(160deg,#101B2E,#0A1220);border:1px solid var(--card-line);
+ border-left-width:3px;border-radius:11px;padding:14px 15px;margin-bottom:10px;cursor:pointer;transition:.15s}
+.al:hover{border-color:var(--brzg)}
+.al.on{box-shadow:0 0 0 1px var(--brzg)}
+.al-t{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:6px}
+.al-n{font-size:13.5px;font-weight:600;line-height:1.3}
+.al-r{font-size:11.5px;color:var(--t3);line-height:1.5}
+.al-m{display:flex;gap:8px;margin-top:9px;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;flex-wrap:wrap}
+.al-m span{border:1px solid var(--card-line);padding:3px 8px;border-radius:3px;color:var(--t4)}
+.grav{display:flex;gap:2px;align-items:center;flex-shrink:0}
+.grav i{width:5px;height:14px;border-radius:1px;display:block}
+.det{background:var(--card-bg);border:1px solid var(--card-line);border-radius:13px;
+ position:sticky;top:20px;overflow:hidden}
+.det-c{padding:17px}
+.campo{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid rgba(38,56,86,.4);font-size:12px}
+.campo:last-child{border-bottom:none}
+.campo span:first-child{color:var(--t4);flex-shrink:0}
+.campo span:last-child{text-align:right;max-width:62%}
+.mit{background:#0A1421;border-radius:9px;padding:12px 14px;margin-bottom:9px;font-size:12px;line-height:1.55}
+.mit-h{font-size:9px;letter-spacing:.13em;text-transform:uppercase;margin-bottom:6px}
+.aviso{margin:12px 17px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.6;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 15px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 15px;border-bottom:1px solid rgba(38,56,86,.4)}
+tr:last-child td{border-bottom:none}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Antecipa&ccedil;&atilde;o</div>
+    <h1>Centro de Alertas</h1>
+    <p class="sub">Riscos identificados a partir da estrutura conhecida do abastecimento nacional. Cada um declara em que evid&ecirc;ncia assenta, o que teria de acontecer para se confirmar, e quem decide.</p>
 
-<div class="app-shell" id="app-shell"></div>
+    <div class="aviso r" style="margin:0 0 16px"><b>Este ecr&atilde; foi reconstru&iacute;do em Agosto de 2026.</b>
+    Mostrava alertas com &laquo;grau de confian&ccedil;a&raquo; de 94%, 82% e 78% &mdash; n&uacute;meros estat&iacute;sticos sem estat&iacute;stica nenhuma por tr&aacute;s.
+    Citava fontes que n&atilde;o existem, como sensores de armaz&eacute;m e declara&ccedil;&otilde;es aduaneiras ligadas ao sistema.
+    E um dos alertas acusava reten&ccedil;&atilde;o especulativa, com nome de prov&iacute;ncia, a partir de dados de demonstra&ccedil;&atilde;o.
+    <b>Uma acusa&ccedil;&atilde;o sem base n&atilde;o &eacute; um erro de indicador: &eacute; um risco s&eacute;rio.</b></div>
 
-<script src="assets/sinagepe.js"></script>
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Riscos activos</h2>
+        <p>Ordenados por gravidade. Carregue num risco para ver a evid&ecirc;ncia e as medidas.</p></div>
+        <span class="tag" id="a-tag">&mdash;</span></div>
+      <div class="filtros" id="filtros"></div>
+      <div class="g2" style="padding:15px 17px">
+        <div id="lista"></div>
+        <div id="detalhe"></div>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O que este centro n&atilde;o faz</h2>
+        <p>E porque n&atilde;o faz</p></div>
+        <span class="tag crit">Limites declarados</span></div>
+      <table id="naofaz"></table>
+    </div>
+  </main>
+</div>
+
 <script>
-SINAGEPE.mountShell('alertas', 'Centro de Alertas', 'Inteligência de Alertas Nacionais');
+if(window.SinagepeNav) SinagepeNav.montar('alertas');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-document.getElementById('content-mount').innerHTML = `
-  <div class="card">
-    <div class="filter-bar">
-      <select id="f-produto"><option value="">Todos os Produtos</option></select>
-      <select id="f-provincia"><option value="">Todas as Províncias</option></select>
-      <select id="f-tipo"><option value="">Todos os Tipos</option></select>
-      <select id="f-confianca">
-        <option value="0">Qualquer Confiança</option>
-        <option value="90">≥ 90%</option>
-        <option value="75">≥ 75%</option>
-        <option value="50">≥ 50%</option>
-      </select>
-    </div>
-  </div>
+var ST={filtro:'todos',sel:0};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
-  <div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <span style="font-size:12px;color:var(--ink-faint)">Alertas de retenção especulativa são detectados por um sub-módulo dedicado.</span>
-      <a href="irae.html" style="font-size:12px;font-weight:600;color:var(--bronze)">Ver Casos IRAE (Retenção Artificial) →</a>
-    </div>
-  </div>
-
-  <div class="split-panel">
-    <div id="alert-list"></div>
-    <div class="card detail-panel" id="alert-detail"></div>
-  </div>
-`;
-
-SINAGEPE.load().then(renderAlertas);
-
-let TODOS_ALERTAS = [];
-let SELECCIONADO = null;
-
-function renderAlertas(data) {
-  SINAGEPE.renderUserFooter(data);
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
-  TODOS_ALERTAS = data.alertasDetalhe;
-
-  // preencher filtros a partir dos dados reais, sem valores fixos
-  const produtos = [...new Set(TODOS_ALERTAS.map(a => a.produto))];
-  const provincias = [...new Set(TODOS_ALERTAS.map(a => a.provincia))];
-  const tipos = [...new Set(TODOS_ALERTAS.map(a => a.tipo))];
-  document.getElementById('f-produto').innerHTML += produtos.map(p => `<option value="${p}">${p}</option>`).join('');
-  document.getElementById('f-provincia').innerHTML += provincias.map(p => `<option value="${p}">${p}</option>`).join('');
-  document.getElementById('f-tipo').innerHTML += tipos.map(t => `<option value="${t}">${t}</option>`).join('');
-
-  ['f-produto', 'f-provincia', 'f-tipo', 'f-confianca'].forEach(id =>
-    document.getElementById(id).addEventListener('change', aplicarFiltros));
-
-  // Deep-link opcional: alertas.html?provincia=Tete pré-selecciona o filtro
-  // (usado pelo mapa central do dashboard) — não afecta o uso normal do ecrã.
-  const params = new URLSearchParams(window.location.search);
-  const provinciaParam = params.get('provincia');
-  if (provinciaParam) document.getElementById('f-provincia').value = provinciaParam;
-
-  SELECCIONADO = TODOS_ALERTAS[0].id;
-  aplicarFiltros();
+function corGrav(g){return g>=5?'#EF4444':g>=4?'#F0A926':g>=3?'#C98A3C':'#5E7189'}
+function barrasGrav(g){
+  var h='<span class="grav">';
+  for(var i=1;i<=5;i++) h+='<i style="background:'+(i<=g?corGrav(g):'rgba(38,56,86,.8)')+'"></i>';
+  return h+'</span>';
 }
 
-function aplicarFiltros() {
-  const produto = document.getElementById('f-produto').value;
-  const provincia = document.getElementById('f-provincia').value;
-  const tipo = document.getElementById('f-tipo').value;
-  const confianca = Number(document.getElementById('f-confianca').value);
+function desenharKpis(){
+  var R=ST.ant.riscos;
+  var g5=R.filter(function(r){return r.gravidade>=5}).length;
+  var comAccao=R.filter(function(r){
+    return (r.mitigacoes||[]).some(function(m){return m.horizonte==='agora'})}).length;
+  var perm=R.filter(function(r){return /permanente/i.test(r.janela||'')}).length;
+  var cert={};R.forEach(function(r){var c=r.certeza||'n&atilde;o declarada';cert[c]=(cert[c]||0)+1});
 
-  const filtrados = TODOS_ALERTAS.filter(a =>
-    (!produto || a.produto === produto) &&
-    (!provincia || a.provincia === provincia) &&
-    (!tipo || a.tipo === tipo) &&
-    (a.confianca >= confianca)
-  );
+  var lista=[
+   {id:'al-total',rotulo:'Riscos identificados',valor:R.length,unidade:'',
+    estado:comAccao+' com ac&ccedil;&atilde;o imediata definida',tipo:'ESTIMATIVA',cor:'var(--blue)',
+    resumo:'Riscos derivados da estrutura conhecida: cadastro, rede vi&aacute;ria, concentra&ccedil;&atilde;o em corredores.',
+    formula:'contagem dos riscos no Centro de Antecipa&ccedil;&atilde;o',
+    componentes:Object.keys(cert).map(function(k){return ['Certeza: '+k,cert[k],'riscos']}),
+    leitura:'S&atilde;o hip&oacute;teses fundamentadas, n&atilde;o previs&otilde;es probabil&iacute;sticas. O sistema n&atilde;o tem s&eacute;rie hist&oacute;rica para calcular probabilidades, e por isso n&atilde;o apresenta nenhuma.',
+    fonte:'Centro de Antecipa&ccedil;&atilde;o do SINAGEPE',dataDados:'Agosto de 2026',
+    ecra:'centro-antecipacao.html'},
 
-  renderLista(filtrados);
-  const aindaVisivel = filtrados.find(a => a.id === SELECCIONADO);
-  renderDetalhe(aindaVisivel || filtrados[0] || null);
+   {id:'al-graves',rotulo:'De gravidade m&aacute;xima',valor:g5,unidade:'de '+R.length,
+    estado:'gravidade 5 em 5',tipo:'ESTIMATIVA',cor:'var(--red)',
+    resumo:'Riscos classificados no grau mais alto da escala.',
+    formula:'contagem dos riscos com gravidade 5',
+    componentes:R.filter(function(r){return r.gravidade>=5})
+      .map(function(r){return [r.titulo,r.gravidade,'/5']}),
+    leitura:'A gravidade &eacute; um ju&iacute;zo declarado sobre o impacto se o risco se concretizar, n&atilde;o uma probabilidade de acontecer.',
+    fonte:'Centro de Antecipa&ccedil;&atilde;o',dataDados:'Agosto de 2026'},
+
+   {id:'al-permanentes',rotulo:'De natureza permanente',valor:perm,unidade:'de '+R.length,
+    estado:'n&atilde;o dependem de esta&ccedil;&atilde;o nem de evento',tipo:'ESTIMATIVA',cor:'var(--amber)',
+    resumo:'Riscos estruturais, que existem enquanto a causa n&atilde;o for resolvida.',
+    formula:'riscos cuja janela &eacute; declarada como permanente',
+    componentes:R.filter(function(r){return /permanente/i.test(r.janela||'')})
+      .map(function(r){return [r.titulo,r.gravidade,'/5']}),
+    leitura:'Um risco permanente n&atilde;o &eacute; um alerta que se fecha. &Eacute; uma condi&ccedil;&atilde;o do sistema que s&oacute; muda com decis&atilde;o.',
+    fonte:'Centro de Antecipa&ccedil;&atilde;o',dataDados:'Agosto de 2026'},
+
+   {id:'al-confianca',rotulo:'Grau de confian&ccedil;a em percentagem',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Percentagem de confian&ccedil;a atribu&iacute;da a cada alerta.',
+    porqueNaoEReal:'Os valores anteriores &mdash; 94%, 82%, 78% &mdash; eram escolhidos &agrave; m&atilde;o. Uma percentagem de confian&ccedil;a &eacute; uma medida estat&iacute;stica: exige um modelo, uma amostra e um erro conhecido. Nada disso existia. Foi substitu&iacute;da pela certeza declarada em palavras e pela evid&ecirc;ncia de cada risco.',
+    oQueFalta:'S&eacute;rie hist&oacute;rica suficiente e um modelo com erro medido',
+    quemDetem:'&mdash;'},
+
+   {id:'al-especulacao',rotulo:'Detec&ccedil;&atilde;o de reten&ccedil;&atilde;o especulativa',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Alerta que assinalava operadores a reter produto para for&ccedil;ar o pre&ccedil;o.',
+    porqueNaoEReal:'O alerta acusava reten&ccedil;&atilde;o especulativa de &oacute;leo de cozinha, com prov&iacute;ncia identificada, a partir de dados de demonstra&ccedil;&atilde;o e de sensores que n&atilde;o existem. Assinalar suspeita de pr&aacute;tica an&oacute;mala sobre um operador exige dados reais e cabe &agrave; autoridade da concorr&ecirc;ncia, n&atilde;o a um ecr&atilde;.',
+    oQueFalta:'Exist&ecirc;ncias e movimentos declarados, e enquadramento com a ARC',
+    quemDetem:'ARC &middot; operadores'}
+  ];
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
 }
 
-const SEV_TIPO = { 'Crítico': 'crit', 'Atenção': 'warn', 'Normal': 'ok' };
-
-function renderLista(alertas) {
-  const el = document.getElementById('alert-list');
-  if (alertas.length === 0) { el.innerHTML = `<div class="card">Nenhum alerta corresponde aos filtros seleccionados.</div>`; return; }
-  el.innerHTML = alertas.map(a => `
-    <div class="alert-card ${SEV_TIPO[a.severidade]} ${a.id === SELECCIONADO ? 'selected' : ''}" data-id="${a.id}">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-        <span class="pill pill-info" style="font-size:9px">${a.tipo}</span>
-        <span class="confidence-badge">${a.confianca}% Confiança</span>
-      </div>
-      <div class="alert-title">${a.titulo}</div>
-      <div class="alert-meta">${a.provincia} · ${a.tempo} · ${a.estado}</div>
-      <div class="alert-desc">${a.descricao}</div>
-    </div>`).join('');
-
-  el.querySelectorAll('.alert-card').forEach(card => card.addEventListener('click', () => {
-    SELECCIONADO = card.dataset.id;
-    aplicarFiltros();
-  }));
-}
-
-function renderDetalhe(a) {
-  const el = document.getElementById('alert-detail');
-  if (!a) { el.innerHTML = `<div class="card-subtitle">Sem alerta seleccionado.</div>`; return; }
-
-  el.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
-      <span class="pill pill-${SEV_TIPO[a.severidade]}">SEVERIDADE ${a.severidade.toUpperCase()}</span>
-      <span style="font-family:var(--font-data);font-size:11px;color:var(--ink-faint)">#<a href="detalhe-alerta.html?id=${a.id}" style="color:var(--bronze)">${a.id}</a></span>
-    </div>
-    <div class="card-title" style="margin-bottom:2px">${a.titulo}</div>
-    <div class="card-subtitle">${a.provincia} · Actualizado ${a.tempo}</div>
-    <p style="font-size:13px;color:var(--ink-dim);line-height:1.6">${a.descricao}</p>
-
-    <details style="margin-bottom:16px">
-      <summary style="cursor:pointer;font-size:12.5px;font-weight:600;color:var(--bronze)">Por que recebi este alerta?</summary>
-      <div class="expand-box">
-        <b>Fontes de dados:</b> ${a.fontes.join(', ')}<br>
-        <b>Regra de decisão:</b> ${a.regra}<br>
-        <b>Grau de confiança:</b> ${a.confianca}%
-      </div>
-    </details>
-
-    <div class="kpi-label" style="margin-bottom:8px">Medidas de Contingência Recomendadas</div>
-    ${a.medidas.map(m => `<div class="medida-row"><span>${m.descricao}</span><span class="pill pill-info">${m.responsavel}</span></div>`).join('')}
-
-    <div style="display:flex;gap:10px;margin-top:18px">
-      <button id="btn-mitigar" style="background:var(--bronze);color:var(--navy-950);border:none;border-radius:8px;padding:10px 16px;font-weight:700;font-size:12.5px;cursor:pointer">Mitigar Rápido</button>
-      <button id="btn-oficio" style="background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px 16px;font-weight:700;font-size:12.5px;cursor:pointer">Disparar Ofício</button>
-    </div>
-    <div id="acao-status" style="margin-top:10px;font-size:11.5px;color:var(--ink-faint)"></div>
-  `;
-
-  document.getElementById('btn-mitigar').addEventListener('click', function () {
-    this.disabled = true;
-    document.getElementById('acao-status').textContent =
-      '✔ Instituição responsável notificada. Nenhuma acção foi aplicada automaticamente — decisão fica com a instituição. (Simulação.)';
-  });
-  document.getElementById('btn-oficio').addEventListener('click', function () {
-    this.disabled = true;
-    document.getElementById('acao-status').textContent =
-      '📄 Rascunho de ofício gerado, a aguardar revisão humana antes de envio. (Simulação — sem envio real neste protótipo.)';
+function desenharFiltros(){
+  var R=ST.ant.riscos;
+  var m=[['todos','Todos',R.length],
+         ['g5','Gravidade m&aacute;xima',R.filter(function(r){return r.gravidade>=5}).length],
+         ['agora','Com ac&ccedil;&atilde;o imediata',R.filter(function(r){
+            return (r.mitigacoes||[]).some(function(x){return x.horizonte==='agora'})}).length],
+         ['permanente','Permanentes',R.filter(function(r){return /permanente/i.test(r.janela||'')}).length]];
+  document.getElementById('filtros').innerHTML=m.map(function(x){
+    return '<button class="fb'+(ST.filtro===x[0]?' on':'')+'" data-f="'+x[0]+'">'+x[1]
+     +' <span style="opacity:.6">'+x[2]+'</span></button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.fb'),function(b){
+    b.addEventListener('click',function(){ST.filtro=b.dataset.f;ST.sel=0;desenharFiltros();desenharLista()});
   });
 }
+
+function filtrados(){
+  var R=ST.ant.riscos.slice();
+  if(ST.filtro==='g5') R=R.filter(function(r){return r.gravidade>=5});
+  else if(ST.filtro==='agora') R=R.filter(function(r){
+    return (r.mitigacoes||[]).some(function(x){return x.horizonte==='agora'})});
+  else if(ST.filtro==='permanente') R=R.filter(function(r){return /permanente/i.test(r.janela||'')});
+  return R.sort(function(a,b){return b.gravidade-a.gravidade});
+}
+
+function desenharLista(){
+  var R=filtrados();
+  document.getElementById('lista').innerHTML=R.map(function(r,i){
+    var c=corGrav(r.gravidade);
+    return '<div class="al'+(ST.sel===i?' on':'')+'" data-i="'+i+'" style="border-left-color:'+c+'">'
+     +'<div class="al-t"><span class="al-n">'+esc(r.titulo)+'</span>'+barrasGrav(r.gravidade)+'</div>'
+     +'<div class="al-r">'+esc(String(r.resumo||'').slice(0,132))+(String(r.resumo||'').length>132?'&hellip;':'')+'</div>'
+     +'<div class="al-m"><span>'+esc(r.janela||'sem janela')+'</span>'
+     +(r.certeza?'<span>certeza: '+esc(r.certeza)+'</span>':'')
+     +(r.afecta?'<span>'+esc(String(r.afecta).slice(0,26))+'</span>':'')+'</div></div>';
+  }).join('');
+  document.getElementById('a-tag').textContent=R.length+' riscos';
+  Array.prototype.forEach.call(document.querySelectorAll('.al'),function(el){
+    el.addEventListener('click',function(){ST.sel=Number(el.dataset.i);desenharLista();desenharDetalhe()});
+  });
+  desenharDetalhe();
+}
+
+var HOR={agora:['Agir j&aacute;','#EF4444'],'90dias':['Em 90 dias','#F0A926'],
+ estrutural:['Estrutural','#22B8F0'],'12meses':['Em 12 meses','#A78BFA']};
+
+function desenharDetalhe(){
+  var R=filtrados(), r=R[ST.sel];
+  var el=document.getElementById('detalhe');
+  if(!r){el.innerHTML='';return}
+  var c=corGrav(r.gravidade);
+  var h='<div class="det"><div class="det-c">'
+   +'<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:11px">'
+   +'<div style="font-size:16px;font-weight:600;line-height:1.3">'+esc(r.titulo)+'</div>'
+   +barrasGrav(r.gravidade)+'</div>'
+   +'<div style="font-size:12.5px;color:var(--t3);line-height:1.65;margin-bottom:14px">'+esc(r.resumo||'')+'</div>'
+   +'<div class="campo"><span>Gravidade</span><span style="color:'+c+'">'+r.gravidade+' em 5</span></div>'
+   +'<div class="campo"><span>Certeza declarada</span><span>'+esc(r.certeza||'n&atilde;o declarada')+'</span></div>'
+   +'<div class="campo"><span>Janela</span><span>'+esc(r.janela||'&mdash;')+'</span></div>'
+   +(r.afecta?'<div class="campo"><span>Afecta</span><span>'+esc(r.afecta)+'</span></div>':'')
+   +(r.cadeia?'<div class="campo"><span>Cadeia</span><span>'+esc(r.cadeia)+'</span></div>':'')
+   +'</div>';
+  if(r.evidencia){
+    h+='<div class="aviso i" style="margin:0 17px 13px"><b>Em que assenta.</b> '+esc(r.evidencia)+'</div>';
+  }
+  if(r.gatilho){
+    h+='<div class="aviso w" style="margin:0 17px 13px"><b>O que confirmaria este risco.</b> '+esc(r.gatilho)+'</div>';
+  }
+  if(r.mitigacoes&&r.mitigacoes.length){
+    h+='<div class="det-c" style="padding-top:0">'
+     +'<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brz);margin-bottom:9px">Medidas</div>';
+    r.mitigacoes.forEach(function(m){
+      var hz=HOR[m.horizonte]||[m.horizonte,'#5E7189'];
+      h+='<div class="mit"><div class="mit-h" style="color:'+hz[1]+'">'+hz[0]+'</div>'
+       +esc(m.accao)
+       +(m.decide?'<div style="margin-top:7px;font-size:11px;color:var(--t4)"><b style="color:var(--t3)">Decide:</b> '+esc(m.decide)+'</div>':'')
+       +(m.custo?'<div style="font-size:11px;color:var(--t4)"><b style="color:var(--t3)">Custo:</b> '+esc(m.custo)+'</div>':'')
+       +'</div>';
+    });
+    h+='</div>';
+  }
+  h+='<div style="padding:13px 17px;border-top:1px solid var(--card-line);font-size:10.5px;color:var(--t4);line-height:1.6">'
+   +'Risco derivado de estrutura conhecida, n&atilde;o de detec&ccedil;&atilde;o autom&aacute;tica. '
+   +'O sistema n&atilde;o vigia nada em cont&iacute;nuo: nenhuma fonte se actualiza sozinha.</div></div>';
+  el.innerHTML=h;
+}
+
+var NAO_FAZ=[
+ ['Vigiar em cont&iacute;nuo','Nenhuma fonte do sistema se actualiza sozinha. Estes riscos foram identificados uma vez, n&atilde;o s&atilde;o recalculados.','Servidor &middot; protocolos de dados'],
+ ['Atribuir probabilidade','Exige s&eacute;rie hist&oacute;rica e modelo com erro medido. Com oito edi&ccedil;&otilde;es de pre&ccedil;o n&atilde;o se faz.','&mdash;'],
+ ['Detectar reten&ccedil;&atilde;o ou cartel','Exige exist&ecirc;ncias e movimentos por operador, e enquadramento legal com a autoridade da concorr&ecirc;ncia.','ARC'],
+ ['Notificar institui&ccedil;&otilde;es','Exige servidor, identidade verificada e valor administrativo do aviso.','Infraestrutura'],
+ ['Emitir of&iacute;cio','Um of&iacute;cio &eacute; um acto administrativo. Um prot&oacute;tipo n&atilde;o o pode gerar.','Institui&ccedil;&atilde;o competente']
+];
+function desenharNaoFaz(){
+  var h='<thead><tr><th>O que n&atilde;o faz</th><th>Porqu&ecirc;</th><th>De que depende</th></tr></thead><tbody>';
+  NAO_FAZ.forEach(function(x){
+    h+='<tr><td style="font-weight:600">'+x[0]+'</td>'
+     +'<td style="color:var(--t3);max-width:520px">'+x[1]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+x[2]+'</td></tr>';
+  });
+  document.getElementById('naofaz').innerHTML=h+'</tbody>';
+}
+
+fetch('data/antecipacao.json',{cache:'no-store'})
+ .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/antecipacao.json');return r.json()})
+ .then(function(j){
+   ST.ant=j;
+   desenharKpis();desenharFiltros();desenharLista();desenharNaoFaz();
+ })
+ .catch(function(e){
+   document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+ });
 </script>
 </body>
 </html>

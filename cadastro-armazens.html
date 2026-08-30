@@ -1,137 +1,317 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cadastro de Armazéns — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Cadastro de Armaz&eacute;ns &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:940px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 17px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.bd{padding:15px 17px}
+.filtros{display:flex;gap:6px;flex-wrap:wrap;padding:12px 17px;border-bottom:1px solid var(--card-line)}
+.fb{font-size:11px;padding:6px 12px;border-radius:20px;border:1px solid var(--card-line);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.fb.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 15px;border-bottom:1px solid var(--card-line);font-weight:600;cursor:pointer;user-select:none}
+th:hover{color:var(--t2)}
+td{padding:9px 15px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:rgba(34,184,240,.05)}
+tbody tr.on{background:rgba(201,138,60,.1)}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.campo{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid rgba(38,56,86,.4);font-size:12px}
+.campo:last-child{border-bottom:none}
+.campo span:first-child{color:var(--t4);flex-shrink:0}
+.campo span:last-child{text-align:right}
+.g2{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;align-items:start}
+@media(max-width:1180px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+.aviso{margin:12px 17px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.6;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.aviso.g{background:rgba(18,185,129,.07);border-color:rgba(18,185,129,.26);color:#8FE3C4}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+a.fonte{color:var(--blue);text-decoration:none;font-size:11px}
+a.fonte:hover{text-decoration:underline}
+</style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Cadastro</div>
+    <h1>Cadastro Nacional de Armazenagem</h1>
+    <p class="sub">As unidades de armazenagem documentadas do pa&iacute;s, cada uma com propriet&aacute;rio, natureza jur&iacute;dica e fonte oficial citada. Este ecr&atilde; foi reconstru&iacute;do em Agosto de 2026: mostrava cinco unidades com ocupa&ccedil;&atilde;o, humidade, temperatura e detec&ccedil;&atilde;o de pragas &mdash; leituras de sensores que nenhuma unidade do pa&iacute;s produz.</p>
 
-<div class="app-shell" id="app-shell"></div>
+    <div id="kpis"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
-<script src="assets/sinagepe.js"></script>
-<script>
-SINAGEPE.mountShell('armazens', 'Cadastro de Armazéns', 'Registo Cadastral + Estado Vivo');
-
-document.getElementById('content-mount').innerHTML = `
-  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)" id="kpi-row"></div>
-
-  <div class="card">
-    <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">Inventário de Armazéns
-      <span style="font-size:11px;font-weight:600;display:flex;gap:14px">
-        <a href="formulario-registar-armazem.html" style="color:var(--bronze)">+ Registar Armazém</a>
-        <a href="estado-vazio-armazens.html" style="color:var(--ink-faint)">Ver Estado Vazio</a>
-        <a href="estado-erro.html" style="color:var(--ink-faint)">Ver Estado de Erro</a>
-      </span>
+    <div class="card frame">
+      <div class="ch"><div><h2>Invent&aacute;rio</h2>
+        <p>Carregue numa linha para ver a ficha da unidade. Carregue nos t&iacute;tulos para ordenar.</p></div>
+        <span class="tag ok" id="i-tag">&mdash;</span></div>
+      <div class="filtros" id="filtros"></div>
+      <div class="g2">
+        <div><table id="tabela"></table></div>
+        <div id="ficha" style="padding:0 17px 17px"></div>
+      </div>
     </div>
-    <div class="card-subtitle">Clica numa linha para ver o detalhe (distribuição de stock e condições de conservação)</div>
-    <table class="balance-table">
-      <thead><tr><th>Nome</th><th>Província</th><th>Operador</th><th>Capacidade</th><th>Ocup.</th><th>Condição</th><th>Últ. Inspecção</th></tr></thead>
-      <tbody id="armazens-body"></tbody>
-    </table>
-  </div>
 
-  <div class="card" id="detalhe-armazem" style="display:none"></div>
-`;
+    <div class="card frame">
+      <div class="ch"><div><h2>O que este cadastro n&atilde;o diz</h2>
+        <p>E de quem depende cada um destes dados</p></div>
+        <span class="tag crit">Honestidade de dados</span></div>
+      <table id="naodiz"></table>
+      <div class="aviso r"><b>A capacidade n&atilde;o &eacute; exist&ecirc;ncia.</b> Saber que um silo tem 45.000 toneladas de capacidade
+      n&atilde;o diz quanto est&aacute; l&aacute; dentro. Nenhuma unidade do pa&iacute;s comunica exist&ecirc;ncias por qualquer meio &mdash;
+      nem manual, nem autom&aacute;tico. &Eacute; a maior lacuna do sistema, e &eacute; a raz&atilde;o pela qual n&atilde;o h&aacute; aqui
+      nenhuma percentagem de ocupa&ccedil;&atilde;o.</div>
+    </div>
+  </main>
+</div>
 
-SINAGEPE.load().then(renderCadastroArmazens);
+<script>
+if(window.SinagepeNav) SinagepeNav.montar('armazens');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-function renderCadastroArmazens(data) {
-  SINAGEPE.renderUserFooter(data);
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+var ST={filtro:'todos',ordem:'nome',inv:false,sel:null};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
 
-  const arm = data.armazens;
-  const capacidadeTotal = arm.reduce((a, w) => a + w.capacidadeTotalT, 0);
-  const ocupacaoMedia = Math.round(arm.reduce((a, w) => a + w.ocupacaoPercent, 0) / arm.length);
-  const criticos = arm.filter(w => w.ocupacaoPercent > 95).length;
+var ROT={estatal:'Estatal','ppp-gestao-privada':'PPP','concessao-privada':'Concess&atilde;o',
+ 'participacao-estatal':'Part. estatal',privada:'Privada',internacional:'Internacional'};
+var CORN={estatal:'#C98A3C','ppp-gestao-privada':'#E8BE7A','concessao-privada':'#22B8F0',
+ 'participacao-estatal':'#2DD4BF',privada:'#F0A926',internacional:'#A78BFA'};
 
-  const kpiDefs = [
-    { label: 'Total de Armazéns', valor: arm.length, estado: 'Registado', tipo: 'info' },
-    { label: 'Capacidade Total', valor: (capacidadeTotal / 1000).toFixed(1) + 'k t', estado: 'Normal', tipo: 'ok' },
-    { label: 'Ocupação Média', valor: ocupacaoMedia + '%', estado: ocupacaoMedia > 80 ? 'Elevada' : 'Estável', tipo: ocupacaoMedia > 80 ? 'warn' : 'ok' },
-    { label: 'Armazéns Críticos', valor: criticos, estado: criticos > 0 ? 'Ocupação Extrema' : 'Nenhum', tipo: criticos > 0 ? 'crit' : 'ok' },
+function desenharKpis(){
+  var A=ST.arm.armazens;
+  var comFonte=A.filter(function(a){return a.fonte}).length;
+  var verif=A.filter(function(a){return a.verificado}).length;
+  var semSensor=A.filter(function(a){return a.sensor==='sem-sensor'}).length;
+  var ton=A.filter(function(a){return a.capacidade&&a.capacidade.unidade==='t'&&a.capacidade.valor});
+  var somaT=ton.reduce(function(s,a){return s+a.capacidade.valor},0);
+  var nat={};A.forEach(function(a){nat[a.natureza]=(nat[a.natureza]||0)+1});
+  var pub=Object.keys(nat).filter(function(k){return k!=='privada'&&k!=='internacional'})
+    .reduce(function(s,k){return s+nat[k]},0);
+  var unidades={};A.forEach(function(a){if(a.capacidade&&a.capacidade.unidade)
+    unidades[a.capacidade.unidade]=(unidades[a.capacidade.unidade]||0)+1});
+
+  var lista=[
+   {id:'ca-total',rotulo:'Unidades cadastradas',valor:A.length,unidade:'',
+    estado:comFonte+' com fonte oficial citada',tipo:'FACTO',cor:'var(--blue)',
+    resumo:'Armaz&eacute;ns, silos, terminais e entrepostos documentados no cadastro nacional.',
+    formula:'contagem directa no ficheiro de cadastro',
+    componentes:[['No cadastro',A.length,''],['Com URL de fonte oficial',comFonte,''],
+                 ['Verificadas',verif,''],['Por verificar',A.length-verif,'']],
+    leitura:'Cada unidade foi documentada a partir de publica&ccedil;&otilde;es de institui&ccedil;&otilde;es &mdash; ICM, MIC, Petromoc, CFM, MPDC, IGEPE. Nenhuma foi inventada.',
+    fonte:'Cadastro Nacional de Armazenagem, fonte por unidade',dataDados:'Agosto de 2026'},
+
+   {id:'ca-publica',rotulo:'Com responsabilidade p&uacute;blica',valor:pub,unidade:'de '+A.length,
+    estado:'Estado, PPP, concess&atilde;o ou participa&ccedil;&atilde;o',tipo:'FACTO',cor:'var(--brzl)',
+    resumo:'Unidades que s&atilde;o do Estado, geridas em parceria, concessionadas ou com participa&ccedil;&atilde;o p&uacute;blica.',
+    formula:'soma das naturezas jur&iacute;dicas com envolvimento do Estado',
+    componentes:Object.keys(nat).sort(function(a,b){return nat[b]-nat[a]})
+      .map(function(k){return [ROT[k]||k,nat[k],'unidades']}),
+    leitura:'A maioria da armazenagem cadastrada tem alguma forma de responsabilidade p&uacute;blica. Isso muda o que o Estado pode exigir em mat&eacute;ria de reporte.',
+    fonte:'Cadastro Nacional, natureza declarada por unidade',dataDados:'Agosto de 2026'},
+
+   {id:'ca-toneladas',rotulo:'Capacidade som&aacute;vel em toneladas',valor:num(somaT),unidade:'t',
+    estado:ton.length+' de '+A.length+' unidades medidas em toneladas',tipo:'FACTO',cor:'var(--teal)',
+    resumo:'Soma apenas das unidades cujo cadastro declara capacidade em toneladas.',
+    formula:'soma da capacidade das unidades medidas em toneladas',
+    componentes:Object.keys(unidades).map(function(u){return ['Unidades medidas em '+u,unidades[u],'']}),
+    leitura:'As capacidades do cadastro n&atilde;o s&atilde;o som&aacute;veis entre si: h&aacute; metros c&uacute;bicos, toneladas, toneladas por ano, TEU e metros quadrados. Somar tudo daria um n&uacute;mero sem significado. Este total cobre s&oacute; o que &eacute; compar&aacute;vel.',
+    fonte:'Cadastro Nacional, capacidade declarada por unidade',dataDados:'Agosto de 2026'},
+
+   {id:'ca-cega',rotulo:'Sem qualquer leitura autom&aacute;tica',valor:Math.round(semSensor/A.length*100),unidade:'%',
+    estado:semSensor+' de '+A.length+' unidades',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Unidades que n&atilde;o reportam exist&ecirc;ncias por telemetria nem por qualquer outro meio.',
+    formula:'unidades sem sensor a dividir pelo total do cadastro',
+    componentes:[['No cadastro',A.length,''],['Sem sensor',semSensor,''],['Com sensor',A.length-semSensor,'']],
+    leitura:'O sistema sabe onde est&atilde;o os armaz&eacute;ns, de quem s&atilde;o e que capacidade declaram. N&atilde;o sabe o que t&ecirc;m dentro. &Eacute; o ponto cego central do abastecimento nacional.',
+    fonte:'Cadastro Nacional, estado de telemetria por unidade',dataDados:'Agosto de 2026',
+    ecra:'ponto-cego-duplo.html'},
+
+   {id:'ca-ocupacao',rotulo:'Ocupa&ccedil;&atilde;o m&eacute;dia',valor:'\u2014',unidade:'',estado:'sem fonte',
+    tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Percentagem de enchimento dos armaz&eacute;ns.',
+    porqueNaoEReal:'O valor que aqui estava era calculado sobre cinco unidades com ocupa&ccedil;&atilde;o escrita &agrave; m&atilde;o. Nenhum armaz&eacute;m do pa&iacute;s comunica quanto tem armazenado, pelo que n&atilde;o h&aacute; como calcular ocupa&ccedil;&atilde;o.',
+    oQueFalta:'Exist&ecirc;ncias declaradas pelos operadores, ainda que mensalmente e em papel',
+    quemDetem:'Armazenistas &middot; ICM &middot; MIC'},
+
+   {id:'ca-condicoes',rotulo:'Condi&ccedil;&otilde;es de conserva&ccedil;&atilde;o',valor:'\u2014',unidade:'',estado:'sem fonte',
+    tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Humidade, temperatura, pragas e taxa de perdas nos armaz&eacute;ns.',
+    porqueNaoEReal:'O ecr&atilde; anterior mostrava humidade de 14,2%, temperatura de 22&deg;C e detec&ccedil;&atilde;o de pragas. S&atilde;o leituras de sensores instalados. Nenhuma unidade do pa&iacute;s tem telemetria a reportar para c&aacute; &mdash; os valores eram de demonstra&ccedil;&atilde;o.',
+    oQueFalta:'Telemetria instalada, ou registo de inspec&ccedil;&atilde;o peri&oacute;dica em formato estruturado',
+    quemDetem:'Armazenistas &middot; MIC'}
   ];
-  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
-
-  // ocupação: Normal <60 / Aviso 60-80 / Alerta 80-95 / Crítico >95
-  function classificaOcupacao(pct) {
-    if (pct > 95) return { t: 'Crítico', tipo: 'crit' };
-    if (pct >= 80) return { t: 'Alerta', tipo: 'warn' };
-    if (pct >= 60) return { t: 'Aviso', tipo: 'warn' };
-    return { t: 'Normal', tipo: 'ok' };
-  }
-  const CONDICAO_TIPO = { 'Boa': 'ok', 'Razoável': 'warn', 'Deficiente': 'crit' };
-
-  document.getElementById('armazens-body').innerHTML = arm.map((w, i) => {
-    const oc = classificaOcupacao(w.ocupacaoPercent);
-    return `<tr style="cursor:pointer" data-idx="${i}">
-      <td>${w.nome}<div style="font-family:var(--font-data);font-size:10px;color:var(--ink-faint)">${w.codigo}</div></td>
-      <td>${w.provincia}</td><td>${w.operador}</td><td>${SINAGEPE.fmt(w.capacidadeTotalT)} t</td>
-      <td><span class="state-tag" style="background:var(--${oc.tipo}-bg);color:var(--${oc.tipo})">${w.ocupacaoPercent}% ${oc.t}</span></td>
-      <td><span class="state-tag" style="background:var(--${CONDICAO_TIPO[w.condicaoFisica]}-bg);color:var(--${CONDICAO_TIPO[w.condicaoFisica]})">${w.condicaoFisica}</span></td>
-      <td>${w.ultimaInspeccao}</td>
-    </tr>`;
-  }).join('');
-
-  document.querySelectorAll('#armazens-body tr').forEach(tr =>
-    tr.addEventListener('click', () => renderDetalhe(arm[Number(tr.dataset.idx)])));
-
-  // mostra o armazém com dados completos por defeito (o único com produtos + condições, secção 45-47 do documento)
-  const primeiroCompleto = arm.find(w => w.produtos) || arm[0];
-  renderDetalhe(primeiroCompleto);
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
 }
 
-function renderDetalhe(w) {
-  const el = document.getElementById('detalhe-armazem');
-  if (!w.produtos) {
-    el.style.display = 'block';
-    el.innerHTML = `<div class="card-title">${w.nome}</div><div class="card-subtitle" style="margin-bottom:0">Dados cadastrais registados. Distribuição de stock detalhada ainda não disponível para este armazém.</div>`;
-    return;
-  }
-  el.style.display = 'block';
-  const overcapacity = w.ocupacaoPercent > 95;
-  el.innerHTML = `
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
-      <div><div class="card-title" style="margin-bottom:2px">${w.nome}</div><div class="card-subtitle" style="margin-bottom:0">${w.codigo} · ${w.provincia} · <a href="detalhe-armazem.html?codigo=${w.codigo}" style="color:var(--bronze)">Ver Detalhe Completo →</a></div></div>
-      ${overcapacity ? '<span class="pill pill-crit">RUPTURA IMINENTE / OVERCAPACITY</span>' : ''}
-    </div>
-    <div class="row-2">
-      <div>
-        <div class="kpi-label" style="margin-bottom:10px">Distribuição de Armazenamento</div>
-        <canvas id="chart-produtos" height="160"></canvas>
-      </div>
-      <div>
-        <div class="kpi-label" style="margin-bottom:10px">Condições Físicas de Conservação</div>
-        <div class="medida-row"><span>Tempo Médio de Permanência</span><span>${w.condicoesConservacao.tempoMedioPermanenciaDias} dias</span></div>
-        <div class="medida-row"><span>Taxa de Perdas de Stock</span><span style="color:${w.condicoesConservacao.taxaPerdasPercent > 1 ? 'var(--warn)' : 'var(--ok)'}">${w.condicoesConservacao.taxaPerdasPercent}% ${w.condicoesConservacao.taxaPerdasPercent > 1 ? '(Acima da meta 1,0%)' : ''}</span></div>
-        <div class="medida-row"><span>Humidade</span><span>${w.condicoesConservacao.humidadePercent}%</span></div>
-        <div class="medida-row"><span>Temperatura</span><span>${w.condicoesConservacao.temperaturaC}°C</span></div>
-        <div class="medida-row"><span>Pragas Detectadas</span><span>${w.condicoesConservacao.pragas}</span></div>
-      </div>
-    </div>`;
-
-  new Chart(document.getElementById('chart-produtos'), {
-    type: 'bar',
-    data: {
-      labels: w.produtos.map(p => p.produto),
-      datasets: [{ data: w.produtos.map(p => p.toneladas), backgroundColor: ['#d9a441', '#5b8ac9', '#3ecf8e'], borderRadius: 6 }]
-    },
-    options: {
-      indexAxis: 'y',
-      plugins: { legend: { display: false } },
-      scales: {
-        x: { ticks: { color: '#5f6d90', font: { size: 10 } }, grid: { color: 'rgba(179,130,74,0.08)' } },
-        y: { ticks: { color: '#97a3c2', font: { size: 11 } }, grid: { display: false } },
-      }
-    }
+function desenharFiltros(){
+  var A=ST.arm.armazens, nat={};
+  A.forEach(function(a){nat[a.natureza]=(nat[a.natureza]||0)+1});
+  var m=[['todos','Todas as unidades',A.length]].concat(
+    Object.keys(nat).sort(function(a,b){return nat[b]-nat[a]})
+      .map(function(k){return [k,ROT[k]||k,nat[k]]}));
+  document.getElementById('filtros').innerHTML=m.map(function(x){
+    return '<button class="fb'+(ST.filtro===x[0]?' on':'')+'" data-f="'+x[0]+'">'+x[1]
+     +' <span style="opacity:.6">'+x[2]+'</span></button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.fb'),function(b){
+    b.addEventListener('click',function(){ST.filtro=b.dataset.f;ST.sel=null;desenharFiltros();desenharTabela()});
   });
 }
+
+function filtradas(){
+  var A=ST.arm.armazens;
+  if(ST.filtro!=='todos') A=A.filter(function(a){return a.natureza===ST.filtro});
+  var o=ST.ordem;
+  A=A.slice().sort(function(a,b){
+    var x,y;
+    if(o==='capacidade'){x=(a.capacidade&&a.capacidade.valor)||0;y=(b.capacidade&&b.capacidade.valor)||0;}
+    else if(o==='provincia'){x=a.provincia||'';y=b.provincia||'';}
+    else {x=a.nome||'';y=b.nome||'';}
+    if(x<y)return ST.inv?1:-1;
+    if(x>y)return ST.inv?-1:1;
+    return 0;
+  });
+  return A;
+}
+
+function desenharTabela(){
+  var A=filtradas();
+  var h='<thead><tr><th data-o="nome">Unidade</th><th data-o="provincia">Prov&iacute;ncia</th>'
+   +'<th>Natureza</th><th data-o="capacidade" class="n">Capacidade</th><th>Fonte</th></tr></thead><tbody>';
+  A.forEach(function(a,i){
+    var c=CORN[a.natureza]||'#5E7189';
+    h+='<tr data-i="'+i+'"'+(ST.sel===i?' class="on"':'')+'>'
+     +'<td><b>'+esc(a.nome)+'</b>'
+     +'<div style="font-size:10px;color:var(--t4);margin-top:2px">'+esc(a.tipo||a.estado||'')+'</div></td>'
+     +'<td style="color:var(--t3)">'+esc(a.provincia||'&mdash;')+'</td>'
+     +'<td><span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'+(ROT[a.natureza]||a.natureza)+'</span></td>'
+     +'<td class="n">'+(a.capacidade&&a.capacidade.valor!=null
+        ? num(a.capacidade.valor)+' <span style="color:var(--t4)">'+esc(a.capacidade.unidade)+'</span>'
+        : '<span style="color:var(--t4)">n&atilde;o publicada</span>')+'</td>'
+     +'<td>'+(a.fonte?'<span style="color:var(--ok)">citada</span>':'<span style="color:var(--red)">em falta</span>')+'</td></tr>';
+  });
+  document.getElementById('tabela').innerHTML=h+'</tbody>';
+  document.getElementById('i-tag').textContent=A.length+' unidades';
+  Array.prototype.forEach.call(document.querySelectorAll('#tabela th[data-o]'),function(th){
+    th.addEventListener('click',function(){
+      if(ST.ordem===th.dataset.o) ST.inv=!ST.inv; else {ST.ordem=th.dataset.o;ST.inv=false;}
+      desenharTabela();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('#tabela tbody tr'),function(tr){
+    tr.addEventListener('click',function(){ST.sel=Number(tr.dataset.i);desenharTabela();desenharFicha()});
+  });
+  if(ST.sel==null&&A.length) ST.sel=0;
+  desenharFicha();
+}
+
+function desenharFicha(){
+  var A=filtradas(), a=A[ST.sel];
+  var el=document.getElementById('ficha');
+  if(!a){el.innerHTML='';return}
+  var c=CORN[a.natureza]||'#5E7189';
+  var h='<div style="background:linear-gradient(160deg,#101B2E,#0A1220);border:1px solid var(--card-line);'
+   +'border-radius:12px;padding:17px;position:sticky;top:20px">'
+   +'<div style="font-size:15px;font-weight:600;line-height:1.3;margin-bottom:4px">'+esc(a.nome)+'</div>'
+   +'<span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'+(ROT[a.natureza]||a.natureza)+'</span>'
+   +'<div style="margin-top:14px">'
+   +'<div class="campo"><span>Prov&iacute;ncia</span><span>'+esc(a.provincia||'&mdash;')+'</span></div>'
+   +(a.proprietario?'<div class="campo"><span>Propriet&aacute;rio</span><span>'+esc(a.proprietario)+'</span></div>':'')
+   +(a.operador?'<div class="campo"><span>Operador</span><span>'+esc(a.operador)+'</span></div>':'')
+   +'<div class="campo"><span>Capacidade declarada</span><span class="mono">'
+   +(a.capacidade&&a.capacidade.valor!=null?num(a.capacidade.valor)+' '+esc(a.capacidade.unidade):'n&atilde;o publicada')+'</span></div>'
+   +(a.estado?'<div class="campo"><span>Estado</span><span>'+esc(a.estado)+'</span></div>':'')
+   +'<div class="campo"><span>Verificada</span><span style="color:'+(a.verificado?'var(--ok)':'var(--amber)')+'">'
+   +(a.verificado?'sim':'por verificar')+'</span></div>'
+   +'<div class="campo"><span>Reporta exist&ecirc;ncias</span><span style="color:var(--red)">n&atilde;o</span></div>'
+   +'</div>';
+  if(a.nota) h+='<div class="aviso i" style="margin:13px 0 0">'+esc(a.nota)+'</div>';
+  if(a.fonte){
+    h+='<div style="margin-top:13px;padding-top:12px;border-top:1px solid var(--card-line);font-size:10.5px;color:var(--t4);line-height:1.6">'
+     +'<b style="color:var(--t3)">Fonte:</b> <a class="fonte" href="'+esc(a.fonte)+'" target="_blank" rel="noopener">'
+     +esc(String(a.fonte).replace(/^https?:\/\//,'').slice(0,52))+'&hellip;</a></div>';
+  } else {
+    h+='<div class="aviso w" style="margin:13px 0 0">Esta unidade est&aacute; no cadastro sem URL de fonte. '
+     +'Deve ser verificada antes de ser citada.</div>';
+  }
+  h+='<div style="margin-top:13px"><a class="fonte" href="ficha-detalhe.html?tipo=unidade&amp;id='
+   +encodeURIComponent(a.id||a.nome)+'">Ficha completa, com liga&ccedil;&otilde;es cruzadas &rarr;</a></div>';
+  el.innerHTML=h+'</div>';
+}
+
+var NAO_DIZ=[
+ ['Quanto produto est&aacute; armazenado','Nenhuma unidade comunica exist&ecirc;ncias, por nenhum meio.','Armazenistas'],
+ ['Ocupa&ccedil;&atilde;o em percentagem','Exige exist&ecirc;ncia e capacidade. S&oacute; temos capacidade.','Armazenistas'],
+ ['Humidade, temperatura, pragas','Exige telemetria instalada. Nenhuma unidade do pa&iacute;s a tem ligada ao sistema.','Armazenistas &middot; MIC'],
+ ['Taxa de perdas','Exige entradas e sa&iacute;das registadas ao longo do tempo.','Armazenistas'],
+ ['Data da &uacute;ltima inspec&ccedil;&atilde;o','As inspec&ccedil;&otilde;es existem; o registo n&atilde;o &eacute; publicado em formato estruturado.','MIC &middot; INAE'],
+ ['Capacidade total do pa&iacute;s','As unidades declaram em medidas diferentes e n&atilde;o som&aacute;veis.','&mdash;']
+];
+function desenharNaoDiz(){
+  var h='<thead><tr><th>O que falta</th><th>Porqu&ecirc;</th><th>Quem det&eacute;m o dado</th></tr></thead><tbody>';
+  NAO_DIZ.forEach(function(x){
+    h+='<tr style="cursor:default"><td style="font-weight:600">'+x[0]+'</td>'
+     +'<td style="color:var(--t3);max-width:480px">'+x[1]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+x[2]+'</td></tr>';
+  });
+  document.getElementById('naodiz').innerHTML=h+'</tbody>';
+}
+
+fetch('data/armazens-nacionais.json',{cache:'no-store'})
+ .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/armazens-nacionais.json');return r.json()})
+ .then(function(j){
+   ST.arm=j;
+   desenharKpis();desenharFiltros();desenharTabela();desenharNaoDiz();
+ })
+ .catch(function(e){
+   document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+ });
 </script>
 </body>
 </html>
