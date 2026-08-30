@@ -26,6 +26,8 @@
   var ECRAS = [
     { h:'index.html', n:'Painel Executivo', d:'Balanço nacional, mapa, alertas e tendência de preços',
       t:'painel dashboard inicio principal kpi balanço executivo torre controlo' },
+    { h:'apresentacao.html', n:'Apresentação', d:'Cinco gráficos sobre os factos que o sistema mede, com fonte e data em cada um',
+      t:'apresentacao grafico investidor parceiro facto visual chart demonstracao' },
     { h:'indicadores-painel.html', n:'Indicadores do Painel', d:'Como se chega a cada número do Painel: fórmula, componentes, fonte e data',
       t:'indicador kpi numero formula origem fonte painel dispersao capacidade cega' },
     { h:'ficha-detalhe.html', n:'Ficha de Detalhe', d:'Tudo o que o sistema sabe sobre uma unidade, produto ou província, cruzando os onze ficheiros',
@@ -88,6 +90,7 @@
 
   /* ---- 2. CONCEITOS: vocabulário do sistema e onde ele vive ---- */
   var CONCEITOS = [
+    { n:'Indicador de demonstração', d:'Cartões a tracejado: o número não é real. Carregue para ver o que falta e quem detém o dado.', h:'portal-comerciantes.html', t:'demonstracao simulado indicador origem fonte tracejado' },
     { n:'Arbitragem entre praças', d:'Feijão nhemba a 30 MT/kg em Panda e 121 em Mandimba. A diferença é margem antes de qualquer transformação.', h:'marketplace-b2b.html', t:'arbitragem comprar vender praca margem dispersao preco' },
     { n:'Vulnerabilidade alimentar', d:'O SETSAN avalia quantas pessoas estão em privação alimentar aguda, por província. Ainda não ligado.', h:'adesao-institucional.html', t:'setsan vulnerabilidade fome privacao alimentar consan ipc avaliacao' },
     { n:'Capacidade cega', d:'Fatia da capacidade sem leitura automática. Hoje: 100%.', h:'ponto-cego-duplo.html', t:'cega cego sensor telemetria' },

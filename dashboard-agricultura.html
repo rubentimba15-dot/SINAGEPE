@@ -1,92 +1,293 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard Agricultura — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Agricultura &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1500px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:920px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 17px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:15px 17px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 15px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 15px;border-bottom:1px solid rgba(38,56,86,.4)}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.leg{display:flex;gap:16px;flex-wrap:wrap;padding:12px 17px 0;font-size:11.5px;color:var(--t3)}
+.leg span{display:flex;align-items:center;gap:6px}
+.leg i{width:11px;height:11px;border-radius:2px;display:inline-block}
+.cw{padding:12px 17px 17px}
+.aviso{margin:12px 17px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.55;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Sector agr&iacute;cola</div>
+    <h1>Agricultura</h1>
+    <p class="sub">O que o Estado mede sobre a agricultura e publica. Este ecr&atilde; foi reconstru&iacute;do em Agosto de 2026: os indicadores anteriores &mdash; produ&ccedil;&atilde;o estimada, &aacute;rea cultivada, produtores registados &mdash; estavam escritos &agrave; m&atilde;o e n&atilde;o derivavam de nenhuma fonte.</p>
 
-<div class="app-shell" id="app-shell"></div>
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Pre&ccedil;o dos produtos ao longo do ano</h2>
+        <p>Pre&ccedil;o m&eacute;dio a retalho em cada edi&ccedil;&atilde;o do boletim do SIMA</p></div>
+        <span class="tag ok">Facto medido</span></div>
+      <div class="leg" id="leg"></div>
+      <div class="cw" style="height:290px"><canvas id="g1"></canvas></div>
+      <div class="aviso i" id="nota-serie"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Onde se compra cada produto mais barato</h2>
+          <p>Pra&ccedil;a com o pre&ccedil;o m&iacute;nimo medido, por produto</p></div></div>
+        <table id="baratos"></table>
+        <div class="aviso i">Estas s&atilde;o as pra&ccedil;as onde o produto sai da explora&ccedil;&atilde;o mais barato.
+        Para o produtor, significa concorr&ecirc;ncia; para o comprador, oportunidade.</div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>De onde sai a produ&ccedil;&atilde;o</h2>
+          <p>Origens mais frequentes nos fluxos documentados</p></div></div>
+        <table id="origens"></table>
+        <div class="aviso i">Cada linha &eacute; uma origem observada pelos t&eacute;cnicos do SIMA num mercado de destino.
+        N&atilde;o &eacute; volume de produ&ccedil;&atilde;o &mdash; &eacute; frequ&ecirc;ncia de aparecimento.</div>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O que este ecr&atilde; mostrava, e porque foi retirado</h2>
+        <p>Cada indicador com a raz&atilde;o e o que falta para o calcular</p></div>
+        <span class="tag">Honestidade de dados</span></div>
+      <table id="retirados"></table>
+      <div class="aviso r"><b>Nenhum destes dados &eacute; imposs&iacute;vel de obter.</b> Produ&ccedil;&atilde;o, &aacute;rea cultivada e
+      n&uacute;mero de produtores s&atilde;o medidos pelo Inqu&eacute;rito Agr&aacute;rio Integrado e pelo Censo Agro-Pecu&aacute;rio.
+      O que falta &eacute; a liga&ccedil;&atilde;o ao dado, n&atilde;o o dado.</div>
+    </div>
+  </main>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
-<script src="assets/sinagepe.js"></script>
 <script>
-SINAGEPE.mountShell('painel', 'Dashboard Agricultura', 'MASA — Ministério da Agricultura e Desenvolvimento Rural');
+if(window.SinagepeNav) SinagepeNav.montar('dashboard-agricultura');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-document.getElementById('content-mount').innerHTML = `
-  <div class="kpi-row" style="grid-template-columns:repeat(5,1fr)" id="kpi-row"></div>
-
-  <div class="row-2">
-    <div class="card">
-      <div class="card-title">Produtividade por Província (t/ha)</div>
-      <div class="card-subtitle">Alta &gt;2,5 t/ha · Moderada 1,2&ndash;2,5 · Crítica &lt;1,2</div>
-      <div id="produtividade-list"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Calendário Agrícola por Região</div>
-      <div id="calendario-list"></div>
-    </div>
-  </div>
-
-  <div class="row-2">
-    <div class="card">
-      <div class="card-title">Produção por Cultura — % da Meta</div>
-      <canvas id="chart-cultura" height="180"></canvas>
-    </div>
-    <div class="card">
-      <div class="card-title">Alertas Agrícolas Activos</div>
-      <div id="alertas-agricolas"></div>
-    </div>
-  </div>
-`;
-
-SINAGEPE.load().then(renderDashboardAgricultura);
-
-function renderDashboardAgricultura(data) {
-  SINAGEPE.renderUserFooter(data);
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
-
-  const a = data.dashboardAgricultura;
-  const kpiDefs = [
-    { label: 'Produção Estimada', valor: (a.kpis.producaoEstimadaTon / 1e6).toFixed(2) + 'M ton', estado: 'Normal', tipo: 'ok' },
-    { label: 'Área Cultivada', valor: (a.kpis.areaCultivadaHa / 1e6).toFixed(2) + 'M ha', estado: 'Estável', tipo: 'info' },
-    { label: 'Previsão Próx. Safra', valor: (a.kpis.previsaoProxSafraTon / 1e6).toFixed(2) + 'M ton', estado: '+9.8%', tipo: 'ok' },
-    { label: 'Taxa de Auto-Suficiência', valor: a.kpis.taxaAutoSuficienciaPercent + '%', estado: 'Alerta', tipo: 'warn' },
-    { label: 'Produtores Registados', valor: (a.kpis.produtoresRegistados / 1e6).toFixed(2) + 'M', estado: 'Estável', tipo: 'info' },
-  ];
-  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
-
-  document.getElementById('produtividade-list').innerHTML = a.produtividadeProvincial.map(p => {
-    const tipo = p.tHa > 2.5 ? 'ok' : p.tHa >= 1.2 ? 'warn' : 'crit';
-    return `<div class="medida-row"><span>${p.provincia}</span><span class="state-tag" style="background:var(--${tipo}-bg);color:var(--${tipo})">${p.tHa} t/ha</span></div>`;
-  }).join('');
-
-  document.getElementById('calendario-list').innerHTML = a.calendarioRegional.map(c => `
-    <div class="medida-row" style="display:block;padding:10px 0">
-      <div style="display:flex;justify-content:space-between"><b style="font-size:12.5px">${c.regiao}</b><span class="pill pill-info">${c.fase}</span></div>
-      <div style="font-size:11px;color:var(--ink-faint);margin-top:3px">${c.provincias}</div>
-      <div style="font-size:12px;color:var(--ink-dim);margin-top:3px">${c.nota}</div>
-    </div>`).join('');
-
-  new Chart(document.getElementById('chart-cultura'), {
-    type: 'bar',
-    data: { labels: a.producaoCultura.map(c => c.cultura), datasets: [{ data: a.producaoCultura.map(c => c.percentMeta), backgroundColor: '#d9a441', borderRadius: 6 }] },
-    options: {
-      plugins: { legend: { display: false } },
-      scales: { x: { ticks: { color: '#97a3c2', font: { size: 10.5 } }, grid: { display: false } }, y: { ticks: { color: '#5f6d90', font: { size: 10 } }, grid: { color: 'rgba(179,130,74,0.08)' } } }
-    }
-  });
-
-  const SEV_TIPO = { 'Crítico': 'crit', 'Atenção': 'warn', 'Favorável': 'ok' };
-  document.getElementById('alertas-agricolas').innerHTML = a.alertas.map(al => `
-    <div class="alert-card ${SEV_TIPO[al.severidade]}"><div class="alert-title">${al.provincia} — ${al.titulo}</div><div class="alert-meta">${al.severidade}</div></div>`).join('');
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
+function fluxos(){
+  var s=ST.sima;
+  return (s.fluxos||[]).concat(s.fluxos1462||[],s.fluxos1449||[],s.fluxos1460||[],s.fluxos1444||[],s.fluxos1446||[]);
 }
+
+function desenharKpis(){
+  var S=ST.sima.series, E=S.edicoes, R=ST.sima.retalho1462||ST.sima.retalho;
+  var F=fluxos();
+  function serie(p){var x=null;S.precoMedio.forEach(function(y){if(y.produto===p)x=y});return x}
+  function amp(x){
+    var v=E.map(function(e){return x.valores[String(e.edicao)]}).filter(function(y){return y!=null});
+    return v.length>1?(Math.max.apply(null,v)/Math.min.apply(null,v)-1)*100:null;
+  }
+  var milho=serie('Milho'), arroz=serie('Arroz');
+  var medidos=E.filter(function(e){
+    return S.precoMedio.some(function(x){return x.valores[String(e.edicao)]!=null})}).length;
+
+  var lista=[
+   {id:'ag-edicoes',rotulo:'Edi&ccedil;&otilde;es do boletim carregadas',
+    valor:medidos,unidade:'de '+E.length,
+    estado:'Setembro de 2022 a Julho de 2023',tipo:'FACTO',cor:'var(--blue)',
+    resumo:'Boletins Quente-Quente extra&iacute;dos e verificados contra o PDF original.',
+    formula:'contagem das edi&ccedil;&otilde;es com pre&ccedil;os confirmados',
+    componentes:E.map(function(e){
+      var tem=S.precoMedio.some(function(x){return x.valores[String(e.edicao)]!=null});
+      return ['Edi&ccedil;&atilde;o '+e.edicao+' &middot; '+e.semana, tem?'carregada':'por confirmar','']}),
+    leitura:'Uma edi&ccedil;&atilde;o ficou sem valores: o boletim 1446 repete o texto da semana anterior. Est&aacute; registado como anomalia em vez de corrigido em sil&ecirc;ncio.',
+    fonte:'SIMA &mdash; boletim Quente-Quente',dataDados:'Setembro de 2022 a Julho de 2023'},
+
+   {id:'ag-milho',rotulo:'Amplitude do milho no per&iacute;odo',
+    valor:Math.round(amp(milho)),unidade:'%',
+    estado:'produto colhido em Mo&ccedil;ambique',tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Quanto o pre&ccedil;o m&eacute;dio do milho variou entre a edi&ccedil;&atilde;o mais barata e a mais cara.',
+    formula:'valor mais alto a dividir pelo mais baixo, menos um',
+    componentes:E.filter(function(e){return milho.valores[String(e.edicao)]!=null})
+      .map(function(e){return [e.semana,milho.valores[String(e.edicao)],'MT/kg']}),
+    leitura:'Sobe at&eacute; Mar&ccedil;o, no fim do per&iacute;odo de escassez, e desce depois da colheita. &Eacute; sazonalidade medida, n&atilde;o estimada.',
+    fonte:'SIMA &mdash; '+E.length+' edi&ccedil;&otilde;es',dataDados:'Setembro de 2022 a Julho de 2023'},
+
+   {id:'ag-arroz',rotulo:'Amplitude do arroz no per&iacute;odo',
+    valor:Math.round(amp(arroz)),unidade:'%',
+    estado:'produto maioritariamente importado',tipo:'FACTO',cor:'var(--ok)',
+    resumo:'A mesma medida, para um produto que vem sobretudo de fora.',
+    formula:'valor mais alto a dividir pelo mais baixo, menos um',
+    componentes:E.filter(function(e){return arroz.valores[String(e.edicao)]!=null})
+      .map(function(e){return [e.semana,arroz.valores[String(e.edicao)],'MT/kg']}),
+    leitura:'O contraste com o milho &eacute; o achado: o que se colhe c&aacute; segue a safra; o que vem de fora tem pre&ccedil;o ancorado no exterior. No mesmo per&iacute;odo, o c&acirc;mbio moveu dois c&ecirc;ntimos.',
+    fonte:'SIMA &mdash; '+E.length+' edi&ccedil;&otilde;es',dataDados:'Setembro de 2022 a Julho de 2023'},
+
+   {id:'ag-fluxos',rotulo:'Movimenta&ccedil;&otilde;es de produto documentadas',
+    valor:F.length,unidade:'',
+    estado:'com origem, destino e pre&ccedil;o',tipo:'FACTO',cor:'var(--teal)',
+    resumo:'Fluxos observados pelos t&eacute;cnicos do SIMA nos mercados de refer&ecirc;ncia.',
+    formula:'contagem dos fluxos em todas as edi&ccedil;&otilde;es extra&iacute;das',
+    componentes:(function(){
+      var o={};F.forEach(function(f){o[f.produto]=(o[f.produto]||0)+1});
+      return Object.keys(o).sort(function(a,b){return o[b]-o[a]}).slice(0,6)
+        .map(function(k){return [k,o[k],'fluxos']});})(),
+    leitura:'&Eacute; o &uacute;nico dado do sistema que mostra produto a mover-se entre pra&ccedil;as, com o pre&ccedil;o a que foi comprado.',
+    fonte:'SIMA &mdash; boletins de 2022 e 2023',dataDados:'Setembro de 2022 a Julho de 2023',
+    ecra:'mapa-integrado.html'},
+
+   {id:'ag-producao',rotulo:'Produ&ccedil;&atilde;o estimada',
+    valor:'\u2014',unidade:'',estado:'sem fonte',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Toneladas produzidas na campanha agr&iacute;cola.',
+    porqueNaoEReal:'O valor que aqui estava (2,84 milh&otilde;es de toneladas) era um n&uacute;mero escrito &agrave; m&atilde;o no ficheiro de demonstra&ccedil;&atilde;o. N&atilde;o derivava de nenhum inqu&eacute;rito nem de nenhuma publica&ccedil;&atilde;o.',
+    oQueFalta:'Resultados do Inqu&eacute;rito Agr&aacute;rio Integrado em formato leg&iacute;vel por m&aacute;quina',
+    quemDetem:'MAAP &middot; INE'},
+
+   {id:'ag-produtores',rotulo:'Produtores registados',
+    valor:'\u2014',unidade:'',estado:'sem fonte',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'N&uacute;mero de explora&ccedil;&otilde;es agr&iacute;colas registadas.',
+    porqueNaoEReal:'O valor que aqui estava (1,24 milh&otilde;es) tamb&eacute;m era de demonstra&ccedil;&atilde;o. O Censo Agro-Pecu&aacute;rio mede isto, mas o SINAGEPE n&atilde;o est&aacute; ligado a ele.',
+    oQueFalta:'Agregado do Censo Agro-Pecu&aacute;rio, por prov&iacute;ncia',
+    quemDetem:'INE &middot; MAAP'}
+  ];
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
+}
+
+var C={brz:'#C98A3C',blue:'#22B8F0',teal:'#2DD4BF',amber:'#F0A926',viol:'#A78BFA'};
+function desenharGrafico(){
+  if(!window.Chart)return;
+  var S=ST.sima.series,E=S.edicoes;
+  var cores=[C.brz,C.blue,C.teal,C.amber,C.viol];
+  var ds=S.precoMedio.map(function(x,i){
+    return {label:x.produto,
+      data:E.map(function(e){return x.valores[String(e.edicao)]}),
+      borderColor:cores[i%5],backgroundColor:cores[i%5],
+      borderWidth:i<2?2.6:1.8,borderDash:i===1?[6,3]:i===3?[2,3]:[],
+      tension:.25,pointRadius:i<2?4:3,spanGaps:true};
+  });
+  document.getElementById('leg').innerHTML=S.precoMedio.map(function(x,i){
+    return '<span><i style="background:'+cores[i%5]+'"></i>'+esc(x.produto)+'</span>';}).join('');
+  new Chart(document.getElementById('g1'),{type:'line',
+    data:{labels:E.map(function(e){return e.mes||('n.º '+e.edicao)}),datasets:ds},
+    options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#0C1626',borderColor:'rgba(38,56,86,.9)',
+        borderWidth:1,titleColor:'#F3F7FC',bodyColor:'#C3D0E0',padding:10,
+        callbacks:{label:function(c){return c.dataset.label+': '
+          +(c.parsed.y==null?'sem medi&ccedil;&atilde;o':p2(c.parsed.y)+' MT/kg')}}}},
+      scales:{x:{ticks:{color:'#5E7189',font:{size:11}},grid:{display:false},border:{color:'rgba(38,56,86,.55)'}},
+              y:{ticks:{color:'#5E7189',font:{size:11}},grid:{color:'rgba(38,56,86,.55)'},border:{display:false}}}}});
+  var vazias=E.filter(function(e){
+    return !S.precoMedio.some(function(x){return x.valores[String(e.edicao)]!=null})});
+  document.getElementById('nota-serie').innerHTML=
+    '<b>As falhas no gr&aacute;fico s&atilde;o propositadas.</b> '
+   +(vazias.length?('A edi&ccedil;&atilde;o '+vazias[0].edicao+' ficou sem valores porque o boletim repete o texto da semana anterior. ')
+     :'')
+   +'Cada ponto foi lido do PDF oficial e confirmado. Onde a fonte n&atilde;o permitiu confirmar, o ponto fica vazio '
+   +'em vez de ser preenchido por interpola&ccedil;&atilde;o.';
+}
+
+function desenharBaratos(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var h='<thead><tr><th>Produto</th><th>Pra&ccedil;a mais barata</th><th class="n">MT/kg</th><th class="n">vs m&eacute;dia</th></tr></thead><tbody>';
+  R.slice().sort(function(a,b){return a.minimo.valor-b.minimo.valor}).forEach(function(r){
+    var d=(r.minimo.valor/r.media-1)*100;
+    h+='<tr><td>'+esc(r.produto)+'</td><td style="color:var(--t3)">'+esc(r.minimo.mercados.join(', '))+'</td>'
+     +'<td class="n" style="color:var(--ok)">'+p2(r.minimo.valor)+'</td>'
+     +'<td class="n" style="color:var(--t4)">'+d.toFixed(0)+'%</td></tr>';
+  });
+  document.getElementById('baratos').innerHTML=h+'</tbody>';
+}
+
+function desenharOrigens(){
+  var F=fluxos(),o={};
+  F.forEach(function(f){if(f.origem)o[f.origem]=(o[f.origem]||0)+1});
+  var top=Object.keys(o).sort(function(a,b){return o[b]-o[a]}).slice(0,8);
+  var h='<thead><tr><th>Origem observada</th><th class="n">Fluxos</th></tr></thead><tbody>';
+  top.forEach(function(k){
+    h+='<tr><td>'+esc(k)+'</td><td class="n">'+o[k]+'</td></tr>';
+  });
+  document.getElementById('origens').innerHTML=h+'</tbody>';
+}
+
+var RETIRADOS=[
+ ['Produ&ccedil;&atilde;o estimada','2,84M ton','Escrito &agrave; m&atilde;o. Sem inqu&eacute;rito nem publica&ccedil;&atilde;o por tr&aacute;s.','Inqu&eacute;rito Agr&aacute;rio Integrado','MAAP &middot; INE'],
+ ['&Aacute;rea cultivada','4,25M ha','Mesma origem. N&atilde;o havia c&aacute;lculo nem fonte.','Inqu&eacute;rito Agr&aacute;rio Integrado','MAAP &middot; INE'],
+ ['Previs&atilde;o pr&oacute;xima safra','3,12M ton','Uma previs&atilde;o sem s&eacute;rie hist&oacute;rica nem modelo declarado.','S&eacute;rie de produ&ccedil;&atilde;o de v&aacute;rias campanhas','MAAP'],
+ ['Taxa de auto-sufici&ecirc;ncia','84%','Exige produ&ccedil;&atilde;o e consumo. N&atilde;o havia nenhum dos dois.','Produ&ccedil;&atilde;o e importa&ccedil;&otilde;es por produto','MAAP &middot; Alf&acirc;ndegas'],
+ ['Produtores registados','1,24M','O Censo Agro-Pecu&aacute;rio mede-o; o sistema n&atilde;o est&aacute; ligado a ele.','Agregado do Censo Agro-Pecu&aacute;rio','INE'],
+ ['Produtividade por prov&iacute;ncia','2,8 a 0,9 t/ha','Quatro prov&iacute;ncias de dez, com valores sem origem.','Produ&ccedil;&atilde;o e &aacute;rea por prov&iacute;ncia','MAAP &middot; INE'],
+ ['Produ&ccedil;&atilde;o por cultura face &agrave; meta','94% a 102%','N&atilde;o havia meta declarada nem produ&ccedil;&atilde;o medida.','Metas do plano e produ&ccedil;&atilde;o realizada','MAAP']
+];
+function desenharRetirados(){
+  var h='<thead><tr><th>Indicador</th><th class="n">Mostrava</th><th>Porque foi retirado</th>'
+   +'<th>O que falta</th><th>Quem det&eacute;m</th></tr></thead><tbody>';
+  RETIRADOS.forEach(function(r){
+    h+='<tr><td style="font-weight:600;color:var(--t3)">'+r[0]+'</td>'
+     +'<td class="n" style="color:var(--red);text-decoration:line-through">'+r[1]+'</td>'
+     +'<td style="color:var(--t3);max-width:330px">'+r[2]+'</td>'
+     +'<td style="color:var(--brzl);max-width:230px">'+r[3]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+r[4]+'</td></tr>';
+  });
+  document.getElementById('retirados').innerHTML=h+'</tbody>';
+}
+
+fetch('data/sima-precos.json',{cache:'no-store'})
+ .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/sima-precos.json');return r.json()})
+ .then(function(j){
+   ST.sima=j;
+   desenharKpis();desenharGrafico();desenharBaratos();desenharOrigens();desenharRetirados();
+ })
+ .catch(function(e){
+   document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+ });
 </script>
 </body>
 </html>

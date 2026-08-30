@@ -1,106 +1,324 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Portal de Transparência — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Portal de Transpar&ecirc;ncia &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  body { padding: 0; }
-  .pub-header { background: var(--navy-900); border-bottom: 1px solid var(--line); padding: 18px 28px; display: flex; justify-content: space-between; align-items: center; }
-  .pub-brand { display: flex; align-items: center; gap: 12px; }
-  .pub-content { max-width: 1000px; margin: 0 auto; padding: 30px 24px 60px; }
-  .hero-ring { display: flex; align-items: center; gap: 24px; margin-bottom: 24px; }
-  .ring-value { font-family: var(--font-data); font-size: 42px; font-weight: 700; color: var(--ok); }
-  .badge-row { display: flex; gap: 10px; margin-top: 8px; }
-  .badge { font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 20px; background: var(--ok-bg); color: var(--ok); }
-  .cabaz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .cabaz-card { background: var(--navy-800); border-radius: 10px; padding: 14px; }
-  .cabaz-nome { font-size: 12px; color: var(--ink-dim); margin-bottom: 6px; }
-  .cabaz-preco { font-family: var(--font-data); font-size: 17px; font-weight: 700; }
-  .pub-footer { text-align: center; padding: 24px; font-size: 11px; color: var(--ink-faint); border-top: 1px solid var(--line); margin-top: 30px; }
+:root{--bg1:#060B16;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.topo{border-bottom:1px solid var(--card-line);background:#080E1B;padding:16px 26px;
+ display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.marca{display:flex;align-items:center;gap:13px}
+.marca-q{width:34px;height:34px;border-radius:8px;background:linear-gradient(140deg,var(--brz),#8A5A20);
+ display:flex;align-items:center;justify-content:center;font-weight:700;color:#08121F;font-size:15px}
+.marca-t{font-size:15px;font-weight:700;letter-spacing:.05em}
+.marca-s{font-size:9px;color:var(--brz);letter-spacing:.16em;text-transform:uppercase;margin-top:2px}
+.topo-d{text-align:right;font-size:10.5px;color:var(--t4);line-height:1.7}
+.topo-d a{color:var(--brzl);text-decoration:none}
+main{max-width:1080px;margin:0 auto;padding:26px 24px 60px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:-.015em}
+.sub{color:var(--t3);font-size:13px;margin-bottom:18px;line-height:1.65;max-width:800px}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:15px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px;
+ border-bottom:1px solid var(--card-line);gap:14px;flex-wrap:wrap}
+.ch h2{font-size:15px;font-weight:600;margin:0 0 3px;letter-spacing:-.01em}
+.ch p{font-size:12px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);
+ padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:16px 18px}
+.aberto{padding:15px 18px;border-radius:12px;border:1px solid rgba(34,184,240,.3);
+ background:rgba(34,184,240,.07);margin-bottom:17px;font-size:12.5px;line-height:1.7;color:#9EDCF7}
+.aberto b{color:var(--blue)}
+.prod{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:12px;padding:16px 18px}
+.pc{background:linear-gradient(160deg,#101B2E,#0A1220);border:1px solid var(--card-line);
+ border-radius:12px;padding:15px 16px}
+.pc-n{font-size:13.5px;font-weight:600;margin-bottom:10px}
+.pc-m{font-size:23px;font-weight:600;letter-spacing:-.02em;font-family:'IBM Plex Mono',monospace}
+.pc-m small{font-size:11px;font-weight:400;color:var(--t4);margin-left:4px}
+.pc-e{margin-top:11px;font-size:11px;line-height:1.7;color:var(--t3)}
+.pc-e b{font-family:'IBM Plex Mono',monospace}
+.pc-b{height:5px;background:#0A1421;border-radius:3px;margin:9px 0 4px;position:relative;overflow:hidden}
+.pc-b i{position:absolute;top:0;bottom:0;border-radius:3px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);
+ padding:9px 16px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 16px;border-bottom:1px solid rgba(38,56,86,.4)}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;
+ padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.aviso{margin:13px 18px;padding:12px 14px;border-radius:9px;font-size:11.5px;line-height:1.6;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.rodape{border-top:1px solid var(--card-line);margin-top:26px;padding:20px 24px 40px;
+ font-size:11px;color:var(--t4);line-height:1.8;max-width:1080px;margin-left:auto;margin-right:auto}
+.rodape b{color:var(--t3)}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
 </style>
 </head>
 <body>
 
-<div class="pub-header">
-  <div class="pub-brand">
-    <div class="brand-mark">S</div>
-    <div><div class="brand-title">SINAGEPE</div><div class="brand-sub">República de Moçambique</div></div>
+<div class="topo">
+  <div class="marca">
+    <div class="marca-q">S</div>
+    <div><div class="marca-t">SINAGEPE</div><div class="marca-s">Rep&uacute;blica de Mo&ccedil;ambique</div></div>
   </div>
-  <div style="text-align:right"><div style="font-size:11px;color:var(--ink-faint)">Portal de Transparência — Abastecimento Nacional</div>
-  <a href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="font-size:10.5px;color:var(--bronze)">Sair (Logout) →</a></div>
-</div>
-
-<div class="pub-content">
-  <div class="card hero-ring">
-    <div class="ring-value" id="disp-valor">—</div>
-    <div>
-      <div class="card-title" style="margin-bottom:2px">Disponibilidade Nacional</div>
-      <div class="card-subtitle" style="margin-bottom:0" id="meta-texto">—</div>
-      <div class="badge-row">
-        <div class="badge">Abastecimento Garantido</div>
-        <div class="badge">10 Províncias Monitoradas</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Índice por Província</div>
-    <div class="province-grid" id="province-grid"></div>
-    <div class="legend">
-      <div class="legend-item"><span class="legend-dot" style="background:var(--ok)"></span> Normal (&ge;80%)</div>
-      <div class="legend-item"><span class="legend-dot" style="background:var(--warn)"></span> Aviso (50&ndash;80%)</div>
-      <div class="legend-item"><span class="legend-dot" style="background:var(--crit)"></span> Ruptura (&lt;50%)</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Cabaz de Produtos Essenciais</div>
-    <div class="card-subtitle">Preço médio nacional, tendência a 30 dias</div>
-    <div class="cabaz-grid" id="cabaz-grid"></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Alertas Públicos</div>
-    <div id="alertas-publicos"></div>
+  <div class="topo-d">
+    Portal de Transpar&ecirc;ncia &mdash; acesso p&uacute;blico<br>
+    <a href="index.html" onclick="try{sessionStorage.clear()}catch(e){}">Sair &rarr;</a>
   </div>
 </div>
 
-<div class="pub-footer">
-  Ministério da Indústria e Comércio — dados recolhidos diariamente e auditados periodicamente.<br>
-  Abastecimento Garantido pelo Estado.
-</div>
+<main>
+  <div class="eyebrow">Acesso p&uacute;blico</div>
+  <h1>Pre&ccedil;os e abastecimento, com a fonte &agrave; vista</h1>
+  <p class="sub">Esta p&aacute;gina mostra o que foi medido por institui&ccedil;&otilde;es do Estado e publicado. Cada n&uacute;mero diz de onde vem e de quando &eacute;. O que n&atilde;o foi medido n&atilde;o aparece aqui como se tivesse sido.</p>
 
-<script src="assets/sinagepe.js"></script>
+  <div class="aberto" id="aberto"></div>
+
+  <div id="kpis"></div>
+
+  <div class="card frame">
+    <div class="ch"><div><h2>Quanto custa cada produto, e onde</h2>
+      <p>Pre&ccedil;o a retalho medido nos mercados de refer&ecirc;ncia do SIMA</p></div>
+      <span class="tag ok" id="c-tag">&mdash;</span></div>
+    <div class="prod" id="cabaz"></div>
+    <div class="aviso w" id="aviso-preco"></div>
+  </div>
+
+  <div class="card frame">
+    <div class="ch"><div><h2>Combust&iacute;vel por regi&atilde;o</h2>
+      <p>Pre&ccedil;o regulado, o mesmo para todos os postos da regi&atilde;o</p></div>
+      <span class="tag ok">Pre&ccedil;o oficial</span></div>
+    <table id="combustivel"></table>
+    <div class="aviso i">A diferen&ccedil;a entre regi&otilde;es n&atilde;o &eacute; margem de nenhum vendedor: &eacute; o custo do transporte
+    interno do combust&iacute;vel, reconhecido pelo regulador na metodologia de forma&ccedil;&atilde;o do pre&ccedil;o.</div>
+  </div>
+
+  <div class="card frame">
+    <div class="ch"><div><h2>O que existe em cada prov&iacute;ncia</h2>
+      <p>Unidades de armazenagem documentadas e interrup&ccedil;&otilde;es de estrada registadas</p></div>
+      <span class="tag ok">Cadastro verificado</span></div>
+    <table id="provincias"></table>
+    <div class="aviso r"><b>Nenhuma destas unidades reporta o que tem l&aacute; dentro.</b>
+    O cadastro diz onde est&atilde;o os armaz&eacute;ns, de quem s&atilde;o e que capacidade declaram.
+    N&atilde;o diz quanto produto est&aacute; armazenado, porque nenhuma unidade do pa&iacute;s o comunica.</div>
+  </div>
+
+  <div class="card frame">
+    <div class="ch"><div><h2>O que esta p&aacute;gina n&atilde;o mostra</h2>
+      <p>E porque n&atilde;o mostra</p></div></div>
+    <table id="naomostra"></table>
+  </div>
+</main>
+
+<div class="rodape" id="rodape"></div>
+
 <script>
-SINAGEPE.load().then(data => {
-  const pub = data.portalPublico;
-  document.getElementById('disp-valor').textContent = data.kpis.disponibilidadeNacional.valor + '%';
-  document.getElementById('meta-texto').textContent = 'Meta Nacional: ' + pub.meta + '%';
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-  // mesma regra de cor confirmada — sem a inconsistência que existia no Figma
-  document.getElementById('province-grid').innerHTML = data.provincias.map(p => {
-    const cls = p.disponibilidade >= 80 ? 'tile-ok' : p.disponibilidade >= 50 ? 'tile-warn' : 'tile-crit';
-    return `<div class="province-tile ${cls}"><div class="province-name">${p.nome}</div><div class="province-value">${p.disponibilidade}%</div></div>`;
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
+
+function desenharAberto(){
+  var E=ST.sima.series.edicoes;
+  document.getElementById('aberto').innerHTML=
+     '<b>Porque &eacute; que os pre&ccedil;os s&atilde;o de 2023.</b> O SIMA visita mercados de refer&ecirc;ncia e publica os pre&ccedil;os '
+    +'todas as sextas-feiras desde 1991. O arquivo p&uacute;blico em linha p&aacute;ra em Agosto de 2023 &mdash; a recolha continua, '
+    +'a publica&ccedil;&atilde;o parou. Estas s&atilde;o as '+E.length+' edi&ccedil;&otilde;es mais recentes que foi poss&iacute;vel obter e ler.'
+    +'<div style="margin-top:9px;color:var(--t3)">Servem para mostrar como os pre&ccedil;os variam entre pra&ccedil;as e ao longo do ano. '
+    +'<b style="color:var(--amber)">N&atilde;o servem para saber quanto custa hoje.</b></div>';
+}
+
+function desenharKpis(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var disp=R.slice().sort(function(a,b){
+    return (b.maximo.valor/b.minimo.valor)-(a.maximo.valor/a.minimo.valor)})[0];
+  var A=ST.arm.armazens, Rg=ST.cp.regioes.filter(function(r){return r.gasoleo!=null});
+  var ref=Rg[0].gasoleo, pior=Rg[Rg.length-1];
+  var E=ST.sima.series.edicoes;
+  var milho=null;ST.sima.series.precoMedio.forEach(function(x){if(x.produto==='Milho')milho=x});
+  var vm=E.map(function(e){return milho.valores[String(e.edicao)]}).filter(function(v){return v!=null});
+
+  var lista=[
+   {id:'pub-dispersao',rotulo:'Diferen&ccedil;a de pre&ccedil;o entre pra&ccedil;as',
+    valor:Math.round((disp.maximo.valor/disp.minimo.valor-1)*100),unidade:'%',
+    estado:disp.produto+' &mdash; '+disp.minimo.mercados[0]+' vs '+disp.maximo.mercados[0],
+    tipo:'FACTO',cor:'var(--red)',
+    resumo:'O mesmo produto, na mesma semana, custa muito mais numas pra&ccedil;as do que noutras.',
+    formula:'pre&ccedil;o m&aacute;ximo a dividir pelo m&iacute;nimo, menos um',
+    componentes:[[disp.produto+' em '+disp.minimo.mercados[0],disp.minimo.valor,'MT/kg'],
+                 [disp.produto+' em '+disp.maximo.mercados[0],disp.maximo.valor,'MT/kg']],
+    leitura:'N&atilde;o &eacute; diferen&ccedil;a de qualidade. &Eacute; custo de transporte, isolamento do mercado e falta de alternativa de compra na pra&ccedil;a mais cara.',
+    fonte:'SIMA &mdash; boletim Quente-Quente n.&ordm; '+ST.sima.meta.edicao,dataDados:'Julho de 2023'},
+
+   {id:'pub-milho',rotulo:'Varia&ccedil;&atilde;o do milho no ano',
+    valor:Math.round((Math.max.apply(null,vm)/Math.min.apply(null,vm)-1)*100),unidade:'%',
+    estado:'entre a edi&ccedil;&atilde;o mais barata e a mais cara',tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Quanto o pre&ccedil;o m&eacute;dio do milho se moveu ao longo das edi&ccedil;&otilde;es medidas.',
+    formula:'valor mais alto a dividir pelo mais baixo, menos um',
+    componentes:E.filter(function(e){return milho.valores[String(e.edicao)]!=null})
+      .map(function(e){return ['Edi&ccedil;&atilde;o '+e.edicao+' &middot; '+e.semana,milho.valores[String(e.edicao)],'MT/kg']}),
+    leitura:'Sobe at&eacute; Mar&ccedil;o e desce depois da colheita. No mesmo per&iacute;odo o c&acirc;mbio moveu dois c&ecirc;ntimos &mdash; o que move o pre&ccedil;o da comida n&atilde;o &eacute; o c&acirc;mbio.',
+    fonte:'SIMA &mdash; '+E.length+' edi&ccedil;&otilde;es do boletim',dataDados:'Setembro de 2022 a Julho de 2023'},
+
+   {id:'pub-armazens',rotulo:'Unidades de armazenagem documentadas',
+    valor:A.length,unidade:'',
+    estado:A.filter(function(x){return x.fonte}).length+' com fonte oficial citada',
+    tipo:'FACTO',cor:'var(--blue)',
+    resumo:'Armaz&eacute;ns, silos e terminais cadastrados, com propriet&aacute;rio e capacidade declarada.',
+    formula:'contagem directa no cadastro nacional',
+    componentes:[['No cadastro',A.length,''],
+                 ['Com fonte oficial',A.filter(function(x){return x.fonte}).length,''],
+                 ['Sem qualquer leitura autom&aacute;tica',A.filter(function(x){return x.sensor==='sem-sensor'}).length,'']],
+    leitura:'O sistema sabe onde est&atilde;o e de quem s&atilde;o. N&atilde;o sabe o que t&ecirc;m dentro, porque nenhuma unidade do pa&iacute;s reporta exist&ecirc;ncias.',
+    fonte:'Cadastro Nacional de Armazenagem, fonte oficial por unidade',dataDados:'Agosto de 2026'},
+
+   {id:'pub-gasoleo',rotulo:'Gas&oacute;leo &mdash; diferen&ccedil;a entre regi&otilde;es',
+    valor:p2(pior.gasoleo-ref),unidade:'MT/L',estado:pior.local+' face ao terminal',
+    tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Quanto mais custa o litro na regi&atilde;o mais cara do pa&iacute;s.',
+    formula:'pre&ccedil;o na regi&atilde;o menos o pre&ccedil;o nas cidades com terminal',
+    componentes:[['Cidades com terminal',ref,'MT/L'],[pior.local,pior.gasoleo,'MT/L']],
+    leitura:'Entra no pre&ccedil;o de tudo o que &eacute; transportado. &Eacute; a factura de estar longe do porto.',
+    fonte:'ARENE &mdash; pre&ccedil;os regulados, Decreto n.&ordm; 89/2019',dataDados:ST.cp.revisao.data},
+
+   {id:'pub-disponibilidade',rotulo:'Disponibilidade nacional',
+    valor:'\u2014',unidade:'',estado:'sem fonte',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Percentagem de abastecimento garantido a n&iacute;vel nacional.',
+    porqueNaoEReal:'O valor que aqui estava (87%) era um n&uacute;mero escrito &agrave; m&atilde;o. Para calcular disponibilidade a s&eacute;rio &eacute; preciso saber as exist&ecirc;ncias e o consumo &mdash; e o sistema n&atilde;o tem nenhum dos dois.',
+    oQueFalta:'Exist&ecirc;ncias declaradas pelos armazenistas e estimativa de consumo nacional',
+    quemDetem:'Armazenistas &middot; INE &middot; MIC'},
+
+   {id:'pub-provincia',rotulo:'&Iacute;ndice de disponibilidade por prov&iacute;ncia',
+    valor:'\u2014',unidade:'',estado:'sem fonte',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Percentagem de abastecimento em cada uma das dez prov&iacute;ncias.',
+    porqueNaoEReal:'A grelha de percentagens por prov&iacute;ncia estava toda escrita &agrave; m&atilde;o. Nenhuma prov&iacute;ncia reporta exist&ecirc;ncias, pelo que n&atilde;o havia como as calcular. Foi substitu&iacute;da pela contagem do que existe de facto: armaz&eacute;ns cadastrados e cortes de estrada registados.',
+    oQueFalta:'Exist&ecirc;ncias por prov&iacute;ncia, ou pelo menos por armaz&eacute;m',
+    quemDetem:'Armazenistas &middot; ICM &middot; MIC'}
+  ];
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
+}
+
+function desenharCabaz(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  document.getElementById('cabaz').innerHTML=R.map(function(r){
+    var mn=r.minimo.valor,mx=r.maximo.valor,md=r.media;
+    var pos=(md-mn)/(mx-mn||1)*100;
+    return '<div class="pc"><div class="pc-n">'+esc(r.produto)+'</div>'
+     +'<div class="pc-m">'+p2(md)+'<small>MT/kg m&eacute;dia</small></div>'
+     +'<div class="pc-b"><i style="left:0;width:'+pos.toFixed(0)+'%;background:linear-gradient(90deg,var(--ok),var(--amber))"></i></div>'
+     +'<div class="pc-e"><span style="color:var(--ok)">Mais barato</span> <b>'+p2(mn)+'</b> em '+esc(r.minimo.mercados[0])+'<br>'
+     +'<span style="color:var(--amber)">Mais caro</span> <b>'+p2(mx)+'</b> em '+esc(r.maximo.mercados[0])+'</div></div>';
   }).join('');
+  document.getElementById('c-tag').textContent=R.length+' produtos medidos';
+  document.getElementById('aviso-preco').innerHTML=
+    '<b>Estes pre&ccedil;os n&atilde;o s&atilde;o de hoje.</b> S&atilde;o da edi&ccedil;&atilde;o '+ST.sima.meta.edicao
+    +' do boletim, recolhida em '+esc(ST.sima.meta.semana||'Julho de 2023')
+    +'. Antes de comprar ou vender, confirme o pre&ccedil;o corrente no seu mercado.';
+}
 
-  document.getElementById('cabaz-grid').innerHTML = pub.cabaz.map(c => `
-    <div class="cabaz-card">
-      <div class="cabaz-nome">${c.produto}</div>
-      <div class="cabaz-preco">${c.precoMzn} MZN</div>
-      <div style="font-size:11px;margin-top:4px;color:${c.tendenciaPercent >= 0 ? 'var(--crit)' : 'var(--ok)'}">${c.tendenciaPercent >= 0 ? '+' : ''}${c.tendenciaPercent}% (30d)</div>
-    </div>`).join('');
+function desenharCombustivel(){
+  var Rg=ST.cp.regioes.filter(function(r){return r.gasoleo!=null});
+  var ref=Rg[0].gasoleo;
+  var h='<thead><tr><th>Regi&atilde;o</th><th class="n">Gas&oacute;leo</th><th class="n">Gasolina</th><th class="n">Face ao terminal</th></tr></thead><tbody>';
+  Rg.forEach(function(r,i){
+    var d=r.gasoleo-ref, c=d===0?'var(--ok)':d<6?'var(--brzl)':'var(--amber)';
+    h+='<tr><td>'+esc(i===0?'Cidades com terminal de distribui&ccedil;&atilde;o':r.local)+'</td>'
+     +'<td class="n">'+p2(r.gasoleo)+'</td>'
+     +'<td class="n" style="color:var(--t4)">'+(r.gasolina?p2(r.gasolina):'&mdash;')+'</td>'
+     +'<td class="n" style="color:'+c+'">'+(d>0?'+'+p2(d):'refer&ecirc;ncia')+'</td></tr>';
+  });
+  document.getElementById('combustivel').innerHTML=h+'</tbody>';
+}
 
-  document.getElementById('alertas-publicos').innerHTML = pub.alertasPublicos.map(a => `
-    <div class="alert-card ${a.tipo === 'Positivo' ? 'ok' : 'warn'}">
-      <div class="alert-title">${a.titulo}</div>
-      <div class="alert-desc">${a.descricao}</div>
-    </div>`).join('');
+function desenharProvincias(){
+  var A=ST.arm.armazens, V=ST.rv.interrupcoes;
+  var un={},cap={},cortes={};
+  A.forEach(function(a){
+    if(!a.provincia)return;
+    un[a.provincia]=(un[a.provincia]||0)+1;
+    if(a.capacidade&&a.capacidade.unidade==='t'&&a.capacidade.valor)
+      cap[a.provincia]=(cap[a.provincia]||0)+a.capacidade.valor;
+  });
+  V.forEach(function(i){cortes[i.provincia]=(cortes[i.provincia]||0)+1});
+  var PROV=['Cabo Delgado','Niassa','Nampula','Zambézia','Tete','Manica','Sofala','Inhambane','Gaza','Maputo'];
+  var h='<thead><tr><th>Prov&iacute;ncia</th><th class="n">Armaz&eacute;ns</th><th class="n">Capacidade em t</th>'
+   +'<th class="n">Cortes de estrada</th><th>Estado do dado</th></tr></thead><tbody>';
+  PROV.forEach(function(p){
+    var n=un[p]||0, c=cortes[p]||0;
+    var estado = n===0 ? ['Sem unidade cadastrada','var(--red)']
+               : c>0 ? ['Com corte registado','var(--amber)']
+               : ['Cadastrado','var(--ok)'];
+    h+='<tr><td>'+esc(p)+'</td><td class="n">'+n+'</td>'
+     +'<td class="n" style="color:var(--t4)">'+(cap[p]?num(cap[p]):'&mdash;')+'</td>'
+     +'<td class="n" style="color:'+(c?'var(--amber)':'var(--t4)')+'">'+(c||'&mdash;')+'</td>'
+     +'<td><span class="est" style="color:'+estado[1]+';border-color:'+estado[1]+'55;background:'+estado[1]+'12">'
+     +estado[0]+'</span></td></tr>';
+  });
+  document.getElementById('provincias').innerHTML=h+'</tbody>';
+}
+
+var NAO_MOSTRA=[
+ ['Quanto produto est&aacute; armazenado','Nenhuma unidade reporta exist&ecirc;ncias, por qualquer meio.','Armazenistas'],
+ ['Pre&ccedil;o de hoje','O arquivo p&uacute;blico do SIMA p&aacute;ra em Agosto de 2023.','MAAP &middot; SIMA'],
+ ['Quanto entra pelas fronteiras','As declara&ccedil;&otilde;es aduaneiras existem, mas n&atilde;o h&aacute; agregado p&uacute;blico por produto.','Alf&acirc;ndegas &middot; JUE'],
+ ['Quantas pessoas passam fome','O SETSAN mede-o todos os anos. Publica em PDF; n&atilde;o h&aacute; s&eacute;rie estruturada.','SETSAN'],
+ ['Previs&atilde;o de ruptura','Com oito edi&ccedil;&otilde;es de pre&ccedil;o n&atilde;o se faz previs&atilde;o. O sistema recusa-se a apresentar uma.','&mdash;']
+];
+function desenharNaoMostra(){
+  var h='<thead><tr><th>O que n&atilde;o est&aacute; aqui</th><th>Porqu&ecirc;</th><th>Quem det&eacute;m o dado</th></tr></thead><tbody>';
+  NAO_MOSTRA.forEach(function(x){
+    h+='<tr><td style="font-weight:600">'+x[0]+'</td>'
+     +'<td style="color:var(--t3);max-width:460px">'+x[1]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+x[2]+'</td></tr>';
+  });
+  document.getElementById('naomostra').innerHTML=h+'</tbody>';
+}
+
+function desenharRodape(){
+  var E=ST.sima.series.edicoes;
+  document.getElementById('rodape').innerHTML=
+     '<b>Pre&ccedil;os:</b> SIMA &mdash; Sistema de Informa&ccedil;&atilde;o de Mercados Agr&iacute;colas, Minist&eacute;rio da Agricultura. '
+    +'Boletim Quente-Quente, edi&ccedil;&otilde;es '+E.map(function(e){return e.edicao}).join(', ')+'.<br>'
+    +'<b>Combust&iacute;veis:</b> ARENE &mdash; pre&ccedil;os regulados ao abrigo do Decreto n.&ordm; 89/2019, revis&atilde;o de '+esc(ST.cp.revisao.data)+'.<br>'
+    +'<b>Armazenagem:</b> Cadastro Nacional do SINAGEPE, '+ST.arm.armazens.length+' unidades, cada uma com fonte oficial citada.<br>'
+    +'<b>Estradas:</b> ANE &mdash; comunicado p&uacute;blico de Janeiro de 2026.<br><br>'
+    +'<span style="color:var(--t3)">Prot&oacute;tipo de demonstra&ccedil;&atilde;o. Nenhum indicador se actualiza automaticamente: '
+    +'os dados s&atilde;o carregados &agrave; m&atilde;o a partir de publica&ccedil;&otilde;es oficiais. '
+    +'Verifique sempre a data antes de citar.</span>';
+}
+
+Promise.all(['sima-precos','cascata-precos','armazens-nacionais','rede-viaria'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.sima=res[0];ST.cp=res[1];ST.arm=res[2];ST.rv=res[3];
+  desenharAberto();desenharKpis();desenharCabaz();desenharCombustivel();
+  desenharProvincias();desenharNaoMostra();desenharRodape();
+}).catch(function(e){
+  document.getElementById('aberto').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
 });
 </script>
 </body>
