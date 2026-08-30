@@ -1,78 +1,339 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Portal de Comerciantes — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Portal do Comerciante &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<script src="assets/selo-proveniencia.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1500px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:920px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
+.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.bd{padding:15px 17px}
+.oferta{padding:15px 18px;border-radius:12px;border:1px solid rgba(18,185,129,.32);background:rgba(18,185,129,.07);
+ margin-bottom:16px;font-size:12.5px;line-height:1.65;color:#8FE3C4}
+.oferta b{color:var(--ok)}
+.sel{display:flex;gap:6px;flex-wrap:wrap;padding:12px 17px;border-bottom:1px solid var(--card-line)}
+.sb{font-size:11px;padding:6px 12px;border-radius:20px;border:1px solid var(--card-line);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.sb.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+.g2{display:grid;grid-template-columns:1.15fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 14px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 14px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.barra{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:11.5px}
+.barra-n{width:118px;flex-shrink:0;color:var(--t3)}
+.barra-t{flex:1;height:16px;background:#0A1421;border-radius:4px;overflow:hidden}
+.barra-t i{display:block;height:100%;border-radius:4px}
+.barra-v{width:86px;text-align:right;flex-shrink:0}
+.aviso{margin:12px 17px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.55;border:1px solid}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.g{background:rgba(18,185,129,.07);border-color:rgba(18,185,129,.26);color:#8FE3C4}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Reciprocidade &mdash; o que o sistema devolve</div>
+    <h1>Portal do Comerciante</h1>
+    <p class="sub">O que qualquer comerciante recebe <b>hoje</b>, sem se registar: onde comprar mais barato, quanto custa o mesmo produto noutras pra&ccedil;as, quem abastece a sua zona, e o custo de ir buscar.</p>
 
-<div class="app-shell">
-  <aside class="sidebar">
-    <div class="sidebar-top">
-      <div class="brand"><div class="brand-mark">P</div><div class="brand-text"><div class="brand-title">Portal Privado</div><div class="brand-sub">SINAGEPE — Comerciantes</div></div></div>
-      <nav class="nav-list">
-        <a class="nav-item active" href="portal-comerciantes.html"><span class="nav-icon">▦</span> PAINEL</a>
-        <a class="nav-item" href="marketplace-b2b.html"><span class="nav-icon">◎</span> Mercado</a>
-        <a class="nav-item" href="#"><span class="nav-icon">⇄</span> Logística</a>
-        <a class="nav-item" href="#"><span class="nav-icon">▤</span> Armazéns</a>
-        <a class="nav-item" href="#"><span class="nav-icon">≋</span> Simulador</a>
-        <a class="nav-item" href="#"><span class="nav-icon">▧</span> Relatórios</a>
-        <a class="nav-item" href="#"><span class="nav-icon">⚙</span> Configurações</a>
-        <a class="nav-item" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="margin-top:8px;border-top:1px solid rgba(212,165,116,0.15);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:#ef4444">Sair (Logout)</span></a>
-      </nav>
+    <div class="oferta" id="oferta"></div>
+
+    <div class="card frame" style="margin-bottom:14px">
+      <div class="ch"><h2>A minha pra&ccedil;a</h2><span class="tag ok">Sem registo necess&aacute;rio</span></div>
+      <div class="sel" id="sel"></div>
     </div>
-    <div class="sidebar-footer"><div class="avatar-dot" id="user-initials">AM</div><div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div></div>
-  </aside>
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-title-group"><div class="topbar-title">Portal de Comerciantes</div><div class="topbar-badge">Stock &amp; Reabastecimento</div></div>
-      <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+
+    <div id="kpis"></div>
+
+    <div class="g2">
+      <div>
+        <div class="card frame">
+          <div class="ch"><h2>Onde comprar mais barato</h2><span class="tag" id="p-tag">&mdash;</span></div>
+          <div class="bd" id="arbitragem"></div>
+        </div>
+      </div>
+      <div>
+        <div class="card frame">
+          <div class="ch"><h2>Quem abastece esta zona</h2><span class="tag" id="f-tag">&mdash;</span></div>
+          <div id="fluxos"></div>
+        </div>
+      </div>
     </div>
-    <div class="content" id="content-mount"></div>
-    <div class="footer"><span>© 2026 SINAGEPE Moçambique — Acesso Privado</span><span id="footer-updated">—</span></div>
-  </div>
+
+    <div class="card frame">
+      <div class="ch"><h2>O que ainda n&atilde;o consigo dar-lhe &mdash; e quem o det&eacute;m</h2><span class="tag">Honestidade de dados</span></div>
+      <table id="lacunas"></table>
+      <div class="bd" style="border-top:1px solid var(--card-line);font-size:11.5px;color:var(--t3);line-height:1.6">
+        <b style="color:var(--t2)">A troca que se prop&otilde;e.</b> Nada do que est&aacute; em cima exigiu que o comerciante desse alguma coisa.
+        O que est&aacute; nesta tabela s&oacute; existe quando quem vende declarar o que tem e a que pre&ccedil;o &mdash;
+        e quem o fizer deixa de procurar comprador &agrave;s cegas.
+      </div>
+    </div>
+  </main>
 </div>
 
-<script src="assets/sinagepe.js"></script>
 <script>
-SINAGEPE.load().then(data => {
-  const c = data.portalComerciantes;
-  SINAGEPE.renderUserFooter({ utilizador: { nome: c.armazem, instituicao: 'Sector Comercial', direccao: 'Director de Logística' } });
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+if(window.SinagepeNav) SinagepeNav.montar('portal-comerciantes');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-  document.getElementById('content-mount').innerHTML = `
-    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
-      ${SINAGEPE.kpiCard({ label: 'Stock Actual', valor: c.kpis.stockPercent + '%', estado: 'Regular', tipo: 'warn' })}
-      ${SINAGEPE.kpiCard({ label: 'Produtos em Falta', valor: c.kpis.produtosEmFalta, estado: 'Atenção', tipo: 'crit' })}
-      ${SINAGEPE.kpiCard({ label: 'Lucro Estimado', valor: c.kpis.lucroEstimadoPercent + '%', estado: 'Normal', tipo: 'ok' })}
-      ${SINAGEPE.kpiCard({ label: 'Alertas Activos', valor: c.kpis.alertasActivos, estado: 'Monitorizar', tipo: 'warn' })}
-    </div>
+var ST={praca:0};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
 
-    <div class="card">
-      <div class="card-title">Sugestões de Encomenda &amp; Reabastecimento Automático</div>
-      <div class="card-subtitle">Limiares distritais: Crítico &lt;7 dias, Atenção 7&ndash;14, Estável &ge;15</div>
-      <table class="balance-table">
-        <thead><tr><th>Produto</th><th>Stock Actual</th><th>Cobertura</th><th>Recomendação</th><th>Fornecedor Sugerido</th><th>Preço Est.</th></tr></thead>
-        <tbody id="reabastecimento-body"></tbody>
-      </table>
-    </div>
-  `;
+function retalho(){return ST.sima.retalho1462||ST.sima.retalho}
+function todasPracas(){
+  var m={};
+  retalho().forEach(function(r){
+    (r.minimo.mercados||[]).forEach(function(x){m[x]=1});
+    (r.outros||[]).forEach(function(x){m[x.mercado]=1});
+    (r.maximo.mercados||[]).forEach(function(x){m[x]=1});
+  });
+  return Object.keys(m).sort();
+}
+function precoNa(r,praca){
+  if((r.minimo.mercados||[]).indexOf(praca)>=0) return r.minimo.valor;
+  if((r.maximo.mercados||[]).indexOf(praca)>=0) return r.maximo.valor;
+  var v=null;(r.outros||[]).forEach(function(x){if(x.mercado===praca)v=x.valor});
+  return v;
+}
 
-  document.getElementById('reabastecimento-body').innerHTML = c.reabastecimento.map(r => {
-    let rec, tipo;
-    if (r.coberturaDias < 7) { rec = 'Reabastecer'; tipo = 'crit'; }
-    else if (r.coberturaDias < 15) { rec = 'Comprar Breve'; tipo = 'warn'; }
-    else { rec = 'Manter Stock'; tipo = 'ok'; }
-    return `<tr><td>${r.produto}</td><td>${r.stockActualT} t</td><td>${r.coberturaDias} dias</td>
-      <td><span class="state-tag" style="background:var(--${tipo}-bg);color:var(--${tipo})">${rec}</span></td>
-      <td>${r.fornecedor}</td><td>${r.precoEstimado ? r.precoEstimado + ' MZN/t' : '—'}</td></tr>`;
+function desenharOferta(){
+  var F=(ST.sima.fluxos||[]).concat(ST.sima.fluxos1462||[],ST.sima.fluxos1449||[],
+        ST.sima.fluxos1460||[],ST.sima.fluxos1444||[],ST.sima.fluxos1446||[]);
+  document.getElementById('oferta').innerHTML=
+     '<b>Isto n&atilde;o &eacute; um formul&aacute;rio.</b> O SIMA visita mercados de refer&ecirc;ncia e publica os pre&ccedil;os todas as sextas-feiras '
+    +'desde 1991. Cruzando esses pre&ccedil;os com as movimenta&ccedil;&otilde;es de produto e o custo do combust&iacute;vel por regi&atilde;o, '
+    +'sai a informa&ccedil;&atilde;o comercial que est&aacute; nesta p&aacute;gina.'
+    +'<div style="margin-top:9px;color:var(--t3)">'+F.length+' movimenta&ccedil;&otilde;es documentadas e '
+    +todasPracas().length+' pra&ccedil;as medidas. Os pre&ccedil;os s&atilde;o da edi&ccedil;&atilde;o '+ST.sima.meta.edicao
+    +' e <b>n&atilde;o s&atilde;o correntes</b> &mdash; servem para comparar, n&atilde;o para fechar neg&oacute;cio.</div>';
+}
+
+function desenharSel(){
+  var P=todasPracas();
+  document.getElementById('sel').innerHTML=P.map(function(p,i){
+    return '<button class="sb'+(ST.praca===i?' on':'')+'" data-i="'+i+'">'+esc(p)+'</button>';
   }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.sb'),function(b){
+    b.addEventListener('click',function(){ST.praca=Number(b.dataset.i);desenharSel();desenharTudo()});
+  });
+}
+
+/* ---- indicadores: reais primeiro, demonstração declarada ---- */
+function desenharKpis(){
+  var praca=todasPracas()[ST.praca];
+  var R=retalho();
+  var comPreco=R.filter(function(r){return precoNa(r,praca)!=null});
+  var disp=R.slice().sort(function(a,b){
+    return (b.maximo.valor/b.minimo.valor)-(a.maximo.valor/a.minimo.valor);})[0];
+  var cp=ST.cp, Rg=cp.regioes.filter(function(x){return x.gasoleo!=null});
+  var ref=Rg[0].gasoleo;
+  var F=(ST.sima.fluxos||[]).concat(ST.sima.fluxos1462||[],ST.sima.fluxos1449||[],
+        ST.sima.fluxos1460||[],ST.sima.fluxos1444||[],ST.sima.fluxos1446||[]);
+  var entram=F.filter(function(f){return f.destino===praca});
+
+  /* poupança possível: comprar no mercado mais barato em vez do mais caro */
+  var poup=0, prodPoup=null;
+  comPreco.forEach(function(r){
+    var aqui=precoNa(r,praca), d=aqui-r.minimo.valor;
+    if(d>poup){poup=d;prodPoup=r}
+  });
+
+  var lista=[
+   {id:'dispersao',rotulo:'Dispers&atilde;o m&aacute;xima entre pra&ccedil;as',
+    valor:Math.round((disp.maximo.valor/disp.minimo.valor-1)*100),unidade:'%',
+    estado:disp.produto+' &mdash; '+disp.minimo.mercados[0]+' vs '+disp.maximo.mercados[0],
+    tipo:'FACTO',cor:'var(--red)',
+    resumo:'Diferen&ccedil;a entre a pra&ccedil;a mais barata e a mais cara para o mesmo produto, na mesma semana.',
+    formula:'m&aacute;ximo a dividir pelo m&iacute;nimo, menos um',
+    componentes:[[disp.produto+' em '+disp.minimo.mercados[0],disp.minimo.valor,'MT/kg'],
+                 [disp.produto+' em '+disp.maximo.mercados[0],disp.maximo.valor,'MT/kg']],
+    leitura:'Para quem compra para revender, esta diferen&ccedil;a &eacute; margem antes de qualquer transforma&ccedil;&atilde;o. Desconte o transporte e o risco.',
+    fonte:'SIMA &mdash; boletim Quente-Quente n.&ordm; '+ST.sima.meta.edicao,
+    dataDados:'Julho de 2023',ecra:'marketplace-b2b.html'},
+
+   {id:'poupanca',rotulo:'Poupan&ccedil;a poss&iacute;vel por quilo',
+    valor:poup?p2(poup):'\u2014',unidade:poup?'MT/kg':'',
+    estado:prodPoup?(prodPoup.produto+', comprando em '+prodPoup.minimo.mercados[0]):'sem pre&ccedil;o medido nesta pra&ccedil;a',
+    tipo:'FACTO',cor:poup?'var(--ok)':'var(--t4)',
+    resumo:'Quanto se poupa por quilo comprando na pra&ccedil;a mais barata em vez desta.',
+    formula:'pre&ccedil;o nesta pra&ccedil;a menos o m&iacute;nimo nacional medido',
+    componentes:prodPoup?[[prodPoup.produto+' em '+praca,precoNa(prodPoup,praca),'MT/kg'],
+                          [prodPoup.produto+' em '+prodPoup.minimo.mercados[0],prodPoup.minimo.valor,'MT/kg'],
+                          ['Numa tonelada',Math.round(poup*1000),'MT']]:[],
+    leitura:'N&atilde;o desconta transporte nem perdas. Serve para saber se vale a pena ir buscar, n&atilde;o para or&ccedil;amentar a viagem.',
+    fonte:'SIMA &mdash; edi&ccedil;&atilde;o '+ST.sima.meta.edicao,dataDados:'Julho de 2023',ecra:'marketplace-b2b.html'},
+
+   {id:'fluxos-zona',rotulo:'Fluxos que chegam a esta pra&ccedil;a',
+    valor:entram.length,unidade:'',
+    estado:entram.length?('de '+esc(entram[0].origem)):'nenhum documentado nesta pra&ccedil;a',
+    tipo:'FACTO',cor:entram.length?'var(--blue)':'var(--t4)',
+    resumo:'Movimenta&ccedil;&otilde;es de produto documentadas com destino a esta pra&ccedil;a.',
+    formula:'contagem dos fluxos registados pelo SIMA com este destino',
+    componentes:entram.slice(0,5).map(function(f){
+      return [f.produto+' de '+f.origem,f.precoPorKg||f.preco,f.precoPorKg?'MT/kg':'MT']}),
+    leitura:'Diz de onde vem a oferta e a que pre&ccedil;o foi comprada. &Eacute; o &uacute;nico dado do sistema que mostra produto a mover-se.',
+    fonte:'SIMA &mdash; boletins de 2022 e 2023',dataDados:'Setembro de 2022 a Julho de 2023',
+    ecra:'mapa-integrado.html'},
+
+   {id:'gasoleo',rotulo:'Gas&oacute;leo &mdash; acr&eacute;scimo m&aacute;ximo',
+    valor:p2(Rg[Rg.length-1].gasoleo-ref),unidade:'MT/L',
+    estado:Rg[Rg.length-1].local,tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Quanto mais custa o litro na regi&atilde;o mais cara, face &agrave;s cidades com terminal.',
+    formula:'pre&ccedil;o na regi&atilde;o menos pre&ccedil;o de refer&ecirc;ncia',
+    componentes:[['Cidades com terminal',ref,'MT/L'],[Rg[Rg.length-1].local,Rg[Rg.length-1].gasoleo,'MT/L']],
+    leitura:'Entra directamente no custo de ir buscar mercadoria longe. Numa viagem de 400 km com cami&atilde;o de consumo m&eacute;dio, s&atilde;o cerca de '
+      +num((Rg[Rg.length-1].gasoleo-ref)*128)+' MT de acr&eacute;scimo.',
+    fonte:'ARENE &mdash; Decreto n.&ordm; 89/2019',dataDados:cp.revisao.data,ecra:'portal-transportadores.html'},
+
+   {id:'stock-proprio',rotulo:'Stock actual do estabelecimento',
+    valor:'\u2014',unidade:'',estado:'sem fonte',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Quanto o comerciante tem em armaz&eacute;m neste momento.',
+    porqueNaoEReal:'O valor que aqui estava (68%) era um n&uacute;mero escrito &agrave; m&atilde;o no ficheiro de demonstra&ccedil;&atilde;o. O sistema n&atilde;o conhece as exist&ecirc;ncias de nenhum estabelecimento do pa&iacute;s.',
+    oQueFalta:'Exist&ecirc;ncias declaradas pelo pr&oacute;prio comerciante, ou telemetria instalada',
+    quemDetem:'O pr&oacute;prio comerciante'},
+
+   {id:'lucro',rotulo:'Lucro estimado',
+    valor:'\u2014',unidade:'',estado:'sem fonte',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Margem estimada sobre as vendas.',
+    porqueNaoEReal:'O valor que aqui estava (15%) n&atilde;o derivava de nada. O sistema n&atilde;o conhece nem os custos de compra nem os pre&ccedil;os de venda de nenhum operador &mdash; e, se conhecesse, publicar margens seria mat&eacute;ria de concorr&ecirc;ncia.',
+    oQueFalta:'Pre&ccedil;o de compra e pre&ccedil;o de venda declarados, com as devidas salvaguardas de sigilo comercial',
+    quemDetem:'O pr&oacute;prio comerciante'}
+  ];
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
+}
+
+function desenharArbitragem(){
+  var praca=todasPracas()[ST.praca];
+  var R=retalho();
+  var h='',n=0;
+  R.forEach(function(r){
+    var aqui=precoNa(r,praca);
+    var mn=r.minimo.valor,mx=r.maximo.valor;
+    if(aqui==null)return;
+    n++;
+    var pos=(aqui-mn)/(mx-mn||1)*100;
+    var c=pos<25?'var(--ok)':pos<70?'var(--amber)':'var(--red)';
+    h+='<div style="margin-bottom:13px">'
+     +'<div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px">'
+     +'<b>'+esc(r.produto)+'</b><span class="mono" style="color:'+c+'">'+p2(aqui)+' MT/kg aqui</span></div>'
+     +'<div class="barra"><span class="barra-n" style="color:var(--ok)">'+p2(mn)+'</span>'
+     +'<span class="barra-t"><i style="width:'+pos.toFixed(0)+'%;background:'+c+'"></i></span>'
+     +'<span class="barra-v mono" style="color:var(--amber)">'+p2(mx)+'</span></div>'
+     +'<div style="font-size:10.5px;color:var(--t4);margin-top:2px">mais barato em '
+     +esc(r.minimo.mercados[0])+' &middot; mais caro em '+esc(r.maximo.mercados[0])+'</div></div>';
+  });
+  if(!n) h='<div style="color:var(--t4);font-size:12px;line-height:1.6">O SIMA n&atilde;o mediu pre&ccedil;o nesta pra&ccedil;a nesta edi&ccedil;&atilde;o. '
+   +'Escolha outra pra&ccedil;a, ou consulte a compara&ccedil;&atilde;o nacional no Marketplace.</div>';
+  document.getElementById('arbitragem').innerHTML=h;
+  document.getElementById('p-tag').textContent=n+' produtos medidos';
+}
+
+function desenharFluxos(){
+  var praca=todasPracas()[ST.praca];
+  var F=(ST.sima.fluxos||[]).concat(ST.sima.fluxos1462||[],ST.sima.fluxos1449||[],
+        ST.sima.fluxos1460||[],ST.sima.fluxos1444||[],ST.sima.fluxos1446||[]);
+  var entram=F.filter(function(f){return f.destino===praca});
+  var h='';
+  if(entram.length){
+    h='<table><thead><tr><th>Produto</th><th>Vem de</th><th class="n">Pre&ccedil;o</th><th class="n">MT/kg</th></tr></thead><tbody>'
+     +entram.map(function(f){
+        return '<tr><td>'+esc(f.produto)+'</td><td style="color:var(--t3)">'+esc(f.origem)+'</td>'
+         +'<td class="n" style="color:var(--t4)">'+num(f.preco)+'</td>'
+         +'<td class="n">'+(f.precoPorKg?p2(f.precoPorKg):'&mdash;')+'</td></tr>';
+      }).join('')+'</tbody></table>'
+     +'<div class="aviso i">Pre&ccedil;o a que o mercado comprou, n&atilde;o a que revende. A diferen&ccedil;a para o retalho '
+     +'&eacute; transporte, perdas e margem &mdash; e o boletim n&atilde;o os separa.</div>';
+  } else {
+    h='<div class="bd"><div class="aviso i">Nenhum fluxo documentado com destino a esta pra&ccedil;a nas edi&ccedil;&otilde;es extra&iacute;das. '
+     +'O SIMA regista fluxos apenas onde os t&eacute;cnicos os observam.</div></div>';
+  }
+  document.getElementById('fluxos').innerHTML=h;
+  document.getElementById('f-tag').textContent=entram.length+' fluxos';
+}
+
+var LACUNAS=[
+ ['Exist&ecirc;ncias do meu estabelecimento','Depende de mim','var(--amber)',
+  'S&oacute; o pr&oacute;prio comerciante sabe o que tem. Declarar exige registo, e registo exige servidor.','O comerciante'],
+ ['Pre&ccedil;o grossista por pra&ccedil;a','Poss&iacute;vel j&aacute;','var(--amber)',
+  'O SIMA recolhe pre&ccedil;o ao grossista, al&eacute;m do retalho. As edi&ccedil;&otilde;es extra&iacute;das trazem sobretudo retalho.','MAAP &middot; SIMA'],
+ ['Quantidade dispon&iacute;vel no grossista','Poss&iacute;vel j&aacute;','var(--amber)',
+  'O SIMA mede este indicador. &Eacute; o mais pr&oacute;ximo de exist&ecirc;ncias que o pa&iacute;s tem, e n&atilde;o est&aacute; ligado.','MAAP &middot; SIMA'],
+ ['Pre&ccedil;o corrente','Depende de publica&ccedil;&atilde;o','var(--red)',
+  'O arquivo p&uacute;blico do SIMA p&aacute;ra em Agosto de 2023. A recolha continua; a publica&ccedil;&atilde;o em linha parou.','MAAP &middot; SIMA'],
+ ['Quem vende o qu&ecirc; e a que pre&ccedil;o','Depende de ades&atilde;o','var(--red)',
+  'Exige operadores registados. &Eacute; o Marketplace a funcionar, com contrapartida para quem se inscreve.','Sector privado &middot; CTA'],
+ ['Custo de ir buscar a outra pra&ccedil;a','Calcul&aacute;vel','var(--ok)',
+  'Com o pre&ccedil;o do gas&oacute;leo por regi&atilde;o e a dist&acirc;ncia, o custo da viagem &eacute; aritm&eacute;tica.','&mdash;']
+];
+function desenharLacunas(){
+  var h='<thead><tr><th>O que o comerciante pediria</th><th>Situa&ccedil;&atilde;o</th><th>Porqu&ecirc;</th><th>Quem det&eacute;m</th></tr></thead><tbody>';
+  LACUNAS.forEach(function(l){
+    h+='<tr><td style="font-weight:600">'+l[0]+'</td>'
+     +'<td><span class="est" style="color:'+l[2]+';border-color:'+l[2]+'55;background:'+l[2]+'12">'+l[1]+'</span></td>'
+     +'<td style="color:var(--t3);max-width:420px">'+l[3]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+l[4]+'</td></tr>';
+  });
+  document.getElementById('lacunas').innerHTML=h+'</tbody>';
+}
+
+function desenharTudo(){desenharKpis();desenharArbitragem();desenharFluxos()}
+
+Promise.all(['sima-precos','cascata-precos'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.sima=res[0];ST.cp=res[1];
+  desenharOferta();desenharSel();desenharLacunas();desenharTudo();
+}).catch(function(e){
+  document.getElementById('oferta').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
 });
 </script>
 </body>
