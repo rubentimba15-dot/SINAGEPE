@@ -1,106 +1,112 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Relatórios e Exportação — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Relat&oacute;rios &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  .report-card { background: var(--navy-800); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin-bottom: 12px; }
-  .report-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-  .report-name { font-size: 13.5px; font-weight: 700; }
-  .report-desc { font-size: 12px; color: var(--ink-dim); margin: 4px 0 10px; }
-  .report-meta { font-size: 10.5px; color: var(--ink-faint); }
-  .report-actions { display: flex; gap: 8px; margin-top: 10px; }
-  .btn-sm { font-size: 11.5px; font-weight: 600; padding: 6px 12px; border-radius: 6px; cursor: pointer; border: 1px solid var(--line); background: transparent; color: var(--ink); }
-  .btn-sm.primary { background: var(--bronze); color: var(--navy-950); border: none; }
-  .gen-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
-  .gen-field label { font-size: 11px; color: var(--ink-faint); font-weight: 600; }
-  .gen-field select { background: var(--navy-900); color: var(--ink); border: 1px solid var(--line); border-radius: 7px; padding: 8px 10px; font-size: 12.5px; }
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1100px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:18px;max-width:820px;line-height:1.6}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{padding:14px 17px;border-bottom:1px solid var(--card-line)}
+.ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.bd{padding:15px 17px}
+.destino{display:block;text-decoration:none;color:inherit;background:linear-gradient(160deg,#101B2E,#0A1220);
+ border:1px solid var(--card-line);border-radius:12px;padding:17px 18px;margin-bottom:11px;transition:.16s}
+.destino:hover{border-color:var(--brzg);transform:translateY(-2px)}
+.destino-t{font-size:15px;font-weight:600;margin-bottom:5px}
+.destino-d{font-size:12px;color:var(--t3);line-height:1.6}
+.destino-s{font-size:10.5px;color:var(--brzl);margin-top:10px}
+.aviso{margin:0 0 16px;padding:13px 15px;border-radius:11px;font-size:12px;line-height:1.7;border:1px solid}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.28);color:var(--amber)}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
 </style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Ecr&atilde; consolidado</div>
+    <h1>Relat&oacute;rios e Exporta&ccedil;&atilde;o</h1>
+    <p class="sub">Este ecr&atilde; foi consolidado na Central de Relat&oacute;rios, que gera documentos reais a partir dos dados do sistema.</p>
 
-<div class="app-shell" id="app-shell"></div>
+    <div class="aviso w"><b>Porque foi consolidado.</b> Listava tr&ecirc;s relat&oacute;rios peri&oacute;dicos que n&atilde;o eram gerados
+    por ningu&eacute;m, e um hist&oacute;rico de exporta&ccedil;&otilde;es recentes com nomes de ficheiro, tamanhos e autores &mdash; tudo inventado.
+    O bot&atilde;o de compilar admitia, no pr&oacute;prio texto, ser simula&ccedil;&atilde;o.
+    <b>A Central de Relat&oacute;rios gera doze relat&oacute;rios de verdade, imprim&iacute;veis e export&aacute;veis.</b></div>
 
-<script src="assets/sinagepe.js"></script>
+    <div class="card frame">
+      <div class="ch"><h2>Onde est&aacute; a informa&ccedil;&atilde;o agora</h2>
+        <p>Dois ecr&atilde;s cobrem o que este prometia</p></div>
+      <div class="bd">
+        <a class="destino" href="relatorios-central.html">
+          <div class="destino-t">Central de Relat&oacute;rios</div>
+          <div class="destino-d">Doze relat&oacute;rios gerados a partir dos dados do sistema: cadastro de armazenagem,
+          pre&ccedil;os por mercado, s&eacute;rie de pre&ccedil;os, fluxos, combust&iacute;veis, rede vi&aacute;ria, riscos, ades&atilde;o institucional,
+          governa&ccedil;&atilde;o, identifica&ccedil;&atilde;o e medicamentos. Cada um em folha A4 com fonte e data de refer&ecirc;ncia,
+          pronto a imprimir. Exporta&ccedil;&atilde;o em CSV e JSON reservada ao administrador.</div>
+          <div class="destino-s">Abrir a Central de Relat&oacute;rios &rarr;</div>
+        </a>
+        <a class="destino" href="relatorio-executivo.html">
+          <div class="destino-t">Relat&oacute;rio Executivo</div>
+          <div class="destino-d">Documento &uacute;nico e narrativo, em oito sec&ccedil;&otilde;es, para levar a uma reuni&atilde;o:
+          sum&aacute;rio, capacidade de armazenagem, pre&ccedil;os e mercados, a factura da geografia, riscos,
+          o que n&atilde;o &eacute; conhecido, recomenda&ccedil;&otilde;es e anexo de fontes.</div>
+          <div class="destino-s">Abrir o Relat&oacute;rio Executivo &rarr;</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><h2>O que ainda n&atilde;o &eacute; poss&iacute;vel</h2>
+        <p>E de que depende</p></div>
+      <div class="bd" style="font-size:12px;color:var(--t3);line-height:1.9">
+        <b style="color:var(--t2)">Gera&ccedil;&atilde;o autom&aacute;tica peri&oacute;dica.</b>
+        Um relat&oacute;rio mensal que se gera sozinho exige servidor. Hoje, cada relat&oacute;rio &eacute; gerado quando algu&eacute;m o abre.<br>
+        <b style="color:var(--t2)">Hist&oacute;rico de exporta&ccedil;&otilde;es.</b>
+        Saber quem exportou o qu&ecirc; e quando exige contas individuais e registo de sess&atilde;o.<br>
+        <b style="color:var(--t2)">Envio autom&aacute;tico por correio electr&oacute;nico.</b>
+        Exige servidor e lista de destinat&aacute;rios mantida.<br>
+        <b style="color:var(--t2)">Exporta&ccedil;&atilde;o em PDF e Excel.</b>
+        A Central exporta em CSV e JSON, e imprime em A4 &mdash; o di&aacute;logo de impress&atilde;o do navegador guarda em PDF.
+        Ficheiros Excel exigiriam gera&ccedil;&atilde;o no servidor.
+      </div>
+      <div class="aviso i" style="margin:0 17px 16px">Nenhuma destas lacunas impede o uso do sistema hoje:
+      todos os relat&oacute;rios se abrem, imprimem e citam-se com a fonte declarada.</div>
+    </div>
+  </main>
+</div>
+
 <script>
-SINAGEPE.mountShell('relatorios', 'Relatórios e Exportação', 'Periódicos, Sectoriais e Auditoria');
-
-document.getElementById('content-mount').innerHTML = `
-  <div class="row-2">
-    <div class="card">
-      <div class="card-title">Relatórios Periódicos</div>
-      <div class="card-subtitle">Gerados automaticamente pelo sistema, segundo a sua frequência</div>
-      <div id="reports-list"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Gerador Customizado</div>
-      <div class="card-subtitle">Compila um relatório à medida a partir dos parâmetros escolhidos</div>
-      <div class="gen-field"><label>Produto</label>
-        <select id="gen-produto"><option>Todos os Produtos</option></select>
-      </div>
-      <div class="gen-field"><label>Período</label>
-        <select id="gen-periodo"><option>Últimos 7 dias</option><option>Últimos 30 dias</option><option>Último Trimestre</option><option>Último Ano</option></select>
-      </div>
-      <div class="gen-field"><label>Província / Região</label>
-        <select id="gen-provincia"><option>Todo o País</option></select>
-      </div>
-      <div class="gen-field"><label>Formato</label>
-        <select id="gen-formato"><option>PDF</option><option>Excel (XLSX)</option><option>CSV</option></select>
-      </div>
-      <button class="btn-sm primary" id="btn-compilar" style="width:100%;padding:10px">Compilar &amp; Exportar</button>
-      <div id="gen-status" style="margin-top:10px;font-size:11.5px;color:var(--ink-faint)"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Exportações Recentes</div>
-    <table class="balance-table">
-      <thead><tr><th>Ficheiro</th><th>Formato</th><th>Data</th><th>Tamanho</th><th>Gerado Por</th></tr></thead>
-      <tbody id="export-body"></tbody>
-    </table>
-  </div>
-`;
-
-SINAGEPE.load().then(renderRelatorios);
-
-function renderRelatorios(data) {
-  SINAGEPE.renderUserFooter(data);
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
-
-  document.getElementById('reports-list').innerHTML = data.relatoriosModelo.map(r => `
-    <div class="report-card">
-      <div class="report-top"><span class="report-name">${r.nome}</span><span class="pill pill-info">${r.frequencia}</span></div>
-      <div class="report-desc">${r.descricao}</div>
-      <div class="report-meta">Gerado: ${r.geradoEm}</div>
-      <div class="report-actions">
-        <button class="btn-sm">Visualizar</button>
-        <button class="btn-sm primary">Descarregar</button>
-      </div>
-    </div>`).join('');
-
-  const produtos = [...new Set(data.balancoNacional.map(p => p.produto))];
-  document.getElementById('gen-produto').innerHTML += produtos.map(p => `<option>${p}</option>`).join('');
-  document.getElementById('gen-provincia').innerHTML += data.provincias.map(p => `<option>${p.nome}</option>`).join('');
-
-  document.getElementById('export-body').innerHTML = data.exportacoesRecentes.map(e => `
-    <tr><td>${e.ficheiro}</td><td>${e.formato}</td><td>${e.data}</td><td>${e.tamanho}</td><td>${e.geradoPor}</td></tr>`).join('');
-
-  document.getElementById('btn-compilar').addEventListener('click', function () {
-    const produto = document.getElementById('gen-produto').value;
-    const periodo = document.getElementById('gen-periodo').value;
-    const provincia = document.getElementById('gen-provincia').value;
-    const formato = document.getElementById('gen-formato').value;
-    document.getElementById('gen-status').innerHTML =
-      `⏳ A compilar: ${produto} · ${periodo} · ${provincia} · ${formato}. (Simulação — geração real de ficheiro requer backend, ainda não implementado neste protótipo.)`;
-  });
-}
+if(window.SinagepeNav) SinagepeNav.montar('relatorios');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
 </script>
 </body>
 </html>

@@ -1,111 +1,116 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mapa Nacional — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Mapa Nacional &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1100px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:18px;max-width:820px;line-height:1.6}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{padding:14px 17px;border-bottom:1px solid var(--card-line)}
+.ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.bd{padding:15px 17px}
+.destino{display:block;text-decoration:none;color:inherit;background:linear-gradient(160deg,#101B2E,#0A1220);
+ border:1px solid var(--card-line);border-radius:12px;padding:17px 18px;margin-bottom:11px;transition:.16s}
+.destino:hover{border-color:var(--brzg);transform:translateY(-2px)}
+.destino-t{font-size:15px;font-weight:600;margin-bottom:5px}
+.destino-d{font-size:12px;color:var(--t3);line-height:1.6}
+.destino-s{font-size:10.5px;color:var(--brzl);margin-top:10px}
+.aviso{margin:0 0 16px;padding:13px 15px;border-radius:11px;font-size:12px;line-height:1.7;border:1px solid}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.28);color:var(--amber)}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+</style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Ecr&atilde; consolidado</div>
+    <h1>Mapa Nacional</h1>
+    <p class="sub">Este ecr&atilde; foi consolidado noutros que fazem o mesmo com dados verificados. N&atilde;o foi apagado: encaminha para onde a informa&ccedil;&atilde;o est&aacute; agora.</p>
 
-<div class="app-shell" id="app-shell"></div>
+    <div class="aviso w"><b>Porque foi consolidado.</b> Mostrava uma grelha de disponibilidade por prov&iacute;ncia
+    &mdash; percentagens escritas &agrave; m&atilde;o, sem origem &mdash; e uma tabela de corredores log&iacute;sticos com tempos de percurso,
+    custos por tonelada-quil&oacute;metro e n&iacute;veis de tr&aacute;fego que ningu&eacute;m mede em Mo&ccedil;ambique.
+    Tinha ainda um &laquo;&Iacute;ndice de Acessibilidade Municipal&raquo; sem f&oacute;rmula declarada.
+    <b>Manter dois mapas, um com dados e outro sem, seria pior do que ter um s&oacute;.</b></div>
 
-<script src="assets/sinagepe.js"></script>
+    <div class="card frame">
+      <div class="ch"><h2>Onde est&aacute; a informa&ccedil;&atilde;o agora</h2>
+        <p>Tr&ecirc;s ecr&atilde;s cobrem, com fonte declarada, o que este mostrava</p></div>
+      <div class="bd">
+        <a class="destino" href="mapa-integrado.html">
+          <div class="destino-t">Mapa Integrado</div>
+          <div class="destino-d">Sete camadas sobre o mesmo mapa: estradas, interrup&ccedil;&otilde;es, armaz&eacute;ns cadastrados,
+          portos, fluxos de mercado documentados pelo SIMA, rede comercial e produtores. Cada camada com a sua fonte.</div>
+          <div class="destino-s">Abrir o Mapa Integrado &rarr;</div>
+        </a>
+        <a class="destino" href="modulo-logistica.html">
+          <div class="destino-t">M&oacute;dulo de Log&iacute;stica</div>
+          <div class="destino-d">Estradas principais, interrup&ccedil;&otilde;es registadas pela ANE com causa e alternativa indicada,
+          e c&aacute;lculo do custo de uma viagem ao pre&ccedil;o regulado do combust&iacute;vel na regi&atilde;o.</div>
+          <div class="destino-s">Abrir o M&oacute;dulo de Log&iacute;stica &rarr;</div>
+        </a>
+        <a class="destino" href="portal-publico.html">
+          <div class="destino-t">O que existe em cada prov&iacute;ncia</div>
+          <div class="destino-d">No Portal de Transpar&ecirc;ncia: armaz&eacute;ns cadastrados por prov&iacute;ncia, capacidade declarada
+          e cortes de estrada registados. &Eacute; a contagem do que existe, no lugar da percentagem que n&atilde;o se podia calcular.</div>
+          <div class="destino-s">Abrir o Portal de Transpar&ecirc;ncia &rarr;</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><h2>O que se perdeu na consolida&ccedil;&atilde;o</h2>
+        <p>E o que seria preciso para o recuperar a s&eacute;rio</p></div>
+      <div class="bd" style="font-size:12px;color:var(--t3);line-height:1.9">
+        <b style="color:var(--t2)">Disponibilidade por prov&iacute;ncia em percentagem.</b>
+        Exige exist&ecirc;ncias declaradas pelos armazenistas. Nenhuma unidade do pa&iacute;s as comunica.<br>
+        <b style="color:var(--t2)">Tempo de percurso por corredor.</b>
+        Exige medi&ccedil;&atilde;o real ou telemetria em ve&iacute;culos. N&atilde;o existe.<br>
+        <b style="color:var(--t2)">Custo por tonelada-quil&oacute;metro observado.</b>
+        Exige declara&ccedil;&atilde;o dos transportadores. O M&oacute;dulo de Log&iacute;stica calcula-o a partir do combust&iacute;vel,
+        que &eacute; a parcela que se conhece.<br>
+        <b style="color:var(--t2)">&Iacute;ndice de Acessibilidade Municipal.</b>
+        Exigiria f&oacute;rmula declarada e dados de infraestrutura por munic&iacute;pio.
+      </div>
+      <div class="aviso i" style="margin:0 17px 16px">Nada disto &eacute; imposs&iacute;vel de obter.
+      Est&aacute; tudo no dossier de ades&atilde;o institucional, com o esfor&ccedil;o e o impacto de cada pedido.</div>
+    </div>
+  </main>
+</div>
+
 <script>
-SINAGEPE.mountShell('mapa', 'Mapa Nacional', 'Atlas de Monitoria de Mercadorias e Corredores');
-
-document.getElementById('content-mount').innerHTML = `
-  <div class="row-2">
-    <div class="card">
-      <div class="card-title">Cobertura Provincial</div>
-      <div class="card-subtitle">Disponibilidade (%) por província — mesma regra de cor do Painel Nacional</div>
-      <div class="province-grid" id="province-grid"></div>
-      <div class="legend">
-        <div class="legend-item"><span class="legend-dot" style="background:var(--ok)"></span> Normal (&ge;80%)</div>
-        <div class="legend-item"><span class="legend-dot" style="background:var(--warn)"></span> Aviso (50&ndash;80%)</div>
-        <div class="legend-item"><span class="legend-dot" style="background:var(--crit)"></span> Ruptura (&lt;50%)</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">Índice de Acessibilidade Municipal (IAM)</div>
-      <div class="card-subtitle">Relação infraestrutura vs. custo de frete, por província</div>
-      <div id="iam-list"></div>
-    </div>
-  </div>
-
-  <div class="row-2">
-    <div class="card">
-      <div class="card-title">Corredores Logísticos Fixos</div>
-      <div class="card-subtitle">Rotas nacionais principais — o estado muda em tempo real, a rota não</div>
-      <table class="balance-table">
-        <thead><tr><th>Corredor</th><th>Origem</th><th>Destino</th><th>Estado</th><th>Distância</th><th>Tempo</th><th>Custo t/km</th><th>Tráfego</th></tr></thead>
-        <tbody id="corredores-body"></tbody>
-      </table>
-    </div>
-    <div class="card">
-      <div class="card-title">Capacidade dos Corredores por Modal</div>
-      <div class="card-subtitle">% de utilização — verde &lt;70%, amarelo 70&ndash;84%, vermelho &ge;85%</div>
-      <div id="util-list"></div>
-    </div>
-  </div>
-`;
-
-SINAGEPE.load().then(renderMapaNacional);
-
-function renderMapaNacional(data) {
-  SINAGEPE.renderUserFooter(data);
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
-
-  // Cobertura provincial — mesma regra de cor do Painel Nacional (secção 8 do documento)
-  document.getElementById('province-grid').innerHTML = data.provincias.map(p => {
-    const cls = p.disponibilidade >= 80 ? 'tile-ok' : p.disponibilidade >= 50 ? 'tile-warn' : 'tile-crit';
-    const nomeHtml = p.nome === data.painelProvincial.provincia
-      ? `<a href="painel-provincial.html" style="color:inherit;text-decoration:underline">${p.nome}</a>`
-      : p.nome === 'Tete'
-      ? `<a href="detalhe-provincia.html" style="color:inherit;text-decoration:underline">${p.nome}</a>`
-      : p.nome;
-    return `<div class="province-tile ${cls}"><div class="province-name">${nomeHtml}</div><div class="province-value">${p.disponibilidade}%</div></div>`;
-  }).join('');
-
-  // IAM por província
-  const IAM_TIPO = { 'Excelente': 'ok', 'Alto': 'ok', 'Adequado': 'info', 'Moderado': 'warn', 'Crítico': 'crit' };
-  document.getElementById('iam-list').innerHTML = data.iamProvincial.map(p => `
-    <div class="util-row">
-      <div class="util-label-row">
-        <span>${p.nome}</span>
-        <span>${p.valor.toFixed(2)} · ${SINAGEPE.stateTag(p.classificacao)}</span>
-      </div>
-      <div class="util-track"><div class="util-fill pill-${IAM_TIPO[p.classificacao] || 'info'}" style="width:${p.valor * 100}%"></div></div>
-    </div>`).join('');
-
-  // Corredores
-  const ESTADO_CORREDOR_TIPO = { 'Operacional': 'ok', 'Condicionado': 'warn', 'Interrompido': 'crit' };
-  document.getElementById('corredores-body').innerHTML = data.corredores.map(c => {
-    const tag = `<span class="state-tag" style="background:var(--${ESTADO_CORREDOR_TIPO[c.estado]}-bg);color:var(--${ESTADO_CORREDOR_TIPO[c.estado]})">${c.estado}</span>`;
-    const tempo = c.tempoH === null ? '—' : c.tempoH + 'h';
-    const custo = c.custoTKm === null ? '—' : c.custoTKm + ' USD';
-    const nome = c.nome === data.corredorDetalhe.corredor
-      ? `<a href="detalhe-corredor.html" style="color:var(--bronze);text-decoration:underline">${c.nome}</a>`
-      : c.nome;
-    return `<tr>
-      <td>${nome}</td><td>${c.origem}</td><td>${c.destino}</td><td>${tag}</td>
-      <td>${c.distanciaKm} km</td><td>${tempo}</td><td>${custo}</td><td>${c.trafego}</td>
-    </tr>`;
-  }).join('');
-
-  // Utilização por modal — regra confirmada: <70 verde, 70-84 amarelo, >=85 vermelho
-  document.getElementById('util-list').innerHTML = data.utilizacaoModal.map(u => {
-    const tipo = u.percentagem >= 85 ? 'crit' : u.percentagem >= 70 ? 'warn' : 'ok';
-    return `<div class="util-row">
-      <div class="util-label-row"><span>${u.modal}</span><span>${u.percentagem}%</span></div>
-      <div class="util-track"><div class="util-fill pill-${tipo}" style="width:${u.percentagem}%"></div></div>
-    </div>`;
-  }).join('');
-}
+if(window.SinagepeNav) SinagepeNav.montar('mapa');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
 </script>
 </body>
 </html>

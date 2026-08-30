@@ -1,135 +1,323 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Módulo de Logística — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>M&oacute;dulo de Log&iacute;stica &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:940px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 17px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.bd{padding:15px 17px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 15px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 15px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+.campo{margin-bottom:13px}
+.campo label{display:block;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);margin-bottom:6px}
+.campo input,.campo select{width:100%;background:#0A1421;color:var(--ink);border:1px solid var(--card-line);
+ border-radius:8px;padding:10px 12px;font-size:13px;font-family:'IBM Plex Mono',monospace}
+.campo select{font-family:Inter,sans-serif}
+.campo .dica{font-size:10.5px;color:var(--t4);margin-top:5px;line-height:1.5}
+.res{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid rgba(38,56,86,.4);font-size:12.5px}
+.res:last-child{border-bottom:none}
+.res span:first-child{color:var(--t3)}
+.res span:last-child{font-family:'IBM Plex Mono',monospace;text-align:right}
+.total{background:linear-gradient(160deg,#101B2E,#0A1220);border:1px solid var(--brzg);border-radius:12px;padding:16px;margin-top:14px}
+.total-l{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--t4);margin-bottom:7px}
+.total-v{font-size:28px;font-weight:600;letter-spacing:-.03em;font-family:'IBM Plex Mono',monospace;color:var(--brzl)}
+.total-s{font-size:11.5px;color:var(--t3);margin-top:8px;line-height:1.6}
+.aviso{margin:12px 17px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.65;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Log&iacute;stica</div>
+    <h1>M&oacute;dulo de Log&iacute;stica</h1>
+    <p class="sub">Estradas principais, interrup&ccedil;&otilde;es registadas pela ANE, e o custo de mover carga entre regi&otilde;es com o pre&ccedil;o regulado do combust&iacute;vel.</p>
 
-<div class="app-shell" id="app-shell"></div>
+    <div class="aviso r" style="margin:0 0 16px"><b>Este m&oacute;dulo foi reconstru&iacute;do em Agosto de 2026.</b>
+    Tinha um simulador de ruptura que devolvia &laquo;<b>Rota Alternativa Recomendada (IA)</b>&raquo;, com tempo e custo adicionais &mdash;
+    valores escritos &agrave; m&atilde;o, apresentados como recomenda&ccedil;&atilde;o de intelig&ecirc;ncia artificial que n&atilde;o existe.
+    Quem planeasse uma rota com aqueles n&uacute;meros estaria a planear com fic&ccedil;&atilde;o.</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
-<script src="assets/sinagepe.js"></script>
-<script>
-SINAGEPE.mountShell('logistica', 'Módulo de Logística', 'Corredores, Custos e Simulação de Ruptura');
+    <div id="kpis"></div>
 
-document.getElementById('content-mount').innerHTML = `
-  <div class="kpi-row" id="kpi-row" style="grid-template-columns:repeat(4,1fr)"></div>
-
-  <div class="row-2">
-    <div class="card">
-      <div class="card-title">Painel de Corredores Activos e Gargalos</div>
-      <div class="card-subtitle">Mesmos corredores fixos do Mapa Nacional — o estado é que muda em tempo real</div>
-      <table class="balance-table">
-        <thead><tr><th>Corredor</th><th>Origem</th><th>Destino</th><th>Estado</th><th>Distância</th><th>Tempo</th><th>Custo t/km</th><th>Tráfego</th></tr></thead>
-        <tbody id="corredores-body"></tbody>
-      </table>
+    <div class="card frame">
+      <div class="ch"><div><h2>Estradas principais</h2>
+        <p>Eixos que estruturam o abastecimento nacional</p></div>
+        <span class="tag ok" id="e-tag">&mdash;</span></div>
+      <table id="estradas"></table>
     </div>
-    <div class="card">
-      <div class="card-title">Balanço de Custo Logístico Total</div>
-      <div class="card-subtitle">Distribuição percentual do custo nacional de transporte</div>
-      <canvas id="chart-custo" height="220"></canvas>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Interrup&ccedil;&otilde;es registadas</h2>
+        <p>Publicadas pela ANE em comunicado de imprensa</p></div>
+        <span class="tag crit" id="i-tag">&mdash;</span></div>
+      <table id="interrupcoes"></table>
+      <div class="aviso w"><b>Aten&ccedil;&atilde;o &agrave; data.</b> Estas ocorr&ecirc;ncias s&atilde;o de Janeiro de 2026. A ANE publica em
+      comunicado, n&atilde;o em formato actualiz&aacute;vel por m&aacute;quina. <b>Confirme sempre antes de planear rota.</b></div>
     </div>
-  </div>
 
-  <div class="card">
-    <div class="card-title">Simulador de Ruptura de Eixos Críticos</div>
-    <div class="card-subtitle">Selecciona um corredor para simular o impacto de um bloqueio</div>
-    <select id="sim-select" style="background:var(--navy-800);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-family:var(--font-body);font-size:13px;margin-bottom:16px;min-width:280px;"></select>
-    <div id="sim-result"></div>
-  </div>
-`;
-
-SINAGEPE.load().then(renderLogistica);
-
-function renderLogistica(data) {
-  SINAGEPE.renderUserFooter(data);
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
-
-  // --- KPIs calculados a partir dos dados-base, não fixos ---
-  const ipl = SINAGEPE.calcIPL(data);
-  const incl = SINAGEPE.calcINCL(data);
-  const corredoresCriticos = data.corredores.filter(c => c.estado === 'Condicionado' || c.estado === 'Interrompido').length;
-  const custosValidos = data.corredores.map(c => c.custoTKm).filter(v => v !== null);
-  const custoMedio = (custosValidos.reduce((a, b) => a + b, 0) / custosValidos.length).toFixed(2);
-
-  const classificaIPL = ipl < 0.4 ? 'Pressão Estável' : ipl < 0.7 ? 'Pressão Moderada' : 'Pressão Alta';
-  const classificaINCL = incl > 0.7 ? 'Capacidade Adequada' : incl > 0.4 ? 'Capacidade Limitada' : 'Capacidade Crítica';
-
-  const kpiDefs = [
-    { label: 'Índice de Pressão Logística (IPL)', valor: ipl.toFixed(2), estado: classificaIPL, tipo: ipl < 0.4 ? 'ok' : ipl < 0.7 ? 'warn' : 'crit' },
-    { label: 'Capacidade Nacional (INCL)', valor: incl.toFixed(2), estado: classificaINCL, tipo: incl > 0.7 ? 'ok' : incl > 0.4 ? 'warn' : 'crit' },
-    { label: 'Custo Médio por Tonelada', valor: custoMedio + ' USD', estado: 'Normal', tipo: 'info' },
-    { label: 'Corredores Críticos', valor: corredoresCriticos + ' Eixos', estado: corredoresCriticos > 0 ? 'Atenção' : 'Normal', tipo: corredoresCriticos > 0 ? 'warn' : 'ok' },
-  ];
-  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
-
-  // --- Tabela de corredores (mesma lógica do Mapa Nacional) ---
-  const ESTADO_TIPO = { 'Operacional': 'ok', 'Condicionado': 'warn', 'Interrompido': 'crit' };
-  document.getElementById('corredores-body').innerHTML = data.corredores.map(c => {
-    const tag = `<span class="state-tag" style="background:var(--${ESTADO_TIPO[c.estado]}-bg);color:var(--${ESTADO_TIPO[c.estado]})">${c.estado}</span>`;
-    const tempo = c.tempoH === null ? '—' : c.tempoH + 'h';
-    const custo = c.custoTKm === null ? '—' : c.custoTKm + ' USD';
-    const nome = c.nome === data.corredorDetalhe.corredor
-      ? `<a href="detalhe-corredor.html" style="color:var(--bronze);text-decoration:underline">${c.nome}</a>`
-      : c.nome;
-    return `<tr><td>${nome}</td><td>${c.origem}</td><td>${c.destino}</td><td>${tag}</td><td>${c.distanciaKm} km</td><td>${tempo}</td><td>${custo}</td><td>${c.trafego}</td></tr>`;
-  }).join('');
-
-  // --- Gráfico de custo logístico ---
-  new Chart(document.getElementById('chart-custo'), {
-    type: 'doughnut',
-    data: {
-      labels: data.custoLogisticoBreakdown.map(c => c.categoria),
-      datasets: [{
-        data: data.custoLogisticoBreakdown.map(c => c.percentagem),
-        backgroundColor: ['#d9a441', '#5b8ac9', '#3ecf8e', '#e0a83e', '#e2555c'],
-        borderWidth: 0,
-      }]
-    },
-    options: { plugins: { legend: { position: 'bottom', labels: { color: '#97a3c2', font: { size: 10.5 }, boxWidth: 10 } } }, cutout: '62%' }
-  });
-
-  // --- Simulador de ruptura ---
-  const select = document.getElementById('sim-select');
-  select.innerHTML = data.fluxosCorredor.map(f => `<option value="${f.corredor}">${f.corredor} — Bloqueio</option>`).join('');
-
-  function renderSim(corredorNome) {
-    const f = data.fluxosCorredor.find(x => x.corredor === corredorNome);
-    document.getElementById('sim-result').innerHTML = `
-      <div class="row-3">
-        <div class="card" style="background:var(--navy-800)">
-          <div class="kpi-label">Produtos Afectados</div>
-          <div style="font-size:15px;font-weight:600;margin-top:4px">${f.produtosAfectados}</div>
-        </div>
-        <div class="card" style="background:var(--navy-800)">
-          <div class="kpi-label">Tonelagem em Risco</div>
-          <div class="kpi-value">${SINAGEPE.fmt(f.tonelagemSemana)} t/semana</div>
-        </div>
-        <div class="card" style="background:var(--navy-800)">
-          <div class="kpi-label">Projecção de Preços</div>
-          <div class="kpi-value" style="color:var(--crit)">+${f.projecaoPrecoPercent}%</div>
-        </div>
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Custo de uma viagem</h2>
+          <p>Cada pressuposto &agrave; vista e alter&aacute;vel</p></div></div>
+        <div class="bd" id="form"></div>
       </div>
-      <div class="card" style="background:var(--navy-800);margin-top:14px">
-        <div class="kpi-label">Rota Alternativa Recomendada (IA)</div>
-        <div style="font-size:15px;font-weight:600;margin:6px 0 10px">${f.rotaAlternativa}</div>
-        <div style="display:flex;gap:24px;font-size:13px;color:var(--ink-dim)">
-          <span>Tempo adicional: <b style="color:var(--ink)">+${f.tempoAdicionalH}h</b></span>
-          <span>Custo adicional: <b style="color:var(--ink)">+${f.custoAdicionalPercent}%</b></span>
-        </div>
-      </div>`;
-  }
+      <div class="card frame">
+        <div class="ch"><div><h2>Resultado</h2>
+          <p>Combust&iacute;vel ao pre&ccedil;o regulado da regi&atilde;o</p></div>
+          <span class="tag" id="r-tag">&mdash;</span></div>
+        <div class="bd" id="resultado"></div>
+      </div>
+    </div>
 
-  select.addEventListener('change', e => renderSim(e.target.value));
-  renderSim(data.fluxosCorredor[0].corredor);
+    <div class="card frame">
+      <div class="ch"><div><h2>O que a ANE n&atilde;o publica</h2>
+        <p>Lacunas declaradas na informa&ccedil;&atilde;o vi&aacute;ria</p></div>
+        <span class="tag crit">Honestidade de dados</span></div>
+      <table id="ausencias"></table>
+      <div class="aviso i"><b>O pedido &agrave; ANE &eacute; a integra&ccedil;&atilde;o de melhor retorno de todo o sistema:</b>
+      esfor&ccedil;o 1, impacto 5. Um ficheiro estruturado com os cortes de estrada, actualizado quando h&aacute; corte,
+      transformaria dados de Janeiro em dados de hoje.</div>
+    </div>
+  </main>
+</div>
+
+<script>
+if(window.SinagepeNav) SinagepeNav.montar('logistica');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
+
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
+
+function desenharKpis(){
+  var V=ST.rv, Rg=ST.cp.regioes.filter(function(r){return r.gasoleo!=null});
+  var ref=Rg[0].gasoleo, pior=Rg[Rg.length-1];
+  var intr=V.interrupcoes.filter(function(i){return i.gravidade==='intransitavel'}).length;
+  var semAlt=V.interrupcoes.filter(function(i){
+    return !i.alternativa || /nenhuma/i.test(i.alternativa)}).length;
+
+  var lista=[
+   {id:'lg-estradas',rotulo:'Estradas principais documentadas',valor:V.estradas.length,unidade:'',
+    estado:'eixos que estruturam o abastecimento',tipo:'FACTO',cor:'var(--blue)',
+    resumo:'Estradas nacionais e corredores que ligam portos ao interior e &agrave;s fronteiras.',
+    formula:'contagem das estradas no cadastro vi&aacute;rio',
+    componentes:V.estradas.map(function(e){return [e.designacao+' &mdash; '+e.nome,e.liga,'']}),
+    leitura:'S&atilde;o poucos eixos para um pa&iacute;s com 2.700 km de costa. A concentra&ccedil;&atilde;o em corredores &eacute; o que torna cada corte grave.',
+    fonte:'ANE &mdash; Administra&ccedil;&atilde;o Nacional de Estradas',dataDados:'Janeiro de 2026',
+    ecra:'mapa-integrado.html'},
+
+   {id:'lg-cortes',rotulo:'Interrup&ccedil;&otilde;es registadas',valor:V.interrupcoes.length,unidade:'',
+    estado:intr+' intransit&aacute;veis, '+semAlt+' sem alternativa',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Tro&ccedil;os com circula&ccedil;&atilde;o cortada ou condicionada, publicados pela ANE.',
+    formula:'contagem das interrup&ccedil;&otilde;es no comunicado',
+    componentes:V.interrupcoes.map(function(i){
+      return [i.estrada+' '+i.troco+' ('+i.provincia+')',
+              i.gravidade==='intransitavel'?'intransit&aacute;vel':'condicionada','']}),
+    leitura:'Uma interrup&ccedil;&atilde;o sem alternativa isola a popula&ccedil;&atilde;o servida por esse tro&ccedil;o. &Eacute; onde o pre&ccedil;o sobe primeiro.',
+    fonte:'ANE &mdash; comunicado p&uacute;blico',dataDados:'Janeiro de 2026'},
+
+   {id:'lg-gasoleo',rotulo:'Gas&oacute;leo &mdash; amplitude entre regi&otilde;es',valor:p2(pior.gasoleo-ref),unidade:'MT/L',
+    estado:pior.local+' face ao terminal',tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Diferen&ccedil;a de pre&ccedil;o do gas&oacute;leo entre a regi&atilde;o mais cara e as cidades com terminal.',
+    formula:'pre&ccedil;o na regi&atilde;o menos pre&ccedil;o de refer&ecirc;ncia',
+    componentes:Rg.map(function(r,i){return [i===0?'Cidades com terminal':r.local,r.gasoleo,'MT/L']}),
+    leitura:'N&atilde;o &eacute; margem de ningu&eacute;m: &eacute; o custo do transporte interno do pr&oacute;prio combust&iacute;vel, reconhecido pelo regulador.',
+    fonte:'ARENE &mdash; Decreto n.&ordm; 89/2019',dataDados:ST.cp.revisao.data,
+    ecra:'portal-transportadores.html'},
+
+   {id:'lg-ipl',rotulo:'&Iacute;ndice de press&atilde;o log&iacute;stica',valor:'\u2014',unidade:'',estado:'retirado',
+    tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'&Iacute;ndice agregado de press&atilde;o sobre a rede log&iacute;stica nacional.',
+    porqueNaoEReal:'O &iacute;ndice era calculado sobre corredores com tempo de percurso, custo por tonelada-quil&oacute;metro e n&iacute;vel de tr&aacute;fego &mdash; todos escritos &agrave; m&atilde;o no ficheiro de demonstra&ccedil;&atilde;o. Nenhum desses valores &eacute; medido em Mo&ccedil;ambique.',
+    oQueFalta:'Tempos de percurso e volumes por corredor, medidos',
+    quemDetem:'ANE &middot; transportadores &middot; portos'},
+
+   {id:'lg-rota',rotulo:'Rota alternativa recomendada por IA',valor:'\u2014',unidade:'',estado:'retirado',
+    tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Sugest&atilde;o de rota alternativa em caso de bloqueio de um corredor.',
+    porqueNaoEReal:'O simulador devolvia uma rota, um tempo adicional e um custo adicional, rotulados como recomenda&ccedil;&atilde;o de intelig&ecirc;ncia artificial. Eram valores fixos escritos no ficheiro de demonstra&ccedil;&atilde;o: n&atilde;o havia c&aacute;lculo de rota, nem cartografia, nem IA. As alternativas que existem s&atilde;o as que a pr&oacute;pria ANE indica no comunicado, e est&atilde;o na tabela de interrup&ccedil;&otilde;es.',
+    oQueFalta:'Cartografia com grafo de estradas e c&aacute;lculo de rota',
+    quemDetem:'ANE &middot; cartografia nacional'}
+  ];
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
 }
+
+function desenharEstradas(){
+  var V=ST.rv;
+  var h='<thead><tr><th>Designa&ccedil;&atilde;o</th><th>Nome</th><th>Liga</th><th>Estado</th></tr></thead><tbody>';
+  V.estradas.forEach(function(e){
+    var cortes=V.interrupcoes.filter(function(i){
+      return String(i.estrada||'').replace(/^EN/,'N')===String(e.designacao)}).length;
+    var c=cortes?'var(--amber)':'var(--ok)';
+    h+='<tr><td><b class="mono">'+esc(e.designacao)+'</b></td>'
+     +'<td>'+esc(e.nome)+'</td>'
+     +'<td style="color:var(--t3)">'+esc(e.liga)+'</td>'
+     +'<td><span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'
+     +(cortes?cortes+' corte'+(cortes>1?'s':'')+' registado'+(cortes>1?'s':''):'sem corte registado')+'</span></td></tr>';
+  });
+  document.getElementById('estradas').innerHTML=h+'</tbody>';
+  document.getElementById('e-tag').textContent=V.estradas.length+' estradas';
+}
+
+function desenharInterrupcoes(){
+  var V=ST.rv;
+  var h='<thead><tr><th>Estrada</th><th>Tro&ccedil;o</th><th>Prov&iacute;ncia</th><th>Gravidade</th>'
+   +'<th>Causa</th><th>Alternativa indicada</th></tr></thead><tbody>';
+  V.interrupcoes.forEach(function(i){
+    var intr=i.gravidade==='intransitavel';
+    var c=intr?'var(--red)':'var(--amber)';
+    var semAlt=!i.alternativa||/nenhuma/i.test(i.alternativa);
+    h+='<tr><td><b class="mono">'+esc(i.estrada)+'</b></td>'
+     +'<td>'+esc(i.troco)+'</td><td style="color:var(--t3)">'+esc(i.provincia)+'</td>'
+     +'<td><span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'
+     +(intr?'intransit&aacute;vel':'condicionada')+'</span></td>'
+     +'<td style="color:var(--t3);max-width:220px">'+esc(i.causa||'&mdash;')+'</td>'
+     +'<td style="color:'+(semAlt?'var(--red)':'var(--t3)')+';max-width:220px">'
+     +esc(i.alternativa||'nenhuma indicada')+'</td></tr>';
+  });
+  document.getElementById('interrupcoes').innerHTML=h+'</tbody>';
+  document.getElementById('i-tag').textContent=V.interrupcoes.length+' interrup&ccedil;&otilde;es';
+}
+
+/* Custo de viagem: aritmética simples sobre o preço regulado.
+   Nenhum pressuposto vem de dado medido — todos são do utilizador. */
+function desenharForm(){
+  var Rg=ST.cp.regioes.filter(function(r){return r.gasoleo!=null});
+  document.getElementById('form').innerHTML=
+     '<div class="campo"><label>Regi&atilde;o onde abastece</label><select id="f-regiao">'
+    +Rg.map(function(r,i){return '<option value="'+i+'">'+esc(i===0?'Cidades com terminal':r.local)+'</option>'}).join('')
+    +'</select><div class="dica">Pre&ccedil;o regulado pela ARENE, igual em todos os postos da regi&atilde;o.</div></div>'
+    +'<div class="campo"><label>Dist&acirc;ncia, km</label>'
+    +'<input type="number" id="f-km" value="400" step="50" min="0">'
+    +'<div class="dica"><b>Valor seu.</b> O sistema n&atilde;o calcula rotas nem dist&acirc;ncias.</div></div>'
+    +'<div class="campo"><label>Consumo, litros por 100 km</label>'
+    +'<input type="number" id="f-cons" value="32" step="2" min="0">'
+    +'<div class="dica"><b>Valor seu.</b> Consumo m&eacute;dio de um cami&atilde;o carregado.</div></div>'
+    +'<div class="campo"><label>Carga transportada, toneladas</label>'
+    +'<input type="number" id="f-carga" value="25" step="5" min="0">'
+    +'<div class="dica"><b>Valor seu.</b> Serve para repartir o custo por tonelada.</div></div>'
+    +'<div class="campo"><label>Viagem de regresso</label><select id="f-volta">'
+    +'<option value="2">Sim, ida e volta</option><option value="1">N&atilde;o, s&oacute; ida</option></select>'
+    +'<div class="dica">Um cami&atilde;o que volta vazio gasta combust&iacute;vel na mesma.</div></div>';
+  ['f-regiao','f-km','f-cons','f-carga','f-volta'].forEach(function(id){
+    var el=document.getElementById(id);
+    el.addEventListener('input',calcular);el.addEventListener('change',calcular);
+  });
+}
+
+function calcular(){
+  var Rg=ST.cp.regioes.filter(function(r){return r.gasoleo!=null});
+  var reg=Rg[Number(document.getElementById('f-regiao').value)||0];
+  var ref=Rg[0].gasoleo;
+  var km=Number(document.getElementById('f-km').value)||0;
+  var cons=Number(document.getElementById('f-cons').value)||0;
+  var carga=Number(document.getElementById('f-carga').value)||0;
+  var volta=Number(document.getElementById('f-volta').value)||1;
+
+  var kmTotal=km*volta;
+  var litros=kmTotal*cons/100;
+  var custo=litros*reg.gasoleo;
+  var porT=carga>0?custo/carga:0;
+  var porTKm=(carga>0&&km>0)?custo/carga/km:0;
+  var custoRef=litros*ref;
+  var extra=custo-custoRef;
+
+  document.getElementById('resultado').innerHTML=
+     '<div class="res"><span>Dist&acirc;ncia percorrida</span><span>'+num(kmTotal)+' km</span></div>'
+    +'<div class="res"><span>Gas&oacute;leo consumido</span><span>'+num(litros)+' L</span></div>'
+    +'<div class="res"><span>Pre&ccedil;o na regi&atilde;o</span><span>'+p2(reg.gasoleo)+' MT/L</span></div>'
+    +'<div class="total"><div class="total-l">Custo de combust&iacute;vel da viagem</div>'
+    +'<div class="total-v">'+num(custo)+' MT</div>'
+    +'<div class="total-s">S&atilde;o <b>'+num(porT)+' MT por tonelada</b> transportada, ou '
+    +p2(porTKm)+' MT por tonelada-quil&oacute;metro. '
+    +'<b>S&oacute; combust&iacute;vel</b> &mdash; n&atilde;o inclui motorista, portagens, manuten&ccedil;&atilde;o, seguro nem margem.</div></div>'
+    +(extra>0?'<div class="aviso w" style="margin:14px 0 0"><b>A factura da geografia.</b> '
+      +'A mesma viagem a abastecer nas cidades com terminal custaria '+num(custoRef)+' MT. '
+      +'Abastecer em '+esc(reg.local)+' acrescenta <b>'+num(extra)+' MT</b> &mdash; '
+      +p2(extra/custo*100)+'% do custo de combust&iacute;vel.</div>':'')
+    +'<div class="aviso i" style="margin:14px 0 0">Este c&aacute;lculo &eacute; aritm&eacute;tica sobre o pre&ccedil;o regulado. '
+    +'N&atilde;o &eacute; estimativa nem previs&atilde;o: se os pressupostos estiverem certos, o resultado est&aacute; certo.</div>';
+  document.getElementById('r-tag').textContent=num(porT)+' MT/t';
+}
+
+function desenharAusencias(){
+  var V=ST.rv, A=V.ausencias||[];
+  var h='<thead><tr><th>O que a ANE n&atilde;o publica</th><th>Consequ&ecirc;ncia para o sistema</th></tr></thead><tbody>';
+  A.forEach(function(a){
+    var item=typeof a==='string'?a:(a.item||a.descricao||'');
+    var cons=typeof a==='string'?'':(a.consequencia||a.impacto||'');
+    h+='<tr><td style="font-weight:600;max-width:340px">'+esc(item)+'</td>'
+     +'<td style="color:var(--t3)">'+esc(cons||'N&atilde;o &eacute; poss&iacute;vel calcular o efeito desta lacuna sem o dado.')+'</td></tr>';
+  });
+  h+='<tr><td style="font-weight:600">Formato actualiz&aacute;vel por m&aacute;quina</td>'
+   +'<td style="color:var(--t3)">Os cortes s&atilde;o publicados em comunicado de imprensa. '
+   +'Cada actualiza&ccedil;&atilde;o do sistema exige leitura e transcri&ccedil;&atilde;o manual.</td></tr>';
+  document.getElementById('ausencias').innerHTML=h+'</tbody>';
+}
+
+Promise.all(['rede-viaria','cascata-precos'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.rv=res[0];ST.cp=res[1];
+  desenharKpis();desenharEstradas();desenharInterrupcoes();
+  desenharForm();desenharAusencias();calcular();
+}).catch(function(e){
+  document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+});
 </script>
 </body>
 </html>

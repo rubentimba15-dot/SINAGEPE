@@ -1,91 +1,290 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Administração e Auditoria — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Administra&ccedil;&atilde;o e Auditoria &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:940px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 17px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:15px 17px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 15px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 15px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+.aviso{margin:12px 17px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.65;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.aviso.g{background:rgba(18,185,129,.07);border-color:rgba(18,185,129,.26);color:#8FE3C4}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Governa&ccedil;&atilde;o</div>
+    <h1>Administra&ccedil;&atilde;o e Auditoria</h1>
+    <p class="sub">Estado real de liga&ccedil;&atilde;o de cada fonte, perfis de acesso configurados, e o que est&aacute; por construir em mat&eacute;ria de responsabiliza&ccedil;&atilde;o.</p>
 
-<div class="app-shell" id="app-shell"></div>
+    <div class="aviso r" style="margin:0 0 16px"><b>Este ecr&atilde; foi reconstru&iacute;do em Agosto de 2026, e mostrava duas coisas graves.</b>
+    Declarava as fontes de dados como <b>&laquo;Conectado&raquo;</b> &mdash; INE, SIMA, Alf&acirc;ndegas, MIST. Nenhuma est&aacute; ligada:
+    todos os dados do sistema s&atilde;o carregados &agrave; m&atilde;o a partir de publica&ccedil;&otilde;es.
+    E mostrava um <b>registo de auditoria fabricado</b>, com nomes de pessoas, endere&ccedil;os IP e horas.
+    Um registo de auditoria existe para responsabilizar; um registo inventado atribui ac&ccedil;&otilde;es a quem nunca as praticou.</div>
 
-<script src="assets/sinagepe.js"></script>
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Estado real de liga&ccedil;&atilde;o das fontes</h2>
+        <p>Como cada dado entra no sistema, e o que falta para se actualizar sozinho</p></div>
+        <span class="tag crit" id="f-tag">&mdash;</span></div>
+      <table id="fontes"></table>
+      <div class="aviso r"><b>Nenhuma fonte se actualiza automaticamente.</b> Todos os dados do sistema foram
+      carregados &agrave; m&atilde;o a partir de publica&ccedil;&otilde;es oficiais. A ferramenta de extrac&ccedil;&atilde;o do SIMA reduz esse
+      trabalho a segundos, mas continua a ser accionada por uma pessoa &mdash; n&atilde;o corre sozinha.</div>
+    </div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Perfis de acesso</h2>
+          <p>Configurados no ficheiro de acesso do sistema</p></div>
+          <span class="tag" id="p-tag">&mdash;</span></div>
+        <table id="perfis"></table>
+        <div class="aviso i">Estes s&atilde;o os perfis realmente configurados. O n&uacute;mero de utilizadores por perfil
+        n&atilde;o &eacute; conhecido: n&atilde;o h&aacute; registo de contas, apenas credenciais partilhadas.</div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>Auditoria que o sistema faz</h2>
+          <p>Verifica&ccedil;&otilde;es autom&aacute;ticas sobre o pr&oacute;prio sistema</p></div>
+          <span class="tag ok">Real</span></div>
+        <div class="bd" id="auditoria"></div>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O que falta para haver responsabiliza&ccedil;&atilde;o a s&eacute;rio</h2>
+        <p>Cada item com o que exige</p></div>
+        <span class="tag crit">Limites declarados</span></div>
+      <table id="falta"></table>
+    </div>
+  </main>
+</div>
+
 <script>
-SINAGEPE.mountShell('config', 'Administração e Auditoria', 'Utilizadores · Perfis · Auditoria · Sistema');
+if(window.SinagepeNav) SinagepeNav.montar('config');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-document.getElementById('content-mount').innerHTML = `
-  <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)" id="kpi-row"></div>
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
 
-  <div class="card">
-    <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">Registo de Auditoria
-      <span style="font-size:11px;font-weight:600;display:flex;gap:14px">
-        <a href="configuracoes.html" style="color:var(--bronze)">Configurações</a>
-        <a href="centro-notificacoes.html" style="color:var(--bronze)">Notificações</a>
-        <a href="historico-actividade.html" style="color:var(--bronze)">Histórico</a>
-        <a href="painel-ajuda.html" style="color:var(--bronze)">Ajuda</a>
-        <a href="gestao-utilizadores.html" style="color:var(--bronze)">Utilizadores</a>
-        <a href="importacao-dados.html" style="color:var(--bronze)">Importar Dados</a>
-        <a href="painel-kpis-executivo.html" style="color:var(--bronze)">KPIs Executivo</a>
-      </span>
-    </div>
-    <div class="card-subtitle">Inclui acções humanas e decisões automáticas do "Sistema IA" — mesmo registo para ambas, para efeitos de responsabilização</div>
-    <table class="balance-table">
-      <thead><tr><th>Hora</th><th>Utilizador</th><th>Acção</th><th>Módulo</th><th>Detalhes</th><th>IP</th><th>Estado</th></tr></thead>
-      <tbody id="auditoria-body"></tbody>
-    </table>
-  </div>
+/* Estado real de cada fonte. "Ligada" significa que se actualiza sozinha —
+   nenhuma está. As colunas dizem como o dado entra e o que falta. */
+var FONTES=[
+ ['SIMA &mdash; pre&ccedil;os agr&iacute;colas','Extrac&ccedil;&atilde;o de PDF','Ferramenta autom&aacute;tica, accionada por pessoa',
+  'Publica&ccedil;&atilde;o em formato leg&iacute;vel, ou API','MAAP &middot; SIMA','manual','8 edi&ccedil;&otilde;es carregadas'],
+ ['ARENE &mdash; pre&ccedil;os de combust&iacute;vel','Leitura de despacho','Manual, a cada revis&atilde;o de pre&ccedil;o',
+  'Publica&ccedil;&atilde;o estruturada dos despachos','ARENE','manual','Revis&atilde;o de Maio de 2026'],
+ ['Cadastro de armazenagem','Recolha documental','Manual, unidade a unidade',
+  'Registo central mantido pelo detentor','MIC &middot; ICM','manual','30 unidades'],
+ ['ANE &mdash; cortes de estrada','Comunicado de imprensa','Manual, quando publicado',
+  'Ficheiro estruturado actualizado quando h&aacute; corte','ANE','manual','Janeiro de 2026'],
+ ['ICM &mdash; reserva e importa&ccedil;&otilde;es','Declara&ccedil;&atilde;o p&uacute;blica','Manual, quando declarado',
+  'Publica&ccedil;&atilde;o peri&oacute;dica de exist&ecirc;ncias','ICM','manual','Meta conhecida, exist&ecirc;ncias n&atilde;o'],
+ ['Alf&acirc;ndegas &middot; JUE','N&atilde;o entra','Sem qualquer liga&ccedil;&atilde;o',
+  'Agregado mensal por produto e posto','Alf&acirc;ndegas &middot; MCNet','ausente','Pedido escrito, por entregar'],
+ ['INE &mdash; &iacute;ndice de pre&ccedil;os','Carregamento manual','Manual, sem verifica&ccedil;&atilde;o',
+  'API p&uacute;blica ou ficheiro estruturado','INE','manual','N&atilde;o entra no c&aacute;lculo'],
+ ['SETSAN &mdash; vulnerabilidade','N&atilde;o entra','Sem qualquer liga&ccedil;&atilde;o',
+  'Tabela anual por prov&iacute;ncia e fase','SETSAN','ausente','Identificado como lacuna'],
+ ['MISAU &mdash; medicamentos','N&atilde;o entra','Sem qualquer liga&ccedil;&atilde;o',
+  'Ficheiro piloto de cinco medicamentos','MISAU &middot; CMAM','ausente','Pedido escrito, por entregar'],
+ ['Telemetria de armaz&eacute;m','N&atilde;o existe','Nenhuma unidade do pa&iacute;s a tem',
+  'Instala&ccedil;&atilde;o, ou declara&ccedil;&atilde;o mensal em papel','Armazenistas','ausente','Zero unidades']
+];
 
-  <div class="row-2">
-    <div class="card">
-      <div class="card-title">Perfis de Acesso Activos</div>
-      <div class="card-subtitle">6 papéis oficiais, com âmbito e permissões próprias</div>
-      <div id="papeis-list"></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Estado das Fontes de Dados</div>
-      <div class="card-subtitle">Quando uma fonte fica indisponível, o sistema usa cache do último dado válido — nunca mostra vazio</div>
-      <div id="fontes-list"></div>
-    </div>
-  </div>
-`;
-
-SINAGEPE.load().then(renderAdministracao);
-
-function renderAdministracao(data) {
-  SINAGEPE.renderUserFooter(data);
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
-
-  const totalUtilizadores = data.papeisAcesso.reduce((a, p) => a + p.utilizadores, 0);
-  const fontesIndisponiveis = data.fontesDados.filter(f => f.estado !== 'Conectado').length;
-
-  const kpiDefs = [
-    { label: 'Operações Registadas (Sessão)', valor: data.registoAuditoria.length, estado: 'Normal', tipo: 'info' },
-    { label: 'Utilizadores Activos', valor: totalUtilizadores, estado: data.papeisAcesso.length + ' Papéis', tipo: 'ok' },
-    { label: 'Tentativas Bloqueadas', valor: data.registoAuditoria.filter(r => r.estado === 'Bloqueado').length, estado: 'Monitorizado', tipo: 'warn' },
-    { label: 'Fontes de Dados Indisponíveis', valor: fontesIndisponiveis, estado: fontesIndisponiveis > 0 ? 'Atenção' : 'Todas OK', tipo: fontesIndisponiveis > 0 ? 'warn' : 'ok' },
-  ];
-  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
-
-  document.getElementById('auditoria-body').innerHTML = data.registoAuditoria.map(r => {
-    const tipo = r.estado === 'Sucesso' ? 'ok' : 'crit';
-    const utilizadorHtml = r.utilizador === 'Sistema IA' ? `<span style="color:var(--bronze)">✦ ${r.utilizador}</span>` : r.utilizador;
-    return `<tr><td style="font-family:var(--font-data)">${r.hora}</td><td>${utilizadorHtml}</td><td>${r.accao}</td><td>${r.modulo}</td><td>${r.detalhes}</td>
-      <td style="font-family:var(--font-data);font-size:10.5px;color:var(--ink-faint)">${r.ip}</td>
-      <td><span class="state-tag" style="background:var(--${tipo}-bg);color:var(--${tipo})">${r.estado}</span></td></tr>`;
-  }).join('');
-
-  document.getElementById('papeis-list').innerHTML = data.papeisAcesso.map(p => `
-    <div class="medida-row"><span>${p.nome}</span><span style="font-family:var(--font-data)">${p.utilizadores} utilizadores</span></div>`).join('');
-
-  const FONTE_TIPO = { 'Conectado': 'ok', 'Pendente': 'warn', 'Indisponível': 'crit' };
-  document.getElementById('fontes-list').innerHTML = data.fontesDados.map(f => `
-    <div class="medida-row"><span>${f.nome}</span><span class="state-tag" style="background:var(--${FONTE_TIPO[f.estado]}-bg);color:var(--${FONTE_TIPO[f.estado]})">${f.estado}</span></div>`).join('');
+function desenharFontes(){
+  var COR={manual:'#F0A926',ausente:'#EF4444',ligada:'#12B981'};
+  var ROT={manual:'Carregamento manual',ausente:'Sem liga&ccedil;&atilde;o',ligada:'Ligada'};
+  var h='<thead><tr><th>Fonte</th><th>Como entra</th><th>Periodicidade real</th>'
+   +'<th>O que falta para se actualizar sozinha</th><th>Quem det&eacute;m</th><th>Estado</th></tr></thead><tbody>';
+  FONTES.forEach(function(f){
+    h+='<tr><td style="font-weight:600">'+f[0]
+     +'<div style="font-size:10px;color:var(--t4);font-weight:400;margin-top:3px">'+f[6]+'</div></td>'
+     +'<td style="color:var(--t3)">'+f[1]+'</td>'
+     +'<td style="color:var(--t3)">'+f[2]+'</td>'
+     +'<td style="color:var(--brzl);max-width:250px">'+f[3]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+f[4]+'</td>'
+     +'<td><span class="est" style="color:'+COR[f[5]]+';border-color:'+COR[f[5]]+'55;background:'+COR[f[5]]+'12">'
+     +ROT[f[5]]+'</span></td></tr>';
+  });
+  document.getElementById('fontes').innerHTML=h+'</tbody>';
+  var lig=FONTES.filter(function(f){return f[5]==='ligada'}).length;
+  document.getElementById('f-tag').textContent=lig+' de '+FONTES.length+' ligadas';
 }
+
+function desenharPerfis(){
+  var N=ST.niveis||[];
+  var h='<thead><tr><th>Perfil</th><th class="n">Ecr&atilde;s acess&iacute;veis</th><th>Entrada</th></tr></thead><tbody>';
+  N.slice().sort(function(a,b){return (b.paginas||[]).length-(a.paginas||[]).length}).forEach(function(n){
+    h+='<tr><td style="font-weight:600">'+esc(n.nome||n.chave)+'</td>'
+     +'<td class="n">'+((n.paginas||[]).length)+'</td>'
+     +'<td style="color:var(--t4);font-size:10.5px">'+esc(n.paginaInicial||'index.html')+'</td></tr>';
+  });
+  document.getElementById('perfis').innerHTML=h+'</tbody>';
+  document.getElementById('p-tag').textContent=N.length+' perfis';
+}
+
+/* A auditoria que o sistema realmente faz: verificações automáticas
+   sobre o próprio código, corridas antes de cada entrega. */
+var AUDITORIA=[
+ ['Auditoria de regress&atilde;o','Verifica que funcionalidades j&aacute; conquistadas continuam presentes. Corre antes de cada entrega e j&aacute; apanhou erros reais antes de chegarem ao sistema.','activa'],
+ ['Verifica&ccedil;&atilde;o de ecr&atilde;s','Abre cada ecr&atilde; e confirma que carrega sem erro e que os dados chegam.','activa'],
+ ['Guarda de sess&atilde;o por ecr&atilde;','Cada ecr&atilde; verifica o n&iacute;vel de acesso antes de mostrar conte&uacute;do.','activa'],
+ ['Classifica&ccedil;&atilde;o de origem dos n&uacute;meros','Cada indicador declara-se facto, estimativa ou demonstra&ccedil;&atilde;o.','activa'],
+ ['Registo de ac&ccedil;&otilde;es de utilizador','Quem fez o qu&ecirc; e quando. <b>N&atilde;o existe</b>: exige servidor e contas individuais.','ausente'],
+ ['Registo de altera&ccedil;&otilde;es de dados','Que dado mudou, por quem e porqu&ecirc;. <b>N&atilde;o existe</b> no sistema; existe no hist&oacute;rico do reposit&oacute;rio.','parcial']
+];
+function desenharAuditoria(){
+  var COR={activa:'#12B981',parcial:'#F0A926',ausente:'#EF4444'};
+  var ROT={activa:'Activa',parcial:'Parcial',ausente:'N&atilde;o existe'};
+  document.getElementById('auditoria').innerHTML=AUDITORIA.map(function(a){
+    return '<div style="padding:11px 0;border-bottom:1px solid rgba(38,56,86,.4)">'
+     +'<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:5px">'
+     +'<b style="font-size:12.5px">'+a[0]+'</b>'
+     +'<span class="est" style="color:'+COR[a[2]]+';border-color:'+COR[a[2]]+'55;background:'+COR[a[2]]+'12">'
+     +ROT[a[2]]+'</span></div>'
+     +'<div style="font-size:11.5px;color:var(--t3);line-height:1.6">'+a[1]+'</div></div>';
+  }).join('');
+}
+
+function desenharKpis(){
+  var lig=FONTES.filter(function(f){return f[5]==='ligada'}).length;
+  var aus=FONTES.filter(function(f){return f[5]==='ausente'}).length;
+  var man=FONTES.filter(function(f){return f[5]==='manual'}).length;
+  var N=ST.niveis||[];
+  var act=AUDITORIA.filter(function(a){return a[2]==='activa'}).length;
+
+  var lista=[
+   {id:'ad-ligadas',rotulo:'Fontes que se actualizam sozinhas',valor:lig,unidade:'de '+FONTES.length,
+    estado:man+' por carregamento manual, '+aus+' sem liga&ccedil;&atilde;o',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Fontes com liga&ccedil;&atilde;o autom&aacute;tica ao sistema.',
+    formula:'contagem das fontes com actualiza&ccedil;&atilde;o autom&aacute;tica',
+    componentes:FONTES.map(function(f){return [f[0].replace(/&mdash;/g,'—'),
+      f[5]==='ligada'?'ligada':f[5]==='manual'?'manual':'ausente','']}),
+    leitura:'&Eacute; o n&uacute;mero mais importante deste ecr&atilde; e o mais desconfort&aacute;vel. Um sistema que n&atilde;o se actualiza sozinho depende de algu&eacute;m se lembrar &mdash; e envelhece em sil&ecirc;ncio.',
+    fonte:'Registo de integra&ccedil;&atilde;o do SINAGEPE',dataDados:'Agosto de 2026',
+    ecra:'adesao-institucional.html'},
+
+   {id:'ad-perfis',rotulo:'Perfis de acesso configurados',valor:N.length,unidade:'',
+    estado:'com listas de ecr&atilde;s distintas',tipo:'FACTO',cor:'var(--blue)',
+    resumo:'Perfis definidos no ficheiro de acesso, cada um com a sua lista de ecr&atilde;s.',
+    formula:'contagem dos n&iacute;veis de acesso configurados',
+    componentes:N.slice().sort(function(a,b){return (b.paginas||[]).length-(a.paginas||[]).length})
+      .map(function(n){return [n.nome||n.chave,(n.paginas||[]).length,'ecr&atilde;s']}),
+    leitura:'A separa&ccedil;&atilde;o funciona: cada perfil v&ecirc; s&oacute; o que lhe diz respeito. O que n&atilde;o existe &eacute; conta individual &mdash; s&atilde;o credenciais partilhadas por institui&ccedil;&atilde;o.',
+    fonte:'Ficheiro de acesso do sistema',dataDados:'Agosto de 2026'},
+
+   {id:'ad-auditoria',rotulo:'Verifica&ccedil;&otilde;es autom&aacute;ticas activas',valor:act,unidade:'de '+AUDITORIA.length,
+    estado:'sobre o pr&oacute;prio sistema',tipo:'FACTO',cor:'var(--ok)',
+    resumo:'Verifica&ccedil;&otilde;es que o sistema corre sobre si pr&oacute;prio antes de cada entrega.',
+    formula:'contagem das verifica&ccedil;&otilde;es em funcionamento',
+    componentes:AUDITORIA.map(function(a){return [a[0],a[2],'']}),
+    leitura:'A auditoria de regress&atilde;o apanhou erros reais antes de chegarem ao sistema, incluindo pre&ccedil;os noventa vezes errados e indicadores que tinham deixado de funcionar.',
+    fonte:'Auditoria de regress&atilde;o do SINAGEPE',dataDados:'Agosto de 2026'},
+
+   {id:'ad-registo',rotulo:'Registo de ac&ccedil;&otilde;es de utilizador',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Quem consultou o qu&ecirc;, quando e de que endere&ccedil;o.',
+    porqueNaoEReal:'O registo que aqui estava tinha nomes de pessoas, endere&ccedil;os IP, horas e ac&ccedil;&otilde;es &mdash; tudo inventado. Um registo de auditoria existe para responsabilizar; um registo fabricado atribui ac&ccedil;&otilde;es a quem nunca as praticou. Algumas linhas eram atribu&iacute;das a um &laquo;Sistema IA&raquo; que n&atilde;o existe.',
+    oQueFalta:'Servidor com contas individuais e registo de sess&atilde;o',
+    quemDetem:'Infraestrutura'},
+
+   {id:'ad-conectado',rotulo:'Fontes declaradas como conectadas',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Estado de liga&ccedil;&atilde;o das fontes institucionais.',
+    porqueNaoEReal:'O ecr&atilde; declarava INE, SIMA, Alf&acirc;ndegas e MIST como &laquo;Conectado&raquo;. Nenhuma est&aacute; ligada. Havia ainda a nota de que o sistema usa cache do &uacute;ltimo dado v&aacute;lido quando uma fonte fica indispon&iacute;vel &mdash; n&atilde;o h&aacute; cache porque n&atilde;o h&aacute; liga&ccedil;&atilde;o. Foi substitu&iacute;do pela tabela de estado real.',
+    oQueFalta:'Protocolos de dados com cada institui&ccedil;&atilde;o e servidor que os consuma',
+    quemDetem:'Institui&ccedil;&otilde;es &middot; infraestrutura'}
+  ];
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
+}
+
+var FALTA=[
+ ['Contas individuais','Hoje h&aacute; credenciais por institui&ccedil;&atilde;o, partilhadas. Sem conta individual n&atilde;o h&aacute; a quem imputar uma ac&ccedil;&atilde;o.','Servidor &middot; registo de contas'],
+ ['Registo de sess&atilde;o','Quem entrou, quando e de onde. Exige servidor: um s&iacute;tio est&aacute;tico n&atilde;o guarda nada.','Servidor'],
+ ['Hist&oacute;rico de altera&ccedil;&atilde;o de dados','Existe parcialmente, no hist&oacute;rico do reposit&oacute;rio, mas n&atilde;o &eacute; consult&aacute;vel a partir do sistema.','Servidor &middot; interface'],
+ ['Assinatura de documentos','Um relat&oacute;rio gerado n&atilde;o tem valor administrativo sem assinatura de quem o emite.','Enquadramento jur&iacute;dico'],
+ ['Reten&ccedil;&atilde;o e prote&ccedil;&atilde;o de registos','Um registo de auditoria tem de ser inalter&aacute;vel e ter prazo de conserva&ccedil;&atilde;o definido.','Servidor &middot; pol&iacute;tica de dados']
+];
+function desenharFalta(){
+  var h='<thead><tr><th>O que falta</th><th>Porqu&ecirc;</th><th>De que depende</th></tr></thead><tbody>';
+  FALTA.forEach(function(x){
+    h+='<tr><td style="font-weight:600">'+x[0]+'</td>'
+     +'<td style="color:var(--t3);max-width:520px">'+x[1]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+x[2]+'</td></tr>';
+  });
+  document.getElementById('falta').innerHTML=h+'</tbody>';
+}
+
+/* Os perfis vêm do próprio index.html, que é onde estão configurados.
+   Se não for possível lê-lo, o ecrã mostra o resto na mesma. */
+fetch('index.html',{cache:'no-store'})
+ .then(function(r){return r.ok?r.text():''})
+ .then(function(t){
+   var m=t.match(/const NIVEIS_ACESSO = (\[[\s\S]*?\n\]);/);
+   if(m){ try{ ST.niveis=JSON.parse(m[1]); }catch(e){ ST.niveis=[]; } }
+   else ST.niveis=[];
+ })
+ .catch(function(){ST.niveis=[]})
+ .then(function(){
+   desenharKpis();desenharFontes();desenharPerfis();desenharAuditoria();desenharFalta();
+ });
 </script>
 </body>
 </html>
