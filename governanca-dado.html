@@ -171,6 +171,41 @@ function kpi(l,v,n,c){
    +'<div class="kpi-v mono" style="color:'+(c||'var(--ink)')+'">'+v+'</div><div class="kpi-n">'+n+'</div></div>';
 }
 
+/* A cadeia de responsabilidade da regra 7: oito etapas, cada uma com
+   o seu responsável e o seu estado. O sistema ocupa três; as outras
+   cinco pertencem a instituições. Desenhada como escada, para se ver
+   onde a cadeia parte. */
+var COR_ETAPA={aplicada:'#12B981',parcial:'#F0A926','por ligar':'#5E7189','por implementar':'#EF4444'};
+function desenharCadeia(C){
+  var h='<div style="margin-top:14px;padding:14px 16px;background:#0A1421;border-radius:10px">'
+   +'<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brz);margin-bottom:12px">'
+   +'As oito etapas, do dado &agrave; verifica&ccedil;&atilde;o</div>';
+  C.forEach(function(e,i){
+    var c=COR_ETAPA[e.estado]||'#5E7189';
+    var meu=/SINAGEPE|Sistema|C&aacute;lculo|Cálculo/.test(e.quem);
+    h+='<div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0'
+     +(i<C.length-1?';border-bottom:1px solid rgba(38,56,86,.4)':'')+'">'
+     +'<span style="flex-shrink:0;width:22px;height:22px;border-radius:50%;border:1px solid '+c
+     +';background:'+c+'18;color:'+c+';font-size:10.5px;display:flex;align-items:center;'
+     +'justify-content:center;font-family:IBM Plex Mono,monospace;margin-top:1px">'+e.n+'</span>'
+     +'<div style="flex:1;min-width:0">'
+     +'<div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">'
+     +'<b style="font-size:12.5px'+(meu?';color:var(--brzl)':'')+'">'+esc(e.etapa)+'</b>'
+     +'<span style="font-size:11px;color:var(--t4)">'+esc(e.quem)+'</span>'
+     +'<span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12;font-size:8.5px">'
+     +esc(e.estado)+'</span></div>'
+     +'<div style="font-size:11px;color:var(--t3);line-height:1.6;margin-top:4px">'+esc(e.nota)+'</div>'
+     +'</div></div>';
+  });
+  var meu=C.filter(function(e){return /SINAGEPE|Sistema|C.lculo/.test(e.quem)}).length;
+  h+='<div style="margin-top:12px;padding-top:11px;border-top:1px solid rgba(38,56,86,.5);'
+   +'font-size:11px;color:var(--t3);line-height:1.65">'
+   +'<b style="color:var(--t2)">O sistema ocupa '+meu+' das '+C.length+' etapas.</b> '
+   +'As restantes pertencem a institui&ccedil;&otilde;es. &Eacute; deliberado: um sistema que assinalasse '
+   +'e decidisse ao mesmo tempo n&atilde;o teria a quem prestar contas.</div></div>';
+  return h;
+}
+
 function desenharRegras(){
   document.getElementById('regras').innerHTML=ST.g.regras.map(function(r){
     var c=COR_EST[r.estado]||'#5E7189';
@@ -179,6 +214,7 @@ function desenharRegras(){
      +'<span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'+esc(r.estado)+'</span></div>'
      +'<div class="regra-r">'+esc(r.regra)+'</div>'
      +'<div class="regra-c"><b style="color:var(--brzl)">Como se aplica aqui:</b> '+esc(r.comoAplicamos)+'</div>'
+     +(r.etapasResponsabilidade?desenharCadeia(r.etapasResponsabilidade):'')
      +(r.porFechar?'<div class="regra-f"><b>Por fechar:</b> '+esc(r.porFechar)+'</div>':'')
      +'</div>';
   }).join('');

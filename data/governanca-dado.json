@@ -3,7 +3,8 @@
     "versao": "1.0",
     "geradoEm": "2026-08-23",
     "origem": "Cinco regras aproveitadas do prompt operacional de diagnóstico e consolidação. As restantes onze fases desse documento pressupõem base de dados, APIs, jobs e modelos de IA que o SINAGEPE não tem, e foram deixadas de fora deliberadamente.",
-    "naturezaDestaPagina": "Esta página VERIFICA, não declara. Os números de conformidade são contados nos próprios ficheiros de dados ao carregar, não escritos à mão."
+    "naturezaDestaPagina": "Esta página VERIFICA, não declara. Os números de conformidade são contados nos próprios ficheiros de dados ao carregar, não escritos à mão.",
+    "notaCadeia": "A regra 7 foi acrescentada em Agosto de 2026, a partir de uma proposta externa. A cadeia original previa deteccao por sensor e reconhecimento de padrão por inteligência artificial. Nenhum dos dois existe em Moçambique ou no sistema, e ambos foram substituídos pelo que é possível hoje: declaração periódica e cálculo aritmético. As seis etapas seguintes ficaram como estavam — estavam certas."
   },
   "regras": [
     {
@@ -53,6 +54,72 @@
       "comoAplicamos": "Matriz de três colunas na secção própria. Regra adoptada depois de uma leitura externa do sistema ter concluído, a partir do código, que o modo demonstração estava activo — quando o aviso estava apenas escondido por CSS. O aviso passou a ser criado por código: se não está ligado, não existe no ficheiro.",
       "estado": "aplicada",
       "porFechar": null
+    },
+    {
+      "n": 7,
+      "titulo": "Cadeia de responsabilidade: quem assinala não é quem decide",
+      "regra": "Entre um dado anómalo e uma decisão há oito etapas, e o sistema ocupa apenas três delas. O sistema recolhe, calcula o risco e verifica se o problema foi resolvido. Não investiga, não qualifica, não decide, não sanciona. Cada etapa tem um responsável nomeado, e nenhuma pode ser saltada.",
+      "comoAplicamos": "Nenhum ecrã do sistema declara fraude, dumping, cartel ou retenção especulativa. Os desvios são apresentados como indicador que justifica verificação, com a ressalva escrita no próprio ecrã. Cada achado nomeia quem decide. Foi por esta regra que se retirou o alerta de retenção especulativa, que acusava um operador com província identificada a partir de dados de demonstração.",
+      "estado": "aplicada",
+      "porFechar": "A oitava etapa — verificar se o problema foi resolvido — não está implementada. Exige registo do que foi decidido e acompanhamento no tempo, o que exige servidor.",
+      "etapasResponsabilidade": [
+        {
+          "n": 1,
+          "etapa": "Deteccao",
+          "quem": "Sistema, a partir de dado declarado",
+          "estado": "parcial",
+          "nota": "A formulação original desta cadeia falava em sensores. Não existem: trinta de trinta unidades sem leitura automática. A via possível hoje é a declaração periódica, ainda que mensal e em papel."
+        },
+        {
+          "n": 2,
+          "etapa": "Reconhecimento de padrão",
+          "quem": "Cálculo sobre a distribuição",
+          "estado": "parcial",
+          "nota": "A formulação original falava em inteligência artificial. Não existe, e não é necessária: um valor fora de dois desvios-padrão da média da praça é aritmética. Chamar-lhe IA cria expectativa que o sistema não cumpre."
+        },
+        {
+          "n": 3,
+          "etapa": "Cálculo do risco",
+          "quem": "SINAGEPE",
+          "estado": "aplicada",
+          "nota": "Com gravidade declarada, evidência e gatilho. Sem probabilidade: não há série histórica para a calcular."
+        },
+        {
+          "n": 4,
+          "etapa": "Visualização e auditoria",
+          "quem": "IGSAE",
+          "estado": "por ligar",
+          "nota": "Inspecção, não execução. O IGSAE vê e audita; não decide nem sanciona."
+        },
+        {
+          "n": 5,
+          "etapa": "Investigação técnica",
+          "quem": "Instituição científica ou sectorial competente",
+          "estado": "por ligar",
+          "nota": "É aqui que um desvio de preço deixa de ser número e passa a ter explicação: frete, seguro, qualidade, prazo — ou irregularidade."
+        },
+        {
+          "n": 6,
+          "etapa": "Decisão",
+          "quem": "Autoridade competente",
+          "estado": "por ligar",
+          "nota": "ARC para concorrência, Alfândegas para matéria aduaneira, MIC para comércio. O sistema nunca decide."
+        },
+        {
+          "n": 7,
+          "etapa": "Implementação da solução",
+          "quem": "Instituição executora",
+          "estado": "por ligar",
+          "nota": "Fora do âmbito do sistema. Registada para que o ciclo se possa fechar."
+        },
+        {
+          "n": 8,
+          "etapa": "Verificação do resultado",
+          "quem": "SINAGEPE",
+          "estado": "por implementar",
+          "nota": "O elo que quase nunca se escreve, e o que distingue um sistema de alerta de um sistema de gestão. Sem ele, produzem-se alertas e nunca se sabe se serviram. Exige registo do que foi decidido e acompanhamento no tempo."
+        }
+      ]
     }
   ],
   "classificacao": [
