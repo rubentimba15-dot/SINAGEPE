@@ -1,100 +1,323 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard ARC — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Portal ARC &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:940px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 17px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:15px 17px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 15px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 15px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+.barra{display:flex;align-items:center;gap:10px;padding:7px 0;font-size:11.5px}
+.barra-n{width:132px;flex-shrink:0;color:var(--t3)}
+.barra-t{flex:1;height:16px;background:#0A1421;border-radius:4px;overflow:hidden;position:relative}
+.barra-t i{position:absolute;top:0;bottom:0;border-radius:4px}
+.barra-v{width:88px;text-align:right;flex-shrink:0;font-family:'IBM Plex Mono',monospace}
+.aviso{margin:12px 17px;padding:12px 14px;border-radius:9px;font-size:11.5px;line-height:1.7;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Autoridade Reguladora da Concorr&ecirc;ncia</div>
+    <h1>Portal ARC</h1>
+    <p class="sub">Sinais de mercado que o SINAGEPE consegue medir a partir de fontes p&uacute;blicas. <b>Nenhum identifica uma empresa e nenhum qualifica uma pr&aacute;tica.</b> A qualifica&ccedil;&atilde;o &eacute; da ARC, e este portal existe para lha entregar com a evid&ecirc;ncia de origem.</p>
 
-<div class="app-shell">
-  <aside class="sidebar">
-    <div class="sidebar-top">
-      <div class="brand"><div class="brand-mark">A</div><div class="brand-text"><div class="brand-title">ARC</div><div class="brand-sub">Regulação da Concorrência</div></div></div>
-      <nav class="nav-list">
-        <a class="nav-item active" href="dashboard-arc.html"><span class="nav-icon">▦</span> Painel Antitruste</a>
-        <a class="nav-item" href="#"><span class="nav-icon">⚠</span> Investigações Activas</a>
-        <a class="nav-item" href="#"><span class="nav-icon">◎</span> Concentração HHI</a>
-        <a class="nav-item" href="#"><span class="nav-icon">▧</span> Evolução de Tarifas</a>
-        <a class="nav-item" href="#"><span class="nav-icon">⚙</span> Configurações</a>
-        <a class="nav-item" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="margin-top:8px;border-top:1px solid rgba(212,165,116,0.15);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:#ef4444">Sair (Logout)</span></a>
-      </nav>
+    <div class="aviso r" style="margin:0 0 16px"><b>Este portal foi reconstru&iacute;do em Agosto de 2026, e o que foi retirado importa.</b>
+    Mostrava um <b>alerta de cart&eacute;l completo</b>: produto, cidade, tr&ecirc;s distribuidores, e a frase &laquo;aumento concertado de pre&ccedil;os sem justifica&ccedil;&atilde;o de custos reais&raquo;.
+    Cart&eacute;l &eacute; crime. Aquele alerta era inteiramente inventado e tinha localiza&ccedil;&atilde;o suficiente para identificar empresas reais.
+    Mostrava tamb&eacute;m <b>quotas de mercado com nomes de empresas</b> &mdash; 72%, 58%, 45% &mdash; que n&atilde;o derivavam de nenhuma fonte.
+    <b>Uma acusa&ccedil;&atilde;o fabricada n&atilde;o &eacute; um erro de indicador: &eacute; uma exposi&ccedil;&atilde;o s&eacute;ria de quem apresenta o sistema.</b></div>
+
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Dispers&atilde;o de pre&ccedil;o entre pra&ccedil;as</h2>
+        <p>O mesmo produto, na mesma semana, medido em mercados diferentes</p></div>
+        <span class="tag ok">Facto medido</span></div>
+      <div class="bd" id="dispersao"></div>
+      <div class="aviso i"><b>O que esta medida &eacute;, e o que n&atilde;o &eacute;.</b> Uma amplitude elevada indica mercado isolado,
+      custo de transporte alto ou aus&ecirc;ncia de alternativa de compra. <b>N&atilde;o indica pr&aacute;tica concertada.</b>
+      Um pre&ccedil;o alto numa pra&ccedil;a remota &eacute;, na maior parte dos casos, o custo de l&aacute; chegar.</div>
     </div>
-    <div class="sidebar-footer"><div class="avatar-dot" id="user-initials">AR</div><div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div></div>
-  </aside>
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-title-group"><div class="topbar-title">Dashboard ARC</div><div class="topbar-badge">Portal Vivo de Inteligência Integrada (SIMULADO)</div></div>
-      <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Concentra&ccedil;&atilde;o de origem no abastecimento</h2>
+          <p>De onde vem o produto que chega a cada pra&ccedil;a</p></div></div>
+        <table id="origens"></table>
+        <div class="aviso i">Concentra&ccedil;&atilde;o de origem geogr&aacute;fica n&atilde;o &eacute; concentra&ccedil;&atilde;o de mercado.
+        Diz que uma regi&atilde;o abastece muitas outras &mdash; n&atilde;o diz quantas empresas o fazem.</div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>Pre&ccedil;o de importa&ccedil;&atilde;o face &agrave; refer&ecirc;ncia</h2>
+          <p>Observa&ccedil;&atilde;o publicada pelo pr&oacute;prio ICM</p></div></div>
+        <table id="importacao"></table>
+        <div class="aviso w"><b>Isto n&atilde;o constitui prova de infrac&ccedil;&atilde;o.</b> &Eacute; um indicador que justifica
+        verifica&ccedil;&atilde;o documental. Um desvio pode ter explica&ccedil;&atilde;o leg&iacute;tima: frete, seguro, prazo de pagamento,
+        qualidade ou momento de compra.</div>
+      </div>
     </div>
-    <div class="content" id="content-mount"></div>
-    <div class="footer"><span>© 2026 SINAGEPE Moçambique - ARC</span><span id="footer-updated">—</span></div>
-  </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O que a ARC precisaria para analisar concentra&ccedil;&atilde;o</h2>
+        <p>Cada pedido com o fundamento legal e de quem depende</p></div>
+        <span class="tag crit">Por obter</span></div>
+      <table id="precisa"></table>
+      <div class="aviso i"><b>Porque &eacute; que o sistema n&atilde;o calcula concentra&ccedil;&atilde;o hoje.</b>
+      Um &iacute;ndice de concentra&ccedil;&atilde;o exige quotas de mercado por operador. Isso exige volumes por empresa,
+      que o SINAGEPE n&atilde;o tem e n&atilde;o pode inventar. <b>Um &iacute;ndice calculado sobre n&uacute;meros imaginados
+      &eacute; pior do que a aus&ecirc;ncia do &iacute;ndice</b> &mdash; d&aacute; confian&ccedil;a onde n&atilde;o h&aacute; base.</div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Regras que este portal segue</h2>
+        <p>Aplic&aacute;veis mesmo quando os dados existirem</p></div></div>
+      <table id="regras"></table>
+    </div>
+  </main>
 </div>
 
-<script src="assets/sinagepe.js"></script>
 <script>
-SINAGEPE.load().then(data => {
-  const a = data.dashboardARC;
-  SINAGEPE.renderUserFooter({ utilizador: { nome: 'Dr. J. Sitoe', instituicao: 'ARC', direccao: 'Analista de Concorrência' } });
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+if(window.SinagepeNav) SinagepeNav.montar('arc');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-  document.getElementById('content-mount').innerHTML = `
-    <div class="kpi-row" style="grid-template-columns:repeat(4,1fr)">
-      ${SINAGEPE.kpiCard({ label: 'Índice de Concentração (HHI)', valor: a.kpis.hhiNacional.toFixed(2), estado: 'Concentrado', tipo: 'warn' })}
-      ${SINAGEPE.kpiCard({ label: 'Mercados Monitorizados', valor: a.kpis.mercadosMonitorizados + ' Sectores', estado: 'Normal', tipo: 'info' })}
-      ${SINAGEPE.kpiCard({ label: 'Alertas Concorrenciais', valor: a.kpis.alertasConcorrenciaisActivos, estado: 'Risco Cartel', tipo: 'crit' })}
-      ${SINAGEPE.kpiCard({ label: 'Investigações Activas', valor: a.kpis.investigacoesActivas + ' Casos', estado: 'Em Progresso', tipo: 'warn' })}
-    </div>
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
+function fluxos(){
+  var s=ST.sima;
+  return (s.fluxos||[]).concat(s.fluxos1462||[],s.fluxos1449||[],s.fluxos1460||[],s.fluxos1444||[],s.fluxos1446||[]);
+}
 
-    <div class="row-2">
-      <div class="card">
-        <div class="card-title">Índice HHI por Produto Essencial</div>
-        <div class="card-subtitle">Escala 0-1 &mdash; &lt;0,3 Baixo, 0,3&ndash;0,6 Moderado, &gt;0,6 Alto</div>
-        <div id="hhi-list"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Barreiras de Entrada</div>
-        <div id="barreiras-list"></div>
-      </div>
-    </div>
+function desenharKpis(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var disp=R.slice().sort(function(a,b){
+    return (b.maximo.valor/b.minimo.valor)-(a.maximo.valor/a.minimo.valor)})[0];
+  var F=fluxos(), o={};
+  F.forEach(function(f){if(f.origem)o[f.origem]=(o[f.origem]||0)+1});
+  var top=Object.keys(o).sort(function(a,b){return o[b]-o[a]});
+  var conc=top.length?Math.round(o[top[0]]/F.length*100):0;
+  var imp=ST.fx.icm&&ST.fx.icm.importacoes;
+  var maxDesvio=0,prodDesvio=null;
+  if(imp&&imp.linhas) imp.linhas.forEach(function(l){
+    var d=(l.precoDeclaradoUSDt-l.precoReferenciaUSDt)/l.precoReferenciaUSDt*100;
+    if(d>maxDesvio){maxDesvio=d;prodDesvio=l}
+  });
 
-    <div class="card">
-      <div class="card-title">Quotas de Mercado das Empresas Dominantes</div>
-      <div class="card-subtitle">Identificadas por nome — quota de mercado de líderes de sector é informação regulatória tipicamente pública</div>
-      <table class="balance-table">
-        <thead><tr><th>Produto</th><th>Empresa Dominante</th><th>Quota</th><th>Tendência</th><th>Risco Conc.</th></tr></thead>
-        <tbody id="empresas-body"></tbody>
-      </table>
-    </div>
+  var lista=[
+   {id:'arc-dispersao',rotulo:'Dispers&atilde;o m&aacute;xima entre pra&ccedil;as',
+    valor:Math.round((disp.maximo.valor/disp.minimo.valor-1)*100),unidade:'%',
+    estado:disp.produto+' &mdash; '+disp.minimo.mercados[0]+' vs '+disp.maximo.mercados[0],
+    tipo:'FACTO',cor:'var(--red)',
+    resumo:'Diferen&ccedil;a entre a pra&ccedil;a mais barata e a mais cara para o mesmo produto, na mesma semana.',
+    formula:'m&aacute;ximo a dividir pelo m&iacute;nimo, menos um',
+    componentes:[[disp.produto+' em '+disp.minimo.mercados[0],disp.minimo.valor,'MT/kg'],
+                 [disp.produto+' em '+disp.maximo.mercados[0],disp.maximo.valor,'MT/kg']],
+    leitura:'Indica ineefici&ecirc;ncia de mercado, n&atilde;o pr&aacute;tica concertada. A causa mais provável &eacute; custo de transporte e isolamento &mdash; o que exige investiga&ccedil;&atilde;o para se distinguir.',
+    fonte:'SIMA &mdash; boletim Quente-Quente n.&ordm; '+ST.sima.meta.edicao,dataDados:'Julho de 2023',
+    ecra:'marketplace-b2b.html'},
 
-    <div class="card" style="background:var(--navy-800);border-color:var(--crit)">
-      <div class="pill pill-crit" style="margin-bottom:8px">PREV. ATIVA — Detecção Preventiva de Cartéis</div>
-      <p style="font-size:12.5px;color:var(--ink-dim);line-height:1.6;margin:0" id="cartel-texto"></p>
-    </div>
-  `;
+   {id:'arc-concentracao',rotulo:'Concentra&ccedil;&atilde;o de origem geogr&aacute;fica',valor:conc,unidade:'%',
+    estado:top.length?(top[0]+' &eacute; a maior origem'):'sem fluxos',tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Fatia dos fluxos documentados que parte da origem mais frequente.',
+    formula:'fluxos da maior origem a dividir pelo total de fluxos',
+    componentes:top.slice(0,6).map(function(k){return [k,o[k],'fluxos']}),
+    leitura:'&Eacute; concentra&ccedil;&atilde;o de <b>origem</b>, n&atilde;o de mercado. Diz que uma regi&atilde;o abastece muitas outras; n&atilde;o diz quantas empresas o fazem nem com que quota.',
+    fonte:'SIMA &mdash; fluxos documentados em 8 edi&ccedil;&otilde;es',dataDados:'Setembro de 2022 a Julho de 2023'},
 
-  const HHI_TIPO = h => h > 0.6 ? 'crit' : h >= 0.3 ? 'warn' : 'ok';
-  document.getElementById('hhi-list').innerHTML = a.hhiPorProduto.map(h => `
-    <div class="util-row"><div class="util-label-row"><span>${h.produto}</span><span>${h.hhi.toFixed(2)}</span></div>
-    <div class="util-track"><div class="util-fill pill-${HHI_TIPO(h.hhi)}" style="width:${h.hhi * 100}%"></div></div></div>`).join('');
+   {id:'arc-importacao',rotulo:'Maior desvio em pre&ccedil;o de importa&ccedil;&atilde;o',
+    valor:maxDesvio?Math.round(maxDesvio):'\u2014',unidade:maxDesvio?'%':'',
+    estado:prodDesvio?(prodDesvio.produto+' &mdash; observa&ccedil;&atilde;o do ICM'):'sem observa&ccedil;&atilde;o',
+    tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Diferen&ccedil;a entre o pre&ccedil;o declarado na importa&ccedil;&atilde;o e a refer&ecirc;ncia internacional.',
+    formula:'(pre&ccedil;o declarado menos refer&ecirc;ncia) a dividir pela refer&ecirc;ncia',
+    componentes:prodDesvio?[[prodDesvio.produto+' declarado',prodDesvio.precoDeclaradoUSDt,'USD/t'],
+      [prodDesvio.produto+' refer&ecirc;ncia',prodDesvio.precoReferenciaUSDt,'USD/t'],
+      ['Volume declarado',prodDesvio.volumeToneladas,'t']]:[],
+    leitura:'<b>N&atilde;o constitui prova de infrac&ccedil;&atilde;o.</b> &Eacute; observa&ccedil;&atilde;o p&uacute;blica do pr&oacute;prio ICM e justifica verifica&ccedil;&atilde;o documental. Frete, seguro, prazo e qualidade s&atilde;o explica&ccedil;&otilde;es leg&iacute;timas poss&iacute;veis.',
+    fonte:'ICM &mdash; declara&ccedil;&atilde;o p&uacute;blica',dataDados:'2026',
+    ecra:'inteligencia-consolidada.html'},
 
-  document.getElementById('barreiras-list').innerHTML = a.barreirasEntrada.map(b => `
-    <div class="util-row"><div class="util-label-row"><span>${b.tipo}</span><span>${b.pontuacao}/10</span></div>
-    <div class="util-track"><div class="util-fill" style="width:${b.pontuacao * 10}%;background:var(--bronze)"></div></div>
-    <div style="font-size:10.5px;color:var(--ink-faint);margin-top:2px">${b.descricao}</div></div>`).join('');
+   {id:'arc-hhi',rotulo:'&Iacute;ndice de concentra&ccedil;&atilde;o de mercado',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'&Iacute;ndice que mede quanto um mercado est&aacute; concentrado em poucos operadores.',
+    porqueNaoEReal:'O &iacute;ndice apresentado era calculado sobre quotas de mercado escritas &agrave; m&atilde;o, atribu&iacute;das a empresas nomeadas. Um &iacute;ndice de concentra&ccedil;&atilde;o exige volumes reais por operador, que o sistema n&atilde;o tem. Calcul&aacute;-lo sobre n&uacute;meros imaginados d&aacute; confian&ccedil;a onde n&atilde;o h&aacute; base &mdash; e atribui posi&ccedil;&atilde;o dominante a quem talvez n&atilde;o a tenha.',
+    oQueFalta:'Volumes de venda por operador e por produto, com salvaguarda de sigilo comercial',
+    quemDetem:'Operadores &middot; MIC &middot; Alf&acirc;ndegas'},
 
-  const RISCO_TIPO = { 'Crítico': 'crit', 'Alto': 'crit', 'Médio': 'warn', 'Baixo': 'ok' };
-  document.getElementById('empresas-body').innerHTML = a.empresasDominantes.map(e => `
-    <tr><td>${e.produto}</td><td>${e.empresa}</td><td>${e.quotaPercent}%</td><td>${e.tendencia}</td>
-    <td><span class="state-tag" style="background:var(--${RISCO_TIPO[e.risco]}-bg);color:var(--${RISCO_TIPO[e.risco]})">${e.risco}</span></td></tr>`).join('');
+   {id:'arc-cartel',rotulo:'Detec&ccedil;&atilde;o preventiva de cart&eacute;is',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Alerta que assinalava movimento concertado de pre&ccedil;os entre operadores.',
+    porqueNaoEReal:'O alerta identificava produto, cidade e n&uacute;mero de distribuidores, e afirmava aumento concertado sem justifica&ccedil;&atilde;o de custos. Era inteiramente inventado. Cart&eacute;l &eacute; crime: uma acusa&ccedil;&atilde;o com localiza&ccedil;&atilde;o suficiente para identificar empresas reais, assente em dados de demonstra&ccedil;&atilde;o, expõe quem apresenta o sistema. A detec&ccedil;&atilde;o de pr&aacute;tica concertada &eacute; compet&ecirc;ncia exclusiva da ARC, com poderes de investiga&ccedil;&atilde;o que um ecr&atilde; n&atilde;o tem.',
+    oQueFalta:'S&eacute;ries de pre&ccedil;o por operador, e enquadramento legal da an&aacute;lise',
+    quemDetem:'ARC'}
+  ];
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
+}
 
-  document.getElementById('cartel-texto').textContent = a.alertaCartel.descricao;
+function desenharDispersao(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var h='';
+  R.slice().sort(function(a,b){
+    return (b.maximo.valor/b.minimo.valor)-(a.maximo.valor/a.minimo.valor)}).forEach(function(r){
+    var d=(r.maximo.valor/r.minimo.valor-1)*100;
+    var c=d>150?'var(--red)':d>60?'var(--amber)':'var(--ok)';
+    h+='<div style="margin-bottom:13px">'
+     +'<div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px">'
+     +'<b>'+esc(r.produto)+'</b><span class="mono" style="color:'+c+'">+'+d.toFixed(0)+'%</span></div>'
+     +'<div class="barra"><span class="barra-n" style="color:var(--ok);text-align:right">'
+     +esc(r.minimo.mercados[0])+'</span>'
+     +'<span class="barra-t"><i style="left:0;width:100%;background:linear-gradient(90deg,var(--ok),'+c+')"></i></span>'
+     +'<span class="barra-n" style="color:var(--amber)">'+esc(r.maximo.mercados[0])+'</span></div>'
+     +'<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--t4);margin-top:3px">'
+     +'<span class="mono">'+p2(r.minimo.valor)+' MT/kg</span>'
+     +'<span class="mono">'+p2(r.maximo.valor)+' MT/kg</span></div></div>';
+  });
+  document.getElementById('dispersao').innerHTML=h;
+}
+
+function desenharOrigens(){
+  var F=fluxos(), o={},d={};
+  F.forEach(function(f){
+    if(f.origem)o[f.origem]=(o[f.origem]||0)+1;
+    if(f.origem&&f.destino){d[f.origem]=d[f.origem]||{};d[f.origem][f.destino]=1}
+  });
+  var top=Object.keys(o).sort(function(a,b){return o[b]-o[a]}).slice(0,7);
+  var h='<thead><tr><th>Origem</th><th class="n">Fluxos</th><th class="n">Pra&ccedil;as servidas</th>'
+   +'<th class="n">Fatia</th></tr></thead><tbody>';
+  top.forEach(function(k){
+    var praças=Object.keys(d[k]||{}).length;
+    h+='<tr><td style="font-weight:600">'+esc(k)+'</td>'
+     +'<td class="n">'+o[k]+'</td><td class="n" style="color:var(--t3)">'+praças+'</td>'
+     +'<td class="n" style="color:var(--brzl)">'+Math.round(o[k]/F.length*100)+'%</td></tr>';
+  });
+  document.getElementById('origens').innerHTML=h+'</tbody>';
+}
+
+function desenharImportacao(){
+  var imp=ST.fx.icm&&ST.fx.icm.importacoes;
+  var h='<thead><tr><th>Produto</th><th class="n">Declarado</th><th class="n">Refer&ecirc;ncia</th>'
+   +'<th class="n">Desvio</th></tr></thead><tbody>';
+  if(imp&&imp.linhas&&imp.linhas.length){
+    imp.linhas.forEach(function(l){
+      var d=(l.precoDeclaradoUSDt-l.precoReferenciaUSDt)/l.precoReferenciaUSDt*100;
+      var c=d>15?'var(--amber)':'var(--t3)';
+      h+='<tr><td style="font-weight:600">'+esc(l.produto)+'</td>'
+       +'<td class="n">'+num(l.precoDeclaradoUSDt)+'</td>'
+       +'<td class="n" style="color:var(--t4)">'+num(l.precoReferenciaUSDt)+'</td>'
+       +'<td class="n" style="color:'+c+'">'+(d>0?'+':'')+d.toFixed(0)+'%</td></tr>';
+    });
+  } else {
+    h+='<tr><td colspan="4" style="color:var(--t4)">Sem observa&ccedil;&otilde;es carregadas.</td></tr>';
+  }
+  document.getElementById('importacao').innerHTML=h+'</tbody>';
+}
+
+var PRECISA=[
+ ['Volumes de venda por operador','&Iacute;ndice de concentra&ccedil;&atilde;o e quotas de mercado reais',
+  'Lei da concorr&ecirc;ncia: a ARC tem poderes de recolha junto de operadores','Operadores &middot; ARC'],
+ ['S&eacute;ries de pre&ccedil;o por operador','An&aacute;lise de movimento paralelo de pre&ccedil;os',
+  'S&oacute; a ARC pode recolher e analisar. O sistema n&atilde;o deve receb&ecirc;-las sem enquadramento','ARC'],
+ ['Estrutura de custos por sector','Distinguir subida por custo de subida por margem',
+  'Exige declara&ccedil;&atilde;o dos operadores, com sigilo comercial','Operadores &middot; ARC'],
+ ['Quantidades importadas por operador','Depend&ecirc;ncia de fornecedor e barreiras &agrave; entrada',
+  'Agregado aduaneiro, com regra dos cinco operadores','Alf&acirc;ndegas &middot; JUE'],
+ ['Registo de operadores por sector','Saber quantos concorrem em cada mercado',
+  'Registo comercial p&uacute;blico','MIC &middot; Conservat&oacute;ria'],
+ ['Pre&ccedil;o grossista por pra&ccedil;a','Separar margem grossista de margem retalhista',
+  'O SIMA j&aacute; recolhe este dado; falta public&aacute;-lo estruturado','MAAP &middot; SIMA']
+];
+function desenharPrecisa(){
+  var h='<thead><tr><th>Dado em falta</th><th>O que permitiria</th><th>Fundamento</th>'
+   +'<th>Quem det&eacute;m</th></tr></thead><tbody>';
+  PRECISA.forEach(function(x){
+    h+='<tr><td style="font-weight:600">'+x[0]+'</td>'
+     +'<td style="color:var(--t3);max-width:280px">'+x[1]+'</td>'
+     +'<td style="color:var(--t3);max-width:300px">'+x[2]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+x[3]+'</td></tr>';
+  });
+  document.getElementById('precisa').innerHTML=h+'</tbody>';
+}
+
+var REGRAS=[
+ ['O sistema n&atilde;o nomeia empresas','Nenhum indicador deste portal identifica um operador, directa ou indirectamente. Um pseud&oacute;nimo com sector, prov&iacute;ncia e dimens&atilde;o identifica quem conhece o mercado.'],
+ ['O sistema n&atilde;o qualifica pr&aacute;ticas','N&atilde;o declara cart&eacute;l, dumping, abuso de posi&ccedil;&atilde;o dominante nem pr&aacute;tica concertada. Assinala desvios e nomeia quem tem compet&ecirc;ncia para os qualificar.'],
+ ['Um desvio n&atilde;o &eacute; uma prova','&Eacute; indicador que justifica verifica&ccedil;&atilde;o. A explica&ccedil;&atilde;o leg&iacute;tima &eacute; sempre a primeira hip&oacute;tese a considerar.'],
+ ['M&iacute;nimo de cinco observa&ccedil;&otilde;es','Nenhuma compara&ccedil;&atilde;o com menos de cinco operadores medidos. Em pra&ccedil;as com dois ou tr&ecirc;s, a compara&ccedil;&atilde;o individual n&atilde;o deve existir.'],
+ ['O alerta vai &agrave; autoridade, n&atilde;o ao mercado','Informa&ccedil;&atilde;o sobre desvios de pre&ccedil;o &eacute; leg&iacute;tima como dado de mercado. Rotular um operador como suspeito n&atilde;o &eacute;, e cabe &agrave; ARC.']
+];
+function desenharRegras(){
+  var h='<thead><tr><th>Regra</th><th>O que significa na pr&aacute;tica</th></tr></thead><tbody>';
+  REGRAS.forEach(function(r){
+    h+='<tr><td style="font-weight:600;max-width:260px">'+r[0]+'</td>'
+     +'<td style="color:var(--t3)">'+r[1]+'</td></tr>';
+  });
+  document.getElementById('regras').innerHTML=h+'</tbody>';
+}
+
+Promise.all(['sima-precos','fontes-externas'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.sima=res[0];ST.fx=res[1];
+  desenharKpis();desenharDispersao();desenharOrigens();
+  desenharImportacao();desenharPrecisa();desenharRegras();
+}).catch(function(e){
+  document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
 });
 </script>
 </body>

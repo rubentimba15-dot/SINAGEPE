@@ -1,93 +1,342 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard IGSAE — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Portal IGSAE &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:940px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 17px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:15px 17px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 15px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 15px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+.etapa{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid rgba(38,56,86,.4)}
+.etapa:last-child{border-bottom:none}
+.etapa-n{flex-shrink:0;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;
+ justify-content:center;font-size:11px;font-family:'IBM Plex Mono',monospace;border:1px solid}
+.aviso{margin:12px 17px;padding:12px 14px;border-radius:9px;font-size:11.5px;line-height:1.7;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Inspec&ccedil;&atilde;o-Geral</div>
+    <h1>Portal IGSAE</h1>
+    <p class="sub">Onde o pa&iacute;s n&atilde;o v&ecirc;, e de quem se pode exigir que passe a ver. <b>Nenhum operador &eacute; identificado como suspeito</b> &mdash; a aus&ecirc;ncia de dados &eacute; um evento de risco, n&atilde;o uma prova de infrac&ccedil;&atilde;o.</p>
 
-<div class="app-shell">
-  <aside class="sidebar">
-    <div class="sidebar-top">
-      <div class="brand"><div class="brand-mark">I</div><div class="brand-text"><div class="brand-title">IGSAE</div><div class="brand-sub">Inspecção-Geral</div></div></div>
-      <nav class="nav-list">
-        <a class="nav-item active" href="dashboard-igsae.html"><span class="nav-icon">▦</span> Painel de Fiscalização</a>
-        <a class="nav-item" href="#"><span class="nav-icon">⚠</span> Centro de Alertas</a>
-        <a class="nav-item" href="#"><span class="nav-icon">⛁</span> Empresas Suspeitas</a>
-        <a class="nav-item" href="#"><span class="nav-icon">▧</span> Auto de Infração</a>
-        <a class="nav-item" href="#"><span class="nav-icon">⚙</span> Configurações</a>
-        <a class="nav-item" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="margin-top:8px;border-top:1px solid rgba(212,165,116,0.15);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:#ef4444">Sair (Logout)</span></a>
-      </nav>
+    <div class="aviso r" style="margin:0 0 16px"><b>Este portal foi reconstru&iacute;do em Agosto de 2026.</b>
+    Mostrava uma tabela de <b>operadores sob suspeita</b>, com prov&iacute;ncia, n&uacute;mero de autos emitidos, data da &uacute;ltima visita e n&iacute;vel de risco severo.
+    O subt&iacute;tulo dizia que eram pseud&oacute;nimos consistentes &mdash; mas <b>um pseud&oacute;nimo com sector, prov&iacute;ncia e dimens&atilde;o identifica o operador</b> para quem conhece o mercado.
+    E os dados eram de demonstra&ccedil;&atilde;o: os autos, as visitas e os n&iacute;veis de risco n&atilde;o derivavam de nenhuma inspec&ccedil;&atilde;o real.
+    Mostrava ainda fiscaliza&ccedil;&otilde;es realizadas, produtos apreendidos e casos pendentes &mdash; n&uacute;meros que s&oacute; o IGSAE possui e que o sistema n&atilde;o tem.</div>
+
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Onde inspeccionar primeiro</h2>
+        <p>Unidades sem reporte, ordenadas pela via de exig&ecirc;ncia dispon&iacute;vel</p></div>
+        <span class="tag crit" id="u-tag">&mdash;</span></div>
+      <table id="unidades"></table>
+      <div class="aviso i"><b>Isto n&atilde;o &eacute; uma lista de infractores.</b> N&atilde;o existe obriga&ccedil;&atilde;o legal de reportar exist&ecirc;ncias
+      ao SINAGEPE. &Eacute; um mapa de onde a informa&ccedil;&atilde;o falta, ordenado por onde &eacute; mais f&aacute;cil obt&ecirc;-la.
+      A ordem come&ccedil;a nas unidades do Estado, onde basta instru&ccedil;&atilde;o da tutela.</div>
     </div>
-    <div class="sidebar-footer"><div class="avatar-dot" id="user-initials">FM</div><div class="sidebar-footer-text"><div class="sidebar-footer-name" id="user-nome">—</div><div class="sidebar-footer-role" id="user-cargo">—</div></div></div>
-  </aside>
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-title-group"><div class="topbar-title">Dashboard IGSAE</div><div class="topbar-badge">Portal Vivo de Inteligência Integrada (SIMULADO)</div></div>
-      <div class="live-indicator"><span class="live-dot"></span> Dados em tempo real</div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Rede vi&aacute;ria com impacto na fiscaliza&ccedil;&atilde;o</h2>
+          <p>Tro&ccedil;os cortados que condicionam o acesso a unidades</p></div></div>
+        <table id="viaria"></table>
+        <div class="aviso w">Uma unidade servida por tro&ccedil;o intransit&aacute;vel &eacute; de dif&iacute;cil inspec&ccedil;&atilde;o
+        e de dif&iacute;cil abastecimento. As duas coisas andam juntas.</div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>Diverg&ecirc;ncias entre fontes oficiais</h2>
+          <p>Onde duas institui&ccedil;&otilde;es publicam n&uacute;meros diferentes</p></div></div>
+        <table id="divergencias"></table>
+        <div class="aviso i">Uma diverg&ecirc;ncia entre registos oficiais &eacute; mat&eacute;ria de reconcilia&ccedil;&atilde;o,
+        n&atilde;o de fiscaliza&ccedil;&atilde;o. Mas &eacute; onde a inspec&ccedil;&atilde;o costuma come&ccedil;ar.</div>
+      </div>
     </div>
-    <div class="content" id="content-mount"></div>
-    <div class="footer"><span>© 2026 SINAGEPE Moçambique - IGSAE</span><span id="footer-updated">—</span></div>
-  </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>A cadeia de responsabilidade, e onde o IGSAE entra</h2>
+        <p>Oito etapas entre um dado an&oacute;malo e uma decis&atilde;o</p></div>
+        <span class="tag">Regra 7 da Governa&ccedil;&atilde;o</span></div>
+      <div class="bd" id="cadeia"></div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O que o IGSAE ter&aacute; acesso com protocolo</h2>
+        <p>E o fundamento de cada pedido</p></div>
+        <span class="tag crit">Por obter</span></div>
+      <table id="protocolo"></table>
+      <div class="aviso w"><b>O sistema n&atilde;o tem hoje dados confidenciais de empresas, e por isso n&atilde;o os pode mostrar a ningu&eacute;m.</b>
+      O mandato do IGSAE justifica acesso privilegiado &mdash; mas acesso privilegiado a dados que n&atilde;o existem
+      seria um ecr&atilde; vazio, ou pior, um ecr&atilde; com dados de demonstra&ccedil;&atilde;o com apar&ecirc;ncia de confidenciais.
+      Quando os dados existirem, o acesso far-se-&aacute; com registo de quem consultou o qu&ecirc; &mdash; que &eacute; a garantia
+      que protege tanto o inspeccionado como o inspector.</div>
+    </div>
+  </main>
 </div>
 
-<script src="assets/sinagepe.js"></script>
 <script>
-SINAGEPE.load().then(data => {
-  const i = data.dashboardIGSAE;
-  SINAGEPE.renderUserFooter({ utilizador: { nome: 'Dra. F. Mapote', instituicao: 'IGSAE', direccao: 'Inspectora-Geral Adjunta' } });
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+if(window.SinagepeNav) SinagepeNav.montar('igsae');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-  document.getElementById('content-mount').innerHTML = `
-    <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)">
-      ${SINAGEPE.kpiCard({ label: 'Fiscalizações Realizadas (Mês)', valor: i.kpis.fiscalizacoesRealizadasMes, estado: 'No Prazo', tipo: 'ok' })}
-      ${SINAGEPE.kpiCard({ label: 'Produtos Apreendidos', valor: i.kpis.produtosApreendidosT + ' ton', estado: 'Crítico', tipo: 'crit' })}
-      ${SINAGEPE.kpiCard({ label: 'Casos Pendentes', valor: i.kpis.casosPendentes, estado: 'Em Análise', tipo: 'warn' })}
-    </div>
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
 
-    <div class="row-2">
-      <div class="card">
-        <div class="card-title">Mapa de Risco e Fiscalização</div>
-        <div id="mapa-risco-list"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Ranking de Infracções Detectadas</div>
-        <table class="balance-table">
-          <thead><tr><th>Tipo</th><th>Ocorrências</th><th>Tendência</th><th>Gravidade</th></tr></thead>
-          <tbody id="infracoes-body"></tbody>
-        </table>
-      </div>
-    </div>
+var ROT={estatal:'Estatal','ppp-gestao-privada':'PPP','concessao-privada':'Concess&atilde;o',
+ 'participacao-estatal':'Participa&ccedil;&atilde;o estatal',privada:'Privada',internacional:'Internacional'};
+var VIA={'estatal':['Directa','#12B981'],'ppp-gestao-privada':['Contratual','#E8BE7A'],
+ 'concessao-privada':['Contratual','#22B8F0'],'participacao-estatal':['Accionista','#2DD4BF'],
+ 'privada':['Negociada','#F0A926'],'internacional':['Negociada','#A78BFA']};
 
-    <div class="card">
-      <div class="card-title">Principais Operadores sob Suspeita</div>
-      <div class="card-subtitle">Pseudónimos consistentes e persistentes — o mesmo operador mantém sempre o mesmo nome, para permitir acompanhar reincidências ao longo do tempo</div>
-      <table class="balance-table">
-        <thead><tr><th>Operador</th><th>Província</th><th>Reincidências</th><th>Últ. Visita</th><th>Nível de Risco</th></tr></thead>
-        <tbody id="suspeitos-body"></tbody>
-      </table>
-    </div>
-  `;
+function semReporte(){return ST.arm.armazens.filter(function(a){return a.sensor==='sem-sensor'})}
 
-  const RISCO_TIPO = { 'Risco Extremo': 'crit', 'Alerta/Desvio': 'warn', 'Fiscalizado Limpo': 'ok' };
-  document.getElementById('mapa-risco-list').innerHTML = i.mapaRisco.map(m => `
-    <div class="medida-row"><span>${m.local}${m.tipo !== '—' ? ' — ' + m.tipo : ''}</span><span class="state-tag" style="background:var(--${RISCO_TIPO[m.nivel]}-bg);color:var(--${RISCO_TIPO[m.nivel]})">${m.nivel}</span></div>`).join('');
+function desenharKpis(){
+  var A=ST.arm.armazens, S=semReporte();
+  var exigivel=S.filter(function(a){var v=VIA[a.natureza];
+    return v&&(v[0]==='Directa'||v[0]==='Contratual')}).length;
+  var V=ST.rv, intr=V.interrupcoes.filter(function(i){return i.gravidade==='intransitavel'}).length;
+  var comFonte=A.filter(function(a){return a.fonte}).length;
 
-  const GRAV_TIPO = { 'Crítica': 'crit', 'Alerta': 'warn' };
-  document.getElementById('infracoes-body').innerHTML = i.rankingInfracoes.map(r => `
-    <tr><td>${r.tipo}</td><td>${r.ocorrencias}</td><td>${r.tendencia}</td>
-    <td><span class="state-tag" style="background:var(--${GRAV_TIPO[r.gravidade]}-bg);color:var(--${GRAV_TIPO[r.gravidade]})">${r.gravidade}</span></td></tr>`).join('');
+  var lista=[
+   {id:'ig-cegas',rotulo:'Unidades sem reporte de exist&ecirc;ncias',valor:S.length,unidade:'de '+A.length,
+    estado:'nem telemetria nem declara&ccedil;&atilde;o',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Unidades cadastradas que n&atilde;o comunicam o que t&ecirc;m armazenado.',
+    formula:'contagem das unidades sem qualquer forma de reporte',
+    componentes:(function(){var n={};S.forEach(function(a){n[a.natureza]=(n[a.natureza]||0)+1});
+      return Object.keys(n).sort(function(a,b){return n[b]-n[a]})
+        .map(function(k){return [ROT[k]||k,n[k],'unidades']})})(),
+    leitura:'&Eacute; a totalidade do cadastro. Nenhuma unidade do pa&iacute;s reporta exist&ecirc;ncias, e isso n&atilde;o &eacute; infrac&ccedil;&atilde;o: n&atilde;o h&aacute; obriga&ccedil;&atilde;o legal de o fazer.',
+    fonte:'Cadastro Nacional de Armazenagem',dataDados:'Agosto de 2026',
+    ecra:'monitorizacao-em-falta.html'},
 
-  const RISCO_OP_TIPO = { 'Severo': 'crit', 'Médio': 'warn' };
-  document.getElementById('suspeitos-body').innerHTML = i.operadoresSuspeitos.map(o => `
-    <tr><td>${o.nome}</td><td>${o.provincia}</td><td>${o.autosEmitidos} Autos Emitidos</td><td>${o.ultimaVisita}</td>
-    <td><span class="state-tag" style="background:var(--${RISCO_OP_TIPO[o.nivelRisco]}-bg);color:var(--${RISCO_OP_TIPO[o.nivelRisco]})">${o.nivelRisco}</span></td></tr>`).join('');
+   {id:'ig-exigivel',rotulo:'Onde h&aacute; fundamento para exigir',valor:exigivel,unidade:'de '+S.length,
+    estado:'instru&ccedil;&atilde;o da tutela ou contrato',tipo:'FACTO',cor:'var(--brzl)',
+    resumo:'Unidades do Estado, em PPP ou concessionadas, onde a via de exig&ecirc;ncia existe.',
+    formula:'unidades de natureza estatal, PPP ou concess&atilde;o',
+    componentes:(function(){var n={};S.forEach(function(a){n[a.natureza]=(n[a.natureza]||0)+1});
+      return Object.keys(n).map(function(k){var v=VIA[k]||['&mdash;'];
+        return [(ROT[k]||k)+' &mdash; via '+v[0],n[k],'unidades']})})(),
+    leitura:'&Eacute; por aqui que uma campanha de recolha come&ccedil;a: onde j&aacute; h&aacute; t&iacute;tulo que a sustente.',
+    fonte:'Cadastro Nacional, natureza declarada',dataDados:'Agosto de 2026'},
+
+   {id:'ig-fonte',rotulo:'Unidades com fonte oficial citada',valor:comFonte,unidade:'de '+A.length,
+    estado:'documenta&ccedil;&atilde;o verific&aacute;vel',tipo:'FACTO',cor:'var(--ok)',
+    resumo:'Unidades cuja exist&ecirc;ncia est&aacute; documentada em publica&ccedil;&atilde;o de institui&ccedil;&atilde;o.',
+    formula:'contagem das unidades com URL de fonte no cadastro',
+    componentes:[['No cadastro',A.length,''],['Com fonte citada',comFonte,''],
+                 ['Verificadas',A.filter(function(a){return a.verificado}).length,'']],
+    leitura:'Cada unidade pode ser confirmada na publica&ccedil;&atilde;o de origem. Para inspec&ccedil;&atilde;o, isso &eacute; o m&iacute;nimo: n&atilde;o se fiscaliza o que n&atilde;o se sabe existir.',
+    fonte:'Cadastro Nacional, fonte por unidade',dataDados:'Agosto de 2026',
+    ecra:'cadastro-armazens.html'},
+
+   {id:'ig-vias',rotulo:'Tro&ccedil;os intransit&aacute;veis',valor:intr,unidade:'de '+V.interrupcoes.length,
+    estado:'condicionam acesso e abastecimento',tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Tro&ccedil;os de estrada com circula&ccedil;&atilde;o cortada, segundo a ANE.',
+    formula:'contagem das interrup&ccedil;&otilde;es classificadas como intransit&aacute;veis',
+    componentes:V.interrupcoes.map(function(i){
+      return [i.estrada+' '+i.troco+' ('+i.provincia+')',
+              i.gravidade==='intransitavel'?'intransit&aacute;vel':'condicionada','']}),
+    leitura:'Uma unidade servida por tro&ccedil;o cortado &eacute; de dif&iacute;cil inspec&ccedil;&atilde;o e de dif&iacute;cil abastecimento. As duas coisas andam juntas.',
+    fonte:'ANE &mdash; comunicado p&uacute;blico',dataDados:'Janeiro de 2026',
+    ecra:'modulo-logistica.html'},
+
+   {id:'ig-suspeitos',rotulo:'Operadores sob suspeita',valor:'\u2014',unidade:'',estado:'retirado',
+    tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Lista de operadores com reincid&ecirc;ncias e n&iacute;vel de risco.',
+    porqueNaoEReal:'A tabela mostrava operadores com prov&iacute;ncia, autos emitidos, data da &uacute;ltima visita e n&iacute;vel de risco severo. Era apresentada como pseud&oacute;nimos consistentes &mdash; mas um pseud&oacute;nimo com sector, prov&iacute;ncia e dimens&atilde;o identifica o operador para quem conhece o mercado. E os dados eram inventados: n&atilde;o houve inspec&ccedil;&atilde;o, auto nem visita.',
+    oQueFalta:'Registo de inspec&ccedil;&otilde;es do pr&oacute;prio IGSAE, com protocolo de acesso',
+    quemDetem:'IGSAE'},
+
+   {id:'ig-fiscalizacoes',rotulo:'Fiscaliza&ccedil;&otilde;es, apreens&otilde;es e casos pendentes',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Actividade de fiscaliza&ccedil;&atilde;o do m&ecirc;s corrente.',
+    porqueNaoEReal:'S&atilde;o dados que s&oacute; o IGSAE possui: quantas fiscaliza&ccedil;&otilde;es realizou, quanto apreendeu, quantos casos tem pendentes. O SINAGEPE n&atilde;o tem acesso a nenhum deles, e os valores mostrados eram de demonstra&ccedil;&atilde;o.',
+    oQueFalta:'Agregado mensal de actividade, fornecido pelo IGSAE',
+    quemDetem:'IGSAE'}
+  ];
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
+}
+
+function desenharUnidades(){
+  var S=semReporte().slice().sort(function(a,b){
+    var va=VIA[a.natureza],vb=VIA[b.natureza];
+    var oa=va&&va[0]==='Directa'?0:va&&va[0]==='Contratual'?1:2;
+    var ob=vb&&vb[0]==='Directa'?0:vb&&vb[0]==='Contratual'?1:2;
+    return oa-ob;
+  });
+  var h='<thead><tr><th>Unidade</th><th>Prov&iacute;ncia</th><th>Natureza</th>'
+   +'<th>Quem deveria declarar</th><th>Via</th></tr></thead><tbody>';
+  S.forEach(function(a){
+    var v=VIA[a.natureza]||['&mdash;','#5E7189'];
+    h+='<tr><td><b>'+esc(a.nome)+'</b></td>'
+     +'<td style="color:var(--t3)">'+esc(a.provincia||'&mdash;')+'</td>'
+     +'<td style="color:var(--t3)">'+(ROT[a.natureza]||a.natureza)+'</td>'
+     +'<td style="color:var(--t3);max-width:250px">'+esc(a.operador||a.proprietario||'n&atilde;o declarado')+'</td>'
+     +'<td><span class="est" style="color:'+v[1]+';border-color:'+v[1]+'55;background:'+v[1]+'12">'+v[0]+'</span></td></tr>';
+  });
+  document.getElementById('unidades').innerHTML=h+'</tbody>';
+  document.getElementById('u-tag').textContent=S.length+' unidades';
+}
+
+function desenharViaria(){
+  var V=ST.rv, A=ST.arm.armazens;
+  var h='<thead><tr><th>Tro&ccedil;o</th><th>Prov&iacute;ncia</th><th class="n">Unidades na prov&iacute;ncia</th>'
+   +'<th>Alternativa</th></tr></thead><tbody>';
+  V.interrupcoes.forEach(function(i){
+    var un=A.filter(function(a){return a.provincia===i.provincia}).length;
+    var semAlt=!i.alternativa||/nenhuma/i.test(i.alternativa);
+    var intr=i.gravidade==='intransitavel';
+    h+='<tr><td><b class="mono">'+esc(i.estrada)+'</b> '+esc(i.troco)
+     +'<div style="font-size:10px;color:'+(intr?'var(--red)':'var(--amber)')+';margin-top:3px">'
+     +(intr?'intransit&aacute;vel':'condicionada')+'</div></td>'
+     +'<td style="color:var(--t3)">'+esc(i.provincia)+'</td>'
+     +'<td class="n">'+un+'</td>'
+     +'<td style="color:'+(semAlt?'var(--red)':'var(--t3)')+';max-width:200px">'
+     +esc(i.alternativa||'nenhuma indicada')+'</td></tr>';
+  });
+  document.getElementById('viaria').innerHTML=h+'</tbody>';
+}
+
+function desenharDivergencias(){
+  var F=ST.fx, D=[];
+  var sc=F.icm&&F.icm.silosConcessionados;
+  if(sc){
+    var noCadastro=ST.arm.armazens.filter(function(a){
+      return /ppp|concessao/.test(a.natureza||'')}).length;
+    D.push(['Silos concessionados','ICM: '+sc.complexos+' complexos',
+            'Cadastro: '+noCadastro+' unidades',
+            Math.round((noCadastro-sc.complexos)/sc.complexos*100)+'%']);
+  }
+  var re=F.icm&&F.icm.reservaEstrategica;
+  if(re&&re.metaToneladas&&re.actualToneladas==null)
+    D.push(['Reserva estrat&eacute;gica','Meta: '+num(re.metaToneladas)+' t',
+            'Exist&ecirc;ncias: desconhecidas','n&atilde;o verific&aacute;vel']);
+  var g=F.gs1&&F.gs1.situacaoMocambique;
+  if(g) D.push(['Identifica&ccedil;&atilde;o de produto','Cadastro: alguns com GTIN',
+                'GS1: sem organiza&ccedil;&atilde;o-membro em Mo&ccedil;ambique','incompar&aacute;vel']);
+  var h='<thead><tr><th>Assunto</th><th>Uma fonte</th><th>A outra</th><th class="n">Diferen&ccedil;a</th></tr></thead><tbody>';
+  D.forEach(function(d){
+    h+='<tr><td style="font-weight:600">'+d[0]+'</td>'
+     +'<td style="color:var(--t3)">'+d[1]+'</td>'
+     +'<td style="color:var(--t3)">'+d[2]+'</td>'
+     +'<td class="n" style="color:var(--amber)">'+d[3]+'</td></tr>';
+  });
+  document.getElementById('divergencias').innerHTML=h+'</tbody>';
+}
+
+function desenharCadeia(){
+  var r7=null;
+  (ST.gov.regras||[]).forEach(function(r){if(r.etapasResponsabilidade)r7=r});
+  if(!r7){document.getElementById('cadeia').innerHTML='';return}
+  var COR={aplicada:'#12B981',parcial:'#F0A926','por ligar':'#5E7189','por implementar':'#EF4444'};
+  var h='';
+  r7.etapasResponsabilidade.forEach(function(e){
+    var c=COR[e.estado]||'#5E7189';
+    var meu=/IGSAE/.test(e.quem);
+    h+='<div class="etapa"'+(meu?' style="background:rgba(201,138,60,.07);border-radius:8px;padding:11px 12px"':'')+'>'
+     +'<span class="etapa-n" style="border-color:'+c+';background:'+c+'18;color:'+c+'">'+e.n+'</span>'
+     +'<div style="flex:1"><div style="display:flex;gap:10px;align-items:baseline;flex-wrap:wrap">'
+     +'<b style="font-size:12.5px'+(meu?';color:var(--brzl)':'')+'">'+esc(e.etapa)+'</b>'
+     +'<span style="font-size:11px;color:var(--t4)">'+esc(e.quem)+'</span>'
+     +(meu?'<span class="est" style="color:var(--brz);border-color:var(--brzg);background:rgba(201,138,60,.1)">&Eacute; aqui</span>':'')
+     +'</div><div style="font-size:11px;color:var(--t3);line-height:1.6;margin-top:4px">'+esc(e.nota)+'</div></div></div>';
+  });
+  document.getElementById('cadeia').innerHTML=h
+   +'<div class="aviso i" style="margin:14px 0 0"><b>O IGSAE ocupa a quarta etapa: visualizar e auditar.</b> '
+   +'N&atilde;o &eacute; quem decide nem quem sanciona &mdash; e isso protege a pr&oacute;pria inspec&ccedil;&atilde;o, '
+   +'porque separa quem v&ecirc; de quem julga.</div>';
+}
+
+var PROTOCOLO=[
+ ['Exist&ecirc;ncias por unidade','Verificar reserva estrat&eacute;gica e detectar acumula&ccedil;&atilde;o an&oacute;mala',
+  'Mandato de inspec&ccedil;&atilde;o; nas unidades do Estado basta instru&ccedil;&atilde;o da tutela','Armazenistas &middot; ICM'],
+ ['Registo de inspec&ccedil;&otilde;es do IGSAE','Hist&oacute;rico de visitas, autos e reincid&ecirc;ncias',
+  'S&atilde;o dados do pr&oacute;prio IGSAE. O sistema n&atilde;o os tem e n&atilde;o os pode inventar','IGSAE'],
+ ['Condi&ccedil;&otilde;es de conserva&ccedil;&atilde;o','Temperatura, humidade e cadeia de frio em unidades sens&iacute;veis',
+  'Exige telemetria instalada ou registo de inspec&ccedil;&atilde;o estruturado','Armazenistas &middot; MIC'],
+ ['Reten&ccedil;&otilde;es aduaneiras','Produto essencial retido, tempo de perman&ecirc;ncia e risco de deteriora&ccedil;&atilde;o',
+  'Agregado das Alf&acirc;ndegas, com regra dos cinco operadores','Alf&acirc;ndegas &middot; JUE'],
+ ['Movimenta&ccedil;&otilde;es de entrada e sa&iacute;da','Reconstituir a cadeia de cust&oacute;dia de um lote',
+  'Exige declara&ccedil;&atilde;o dos operadores e identifica&ccedil;&atilde;o normalizada de produto','Operadores &middot; GS1'],
+ ['Registo de quem consultou o qu&ecirc;','Proteger inspeccionado e inspector',
+  'Exige servidor e contas individuais. &Eacute; condi&ccedil;&atilde;o pr&eacute;via a qualquer acesso privilegiado','Infraestrutura']
+];
+function desenharProtocolo(){
+  var h='<thead><tr><th>Dado</th><th>O que permitiria</th><th>Fundamento</th><th>Quem det&eacute;m</th></tr></thead><tbody>';
+  PROTOCOLO.forEach(function(x){
+    h+='<tr><td style="font-weight:600">'+x[0]+'</td>'
+     +'<td style="color:var(--t3);max-width:270px">'+x[1]+'</td>'
+     +'<td style="color:var(--t3);max-width:290px">'+x[2]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+x[3]+'</td></tr>';
+  });
+  document.getElementById('protocolo').innerHTML=h+'</tbody>';
+}
+
+Promise.all(['armazens-nacionais','rede-viaria','fontes-externas','governanca-dado'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.arm=res[0];ST.rv=res[1];ST.fx=res[2];ST.gov=res[3];
+  desenharKpis();desenharUnidades();desenharViaria();
+  desenharDivergencias();desenharCadeia();desenharProtocolo();
+}).catch(function(e){
+  document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
 });
 </script>
 </body>
