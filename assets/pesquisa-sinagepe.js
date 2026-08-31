@@ -70,6 +70,8 @@
       t:'fonte internacional fao pam wfp gs1 faostat hungermap' },
     { h:'alertas.html', n:'Centro de Alertas', d:'Ocorrências por severidade', t:'alerta ocorrencia severidade critico aviso' },
     { h:'mapa-nacional.html', n:'Mapa Nacional', d:'Vista territorial por província', t:'mapa nacional provincia territorio' },
+    { h:'monitorizacao-em-falta.html', n:'Monitorização em falta', d:'As 30 unidades que não reportam existências, com quem deveria declarar e por que via',
+      t:'monitorizacao sensor existencias reporte ponto cego silencio declaracao' },
     { h:'cadastro-armazens.html', n:'Cadastro de Armazéns', d:'Registo operacional de armazéns', t:'cadastro armazem registo' },
     { h:'modulo-logistica.html', n:'Logística', d:'Módulo logístico', t:'logistica modulo transporte' },
     { h:'portal-bancos.html', n:'Portal dos Bancos', d:'Cadeia de valor, empresas candidatas a garantia e risco sectorial',

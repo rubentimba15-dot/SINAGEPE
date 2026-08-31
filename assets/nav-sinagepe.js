@@ -43,6 +43,7 @@
     { key: 'armazens',      icon: '\u25A4', label: 'Armaz\u00e9ns',         href: 'cadastro-armazens.html', grupo: 'CADEIA' },
     { key: 'armazens-nac',  icon: '\u25EB', label: 'Armaz\u00e9ns Nacionais', href: 'armazens-nacionais.html', grupo: 'CADEIA' },
     { key: 'ponto-cego',    icon: '\u25CE', label: 'Ponto Cego Duplo',      href: 'ponto-cego-duplo.html', grupo: 'INTELIGENCIA' },
+    { key: 'monitorizacao', icon: '\u25CE', label: 'Monitoriza\u00e7\u00e3o em falta', href: 'monitorizacao-em-falta.html', grupo: 'CADEIA' },
     { key: 'sandbox-epcis', icon: '\u223E', label: 'Sandbox EPCIS',         href: 'sandbox-rastreabilidade.html', grupo: 'CADEIA' },
     { key: 'medicamentos', icon: '\u2695', label: 'Cadeia de Medicamentos', href: 'medicamentos-cadeia.html', grupo: 'CADEIA' },
     { key: 'logistica',     icon: '\u21C4', label: 'Log\u00edstica',        href: 'modulo-logistica.html', grupo: 'CADEIA' },

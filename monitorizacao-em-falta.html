@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monitoriza&ccedil;&atilde;o em falta &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:940px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 17px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.bd{padding:15px 17px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 15px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:9px 15px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.filtros{display:flex;gap:6px;flex-wrap:wrap;padding:12px 17px;border-bottom:1px solid var(--card-line)}
+.fb{font-size:11px;padding:6px 12px;border-radius:20px;border:1px solid var(--card-line);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.fb.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+.aviso{margin:12px 17px;padding:12px 14px;border-radius:9px;font-size:11.5px;line-height:1.7;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.barra{display:flex;align-items:center;gap:11px;padding:8px 0;font-size:12px}
+.barra-n{width:180px;flex-shrink:0;color:var(--t3)}
+.barra-t{flex:1;height:17px;background:#0A1421;border-radius:4px;overflow:hidden}
+.barra-t i{display:block;height:100%;border-radius:4px}
+.barra-v{width:64px;text-align:right;flex-shrink:0;font-family:'IBM Plex Mono',monospace}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Ponto cego</div>
+    <h1>Monitoriza&ccedil;&atilde;o em falta</h1>
+    <p class="sub">Unidades de armazenagem cadastradas que n&atilde;o comunicam o que t&ecirc;m &mdash; por telemetria ou por qualquer outro meio. Cada uma com o propriet&aacute;rio, o operador e a natureza jur&iacute;dica, que &eacute; o que determina o que se lhe pode exigir.</p>
+
+    <div class="aviso r" style="margin:0 0 16px"><b>A aus&ecirc;ncia de dados &eacute; um evento de risco, n&atilde;o uma prova de infrac&ccedil;&atilde;o.</b>
+    Nenhuma unidade desta lista est&aacute; a violar seja o que for &mdash; n&atilde;o existe obriga&ccedil;&atilde;o legal de reportar exist&ecirc;ncias
+    ao SINAGEPE, porque o SINAGEPE n&atilde;o tem mandato para as exigir. Esta lista n&atilde;o acusa: <b>mostra onde o pa&iacute;s n&atilde;o v&ecirc;.</b></div>
+
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Onde o pa&iacute;s n&atilde;o v&ecirc;</h2>
+        <p>Unidades sem qualquer forma de reporte, por natureza jur&iacute;dica</p></div>
+        <span class="tag crit" id="l-tag">&mdash;</span></div>
+      <div class="filtros" id="filtros"></div>
+      <table id="lista"></table>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>De quem se pode exigir, e com que fundamento</h2>
+        <p>A natureza jur&iacute;dica determina o que &eacute; poss&iacute;vel pedir</p></div></div>
+      <table id="exigencia"></table>
+      <div class="aviso i"><b>O caminho mais curto n&atilde;o &eacute; telemetria.</b> Instalar sensores em trinta unidades custa dinheiro
+      e tempo. Uma declara&ccedil;&atilde;o mensal de exist&ecirc;ncias, ainda que em papel, resolve grande parte do problema
+      e pode come&ccedil;ar nas unidades onde o Estado tem posi&ccedil;&atilde;o &mdash; que s&atilde;o a maioria do cadastro.</div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O que muda quando uma unidade passa a reportar</h2>
+        <p>Indicadores que hoje n&atilde;o existem e passariam a existir</p></div></div>
+      <table id="destrava"></table>
+    </div>
+  </main>
+</div>
+
+<script>
+if(window.SinagepeNav) SinagepeNav.montar('monitorizacao');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
+
+var ST={filtro:'todas'};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+
+var ROT={estatal:'Estatal','ppp-gestao-privada':'PPP','concessao-privada':'Concess&atilde;o',
+ 'participacao-estatal':'Participa&ccedil;&atilde;o estatal',privada:'Privada',internacional:'Internacional'};
+var CORN={estatal:'#C98A3C','ppp-gestao-privada':'#E8BE7A','concessao-privada':'#22B8F0',
+ 'participacao-estatal':'#2DD4BF',privada:'#F0A926',internacional:'#A78BFA'};
+
+/* O que se pode pedir a cada natureza jurídica, e com que fundamento.
+   Não é o mesmo pedir a uma unidade do Estado e a uma privada. */
+var EXIGENCIA={
+ 'estatal':['Directa','O Estado &eacute; propriet&aacute;rio. A declara&ccedil;&atilde;o de exist&ecirc;ncias pode ser determinada por instru&ccedil;&atilde;o da tutela.','#12B981'],
+ 'ppp-gestao-privada':['Contratual','O bem &eacute; do Estado e a gest&atilde;o &eacute; privada. O contrato de concess&atilde;o pode prever obriga&ccedil;&atilde;o de reporte, ou ser aditado.','#E8BE7A'],
+ 'concessao-privada':['Contratual','Concess&atilde;o de bem p&uacute;blico. Mesmo fundamento: o t&iacute;tulo de concess&atilde;o &eacute; a via.','#22B8F0'],
+ 'participacao-estatal':['Accionista','O Estado tem participa&ccedil;&atilde;o. A via &eacute; a representa&ccedil;&atilde;o accionista, n&atilde;o a determina&ccedil;&atilde;o administrativa.','#2DD4BF'],
+ 'privada':['Negociada','Propriedade privada. Exige contrapartida: acesso a informa&ccedil;&atilde;o de mercado em troca de declara&ccedil;&atilde;o.','#F0A926'],
+ 'internacional':['Negociada','Operador internacional. Mesma via, com aten&ccedil;&atilde;o ao enquadramento aplic&aacute;vel.','#A78BFA']
+};
+
+function semReporte(){
+  return ST.arm.armazens.filter(function(a){return a.sensor==='sem-sensor'});
+}
+
+function desenharKpis(){
+  var A=ST.arm.armazens, S=semReporte();
+  var nat={};S.forEach(function(a){nat[a.natureza]=(nat[a.natureza]||0)+1});
+  var exigivel=S.filter(function(a){
+    var e=EXIGENCIA[a.natureza];return e&&(e[0]==='Directa'||e[0]==='Contratual')}).length;
+  var prov={};S.forEach(function(a){if(a.provincia)prov[a.provincia]=(prov[a.provincia]||0)+1});
+  var ops={};S.forEach(function(a){if(a.operador)ops[a.operador]=(ops[a.operador]||0)+1});
+
+  var lista=[
+   {id:'mo-total',rotulo:'Unidades sem qualquer reporte',valor:S.length,unidade:'de '+A.length,
+    estado:'nem telemetria nem declara&ccedil;&atilde;o',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Unidades cadastradas que n&atilde;o comunicam exist&ecirc;ncias por nenhum meio.',
+    formula:'contagem das unidades sem sensor no cadastro',
+    componentes:Object.keys(nat).sort(function(a,b){return nat[b]-nat[a]})
+      .map(function(k){return [ROT[k]||k,nat[k],'unidades']}),
+    leitura:'&Eacute; a totalidade do cadastro. N&atilde;o h&aacute; uma &uacute;nica unidade no pa&iacute;s a reportar o que tem armazenado.',
+    fonte:'Cadastro Nacional de Armazenagem',dataDados:'Agosto de 2026',
+    ecra:'cadastro-armazens.html'},
+
+   {id:'mo-exigivel',rotulo:'Onde o reporte &eacute; exig&iacute;vel',valor:exigivel,unidade:'de '+S.length,
+    estado:'por instru&ccedil;&atilde;o da tutela ou por contrato',tipo:'FACTO',cor:'var(--brzl)',
+    resumo:'Unidades do Estado, em PPP ou concessionadas, onde existe fundamento para exigir declara&ccedil;&atilde;o.',
+    formula:'unidades de natureza estatal, PPP ou concess&atilde;o',
+    componentes:Object.keys(nat).map(function(k){
+      var e=EXIGENCIA[k]||['&mdash;'];return [(ROT[k]||k)+' &mdash; via '+e[0],nat[k],'unidades']}),
+    leitura:'&Eacute; por aqui que se come&ccedil;a. Nas unidades do Estado a via &eacute; a instru&ccedil;&atilde;o; nas concessionadas &eacute; o contrato. Nas privadas exige contrapartida.',
+    fonte:'Cadastro Nacional, natureza declarada por unidade',dataDados:'Agosto de 2026'},
+
+   {id:'mo-provincias',rotulo:'Prov&iacute;ncias com unidades cegas',valor:Object.keys(prov).length,unidade:'',
+    estado:'com pelo menos uma unidade sem reporte',tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Prov&iacute;ncias onde existe armazenagem cadastrada e nenhuma leitura.',
+    formula:'contagem das prov&iacute;ncias com unidades sem reporte',
+    componentes:Object.keys(prov).sort(function(a,b){return prov[b]-prov[a]})
+      .map(function(k){return [k,prov[k],'unidades']}),
+    leitura:'A cegueira n&atilde;o &eacute; regional: &eacute; nacional. Nenhuma prov&iacute;ncia tem visibilidade sobre o que est&aacute; armazenado.',
+    fonte:'Cadastro Nacional de Armazenagem',dataDados:'Agosto de 2026'},
+
+   {id:'mo-operadores',rotulo:'Operadores distintos envolvidos',valor:Object.keys(ops).length,unidade:'',
+    estado:'entidades que gerem estas unidades',tipo:'FACTO',cor:'var(--blue)',
+    resumo:'N&uacute;mero de operadores diferentes a gerir as unidades sem reporte.',
+    formula:'contagem dos operadores distintos no cadastro',
+    componentes:Object.keys(ops).sort(function(a,b){return ops[b]-ops[a]}).slice(0,8)
+      .map(function(k){return [k,ops[k],'unidades']}),
+    leitura:'Poucos operadores para muitas unidades significa que um n&uacute;mero pequeno de conversas cobriria grande parte do cadastro.',
+    fonte:'Cadastro Nacional, operador declarado por unidade',dataDados:'Agosto de 2026'}
+  ];
+  document.getElementById('kpis').innerHTML=IndicadoresSinagepe.linha(lista);
+}
+
+function desenharFiltros(){
+  var S=semReporte(), nat={};
+  S.forEach(function(a){nat[a.natureza]=(nat[a.natureza]||0)+1});
+  var m=[['todas','Todas',S.length]].concat(
+    Object.keys(nat).sort(function(a,b){return nat[b]-nat[a]})
+      .map(function(k){return [k,ROT[k]||k,nat[k]]}));
+  document.getElementById('filtros').innerHTML=m.map(function(x){
+    return '<button class="fb'+(ST.filtro===x[0]?' on':'')+'" data-f="'+x[0]+'">'+x[1]
+     +' <span style="opacity:.6">'+x[2]+'</span></button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.fb'),function(b){
+    b.addEventListener('click',function(){ST.filtro=b.dataset.f;desenharFiltros();desenharLista()});
+  });
+}
+
+function desenharLista(){
+  var S=semReporte();
+  if(ST.filtro!=='todas') S=S.filter(function(a){return a.natureza===ST.filtro});
+  S=S.slice().sort(function(a,b){
+    var ea=EXIGENCIA[a.natureza],eb=EXIGENCIA[b.natureza];
+    var oa=ea&&ea[0]==='Directa'?0:ea&&ea[0]==='Contratual'?1:2;
+    var ob=eb&&eb[0]==='Directa'?0:eb&&eb[0]==='Contratual'?1:2;
+    return oa-ob;
+  });
+  var h='<thead><tr><th>Unidade</th><th>Prov&iacute;ncia</th><th>Natureza</th>'
+   +'<th>Quem deveria declarar</th><th>Via poss&iacute;vel</th><th>Reporta</th></tr></thead><tbody>';
+  S.forEach(function(a){
+    var c=CORN[a.natureza]||'#5E7189';
+    var e=EXIGENCIA[a.natureza]||['&mdash;','','#5E7189'];
+    var quem=a.operador||a.proprietario||'n&atilde;o declarado';
+    h+='<tr><td><b>'+esc(a.nome)+'</b>'
+     +'<div style="font-size:10px;color:var(--t4);margin-top:3px">'+esc(a.estado||a.tipo||'')+'</div></td>'
+     +'<td style="color:var(--t3)">'+esc(a.provincia||'&mdash;')+'</td>'
+     +'<td><span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'+(ROT[a.natureza]||a.natureza)+'</span></td>'
+     +'<td style="color:var(--t3);max-width:230px">'+esc(quem)+'</td>'
+     +'<td><span class="est" style="color:'+e[2]+';border-color:'+e[2]+'55;background:'+e[2]+'12">'+e[0]+'</span></td>'
+     +'<td style="color:var(--red)">n&atilde;o</td></tr>';
+  });
+  document.getElementById('lista').innerHTML=h+'</tbody>';
+  document.getElementById('l-tag').textContent=S.length+' unidades';
+}
+
+function desenharExigencia(){
+  var S=semReporte(), nat={};
+  S.forEach(function(a){nat[a.natureza]=(nat[a.natureza]||0)+1});
+  var ks=Object.keys(nat).sort(function(a,b){
+    var ea=EXIGENCIA[a],eb=EXIGENCIA[b];
+    var oa=ea&&ea[0]==='Directa'?0:ea&&ea[0]==='Contratual'?1:2;
+    var ob=eb&&eb[0]==='Directa'?0:eb&&eb[0]==='Contratual'?1:2;
+    return oa-ob||nat[b]-nat[a];
+  });
+  var h='<thead><tr><th>Natureza jur&iacute;dica</th><th class="n">Unidades</th><th>Via</th>'
+   +'<th>Fundamento</th></tr></thead><tbody>';
+  ks.forEach(function(k){
+    var e=EXIGENCIA[k]||['&mdash;','','#5E7189'];
+    h+='<tr><td style="font-weight:600">'+(ROT[k]||k)+'</td>'
+     +'<td class="n">'+nat[k]+'</td>'
+     +'<td><span class="est" style="color:'+e[2]+';border-color:'+e[2]+'55;background:'+e[2]+'12">'+e[0]+'</span></td>'
+     +'<td style="color:var(--t3);max-width:480px">'+e[1]+'</td></tr>';
+  });
+  document.getElementById('exigencia').innerHTML=h+'</tbody>';
+}
+
+var DESTRAVA=[
+ ['Disponibilidade nacional','Percentagem de abastecimento garantido. Foi retirada do Painel e do Portal P&uacute;blico por n&atilde;o ter origem.','Exist&ecirc;ncias e consumo'],
+ ['Dias de cobertura','Quantos dias de consumo o pa&iacute;s tem em armaz&eacute;m. Retirada pela mesma raz&atilde;o.','Exist&ecirc;ncias e consumo'],
+ ['Ocupa&ccedil;&atilde;o dos armaz&eacute;ns','Quanto est&aacute; cheio face &agrave; capacidade declarada. Retirada do Cadastro.','Exist&ecirc;ncias'],
+ ['Alerta de ruptura','Aviso antecipado de falta de produto numa regi&atilde;o. N&atilde;o existe.','Exist&ecirc;ncias e sa&iacute;das'],
+ ['Redistribui&ccedil;&atilde;o entre regi&otilde;es','Saber onde h&aacute; excesso e onde falta, para mover produto. N&atilde;o existe.','Exist&ecirc;ncias por unidade'],
+ ['Reserva estrat&eacute;gica verific&aacute;vel','O ICM tem meta p&uacute;blica de 20.000 t. As exist&ecirc;ncias n&atilde;o s&atilde;o conhecidas.','Exist&ecirc;ncias na reserva'],
+ ['Taxa de perdas','Quanto se perde em armazenagem. N&atilde;o &eacute; medida em Mo&ccedil;ambique.','Entradas e sa&iacute;das ao longo do tempo']
+];
+function desenharDestrava(){
+  var h='<thead><tr><th>Indicador que passaria a existir</th><th>Situa&ccedil;&atilde;o actual</th>'
+   +'<th>O que exige</th></tr></thead><tbody>';
+  DESTRAVA.forEach(function(x){
+    h+='<tr><td style="font-weight:600">'+x[0]+'</td>'
+     +'<td style="color:var(--t3);max-width:460px">'+x[1]+'</td>'
+     +'<td style="color:var(--brzl);white-space:nowrap">'+x[2]+'</td></tr>';
+  });
+  document.getElementById('destrava').innerHTML=h+'</tbody>';
+}
+
+fetch('data/armazens-nacionais.json',{cache:'no-store'})
+ .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/armazens-nacionais.json');return r.json()})
+ .then(function(j){
+   ST.arm=j;
+   desenharKpis();desenharFiltros();desenharLista();desenharExigencia();desenharDestrava();
+ })
+ .catch(function(e){
+   document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+ });
+</script>
+</body>
+</html>

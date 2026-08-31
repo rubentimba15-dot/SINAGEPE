@@ -42,10 +42,47 @@
     {
       "n": 5,
       "titulo": "Facto, estimativa, previsão, cenário, recomendação",
-      "regra": "Nunca confundir previsão com realidade observada. Cada número apresentado deve declarar a que categoria pertence.",
-      "comoAplicamos": "Classificação completa na secção própria. Nota: o documento de origem pedia percentagens de confiança e de qualidade do dado — recusadas, porque não há série histórica que as sustente e seriam elas próprias números inventados.",
+      "regra": "Nunca confundir previsão com realidade observada. Cada número apresentado deve declarar a que categoria pertence. Aos cinco graus de natureza do número junta-se, desde Agosto de 2026, uma segunda escala: a força da evidência quando o sistema assinala alguma coisa. As duas respondem a perguntas diferentes — a primeira pergunta o que é este número; a segunda pergunta quanto peso tem esta observação.",
+      "comoAplicamos": "Classificação completa na secção própria. Nota: o documento de origem pedia percentagens de confiança e de qualidade do dado — recusadas, porque não há série histórica que as sustente e seriam elas próprias números inventados. A escala de evidência aplica-se aos achados: cada um declara se é facto, indício, correlação ou hipótese. O sistema nunca produz o quinto grau, e essa ausência é deliberada.",
       "estado": "aplicada",
-      "porFechar": null
+      "porFechar": null,
+      "escalaEvidencia": [
+        {
+          "grau": "FACTO",
+          "cor": "#12B981",
+          "definicao": "Dado comprovado pelo sistema ou por fonte validada.",
+          "exemplo": "O milho custou 9,00 MT/kg em Lichinga na semana de 17 a 23 de Abril de 2023. Está no boletim oficial.",
+          "podeSustentar": "Decisão, citação em documento, comunicação pública."
+        },
+        {
+          "grau": "INDÍCIO",
+          "cor": "#22B8F0",
+          "definicao": "Sinal objectivo que merece investigação, sem explicação estabelecida.",
+          "exemplo": "O preço de importação do arroz declarado está 34% acima da referência internacional. É observação pública do ICM.",
+          "podeSustentar": "Pedido de verificação a quem tem competência. Nunca uma conclusão."
+        },
+        {
+          "grau": "CORRELAÇÃO",
+          "cor": "#A78BFA",
+          "definicao": "Relação estatística entre variáveis, sem causa demonstrada.",
+          "exemplo": "O preço do milho subiu 53% enquanto o câmbio se manteve. As duas séries movem-se de forma independente.",
+          "podeSustentar": "Formulação de hipótese. Não sustenta afirmação de causa."
+        },
+        {
+          "grau": "HIPÓTESE",
+          "cor": "#F0A926",
+          "definicao": "Explicação possível que carece de investigação.",
+          "exemplo": "A dispersão de preço no Niassa pode dever-se a isolamento de mercado e ao custo do transporte interno.",
+          "podeSustentar": "Desenho de um estudo. Nunca uma decisão nem uma comunicação pública."
+        },
+        {
+          "grau": "CONCLUSÃO CIENTÍFICA",
+          "cor": "#C98A3C",
+          "definicao": "Conclusão sustentada por metodologia e evidência técnica adequada, produzida por quem tem competência.",
+          "exemplo": "Nenhuma. O SINAGEPE não produz conclusões científicas — encaminha para quem as pode produzir.",
+          "podeSustentar": "Decisão administrativa, sanitária ou legal. Não é produzida pelo sistema."
+        }
+      ]
     },
     {
       "n": 6,
