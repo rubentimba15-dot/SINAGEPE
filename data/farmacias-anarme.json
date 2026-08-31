@@ -1,0 +1,462 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "fonte": "ANARME — Autoridade Nacional Reguladora de Medicamentos",
+    "documento": "Lista de Farmácias 2024",
+    "url": "https://anarme.gov.mz/wp-content/uploads/2024/09/LISTA-DE-FARMACIAS-2024.pdf",
+    "dataFonte": "Setembro de 2024",
+    "extraidoEm": "2026-08-31",
+    "verificado": true,
+    "extraccaoParcial": true,
+    "avisoExtraccao": "A lista da ANARME é longa e a leitura foi truncada. Foram lidas seis províncias — Maputo, Cidade de Maputo, Gaza, Inhambane, Manica e Sofala. Faltam Tete, Zambézia, Nampula, Niassa e Cabo Delgado. A numeração do documento vai pelo menos até 1242, pelo que o total nacional é superior ao aqui registado. Não se estimou o que falta.",
+    "regraObservacoes": "O documento da ANARME traz, em alguns casos, o motivo do encerramento — incluindo notas de irregularidade detectada em inspecção. Essas observações NÃO são reproduzidas neste ficheiro. São registo do regulador, e cabe a quem tem competência divulgá-las ou usá-las. Regista-se apenas a situação: em funcionamento ou encerrada. Quem precisar do motivo consulta o documento.",
+    "porqueImporta": "É o primeiro cadastro do sistema que cobre estabelecimentos de venda ao público, e não infraestrutura. Muda o que o IGSAE pode ver: até aqui o sistema conhecia 30 unidades de armazenagem; passa a conhecer também mais de mil pontos de dispensa de medicamentos, com alvará e localização."
+  },
+  "totais": {
+    "lidas": 1048,
+    "emFuncionamento": 973,
+    "encerradas": 75,
+    "distritosCobertos": 53,
+    "provinciasLidas": 6,
+    "provinciasPorLer": 5
+  },
+  "porProvincia": [
+    {
+      "provincia": "Maputo",
+      "emFuncionamento": 406,
+      "encerradas": 19,
+      "distritos": 8
+    },
+    {
+      "provincia": "Cidade de Maputo",
+      "emFuncionamento": 264,
+      "encerradas": 21,
+      "distritos": 6
+    },
+    {
+      "provincia": "Gaza",
+      "emFuncionamento": 120,
+      "encerradas": 18,
+      "distritos": 13
+    },
+    {
+      "provincia": "Inhambane",
+      "emFuncionamento": 87,
+      "encerradas": 1,
+      "distritos": 14
+    },
+    {
+      "provincia": "Manica",
+      "emFuncionamento": 58,
+      "encerradas": 8,
+      "distritos": 11
+    },
+    {
+      "provincia": "Sofala",
+      "emFuncionamento": 38,
+      "encerradas": 8,
+      "distritos": 1
+    }
+  ],
+  "porDistrito": [
+    {
+      "distrito": "Magude",
+      "provincia": "Maputo",
+      "emFuncionamento": 3,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Manhiça",
+      "provincia": "Maputo",
+      "emFuncionamento": 16,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Matutuine",
+      "provincia": "Maputo",
+      "emFuncionamento": 6,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Moamba",
+      "provincia": "Maputo",
+      "emFuncionamento": 12,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Namaacha",
+      "provincia": "Maputo",
+      "emFuncionamento": 5,
+      "encerradas": 2
+    },
+    {
+      "distrito": "Boane",
+      "provincia": "Maputo",
+      "emFuncionamento": 52,
+      "encerradas": 4
+    },
+    {
+      "distrito": "Marracuene",
+      "provincia": "Maputo",
+      "emFuncionamento": 56,
+      "encerradas": 2
+    },
+    {
+      "distrito": "Matola",
+      "provincia": "Maputo",
+      "emFuncionamento": 256,
+      "encerradas": 11
+    },
+    {
+      "distrito": "KaMpfumu",
+      "provincia": "Cidade de Maputo",
+      "emFuncionamento": 60,
+      "encerradas": 5
+    },
+    {
+      "distrito": "Nlhamankulu",
+      "provincia": "Cidade de Maputo",
+      "emFuncionamento": 26,
+      "encerradas": 9
+    },
+    {
+      "distrito": "KaMaxakeni",
+      "provincia": "Cidade de Maputo",
+      "emFuncionamento": 33,
+      "encerradas": 4
+    },
+    {
+      "distrito": "KaMavota",
+      "provincia": "Cidade de Maputo",
+      "emFuncionamento": 68,
+      "encerradas": 3
+    },
+    {
+      "distrito": "KaMubukwana",
+      "provincia": "Cidade de Maputo",
+      "emFuncionamento": 68,
+      "encerradas": 0
+    },
+    {
+      "distrito": "KaTembe",
+      "provincia": "Cidade de Maputo",
+      "emFuncionamento": 9,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Bilene",
+      "provincia": "Gaza",
+      "emFuncionamento": 18,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Mapai",
+      "provincia": "Gaza",
+      "emFuncionamento": 2,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Xai-Xai",
+      "provincia": "Gaza",
+      "emFuncionamento": 26,
+      "encerradas": 10
+    },
+    {
+      "distrito": "Limpopo",
+      "provincia": "Gaza",
+      "emFuncionamento": 12,
+      "encerradas": 3
+    },
+    {
+      "distrito": "Chongoene",
+      "provincia": "Gaza",
+      "emFuncionamento": 8,
+      "encerradas": 1
+    },
+    {
+      "distrito": "Chókwè",
+      "provincia": "Gaza",
+      "emFuncionamento": 18,
+      "encerradas": 4
+    },
+    {
+      "distrito": "Chibuto",
+      "provincia": "Gaza",
+      "emFuncionamento": 13,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Guijá",
+      "provincia": "Gaza",
+      "emFuncionamento": 5,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Mandlakazi",
+      "provincia": "Gaza",
+      "emFuncionamento": 10,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Massingir",
+      "provincia": "Gaza",
+      "emFuncionamento": 2,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Mabalane",
+      "provincia": "Gaza",
+      "emFuncionamento": 2,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Chicualacuala",
+      "provincia": "Gaza",
+      "emFuncionamento": 3,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Massangena",
+      "provincia": "Gaza",
+      "emFuncionamento": 1,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Morrumbene",
+      "provincia": "Inhambane",
+      "emFuncionamento": 7,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Massinga",
+      "provincia": "Inhambane",
+      "emFuncionamento": 12,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Inhambane",
+      "provincia": "Inhambane",
+      "emFuncionamento": 10,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Jangamo",
+      "provincia": "Inhambane",
+      "emFuncionamento": 7,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Inharrime",
+      "provincia": "Inhambane",
+      "emFuncionamento": 6,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Vilankulo",
+      "provincia": "Inhambane",
+      "emFuncionamento": 9,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Maxixe",
+      "provincia": "Inhambane",
+      "emFuncionamento": 12,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Homoine",
+      "provincia": "Inhambane",
+      "emFuncionamento": 5,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Inhassoro",
+      "provincia": "Inhambane",
+      "emFuncionamento": 4,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Zavala",
+      "provincia": "Inhambane",
+      "emFuncionamento": 9,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Panda",
+      "provincia": "Inhambane",
+      "emFuncionamento": 2,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Govuro",
+      "provincia": "Inhambane",
+      "emFuncionamento": 2,
+      "encerradas": 1
+    },
+    {
+      "distrito": "Mabote",
+      "provincia": "Inhambane",
+      "emFuncionamento": 1,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Funhalouro",
+      "provincia": "Inhambane",
+      "emFuncionamento": 1,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Barué",
+      "provincia": "Manica",
+      "emFuncionamento": 3,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Chimoio",
+      "provincia": "Manica",
+      "emFuncionamento": 26,
+      "encerradas": 7
+    },
+    {
+      "distrito": "Gondola",
+      "provincia": "Manica",
+      "emFuncionamento": 7,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Guro",
+      "provincia": "Manica",
+      "emFuncionamento": 1,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Machaze",
+      "provincia": "Manica",
+      "emFuncionamento": 1,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Manica",
+      "provincia": "Manica",
+      "emFuncionamento": 8,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Mossurize",
+      "provincia": "Manica",
+      "emFuncionamento": 3,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Sussundenga",
+      "provincia": "Manica",
+      "emFuncionamento": 4,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Tambara",
+      "provincia": "Manica",
+      "emFuncionamento": 0,
+      "encerradas": 1
+    },
+    {
+      "distrito": "Vanduzi",
+      "provincia": "Manica",
+      "emFuncionamento": 4,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Macate",
+      "provincia": "Manica",
+      "emFuncionamento": 1,
+      "encerradas": 0
+    },
+    {
+      "distrito": "Beira",
+      "provincia": "Sofala",
+      "emFuncionamento": 38,
+      "encerradas": 8
+    }
+  ],
+  "provinciasPorLer": [
+    "Tete",
+    "Zambézia",
+    "Nampula",
+    "Niassa",
+    "Cabo Delgado"
+  ],
+  "exemplos": [
+    {
+      "nome": "Farmácia Magude",
+      "alvara": "218",
+      "endereco": "Vila Sede Magude",
+      "distrito": "Magude",
+      "provincia": "Maputo",
+      "situacao": "em funcionamento"
+    },
+    {
+      "nome": "Farmácia Bela Vista",
+      "alvara": "299",
+      "endereco": "Vila de Bela Vista, talhão n.º 41",
+      "distrito": "Matutuine",
+      "provincia": "Maputo",
+      "situacao": "em funcionamento"
+    },
+    {
+      "nome": "Farmácia LAVEGA",
+      "alvara": "128",
+      "endereco": "Centro Comercial da Ponta do Ouro",
+      "distrito": "Matutuine",
+      "provincia": "Maputo",
+      "situacao": "em funcionamento"
+    },
+    {
+      "nome": "Farmácia 25 de Setembro",
+      "alvara": "952",
+      "endereco": "Av. 25 de Setembro n.º 1700, Bairro Central C",
+      "distrito": "KaMpfumu",
+      "provincia": "Cidade de Maputo",
+      "situacao": "em funcionamento"
+    },
+    {
+      "nome": "Farmácia Xai-Xai — Farmac E.E.",
+      "alvara": "55",
+      "endereco": "Av. Samora Machel, EN1",
+      "distrito": "Xai-Xai",
+      "provincia": "Gaza",
+      "situacao": "em funcionamento"
+    },
+    {
+      "nome": "Farmácia Mapai",
+      "alvara": "839",
+      "endereco": "Sede do posto administrativo de Mapai, 1.º bairro",
+      "distrito": "Mapai",
+      "provincia": "Gaza",
+      "situacao": "em funcionamento"
+    },
+    {
+      "nome": "Farmácia Inhassoro",
+      "alvara": "353",
+      "endereco": "Bairro Sede da Vila",
+      "distrito": "Inhassoro",
+      "provincia": "Inhambane",
+      "situacao": "em funcionamento"
+    },
+    {
+      "nome": "Farmácia Catandica",
+      "alvara": "2135",
+      "endereco": "Bairro Militar",
+      "distrito": "Barué",
+      "provincia": "Manica",
+      "situacao": "em funcionamento"
+    },
+    {
+      "nome": "Farmácia Munhava",
+      "alvara": "61",
+      "endereco": "Munhava, Av. Acordos de Lusaka n.º 270",
+      "distrito": "Beira",
+      "provincia": "Sofala",
+      "situacao": "encerrada"
+    }
+  ]
+}

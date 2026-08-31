@@ -114,6 +114,14 @@ td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
     </div>
 
     <div class="card frame">
+      <div class="ch"><div><h2>Farm&aacute;cias licenciadas &mdash; cadastro da ANARME</h2>
+        <p>Estabelecimentos de dispensa de medicamentos, com alvar&aacute; e localiza&ccedil;&atilde;o</p></div>
+        <span class="tag ok" id="fa-tag">&mdash;</span></div>
+      <table id="farmacias"></table>
+      <div class="aviso i" id="fa-nota"></div>
+    </div>
+
+    <div class="card frame">
       <div class="ch"><div><h2>O que o IGSAE ter&aacute; acesso com protocolo</h2>
         <p>E o fundamento de cada pedido</p></div>
         <span class="tag crit">Por obter</span></div>
@@ -303,6 +311,43 @@ function desenharCadeia(){
    +'porque separa quem v&ecirc; de quem julga.</div>';
 }
 
+function desenharFarmacias(){
+  var F=ST.fa;
+  if(!F){document.getElementById('farmacias').innerHTML='';return}
+  var P=F.porProvincia.slice().sort(function(a,b){
+    return (b.emFuncionamento+b.encerradas)-(a.emFuncionamento+a.encerradas)});
+  var A=ST.arm.armazens;
+  var h='<thead><tr><th>Prov&iacute;ncia</th><th class="n">Em funcionamento</th><th class="n">Encerradas</th>'
+   +'<th class="n">Distritos</th><th class="n">Armaz&eacute;ns no cadastro</th></tr></thead><tbody>';
+  P.forEach(function(x){
+    var arm=A.filter(function(a){
+      return a.provincia===x.provincia || (x.provincia==='Cidade de Maputo'&&a.provincia==='Maputo')}).length;
+    h+='<tr><td style="font-weight:600">'+esc(x.provincia)+'</td>'
+     +'<td class="n">'+num(x.emFuncionamento)+'</td>'
+     +'<td class="n" style="color:var(--t4)">'+(x.encerradas||'&mdash;')+'</td>'
+     +'<td class="n" style="color:var(--t3)">'+x.distritos+'</td>'
+     +'<td class="n" style="color:var(--brzl)">'+arm+'</td></tr>';
+  });
+  F.provinciasPorLer.forEach(function(p){
+    h+='<tr style="opacity:.5"><td style="font-weight:600">'+esc(p)+'</td>'
+     +'<td class="n" colspan="3" style="color:var(--amber)">por extrair do documento</td>'
+     +'<td class="n" style="color:var(--t4)">'
+     +A.filter(function(a){return a.provincia===p}).length+'</td></tr>';
+  });
+  document.getElementById('farmacias').innerHTML=h+'</tbody>';
+  document.getElementById('fa-tag').innerHTML=num(F.totais.lidas)+' farm&aacute;cias';
+  document.getElementById('fa-nota').innerHTML=
+     '<b>Cadastro p&uacute;blico, publicado pela pr&oacute;pria ANARME.</b> Cada farm&aacute;cia consta com nome, n&uacute;mero de alvar&aacute;, '
+    +'endere&ccedil;o, distrito e situa&ccedil;&atilde;o de funcionamento. '
+    +'<div style="margin-top:8px">'+esc(F.meta.avisoExtraccao)+'</div>'
+    +'<div style="margin-top:8px;color:var(--t3)"><b>O que n&atilde;o est&aacute; aqui, e porqu&ecirc;.</b> '
+    +'O documento da ANARME traz, nalguns casos, o motivo do encerramento. '
+    +'Essas observa&ccedil;&otilde;es n&atilde;o s&atilde;o reproduzidas: s&atilde;o registo do regulador, e cabe a quem tem '
+    +'compet&ecirc;ncia divulg&aacute;-las. Quem precisar consulta o documento.</div>'
+    +'<div style="margin-top:9px"><a class="fonte" href="'+esc(F.meta.url)+'" target="_blank" rel="noopener" '
+    +'style="color:var(--blue);text-decoration:none;font-size:11px">Abrir a lista da ANARME &rarr;</a></div>';
+}
+
 var PROTOCOLO=[
  ['Exist&ecirc;ncias por unidade','Verificar reserva estrat&eacute;gica e detectar acumula&ccedil;&atilde;o an&oacute;mala',
   'Mandato de inspec&ccedil;&atilde;o; nas unidades do Estado basta instru&ccedil;&atilde;o da tutela','Armazenistas &middot; ICM'],
@@ -328,13 +373,13 @@ function desenharProtocolo(){
   document.getElementById('protocolo').innerHTML=h+'</tbody>';
 }
 
-Promise.all(['armazens-nacionais','rede-viaria','fontes-externas','governanca-dado'].map(function(f){
+Promise.all(['armazens-nacionais','rede-viaria','fontes-externas','governanca-dado','farmacias-anarme'].map(function(f){
   return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
     if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
 })).then(function(res){
-  ST.arm=res[0];ST.rv=res[1];ST.fx=res[2];ST.gov=res[3];
+  ST.arm=res[0];ST.rv=res[1];ST.fx=res[2];ST.gov=res[3];ST.fa=res[4];
   desenharKpis();desenharUnidades();desenharViaria();
-  desenharDivergencias();desenharCadeia();desenharProtocolo();
+  desenharDivergencias();desenharCadeia();desenharFarmacias();desenharProtocolo();
 }).catch(function(e){
   document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
 });
