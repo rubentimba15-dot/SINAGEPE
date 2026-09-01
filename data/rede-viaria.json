@@ -11,16 +11,23 @@
     },
     "avisoTracado": "Os traçados desenhados são ESQUEMÁTICOS. São polilinhas entre localidades conhecidas, calculadas com a mesma projecção do mapa do Painel. Não são cartografia da ANE e não devem ser usados para medir distâncias, planear percursos nem apoiar decisões de engenharia. Servem para mostrar a relação entre corredor, armazém e produtor.",
     "avisoInterrupcoes": "As interrupções registadas provêm de um comunicado da ANE de 16 de Janeiro de 2026, durante a época chuvosa. NÃO SÃO ESTADO ACTUAL. Sete meses depois, a maior parte terá sido reparada e terão surgido outras. A ANE não publica estas ocorrências em formato consultável por máquina, pelo que não há forma de as manter actualizadas automaticamente.",
-    "lacuna": "Só está desenhada uma fracção da rede. Das estradas classificadas, este ficheiro cobre quatro eixos. Os restantes milhares de quilómetros, incluindo praticamente toda a rede terciária que liga o produtor à estrada nacional, não têm representação aqui."
+    "lacuna": "Só está desenhada uma fracção da rede. Das estradas classificadas, este ficheiro cobre quatro eixos. Os restantes milhares de quilómetros, incluindo praticamente toda a rede terciária que liga o produtor à estrada nacional, não têm representação aqui.",
+    "redeClassificadaKm": 30056,
+    "notaTracado": "Os traçados são sequências de pontos pelas localidades que a descrição oficial de cada estrada nomeia. Não são cartografia rigorosa: são o esqueleto da rede, suficiente para ver por onde passa cada eixo e o que serve. Um traçado real exigiria dados da ANE em formato geográfico.",
+    "fonteEstradas": "ANE — rede rodoviária nacional classificada",
+    "composicaoRede": {
+      "classificadaKm": 30056,
+      "nota": "A ANE declara 30.056 km de rede classificada, subdividida em primária, secundária, terciária e vicinal. As 14 estradas nacionais aqui listadas são a rede primária."
+    }
   },
   "estradas": [
     {
       "id": "n1",
       "designacao": "N1",
+      "designacaoAlternativa": "EN1",
       "nome": "Estrada Nacional n.º 1",
-      "extensaoKm": 2477,
       "liga": "Maputo — Pemba",
-      "classe": "longitudinal principal",
+      "classe": "primária",
       "provincias": [
         "Maputo",
         "Gaza",
@@ -30,12 +37,13 @@
         "Nampula",
         "Cabo Delgado"
       ],
-      "nota": "Principal eixo do país, atravessa seis zonas de capitais provinciais. O troço entre Sofala e Inhambane está em regime de concessão privada desde 2019.",
+      "nota": "Eixo estruturante do país. Liga o Sul ao Norte e serve as capitais provinciais. Nós com a N5, N6, N10, N11, N12, N13 e N14.",
+      "extensaoKm": 2477,
       "papelSinagepe": "Eixo de escoamento predominante de Cabo Delgado, Zambézia e Inhambane. Uma interrupção aqui não tem alternativa de igual capacidade.",
       "pontos": [
         [
           -25.97,
-          32.58
+          32.57
         ],
         [
           -25.05,
@@ -46,36 +54,40 @@
           35.35
         ],
         [
-          -22.0,
-          35.31
+          -21.16,
+          34.94
         ],
         [
-          -20.87,
-          33.94
+          -19.15,
+          34.02
         ],
         [
-          -19.13,
-          33.89
+          -18.68,
+          34.07
         ],
         [
           -17.83,
           35.33
         ],
         [
+          -17.61,
+          36.82
+        ],
+        [
           -16.84,
           36.99
         ],
         [
-          -15.62,
-          37.68
+          -15.61,
+          37.67
         ],
         [
           -15.12,
           39.27
         ],
         [
-          -14.93,
-          39.87
+          -14.6,
+          39.9
         ],
         [
           -12.97,
@@ -85,49 +97,124 @@
       "fonte": "https://pt.wikipedia.org/wiki/Estrada_Nacional_n.%C2%BA_1_(Mo%C3%A7ambique)"
     },
     {
-      "id": "n4",
-      "designacao": "N4",
-      "nome": "Corredor de Maputo",
-      "extensaoKm": null,
-      "liga": "Maputo — Ressano Garcia (fronteira com a África do Sul)",
-      "classe": "corredor internacional",
+      "id": "n2",
+      "designacao": "N2",
+      "designacaoAlternativa": "EN2",
+      "nome": "Maputo — Namaacha",
+      "liga": "Maputo — fronteira da Namaacha (eSwatini)",
+      "classe": "primária",
+      "provincias": [
+        "Maputo",
+        "Cidade de Maputo"
+      ],
+      "nota": "Ligação a eSwatini pela Namaacha. Nó com a N3.",
+      "pontos": [
+        [
+          -25.97,
+          32.57
+        ],
+        [
+          -25.96,
+          32.46
+        ],
+        [
+          -25.98,
+          32.02
+        ]
+      ],
+      "fonte": "ANE — rede rodoviária nacional classificada"
+    },
+    {
+      "id": "n3",
+      "designacao": "N3",
+      "designacaoAlternativa": "EN3",
+      "nome": "Junção N2 — Goba",
+      "liga": "Junção da N2 — fronteira de Goba (eSwatini)",
+      "classe": "primária",
       "provincias": [
         "Maputo"
       ],
-      "nota": "Ligação ao hinterland sul-africano. Serve o Porto de Maputo e o Terminal da Matola.",
+      "nota": "Segunda ligação a eSwatini. Serve o corredor ferroviário de Goba.",
+      "pontos": [
+        [
+          -25.96,
+          32.46
+        ],
+        [
+          -26.27,
+          32.1
+        ]
+      ],
+      "fonte": "ANE — rede rodoviária nacional classificada"
+    },
+    {
+      "id": "n4",
+      "designacao": "N4",
+      "designacaoAlternativa": "EN4",
+      "nome": "Corredor de Maputo",
+      "liga": "Maputo — Ressano Garcia (fronteira com a África do Sul)",
+      "classe": "primária",
+      "provincias": [
+        "Maputo",
+        "Cidade de Maputo"
+      ],
+      "nota": "Corredor de Maputo. É a via de maior tráfego internacional do país e serve o porto de Maputo.",
       "papelSinagepe": "Via de entrada da maior parte das importações que passam por Maputo e de saída do trânsito para a África do Sul, Eswatini e Zimbabwe.",
       "pontos": [
         [
           -25.97,
-          32.58
-        ],
-        [
-          -25.59,
-          32.24
+          32.57
         ],
         [
           -25.44,
           31.99
+        ],
+        [
+          -25.44,
+          31.95
         ]
       ],
       "fonte": "https://ane.gov.mz/"
     },
     {
+      "id": "n5",
+      "designacao": "N5",
+      "designacaoAlternativa": "EN5",
+      "nome": "Junção N1 — Inhambane",
+      "liga": "Junção da N1 — Inhambane",
+      "classe": "primária",
+      "provincias": [
+        "Inhambane"
+      ],
+      "nota": "Ramal curto que liga a N1 à cidade de Inhambane.",
+      "pontos": [
+        [
+          -23.86,
+          35.35
+        ],
+        [
+          -23.87,
+          35.38
+        ]
+      ],
+      "fonte": "ANE — rede rodoviária nacional classificada"
+    },
+    {
       "id": "n6",
       "designacao": "N6",
+      "designacaoAlternativa": "EN6",
       "nome": "Corredor da Beira",
-      "extensaoKm": null,
       "liga": "Beira — Machipanda (fronteira com o Zimbabwe)",
-      "classe": "corredor internacional",
+      "classe": "primária",
       "provincias": [
         "Sofala",
         "Manica"
       ],
-      "nota": "Liga o Porto da Beira ao Zimbabwe, passando por Dondo, Inchope, Chimoio e Manica.",
+      "nota": "Corredor da Beira. Integra a Auto-estrada Transafricana n.º 9, Beira—Lobito. Nós com a N1 em Inchope e com a N7.",
       "papelSinagepe": "Corredor de escoamento de Manica e Sofala e via de trânsito para o Zimbabwe, Zâmbia e Malawi. Cruza a N1 em Inchope — nó crítico.",
       "pontos": [
         [
-          -19.83,
+          -19.84,
           34.84
         ],
         [
@@ -135,16 +222,20 @@
           34.74
         ],
         [
-          -19.13,
-          33.89
+          -19.28,
+          34.2
+        ],
+        [
+          -19.15,
+          34.02
         ],
         [
           -19.12,
           33.48
         ],
         [
-          -18.94,
-          32.88
+          -18.93,
+          32.87
         ],
         [
           -18.93,
@@ -154,18 +245,190 @@
       "fonte": "https://ane.gov.mz/"
     },
     {
+      "id": "n7",
+      "designacao": "N7",
+      "designacaoAlternativa": "EN7",
+      "nome": "Junção N6 — Zóbuè",
+      "liga": "Junção da N6 — Catandica — Changara — Tete — Zóbuè (Malawi)",
+      "classe": "primária",
+      "provincias": [
+        "Manica",
+        "Tete"
+      ],
+      "nota": "Liga o corredor da Beira a Tete e ao Malawi. Serve a região carbonífera de Moatize.",
+      "pontos": [
+        [
+          -19.12,
+          33.48
+        ],
+        [
+          -18.06,
+          33.16
+        ],
+        [
+          -16.66,
+          33.36
+        ],
+        [
+          -16.16,
+          33.59
+        ],
+        [
+          -16.11,
+          33.73
+        ],
+        [
+          -15.61,
+          34.42
+        ]
+      ],
+      "fonte": "ANE — rede rodoviária nacional classificada"
+    },
+    {
+      "id": "n8",
+      "designacao": "N8",
+      "designacaoAlternativa": "EN8",
+      "nome": "Changara — Nyamapanda",
+      "liga": "Changara (nó da N7) — Nyamapanda (Zimbabwe)",
+      "classe": "primária",
+      "provincias": [
+        "Tete"
+      ],
+      "nota": "Ligação a norte do Zimbabwe pelo posto de Nyamapanda.",
+      "pontos": [
+        [
+          -16.66,
+          33.36
+        ],
+        [
+          -16.63,
+          32.85
+        ]
+      ],
+      "fonte": "ANE — rede rodoviária nacional classificada"
+    },
+    {
+      "id": "n9",
+      "designacao": "N9",
+      "designacaoAlternativa": "EN9",
+      "nome": "Tete — Chimefusa",
+      "liga": "Tete — Chimefusa (Zâmbia)",
+      "classe": "primária",
+      "provincias": [
+        "Tete"
+      ],
+      "nota": "Única ligação rodoviária directa à Zâmbia.",
+      "pontos": [
+        [
+          -16.16,
+          33.59
+        ],
+        [
+          -15.53,
+          32.2
+        ]
+      ],
+      "fonte": "ANE — rede rodoviária nacional classificada"
+    },
+    {
+      "id": "n10",
+      "designacao": "N10",
+      "designacaoAlternativa": "EN10",
+      "nome": "Junção N1 — Quelimane",
+      "liga": "Junção da N1 — Quelimane",
+      "classe": "primária",
+      "provincias": [
+        "Zambézia"
+      ],
+      "nota": "Serve a cidade e o porto de Quelimane a partir da N1.",
+      "pontos": [
+        [
+          -17.61,
+          36.82
+        ],
+        [
+          -17.88,
+          36.89
+        ]
+      ],
+      "fonte": "ANE — rede rodoviária nacional classificada"
+    },
+    {
+      "id": "n11",
+      "designacao": "N11",
+      "designacaoAlternativa": "EN11",
+      "nome": "Mocuba — Milange",
+      "liga": "Mocuba (nó da N1) — Milange (Malawi)",
+      "classe": "primária",
+      "provincias": [
+        "Zambézia"
+      ],
+      "nota": "Ligação ao Malawi pelo posto de Milange.",
+      "pontos": [
+        [
+          -16.84,
+          36.99
+        ],
+        [
+          -16.09,
+          35.78
+        ]
+      ],
+      "fonte": "ANE — rede rodoviária nacional classificada"
+    },
+    {
+      "id": "n12",
+      "designacao": "N12",
+      "designacaoAlternativa": "EN12",
+      "nome": "Namialo — Nacala",
+      "liga": "Namialo (nó da N1) — Monapo — Nacala",
+      "classe": "primária",
+      "provincias": [
+        "Nampula"
+      ],
+      "nota": "Serve o porto de águas profundas de Nacala e o corredor de Nacala.",
+      "pontos": [
+        [
+          -14.6,
+          39.9
+        ],
+        [
+          -14.95,
+          40.34
+        ],
+        [
+          -14.55,
+          40.67
+        ]
+      ],
+      "fonte": "ANE — rede rodoviária nacional classificada"
+    },
+    {
       "id": "n13",
       "designacao": "N13",
-      "nome": "Cuamba — Mandimba — Lichinga",
-      "extensaoKm": null,
-      "liga": "Cuamba — Lichinga",
-      "classe": "corredor de desenvolvimento de Nacala",
+      "designacaoAlternativa": "EN13",
+      "nome": "Nampula — Lichinga",
+      "liga": "Nampula (nó da N1) — Ribáuè — Cuamba — Mandimba — Lichinga",
+      "classe": "primária",
       "provincias": [
+        "Nampula",
         "Niassa"
       ],
-      "nota": "Eixo interior do Corredor de Nacala. Foi objecto de estudo preparatório da JICA sobre melhoramento da via.",
+      "nota": "Único eixo rodoviário que serve o Niassa a partir do centro do país. Acompanha a linha férrea de Nacala e o ramal de Lichinga.",
       "papelSinagepe": "Único acesso rodoviário estruturante de Lichinga ao Corredor de Nacala. Serve os complexos de silos de Cuamba e de Lichinga.",
       "pontos": [
+        [
+          -15.12,
+          39.27
+        ],
+        [
+          -14.93,
+          38.28
+        ],
+        [
+          -14.95,
+          37.42
+        ],
         [
           -14.8,
           36.54
@@ -180,6 +443,42 @@
         ]
       ],
       "fonte": "https://openjicareport.jica.go.jp/pdf/11991635.pdf"
+    },
+    {
+      "id": "n14",
+      "designacao": "N14",
+      "designacaoAlternativa": "EN14",
+      "nome": "Metoro — Lichinga",
+      "liga": "Metoro (nó da N1) — Montepuez — Cassembe — Lichinga",
+      "classe": "primária",
+      "provincias": [
+        "Cabo Delgado",
+        "Niassa"
+      ],
+      "nota": "Atravessa o interior de Cabo Delgado e do Niassa. Segundo acesso a Lichinga, pelo norte.",
+      "pontos": [
+        [
+          -13.2,
+          39.55
+        ],
+        [
+          -13.13,
+          38.99
+        ],
+        [
+          -13.19,
+          37.51
+        ],
+        [
+          -13.05,
+          37.13
+        ],
+        [
+          -13.31,
+          35.24
+        ]
+      ],
+      "fonte": "ANE — rede rodoviária nacional classificada"
     }
   ],
   "interrupcoes": [
@@ -199,7 +498,14 @@
       "precisao": "ponto-medio-troco",
       "data": "2026-01-16",
       "impactoSinagepe": "Atinge o eixo principal do país no ponto que serve os complexos de silos de Malema e de Iapala. Trânsito condicionado significa passagem com restrição de peso — precisamente o que trava camiões de cereal.",
-      "fonte": "https://mznews.co.mz/en/situacao-atual-e-nacional-de-todas-as-estradas-mocambicanas/"
+      "fonte": "https://mznews.co.mz/en/situacao-atual-e-nacional-de-todas-as-estradas-mocambicanas/",
+      "divergencia": {
+        "tipo": "designação da estrada",
+        "registado": "EN1",
+        "descricaoOficialIndica": "N13",
+        "nota": "O troço Ribáuè — Malema fica no eixo Nampula — Cuamba, que a descrição oficial da rede atribui à N13. O comunicado da ANE registou EN1. Pode ser lapso do comunicado, pode ser nuance de numeração local. Fica registado como divergência a confirmar junto da ANE, e não foi corrigido em silêncio.",
+        "porConfirmar": true
+      }
     },
     {
       "id": "int-r698-muecate-imala",

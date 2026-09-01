@@ -54,6 +54,9 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:-.01em}
 .tc-prov:hover{fill:#16294420}
 .tc-prov.sel{fill:#1B3350}
 .rd{fill:none;stroke-linecap:round;stroke-linejoin:round;cursor:pointer}
+@keyframes tracarVia{from{stroke-dashoffset:900}to{stroke-dashoffset:0}}
+.traca-via{stroke-dasharray:900;animation:tracarVia 1.5s ease-out both}
+@media (prefers-reduced-motion:reduce){.traca-via{animation:none;stroke-dasharray:none}}
 .rd-hit{fill:none;stroke:transparent;stroke-width:12;cursor:pointer}
 .corr{stroke-width:1.6;fill:none;stroke-dasharray:5 8;opacity:.45}
 .mk{cursor:pointer}
@@ -158,7 +161,14 @@ function Y(la){return P.ay*Math.log(Math.tan(Math.PI/4+la*Math.PI/360))+P.by}
 var COR_NAT={estatal:'#12B981','ppp-gestao-privada':'#C98A3C','concessao-privada':'#22B8F0','participacao-estatal':'#2DD4BF',privada:'#F0A926',internacional:'#A78BFA'};
 var ROT_NAT={estatal:'Estatal','ppp-gestao-privada':'PPP \u2014 Estado/gest\u00e3o privada','concessao-privada':'Concess\u00e3o','participacao-estatal':'Participa\u00e7\u00e3o estatal',privada:'Privada',internacional:'Internacional'};
 var ROT_EST={operacional:'Operacional','em-modernizacao':'Em moderniza\u00e7\u00e3o','por-reabilitar':'Por reabilitar','por-construir':'Por construir',desconhecido:'Desconhecido'};
-var COR_ESTRADA={n1:'#E8BE7A',n4:'#12B981',n6:'#F0A926',n13:'#22B8F0'};
+/* Os quatro eixos que estruturam o abastecimento ficam com cor cheia.
+   Os ramais e ligações fronteiriças ficam mais discretos, para o mapa
+   não virar um novelo. A espessura acompanha: eixo 2,4 e ramal 1,6. */
+var COR_ESTRADA={n1:'#E8BE7A',n4:'#12B981',n6:'#F0A926',n13:'#22B8F0',
+  n6b:'#F0A926',n7:'#C98A3C',n14:'#A78BFA',n12:'#2DD4BF',
+  n2:'#4A6B8A',n3:'#4A6B8A',n5:'#4A6B8A',n8:'#5E7189',n9:'#5E7189',
+  n10:'#3E6B7A',n11:'#3E6B7A'};
+var EIXO_PRINCIPAL={n1:1,n4:1,n6:1,n7:1,n13:1,n14:1,n12:1};
 
 var ST={rede:null,arm:null,prod:null,com:null,sima:null,sel:null,camadas:{estradas:1,interrupcoes:1,armazens:1,comercial:1,fluxos:1,produtores:1,corredores:1}};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
@@ -187,14 +197,21 @@ function desenharEstradas(){
   var g=document.getElementById('gestr');
   if(!ST.camadas.estradas){g.innerHTML='';return}
   var h='';
-  ST.rede.estradas.forEach(function(e){
+  ST.rede.estradas.forEach(function(e,i){
     var pts=e.pontos.map(function(p){return X(p[1]).toFixed(1)+','+Y(p[0]).toFixed(1)}).join(' ');
     var c=COR_ESTRADA[e.id]||'#8FA1B8';
+    var eixo=EIXO_PRINCIPAL[e.id];
+    var esp=ST.sel==='rd:'+e.id?4.2:(eixo?2.4:1.5);
+    var op=ST.sel==='rd:'+e.id?1:(eixo?.92:.55);
     h+='<g class="mk'+(ST.sel==='rd:'+e.id?' sel':'')+'" data-t="rd" data-i="'+e.id+'">'
-      +'<polyline class="rd" points="'+pts+'" stroke="'+c+'" stroke-width="'+(ST.sel==='rd:'+e.id?'4':'2.4')+'" opacity=".9"/>'
+      +'<polyline class="rd traca-via" points="'+pts+'" stroke="'+c+'" stroke-width="'+esp+'" '
+      +'opacity="'+op+'" style="animation-delay:'+(i*.07)+'s"/>'
       +'<polyline class="rd-hit" points="'+pts+'"/></g>';
-    var mid=e.pontos[Math.floor(e.pontos.length/2)];
-    h+='<text class="rlbl" x="'+(X(mid[1])+7).toFixed(1)+'" y="'+(Y(mid[0])-5).toFixed(1)+'" fill="'+c+'">'+esc(e.designacao)+'</text>';
+    if(eixo||ST.sel==='rd:'+e.id){
+      var mid=e.pontos[Math.floor(e.pontos.length/2)];
+      h+='<text class="rlbl" x="'+(X(mid[1])+7).toFixed(1)+'" y="'+(Y(mid[0])-5).toFixed(1)+'" fill="'+c+'" '
+       +'opacity="'+(eixo?1:.8)+'">'+esc(e.designacao)+'</text>';
+    }
   });
   g.innerHTML=h;
 }
