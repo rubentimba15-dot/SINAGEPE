@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "fonte": "MAAP — Ministério da Agricultura, Ambiente e Pescas",
+    "documento": "Sector agrário mantém perspectivas de boa produção na campanha 2025/26",
+    "url": "https://www.agricultura.gov.mz/sector-agrario-mantem-perspectivas-de-boa-producao-na-campanha-2025-26/",
+    "publicado": "9 de Janeiro de 2026",
+    "dataDados": "8 de Janeiro de 2026",
+    "extraidoEm": "2026-09-01",
+    "verificado": true,
+    "natureza": "Publicação oficial do Ministério, no seu sítio institucional",
+    "notaImportante": "A produção é PLANIFICADA e PREVISTA para a campanha, não medida. O MAAP declara-a como previsão no início da campanha. A produção efectiva só é conhecida no Inquérito Agrário Integrado, publicado depois da colheita.",
+    "porqueImporta": "Resolve uma lacuna concreta. A produção estimada tinha sido retirada do dashboard de agricultura por não ter origem declarada. Passa a ter: é previsão oficial do MAAP, com data e documento. O impacto das cheias é dado observado, não previsão."
+  },
+  "campanha2025_26": {
+    "areaPlanificadaHa": 7800000,
+    "natureza": "previsão de campanha",
+    "crescimentoFaceAnterior": 5,
+    "producaoPrevista": [
+      {
+        "grupo": "Raízes e tubérculos",
+        "toneladas": 10200000
+      },
+      {
+        "grupo": "Cereais",
+        "toneladas": 3400000
+      },
+      {
+        "grupo": "Hortícolas diversas",
+        "toneladas": 2100000
+      },
+      {
+        "grupo": "Leguminosas",
+        "toneladas": 930000
+      },
+      {
+        "grupo": "Oleaginosas",
+        "toneladas": 400000
+      }
+    ]
+  },
+  "cheias": {
+    "dataReferencia": "8 de Janeiro de 2026",
+    "hectaresAfectados": 92000,
+    "percentagemAreaSemeada": 1.8,
+    "familiasProdutoras": 57000,
+    "culturasAfectadas": [
+      "arroz",
+      "milho",
+      "feijões",
+      "mandioca",
+      "batata-doce"
+    ],
+    "provinciasAfectadas": [
+      "Sofala",
+      "Tete",
+      "Manica",
+      "Gaza",
+      "Maputo",
+      "Zambézia",
+      "Nampula",
+      "Inhambane"
+    ],
+    "porProvincia": [
+      {
+        "provincia": "Sofala",
+        "hectaresInundados": 54000,
+        "hectaresSemeados": 211000,
+        "familiasAfectadas": 41000,
+        "nota": "A mais afectada. Mais de um quarto da área semeada da província ficou inundada."
+      },
+      {
+        "provincia": "Zambézia",
+        "hectaresInundados": 35000,
+        "hectaresSemeados": 1300000,
+        "familiasAfectadas": null,
+        "nota": "Maior área semeada do país entre as províncias com dado publicado."
+      },
+      {
+        "provincia": "Inhambane",
+        "hectaresInundados": 120,
+        "hectaresSemeados": null,
+        "familiasAfectadas": null,
+        "nota": "Impacto residual."
+      },
+      {
+        "provincia": "Cabo Delgado",
+        "hectaresInundados": 0,
+        "hectaresSemeados": null,
+        "familiasAfectadas": 0,
+        "nota": "Não registou áreas inundadas nem famílias afectadas."
+      }
+    ],
+    "aquacultura": {
+      "provincia": "Sofala",
+      "tanquesAfectados": 180,
+      "tanquesDestruidos": 30,
+      "gaiolasDestruidas": 40,
+      "alevinosPerdidos": 116000,
+      "piscicultoresAfectados": 390
+    },
+    "pecuaria": {
+      "infraestruturasDanificadas": 170,
+      "animaisAfectados": 143000,
+      "especies": [
+        "bovinos",
+        "caprinos",
+        "suínos",
+        "aves"
+      ],
+      "criadoresAfectados": 200
+    }
+  },
+  "lacunasQuePermanecem": [
+    {
+      "lacuna": "Área semeada por província",
+      "estado": "Publicada apenas para Sofala e Zambézia, no contexto das cheias.",
+      "recomendacao": "Solicitar fisicamente ao MAAP a área semeada das onze províncias."
+    },
+    {
+      "lacuna": "Produção efectiva por província e cultura",
+      "estado": "O que existe é previsão nacional por grupo de cultura.",
+      "recomendacao": "Solicitar o Inquérito Agrário Integrado em formato estruturado. É publicado pelo MAAP mas não foi localizado em formato utilizável."
+    },
+    {
+      "lacuna": "Boletins do SIMA posteriores a Agosto de 2023",
+      "estado": "O SIMA passou a ter sítio próprio, sima.gov.mz. Publicação semanal declarada às sextas-feiras.",
+      "recomendacao": "Consultar sima.gov.mz e, se não estiver acessível, solicitar fisicamente ao SIMA."
+    },
+    {
+      "lacuna": "Plataforma AgriConnect",
+      "estado": "Lançada pelo MAAP em 2 de Março de 2026 como plataforma do sector agrário. Conteúdo e dados não conhecidos.",
+      "recomendacao": "Verificar o que a AgriConnect publica e se há sobreposição com o SINAGEPE."
+    }
+  ]
+}
