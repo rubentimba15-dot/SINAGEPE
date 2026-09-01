@@ -1,157 +1,417 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
-<script src="assets/access-control.js"></script>
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Painel Nacional — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<title>Painel Nacional &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.015em}
+.sub{color:var(--t3);font-size:13px;margin-bottom:18px;max-width:920px;line-height:1.6}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:3}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:15px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:16px 18px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 16px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:10px 16px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.g2{display:grid;grid-template-columns:1.25fr 1fr;gap:14px;align-items:start}
+@media(max-width:1140px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+
+/* ---- animação ---- */
+@keyframes surge{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes crescer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.entra{animation:surge .5s cubic-bezier(.16,1,.3,1) both}
+.cresce{transform-origin:left center;animation:crescer .85s cubic-bezier(.16,1,.3,1) both}
+@media (prefers-reduced-motion:reduce){.entra,.cresce{animation:none!important;opacity:1!important;transform:none!important}}
+
+/* ---- mosaico de províncias, clicável ---- */
+.malha{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.prov{display:block;text-decoration:none;color:inherit;background:linear-gradient(158deg,#101B2E,#0A1220);
+ border:1px solid var(--card-line);border-radius:12px;padding:14px 15px 13px;position:relative;
+ overflow:hidden;cursor:pointer;transition:.2s}
+.prov:hover{transform:translateY(-4px);border-color:var(--brzg);box-shadow:0 10px 26px rgba(0,0,0,.4)}
+.prov:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.prov:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px}
+.prov-h{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:11px}
+.prov-n{font-size:13px;font-weight:600}
+.prov-c{font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid}
+.prov-l{display:flex;flex-direction:column;gap:6px}
+.linha{display:flex;align-items:center;gap:8px;font-size:11px}
+.linha-i{width:15px;text-align:center;opacity:.7;flex-shrink:0}
+.linha-t{flex:1;color:var(--t3)}
+.linha-v{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600}
+.prov-f{margin-top:11px;padding-top:9px;border-top:1px solid rgba(38,56,86,.5);font-size:10px;color:var(--brzl);
+ display:flex;align-items:center;justify-content:space-between;gap:6px}
+.prov:hover .prov-f{color:var(--brz)}
+
+.dest{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:9px}
+.dest a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--t2);background:#0A1421;
+ border:1px solid var(--card-line);border-radius:10px;padding:11px 13px;font-size:12px;transition:.16s}
+.dest a:hover{background:var(--cardh);border-color:var(--brzg);color:var(--ink);transform:translateX(3px)}
+.dest .ic{width:17px;text-align:center;opacity:.75;flex-shrink:0}
+.grupo{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--brz);margin:18px 0 10px}
+.grupo:first-child{margin-top:0}
+.aviso{margin:14px 18px;padding:13px 15px;border-radius:10px;font-size:11.5px;line-height:1.7;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Painel Nacional</div>
+    <h1>O que o pa&iacute;s sabe sobre o seu abastecimento</h1>
+    <p class="sub">Cada prov&iacute;ncia mostra o que est&aacute; documentado com fonte. <b>Clique numa para abrir o ecr&atilde; que d&aacute; o detalhe</b> &mdash; e clique numa linha para ir directo a essa mat&eacute;ria.</p>
 
-<div class="app-shell" id="app-shell"></div>
+    <div class="aviso r" style="margin:0 0 16px"><b>Este painel foi reconstru&iacute;do em Agosto de 2026.</b>
+    Mostrava disponibilidade por prov&iacute;ncia em percentagem, dias de cobertura, importa&ccedil;&otilde;es em tr&acirc;nsito e
+    um &iacute;ndice log&iacute;stico nacional. <b>Nenhum desses n&uacute;meros tinha origem</b> &mdash; derivavam de stock escrito &agrave; m&atilde;o
+    no ficheiro de demonstra&ccedil;&atilde;o, e nenhum armaz&eacute;m do pa&iacute;s declara exist&ecirc;ncias.
+    Passa a mostrar o que existe e est&aacute; contado: armaz&eacute;ns cadastrados, farm&aacute;cias licenciadas,
+    cortes de estrada, estradas nacionais e peso no &iacute;ndice de pre&ccedil;os.</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
-<script src="assets/sinagepe.js"></script>
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>As onze prov&iacute;ncias</h2>
+        <p>Cada n&uacute;mero &eacute; contado, e cada linha leva ao ecr&atilde; que a explica</p></div>
+        <span class="tag ok" id="p-tag">&mdash;</span></div>
+      <div class="bd"><div class="malha" id="provincias"></div></div>
+      <div class="aviso i"><b>A cor da barra diz o que falta, n&atilde;o o que est&aacute; mal.</b>
+      Vermelho significa que a prov&iacute;ncia n&atilde;o tem armaz&eacute;m cadastrado nem farm&aacute;cias extra&iacute;das &mdash;
+      &eacute; lacuna de cadastro, n&atilde;o de abastecimento. <b>O sistema n&atilde;o sabe o que l&aacute; existe, e diz.</b></div>
+    </div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Preços que o sistema tem</h2>
+          <p>Amplitude entre a pra&ccedil;a mais barata e a mais cara</p></div>
+          <span class="tag" id="s-tag">&mdash;</span></div>
+        <div class="bd" id="precos"></div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>Riscos com evid&ecirc;ncia</h2>
+          <p>Do Centro de Antecipa&ccedil;&atilde;o</p></div>
+          <span class="tag crit" id="r-tag">&mdash;</span></div>
+        <div class="bd" id="riscos"></div>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Todos os ecr&atilde;s</h2>
+        <p>Acesso directo, agrupado por natureza</p></div></div>
+      <div class="bd" id="destinos"></div>
+    </div>
+  </main>
+</div>
+
 <script>
-SINAGEPE.mountShell('painel', 'Painel Nacional', 'Disponibilidade Física · Governo');
+if(window.SinagepeNav) SinagepeNav.montar('painel');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-document.getElementById('content-mount').innerHTML = `
-  <div class="kpi-row" id="kpi-row"></div>
-  <div class="row-2">
-    <div class="card">
-      <div class="card-title">Disponibilidade por Província</div>
-      <div class="card-subtitle">Percentagem do stock mínimo estratégico coberto, por província</div>
-      <div class="province-grid" id="province-grid"></div>
-      <div class="legend">
-        <div class="legend-item"><span class="legend-dot" style="background:var(--ok)"></span> Normal (&ge;80%)</div>
-        <div class="legend-item"><span class="legend-dot" style="background:var(--warn)"></span> Aviso (50&ndash;80%)</div>
-        <div class="legend-item"><span class="legend-dot" style="background:var(--crit)"></span> Ruptura (&lt;50%)</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">Alertas por Severidade</div>
-      <div class="card-subtitle" id="alertas-subtitle">A carregar...</div>
-      <canvas id="chart-alertas" height="180"></canvas>
-    </div>
-  </div>
-  <div class="row-2">
-    <div class="card">
-      <div class="card-title"><a href="balanco-nacional-vivo.html" style="color:inherit">Balanço Nacional Vivo →</a></div>
-      <div class="card-subtitle">Stock, fluxos e cobertura por produto essencial</div>
-      <table class="balance-table">
-        <thead><tr><th>Produto</th><th>Stock</th><th>Prod.</th><th>Import.</th><th>Export.</th><th>Consumo</th><th>Cobertura</th><th>Estado</th></tr></thead>
-        <tbody id="balance-body"></tbody>
-      </table>
-    </div>
-    <div class="card">
-      <div class="card-title">Tendência de Preços</div>
-      <div class="card-subtitle">MZN/kg, últimos 6 meses</div>
-      <canvas id="chart-precos" height="200"></canvas>
-    </div>
-  </div>
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
 
-  <div class="card">
-    <div class="card-title">Outros Módulos, Dashboards e Portais</div>
-    <div class="card-subtitle">Ecrãs sem item próprio na sidebar principal — acesso directo aqui</div>
-    <div class="row-2">
-      <div>
-        <div class="kpi-label" style="margin-bottom:8px">Dashboards Sectoriais</div>
-        <div class="medida-row"><a href="dashboard-agricultura.html" style="color:var(--bronze)">Agricultura (MASA)</a></div>
-        <div class="medida-row"><a href="dashboard-financas.html" style="color:var(--bronze)">Finanças</a></div>
-        <div class="medida-row"><a href="dashboard-banco-central.html" style="color:var(--bronze)">Banco Central</a></div>
-        <div class="medida-row"><a href="dashboard-transportes.html" style="color:var(--bronze)">Transportes</a></div>
-      </div>
-      <div>
-        <div class="kpi-label" style="margin-bottom:8px">Fiscalização e Regulação</div>
-        <div class="medida-row"><a href="dashboard-igsae.html" style="color:var(--bronze)">IGSAE</a></div>
-        <div class="medida-row"><a href="dashboard-arc.html" style="color:var(--bronze)">ARC (Concorrência)</a></div>
-      </div>
-    </div>
-    <div class="row-2" style="margin-top:14px">
-      <div>
-        <div class="kpi-label" style="margin-bottom:8px">Portais por Agente Económico</div>
-        <div class="medida-row"><a href="portal-empresas.html" style="color:var(--bronze)">Empresas</a></div>
-        <div class="medida-row"><a href="portal-produtores.html" style="color:var(--bronze)">Produtores</a></div>
-        <div class="medida-row"><a href="portal-comerciantes.html" style="color:var(--bronze)">Comerciantes</a></div>
-        <div class="medida-row"><a href="portal-transportadores.html" style="color:var(--bronze)">Transportadores</a></div>
-        <div class="medida-row"><a href="marketplace-b2b.html" style="color:var(--bronze)">Marketplace B2B</a></div>
-        <div class="medida-row"><a href="portal-investidores.html" style="color:var(--bronze)">Investidores</a></div>
-      </div>
-      <div>
-        <div class="kpi-label" style="margin-bottom:8px">Parceiros Institucionais</div>
-        <div class="medida-row"><a href="portal-bancos.html" style="color:var(--bronze)">Bancos</a></div>
-        <div class="medida-row"><a href="portal-universidades.html" style="color:var(--bronze)">Universidades</a></div>
-        <div class="medida-row"><a href="portal-parceiros.html" style="color:var(--bronze)">Parceiros Internacionais</a></div>
-      </div>
-    </div>
-  </div>
-`;
+var PROVINCIAS=['Niassa','Cabo Delgado','Nampula','Zamb\u00e9zia','Tete','Manica','Sofala',
+ 'Inhambane','Gaza','Maputo','Cidade de Maputo'];
 
-SINAGEPE.load().then(renderPainelNacional);
-
-function renderPainelNacional(data) {
-  SINAGEPE.renderUserFooter(data);
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
-
-  const k = data.kpis;
-  // Alertas Activos, Produtos Críticos e Severidade calculados a partir dos
-  // dados reais (alertasDetalhe / balancoNacional) — não hardcoded, para nunca
-  // ficarem desalinhados como aconteceu na primeira versão deste ecrã.
-  const alertasActivos = data.alertasDetalhe.length;
-  const produtosCriticos = data.balancoNacional.filter(p => p.estado === 'Crítico').length;
-  const severidadeCount = { Crítico: 0, Atenção: 0, Normal: 0 };
-  data.alertasDetalhe.forEach(a => { severidadeCount[a.severidade] = (severidadeCount[a.severidade] || 0) + 1; });
-
-  const kpiDefs = [
-    { label: 'Disponibilidade Nacional (Stock Físico)', valor: k.disponibilidadeNacional.valor + '%', estado: k.disponibilidadeNacional.estado, tipo: 'warn' },
-    { label: 'Dias de Cobertura (Média)', valor: k.diasCoberturaMedia.valor, estado: k.diasCoberturaMedia.estado, tipo: 'ok' },
-    { label: 'Alertas Activos', valor: alertasActivos, estado: alertasActivos > 0 ? 'Atenção' : 'Normal', tipo: alertasActivos > 0 ? 'warn' : 'ok' },
-    { label: 'Produtos Críticos', valor: produtosCriticos, estado: produtosCriticos > 0 ? 'Crítico' : 'Normal', tipo: produtosCriticos > 0 ? 'crit' : 'ok' },
-    { label: 'Importações em Trânsito', valor: k.importacoesTransito.valor + 'k ton', estado: k.importacoesTransito.estado, tipo: 'info' },
-    { label: 'Índice Logístico Nacional', valor: k.indiceLogisticoNacional.valor, estado: k.indiceLogisticoNacional.estado, tipo: 'info' },
-  ];
-  document.getElementById('alertas-subtitle').innerHTML = `${alertasActivos} alertas activos a nível nacional — <a href="alertas.html" style="color:var(--bronze)">ver todos</a>`;
-  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
-
-  document.getElementById('province-grid').innerHTML = data.provincias.map(p => {
-    const cls = p.disponibilidade >= 80 ? 'tile-ok' : p.disponibilidade >= 50 ? 'tile-warn' : 'tile-crit';
-    const nomeHtml = p.nome === data.painelProvincial.provincia
-      ? `<a href="painel-provincial.html" style="color:inherit;text-decoration:underline">${p.nome}</a>`
-      : p.nome;
-    return `<div class="province-tile ${cls}"><div class="province-name">${nomeHtml}</div><div class="province-value">${p.disponibilidade}%</div></div>`;
-  }).join('');
-
-  document.getElementById('balance-body').innerHTML = data.balancoNacional.map(row => `<tr>
-      <td>${row.produto}</td><td>${SINAGEPE.fmt(row.stock)}</td><td>${SINAGEPE.fmt(row.producao)}</td>
-      <td>${SINAGEPE.fmt(row.importacao)}</td><td>${SINAGEPE.fmt(row.exportacao)}</td><td>${SINAGEPE.fmt(row.consumo)}</td>
-      <td>${row.cobertura} dias</td><td>${SINAGEPE.stateTag(row.estado)}</td>
-    </tr>`).join('');
-
-  new Chart(document.getElementById('chart-alertas'), {
-    type: 'doughnut',
-    data: { labels: ['Crítico', 'Atenção', 'Normal'], datasets: [{
-      data: [severidadeCount['Crítico'], severidadeCount['Atenção'], severidadeCount['Normal']],
-      backgroundColor: ['#e2555c', '#e0a83e', '#3ecf8e'], borderWidth: 0 }] },
-    options: { plugins: { legend: { position: 'bottom', labels: { color: '#97a3c2', font: { size: 11 }, boxWidth: 10 } } }, cutout: '68%' }
-  });
-
-  new Chart(document.getElementById('chart-precos'), {
-    type: 'line',
-    data: { labels: data.precoTendencia.meses, datasets: data.precoTendencia.series.map(s => ({
-      label: s.nome, data: s.valores, borderColor: s.cor, backgroundColor: s.cor, tension: 0.35, pointRadius: 3 })) },
-    options: {
-      plugins: { legend: { position: 'bottom', labels: { color: '#97a3c2', font: { size: 11 }, boxWidth: 10 } } },
-      scales: {
-        x: { ticks: { color: '#5f6d90', font: { size: 10 } }, grid: { color: 'rgba(179,130,74,0.08)' } },
-        y: { ticks: { color: '#5f6d90', font: { size: 10 } }, grid: { color: 'rgba(179,130,74,0.08)' } },
-      }
-    }
-  });
+/* Cada província junta o que está contado em quatro cadastros diferentes.
+   O destino de cada linha é o ecrã onde esse número vive, para que
+   quem clica chegue à origem e não a um resumo. */
+function dadosProvincia(p){
+  var arm=ST.arm.armazens.filter(function(a){return a.provincia===p});
+  var fa=(ST.far.porProvincia||[]).filter(function(x){return x.provincia===p})[0];
+  var porLer=(ST.far.provinciasPorLer||[]).indexOf(p)>=0;
+  var cortes=ST.rv.interrupcoes.filter(function(i){return i.provincia===p});
+  var estr=ST.rv.estradas.filter(function(e){return (e.provincias||[]).indexOf(p)>=0});
+  var ipc=(ST.ipc.ponderacao||[]).filter(function(x){return x.provincia===p})
+    .reduce(function(s,x){return s+x.peso},0);
+  var merc=mercadosDe(p);
+  return {arm:arm,fa:fa,porLer:porLer,cortes:cortes,estradas:estr,ipc:ipc,mercados:merc};
 }
+
+/* Mercados do SIMA por província — pela localidade, que é o que o boletim dá. */
+var MERCADO_PROV={'Lichinga':'Niassa','Mandimba':'Niassa','Montepuez':'Cabo Delgado',
+ 'Mocuba':'Zamb\u00e9sia','Ang\u00f3nia':'Tete','Nhamatanda':'Sofala','B\u00fazi':'Sofala',
+ 'Cidade de Inhambane':'Inhambane','Guvuro':'Inhambane','Inhassouro':'Inhambane',
+ 'Panda':'Inhambane','Zavala':'Inhambane','Chokw\u00e9':'Gaza','Manhi\u00e7a':'Maputo',
+ 'Cidade de Maputo':'Cidade de Maputo','Cidade de Quelimane':'Zamb\u00e9zia'};
+function mercadosDe(p){
+  var r=[];
+  for(var m in MERCADO_PROV) if(MERCADO_PROV[m]===p) r.push(m);
+  return r;
+}
+
+/* Documentada significa que os dois cadastros t\u00eam dados desta prov\u00edncia.
+   "Por extrair" n\u00e3o \u00e9 dado: \u00e9 trabalho por fazer, e conta como falta. */
+function corProvincia(d){
+  var temFar=!!d.fa, temArm=d.arm.length>0;
+  if(temArm && temFar) return ['#12B981','documentada'];
+  if(temArm || temFar) return ['#F0A926','parcial'];
+  return ['#EF4444','sem cadastro'];
+}
+
+function desenharProvincias(){
+  var h=PROVINCIAS.map(function(p,i){
+    var d=dadosProvincia(p), c=corProvincia(d);
+    var linhas=[];
+    linhas.push(['\u25A4','Armaz&eacute;ns cadastrados',d.arm.length,
+      d.arm.length?'cadastro-armazens.html':'monitorizacao-em-falta.html',
+      d.arm.length?'#12B981':'#5E7189']);
+    linhas.push(['\u2695','Farm&aacute;cias licenciadas',
+      d.fa?num(d.fa.emFuncionamento):(d.porLer?'por extrair':'&mdash;'),
+      'dashboard-igsae.html', d.fa?'#2DD4BF':'#5E7189']);
+    linhas.push(['\u25AC','Estradas nacionais',d.estradas.length,'mapa-integrado.html','#E8BE7A']);
+    if(d.cortes.length) linhas.push(['\u26A0','Cortes de estrada',d.cortes.length,
+      'modulo-logistica.html','#EF4444']);
+    if(d.mercados.length) linhas.push(['\u25CF','Pra&ccedil;as medidas pelo SIMA',d.mercados.length,
+      'series-precos.html','#22B8F0']);
+    if(d.ipc) linhas.push(['\u25D1','Peso no &iacute;ndice de pre&ccedil;os',p2(d.ipc)+'%',
+      'inflacao-cobertura.html','#A78BFA']);
+
+    var destino=d.arm.length?'cadastro-armazens.html':'monitorizacao-em-falta.html';
+    return '<a class="prov entra" href="'+destino+'" style="animation-delay:'+(i*.045)+'s" '
+     +'aria-label="Abrir detalhe de '+esc(p)+'">'
+     +'<span style="position:absolute;left:0;top:0;bottom:0;width:3px;background:'+c[0]+'"></span>'
+     +'<div class="prov-h"><span class="prov-n">'+p+'</span>'
+     +'<span class="prov-c" style="color:'+c[0]+';border-color:'+c[0]+'55;background:'+c[0]+'12">'+c[1]+'</span></div>'
+     +'<div class="prov-l">'
+     +linhas.map(function(l){
+       return '<span class="linha" data-ir="'+l[3]+'" role="link" tabindex="0" '
+        +'style="cursor:pointer" title="Abrir '+l[3]+'">'
+        +'<span class="linha-i" style="color:'+l[4]+'">'+l[0]+'</span>'
+        +'<span class="linha-t">'+l[1]+'</span>'
+        +'<span class="linha-v" style="color:'+l[4]+'">'+l[2]+'</span></span>';
+     }).join('')
+     +'</div><div class="prov-f"><span>'
+     +(d.arm.length?'Abrir cadastro de armaz&eacute;ns':'Ver o que falta cadastrar')
+     +'</span><span>&rarr;</span></div></a>';
+  }).join('');
+  document.getElementById('provincias').innerHTML=h;
+
+  /* Cada linha leva ao seu ecrã; o clique não deve disparar também o do cartão. */
+  Array.prototype.forEach.call(document.querySelectorAll('.linha[data-ir]'),function(el){
+    function ir(ev){ ev.preventDefault(); ev.stopPropagation();
+      window.location.href=el.getAttribute('data-ir'); }
+    el.addEventListener('click',ir);
+    el.addEventListener('keydown',function(ev){ if(ev.key==='Enter'||ev.key===' ') ir(ev); });
+  });
+
+  var doc=PROVINCIAS.filter(function(p){return corProvincia(dadosProvincia(p))[1]==='documentada'}).length;
+  document.getElementById('p-tag').innerHTML=doc+' de '+PROVINCIAS.length+' documentadas';
+}
+
+function desenharPrecos(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var L=R.slice().sort(function(a,b){
+    return (b.maximo.valor/b.minimo.valor)-(a.maximo.valor/a.minimo.valor)});
+  var max=(L[0].maximo.valor/L[0].minimo.valor-1)*100;
+  document.getElementById('precos').innerHTML=L.map(function(r,i){
+    var d=(r.maximo.valor/r.minimo.valor-1)*100;
+    var c=d>150?'#EF4444':d>60?'#F0A926':'#12B981';
+    return '<div class="entra" style="animation-delay:'+(i*.06)+'s;margin-bottom:12px">'
+     +'<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">'
+     +'<b>'+esc(r.produto)+'</b><span class="mono" style="color:'+c+'">+'+d.toFixed(0)+'%</span></div>'
+     +'<div style="height:7px;background:#0A1421;border-radius:4px;overflow:hidden">'
+     +'<i class="cresce" style="display:block;height:100%;width:'+(d/max*100)+'%;'
+     +'background:linear-gradient(90deg,'+c+'AA,'+c+'55);animation-delay:'+(.1+i*.06)+'s"></i></div>'
+     +'<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--t4);margin-top:4px">'
+     +'<span>'+esc(r.minimo.mercados[0])+' &middot; '+p2(r.minimo.valor)+'</span>'
+     +'<span>'+esc(r.maximo.mercados[0])+' &middot; '+p2(r.maximo.valor)+' MT/kg</span></div></div>';
+  }).join('')
+   +'<a href="series-precos.html" style="display:block;margin-top:6px;font-size:11.5px;color:var(--brzl);'
+   +'text-decoration:none">Abrir a s&eacute;rie completa &rarr;</a>';
+  document.getElementById('s-tag').innerHTML=L.length+' produtos';
+}
+
+function desenharRiscos(){
+  var R=(ST.risc.riscos||[]).slice()
+    .sort(function(a,b){return (b.gravidade||0)-(a.gravidade||0)}).slice(0,5);
+  document.getElementById('riscos').innerHTML=R.map(function(r,i){
+    var g=r.gravidade||0;
+    var c=g>=3?'#EF4444':g>=2?'#F0A926':'#22B8F0';
+    return '<a href="centro-antecipacao.html" class="entra" style="animation-delay:'+(i*.06)+'s;'
+     +'display:block;text-decoration:none;color:inherit;padding:11px 0;'
+     +'border-bottom:1px solid rgba(38,56,86,.4)">'
+     +'<div style="display:flex;gap:10px;align-items:flex-start">'
+     +'<span style="flex-shrink:0;font-family:IBM Plex Mono,monospace;font-size:11px;color:'+c+';'
+     +'border:1px solid '+c+'55;background:'+c+'12;border-radius:3px;padding:1px 6px;margin-top:1px">'
+     +'G'+g+'</span>'
+     +'<div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;line-height:1.45">'
+     +esc(r.titulo||'')+'</div>'
+     +'<div style="font-size:10.5px;color:var(--t4);margin-top:4px;line-height:1.5">'
+     +esc(String(r.evidencia||r.resumo||'').slice(0,88))+'</div>'
+     +'</div></div></a>';
+  }).join('')
+   +'<a href="centro-antecipacao.html" style="display:block;margin-top:10px;font-size:11.5px;'
+   +'color:var(--brzl);text-decoration:none">Abrir o Centro de Antecipa&ccedil;&atilde;o &rarr;</a>';
+  document.getElementById('r-tag').innerHTML=(ST.risc.riscos||[]).length+' riscos';
+}
+
+var DESTINOS=[
+ ['Territ&oacute;rio e cadeia',[
+  ['\u25F1','Mapa Integrado','mapa-integrado.html'],
+  ['\u25A4','Cadastro de Armazenagem','cadastro-armazens.html'],
+  ['\u25CE','Monitoriza&ccedil;&atilde;o em falta','monitorizacao-em-falta.html'],
+  ['\u25AC','M&oacute;dulo de Log&iacute;stica','modulo-logistica.html']]],
+ ['Pre&ccedil;os e mercado',[
+  ['\u25E7','S&eacute;rie de pre&ccedil;os','series-precos.html'],
+  ['\u25D1','Onde a infla&ccedil;&atilde;o n&atilde;o chega','inflacao-cobertura.html'],
+  ['\u25F3','Marketplace B2B','marketplace-b2b.html'],
+  ['\u25C6','Simulador de importa&ccedil;&otilde;es','simulador-importacoes.html']]],
+ ['An&aacute;lise e risco',[
+  ['\u26A0','Centro de Antecipa&ccedil;&atilde;o','centro-antecipacao.html'],
+  ['\u25C9','Intelig&ecirc;ncia Consolidada','inteligencia-consolidada.html'],
+  ['\u25D4','Actualidade dos dados','actualidade-dados.html'],
+  ['\u25A3','Governa&ccedil;&atilde;o do Dado','governanca-dado.html']]],
+ ['Fiscaliza&ccedil;&atilde;o e regula&ccedil;&atilde;o',[
+  ['\u2696','Portal IGSAE','dashboard-igsae.html'],
+  ['\u25CB','Portal ARC','dashboard-arc.html'],
+  ['\u25A0','Administra&ccedil;&atilde;o e Auditoria','administracao-auditoria.html']]],
+ ['Portais por agente',[
+  ['\u25B2','Produtores','portal-produtores.html'],
+  ['\u25BC','Comerciantes','portal-comerciantes.html'],
+  ['\u25C0','Transportadores','portal-transportadores.html'],
+  ['\u25B6','Empresas','portal-empresas.html'],
+  ['\u25CF','Transpar&ecirc;ncia P&uacute;blica','portal-publico.html']]],
+ ['Institucional',[
+  ['\u25C7','Ades&atilde;o Institucional','adesao-institucional.html'],
+  ['\u25FB','Central de Relat&oacute;rios','relatorios-central.html'],
+  ['\u25FC','Relat&oacute;rio Executivo','relatorio-executivo.html'],
+  ['\u25AA','Apresenta&ccedil;&atilde;o','apresentacao.html']]]
+];
+function desenharDestinos(){
+  document.getElementById('destinos').innerHTML=DESTINOS.map(function(g,gi){
+    return '<div class="grupo">'+g[0]+'</div><div class="dest">'
+     +g[1].map(function(x,i){
+       return '<a class="entra" href="'+x[2]+'" style="animation-delay:'+(gi*.04+i*.02)+'s">'
+        +'<span class="ic">'+x[0]+'</span>'+x[1]+'</a>';
+     }).join('')+'</div>';
+  }).join('');
+}
+
+function desenharKpis(){
+  var totalArm=ST.arm.armazens.length;
+  var totalFar=ST.far.totais.lidas;
+  var estr=ST.rv.estradas.length;
+  var cortes=ST.rv.interrupcoes.length;
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var disp=R.slice().sort(function(a,b){
+    return (b.maximo.valor/b.minimo.valor)-(a.maximo.valor/a.minimo.valor)})[0];
+  var docP=PROVINCIAS.filter(function(p){return corProvincia(dadosProvincia(p))[1]==='documentada'}).length;
+
+  var lista=[
+   {id:'pn-armazens',rotulo:'Armaz&eacute;ns cadastrados',valor:totalArm,unidade:'unidades',
+    estado:'todos com fonte oficial citada',tipo:'FACTO',cor:'var(--ok)',
+    resumo:'Unidades de armazenagem documentadas em publica&ccedil;&atilde;o de institui&ccedil;&atilde;o.',
+    formula:'contagem do cadastro nacional',
+    componentes:PROVINCIAS.map(function(p){
+      return [p,ST.arm.armazens.filter(function(a){return a.provincia===p}).length,'']}),
+    leitura:'&Eacute; o que o pa&iacute;s tem documentado. Nenhuma destas unidades reporta exist&ecirc;ncias.',
+    fonte:'Cadastro Nacional de Armazenagem',dataDados:'Agosto de 2026',
+    ecra:'cadastro-armazens.html'},
+
+   {id:'pn-farmacias',rotulo:'Farm&aacute;cias licenciadas',valor:num(totalFar),unidade:'',
+    estado:ST.far.totais.provinciasLidas+' prov&iacute;ncias lidas, '+ST.far.totais.provinciasPorLer+' por extrair',
+    tipo:'FACTO',cor:'var(--teal)',
+    resumo:'Estabelecimentos de dispensa de medicamentos com alvar&aacute;, no cadastro da ANARME.',
+    formula:'contagem da lista p&uacute;blica da ANARME',
+    componentes:(ST.far.porProvincia||[]).map(function(x){
+      return [x.provincia,x.emFuncionamento,'em funcionamento']}),
+    leitura:'&Eacute; o primeiro cadastro do sistema que cobre pontos de venda ao p&uacute;blico, e n&atilde;o infraestrutura.',
+    fonte:'ANARME &mdash; Lista de Farm&aacute;cias',dataDados:'Setembro de 2024',
+    ecra:'dashboard-igsae.html'},
+
+   {id:'pn-dispersao',rotulo:'Maior dispers&atilde;o de pre&ccedil;o',
+    valor:Math.round((disp.maximo.valor/disp.minimo.valor-1)*100),unidade:'%',
+    estado:disp.produto+' &middot; '+disp.minimo.mercados[0]+' vs '+disp.maximo.mercados[0],
+    tipo:'FACTO',cor:'var(--red)',
+    resumo:'Diferen&ccedil;a entre a pra&ccedil;a mais barata e a mais cara, na mesma semana.',
+    formula:'m&aacute;ximo a dividir pelo m&iacute;nimo, menos um',
+    componentes:R.map(function(r){
+      return [r.produto,Math.round((r.maximo.valor/r.minimo.valor-1)*100),'%']}),
+    leitura:'Indica mercado isolado ou custo de transporte, n&atilde;o pr&aacute;tica concertada.',
+    fonte:'SIMA &mdash; boletim Quente-Quente n.&ordm; '+ST.sima.meta.edicao,dataDados:'Julho de 2023',
+    ecra:'series-precos.html'},
+
+   {id:'pn-provincias',rotulo:'Prov&iacute;ncias documentadas',valor:docP,unidade:'de '+PROVINCIAS.length,
+    estado:'com armaz&eacute;m e farm&aacute;cias no cadastro',tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Prov&iacute;ncias com pelo menos um armaz&eacute;m cadastrado e farm&aacute;cias extra&iacute;das.',
+    formula:'contagem das prov&iacute;ncias com ambos os cadastros',
+    componentes:PROVINCIAS.map(function(p){
+      return [p,corProvincia(dadosProvincia(p))[1],'']}),
+    leitura:'Onde falta, &eacute; lacuna de cadastro e n&atilde;o de abastecimento. O sistema n&atilde;o sabe o que l&aacute; existe.',
+    fonte:'Cadastro Nacional e ANARME',dataDados:'Agosto de 2026'},
+
+   {id:'pn-disponibilidade',rotulo:'Disponibilidade nacional',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Percentagem do stock m&iacute;nimo estrat&eacute;gico coberto.',
+    porqueNaoEReal:'O n&uacute;mero derivava de um stock nacional escrito &agrave; m&atilde;o no ficheiro de demonstra&ccedil;&atilde;o. Nenhum armaz&eacute;m do pa&iacute;s declara exist&ecirc;ncias, pelo que n&atilde;o h&aacute; como calcular disponibilidade. Era tamb&eacute;m o n&uacute;mero que dava cor a cada prov&iacute;ncia neste painel.',
+    oQueFalta:'Exist&ecirc;ncias declaradas pelos armazenistas e consumo por produto',
+    quemDetem:'Armazenistas &middot; ICM &middot; INE'},
+
+   {id:'pn-cobertura',rotulo:'Dias de cobertura e importa&ccedil;&otilde;es em tr&acirc;nsito',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Dias de consumo cobertos pelo stock, e tonelagem a caminho.',
+    porqueNaoEReal:'Os dias de cobertura dividiam um stock desconhecido por um consumo estimado. As importa&ccedil;&otilde;es em tr&acirc;nsito exigiriam liga&ccedil;&atilde;o &agrave;s Alf&acirc;ndegas, que n&atilde;o existe. O &iacute;ndice log&iacute;stico nacional assentava em corredores com tempos e custos que ningu&eacute;m mede em Mo&ccedil;ambique.',
+    oQueFalta:'Exist&ecirc;ncias, consumo e agregado aduaneiro',
+    quemDetem:'Armazenistas &middot; Alf&acirc;ndegas &middot; INE'}
+  ];
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
+}
+
+Promise.all(['armazens-nacionais','farmacias-anarme','rede-viaria','ipc-ine','sima-precos','antecipacao']
+ .map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.arm=res[0];ST.far=res[1];ST.rv=res[2];ST.ipc=res[3];ST.sima=res[4];ST.risc=res[5];
+  desenharKpis();desenharProvincias();desenharPrecos();desenharRiscos();desenharDestinos();
+}).catch(function(e){
+  document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+});
 </script>
 </body>
 </html>
