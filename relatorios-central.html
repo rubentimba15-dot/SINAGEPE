@@ -142,6 +142,7 @@ if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
 var ST={d:{},actual:null};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p1(n){return Number(n).toFixed(1).replace('.',',')}
 function p2(n){return Number(n).toFixed(2).replace('.',',')}
 function hoje(){return new Date().toLocaleDateString('pt-PT',{day:'2-digit',month:'long',year:'numeric'})}
 
@@ -161,6 +162,34 @@ function eAdministrador(){var n=nivel();return !n||n.chave==='administrador'}
    que ficheiros de dados usa, e a fun\u00e7\u00e3o que o constr\u00f3i.
    ============================================================ */
 var RELATORIOS=[
+ {id:'fome-vs-oferta',titulo:'Necessidade e Oferta \u2014 cruzamento',
+  desc:'Cruza a insegura\u00e7a alimentar medida pelo IPC e pela FAO com o que o sistema sabe da oferta: armaz\u00e9ns cadastrados, estradas cortadas e pre\u00e7os por pra\u00e7a. \u00c9 o relat\u00f3rio que responde \u00e0 pergunta que nenhuma das fontes responde sozinha.',
+  ecra:'fontes-internacionais.html',
+  dados:['fontes-internacionais','armazens-nacionais','rede-viaria','sima-precos'],
+  idade:'Fontes internacionais de Mar\u00e7o de 2026, cadastro de Agosto de 2026',
+  gerar:relFomeOferta},
+
+ {id:'divergencias-entre-fontes',titulo:'Diverg\u00eancias entre Fontes',
+  desc:'Todos os casos em que duas fontes oficiais dizem coisas diferentes sobre o mesmo facto. Nenhuma foi resolvida em sil\u00eancio: ficam as duas registadas, com o \u00e2mbito de cada uma.',
+  ecra:'inteligencia-consolidada.html',
+  dados:['fontes-internacionais','indicadores-provinciais-ine','rede-viaria'],
+  idade:'Compilado em Setembro de 2026',
+  gerar:relDivergencias},
+
+ {id:'exposicao-provincial',titulo:'Exposi\u00e7\u00e3o Provincial \u2014 quatro camadas',
+  desc:'Junta, por prov\u00edncia, os indicadores do INE, os armaz\u00e9ns cadastrados, as farm\u00e1cias licenciadas e as estradas cortadas. Mostra onde as camadas se acumulam.',
+  ecra:'painel-nacional.html',
+  dados:['indicadores-provinciais-ine','armazens-nacionais','farmacias-anarme','rede-viaria'],
+  idade:'INE de 2017, cadastros de 2024 e 2026',
+  gerar:relExposicao},
+
+ {id:'campanha-e-cheias',titulo:'Campanha Agr\u00e1ria e Impacto das Cheias',
+  desc:'A previs\u00e3o de produ\u00e7\u00e3o do MAAP para 2025/26 e o que as cheias de Janeiro afectaram, com a \u00e1rea semeada por prov\u00edncia onde foi publicada.',
+  ecra:'dashboard-agricultura.html',
+  dados:['campanha-agraria-maap'],
+  idade:'MAAP, Janeiro de 2026',
+  gerar:relCampanha},
+
  {id:'cadastro-armazenagem',titulo:'Cadastro Nacional de Armazenagem',
   desc:'As 30 unidades documentadas, com natureza, propriet\u00e1rio, estado, capacidade e fonte oficial de cada uma.',
   ecra:'armazens-nacionais.html',dados:['armazens-nacionais'],idade:'Cadastro verificado em Agosto de 2026',
@@ -242,6 +271,242 @@ function tab(cols,linhas){
       return '<td'+(cols[i]&&cols[i][1]==='n'?' style="text-align:right;font-family:monospace"':'')+'>'+v+'</td>';
     }).join('')+'</tr>';
   }).join('')+'</tbody></table>';
+}
+
+/* ============================================================
+   RELATÓRIOS QUE CRUZAM FONTES
+   ------------------------------------------------------------
+   Os doze relatórios anteriores tratavam cada um de uma fonte.
+   Estes quatro juntam fontes diferentes, que é onde aparece o
+   que nenhuma delas mostra sozinha.
+   ============================================================ */
+
+function relFomeOferta(){
+  var FI=ST.d['fontes-internacionais'];
+  var A=ST.d['armazens-nacionais'].armazens;
+  var RV=ST.d['rede-viaria'];
+  var R=(ST.d['sima-precos'].retalho1462||ST.d['sima-precos'].retalho);
+  var ult=FI.insegurancaAlimentar[FI.insegurancaAlimentar.length-1];
+  var dv=FI.divergenciaRegistada;
+
+  var PROV=['Niassa','Cabo Delgado','Nampula','Zambézia','Tete','Manica','Sofala',
+   'Inhambane','Gaza','Maputo','Cidade de Maputo'];
+  var afect=(FI.assistencia&&FI.deslocacao)?['Cabo Delgado','Nampula','Sofala','Tete','Zambézia']:[];
+
+  var linhas=PROV.map(function(pv){
+    var arm=A.filter(function(a){return a.provincia===pv}).length;
+    var cort=(RV.interrupcoes||[]).filter(function(c){return c.provincia===pv}).length;
+    var sinal=afect.indexOf(pv)>=0;
+    return [esc(pv), sinal?'destacada pela FAO':'—', String(arm), String(cort),
+      (sinal&&arm===0)?'sem armazém cadastrado e destacada':(sinal?'destacada, com armazém':'—')];
+  });
+
+  var semArmComSinal=PROV.filter(function(pv){
+    return afect.indexOf(pv)>=0 && A.filter(function(a){return a.provincia===pv}).length===0;
+  });
+
+  var csv=[['Provincia','Destacada pela FAO','Armazens cadastrados','Cortes de estrada','Leitura']]
+   .concat(linhas.map(function(l){return l.map(function(x){return String(x).replace(/—/g,'')})}));
+
+  return {
+    html: cabecalho('Necessidade e Oferta — cruzamento',
+        'Fontes internacionais de Março de 2026, cadastro de Agosto de 2026',
+        'IPC · FAO · WFP · Cadastro Nacional de Armazenagem · ANE · SIMA')
+      +'<h2>A pergunta que ninguém responde sozinho</h2>'
+      +'<p>O IPC e o SETSAN medem <b>quem tem fome e onde</b>. O SINAGEPE mede <b>onde está o alimento, '
+      +'quanto custa movê-lo e se a estrada para lá está aberta</b>. '
+      +'Uma classificação de fase diz onde é preciso agir; não diz como lá chegar.</p>'
+      +'<div class="nota">'+esc(FI.utilidadePublica.exemplo)+'</div>'
+      +'<h2>O que as fontes internacionais dizem</h2>'
+      +'<p><b>'+num(ult.pessoas)+' pessoas</b> em insegurança alimentar aguda, fase 3 ou acima, '
+      +'em '+esc(ult.periodo)+', segundo a '+esc(ult.fonte)+'. Âmbito: '+esc(ult.ambito)+'.'
+      +(ult.emergencia?' Destes, <b>'+num(ult.emergencia)+'</b> em fase 4, de emergência.':'')+'</p>'
+      +'<p>A assistência do WFP caiu de <b>'+num(FI.assistencia.pessoasAssistidas2024)+'</b> pessoas em 2024 '
+      +'para <b>'+num(FI.assistencia.pessoasAssistidas2025)+'</b> em 2025, por défice de financiamento. '
+      +'No mesmo período, as cheias do início de 2026 afectaram cerca de '
+      +num(FI.assistencia.cheias2026)+' pessoas.</p>'
+      +'<h2>Cruzamento por província</h2>'
+      +tab([['Província'],['Sinal internacional'],['Armazéns','n'],['Cortes','n'],['Leitura']],linhas)
+      +(function(){
+        /* O cruzamento pode dar dois resultados, e ambos informam. */
+        if(semArmComSinal.length)
+          return '<div class="nota"><b>Achado do cruzamento.</b> '+semArmComSinal.join(' e ')
+           +' consta'+(semArmComSinal.length>1?'m':'')+' entre as províncias destacadas pela FAO '
+           +'e não tem nenhuma unidade de armazenagem no cadastro nacional. '
+           +'É lacuna de cadastro ou lacuna de infraestrutura — o sistema não distingue, e diz.</div>';
+        var semArmTodas=PROV.filter(function(pv){
+          return A.filter(function(a){return a.provincia===pv}).length===0;});
+        return '<div class="nota"><b>Achado do cruzamento.</b> As cinco províncias destacadas pela FAO '
+         +'— '+afect.join(', ')+' — têm todas armazenagem cadastrada. '
+         +'<b>A ausência de cadastro está noutro lado:</b> '+semArmTodas.join(', ')
+         +' não têm nenhuma unidade registada, e não constam do destaque internacional. '
+         +'São dois problemas distintos: onde há necessidade documentada e infraestrutura, '
+         +'e onde não há nem uma coisa nem outra.</div>';
+      })()
+      +'<h2>O preço onde o alimento se compra</h2>'
+      +tab([['Produto'],['Mais barato','n'],['Praça'],['Mais caro','n'],['Praça'],['Amplitude','n']],
+        R.map(function(r){
+          return [esc(r.produto),p2(r.minimo.valor),esc(r.minimo.mercados[0]),
+            p2(r.maximo.valor),esc(r.maximo.mercados[0]),
+            '+'+Math.round((r.maximo.valor/r.minimo.valor-1)*100)+'%'];}))
+      +'<h2>O que este relatório não diz</h2>'
+      +'<p>Não diz quanto alimento existe em cada província, porque nenhuma unidade de armazenagem do país '
+      +'reporta existências. Não diz a necessidade por distrito, porque a classificação do IPC não está '
+      +'ligada ao sistema. <b>Os preços são de Julho de 2023</b> e os cortes de estrada de Janeiro de 2026.</p>'
+      +'<div class="nota"><b>Divergência registada.</b> '+esc(dv.nota)+'</div>'
+      +rodape(),
+    csv: csv,
+    json: {insegurancaAlimentar:FI.insegurancaAlimentar, cruzamento:linhas,
+           divergencia:dv, precos:R}
+  };
+}
+
+function relDivergencias(){
+  var FI=ST.d['fontes-internacionais'];
+  var INE=ST.d['indicadores-provinciais-ine'];
+  var RV=ST.d['rede-viaria'];
+  var D=[];
+
+  if(FI.divergenciaRegistada){
+    var d1=FI.divergenciaRegistada;
+    D.push([esc(d1.assunto),
+      d1.valores.map(function(v){return esc(v.fonte)+': '+num(v.valor)}).join(' / '),
+      esc(d1.valores.map(function(v){return v.ambito}).join(' vs ')),
+      'por confirmar']);
+  }
+  if(INE.divergenciaRegistada){
+    var d2=INE.divergenciaRegistada;
+    D.push([esc(d2.assunto),
+      d2.valores.map(function(v){return num(v.valor)}).join(' / '),
+      esc(d2.valores.map(function(v){return v.fonte}).join(' vs ')),
+      'explicada pela amostra']);
+  }
+  if(RV.divergencia||RV.meta&&RV.meta.divergencia){
+    var d3=RV.divergencia||RV.meta.divergencia;
+    D.push(['Troço Ribáuè–Malema','EN1 / N13',
+      'Comunicado da ANE vs descrição oficial da rede','por confirmar com a ANE']);
+  }
+
+  var csv=[['Assunto','Valores','Fontes','Estado']].concat(D);
+
+  return {
+    html: cabecalho('Divergências entre Fontes','Compilado em Setembro de 2026',
+        'IPC · FAO · INE · ANE')
+      +'<h2>A regra</h2>'
+      +'<p>Quando duas fontes oficiais dizem coisas diferentes sobre o mesmo facto, '
+      +'<b>o sistema não escolhe nenhuma em silêncio</b>. Regista as duas, com o âmbito e o método de cada uma, '
+      +'e devolve a divergência à instituição de origem.</p>'
+      +'<div class="nota">Um sistema que cruza fontes encontra inconsistências que a instituição de origem '
+      +'nem sempre detecta. Devolvê-las é a contrapartida mais útil que se pode oferecer a quem publica dados.</div>'
+      +'<h2>As divergências encontradas</h2>'
+      +tab([['Assunto'],['Valores'],['Fontes'],['Estado']],D)
+      +'<h2>Detalhe</h2>'
+      +'<p><b>Insegurança alimentar, Outubro de 2025 a Março de 2026.</b> '
+      +esc(FI.divergenciaRegistada.nota)+'</p>'
+      +'<p><b>População no Censo de 2017.</b> '+esc(INE.divergenciaRegistada.nota)+'</p>'
+      +'<p><b>Troço Ribáuè–Malema.</b> A interrupção consta do registo como pertencendo à EN1, '
+      +'conforme o comunicado de origem. A descrição oficial da rede situa Ribáuè e Malema no eixo '
+      +'Nampula–Cuamba–Lichinga, atribuído à N13. Não foi corrigida: está assinalada para esclarecimento da ANE.</p>'
+      +rodape(),
+    csv: csv,
+    json: {divergencias:D}
+  };
+}
+
+function relExposicao(){
+  var INE=ST.d['indicadores-provinciais-ine'].provincias;
+  var A=ST.d['armazens-nacionais'].armazens;
+  var FA=ST.d['farmacias-anarme'].porProvincia||[];
+  var RV=ST.d['rede-viaria'];
+  var fa={}; FA.forEach(function(x){fa[x.provincia]=x.emFuncionamento});
+
+  var linhas=INE.map(function(x){
+    var pv=x.provincia;
+    var arm=A.filter(function(a){return a.provincia===pv}).length;
+    var cort=(RV.interrupcoes||[]).filter(function(c){return c.provincia===pv}).length;
+    return [esc(pv), p1(x.esperancaVida2017.homens), p1(x.migracaoLiquida2017),
+      String(arm), fa[pv]!=null?num(fa[pv]):'—', String(cort)];
+  });
+
+  var piorEV=INE.slice().sort(function(a,b){
+    return a.esperancaVida2017.homens-b.esperancaVida2017.homens})[0];
+  var maiorSaida=INE.slice().sort(function(a,b){
+    return a.migracaoLiquida2017-b.migracaoLiquida2017})[0];
+
+  var csv=[['Provincia','Esperanca vida homens','Migracao liquida','Armazens','Farmacias','Cortes']]
+   .concat(linhas.map(function(l){return l.map(function(x){return String(x).replace(/—/g,'')})}));
+
+  return {
+    html: cabecalho('Exposição Provincial — quatro camadas',
+        'INE de 2017, ANARME de 2024, cadastro e ANE de 2026',
+        'INE · Cadastro Nacional de Armazenagem · ANARME · ANE')
+      +'<h2>O que este relatório junta</h2>'
+      +'<p>Quatro camadas por província: os indicadores demográficos do INE, os armazéns cadastrados, '
+      +'as farmácias licenciadas e as estradas com corte registado. <b>Nenhuma destas fontes fala com as outras</b> '
+      +'— e o cruzamento mostra onde as fragilidades se acumulam.</p>'
+      +'<h2>As onze províncias</h2>'
+      +tab([['Província'],['Esperança de vida, homens','n'],['Migração líquida','n'],
+            ['Armazéns','n'],['Farmácias','n'],['Cortes','n']],linhas)
+      +'<h2>Achados do cruzamento</h2>'
+      +'<p><b>'+esc(piorEV.provincia)+'</b> tem a menor esperança de vida masculina do país, '
+      +p1(piorEV.esperancaVida2017.homens)+' anos, e '
+      +A.filter(function(a){return a.provincia===piorEV.provincia}).length
+      +' armazéns cadastrados.</p>'
+      +'<p><b>'+esc(maiorSaida.provincia)+'</b> tem a maior perda migratória, '
+      +p1(maiorSaida.migracaoLiquida2017)+'%, e '
+      +A.filter(function(a){return a.provincia===maiorSaida.provincia}).length
+      +' armazéns cadastrados.</p>'
+      +'<div class="nota"><b>Limitação.</b> Os indicadores do INE são do Censo de 2017 e os cadastros '
+      +'são de 2024 e 2026. A comparação é entre camadas de datas diferentes, e isso deve constar '
+      +'de qualquer uso que se faça deste quadro. <b>Ausência no cadastro não significa ausência no terreno.</b></div>'
+      +rodape(),
+    csv: csv,
+    json: {provincias:linhas}
+  };
+}
+
+function relCampanha(){
+  var M=ST.d['campanha-agraria-maap'];
+  var C=M.campanha2025_26, H=M.cheias;
+  var linhas=C.producaoPrevista.map(function(g){
+    return [esc(g.grupo), num(g.toneladas), num(g.toneladas/1000)+' mil t'];
+  });
+  var prov=H.porProvincia.filter(function(p){return p.hectaresSemeados}).map(function(p){
+    return [esc(p.provincia), num(p.hectaresInundados), num(p.hectaresSemeados),
+      (p.hectaresInundados/p.hectaresSemeados*100).toFixed(1).replace('.',',')+'%',
+      p.familiasAfectadas?num(p.familiasAfectadas):'—'];
+  });
+  var csv=[['Grupo','Toneladas previstas']].concat(
+    C.producaoPrevista.map(function(g){return [g.grupo,g.toneladas]}));
+
+  return {
+    html: cabecalho('Campanha Agrária e Impacto das Cheias','MAAP, Janeiro de 2026',
+        'MAAP — reunião de balanço de 8 de Janeiro de 2026')
+      +'<h2>Campanha 2025/26 — previsão</h2>'
+      +'<p>Área planificada de <b>'+num(C.areaPlanificadaHa)+' hectares</b>, com crescimento estimado '
+      +'de <b>'+C.crescimentoFaceAnterior+'%</b> face à campanha anterior.</p>'
+      +tab([['Grupo de cultura'],['Toneladas previstas','n'],['Em milhares']],linhas)
+      +'<div class="nota"><b>É previsão, não medição.</b> O MAAP publica estes valores no início da campanha '
+      +'como planificação. A produção efectiva só se conhece depois da colheita, no Inquérito Agrário Integrado.</div>'
+      +'<h2>Impacto das cheias — dado observado</h2>'
+      +'<p><b>'+num(H.hectaresAfectados)+' hectares</b> afectados, correspondendo a '
+      +String(H.percentagemAreaSemeada).replace('.',',')+'% da área semeada, envolvendo '
+      +'<b>'+num(H.familiasProdutoras)+' famílias produtoras</b> em '
+      +H.provinciasAfectadas.length+' províncias.</p>'
+      +tab([['Província'],['Ha inundados','n'],['Ha semeados','n'],['Percentagem','n'],['Famílias','n']],prov)
+      +'<p>Na aquacultura, '+num(H.aquacultura.tanquesAfectados)+' tanques afectados em '
+      +esc(H.aquacultura.provincia)+', com perda de '+num(H.aquacultura.alevinosPerdidos)
+      +' alevinos e impacto em '+num(H.aquacultura.piscicultoresAfectados)+' piscicultores. '
+      +'Na pecuária, '+num(H.pecuaria.infraestruturasDanificadas)+' infra-estruturas danificadas e '
+      +num(H.pecuaria.animaisAfectados)+' animais afectados.</p>'
+      +'<h2>O que falta</h2>'
+      +'<p>'+M.lacunasQuePermanecem.map(function(l){
+          return '<b>'+esc(l.lacuna)+'.</b> '+esc(l.estado)+' '+esc(l.recomendacao);
+        }).join('</p><p>')+'</p>'
+      +rodape(),
+    csv: csv,
+    json: {campanha:C, cheias:H}
+  };
 }
 
 function relCadastro(){
@@ -647,7 +912,8 @@ document.addEventListener('keydown',function(e){
 });
 
 var FICHEIROS=['armazens-nacionais','antecipacao','rede-viaria','cascata-precos','sima-precos',
- 'adesao-institucional','governanca-dado','identificacao-gs1','medicamentos-cadeia'];
+ 'adesao-institucional','governanca-dado','identificacao-gs1','medicamentos-cadeia',
+ 'fontes-internacionais','farmacias-anarme','indicadores-provinciais-ine','campanha-agraria-maap'];
 Promise.all(FICHEIROS.map(function(f){
   return fetch('data/'+f+'.json',{cache:'no-store'})
     .then(function(r){return r.ok?r.json():null}).catch(function(){return null});

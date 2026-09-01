@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "dataDados": "Março de 2026",
+    "extraidoEm": "2026-09-01",
+    "verificado": true,
+    "naturezaFontes": "Publicações de organizações internacionais e do sistema das Nações Unidas",
+    "enquadramento": "O IPC e o SETSAN medem quem tem fome e onde. O SINAGEPE mede onde está o alimento, quanto custa movê-lo e por onde circula. São os dois lados da mesma pergunta — e hoje ninguém os cruza. É aí que está a utilidade pública do sistema no combate à insegurança alimentar."
+  },
+  "arquitecturaNacional": {
+    "coordena": "SETSAN — Secretariado Técnico de Segurança Alimentar e Nutricional",
+    "mandato": "Coordenar e monitorar a implementação da Estratégia de Segurança Alimentar e Nutricional",
+    "preside": "O processo de avaliação de vulnerabilidade, no qual as actividades do IPC estão integradas",
+    "apoiadoPor": {
+      "agenciasONU": [
+        "FAO",
+        "WFP",
+        "UNICEF"
+      ],
+      "sistemasAlerta": [
+        "FEWS NET"
+      ],
+      "organizacoes": [
+        "COSACA",
+        "World Vision",
+        "Save the Children",
+        "Oxfam"
+      ]
+    },
+    "fonte": "IPC — Integrated Food Security Phase Classification, página de Moçambique",
+    "url": "https://www.ipcinfo.org/ipcinfo-website/where-what/southern-africa/mozambique/en/",
+    "notaSinagepe": "O SETSAN preside a esta arquitectura e não estava no sistema até Agosto de 2026. É a entidade cuja articulação com o SINAGEPE tem maior valor: um mede a necessidade, o outro a oferta."
+  },
+  "fontes": [
+    {
+      "sigla": "IPC",
+      "nome": "Integrated Food Security Phase Classification",
+      "tipo": "classificação multi-agência",
+      "mede": "Fases de insegurança alimentar aguda por distrito, numa escala de 1 a 5",
+      "periodicidade": "Duas a três análises por ano",
+      "url": "https://www.ipcinfo.org/ipc-country-analysis/en/?country=MOZ",
+      "utilidadeSinagepe": "Diz onde a necessidade está. Cruzado com o cadastro de armazenagem, mostra se o alimento está perto ou longe de quem dele precisa.",
+      "estadoIntegracao": "não ligado"
+    },
+    {
+      "sigla": "FAO",
+      "nome": "Organização das Nações Unidas para a Alimentação e Agricultura",
+      "tipo": "agência das Nações Unidas",
+      "mede": "Projecções de insegurança alimentar, deslocação interna e necessidades de financiamento",
+      "periodicidade": "Contínua, com actualização por época",
+      "url": "https://www.fao.org/emergencies/where-we-work/MOZ/en",
+      "utilidadeSinagepe": "Fornece o enquadramento nacional e o contexto de deslocação, que o sistema não mede.",
+      "estadoIntegracao": "não ligado"
+    },
+    {
+      "sigla": "WFP",
+      "nome": "Programa Mundial Alimentar",
+      "tipo": "agência das Nações Unidas",
+      "mede": "Pessoas assistidas, cobertura de assistência e défice de financiamento",
+      "periodicidade": "Contínua",
+      "url": "https://www.wfp.org/countries/mozambique",
+      "utilidadeSinagepe": "É quem move alimento no terreno. O cruzamento com a rede viária e com os cortes de estrada tem valor operacional imediato.",
+      "estadoIntegracao": "não ligado"
+    },
+    {
+      "sigla": "SADC RVAA",
+      "nome": "Regional Vulnerability Assessment and Analysis Programme",
+      "tipo": "programa regional da SADC",
+      "mede": "Síntese regional do estado da segurança alimentar e nutricional",
+      "periodicidade": "Anual, com fórum de disseminação",
+      "url": "https://www.ipcinfo.org/ipcinfo-website/where-what/southern-africa/en/",
+      "utilidadeSinagepe": "Permite comparar Moçambique com os países vizinhos, que enfrentam os mesmos choques climáticos.",
+      "estadoIntegracao": "não ligado"
+    },
+    {
+      "sigla": "FEWS NET",
+      "nome": "Famine Early Warning Systems Network",
+      "tipo": "sistema de alerta precoce",
+      "mede": "Alerta precoce de crise alimentar, com projecções por zona de meios de vida",
+      "periodicidade": "Mensal",
+      "url": "https://fews.net/",
+      "utilidadeSinagepe": "Alerta precoce que o sistema pode confrontar com a sua própria série de preços.",
+      "estadoIntegracao": "não ligado"
+    },
+    {
+      "sigla": "UNICEF",
+      "nome": "Fundo das Nações Unidas para a Infância",
+      "tipo": "agência das Nações Unidas",
+      "mede": "Desnutrição aguda em crianças e mulheres grávidas e lactantes",
+      "periodicidade": "Contínua",
+      "url": "https://www.unicef.org/mozambique/",
+      "utilidadeSinagepe": "Liga a insegurança alimentar ao seu efeito mais grave e mensurável.",
+      "estadoIntegracao": "não ligado"
+    }
+  ],
+  "insegurancaAlimentar": [
+    {
+      "periodo": "Abril a Setembro de 2024",
+      "fonte": "IPC",
+      "pessoas": 2790000,
+      "fase": "IPC 3 ou acima",
+      "ambito": "63 distritos, 39% do total do país",
+      "contexto": "Após a época ciclónica"
+    },
+    {
+      "periodo": "Abril a Setembro de 2025",
+      "fonte": "IPC",
+      "pessoas": 2090000,
+      "fase": "IPC 3 ou acima",
+      "emergencia": 143000,
+      "ambito": "Nacional",
+      "contexto": "143 mil em Fase 4, com grandes défices de consumo e desnutrição aguda elevada"
+    },
+    {
+      "periodo": "Outubro de 2025 a Março de 2026",
+      "fonte": "IPC",
+      "pessoas": 1200000,
+      "fase": "IPC 3 ou acima",
+      "ambito": "47 distritos predominantemente produtivos",
+      "contexto": "Requerem assistência humanitária urgente"
+    },
+    {
+      "periodo": "Outubro de 2025 a Março de 2026",
+      "fonte": "FAO",
+      "pessoas": 3500000,
+      "fase": "IPC 3 ou acima",
+      "emergencia": 300000,
+      "ambito": "Nacional, com destaque para Cabo Delgado, Nampula, Sofala, Tete e Zambézia",
+      "contexto": "Quase 300 mil em Fase 4"
+    }
+  ],
+  "divergenciaRegistada": {
+    "assunto": "Pessoas em insegurança alimentar aguda entre Outubro de 2025 e Março de 2026",
+    "valores": [
+      {
+        "fonte": "IPC",
+        "valor": 1200000,
+        "ambito": "47 distritos predominantemente produtivos"
+      },
+      {
+        "fonte": "FAO",
+        "valor": 3500000,
+        "ambito": "Nacional, incluindo zonas afectadas por conflito"
+      }
+    ],
+    "diferenca": 2300000,
+    "nota": "As duas fontes referem o mesmo período e diferem em 2,3 milhões de pessoas. A diferença é de âmbito declarado, não necessariamente de método: o IPC publica o número para 47 distritos produtivos e a FAO apresenta um total nacional. Não se escolheu nenhum: ficam os dois registados, com o âmbito de cada um à vista. Confirmar na publicação original antes de qualquer uso oficial.",
+    "porConfirmar": true
+  },
+  "desnutricaoAguda": {
+    "periodo": "Novembro de 2025 a Outubro de 2026",
+    "criancas6a59meses": 72000,
+    "gravidasELactantes": 19000,
+    "fonte": "IPC — análise de desnutrição aguda",
+    "nota": "É o efeito mais grave e mais mensurável da insegurança alimentar."
+  },
+  "deslocacao": {
+    "deslocadosInternos": 741300,
+    "regressados": 610000,
+    "zona": "Cabo Delgado",
+    "fonte": "FAO",
+    "nota": "A deslocação altera a procura de alimento por distrito de forma que nenhum cadastro de armazenagem antecipa."
+  },
+  "assistencia": {
+    "organizacao": "WFP",
+    "pessoasAssistidas2024": 1000000,
+    "pessoasAssistidas2025": 345000,
+    "reducaoPercent": 65.5,
+    "causa": "Défice de financiamento",
+    "modalidade": "Rações a cada dois meses no norte, por assistência alimentar e monetária",
+    "cheias2026": 700000,
+    "fonte": "WFP — página de país de Moçambique",
+    "nota": "A assistência caiu para um terço em um ano, por falta de fundos. No mesmo período, as cheias do início de 2026 afectaram quase 700 mil pessoas."
+  },
+  "contextoRegional": {
+    "programa": "SADC RVAA — Regional Vulnerability Assessment and Analysis",
+    "forum": "Fórum Anual de Disseminação, 14 a 16 de Julho de 2025",
+    "comiteDirector": "29.ª reunião, 17 de Julho de 2025",
+    "estadosMembros": 11,
+    "avaliacoesCompletas": 7,
+    "pessoasRegiao": 46300000,
+    "paisesContados": [
+      "Botsuana",
+      "República Democrática do Congo",
+      "Essuatíni",
+      "Lesoto",
+      "Madagáscar",
+      "África do Sul",
+      "Tanzânia"
+    ],
+    "periodo": "Época de consumo de 2025/26",
+    "mencaoMocambique": "O relatório regional de 2025 destaca um agravamento da insegurança alimentar na República Democrática do Congo, em Moçambique e em zonas urbanas de baixo rendimento.",
+    "atrasoCronico": "Moçambique consta entre os países com prevalência de atraso de crescimento infantil acima de 40%, segundo a síntese regional da SADC.",
+    "fonte": "FAO e IPC, sobre o Fórum Anual do SADC RVAA",
+    "url": "https://www.fao.org/africa/news-stories/news-detail/strengthening-vulnerability-analysis-to-tackle-food-insecurity-in-southern-africa/en"
+  },
+  "organizacoes": [
+    {
+      "nome": "COSACA",
+      "tipo": "consórcio",
+      "papel": "Parceiro do SETSAN na avaliação de vulnerabilidade",
+      "fonte": "IPC"
+    },
+    {
+      "nome": "World Vision",
+      "tipo": "internacional",
+      "papel": "Parceiro do SETSAN na avaliação de vulnerabilidade",
+      "fonte": "IPC"
+    },
+    {
+      "nome": "Save the Children",
+      "tipo": "internacional",
+      "papel": "Parceiro do SETSAN; presente desde 1986; alcançou mais de 1,8 milhões de crianças",
+      "fonte": "IPC e Save the Children Moçambique"
+    },
+    {
+      "nome": "Oxfam",
+      "tipo": "internacional",
+      "papel": "Parceiro do SETSAN na avaliação de vulnerabilidade",
+      "fonte": "IPC"
+    },
+    {
+      "nome": "Action contre la Faim",
+      "tipo": "internacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "Food for the Hungry",
+      "tipo": "internacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "ForAfrika",
+      "tipo": "internacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "Plan International",
+      "tipo": "internacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "HELVETAS Swiss Intercooperation",
+      "tipo": "internacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "AVSI Foundation",
+      "tipo": "internacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "Médicos com África CUAMM",
+      "tipo": "internacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "Clinton Health Access Initiative",
+      "tipo": "internacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "Malaria Consortium",
+      "tipo": "internacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "Cruz Vermelha de Moçambique",
+      "tipo": "nacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "KULIMA",
+      "tipo": "nacional",
+      "papel": "Organismo para o Desenvolvimento Socioeconómico",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "Fundação para o Desenvolvimento da Comunidade",
+      "tipo": "nacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "Caritas Diocesana de Pemba",
+      "tipo": "nacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "Helpo",
+      "tipo": "nacional",
+      "papel": "Parceiro do UNICEF",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "Kukumbi",
+      "tipo": "nacional",
+      "papel": "Organização de Desenvolvimento Rural",
+      "fonte": "UNICEF Moçambique"
+    },
+    {
+      "nome": "OLIPA-ODES",
+      "tipo": "nacional",
+      "papel": "Associação para o Desenvolvimento Sustentável",
+      "fonte": "UNICEF Moçambique"
+    }
+  ],
+  "ondeSinagepeEntra": [
+    {
+      "pergunta": "Onde está a necessidade?",
+      "quemResponde": "IPC e SETSAN",
+      "comoResponde": "Classificação por distrito, em fases de 1 a 5",
+      "sinagepeTem": false
+    },
+    {
+      "pergunta": "Onde está o alimento?",
+      "quemResponde": "Ninguém",
+      "comoResponde": "Nenhuma unidade de armazenagem do país reporta existências",
+      "sinagepeTem": "parcial",
+      "nota": "O SINAGEPE sabe onde estão os 30 armazéns cadastrados e quem os detém. Não sabe o que têm."
+    },
+    {
+      "pergunta": "Quanto custa levar o alimento até lá?",
+      "quemResponde": "SINAGEPE",
+      "comoResponde": "Preço regulado do combustível por região e estado da rede viária",
+      "sinagepeTem": true
+    },
+    {
+      "pergunta": "A que preço se compra em cada praça?",
+      "quemResponde": "SINAGEPE, a partir do SIMA",
+      "comoResponde": "Preço por praça e amplitude entre mercados",
+      "sinagepeTem": true
+    },
+    {
+      "pergunta": "As estradas para lá estão abertas?",
+      "quemResponde": "SINAGEPE, a partir da ANE",
+      "comoResponde": "Interrupções registadas, com causa e alternativa",
+      "sinagepeTem": true
+    },
+    {
+      "pergunta": "Quantos pontos de dispensa existem no distrito?",
+      "quemResponde": "SINAGEPE, a partir da ANARME",
+      "comoResponde": "1.612 farmácias em 98 distritos",
+      "sinagepeTem": true
+    }
+  ],
+  "utilidadePublica": {
+    "tese": "A insegurança alimentar em Moçambique é medida com rigor por várias organizações. O que nenhuma delas mede é a outra metade do problema: onde está o alimento, quanto custa movê-lo e se a estrada para lá está aberta. Sem isso, uma classificação de fase diz onde é preciso agir e não diz como.",
+    "exemplo": "Uma província classificada em Fase 3 com um troço de estrada intransitável e sem armazém cadastrado é um problema logístico antes de ser um problema de financiamento. Nenhum dos dois sistemas, sozinho, revela isso.",
+    "contrapartida": "O SINAGEPE não substitui o SETSAN nem o IPC. Acrescenta-lhes a camada física: rede viária, armazenagem, preços por praça e custo de transporte. E devolve as divergências que encontra ao cruzar fontes — como a diferença de 2,3 milhões de pessoas entre a FAO e o IPC para o mesmo período."
+  }
+}
