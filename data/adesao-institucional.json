@@ -61,14 +61,16 @@
       "impacto": 5,
       "jaTemos": [
         "Rede classificada de 30.056 km sob gestão da ANE",
-        "Quatro eixos desenhados no mapa: N1, N4, N6 e N13",
+        "As 14 estradas nacionais desenhadas no mapa, da N1 à N14, com traçado pelas localidades da descrição oficial",
         "N1 com 2.477 km, de Maputo a Pemba, troço Sofala–Inhambane em concessão privada desde 2019",
-        "Três interrupções concretas de Janeiro de 2026, com causa e alternativa"
+        "Três interrupções concretas de Janeiro de 2026, com causa e alternativa indicada",
+        "**A ANE já publica no MozGIS os serviços GIS da rede e das obras de arte** — confirmado em Agosto de 2026"
       ],
       "lacunas": [
         "As ocorrências têm sete meses e não há forma de saber se foram reparadas",
-        "Só quatro eixos dos milhares de quilómetros classificados estão representados",
-        "Os traçados são esquemáticos, não cartografia da ANE"
+        "Os traçados no sistema são esquemáticos, não a cartografia da ANE",
+        "Não se sabe se a camada de pontes traz limite de carga — é o campo que decide tudo",
+        "Uma interrupção está registada como EN1 e o troço fica no eixo da N13; divergência por confirmar"
       ],
       "ganha": [
         "O aviso deixa de morrer no comunicado de imprensa e passa a chegar a quem carrega o camião",
@@ -77,8 +79,36 @@
         "A restrição de 10 toneladas passa a poder ser dirigida a quem transporta cereal, em vez de apelo genérico"
       ],
       "custa": "Um ficheiro JSON com as ocorrências, actualizado quando há corte. A informação já é produzida — falta publicá-la em formato legível por máquina em vez de comunicado de imprensa.",
-      "primeiroPasso": "Publicar o comunicado de interrupções também como ficheiro estruturado no sítio da ANE, com troço, causa, gravidade, alternativa e data.",
-      "fonte": "https://ane.gov.mz/"
+      "primeiroPasso": "Carta à Direcção-Geral da ANE com três perguntas concretas: (1) confirmação de que o SINAGEPE pode consumir os serviços GIS publicados no MozGIS, citando a ANE 2020; (2) se a camada RedeEstradasObrasDePontes inclui limite de carga por ponte, e sob que designação de campo; (3) se as interrupções de circulação passam a constar de camada actualizável, ou se continuam apenas em comunicado. A carta inclui, como anexo, a matriz de fontes já elaborada e o registo da divergência EN1/N13 encontrada pelo sistema.",
+      "fonte": "https://ane.gov.mz/",
+      "descobertaGIS": {
+        "data": "Agosto de 2026",
+        "servicos": [
+          {
+            "nome": "ANE/RedeEstradasObrasDePontes",
+            "url": "https://www.mozgis.gov.mz/server/rest/services/ANE/RedeEstradasObrasDePontes/MapServer",
+            "tipo": "ArcGIS MapServer",
+            "estado": "responde a pedidos",
+            "porConfirmar": "se os registos incluem limite de carga por ponte"
+          },
+          {
+            "nome": "ANE/RedeEstradasObrasDeEstradas",
+            "url": "https://www.mozgis.gov.mz/server/rest/services/ANE/RedeEstradasObrasDeEstradas/MapServer",
+            "tipo": "ArcGIS MapServer",
+            "estado": "ficha técnica confirmada",
+            "detalhe": "1.270 troços da rede classificada, WGS84, cobre todo o país, consultas avançadas suportadas"
+          },
+          {
+            "nome": "Portal de condições das estradas",
+            "url": "https://estradasdemocambique.mozgis.gov.mz/",
+            "tipo": "portal público",
+            "estado": "existe; recusa acesso automático"
+          }
+        ],
+        "licenca": "Uso não comercial permitido, com citação obrigatória da ANE 2020",
+        "financiamento": "Recolha de dados financiada pela cooperação sueca, através do projecto de apoio à gestão descentralizada de estradas regionais",
+        "porqueMuda": "O pedido deixa de ser \"forneçam dados\" e passa a ser \"confirmamos que podemos consumir o serviço que já publicam, citando a ANE 2020\". Pedir autorização para usar o que já está publicado é incomparavelmente mais simples do que pedir dados novos, e não obriga a ANE a produzir nada."
+      }
     },
     {
       "id": "icm",
