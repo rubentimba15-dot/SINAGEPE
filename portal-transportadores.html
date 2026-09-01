@@ -7,6 +7,7 @@
 <script src="assets/access-control.js"></script>
 <script src="assets/nav-sinagepe.js"></script>
 <script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
@@ -136,6 +137,7 @@ input[type=range]{flex:1;min-width:150px;accent-color:var(--brz)}
 <script>
 if(window.SinagepeNav) SinagepeNav.montar('portal-transportadores');
 if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
 var ST={cp:null,rv:null,rl:null,arm:null,pa:null,reg:0,km:400,consumo:32};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
@@ -169,25 +171,102 @@ function desenharSel(){
 }
 
 function desenharKpis(){
-  var r=reg(),p=precoRegiao(r),pr=precoRegiao(ref());
-  var dif=p!=null?p-pr:0;
+  /* ============================================================
+     Os quatro cartões mostravam o número e uma frase, e não
+     abriam. Passam ao módulo partilhado de indicadores, que traz
+     fórmula, componentes, leitura, fonte e data — e abre ao clique,
+     como nos restantes ecrãs do sistema.
+     ============================================================ */
+  var r=reg(), p=precoRegiao(r), pr=precoRegiao(ref());
+  var dif=(p!=null)?p-pr:null;
   var ints=ST.rv.interrupcoes.filter(function(i){return mesmaProv(i.provincia,r.provincia)});
-  var semAlt=ST.rv.interrupcoes.filter(function(i){return !i.alternativa}).length;
+  var semAlt=ST.rv.interrupcoes.filter(function(i){return !i.alternativa});
+  var Rg=ST.cp.regioes.filter(function(x){return x.gasoleo!=null});
+  var maisCara=Rg[Rg.length-1];
+
+  var lista=[
+   {id:'tr-gasoleo',rotulo:'Gas&oacute;leo aqui',
+    valor:(p!=null)?p2(p):'\u2014', unidade:(p!=null)?'MT/L':'',
+    estado:(p!=null)
+      ? 'pre&ccedil;o regulado em vigor desde '+esc(ST.cp.revisao.data)
+      : 'a ARENE n&atilde;o publica gas&oacute;leo para esta localidade'
+        +(soGasolina(r)?' \u2014 s&oacute; gasolina, a '+p2(r.gasolina)+' MT/L':''),
+    tipo:(p!=null)?'FACTO':'DEMONSTRA\u00c7\u00c3O', cor:(p!=null)?'var(--brzl)':'var(--amber)',
+    resumo:'Pre&ccedil;o m&aacute;ximo do gas&oacute;leo fixado pela ARENE para '+esc(r.local)+'.',
+    formula:'valor publicado no despacho de revis&atilde;o de pre&ccedil;os',
+    componentes:Rg.map(function(x,ix){
+      return [(ix===0?'Cidades com terminal':x.local), x.gasoleo, 'MT/L']}),
+    leitura:'O pre&ccedil;o &eacute; regulado e igual em todos os postos da regi&atilde;o. '
+      +'N&atilde;o &eacute; margem do posto: &eacute; o valor m&aacute;ximo que a ARENE fixa.',
+    porqueNaoEReal:(p!=null)?null:'A ARENE n&atilde;o publica pre&ccedil;o de gas&oacute;leo para esta localidade. '
+      +'O sistema n&atilde;o o estima a partir das regi&otilde;es vizinhas: mostra que n&atilde;o existe.',
+    fonte:'ARENE \u2014 Decreto n.\u00ba 89/2019, revis&atilde;o de '+esc(ST.cp.revisao.data),
+    dataDados:ST.cp.revisao.data,
+    ecra:'modulo-logistica.html'},
+
+   {id:'tr-acrescimo',rotulo:'Acr&eacute;scimo face ao terminal',
+    valor:(dif==null)?'\u2014':(dif>0?'+'+p2(dif):'0,00'),
+    unidade:(dif==null)?'':'MT/L',
+    estado:(dif==null)?'sem pre&ccedil;o de gas&oacute;leo publicado'
+      :(dif>0?'por cada litro, face &agrave;s cidades com terminal':'est&aacute; junto a um terminal'),
+    tipo:(dif==null)?'DEMONSTRA\u00c7\u00c3O':'FACTO',
+    cor:(dif==null)?'var(--t4)':(dif>0?'var(--amber)':'var(--ok)'),
+    resumo:'Diferen&ccedil;a entre o pre&ccedil;o aqui e o das cidades com terminal de distribui&ccedil;&atilde;o.',
+    formula:'pre&ccedil;o nesta regi&atilde;o menos pre&ccedil;o de refer&ecirc;ncia',
+    componentes:[['Cidades com terminal',pr,'MT/L'],
+                 [esc(r.local),(p!=null)?p:'\u2014','MT/L'],
+                 ['Diferen&ccedil;a',(dif!=null)?dif:'\u2014','MT/L'],
+                 ['M&aacute;ximo do pa&iacute;s \u2014 '+esc(maisCara.local),maisCara.gasoleo-pr,'MT/L acima']],
+    leitura:'<b>N&atilde;o &eacute; margem de ningu&eacute;m.</b> &Eacute; o custo do transporte interno do pr&oacute;prio '
+      +'combust&iacute;vel, reconhecido pela ARENE na cascata de forma&ccedil;&atilde;o do pre&ccedil;o. '
+      +'Entra em todos os fretes desta regi&atilde;o.',
+    porqueNaoEReal:(dif==null)?'Sem pre&ccedil;o de gas&oacute;leo publicado para esta localidade, '
+      +'n&atilde;o h&aacute; diferencial a calcular.':null,
+    fonte:'ARENE \u2014 cascata de forma&ccedil;&atilde;o do pre&ccedil;o',dataDados:ST.cp.revisao.data,
+    ecra:'simulador-importacoes.html'},
+
+   {id:'tr-cortes-prov',rotulo:'Cortes nesta prov&iacute;ncia',valor:ints.length,unidade:'',
+    estado:ints.length?'registados no &uacute;ltimo comunicado da ANE'
+      :'nenhum no &uacute;ltimo comunicado',
+    tipo:'FACTO',cor:ints.length?'var(--red)':'var(--ok)',
+    resumo:'Interrup&ccedil;&otilde;es de circula&ccedil;&atilde;o registadas em '+esc(r.provincia)+'.',
+    formula:'contagem das interrup&ccedil;&otilde;es publicadas pela ANE nesta prov&iacute;ncia',
+    componentes:ints.length
+      ? ints.map(function(x){return [esc(x.estrada)+' \u2014 '+esc(x.troco),
+          esc(x.gravidade||''),esc(x.causa||'')]})
+      : ST.rv.interrupcoes.map(function(x){return [esc(x.provincia)+' \u2014 '+esc(x.estrada),
+          esc(x.troco),esc(x.gravidade||'')]}),
+    leitura:ints.length
+      ? 'Cada corte tem causa declarada e, quando existe, alternativa indicada. '
+        +'Confirmar o estado actual antes de partir.'
+      : '<b>Nenhum corte no &uacute;ltimo comunicado n&atilde;o &eacute; garantia de via aberta.</b> '
+        +'A ANE comunica por nota de imprensa, sem periodicidade fixa, e o sistema n&atilde;o sabe '
+        +'se as ocorr&ecirc;ncias registadas foram entretanto reparadas.',
+    fonte:'ANE \u2014 comunicado de interrup&ccedil;&otilde;es',
+    dataDados:(ST.rv.meta&&ST.rv.meta.dataInterrupcoes)||'Janeiro de 2026',
+    ecra:'mapa-integrado.html'},
+
+   {id:'tr-sem-alternativa',rotulo:'Cortes sem alternativa',valor:semAlt.length,
+    unidade:'no país',
+    estado:'quando n&atilde;o h&aacute; desvio, a carga fica parada at&eacute; reabrir',
+    tipo:'FACTO',cor:semAlt.length?'var(--red)':'var(--ok)',
+    resumo:'Interrup&ccedil;&otilde;es para as quais a ANE n&atilde;o indica via alternativa.',
+    formula:'interrup&ccedil;&otilde;es sem alternativa declarada, em todo o pa&iacute;s',
+    componentes:ST.rv.interrupcoes.map(function(x){
+      return [esc(x.estrada)+' \u2014 '+esc(x.troco),
+        x.alternativa?'com alternativa':'SEM ALTERNATIVA', esc(x.provincia)]}),
+    leitura:'Um corte com alternativa custa quil&oacute;metros e combust&iacute;vel. '
+      +'<b>Um corte sem alternativa p&aacute;ra a carga</b> \u2014 e, se for produto perec&iacute;vel, '
+      +'o custo &eacute; a perda, n&atilde;o o desvio.',
+    fonte:'ANE \u2014 comunicado de interrup&ccedil;&otilde;es',
+    dataDados:(ST.rv.meta&&ST.rv.meta.dataInterrupcoes)||'Janeiro de 2026',
+    ecra:'modulo-logistica.html'}
+  ];
+
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
   document.getElementById('kpis').innerHTML=
-     kpi('Gas&oacute;leo aqui',p!=null?p2(p)+' <span style="font-size:13px">MT/L</span>':'n/p',
-       p!=null?'Pre&ccedil;o regulado em vigor desde '+esc(ST.cp.revisao.data)+'.'
-             :'A ARENE n&atilde;o publica gas&oacute;leo para esta localidade'+(soGasolina(r)?' — s&oacute; gasolina, a '+p2(r.gasolina)+' MT/L.':'.'),
-       p!=null?null:'var(--amber)')
-   + kpi('Acr&eacute;scimo face ao terminal',p==null?'&mdash;':(dif>0?'+'+p2(dif):'&mdash;'),
-       p==null?'Sem pre&ccedil;o de gas&oacute;leo publicado, n&atilde;o h&aacute; diferencial a calcular.'
-              :(dif>0?'Por cada litro. &Eacute; a factura da dist&acirc;ncia ao porto.':'Est&aacute; junto a um terminal de distribui&ccedil;&atilde;o.'),
-       dif>0?'var(--amber)':(p==null?'var(--t4)':'var(--ok)'))
-   + kpi('Cortes nesta prov&iacute;ncia',ints.length,ints.length?'Registados no &uacute;ltimo comunicado da ANE.':'Nenhum no &uacute;ltimo comunicado. N&atilde;o &eacute; garantia de via aberta.',ints.length?'var(--red)':'var(--ok)')
-   + kpi('Cortes sem alternativa',semAlt+' no pa&iacute;s','Quando n&atilde;o h&aacute; desvio, a carga fica parada at&eacute; reabrir.',semAlt?'var(--red)':'var(--ok)');
-}
-function kpi(l,v,n,c){
-  return '<div class="card frame kpi"><div class="kpi-l">'+l+'</div>'
-   +'<div class="kpi-v mono" style="color:'+(c||'var(--ink)')+'">'+v+'</div><div class="kpi-n">'+n+'</div></div>';
+    (dem?IndicadoresSinagepe.faixaDemonstracao(dem,lista.length):'')
+    +IndicadoresSinagepe.linha(lista);
 }
 
 function desenharCalc(){
