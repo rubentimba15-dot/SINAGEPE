@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S&eacute;rie de pre&ccedil;os &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<script src="assets/produtos-visual.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:-.015em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:18px;max-width:900px;line-height:1.6}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:3}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14.5px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:16px 18px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 16px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:10px 16px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+@keyframes surge{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes crescer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes tracar{to{stroke-dashoffset:0}}
+.entra{animation:surge .5s cubic-bezier(.16,1,.3,1) both}
+.cresce{transform-origin:left center;animation:crescer .85s cubic-bezier(.16,1,.3,1) both}
+.traca{stroke-dasharray:1600;stroke-dashoffset:1600;animation:tracar 1.8s ease-out .2s both}
+@media (prefers-reduced-motion:reduce){.entra,.cresce,.traca{animation:none!important;
+ stroke-dashoffset:0!important;opacity:1!important;transform:none!important}}
+.fb{font-size:11px;padding:6px 12px;border-radius:20px;border:1px solid var(--card-line);
+ background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.fb.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+.filtros{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid var(--card-line)}
+.aviso{margin:14px 18px;padding:13px 15px;border-radius:10px;font-size:11.5px;line-height:1.7;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Pre&ccedil;os</div>
+    <h1>S&eacute;rie de pre&ccedil;os do SIMA</h1>
+    <p class="sub">Oito edi&ccedil;&otilde;es do boletim Quente-Quente, de Setembro de 2022 a Julho de 2023, extra&iacute;das do PDF oficial e conferidas uma a uma. <b>&Eacute; a &uacute;nica s&eacute;rie de pre&ccedil;o por pra&ccedil;a do pa&iacute;s.</b></p>
+
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Evolu&ccedil;&atilde;o por produto</h2>
+        <p>Pre&ccedil;o m&eacute;dio a retalho, edi&ccedil;&atilde;o a edi&ccedil;&atilde;o</p></div>
+        <span class="tag ok" id="s-tag">&mdash;</span></div>
+      <div class="filtros" id="filtros"></div>
+      <div class="bd" id="grafico"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Amplitude entre pra&ccedil;as</h2>
+          <p>Da mais barata &agrave; mais cara, na mesma semana</p></div>
+          <span class="tag crit" id="a-tag">&mdash;</span></div>
+        <div class="bd" id="amplitude"></div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>As edi&ccedil;&otilde;es carregadas</h2>
+          <p>Cada uma com a semana que cobre</p></div>
+          <span class="tag" id="e-tag">&mdash;</span></div>
+        <table id="edicoes"></table>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Achados da s&eacute;rie</h2>
+        <p>O que aparece quando se p&otilde;em as oito edi&ccedil;&otilde;es lado a lado</p></div>
+        <span class="tag crit" id="ac-tag">&mdash;</span></div>
+      <div class="bd" id="achados"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+if(window.SinagepeNav) SinagepeNav.montar('series');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
+
+var ST={produto:null};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+
+var CORES=['#E8BE7A','#22B8F0','#2DD4BF','#F0A926','#A78BFA','#EF4444'];
+
+function serie(){
+  var s=ST.sima.series;
+  if(!s||!s.precoMedio) return {edicoes:[],produtos:[]};
+  return {edicoes:s.edicoes||[], produtos:s.precoMedio||[]};
+}
+
+function desenharKpis(){
+  var S=serie();
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var disp=R.slice().sort(function(a,b){
+    return (b.maximo.valor/b.minimo.valor)-(a.maximo.valor/a.minimo.valor)})[0];
+  var comValor=S.edicoes.filter(function(e){
+    return S.produtos.some(function(p){return p.valores&&p.valores[String(e.edicao)]!=null})}).length;
+  var F=[]; Object.keys(ST.sima).forEach(function(k){
+    if(k.indexOf('fluxos')===0 && Array.isArray(ST.sima[k])) F=F.concat(ST.sima[k])});
+
+  var lista=[
+   {id:'sp-edicoes',rotulo:'Edi&ccedil;&otilde;es carregadas',valor:S.edicoes.length,unidade:'',
+    estado:comValor+' com valores extra&iacute;dos',tipo:'FACTO',cor:'var(--ok)',
+    resumo:'Boletins do SIMA lidos e conferidos contra o PDF original.',
+    formula:'contagem das edi&ccedil;&otilde;es no ficheiro de s&eacute;rie',
+    componentes:S.edicoes.map(function(e){return ['N.&ordm; '+e.edicao,e.semana||e.mes||'','']}),
+    leitura:'Uma edi&ccedil;&atilde;o ficou sem valores: o boletim n.&ordm; 1446 repete o texto da semana anterior. Est&aacute; registada como anomalia, n&atilde;o corrigida em sil&ecirc;ncio.',
+    fonte:'SIMA &mdash; boletim Quente-Quente',dataDados:'Julho de 2023'},
+
+   {id:'sp-dispersao',rotulo:'Maior dispers&atilde;o entre pra&ccedil;as',
+    valor:Math.round((disp.maximo.valor/disp.minimo.valor-1)*100),unidade:'%',
+    estado:disp.produto+' &middot; '+disp.minimo.mercados[0]+' vs '+disp.maximo.mercados[0],
+    tipo:'FACTO',cor:'var(--red)',
+    resumo:'Diferen&ccedil;a entre a pra&ccedil;a mais barata e a mais cara para o mesmo produto.',
+    formula:'m&aacute;ximo a dividir pelo m&iacute;nimo, menos um',
+    componentes:R.map(function(r){
+      return [r.produto,Math.round((r.maximo.valor/r.minimo.valor-1)*100),'%']}),
+    leitura:'&Eacute; o n&uacute;mero que abre a apresenta&ccedil;&atilde;o do sistema. N&atilde;o &eacute; varia&ccedil;&atilde;o de qualidade: &eacute; custo de transporte e isolamento de mercado.',
+    fonte:'SIMA &mdash; boletim n.&ordm; '+ST.sima.meta.edicao,dataDados:'Julho de 2023',
+    ecra:'inflacao-cobertura.html'},
+
+   {id:'sp-fluxos',rotulo:'Fluxos de produto documentados',valor:F.length,unidade:'',
+    estado:'entre pra&ccedil;as, nas oito edi&ccedil;&otilde;es',tipo:'FACTO',cor:'var(--blue)',
+    resumo:'Movimentos de produto entre pra&ccedil;as registados nos boletins.',
+    formula:'contagem dos fluxos em todas as edi&ccedil;&otilde;es carregadas',
+    componentes:(function(){var o={};F.forEach(function(f){if(f.origem)o[f.origem]=(o[f.origem]||0)+1});
+      return Object.keys(o).sort(function(a,b){return o[b]-o[a]}).slice(0,8)
+        .map(function(k){return [k,o[k],'fluxos']})})(),
+    leitura:'Mostram por onde o produto circula de facto. &Eacute; a &uacute;nica evid&ecirc;ncia documentada de cadeia de abastecimento que o sistema tem.',
+    fonte:'SIMA &mdash; fluxos declarados no boletim',dataDados:'Julho de 2023',
+    ecra:'marketplace-b2b.html'},
+
+   {id:'sp-idade',rotulo:'Idade do dado mais recente',valor:'3,1',unidade:'anos',
+    estado:'a s&eacute;rie parou em Julho de 2023',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Tempo decorrido desde a &uacute;ltima edi&ccedil;&atilde;o carregada.',
+    formula:'data de hoje menos a data da &uacute;ltima edi&ccedil;&atilde;o',
+    componentes:[['&Uacute;ltima edi&ccedil;&atilde;o carregada',1462,''],
+                 ['Semana que cobre','Julho de 2023',''],
+                 ['Periodicidade declarada','semanal','']],
+    leitura:'O SIMA recolhe semanalmente desde 1991 e publica &agrave;s sextas-feiras. A publica&ccedil;&atilde;o em linha que o sistema alcan&ccedil;ou parou em Agosto de 2023. <b>O SIMA passou a ter s&iacute;tio pr&oacute;prio, sima.gov.mz.</b>',
+    fonte:'SIMA &mdash; boletim Quente-Quente',dataDados:'Julho de 2023',
+    ecra:'actualidade-dados.html'}
+  ];
+  document.getElementById('kpis').innerHTML=IndicadoresSinagepe.linha(lista);
+}
+
+function desenharFiltros(){
+  var S=serie();
+  if(ST.produto===null&&S.produtos.length) ST.produto='todos';
+  var m=[['todos','Todos os produtos']].concat(S.produtos.map(function(p){return [p.produto,p.produto]}));
+  document.getElementById('filtros').innerHTML=m.map(function(x){
+    return '<button class="fb'+(ST.produto===x[0]?' on':'')+'" data-p="'+esc(x[0])+'">'+esc(x[1])+'</button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.fb'),function(b){
+    b.addEventListener('click',function(){ST.produto=b.dataset.p;desenharFiltros();desenharGrafico()});
+  });
+}
+
+function desenharGrafico(){
+  var S=serie();
+  var P=(ST.produto==='todos')?S.produtos:S.produtos.filter(function(p){return p.produto===ST.produto});
+  var E=S.edicoes.filter(function(e){
+    return S.produtos.some(function(p){return p.valores&&p.valores[String(e.edicao)]!=null})});
+  if(!E.length||!P.length){document.getElementById('grafico').innerHTML=
+    '<div style="color:var(--t4);font-size:12px">Sem valores para desenhar.</div>';return}
+
+  var vals=[];
+  P.forEach(function(p){E.forEach(function(e){
+    var v=p.valores[String(e.edicao)]; if(v!=null) vals.push(v)})});
+  var min=Math.min.apply(null,vals), max=Math.max.apply(null,vals);
+  var amp=Math.max(max-min,1);
+  var w=980,h=320,pl=54,pb=42;
+  var X=function(i){return pl+i/Math.max(E.length-1,1)*(w-pl-20)};
+  var Y=function(v){return h-pb-((v-min+amp*.12)/(amp*1.28))*(h-pb-24)};
+
+  var g='';
+  for(var k=0;k<=4;k++){var v=min-amp*.12+amp*1.28*k/4;
+    g+='<line x1="'+pl+'" y1="'+Y(v).toFixed(1)+'" x2="'+(w-20)+'" y2="'+Y(v).toFixed(1)
+     +'" stroke="#22354F" stroke-width=".7"/>'
+     +'<text x="'+(pl-9)+'" y="'+(Y(v)+4).toFixed(1)+'" fill="#5E7189" font-size="10" '
+     +'text-anchor="end" font-family="IBM Plex Mono">'+v.toFixed(0)+'</text>';}
+  var lab=E.map(function(e,i){
+    return '<text x="'+X(i).toFixed(1)+'" y="'+(h-14)+'" fill="#5E7189" font-size="9.5" '
+     +'text-anchor="middle">'+e.edicao+'</text>'
+     +'<text x="'+X(i).toFixed(1)+'" y="'+(h-3)+'" fill="#3E5068" font-size="8" '
+     +'text-anchor="middle">'+esc(String(e.mes||'').slice(0,7))+'</text>';}).join('');
+
+  var linhas=P.map(function(p,pi){
+    var c=CORES[pi%CORES.length];
+    var pts=[];
+    E.forEach(function(e,i){var v=p.valores[String(e.edicao)];
+      if(v!=null) pts.push([X(i),Y(v),v,e.edicao]);});
+    if(pts.length<2) return '';
+    var d=pts.map(function(q,j){return (j?'L':'M')+q[0].toFixed(1)+','+q[1].toFixed(1)}).join(' ');
+    return '<path class="traca" d="'+d+'" fill="none" stroke="'+c+'" stroke-width="2.4" '
+     +'stroke-linejoin="round" style="animation-delay:'+(pi*.18)+'s"/>'
+     +pts.map(function(q){
+        return '<circle cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="4" fill="'+c+'">'
+         +'<title>'+esc(p.produto)+' &mdash; edi&ccedil;&atilde;o '+q[3]+': '+p2(q[2])+' MT/kg</title></circle>';
+      }).join('');
+  }).join('');
+
+  var leg=P.map(function(p,pi){
+    var c=CORES[pi%CORES.length];
+    var ilu=(window.ProdutosVisual&&ProdutosVisual.svg)
+      ? '<span style="line-height:0">'+ProdutosVisual.svg(p.produto,26)+'</span>' : '';
+    return '<span style="display:flex;align-items:center;gap:7px;font-size:11.5px">'+ilu
+     +'<i style="width:11px;height:3px;background:'+c+';border-radius:2px;display:block"></i>'
+     +esc(p.produto)+'</span>';
+  }).join('');
+
+  document.getElementById('grafico').innerHTML=
+    '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px">'+leg+'</div>'
+   +'<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:auto" role="img" '
+   +'aria-label="Evolu&ccedil;&atilde;o do pre&ccedil;o m&eacute;dio por produto">'+g+lab+linhas+'</svg>'
+   +'<div style="font-size:11.5px;color:var(--t3);line-height:1.7;margin-top:12px">'
+   +'Pre&ccedil;o m&eacute;dio a retalho em meticais por quilo. O eixo horizontal &eacute; o n&uacute;mero da edi&ccedil;&atilde;o do boletim; '
+   +'as edi&ccedil;&otilde;es n&atilde;o s&atilde;o consecutivas, porque nem todas foram alcan&ccedil;adas no arquivo p&uacute;blico.</div>';
+  document.getElementById('s-tag').innerHTML=P.length+' produto'+(P.length>1?'s':'')+', '+E.length+' edi&ccedil;&otilde;es';
+}
+
+function desenharAmplitude(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var L=R.slice().sort(function(a,b){
+    return (b.maximo.valor/b.minimo.valor)-(a.maximo.valor/a.minimo.valor)});
+  var max=Math.max.apply(null,L.map(function(r){return r.maximo.valor}));
+  document.getElementById('amplitude').innerHTML=L.map(function(r,i){
+    var d=(r.maximo.valor/r.minimo.valor-1)*100;
+    var c=d>150?'#EF4444':d>60?'#F0A926':'#12B981';
+    var ilu=(window.ProdutosVisual&&ProdutosVisual.svg)
+      ? '<span style="flex-shrink:0;line-height:0">'+ProdutosVisual.svg(r.produto,32)+'</span>':'';
+    return '<div class="entra" style="animation-delay:'+(i*.06)+'s;margin-bottom:14px">'
+     +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">'+ilu
+     +'<b style="flex:1;font-size:12.5px">'+esc(r.produto)+'</b>'
+     +'<span class="mono" style="color:'+c+'">+'+d.toFixed(0)+'%</span></div>'
+     +'<div style="position:relative;height:9px;background:#0A1421;border-radius:5px;margin-left:42px">'
+     +'<i class="cresce" style="position:absolute;left:'+(r.minimo.valor/max*100)+'%;'
+     +'width:'+((r.maximo.valor-r.minimo.valor)/max*100)+'%;top:0;bottom:0;border-radius:5px;'
+     +'background:linear-gradient(90deg,#12B981AA,'+c+'AA);animation-delay:'+(.1+i*.06)+'s"></i></div>'
+     +'<div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--t4);'
+     +'margin:5px 0 0 42px"><span>'+esc(r.minimo.mercados[0])+' &middot; '+p2(r.minimo.valor)+'</span>'
+     +'<span>'+esc(r.maximo.mercados[0])+' &middot; '+p2(r.maximo.valor)+' MT/kg</span></div></div>';
+  }).join('');
+  document.getElementById('a-tag').innerHTML=L.length+' produtos';
+}
+
+function desenharEdicoes(){
+  var S=serie();
+  var h='<thead><tr><th>Edi&ccedil;&atilde;o</th><th>Semana que cobre</th><th>Valores</th></tr></thead><tbody>';
+  S.edicoes.forEach(function(e){
+    var tem=S.produtos.some(function(p){return p.valores&&p.valores[String(e.edicao)]!=null});
+    h+='<tr><td class="mono"><b>'+e.edicao+'</b></td>'
+     +'<td style="color:var(--t3)">'+esc(e.semana||e.mes||'&mdash;')+'</td>'
+     +'<td style="color:'+(tem?'var(--ok)':'var(--amber)')+'">'
+     +(tem?'extra&iacute;dos':'boletim repete a semana anterior')+'</td></tr>';
+  });
+  document.getElementById('edicoes').innerHTML=h+'</tbody>';
+  document.getElementById('e-tag').innerHTML=S.edicoes.length+' edi&ccedil;&otilde;es';
+}
+
+function desenharAchados(){
+  var A=ST.sima.achados||[];
+  document.getElementById('achados').innerHTML=A.map(function(a,i){
+    var t=(typeof a==='string')?a:(a.titulo||a.achado||'');
+    var d=(typeof a==='string')?'':(a.detalhe||a.nota||a.resumo||'');
+    return '<div class="entra" style="animation-delay:'+(i*.07)+'s;padding:12px 0'
+     +(i<A.length-1?';border-bottom:1px solid rgba(38,56,86,.4)':'')+'">'
+     +'<div style="display:flex;gap:10px;align-items:flex-start">'
+     +'<span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--brz);margin-top:6px"></span>'
+     +'<div><div style="font-size:12.5px;font-weight:600;line-height:1.45">'+esc(t)+'</div>'
+     +(d?'<div style="font-size:11.5px;color:var(--t3);line-height:1.65;margin-top:5px">'+esc(d)+'</div>':'')
+     +'</div></div></div>';
+  }).join('')
+   +'<div class="aviso w" style="margin:14px 0 0"><b>Estes pre&ccedil;os s&atilde;o de Julho de 2023.</b> '
+   +'Continuam verdadeiros e documentados, e n&atilde;o descrevem o mercado de hoje. '
+   +'O SIMA recolhe semanalmente desde 1991 &mdash; o que parou foi a publica&ccedil;&atilde;o em linha que o sistema alcan&ccedil;ou.</div>';
+  document.getElementById('ac-tag').innerHTML=A.length+' achados';
+}
+
+fetch('data/sima-precos.json',{cache:'no-store'})
+ .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/sima-precos.json');return r.json()})
+ .then(function(j){
+   ST.sima=j;
+   desenharKpis();desenharFiltros();desenharGrafico();
+   desenharAmplitude();desenharEdicoes();desenharAchados();
+ })
+ .catch(function(e){
+   document.getElementById('kpis').innerHTML=
+     '<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+ });
+</script>
+</body>
+</html>

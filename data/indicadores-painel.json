@@ -3,7 +3,8 @@
     "versao": "1.0",
     "geradoEm": "2026-08-25",
     "nota": "Os seis indicadores do Painel. Cada um declara a origem, a fórmula quando existe, e a data dos dados. Nenhum é escrito à mão.",
-    "regra": "Um indicador só entra aqui se derivar de dados com fonte. Se um valor for de demonstração, é marcado como tal e a ficha di-lo à cabeça."
+    "regra": "Um indicador só entra aqui se derivar de dados com fonte. Se um valor for de demonstração, é marcado como tal e a ficha di-lo à cabeça.",
+    "fundamentacao": "Cada indicador declara agora porque importa, que decisão permite e quem o usa. Era o que faltava: o painel tinha o número, a fórmula e a fonte, mas não dizia para que serve — que é a primeira pergunta de quem o abre."
   },
   "indicadores": [
     {
@@ -31,7 +32,15 @@
       "leitura": "Não é variação de qualidade. É custo de transporte, isolamento de mercado e ausência de alternativa de compra. É o maior indicador de ineficiência de mercado que o sistema mede.",
       "fonte": "SIMA — boletim Quente-Quente n.º 1445",
       "dataDados": "Julho de 2023",
-      "ecra": "marketplace-b2b.html"
+      "ecra": "marketplace-b2b.html",
+      "porqueImporta": "Um produto que custa quatro vezes mais numa praça do que noutra, na mesma semana, significa que há populações a pagar um múltiplo do preço nacional pelo mesmo alimento. Não é anomalia estatística: é poder de compra que se perde na estrada.",
+      "queDecisaoPermite": "Onde investir em via, armazenagem ou transporte para ligar mercados isolados. E onde uma intervenção de abastecimento tem maior efeito por metical gasto.",
+      "quemUsa": [
+        "MIC — política de comércio interno",
+        "ANE — prioridade de intervenção viária",
+        "Comerciantes — decisão de compra e venda",
+        "ARC — indício a verificar"
+      ]
     },
     {
       "id": "variacao-milho",
@@ -58,7 +67,15 @@
       "leitura": "A descida coincide com o período pós-colheita. No mesmo intervalo o arroz, maioritariamente importado, subiu 2,4%. É a diferença entre o que se colhe cá e o que vem de fora, medida em preço.",
       "fonte": "SIMA — edições 1445 e 1462",
       "dataDados": "Setembro de 2022 a Julho de 2023",
-      "ecra": "portal-produtores.html"
+      "ecra": "portal-produtores.html",
+      "porqueImporta": "O milho é a base alimentar do país. A sua variação de preço mede directamente o custo de alimentar uma família, e o contraste com o arroz importado separa o que é sazonalidade do que é dependência externa.",
+      "queDecisaoPermite": "Quando comprar para reserva e quando libertar. E se uma subida é de causa interna, que se corrige com logística, ou externa, que se corrige com importação.",
+      "quemUsa": [
+        "ICM — gestão da reserva estratégica",
+        "MAAP — leitura de campanha",
+        "INE — validação do índice de preços",
+        "Produtores — decisão de venda"
+      ]
     },
     {
       "id": "factura-geografia",
@@ -85,7 +102,15 @@
       "leitura": "Não é margem de ninguém. É o custo do transporte interno do combustível, reconhecido pelo próprio regulador na metodologia de formação do preço. Numa viagem de 400 km com camião de consumo médio, são cerca de 1997 MT de acréscimo.",
       "fonte": "ARENE — Decreto n.º 89/2019, revisão de 2026-05-07",
       "dataDados": "2026-05-07",
-      "ecra": "portal-transportadores.html"
+      "ecra": "portal-transportadores.html",
+      "porqueImporta": "É o custo de servir o interior, e é reconhecido por lei na cascata da ARENE. Entra em todos os fretes e, por essa via, em todos os preços de todos os produtos essenciais nas regiões mais distantes.",
+      "queDecisaoPermite": "Dimensionar apoio ao transporte, avaliar viabilidade de operação logística fora dos centros, e explicar porque um produto custa mais longe sem acusar quem o vende.",
+      "quemUsa": [
+        "ARENE — regulação de preço",
+        "Transportadores — cálculo de frete",
+        "MIC — política de abastecimento",
+        "Investidores — plano de negócio"
+      ]
     },
     {
       "id": "capacidade-cega",
@@ -117,7 +142,15 @@
       "leitura": "O sistema sabe onde estão os armazéns, de quem são e que capacidade declaram. Não sabe o que lá está dentro. Nenhuma unidade do país reporta existências.",
       "fonte": "Cadastro Nacional de Armazenagem — fonte oficial por unidade",
       "dataDados": "Agosto de 2026",
-      "ecra": "armazens-nacionais.html"
+      "ecra": "armazens-nacionais.html",
+      "porqueImporta": "É a lacuna central do abastecimento nacional. Em caso de ruptura, a primeira pergunta do decisor — quanto temos e onde — não tem resposta em tempo útil. Todos os outros indicadores de disponibilidade dependem deste.",
+      "queDecisaoPermite": "Onde instalar leitura, ou onde exigir declaração periódica. E, entretanto, saber que qualquer afirmação sobre disponibilidade nacional não tem base.",
+      "quemUsa": [
+        "ICM — reserva estratégica",
+        "IGSAE — planeamento de inspecção",
+        "MIC — decisão de abastecimento",
+        "Governo — resposta a emergência"
+      ]
     },
     {
       "id": "identificacao-nacional",
@@ -149,7 +182,15 @@
       "leitura": "Não existe organização-membro GS1 em Moçambique e o prefixo 602 continua por atribuir. Nenhum produto fabricado no país pode receber hoje um código emitido cá.",
       "fonte": "GS1 e cadastro de identificação do SINAGEPE",
       "dataDados": "Agosto de 2026",
-      "ecra": "ponto-cego-duplo.html"
+      "ecra": "ponto-cego-duplo.html",
+      "porqueImporta": "Sem identificação normalizada, o mesmo produto no armazém, na alfândega e no retalho não se casa automaticamente. Impede rastrear um lote, distinguir produto conforme de contrafeito, e ligar a cadeia do produtor ao consumidor.",
+      "queDecisaoPermite": "Se vale a pena criar organização-membro GS1 nacional. E, no imediato, que nenhum sistema de rastreabilidade pode assentar em identificação que o país não emite.",
+      "quemUsa": [
+        "MIC — política de qualidade",
+        "IGSAE — rastreio de lote",
+        "MISAU — medicamentos",
+        "Exportadores — acesso a mercados"
+      ]
     },
     {
       "id": "riscos-graves",
@@ -181,7 +222,15 @@
       "leitura": "São hipóteses fundamentadas em estrutura conhecida — cadastro, rede viária, concentração em corredores. Não são previsões probabilísticas: o sistema não tem série histórica para as calcular.",
       "fonte": "Centro de Antecipação do SINAGEPE",
       "dataDados": "Agosto de 2026",
-      "ecra": "centro-antecipacao.html"
+      "ecra": "centro-antecipacao.html",
+      "porqueImporta": "São os riscos cuja materialização tem custo máximo. Cada um tem gatilho observável e janela de calendário, o que permite agir antes em vez de reagir depois.",
+      "queDecisaoPermite": "Que mitigações executar agora, quais em noventa dias, e quem decide cada uma. É a ponte entre o diagnóstico e a acção.",
+      "quemUsa": [
+        "Governo — decisão de prioridade",
+        "IGSAE — fiscalização preventiva",
+        "ICM — reserva",
+        "Parceiros — financiamento de mitigação"
+      ]
     }
   ],
   "retirados": [
