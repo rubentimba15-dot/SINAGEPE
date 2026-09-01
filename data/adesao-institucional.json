@@ -445,6 +445,31 @@
       "primeiroPasso": "Uma tabela com província, número de pessoas em privação alimentar e fase de classificação, da avaliação mais recente. Uma linha por província.",
       "fonte": "https://www.setsan.gov.mz/",
       "chave": "É o organismo cuja função é exactamente aquilo que o SINAGEPE tenta fazer, e não estava no sistema. Não é concorrente: é a fonte que falta. O SETSAN diz quantas pessoas estão em privação e onde; o SINAGEPE diz porquê e por onde chegar até elas. Nenhum dos dois responde sozinho. O esforço é baixo porque o dado já é produzido e publicado — muda o formato, não o trabalho."
+    },
+    {
+      "id": "bau",
+      "nome": "Balcão de Atendimento Único, IP",
+      "sigla": "BAU",
+      "tutela": "MIC — Ministério da Indústria e Comércio",
+      "baseLegal": "Decreto n.º 14/2007, de 30 de Maio, que institucionaliza os Balcões de Atendimento Único. Regimes de licenciamento: Simplificado (Decreto n.º 39/2017), Comercial (Decreto n.º 34/2013) e Industrial (Decreto n.º 22/2014).",
+      "esforco": 2,
+      "impacto": 5,
+      "jaTemos": [
+        "Os três regimes de licenciamento e os diplomas que os regem",
+        "A lista de serviços do portal, incluindo o Registo do Operador de Comércio Externo",
+        "A confirmação de que o e-BAU cobre todas as províncias e distritos",
+        "A confirmação de que licenças e alvarás já são emitidos em formato digital"
+      ],
+      "lacunas": [
+        "Contagem de alvarás por distrito e tipo de actividade",
+        "Registo do Operador de Comércio Externo, agregado por produto",
+        "Licenciamento industrial de unidades de transformação alimentar",
+        "Séries de licenciamento ao longo do tempo"
+      ],
+      "ganha": "Visibilidade do que licencia. O BAU emite alvarás e não vê o efeito agregado: quantos retalhistas por distrito, onde a rede comercial cresce, onde não há ninguém licenciado. O SINAGEPE devolve-lhe essa leitura, com a citação da fonte.",
+      "custa": "Uma consulta à base do e-BAU e a exportação de uma contagem. Não exige recolha nova: o dado já existe em formato electrónico, porque o licenciamento já é digital.",
+      "primeiroPasso": "Carta ao BAU, IP a solicitar a contagem agregada de alvarás por distrito e tipo de actividade, ao abrigo da Lei n.º 34/2014. Não se pedem dados de empresas: pede-se contagem. O e-BAU é plataforma digital, pelo que o dado existe em formato electrónico e não exige trabalho de recolha.",
+      "fonte": "https://www.bau.gov.mz"
     }
   ],
   "argumentoTransversal": {

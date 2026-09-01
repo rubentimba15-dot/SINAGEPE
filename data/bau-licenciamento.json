@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "fonte": "BAU, IP — Balcão de Atendimento Único, Instituto Público",
+    "url": "https://www.bau.gov.mz",
+    "portalServicos": "https://www.bau.gov.mz/e-bau/",
+    "tutela": "MIC — Ministério da Indústria e Comércio",
+    "baseLegal": "Decreto n.º 14/2007, de 30 de Maio, que institucionaliza os Balcões de Atendimento Único",
+    "dataDados": "Agosto de 2026",
+    "extraidoEm": "2026-09-01",
+    "verificado": true,
+    "porqueImporta": "É onde se emitem os alvarás comerciais e industriais. O SINAGEPE não tem cadastro de rede comercial — tem um operador. O universo de supermercados, cash and carry, mercados de retalhistas e mercearias existe no registo do BAU, e em nenhum outro lado."
+  },
+  "regimesLicenciamento": [
+    {
+      "regime": "Simplificado",
+      "diploma": "Decreto n.º 39/2017, de 28 de Julho",
+      "abrange": [
+        "Retalho",
+        "Prestação de serviços",
+        "Turismo",
+        "Agricultura",
+        "Indústria"
+      ],
+      "relevanciaSinagepe": "Cobre o retalho e a agricultura. É onde estariam as mercearias, barracas e pequenos comerciantes de produtos essenciais."
+    },
+    {
+      "regime": "Comercial",
+      "diploma": "Decreto n.º 34/2013, de 2 de Agosto",
+      "abrange": [
+        "Retalho",
+        "Grosso",
+        "Prestação de serviços",
+        "Comércio externo"
+      ],
+      "relevanciaSinagepe": "Cobre o grosso e o comércio externo. É onde estariam os cash and carry, os distribuidores e os importadores de produtos essenciais."
+    },
+    {
+      "regime": "Industrial",
+      "diploma": "Decreto n.º 22/2014, de 16 de Maio",
+      "abrange": [
+        "Micro",
+        "Pequena",
+        "Média"
+      ],
+      "relevanciaSinagepe": "Cobre a transformação. É onde estariam as moageiras, as fábricas de óleo alimentar e as unidades de processamento."
+    }
+  ],
+  "servicosRelevantes": [
+    {
+      "servico": "Licença de actividade comercial — entidade nacional",
+      "estado": "disponível"
+    },
+    {
+      "servico": "Licença de actividade comercial — entidade estrangeira",
+      "estado": "disponível"
+    },
+    {
+      "servico": "Licença de actividade comercial — comércio externo",
+      "estado": "disponível"
+    },
+    {
+      "servico": "Registo do Operador de Comércio Externo",
+      "estado": "disponível",
+      "nota": "Obrigatório para importar ou exportar. Existe, segundo o BAU, para fins de controlo, estatística e regulação. É o registo que identifica quem importa produtos essenciais."
+    },
+    {
+      "servico": "Licenciamento industrial",
+      "estado": "disponível"
+    },
+    {
+      "servico": "Certidão de Mera Comunicação Prévia",
+      "estado": "gratuita e imediata"
+    }
+  ],
+  "digitalizacao": {
+    "plataforma": "e-BAU — Plataforma Integrada de Prestação de Serviços ao Cidadão e às Empresas",
+    "cobertura": "Balcões físicos e BAUs móveis em todas as províncias e distritos",
+    "portalLancado": "25 de Agosto de 2025, na Feira Internacional de Maputo, pelo Presidente da República",
+    "inclui": [
+      "Portal de Serviços BAU",
+      "Aplicações móveis",
+      "Máquinas de auto-atendimento"
+    ],
+    "alvaraDigital": "As licenças e alvarás podem ser entregues em formato digital",
+    "distritosCitados": [
+      {
+        "distrito": "Maringué",
+        "provincia": "Sofala",
+        "nota": "Operacionalizou o e-BAU a 28 de Maio"
+      },
+      {
+        "distrito": "Muembe",
+        "provincia": "Niassa",
+        "nota": "Modernizou o licenciamento de actividades económicas"
+      }
+    ]
+  },
+  "oQueSinagepePrecisa": [
+    {
+      "dado": "Contagem de alvarás comerciais por distrito e por tipo de actividade",
+      "permitiria": "Cadastro da rede comercial: quantos retalhistas, grossistas e cash and carry em cada distrito. É o equivalente ao que a ANARME dá para farmácias.",
+      "sensibilidade": "Baixa se agregado. Não identifica empresas.",
+      "prioridade": "alta"
+    },
+    {
+      "dado": "Registo do Operador de Comércio Externo, agregado por produto e distrito",
+      "permitiria": "Saber quantos operadores importam cada produto essencial, e onde estão. Responde à pergunta da concentração sem nomear ninguém.",
+      "sensibilidade": "Média. Exige a regra dos cinco operadores.",
+      "prioridade": "alta"
+    },
+    {
+      "dado": "Licenciamento industrial de unidades de transformação alimentar",
+      "permitiria": "Localizar moageiras, fábricas de óleo e unidades de processamento — o elo da cadeia que o sistema não vê.",
+      "sensibilidade": "Baixa se agregado.",
+      "prioridade": "média"
+    },
+    {
+      "dado": "Séries de licenciamento ao longo do tempo",
+      "permitiria": "Saber se a rede comercial cresce ou encolhe em cada distrito, que é indicador de dinamismo económico local.",
+      "sensibilidade": "Baixa.",
+      "prioridade": "média"
+    }
+  ],
+  "estadoIntegracao": {
+    "ligado": false,
+    "dadosNoSistema": 0,
+    "nota": "O BAU não estava no dossier de adesão institucional. Foi acrescentado em Setembro de 2026, na sequência da observação de que o painel não integra o universo de armazéns, cash and carry, supermercados e mercados de retalhistas. A observação estava certa: esse universo não existe no sistema, e o BAU é onde ele está registado.",
+    "recomendacao": "Solicitar fisicamente ao BAU, IP a contagem agregada de alvarás por distrito e tipo de actividade. Não se pedem dados de empresas: pede-se contagem. O e-BAU já é plataforma digital, pelo que o dado existe em formato electrónico."
+  }
+}

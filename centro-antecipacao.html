@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt">
+<!doctype html>
+<html lang="pt-PT">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +7,7 @@
 <script src="assets/access-control.js"></script>
 <script src="assets/nav-sinagepe.js"></script>
 <script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
@@ -29,82 +30,81 @@ body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-seri
 main{flex:1;padding:22px 26px 60px;max-width:1560px}
 .eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
 .eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
-h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
-.sub{color:var(--t3);font-size:12.5px;margin-bottom:14px;max-width:920px;line-height:1.55}
-.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:-.015em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:18px;max-width:920px;line-height:1.6}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
 .frame{position:relative}
-.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:3}
 .frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
 .frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
-.ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
-.ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
-.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
-.aviso{padding:13px 16px;border-radius:12px;border:1px solid rgba(201,138,60,.35);background:rgba(201,138,60,.07);margin-bottom:14px;font-size:12px;line-height:1.6;color:var(--brzl)}
-.aviso b{color:var(--brz)}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14.5px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:16px 18px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 16px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:10px 16px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+@keyframes surge{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes crescer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes pulsar{0%,100%{opacity:.5}50%{opacity:1}}
+.entra{animation:surge .5s cubic-bezier(.16,1,.3,1) both}
+.cresce{transform-origin:left center;animation:crescer .85s cubic-bezier(.16,1,.3,1) both}
+.pulsa{animation:pulsar 2.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.entra,.cresce,.pulsa{animation:none!important;opacity:1!important;transform:none!important}}
 
-/* faixa grande de leitura imediata */
-.faixa{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:14px}
-.big{padding:18px 19px;position:relative;overflow:hidden}
-.big-l{font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--t4);margin-bottom:11px}
-.big-v{font-size:38px;font-weight:700;letter-spacing:-.03em;line-height:1}
-.big-u{font-size:13px;font-weight:500;color:var(--t3);margin-left:5px}
-.big-n{font-size:11px;color:var(--t3);margin-top:9px;line-height:1.5}
+/* ---- calendário de doze meses ---- */
+.cal{display:grid;grid-template-columns:repeat(12,1fr);gap:5px}
+@media(max-width:720px){.cal{grid-template-columns:repeat(6,1fr)}}
+.cal-m{background:#0A1421;border:1px solid var(--card-line);border-radius:9px;padding:11px 6px;
+ text-align:center;cursor:pointer;transition:.18s;position:relative;overflow:hidden}
+.cal-m:hover{transform:translateY(-3px);border-color:var(--brzg)}
+.cal-m.on{border-color:var(--brz);background:var(--cardh)}
+.cal-m:before{content:"";position:absolute;left:0;right:0;top:0;height:3px}
+.cal-n{font-size:11.5px;font-weight:600;margin-top:3px}
+.cal-r{font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;margin-top:5px}
 
-/* calendario */
-.cal{display:flex;gap:4px;padding:14px 17px}
-.cm{flex:1;text-align:center;cursor:default}
-.cm-b{height:38px;border-radius:5px;margin-bottom:6px;position:relative;transition:.15s}
-.cm.on .cm-b{outline:2px solid var(--ink);outline-offset:2px}
-.cm-m{font-size:10px;color:var(--t4);font-weight:600}
-.cm.on .cm-m{color:var(--ink)}
-.cal-n{padding:0 17px 14px;font-size:11.5px;color:var(--t3);line-height:1.55;min-height:34px}
-
-/* barras de exposicao */
-.pb{display:flex;align-items:center;gap:11px;padding:8px 17px;font-size:11.5px;cursor:pointer;border-bottom:1px solid rgba(38,56,86,.35)}
-.pb:hover{background:var(--cardh)}
-.pb:last-child{border-bottom:none}
-.pb-n{width:96px;flex-shrink:0}
-.pb-t{flex:1;height:16px;background:#0A1421;border-radius:4px;overflow:hidden;position:relative}
-.pb-t i{display:block;height:100%;border-radius:4px}
-.pb-v{width:38px;text-align:right;flex-shrink:0;font-weight:600}
-.pb-d{font-size:10px;color:var(--t4);margin-top:1px}
-
-/* riscos */
-.horiz{display:flex;gap:5px;padding:12px 17px;border-bottom:1px solid var(--card-line);flex-wrap:wrap}
-.hb{font-size:10.5px;padding:6px 13px;border-radius:20px;border:1px solid var(--card-line);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
-.hb.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
-.ri{display:flex;gap:12px;padding:13px 17px;cursor:pointer;border-bottom:1px solid rgba(38,56,86,.4);border-left:3px solid transparent}
-.ri:hover{background:var(--cardh)}
-.ri.sel{background:rgba(34,184,240,.07)}
-.ri-g{width:34px;height:34px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
-.ri-b{flex:1;min-width:0}
-.ri-t{font-size:13px;font-weight:600;line-height:1.35}
-.ri-m{font-size:10.5px;color:var(--t4);margin-top:3px}
-.ri-c{flex-shrink:0;font-size:10px;color:var(--t4);text-align:right;line-height:1.5}
-
-/* dossier */
-.dz{padding:16px 17px}
-.dt{font-size:16px;font-weight:600;line-height:1.3;margin-bottom:6px}
-.dm{font-size:12px;color:var(--t3);line-height:1.6;margin-bottom:14px}
-.cad{display:flex;flex-direction:column;gap:0;margin:14px 0}
-.cad-i{display:flex;align-items:flex-start;gap:11px;position:relative;padding-bottom:12px}
-.cad-i:last-child{padding-bottom:0}
-.cad-i:not(:last-child):before{content:"";position:absolute;left:9px;top:20px;bottom:0;width:2px;background:linear-gradient(180deg,var(--brzg),rgba(239,68,68,.35))}
-.cad-d{width:20px;height:20px;border-radius:50%;flex-shrink:0;border:2px solid;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;background:#0A1421;z-index:1}
-.cad-t{font-size:11.5px;line-height:1.5;padding-top:2px;color:var(--t2)}
-.meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.mp{font-size:10px;padding:5px 10px;border-radius:4px;border:1px solid var(--card-line);color:var(--t3)}
-.mp b{color:var(--t2)}
-.mt{margin-top:12px;padding:13px 15px;border-radius:10px;border:1px solid;position:relative}
-.mt-h{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap}
-.mt-q{font-size:9px;letter-spacing:.13em;text-transform:uppercase;padding:3px 8px;border-radius:3px;font-weight:600}
-.mt-c{font-size:9.5px;color:var(--t4)}
-.mt-a{font-size:13px;font-weight:600;line-height:1.4;margin-bottom:6px}
-.mt-e{font-size:11.5px;line-height:1.55;color:var(--t3)}
-.mt-d{font-size:10.5px;color:var(--brzl);margin-top:7px}
-.ev{margin-top:14px;padding-top:12px;border-top:1px solid rgba(38,56,86,.5);font-size:10.5px;color:var(--t4);line-height:1.55}
-.grid{display:grid;grid-template-columns:1fr 1.1fr;gap:14px;align-items:start}
-@media(max-width:1150px){.grid{grid-template-columns:1fr}.sidebar{display:none}}
+/* ---- risco ---- */
+.risco{border-bottom:1px solid var(--card-line);transition:.16s}
+.risco:last-child{border-bottom:none}
+.risco-h{display:flex;align-items:flex-start;gap:12px;padding:15px 18px;cursor:pointer}
+.risco-h:hover{background:rgba(34,184,240,.04)}
+.risco-g{flex-shrink:0;width:34px;height:34px;border-radius:8px;display:flex;align-items:center;
+ justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;border:1px solid}
+.risco-t{flex:1;min-width:0}
+.risco-n{font-size:13.5px;font-weight:600;line-height:1.4;margin-bottom:5px}
+.risco-r{font-size:11.5px;color:var(--t3);line-height:1.65}
+.risco-seta{flex-shrink:0;color:var(--t4);font-size:13px;transition:.2s;margin-top:8px}
+.risco.aberto .risco-seta{transform:rotate(90deg);color:var(--brz)}
+.risco-d{display:none;padding:0 18px 17px 64px}
+.risco.aberto .risco-d{display:block;animation:surge .35s ease both}
+.bloco{margin-top:13px}
+.bloco-t{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--brz);margin-bottom:6px}
+.bloco-c{font-size:11.5px;color:var(--t2);line-height:1.7}
+.cadeia{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}
+.cadeia b{font-size:11px;font-weight:500;padding:5px 10px;border-radius:5px;
+ background:rgba(239,68,68,.09);border:1px solid rgba(239,68,68,.26);color:#FFB4B4}
+.cadeia i{color:var(--t4);font-style:normal}
+.mit{display:flex;gap:9px;align-items:flex-start;padding:7px 0;font-size:11.5px;line-height:1.6}
+.mit-n{flex-shrink:0;width:19px;height:19px;border-radius:50%;background:rgba(18,185,129,.13);
+ border:1px solid rgba(18,185,129,.35);color:var(--ok);display:flex;align-items:center;
+ justify-content:center;font-size:10px;font-family:'IBM Plex Mono',monospace;margin-top:1px}
+.chip{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;
+ padding:3px 8px;border-radius:3px;border:1px solid;margin-right:5px;white-space:nowrap}
+.fb{font-size:11px;padding:6px 12px;border-radius:20px;border:1px solid var(--card-line);
+ background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
+.fb.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+.filtros{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid var(--card-line)}
+.aviso{margin:14px 18px;padding:13px 15px;border-radius:10px;font-size:11.5px;line-height:1.7;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
 .err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
 </style>
 </head>
@@ -112,218 +112,307 @@ h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
 <div class="app">
   <aside class="sidebar" id="nav-mount"></aside>
   <main>
-    <div class="eyebrow">Intelig&ecirc;ncia consolidada &rarr; ac&ccedil;&atilde;o</div>
+    <div class="eyebrow">Antecipa&ccedil;&atilde;o</div>
     <h1>Centro de Antecipa&ccedil;&atilde;o</h1>
-    <p class="sub">Tudo o que o sistema sabe, reduzido a uma pergunta: <b>o que pode partir, e o que se faz antes disso.</b> Cada risco tem um gatilho conhecido, uma janela de calend&aacute;rio e mitiga&ccedil;&otilde;es com prazo, custo e quem decide.</p>
+    <p class="sub">Dez riscos identificados, cada um com evid&ecirc;ncia, gatilho observ&aacute;vel e quem decide. <b>Nenhum tem probabilidade atribu&iacute;da</b> &mdash; n&atilde;o h&aacute; s&eacute;rie hist&oacute;rica que a sustente. O que h&aacute; &eacute; a cadeia causal, e ela &eacute; verific&aacute;vel.</p>
 
-    <div class="aviso" id="aviso"></div>
+    <div class="aviso r" style="margin:0 0 16px"><b>Este ecr&atilde; foi reconstru&iacute;do em Setembro de 2026.</b>
+    A vers&atilde;o anterior carregava os dados correctamente mas <b>n&atilde;o desenhava nada</b>: tinha os quatro t&iacute;tulos de
+    sec&ccedil;&atilde;o e nenhum conte&uacute;do. Zero indicadores, zero tabelas, zero gr&aacute;ficos, e os dez riscos e o calend&aacute;rio
+    de doze meses que est&atilde;o no ficheiro nunca chegaram ao ecr&atilde;.
+    <b>Os dados estavam l&aacute;. O ecr&atilde; &eacute; que n&atilde;o os mostrava.</b></div>
 
-    <div class="faixa" id="faixa"></div>
+    <div id="kpis"></div>
 
-    <div class="card frame" style="margin-bottom:14px">
-      <div class="ch"><h2>Calend&aacute;rio de risco</h2><span class="tag" id="cal-tag">&mdash;</span></div>
-      <div class="cal" id="cal"></div>
-      <div class="cal-n" id="cal-n"></div>
+    <div class="card frame">
+      <div class="ch"><div><h2>Calend&aacute;rio de risco</h2>
+        <p>Que meses concentram risco, e porqu&ecirc; &mdash; clique num m&ecirc;s</p></div>
+        <span class="tag crit" id="c-tag">&mdash;</span></div>
+      <div class="bd"><div class="cal" id="calendario"></div>
+        <div id="cal-detalhe" style="margin-top:15px"></div></div>
     </div>
 
-    <div class="grid">
-      <div>
-        <div class="card frame">
-          <div class="ch"><h2>Riscos por gravidade</h2><span class="tag" id="r-tag">&mdash;</span></div>
-          <div class="horiz" id="horiz"></div>
-          <div id="riscos"></div>
-        </div>
+    <div class="card frame">
+      <div class="ch"><div><h2>Os dez riscos</h2>
+        <p>Clique num risco para ver a evid&ecirc;ncia, a cadeia causal e as mitiga&ccedil;&otilde;es</p></div>
+        <span class="tag crit" id="r-tag">&mdash;</span></div>
+      <div class="filtros" id="filtros"></div>
+      <div id="riscos"></div>
+      <div class="aviso i"><b>Porque n&atilde;o h&aacute; percentagem de probabilidade.</b>
+      Atribuir 78% a um risco exige s&eacute;rie hist&oacute;rica de ocorr&ecirc;ncias semelhantes. N&atilde;o existe.
+      O que existe &eacute; a gravidade &mdash; quanto custa se acontecer &mdash; e a certeza da evid&ecirc;ncia,
+      que diz se o risco assenta em facto observado ou em documento de terceiro.</div>
+    </div>
 
-        <div class="card frame" style="margin-top:14px">
-          <div class="ch"><h2>Exposi&ccedil;&atilde;o por prov&iacute;ncia</h2><span class="tag">F&oacute;rmula declarada</span></div>
-          <div id="provincias"></div>
-          <div class="ev" style="padding:12px 17px;margin:0;border-top:1px solid var(--card-line)" id="form-nota"></div>
-        </div>
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Exposi&ccedil;&atilde;o por prov&iacute;ncia</h2>
+          <p>Onde os riscos documentados se concentram</p></div></div>
+        <div class="bd" id="exposicao"></div>
       </div>
-
-      <div>
-        <div class="card frame">
-          <div class="ch"><h2>O que fazer</h2><span class="tag" id="d-tag">&mdash;</span></div>
-          <div class="dz" id="dossier"></div>
-        </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>O que fazer, por ordem</h2>
+          <p>Mitiga&ccedil;&otilde;es dos riscos de maior gravidade</p></div>
+          <span class="tag" id="m-tag">&mdash;</span></div>
+        <div class="bd" id="mitigacoes"></div>
       </div>
     </div>
   </main>
 </div>
+
 <script>
-var COR_RISCO={5:'#EF4444',4:'#F0A926',3:'#22B8F0',2:'#2DD4BF',1:'#12B981'};
-var COR_MES={alto:'#EF4444',medio:'#F0A926',baixo:'#12B981'};
-var COR_HOR={agora:'#EF4444','90dias':'#F0A926',estrutural:'#22B8F0'};
-var ROT_HOR={agora:'Agir agora','90dias':'90 dias',estrutural:'Estrutural'};
-var ROT_CUSTO={baixo:'custo baixo',medio:'custo m\u00e9dio',alto:'custo alto'};
-var MES_ACTUAL=new Date().getMonth();
+if(window.SinagepeNav) SinagepeNav.montar('antecipacao');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-var ST={a:null,prod:null,rede:null,arm:null,sel:null,horiz:'todos',mes:MES_ACTUAL};
-function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function num(n){return new Intl.NumberFormat('pt-PT').format(n)}
-function achar(id){var r=null;ST.a.riscos.forEach(function(x){if(x.id===id)r=x});return r}
+var ST={filtro:'todos',mes:null};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
 
-/* ---------- exposicao por provincia, calculada dos dados reais ---------- */
-function exposicao(){
-  var f=ST.a.meta.formulaExposicao;
-  var carga={},mapa=ST.prod.dependenciaCorredor.mapa;
-  Object.keys(mapa).forEach(function(k){carga[mapa[k]]=(carga[mapa[k]]||0)+1});
-  var ints={};
-  ST.rede.interrupcoes.forEach(function(i){ints[i.provincia]=(ints[i.provincia]||0)+1});
-  return ST.prod.provincias.map(function(p){
-    var res=Math.max(0.35, 1 - (p.irrigacaoPercent/100)*0.45 - (p.sementeCertificadaPercent/100)*0.30 - (p.extensaoPercent/100)*0.20);
-    var dist=Math.min(1,p.distanciaMediaArmazemKm/150);
-    var conc=(carga[mapa[p.nome]]-1)/4;
-    var peq=p.pequenas/100;
-    var itr=Math.min(2,ints[p.nome]||0)/2;
-    var v=0.30*res+0.25*dist+0.20*conc+0.15*peq+0.10*itr;
-    var esc=f.escala.find(function(e){return v<=e.ate})||f.escala[f.escala.length-1];
-    return {nome:p.nome,v:v,cor:esc.cor,rotulo:esc.rotulo,dist:p.distanciaMediaArmazemKm,
-            corr:ST.prod.dependenciaCorredor.mapa[p.nome],peq:p.pequenas,ints:ints[p.nome]||0};
-  }).sort(function(a,b){return b.v-a.v});
-}
+var COR_G={5:'#EF4444',4:'#F0A926',3:'#22B8F0',2:'#2DD4BF',1:'#12B981'};
+var COR_RISCO={alto:'#EF4444',medio:'#F0A926','m\u00e9dio':'#F0A926',baixo:'#12B981'};
+var MESES={Jan:'Janeiro',Fev:'Fevereiro',Mar:'Mar\u00e7o',Abr:'Abril',Mai:'Maio',Jun:'Junho',
+ Jul:'Julho',Ago:'Agosto',Set:'Setembro',Out:'Outubro',Nov:'Novembro',Dez:'Dezembro'};
 
-function desenharAviso(){
-  document.getElementById('aviso').innerHTML='<b>O que este ecr&atilde; faz e o que n&atilde;o faz.</b> '
-    +esc(ST.a.meta.naturezaDoQueFazemos)
-    +'<div style="margin-top:8px;color:var(--t3)">'+esc(ST.a.meta.comoLer)+'</div>';
-}
+function desenharKpis(){
+  var R=ST.a.riscos, C=ST.a.calendario;
+  var g5=R.filter(function(r){return r.gravidade===5}).length;
+  var factos=R.filter(function(r){return r.certeza==='facto'}).length;
+  var perm=R.filter(function(r){return /permanente/i.test(r.janela||'')}).length;
+  var altos=C.filter(function(c){return /alto/i.test(c.risco)}).length;
+  var totMit=R.reduce(function(s,r){return s+((r.mitigacoes||[]).length)},0);
 
-function desenharFaixa(){
-  var ex=exposicao();
-  var criticos=ST.a.riscos.filter(function(r){return r.gravidade>=5}).length;
-  var agora=0;ST.a.riscos.forEach(function(r){r.mitigacoes.forEach(function(m){if(m.horizonte==='agora')agora++})});
-  var elev=ex.filter(function(p){return p.v>0.58}).length;
-  var mes=ST.a.calendario[MES_ACTUAL];
-  document.getElementById('faixa').innerHTML=
-     big('Riscos cr&iacute;ticos abertos',criticos,'de '+ST.a.riscos.length+' identificados','Gravidade m&aacute;xima. Nenhum depende de gatilho externo para se manifestar.','#EF4444')
-   + big('Ac&ccedil;&otilde;es execut&aacute;veis j&aacute;',agora,'sem or&ccedil;amento novo','Mitiga&ccedil;&otilde;es que cabem em semanas e n&atilde;o esperam por decis&atilde;o de investimento.','#12B981')
-   + big('Prov&iacute;ncias em exposi&ccedil;&atilde;o elevada',elev,'de 10','Combina&ccedil;&atilde;o de fragilidade produtiva, dist&acirc;ncia ao armaz&eacute;m e corredor &uacute;nico.','#F0A926')
-   + big('M&ecirc;s corrente',mes.mes,mes.risco==='alto'?'risco alto':(mes.risco==='medio'?'risco m&eacute;dio':'risco baixo'),esc(mes.porque),COR_MES[mes.risco]);
-}
-function big(l,v,u,n,c){
-  return '<div class="card frame big"><div class="big-l">'+l+'</div>'
-   +'<div class="big-v mono" style="color:'+c+'">'+v+'<span class="big-u">'+u+'</span></div>'
-   +'<div class="big-n">'+n+'</div></div>';
+  var lista=[
+   {id:'ca-riscos',rotulo:'Riscos identificados',valor:R.length,unidade:'',
+    estado:g5+' de gravidade m&aacute;xima',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Riscos com evid&ecirc;ncia declarada, gatilho observ&aacute;vel e quem decide.',
+    formula:'contagem dos riscos no registo de antecipa&ccedil;&atilde;o',
+    componentes:R.map(function(r){return ['G'+r.gravidade+' &mdash; '+r.titulo.slice(0,52),r.certeza,'']}),
+    leitura:'Nenhum tem probabilidade atribu&iacute;da. A gravidade diz quanto custa se acontecer; a certeza diz se assenta em facto observado ou em documento de terceiro.',
+    fonte:'Centro de Antecipa&ccedil;&atilde;o do SINAGEPE',dataDados:'Agosto de 2026'},
+
+   {id:'ca-factos',rotulo:'Riscos assentes em facto observado',valor:factos,unidade:'de '+R.length,
+    estado:(R.length-factos)+' assentes em documento de terceiro',tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Riscos cuja evid&ecirc;ncia &eacute; observa&ccedil;&atilde;o directa do sistema.',
+    formula:'riscos com certeza declarada como facto',
+    componentes:R.map(function(r){return [r.titulo.slice(0,50),r.certeza,'']}),
+    leitura:'Um risco assente em facto n&atilde;o precisa de confirma&ccedil;&atilde;o para ser tratado. Um assente em documento de terceiro deve ser confirmado na fonte antes de fundamentar decis&atilde;o.',
+    fonte:'Centro de Antecipa&ccedil;&atilde;o do SINAGEPE',dataDados:'Agosto de 2026'},
+
+   {id:'ca-permanentes',rotulo:'Riscos permanentes',valor:perm,unidade:'de '+R.length,
+    estado:'sem janela temporal, activos sempre',tipo:'FACTO',cor:'var(--viol)',
+    resumo:'Riscos que n&atilde;o dependem de esta&ccedil;&atilde;o nem de gatilho externo.',
+    formula:'riscos cuja janela declarada &eacute; permanente',
+    componentes:R.filter(function(r){return /permanente/i.test(r.janela||'')})
+      .map(function(r){return [r.titulo.slice(0,52),'G'+r.gravidade,'']}),
+    leitura:'S&atilde;o os mais graves de todos: n&atilde;o esperam por nada para se manifestarem, e por isso n&atilde;o h&aacute; &eacute;poca em que se possa baixar a guarda.',
+    fonte:'Centro de Antecipa&ccedil;&atilde;o do SINAGEPE',dataDados:'Agosto de 2026'},
+
+   {id:'ca-meses',rotulo:'Meses de risco alto',valor:altos,unidade:'de 12',
+    estado:'concentra&ccedil;&atilde;o sazonal',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Meses do ano classificados como de risco alto no calend&aacute;rio.',
+    formula:'contagem dos meses com risco alto declarado',
+    componentes:C.map(function(c){return [MESES[c.mes]||c.mes,c.risco,'']}),
+    leitura:'A concentra&ccedil;&atilde;o coincide com a &eacute;poca chuvosa e com o per&iacute;odo entre colheitas, que &eacute; quando o stock est&aacute; mais baixo e as estradas piores.',
+    fonte:'Centro de Antecipa&ccedil;&atilde;o do SINAGEPE',dataDados:'Agosto de 2026'},
+
+   {id:'ca-mitigacoes',rotulo:'Mitiga&ccedil;&otilde;es propostas',valor:totMit,unidade:'',
+    estado:(function(){var a=0;R.forEach(function(r){(r.mitigacoes||[]).forEach(function(m){
+      if(m&&m.horizonte==='agora')a++})});return a+' para executar agora'})(),
+    tipo:'FACTO',cor:'var(--ok)',
+    resumo:'Ac&ccedil;&otilde;es concretas propostas para reduzir cada risco.',
+    formula:'soma das mitiga&ccedil;&otilde;es de todos os riscos',
+    componentes:(function(){var c=[];R.forEach(function(r){(r.mitigacoes||[]).forEach(function(m){
+      if(m&&m.accao) c.push([m.accao.slice(0,56),(ROT_HOR[m.horizonte]||m.horizonte||''),
+        'custo '+(m.custo||'')]);})});return c})(),
+    leitura:'Cada mitiga&ccedil;&atilde;o traz hor&iacute;zonte, custo, efeito esperado e quem decide. N&atilde;o s&atilde;o recomenda&ccedil;&otilde;es gen&eacute;ricas: assentam na evid&ecirc;ncia do risco que as origina.',
+    fonte:'Centro de Antecipa&ccedil;&atilde;o do SINAGEPE',dataDados:'Agosto de 2026'}
+  ];
+  document.getElementById('kpis').innerHTML=IndicadoresSinagepe.linha(lista);
 }
 
 function desenharCalendario(){
-  document.getElementById('cal').innerHTML=ST.a.calendario.map(function(m,i){
-    return '<div class="cm'+(ST.mes===i?' on':'')+'" data-i="'+i+'">'
-      +'<div class="cm-b" style="background:'+COR_MES[m.risco]+';opacity:'+(m.risco==='alto'?.95:m.risco==='medio'?.7:.45)+'"></div>'
-      +'<div class="cm-m">'+esc(m.mes)+'</div></div>';
+  var C=ST.a.calendario;
+  document.getElementById('calendario').innerHTML=C.map(function(c,i){
+    var cor=COR_RISCO[String(c.risco).toLowerCase()]||'#5E7189';
+    return '<div class="cal-m entra'+(ST.mes===i?' on':'')+'" data-m="'+i+'" '
+     +'style="animation-delay:'+(i*.035)+'s" role="button" tabindex="0">'
+     +'<span style="position:absolute;left:0;right:0;top:0;height:3px;background:'+cor+'"></span>'
+     +'<div class="cal-n">'+esc(c.mes)+'</div>'
+     +'<div class="cal-r" style="color:'+cor+'">'+esc(c.risco)+'</div></div>';
   }).join('');
-  var m=ST.a.calendario[ST.mes];
-  document.getElementById('cal-n').innerHTML='<b style="color:'+COR_MES[m.risco]+'">'+esc(m.mes)+'</b> &mdash; '+esc(m.porque);
-  document.getElementById('cal-tag').textContent='Janelas conhecidas';
-  Array.prototype.forEach.call(document.querySelectorAll('.cm'),function(el){
-    el.addEventListener('click',function(){ST.mes=Number(el.dataset.i);desenharCalendario()});
+  Array.prototype.forEach.call(document.querySelectorAll('.cal-m'),function(el){
+    function abrir(){ ST.mes=(ST.mes===+el.dataset.m)?null:+el.dataset.m;
+      desenharCalendario(); }
+    el.addEventListener('click',abrir);
+    el.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();abrir()}});
+  });
+  var d=document.getElementById('cal-detalhe');
+  if(ST.mes==null){
+    var altos=C.filter(function(c){return /alto/i.test(c.risco)}).length;
+    d.innerHTML='<div style="font-size:11.5px;color:var(--t3);line-height:1.7">'
+     +'<b>'+altos+' dos 12 meses</b> est&atilde;o classificados como de risco alto. '
+     +'Clique num m&ecirc;s para ver a raz&atilde;o declarada.</div>';
+  } else {
+    var c=C[ST.mes], cor=COR_RISCO[String(c.risco).toLowerCase()]||'#5E7189';
+    d.innerHTML='<div class="entra" style="padding:14px 16px;background:#0A1421;border-radius:10px;'
+     +'border-left:3px solid '+cor+'">'
+     +'<div style="display:flex;gap:10px;align-items:baseline;margin-bottom:7px">'
+     +'<b style="font-size:14px">'+(MESES[c.mes]||c.mes)+'</b>'
+     +'<span class="chip" style="color:'+cor+';border-color:'+cor+'55;background:'+cor+'12">risco '+esc(c.risco)+'</span></div>'
+     +'<div style="font-size:12px;color:var(--t2);line-height:1.7">'+esc(c.porque)+'</div></div>';
+  }
+  var altos=C.filter(function(c){return /alto/i.test(c.risco)}).length;
+  document.getElementById('c-tag').innerHTML=altos+' meses de risco alto';
+}
+
+function desenharFiltros(){
+  var R=ST.a.riscos;
+  var m=[['todos','Todos',R.length],
+         ['g5','Gravidade 5',R.filter(function(r){return r.gravidade===5}).length],
+         ['g4','Gravidade 4',R.filter(function(r){return r.gravidade===4}).length],
+         ['facto','Facto observado',R.filter(function(r){return r.certeza==='facto'}).length],
+         ['permanente','Permanentes',R.filter(function(r){return /permanente/i.test(r.janela||'')}).length]];
+  document.getElementById('filtros').innerHTML=m.map(function(x){
+    return '<button class="fb'+(ST.filtro===x[0]?' on':'')+'" data-f="'+x[0]+'">'
+     +x[1]+' <span style="opacity:.6">'+x[2]+'</span></button>';
+  }).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.fb'),function(b){
+    b.addEventListener('click',function(){ST.filtro=b.dataset.f;desenharFiltros();desenharRiscos()});
   });
 }
 
-function desenharHoriz(){
-  var opts=[['todos','Todos'],['agora','Agir agora'],['90dias','90 dias'],['estrutural','Estrutural']];
-  document.getElementById('horiz').innerHTML=opts.map(function(o){
-    var n=o[0]==='todos'?ST.a.riscos.length:ST.a.riscos.filter(function(r){
-      return r.mitigacoes.some(function(m){return m.horizonte===o[0]})}).length;
-    return '<button class="hb'+(ST.horiz===o[0]?' on':'')+'" data-h="'+o[0]+'">'+o[1]+' ('+n+')</button>';
-  }).join('');
-  Array.prototype.forEach.call(document.querySelectorAll('.hb'),function(b){
-    b.addEventListener('click',function(){ST.horiz=b.dataset.h;desenharHoriz();desenharRiscos();});
-  });
-}
-
-function riscosVisiveis(){
-  return ST.a.riscos.filter(function(r){
-    return ST.horiz==='todos'||r.mitigacoes.some(function(m){return m.horizonte===ST.horiz});
-  }).sort(function(a,b){return b.gravidade-a.gravidade});
+function riscosFiltrados(){
+  var R=ST.a.riscos.slice().sort(function(a,b){return b.gravidade-a.gravidade});
+  if(ST.filtro==='g5') R=R.filter(function(r){return r.gravidade===5});
+  else if(ST.filtro==='g4') R=R.filter(function(r){return r.gravidade===4});
+  else if(ST.filtro==='facto') R=R.filter(function(r){return r.certeza==='facto'});
+  else if(ST.filtro==='permanente') R=R.filter(function(r){return /permanente/i.test(r.janela||'')});
+  return R;
 }
 
 function desenharRiscos(){
-  var vs=riscosVisiveis();
-  document.getElementById('riscos').innerHTML=vs.map(function(r){
-    var c=COR_RISCO[r.gravidade];
-    var nAgora=r.mitigacoes.filter(function(m){return m.horizonte==='agora'}).length;
-    return '<div class="ri'+(ST.sel===r.id?' sel':'')+'" data-i="'+esc(r.id)+'" style="'+(ST.sel===r.id?'border-left-color:'+c:'')+'">'
-     +'<span class="ri-g" style="background:'+c+'1A;color:'+c+';border:1.5px solid '+c+'55">'+r.gravidade+'</span>'
-     +'<span class="ri-b"><span class="ri-t">'+esc(r.titulo)+'</span>'
-     +'<div class="ri-m">'+esc(r.janela)+' &middot; '+r.mitigacoes.length+' mitiga&ccedil;&otilde;es'
-     +(nAgora?' &middot; <span style="color:var(--ok)">'+nAgora+' j&aacute;</span>':'')+'</div></span>'
-     +'<span class="ri-c">'+esc(r.certeza)+'</span></div>';
+  var R=riscosFiltrados();
+  document.getElementById('riscos').innerHTML=R.map(function(r,i){
+    var c=COR_G[r.gravidade]||'#5E7189';
+    var cf=r.certeza==='facto'?'#12B981':'#F0A926';
+    return '<div class="risco entra" data-i="'+i+'" style="animation-delay:'+(i*.05)+'s">'
+     +'<div class="risco-h">'
+     +'<span class="risco-g" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">G'+r.gravidade+'</span>'
+     +'<div class="risco-t"><div class="risco-n">'+esc(r.titulo)+'</div>'
+     +'<div class="risco-r">'+esc(r.resumo)+'</div>'
+     +'<div style="margin-top:9px">'
+     +'<span class="chip" style="color:'+cf+';border-color:'+cf+'55;background:'+cf+'12">'+esc(r.certeza)+'</span>'
+     +'<span class="chip" style="color:var(--t4);border-color:rgba(38,56,86,.8)">'+esc(r.janela)+'</span>'
+     +((r.afecta||[]).length?'<span class="chip" style="color:var(--t4);border-color:rgba(38,56,86,.8)">'
+       +esc(r.afecta[0])+((r.afecta.length>1)?' +'+(r.afecta.length-1):'')+'</span>':'')
+     +'</div></div>'
+     +'<span class="risco-seta">&#9654;</span></div>'
+     +'<div class="risco-d">'
+     +'<div class="bloco"><div class="bloco-t">Evid&ecirc;ncia</div>'
+     +'<div class="bloco-c">'+esc(r.evidencia)+'</div></div>'
+     +'<div class="bloco"><div class="bloco-t">Gatilho</div>'
+     +'<div class="bloco-c">'+esc(r.gatilho)+'</div></div>'
+     +((r.cadeia||[]).length?'<div class="bloco"><div class="bloco-t">Cadeia causal</div>'
+       +'<div class="cadeia">'+r.cadeia.map(function(p,j){
+          return (j?'<i>&rarr;</i>':'')+'<b>'+esc(p)+'</b>'}).join('')+'</div></div>':'')
+     +((r.afecta||[]).length?'<div class="bloco"><div class="bloco-t">Afecta</div>'
+       +'<div class="bloco-c">'+r.afecta.map(esc).join(' &middot; ')+'</div></div>':'')
+     +((r.mitigacoes||[]).length?'<div class="bloco"><div class="bloco-t">Mitiga&ccedil;&otilde;es</div>'
+       +r.mitigacoes.map(function(m,j){return mitigacao(m,j+1)}).join('')+'</div>':'')
+     +'</div></div>';
   }).join('');
-  document.getElementById('r-tag').textContent=vs.length+' de '+ST.a.riscos.length;
-  Array.prototype.forEach.call(document.querySelectorAll('.ri'),function(el){
-    el.addEventListener('click',function(){ST.sel=el.dataset.i;desenharRiscos();desenharDossier()});
+  Array.prototype.forEach.call(document.querySelectorAll('.risco'),function(el){
+    el.querySelector('.risco-h').addEventListener('click',function(){
+      el.classList.toggle('aberto');
+    });
   });
+  document.getElementById('r-tag').innerHTML=R.length+' de '+ST.a.riscos.length;
 }
 
-function desenharProvincias(){
-  var ex=exposicao();
-  document.getElementById('provincias').innerHTML=ex.map(function(p){
-    return '<div class="pb"><span class="pb-n">'+esc(p.nome)
-     +'<div class="pb-d">'+p.dist+' km &middot; '+esc(p.corr)+'</div></span>'
-     +'<span class="pb-t"><i style="width:'+(p.v*100).toFixed(1)+'%;background:'+p.cor+'"></i></span>'
-     +'<span class="pb-v mono" style="color:'+p.cor+'">'+p.v.toFixed(2)+'</span></div>';
+/* Cada mitigação traz acção, horizonte, custo, efeito e quem decide.
+   A versão anterior imprimia o objecto inteiro e saía "[object Object]"
+   no ecrã — foi o que o teste apanhou. */
+var COR_HOR={agora:'#EF4444','90dias':'#F0A926','1ano':'#22B8F0',medio:'#F0A926',longo:'#5E7189'};
+var ROT_HOR={agora:'agora','90dias':'90 dias','1ano':'1 ano'};
+var COR_CUSTO={baixo:'#12B981',medio:'#F0A926',alto:'#EF4444','m\u00e9dio':'#F0A926'};
+
+function mitigacao(m,n){
+  if(typeof m==='string') return '<div class="mit"><span class="mit-n">'+n+'</span><span>'+esc(m)+'</span></div>';
+  var ch=COR_HOR[m.horizonte]||'#5E7189';
+  var cc=COR_CUSTO[m.custo]||'#5E7189';
+  return '<div class="mit" style="align-items:flex-start;padding:11px 0;'
+   +'border-bottom:1px solid rgba(38,56,86,.3)">'
+   +'<span class="mit-n">'+n+'</span>'
+   +'<div style="flex:1;min-width:0">'
+   +'<div style="font-weight:600;font-size:12px;line-height:1.45;margin-bottom:6px">'+esc(m.accao)+'</div>'
+   +'<div style="margin-bottom:7px">'
+   +(m.horizonte?'<span class="chip" style="color:'+ch+';border-color:'+ch+'55;background:'+ch+'12">'
+     +(ROT_HOR[m.horizonte]||esc(m.horizonte))+'</span>':'')
+   +(m.custo?'<span class="chip" style="color:'+cc+';border-color:'+cc+'55;background:'+cc+'12">'
+     +'custo '+esc(m.custo)+'</span>':'')
+   +(m.decide?'<span class="chip" style="color:var(--brz);border-color:var(--brzg);'
+     +'background:rgba(201,138,60,.09)">'+esc(m.decide)+'</span>':'')
+   +'</div>'
+   +(m.efeito?'<div style="font-size:11px;color:var(--t3);line-height:1.65">'+esc(m.efeito)+'</div>':'')
+   +'</div></div>';
+}
+
+function desenharExposicao(){
+  var R=ST.a.riscos, prov={};
+  var TODAS=['Niassa','Cabo Delgado','Nampula','Zamb\u00e9zia','Tete','Manica','Sofala',
+   'Inhambane','Gaza','Maputo','Cidade de Maputo'];
+  R.forEach(function(r){
+    (r.afecta||[]).forEach(function(a){
+      if(/todas as prov/i.test(a)){ TODAS.forEach(function(p){prov[p]=(prov[p]||0)+r.gravidade}); }
+      else TODAS.forEach(function(p){ if(a.indexOf(p)>=0) prov[p]=(prov[p]||0)+r.gravidade; });
+    });
+  });
+  var K=TODAS.slice().sort(function(a,b){return (prov[b]||0)-(prov[a]||0)});
+  var max=Math.max.apply(null,K.map(function(k){return prov[k]||0}))||1;
+  document.getElementById('exposicao').innerHTML=K.map(function(k,i){
+    var v=prov[k]||0;
+    var c=v>=max*.9?'#EF4444':v>=max*.6?'#F0A926':'#22B8F0';
+    return '<div class="entra" style="animation-delay:'+(i*.04)+'s;display:flex;align-items:center;'
+     +'gap:11px;padding:8px 0;border-bottom:1px solid rgba(38,56,86,.35)">'
+     +'<span style="width:126px;flex-shrink:0;font-size:12px">'+k+'</span>'
+     +'<span style="flex:1;height:15px;background:#0A1421;border-radius:4px;overflow:hidden">'
+     +'<i class="cresce" style="display:block;height:100%;width:'+(v/max*100)+'%;'
+     +'background:linear-gradient(90deg,'+c+'AA,'+c+'44);animation-delay:'+(.1+i*.04)+'s"></i></span>'
+     +'<span class="mono" style="width:34px;text-align:right;font-size:12px;color:'+c+'">'+v+'</span></div>';
+  }).join('')
+   +'<div style="font-size:11px;color:var(--t3);line-height:1.65;margin-top:12px">'
+   +'A pontua&ccedil;&atilde;o soma a gravidade dos riscos que afectam cada prov&iacute;ncia. '
+   +'<b>Os riscos que afectam todas as prov&iacute;ncias contam para todas</b>, o que explica a base comum. '
+   +'N&atilde;o &eacute; medida de vulnerabilidade: &eacute; contagem de exposi&ccedil;&atilde;o documentada.</div>';
+}
+
+function desenharMitigacoes(){
+  var R=ST.a.riscos.slice().sort(function(a,b){return b.gravidade-a.gravidade}).slice(0,4);
+  var n=0;
+  document.getElementById('mitigacoes').innerHTML=R.map(function(r,i){
+    var c=COR_G[r.gravidade]||'#5E7189';
+    return '<div class="entra" style="animation-delay:'+(i*.07)+'s;margin-bottom:15px">'
+     +'<div style="display:flex;gap:9px;align-items:baseline;margin-bottom:7px">'
+     +'<span class="chip" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">G'+r.gravidade+'</span>'
+     +'<b style="font-size:12px;line-height:1.4">'+esc(r.titulo)+'</b></div>'
+     +(r.mitigacoes||[]).map(function(m){n++;return mitigacao(m,n)}).join('')
+     +'</div>';
   }).join('');
-  var f=ST.a.meta.formulaExposicao;
-  document.getElementById('form-nota').innerHTML='<b style="color:var(--t3)">C&aacute;lculo:</b> '
-   +f.componentes.map(function(c){return esc(c.nome)+' &times;'+c.peso}).join(' + ')
-   +'. '+esc(f.descricao);
+  document.getElementById('m-tag').innerHTML=n+' ac&ccedil;&otilde;es';
 }
 
-function desenharDossier(){
-  var r=achar(ST.sel);if(!r)return;
-  var c=COR_RISCO[r.gravidade];
-  var h='<div class="dt" style="color:'+c+'">'+esc(r.titulo)+'</div>'
-   +'<div class="dm">'+esc(r.resumo)+'</div>'
-   +'<div class="meta">'
-   +'<span class="mp"><b>Gatilho:</b> '+esc(r.gatilho)+'</span>'
-   +'<span class="mp"><b>Janela:</b> '+esc(r.janela)+'</span>'
-   +'<span class="mp"><b>Afecta:</b> '+esc(r.afecta.join(', '))+'</span></div>';
-
-  h+='<div style="font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brz);margin-top:16px;margin-bottom:10px">Como se chega &agrave; ruptura</div><div class="cad">';
-  r.cadeia.forEach(function(passo,i){
-    var cc=i===r.cadeia.length-1?'#EF4444':(i===0?'#C98A3C':'#8FA1B8');
-    h+='<div class="cad-i"><span class="cad-d" style="border-color:'+cc+';color:'+cc+'">'+(i+1)+'</span>'
-      +'<span class="cad-t"'+(i===r.cadeia.length-1?' style="color:#FFB4B4;font-weight:600"':'')+'>'+esc(passo)+'</span></div>';
-  });
-  h+='</div>';
-
-  var ms=r.mitigacoes.filter(function(m){return ST.horiz==='todos'||m.horizonte===ST.horiz});
-  h+='<div style="font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ok);margin-top:18px;margin-bottom:4px">O que interrompe esta cadeia</div>';
-  ms.forEach(function(m){
-    var hc=COR_HOR[m.horizonte];
-    h+='<div class="mt" style="border-color:'+hc+'44;background:'+hc+'0D">'
-     +'<div class="mt-h"><span class="mt-q" style="background:'+hc+'22;color:'+hc+'">'+ROT_HOR[m.horizonte]+'</span>'
-     +'<span class="mt-c">'+ROT_CUSTO[m.custo]+'</span></div>'
-     +'<div class="mt-a">'+esc(m.accao)+'</div>'
-     +'<div class="mt-e">'+esc(m.efeito)+'</div>'
-     +'<div class="mt-d">Cadeia de decis&atilde;o: '+esc(m.decide)+'</div></div>';
-  });
-  if(!ms.length)h+='<div class="mt" style="border-color:var(--card-line)"><div class="mt-e">Sem mitiga&ccedil;&otilde;es neste horizonte. Mude o filtro para ver as restantes.</div></div>';
-
-  h+='<div class="ev"><b style="color:var(--t3)">Base factual:</b> '+esc(r.evidencia)+'</div>';
-  document.getElementById('dossier').innerHTML=h;
-  document.getElementById('d-tag').textContent='Gravidade '+r.gravidade+'/5';
-}
-
-if(window.SinagepeNav) SinagepeNav.montar('antecipacao');
-if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
-
-Promise.all([
- fetch('data/antecipacao.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/antecipacao.json');return r.json()}),
- fetch('data/produtores-agrarios.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/produtores-agrarios.json');return r.json()}),
- fetch('data/rede-viaria.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/rede-viaria.json');return r.json()}),
- fetch('data/armazens-nacionais.json').then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/armazens-nacionais.json');return r.json()})
-]).then(function(res){
- ST.a=res[0];ST.prod=res[1];ST.rede=res[2];ST.arm=res[3];
- desenharAviso();desenharFaixa();desenharCalendario();desenharHoriz();desenharRiscos();desenharProvincias();
- ST.sel=ST.a.riscos.slice().sort(function(a,b){return b.gravidade-a.gravidade})[0].id;
- desenharRiscos();desenharDossier();
-}).catch(function(err){
- document.getElementById('aviso').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(err.message)
-  +'<br><br>Este ecr&atilde; precisa de quatro ficheiros em <span class="mono">data/</span>: antecipacao.json, produtores-agrarios.json, rede-viaria.json e armazens-nacionais.json.</div>';
-});
+fetch('data/antecipacao.json',{cache:'no-store'})
+ .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/antecipacao.json');return r.json()})
+ .then(function(j){
+   ST.a=j;
+   desenharKpis();desenharCalendario();desenharFiltros();
+   desenharRiscos();desenharExposicao();desenharMitigacoes();
+ })
+ .catch(function(e){
+   document.getElementById('kpis').innerHTML=
+     '<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+ });
 </script>
 </body>
 </html>
