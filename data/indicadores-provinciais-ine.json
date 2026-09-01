@@ -1,0 +1,323 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "fonte": "INE — Instituto Nacional de Estatística, com o UNFPA",
+    "documento": "Dinâmica de População em Moçambique — Estudos Temáticos do IV Recenseamento Geral da População e Habitação de 2017",
+    "publicado": "Dezembro de 2023",
+    "url": "https://mozcensus.com/theme_of_mozambique/facts-sheets/ThematicStudies-2017/DinamicadePopulacaoPrint27-02-24.pdf",
+    "licenca": "Reprodução autorizada, excepto para fins comerciais, com indicação da fonte bibliográfica",
+    "dataDados": "2017",
+    "extraidoEm": "2026-09-01",
+    "verificado": true,
+    "notaMetodologica": "O estudo usa amostras de 10% dos censos de 1997, 2007 e 2017. O próprio INE adverte que as cifras podem não coincidir exactamente com as publicadas a partir das bases completas.",
+    "naoInclui": "População absoluta por província. O estudo trabalha com taxas e estruturas, não com efectivos. Para efectivos por província seria preciso outra publicação do INE, que não foi obtida."
+  },
+  "nacional": {
+    "populacao1997": 15300000,
+    "populacao2007": 20600000,
+    "populacao2017": 26900000,
+    "crescimento9707": 3.0,
+    "crescimento0717": 2.7,
+    "urbana1997": 29.2,
+    "urbana2007": 30.5,
+    "urbana2017": 32.5,
+    "tgf2017": 4.9,
+    "rdt2017": 99.4,
+    "nota": "Efectivos aproximados, do estudo temático. O censo definitivo de 2017 é referido noutras fontes como 27.909.798 e 26.899.105 — divergência registada."
+  },
+  "provincias": [
+    {
+      "provincia": "Niassa",
+      "crescimentoAnual": {
+        "p1997_2007": 4.5,
+        "p2007_2017": 3.7
+      },
+      "fecundidade2017": 5.3,
+      "esperancaVida2017": {
+        "homens": 56.9,
+        "mulheres": 60.1
+      },
+      "migracaoLiquida2017": 0.5,
+      "demografia2017": {
+        "mortalidadeBruta": 10.3,
+        "natalidadeBruta": 40.9,
+        "crescimentoNatural": 30.6,
+        "crescimentoTotal": 30.9
+      },
+      "dependencia2017": {
+        "jovens": 111.5,
+        "idosos": 8.4,
+        "total": 119.9
+      },
+      "idadeMediana2017": 19.4
+    },
+    {
+      "provincia": "Cabo Delgado",
+      "crescimentoAnual": {
+        "p1997_2007": 2.4,
+        "p2007_2017": 3.3
+      },
+      "fecundidade2017": 4.9,
+      "esperancaVida2017": {
+        "homens": 54.6,
+        "mulheres": 58.2
+      },
+      "migracaoLiquida2017": 0.6,
+      "demografia2017": {
+        "mortalidadeBruta": 12.7,
+        "natalidadeBruta": 37.3,
+        "crescimentoNatural": 24.6,
+        "crescimentoTotal": 25.3
+      },
+      "dependencia2017": {
+        "jovens": 97.7,
+        "idosos": 11.8,
+        "total": 109.4
+      },
+      "idadeMediana2017": 21.6
+    },
+    {
+      "provincia": "Nampula",
+      "crescimentoAnual": {
+        "p1997_2007": 3.1,
+        "p2007_2017": 3.0
+      },
+      "fecundidade2017": 5.4,
+      "esperancaVida2017": {
+        "homens": 52.8,
+        "mulheres": 55.6
+      },
+      "migracaoLiquida2017": -0.5,
+      "demografia2017": {
+        "mortalidadeBruta": 13.0,
+        "natalidadeBruta": 41.6,
+        "crescimentoNatural": 28.6,
+        "crescimentoTotal": 28.2
+      },
+      "dependencia2017": {
+        "jovens": 105.3,
+        "idosos": 9.0,
+        "total": 114.3
+      },
+      "idadeMediana2017": 20.2
+    },
+    {
+      "provincia": "Zambézia",
+      "crescimentoAnual": {
+        "p1997_2007": 3.0,
+        "p2007_2017": 2.5
+      },
+      "fecundidade2017": 5.1,
+      "esperancaVida2017": {
+        "homens": 51.6,
+        "mulheres": 55.2
+      },
+      "migracaoLiquida2017": -4.4,
+      "demografia2017": {
+        "mortalidadeBruta": 12.9,
+        "natalidadeBruta": 40.4,
+        "crescimentoNatural": 27.5,
+        "crescimentoTotal": 25.5
+      },
+      "dependencia2017": {
+        "jovens": 107.6,
+        "idosos": 8.3,
+        "total": 115.9
+      },
+      "idadeMediana2017": 19.7
+    },
+    {
+      "provincia": "Tete",
+      "crescimentoAnual": {
+        "p1997_2007": 4.5,
+        "p2007_2017": 3.5
+      },
+      "fecundidade2017": 5.4,
+      "esperancaVida2017": {
+        "homens": 56.8,
+        "mulheres": 61.6
+      },
+      "migracaoLiquida2017": -0.7,
+      "demografia2017": {
+        "mortalidadeBruta": 10.2,
+        "natalidadeBruta": 42.0,
+        "crescimentoNatural": 31.8,
+        "crescimentoTotal": 31.9
+      },
+      "dependencia2017": {
+        "jovens": 99.8,
+        "idosos": 9.2,
+        "total": 109.0
+      },
+      "idadeMediana2017": 20.3
+    },
+    {
+      "provincia": "Manica",
+      "crescimentoAnual": {
+        "p1997_2007": 3.9,
+        "p2007_2017": 2.5
+      },
+      "fecundidade2017": 5.6,
+      "esperancaVida2017": {
+        "homens": 53.3,
+        "mulheres": 60.2
+      },
+      "migracaoLiquida2017": 4.8,
+      "demografia2017": {
+        "mortalidadeBruta": 11.2,
+        "natalidadeBruta": 44.5,
+        "crescimentoNatural": 33.3,
+        "crescimentoTotal": 34.9
+      },
+      "dependencia2017": {
+        "jovens": 101.6,
+        "idosos": 9.1,
+        "total": 110.7
+      },
+      "idadeMediana2017": 20.0
+    },
+    {
+      "provincia": "Sofala",
+      "crescimentoAnual": {
+        "p1997_2007": 2.6,
+        "p2007_2017": 2.7
+      },
+      "fecundidade2017": 5.4,
+      "esperancaVida2017": {
+        "homens": 52.1,
+        "mulheres": 57.8
+      },
+      "migracaoLiquida2017": 0.8,
+      "demografia2017": {
+        "mortalidadeBruta": 12.3,
+        "natalidadeBruta": 42.9,
+        "crescimentoNatural": 30.6,
+        "crescimentoTotal": 31.0
+      },
+      "dependencia2017": {
+        "jovens": 93.0,
+        "idosos": 9.2,
+        "total": 102.1
+      },
+      "idadeMediana2017": 20.8
+    },
+    {
+      "provincia": "Inhambane",
+      "crescimentoAnual": {
+        "p1997_2007": 1.5,
+        "p2007_2017": 1.1
+      },
+      "fecundidade2017": 4.4,
+      "esperancaVida2017": {
+        "homens": 54.2,
+        "mulheres": 59.9
+      },
+      "migracaoLiquida2017": -16.9,
+      "demografia2017": {
+        "mortalidadeBruta": 15.9,
+        "natalidadeBruta": 34.2,
+        "crescimentoNatural": 18.3,
+        "crescimentoTotal": 12.8
+      },
+      "dependencia2017": {
+        "jovens": 88.0,
+        "idosos": 16.5,
+        "total": 104.6
+      },
+      "idadeMediana2017": 24.1
+    },
+    {
+      "provincia": "Gaza",
+      "crescimentoAnual": {
+        "p1997_2007": 1.6,
+        "p2007_2017": 1.1
+      },
+      "fecundidade2017": 4.5,
+      "esperancaVida2017": {
+        "homens": 52.5,
+        "mulheres": 61.2
+      },
+      "migracaoLiquida2017": -13.3,
+      "demografia2017": {
+        "mortalidadeBruta": 14.2,
+        "natalidadeBruta": 35.4,
+        "crescimentoNatural": 21.2,
+        "crescimentoTotal": 18.4
+      },
+      "dependencia2017": {
+        "jovens": 90.2,
+        "idosos": 14.4,
+        "total": 104.6
+      },
+      "idadeMediana2017": 23.1
+    },
+    {
+      "provincia": "Maputo",
+      "crescimentoAnual": {
+        "p1997_2007": 4.2,
+        "p2007_2017": 4.4
+      },
+      "fecundidade2017": 3.2,
+      "esperancaVida2017": {
+        "homens": 55.4,
+        "mulheres": 60.1
+      },
+      "migracaoLiquida2017": 18.2,
+      "demografia2017": {
+        "mortalidadeBruta": 11.5,
+        "natalidadeBruta": 28.9,
+        "crescimentoNatural": 17.4,
+        "crescimentoTotal": 25.4
+      },
+      "dependencia2017": {
+        "jovens": 65.8,
+        "idosos": 8.3,
+        "total": 74.1
+      },
+      "idadeMediana2017": 23.7
+    },
+    {
+      "provincia": "Cidade de Maputo",
+      "crescimentoAnual": {
+        "p1997_2007": 1.4,
+        "p2007_2017": -0.3
+      },
+      "fecundidade2017": 2.6,
+      "esperancaVida2017": {
+        "homens": 61.5,
+        "mulheres": 65.2
+      },
+      "migracaoLiquida2017": 20.0,
+      "demografia2017": {
+        "mortalidadeBruta": 8.4,
+        "natalidadeBruta": 23.8,
+        "crescimentoNatural": 15.4,
+        "crescimentoTotal": 17.9
+      },
+      "dependencia2017": {
+        "jovens": 50.1,
+        "idosos": 9.2,
+        "total": 59.3
+      },
+      "idadeMediana2017": 25.8
+    }
+  ],
+  "divergenciaRegistada": {
+    "assunto": "População total no Censo de 2017",
+    "valores": [
+      {
+        "fonte": "Estudo temático do INE, amostra de 10%",
+        "valor": 26900000
+      },
+      {
+        "fonte": "Resultados definitivos, citados pela TVM",
+        "valor": 27909798
+      },
+      {
+        "fonte": "Citação em notícia sobre o Censo 2027",
+        "valor": 26899105
+      }
+    ],
+    "nota": "Três valores em circulação para o mesmo censo. Não se escolheu nenhum em silêncio: ficam os três registados. O estudo temático explica a diferença pela amostra de 10%."
+  }
+}

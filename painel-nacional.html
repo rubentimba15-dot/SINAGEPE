@@ -150,6 +150,7 @@ if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 var ST={};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p1(n){return Number(n).toFixed(1).replace('.',',')}
 function p2(n){return Number(n).toFixed(2).replace('.',',')}
 
 var PROVINCIAS=['Niassa','Cabo Delgado','Nampula','Zamb\u00e9zia','Tete','Manica','Sofala',
@@ -167,7 +168,9 @@ function dadosProvincia(p){
   var ipc=(ST.ipc.ponderacao||[]).filter(function(x){return x.provincia===p})
     .reduce(function(s,x){return s+x.peso},0);
   var merc=mercadosDe(p);
-  return {arm:arm,fa:fa,porLer:porLer,cortes:cortes,estradas:estr,ipc:ipc,mercados:merc};
+  var ine=((ST.ine&&ST.ine.provincias)||[]).filter(function(x){
+    return x.provincia===p.replace('&eacute;','\u00e9')})[0];
+  return {arm:arm,fa:fa,porLer:porLer,cortes:cortes,estradas:estr,ipc:ipc,mercados:merc,ine:ine};
 }
 
 /* Mercados do SIMA por província — pela localidade, que é o que o boletim dá. */
@@ -208,6 +211,18 @@ function desenharProvincias(){
       'series-precos.html','#22B8F0']);
     if(d.ipc) linhas.push(['\u25D1','Peso no &iacute;ndice de pre&ccedil;os',p2(d.ipc)+'%',
       'inflacao-cobertura.html','#A78BFA']);
+    /* Do estudo temático do INE sobre a dinâmica da população, 2023.
+       Entram porque mudam a leitura: uma província que perde população
+       e não tem armazém cadastrado é caso diferente de uma que cresce. */
+    if(d.ine){
+      var ev=d.ine.esperancaVida2017.homens;
+      linhas.push(['\u25CB','Esperan&ccedil;a de vida, homens',p1(ev)+' anos',
+        'inflacao-cobertura.html', ev<53?'#EF4444':ev<57?'#F0A926':'#12B981']);
+      var mg=d.ine.migracaoLiquida2017;
+      linhas.push([mg<0?'\u2193':'\u2191','Migra&ccedil;&atilde;o l&iacute;quida',
+        (mg>0?'+':'')+p1(mg)+'%','inflacao-cobertura.html',
+        mg<-10?'#EF4444':mg<0?'#F0A926':'#2DD4BF']);
+    }
 
     var destino=d.arm.length?'cadastro-armazens.html':'monitorizacao-em-falta.html';
     return '<a class="prov entra" href="'+destino+'" style="animation-delay:'+(i*.045)+'s" '
@@ -402,12 +417,12 @@ function desenharKpis(){
     IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
 }
 
-Promise.all(['armazens-nacionais','farmacias-anarme','rede-viaria','ipc-ine','sima-precos','antecipacao']
+Promise.all(['armazens-nacionais','farmacias-anarme','rede-viaria','ipc-ine','sima-precos','antecipacao','indicadores-provinciais-ine']
  .map(function(f){
   return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
     if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
 })).then(function(res){
-  ST.arm=res[0];ST.far=res[1];ST.rv=res[2];ST.ipc=res[3];ST.sima=res[4];ST.risc=res[5];
+  ST.arm=res[0];ST.far=res[1];ST.rv=res[2];ST.ipc=res[3];ST.sima=res[4];ST.risc=res[5];ST.ine=res[6];
   desenharKpis();desenharProvincias();desenharPrecos();desenharRiscos();desenharDestinos();
 }).catch(function(e){
   document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
