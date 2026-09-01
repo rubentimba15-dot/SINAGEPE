@@ -319,9 +319,36 @@
   "ondeSinagepeEntra": [
     {
       "pergunta": "Onde está a necessidade?",
-      "quemResponde": "IPC e SETSAN",
-      "comoResponde": "Classificação por distrito, em fases de 1 a 5",
-      "sinagepeTem": false
+      "quemResponde": "IPC e SETSAN, com classificação por distrito. E o SINAGEPE, com quatro camadas próprias",
+      "comoResponde": "O IPC classifica em fases de 1 a 5. O SINAGEPE não classifica — mostra indicadores que apontam pressão: esperança de vida, migração líquida, acesso a farmácia e área inundada",
+      "sinagepeTem": "parcial",
+      "nota": "São duas leituras independentes da mesma coisa. Quando divergem, isso é achado — e o sistema devolve a divergência em vez de escolher uma.",
+      "camadasProprias": [
+        {
+          "camada": "Esperança de vida masculina",
+          "fonte": "INE — Censo de 2017",
+          "extremo": "Zambézia, 51,6 anos",
+          "ecra": "painel-nacional.html"
+        },
+        {
+          "camada": "Migração líquida",
+          "fonte": "INE — Censo de 2017",
+          "extremo": "Inhambane, -16,9%",
+          "ecra": "painel-nacional.html"
+        },
+        {
+          "camada": "Farmácias licenciadas em funcionamento",
+          "fonte": "ANARME, 2024",
+          "extremo": "Niassa, 15 em toda a província",
+          "ecra": "dashboard-igsae.html"
+        },
+        {
+          "camada": "Área semeada inundada",
+          "fonte": "MAAP, Janeiro de 2026",
+          "extremo": "Sofala, 25,6% da área semeada",
+          "ecra": "dashboard-agricultura.html"
+        }
+      ]
     },
     {
       "pergunta": "Onde está o alimento?",
@@ -359,5 +386,11 @@
     "tese": "A insegurança alimentar em Moçambique é medida com rigor por várias organizações. O que nenhuma delas mede é a outra metade do problema: onde está o alimento, quanto custa movê-lo e se a estrada para lá está aberta. Sem isso, uma classificação de fase diz onde é preciso agir e não diz como.",
     "exemplo": "Uma província classificada em Fase 3 com um troço de estrada intransitável e sem armazém cadastrado é um problema logístico antes de ser um problema de financiamento. Nenhum dos dois sistemas, sozinho, revela isso.",
     "contrapartida": "O SINAGEPE não substitui o SETSAN nem o IPC. Acrescenta-lhes a camada física: rede viária, armazenagem, preços por praça e custo de transporte. E devolve as divergências que encontra ao cruzar fontes — como a diferença de 2,3 milhões de pessoas entre a FAO e o IPC para o mesmo período."
+  },
+  "leituraPropriaDeNecessidade": {
+    "oQueE": "Quatro camadas que o sistema já tem e que apontam pressão sobre a população, sem classificar ninguém em fase nenhuma.",
+    "porqueNaoEClassificacao": "Classificar um distrito em fase de insegurança alimentar exige metodologia validada, trabalho de campo e um comité multi-agência. O SINAGEPE não tem nada disso e não o deve fazer. O que tem são indicadores que, cruzados, mostram onde a pressão se acumula.",
+    "valorDoCruzamento": "Duas leituras independentes da mesma realidade. Se a classificação do IPC e a acumulação de camadas do SINAGEPE apontarem para os mesmos territórios, isso reforça ambas. Se divergirem, isso é achado — e pode significar que uma delas está a ver algo que a outra não vê.",
+    "limite": "Nenhuma destas camadas é medida de insegurança alimentar. A esperança de vida e a migração são de 2017; as farmácias medem acesso a medicamento, não a alimento; a área inundada mede impacto de um evento, não estado nutricional. <b>São sinais de pressão, e é assim que devem ser lidos.</b>"
   }
 }

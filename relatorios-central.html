@@ -162,6 +162,13 @@ function eAdministrador(){var n=nivel();return !n||n.chave==='administrador'}
    que ficheiros de dados usa, e a fun\u00e7\u00e3o que o constr\u00f3i.
    ============================================================ */
 var RELATORIOS=[
+ {id:'duas-leituras-necessidade',titulo:'Duas Leituras da Necessidade',
+  desc:'Confronta a classifica\u00e7\u00e3o internacional de inseguran\u00e7a alimentar com a leitura que resulta dos dados que o sistema j\u00e1 tem: esperan\u00e7a de vida, migra\u00e7\u00e3o, acesso a farm\u00e1cia e \u00e1rea inundada. Onde as duas apontam para o mesmo territ\u00f3rio, refor\u00e7am-se. Onde divergem, isso \u00e9 achado.',
+  ecra:'fontes-internacionais.html',
+  dados:['fontes-internacionais','indicadores-provinciais-ine','farmacias-anarme','campanha-agraria-maap','armazens-nacionais'],
+  idade:'INE de 2017, ANARME de 2024, MAAP e fontes internacionais de 2026',
+  gerar:relDuasLeituras},
+
  {id:'fome-vs-oferta',titulo:'Necessidade e Oferta \u2014 cruzamento',
   desc:'Cruza a insegura\u00e7a alimentar medida pelo IPC e pela FAO com o que o sistema sabe da oferta: armaz\u00e9ns cadastrados, estradas cortadas e pre\u00e7os por pra\u00e7a. \u00c9 o relat\u00f3rio que responde \u00e0 pergunta que nenhuma das fontes responde sozinha.',
   ecra:'fontes-internacionais.html',
@@ -280,6 +287,128 @@ function tab(cols,linhas){
    Estes quatro juntam fontes diferentes, que é onde aparece o
    que nenhuma delas mostra sozinha.
    ============================================================ */
+
+/* ============================================================
+   DUAS LEITURAS DA NECESSIDADE
+   ------------------------------------------------------------
+   O sistema tinha marcado "onde está a necessidade" como pergunta
+   a que não responde. Era falso: já tem quatro camadas que apontam
+   pressão. Este relatório põe as duas leituras lado a lado.
+
+   Não classifica ninguém em fase nenhuma — isso é competência do
+   IPC e do SETSAN. Mostra onde a pressão se acumula, e onde as
+   duas leituras não coincidem.
+   ============================================================ */
+function relDuasLeituras(){
+  var FI=ST.d['fontes-internacionais'];
+  var INE=ST.d['indicadores-provinciais-ine'].provincias;
+  var FA=ST.d['farmacias-anarme'].porProvincia||[];
+  var MP=ST.d['campanha-agraria-maap'];
+  var A=ST.d['armazens-nacionais'].armazens;
+
+  var fa={}; FA.forEach(function(x){fa[x.provincia]=x.emFuncionamento});
+  var inund={}; (MP.cheias.porProvincia||[]).forEach(function(x){
+    if(x.hectaresSemeados) inund[x.provincia]=x.hectaresInundados/x.hectaresSemeados*100;});
+  var destacadas=['Cabo Delgado','Nampula','Sofala','Tete','Zambézia'];
+
+  /* Cada camada dá um ponto quando a província está no terço mais
+     desfavorável dessa camada. Não é índice ponderado: é contagem
+     de camadas em que a província aparece mal, e está declarado. */
+  var evs=INE.map(function(x){return x.esperancaVida2017.homens}).sort(function(a,b){return a-b});
+  var limEV=evs[Math.floor(evs.length/3)];
+  var mgs=INE.map(function(x){return x.migracaoLiquida2017}).sort(function(a,b){return a-b});
+  var limMG=mgs[Math.floor(mgs.length/3)];
+  var fas=Object.keys(fa).map(function(k){return fa[k]}).sort(function(a,b){return a-b});
+  var limFA=fas[Math.floor(fas.length/3)];
+
+  var L=INE.map(function(x){
+    var pv=x.provincia, n=0, quais=[];
+    if(x.esperancaVida2017.homens<=limEV){n++;quais.push('esperança de vida')}
+    if(x.migracaoLiquida2017<=limMG){n++;quais.push('perda migratória')}
+    if(fa[pv]!=null&&fa[pv]<=limFA){n++;quais.push('poucas farmácias')}
+    if(inund[pv]&&inund[pv]>5){n++;quais.push('área inundada')}
+    return {provincia:pv, camadas:n, quais:quais,
+            ev:x.esperancaVida2017.homens, mg:x.migracaoLiquida2017,
+            far:fa[pv], inu:inund[pv]||null,
+            internacional:destacadas.indexOf(pv)>=0,
+            armazens:A.filter(function(a){return a.provincia===pv}).length};
+  }).sort(function(a,b){return b.camadas-a.camadas});
+
+  var linhas=L.map(function(x){
+    return [esc(x.provincia), String(x.camadas)+' de 4',
+      x.internacional?'sim':'não',
+      p1(x.ev), p1(x.mg), x.far!=null?num(x.far):'—',
+      x.inu?p1(x.inu)+'%':'—',
+      x.quais.length?esc(x.quais.join(', ')):'—'];
+  });
+
+  /* Onde as duas leituras não coincidem. */
+  var soInternacional=L.filter(function(x){return x.internacional && x.camadas<=1});
+  /* O limiar é 2 e não 3 porque a distribuição real não põe nenhuma
+     província acima de 2 camadas. Com 3, o bloco ficava sempre vazio
+     e o relatório perdia metade do seu valor. */
+  var maxCam=Math.max.apply(null,L.map(function(x){return x.camadas}));
+  var soSistema=L.filter(function(x){return !x.internacional && x.camadas>=maxCam});
+  var ambas=L.filter(function(x){return x.internacional && x.camadas>=2});
+
+  var csv=[['Provincia','Camadas','Destacada internacionalmente','Esperanca vida homens',
+            'Migracao liquida','Farmacias','Area inundada pct','Camadas activas']]
+   .concat(L.map(function(x){return [x.provincia,x.camadas,x.internacional?'sim':'nao',
+     x.ev,x.mg,x.far!=null?x.far:'',x.inu?x.inu.toFixed(1):'',x.quais.join('; ')]}));
+
+  return {
+    html: cabecalho('Duas Leituras da Necessidade',
+        'INE de 2017, ANARME de 2024, MAAP e fontes internacionais de 2026',
+        'IPC · FAO · INE · ANARME · MAAP · Cadastro Nacional de Armazenagem')
+      +'<h2>Porque existem duas leituras</h2>'
+      +'<p>O IPC e o SETSAN classificam a insegurança alimentar por distrito, com metodologia validada '
+      +'e comité multi-agência. <b>O SINAGEPE não faz isso e não o deve fazer.</b></p>'
+      +'<p>Mas o sistema já tem quatro camadas que apontam pressão sobre a população: '
+      +'esperança de vida e migração líquida do Censo do INE, farmácias licenciadas da ANARME, '
+      +'e área semeada inundada segundo o MAAP. '
+      +'São leituras independentes da mesma realidade — e vale a pena vê-las lado a lado.</p>'
+      +'<div class="nota"><b>Como se conta.</b> Cada província recebe um ponto por cada camada em que '
+      +'está no terço mais desfavorável do país. Não é índice ponderado nem classificação: '
+      +'é contagem de camadas, e a regra está aqui declarada para poder ser contestada.</div>'
+      +'<h2>As onze províncias</h2>'
+      +tab([['Província'],['Camadas','n'],['Destaque internacional'],
+            ['Esperança de vida','n'],['Migração','n'],['Farmácias','n'],['Inundado','n'],
+            ['Camadas activas']],linhas)
+      +'<h2>Onde as duas leituras coincidem</h2>'
+      +(ambas.length
+        ? '<p>'+ambas.map(function(x){return '<b>'+esc(x.provincia)+'</b> ('+x.camadas+' camadas)'}).join(', ')
+          +' aparece'+(ambas.length>1?'m':'')+' nas duas leituras. '
+          +'A convergência reforça ambas: são territórios onde a necessidade está documentada por '
+          +'caminhos independentes.</p>'
+        : '<p>Nenhuma província aparece nas duas leituras com força.</p>')
+      +'<h2>Onde divergem</h2>'
+      +(soSistema.length
+        ? '<p><b>Apontadas pelo sistema e não pelo destaque internacional:</b> '
+          +soSistema.map(function(x){
+             return esc(x.provincia)+' ('+x.camadas+' camadas: '+esc(x.quais.join(', '))+')'}).join('; ')
+          +'. Merecem verificação: podem estar fora do foco internacional por razões de âmbito, '
+          +'ou o sistema pode estar a ver pressão que a classificação por fase não capta.</p>'
+        : '')
+      +(soInternacional.length
+        ? '<p><b>Destacadas internacionalmente e sem acumulação de camadas no sistema:</b> '
+          +soInternacional.map(function(x){return esc(x.provincia)}).join(', ')
+          +'. A explicação mais provável é o conflito e a deslocação interna, que o sistema não mede: '
+          +num(FI.deslocacao.deslocadosInternos)+' deslocados internos, com '
+          +num(FI.deslocacao.regressados)+' regressados a '+esc(FI.deslocacao.zona)+'.</p>'
+        : '')
+      +'<h2>O que este relatório não é</h2>'
+      +'<p>Não é uma classificação de insegurança alimentar e não substitui a do IPC. '
+      +'<b>Nenhuma das quatro camadas mede estado nutricional.</b> '
+      +'A esperança de vida e a migração são de 2017; as farmácias medem acesso a medicamento, '
+      +'não a alimento; a área inundada mede o impacto de um evento, não a fome que dele resulta.</p>'
+      +'<div class="nota">'+FI.leituraPropriaDeNecessidade.limite.replace(/<\/?b>/g,'')+'</div>'
+      +rodape(),
+    csv: csv,
+    json: {leituras:L, coincidem:ambas.map(function(x){return x.provincia}),
+           soSistema:soSistema.map(function(x){return x.provincia}),
+           soInternacional:soInternacional.map(function(x){return x.provincia})}
+  };
+}
 
 function relFomeOferta(){
   var FI=ST.d['fontes-internacionais'];

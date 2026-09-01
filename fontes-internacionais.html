@@ -50,7 +50,8 @@ td{padding:11px 16px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:to
 tr:last-child td{border-bottom:none}
 td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
-@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}
+#leituraPropria > div[style*='grid-template-columns:1fr 1fr']{grid-template-columns:1fr!important}}
 @keyframes surge{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:none}}
 @keyframes crescer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes crescerY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
@@ -113,6 +114,7 @@ td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
         <span class="tag ok" id="p-tag">&mdash;</span></div>
       <div class="bd" id="perguntas"></div>
       <div class="aviso i" id="exemplo"></div>
+      <div class="bd" style="border-top:1px solid var(--card-line)" id="leituraPropria"></div>
     </div>
 
     <div class="card frame">
@@ -251,12 +253,45 @@ function desenharPerguntas(){
      +'<span class="perg-i" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'+ic+'</span>'
      +'<div class="perg-t"><div class="perg-q">'+esc(p.pergunta)+'</div>'
      +'<div class="perg-r"><b style="color:var(--t2)">'+esc(p.quemResponde)+'</b> &mdash; '
-     +esc(p.comoResponde)+(p.nota?'<br><span style="color:var(--t4)">'+esc(p.nota)+'</span>':'')+'</div></div>'
+     +esc(p.comoResponde)+(p.nota?'<br><span style="color:var(--t4)">'+esc(p.nota)+'</span>':'')+'</div>'
+     /* Quando a pergunta tem camadas próprias do sistema, mostrá-las.
+        Estavam em falta: a primeira pergunta dizia que o SINAGEPE não
+        respondia, quando já tinha quatro indicadores que apontam pressão. */
+     +((p.camadasProprias||[]).length
+       ? '<div style="margin-top:11px;padding:11px 13px;background:rgba(34,184,240,.06);'
+         +'border-left:2px solid var(--blue);border-radius:0 8px 8px 0">'
+         +'<div style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);'
+         +'margin-bottom:8px">Camadas que o sistema j&aacute; tem</div>'
+         +p.camadasProprias.map(function(c){
+            return '<a href="'+esc(c.ecra)+'" style="display:flex;gap:9px;align-items:baseline;'
+             +'padding:5px 0;text-decoration:none;color:inherit;font-size:11.5px">'
+             +'<span style="flex:1;color:var(--t2)">'+esc(c.camada)+'</span>'
+             +'<span class="mono" style="color:var(--brzl);white-space:nowrap">'+esc(c.extremo)+'</span>'
+             +'<span style="color:var(--t4);font-size:10px;white-space:nowrap">'+esc(c.fonte)+'</span></a>';
+          }).join('')
+         +'</div>'
+       : '')
+     +'</div>'
      +'<span class="perg-e" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'+rot+'</span></div>';
   }).join('');
   var temos=P.filter(function(x){return x.sinagepeTem===true}).length;
   document.getElementById('p-tag').innerHTML=temos+' de '+P.length+' com resposta';
   document.getElementById('exemplo').innerHTML='<b>Um exemplo concreto.</b> '+esc(ST.d.utilidadePublica.exemplo);
+
+  var L=ST.d.leituraPropriaDeNecessidade;
+  if(L) document.getElementById('leituraPropria').innerHTML=
+     '<div style="font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brz);'
+    +'margin-bottom:10px">A leitura pr&oacute;pria da necessidade</div>'
+    +'<div style="font-size:12.5px;color:var(--t2);line-height:1.75;margin-bottom:13px">'+esc(L.oQueE)+'</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">'
+    +'<div><div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--t4);'
+    +'margin-bottom:7px">Porque n&atilde;o &eacute; classifica&ccedil;&atilde;o</div>'
+    +'<div style="font-size:11.5px;color:var(--t3);line-height:1.7">'+esc(L.porqueNaoEClassificacao)+'</div></div>'
+    +'<div><div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ok);'
+    +'margin-bottom:7px">Valor do cruzamento</div>'
+    +'<div style="font-size:11.5px;color:var(--t3);line-height:1.7">'+esc(L.valorDoCruzamento)+'</div></div>'
+    +'</div>'
+    +'<div class="aviso w" style="margin:14px 0 0"><b>Limite.</b> '+L.limite+'</div>';
 }
 
 function desenharSerie(){
