@@ -8,6 +8,7 @@
 <script src="assets/nav-sinagepe.js"></script>
 <script src="assets/pesquisa-sinagepe.js"></script>
 <script src="assets/indicadores-sinagepe.js"></script>
+<script src="assets/produtos-visual.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
@@ -264,9 +265,16 @@ function desenharPrecos(){
   document.getElementById('precos').innerHTML=L.map(function(r,i){
     var d=(r.maximo.valor/r.minimo.valor-1)*100;
     var c=d>150?'#EF4444':d>60?'#F0A926':'#12B981';
-    return '<div class="entra" style="animation-delay:'+(i*.06)+'s;margin-bottom:12px">'
-     +'<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">'
-     +'<b>'+esc(r.produto)+'</b><span class="mono" style="color:'+c+'">+'+d.toFixed(0)+'%</span></div>'
+    /* A ilustração entra à esquerda do nome. Se o ficheiro visual não
+       estiver carregado, a linha continua a funcionar sem ela. */
+    var ilu=(window.ProdutosVisual&&ProdutosVisual.svg)
+      ? '<span style="flex-shrink:0;line-height:0;opacity:.95">'+ProdutosVisual.svg(r.produto,34)+'</span>'
+      : '';
+    return '<div class="entra" style="animation-delay:'+(i*.06)+'s;margin-bottom:14px">'
+     +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">'
+     +ilu
+     +'<b style="flex:1;font-size:12.5px">'+esc(r.produto)+'</b>'
+     +'<span class="mono" style="color:'+c+'">+'+d.toFixed(0)+'%</span></div>'
      +'<div style="height:7px;background:#0A1421;border-radius:4px;overflow:hidden">'
      +'<i class="cresce" style="display:block;height:100%;width:'+(d/max*100)+'%;'
      +'background:linear-gradient(90deg,'+c+'AA,'+c+'55);animation-delay:'+(.1+i*.06)+'s"></i></div>'
