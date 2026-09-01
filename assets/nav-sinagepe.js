@@ -53,6 +53,7 @@
     { key: 'relatorios',    icon: '\u25A7', label: 'Relat\u00f3rios',       href: 'relatorios.html', grupo: 'RELATORIOS' },
     { key: 'governanca',    icon: '\u2696', label: 'Governa\u00e7\u00e3o do Dado', href: 'governanca-dado.html', grupo: 'GOVERNACAO' },
     { key: 'actualidade', icon: '\u25F4', label: 'Actualidade dos dados', href: 'actualidade-dados.html', grupo: 'GOVERNA\u00c7\u00c3O' },
+    { key: 'inflacao', icon: '\u25E7', label: 'Onde a infla\u00e7\u00e3o n\u00e3o chega', href: 'inflacao-cobertura.html', grupo: 'AN\u00c1LISE' },
     { key: 'config',        icon: '\u2699', label: 'Configura\u00e7\u00f5es', href: 'administracao-auditoria.html', grupo: 'GOVERNACAO' },
     { key: 'marketplace',   icon: '\u2B21', label: 'Marketplace B2B',       href: 'marketplace-b2b.html', grupo: 'PORTAIS' },
     { key: 'portal-bancos', icon: '\u26C3', label: 'Portal dos Bancos', href: 'portal-bancos.html', grupo: 'FINANCIAMENTO' },

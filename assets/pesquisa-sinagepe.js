@@ -56,6 +56,8 @@
       t:'relatorio central imprimir exportar csv json pdf documento gerar' },
     { h:'relatorio-executivo.html', n:'Relatório Executivo', d:'Documento imprimível em A4, com exportação CSV e JSON',
       t:'relatorio pdf imprimir exportar csv json executivo documento' },
+    { h:'inflacao-cobertura.html', n:'Onde a inflação não chega', d:'O índice de preços cobre 8 cidades; 13 dos 16 mercados do SIMA ficam de fora',
+      t:'inflacao ipc ine indice precos cobertura lichinga niassa ponderacao cruzamento' },
     { h:'actualidade-dados.html', n:'Actualidade dos dados', d:'Quantos ciclos de atraso tem cada fonte, medidos contra a periodicidade esperada',
       t:'actualidade idade dados desactualizado atraso ciclos temporalidade data facto' },
     { h:'governanca-dado.html', n:'Governação do Dado', d:'Cinco regras de disciplina e classificação de cada número do sistema',

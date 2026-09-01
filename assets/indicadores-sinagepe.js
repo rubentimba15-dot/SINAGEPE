@@ -119,6 +119,8 @@
     'ICM':         { dias: 180, nome: 'irregular' },
     'IMOPETRO':    { dias: 180, nome: 'semestral' },
     'INE':         { dias: 30,  nome: 'mensal' },
+    'IPC':         { dias: 30,  nome: 'mensal' },
+    'LICHINGA':    { dias: 30,  nome: 'mensal' },
     'FAO':         { dias: 365, nome: 'anual' },
     'GS1':         { dias: 1095,nome: 'est\u00e1vel' },
     'CADASTRO':    { dias: 365, nome: 'anual' },

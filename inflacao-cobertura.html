@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Onde a infla&ccedil;&atilde;o n&atilde;o chega &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:25px;margin:0 0 6px;letter-spacing:-.015em}
+.sub{color:var(--t3);font-size:13px;margin-bottom:18px;max-width:900px;line-height:1.6}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px;overflow:hidden}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:3}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:15px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:17px 18px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 16px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:10px 16px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+.aviso{margin:14px 18px;padding:13px 15px;border-radius:10px;font-size:11.5px;line-height:1.7;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+
+/* ---- animação: entrada progressiva dos cartões e barras ---- */
+@keyframes surge{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes crescer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes pulsar{0%,100%{opacity:.35}50%{opacity:.9}}
+@keyframes tracar{to{stroke-dashoffset:0}}
+.entra{animation:surge .5s cubic-bezier(.16,1,.3,1) both}
+.cresce{transform-origin:left center;animation:crescer .9s cubic-bezier(.16,1,.3,1) both}
+.pulsa{animation:pulsar 2.4s ease-in-out infinite}
+.traca{stroke-dasharray:1200;stroke-dashoffset:1200;animation:tracar 1.8s ease-out .3s both}
+@media (prefers-reduced-motion:reduce){
+  .entra,.cresce,.pulsa,.traca{animation:none!important;stroke-dashoffset:0!important;opacity:1!important;transform:none!important}
+}
+
+/* ---- barras de ponderação ---- */
+.pond{display:flex;align-items:center;gap:12px;padding:9px 0}
+.pond-n{width:172px;flex-shrink:0;font-size:12px}
+.pond-t{flex:1;height:22px;background:#0A1421;border-radius:5px;overflow:hidden;position:relative}
+.pond-t i{display:block;height:100%;border-radius:5px;position:relative}
+.pond-v{width:56px;text-align:right;flex-shrink:0;font-family:'IBM Plex Mono',monospace;font-size:12px}
+.pond-m{width:74px;flex-shrink:0;font-size:9.5px;text-align:right}
+
+/* ---- mapa de cobertura ---- */
+.malha{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px}
+.prov{background:#0A1421;border:1px solid var(--card-line);border-radius:11px;padding:13px 14px;position:relative;overflow:hidden;transition:.2s}
+.prov:hover{transform:translateY(-3px);border-color:var(--brzg)}
+.prov:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px}
+.prov.sim:before{background:var(--ok)}
+.prov.nao:before{background:var(--red)}
+.prov-n{font-size:12.5px;font-weight:600;margin-bottom:6px}
+.prov-p{font-size:21px;font-family:'IBM Plex Mono',monospace;letter-spacing:-.02em;line-height:1}
+.prov-s{font-size:10px;color:var(--t4);margin-top:6px;line-height:1.45}
+
+.leg{display:flex;gap:16px;flex-wrap:wrap;padding:0 18px 15px;font-size:11px;color:var(--t3)}
+.leg span{display:flex;align-items:center;gap:7px}
+.leg i{width:11px;height:11px;border-radius:3px;display:block}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Cruzamento de fontes</div>
+    <h1>Onde a infla&ccedil;&atilde;o n&atilde;o chega</h1>
+    <p class="sub">O &iacute;ndice que mede a infla&ccedil;&atilde;o nacional cobre oito centros urbanos. Os mercados onde os pre&ccedil;os mais variam ficam quase todos de fora. <b>Este ecr&atilde; p&otilde;e as duas fontes lado a lado.</b></p>
+
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>De que &eacute; feito o &iacute;ndice nacional</h2>
+        <p>Peso de cada centro na infla&ccedil;&atilde;o que o pa&iacute;s publica</p></div>
+        <span class="tag ok">INE &middot; base 2023 = 100</span></div>
+      <div class="bd" id="ponderacao"></div>
+      <div class="aviso i"><b>A cidade de Maputo vale quase um ter&ccedil;o do &iacute;ndice.</b>
+      A ponderação vem do Inqu&eacute;rito sobre o Or&ccedil;amento Familiar de 2022 e reflecte o consumo das fam&iacute;lias
+      nos centros medidos. N&atilde;o &eacute; um erro: &eacute; o desenho do &iacute;ndice, e est&aacute; publicado.
+      <b>O que importa saber &eacute; o que fica fora dele.</b></div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Cobertura por prov&iacute;ncia</h2>
+        <p>Onde o &iacute;ndice mede, e onde n&atilde;o mede</p></div>
+        <span class="tag crit" id="cob-tag">&mdash;</span></div>
+      <div class="bd"><div class="malha" id="cobertura"></div></div>
+      <div class="leg">
+        <span><i style="background:var(--ok)"></i> Com centro no &iacute;ndice nacional</span>
+        <span><i style="background:var(--red)"></i> Sem representa&ccedil;&atilde;o no &iacute;ndice</span>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Os mercados que o SIMA mede, e o &iacute;ndice n&atilde;o</h2>
+        <p>Sobreposi&ccedil;&atilde;o entre as duas fontes p&uacute;blicas de pre&ccedil;o</p></div>
+        <span class="tag crit" id="sob-tag">&mdash;</span></div>
+      <div class="bd" id="venn"></div>
+      <div class="aviso r"><b>Este &eacute; o achado.</b> A maior dispers&atilde;o de pre&ccedil;o que o sistema mediu &mdash;
+      fu&iacute;j&atilde;o nhemba a variar 341% entre pra&ccedil;as, milho a 9 MT/kg em Lichinga e 34 em Mandimba &mdash;
+      acontece em <b>Niassa</b>. E o Niassa n&atilde;o entra no &iacute;ndice de infla&ccedil;&atilde;o nacional.
+      A cidade de Lichinga tem publica&ccedil;&atilde;o pr&oacute;pria, com infla&ccedil;&atilde;o hom&oacute;loga de <b>7,54%</b> em Fevereiro de 2026,
+      mais do dobro da nacional do mesmo m&ecirc;s. <b>N&atilde;o alimenta o n&uacute;mero nacional.</b></div>
+    </div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Infla&ccedil;&atilde;o em 2026</h2>
+          <p>Nacional contra Lichinga, no mesmo m&ecirc;s</p></div></div>
+        <div class="bd" id="grafico"></div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>O que as duas fontes fazem</h2>
+          <p>N&atilde;o medem a mesma coisa, e n&atilde;o se substituem</p></div></div>
+        <table id="comparacao"></table>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O que este cruzamento n&atilde;o prova</h2>
+        <p>Limites da leitura</p></div>
+        <span class="tag crit">Honestidade de dados</span></div>
+      <table id="limites"></table>
+    </div>
+  </main>
+</div>
+
+<script>
+if(window.SinagepeNav) SinagepeNav.montar('inflacao');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
+
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
+function p1(n){return Number(n).toFixed(1).replace('.',',')}
+
+var PROVINCIAS=['Niassa','Cabo Delgado','Nampula','Zamb&eacute;zia','Tete','Manica','Sofala',
+ 'Inhambane','Gaza','Maputo','Cidade de Maputo'];
+
+function mercadosSima(){
+  var s=ST.sima, m={};
+  Object.keys(s).forEach(function(k){
+    if(k.indexOf('retalho')!==0) return;
+    s[k].forEach(function(r){
+      ['minimo','maximo'].forEach(function(x){
+        (r[x].mercados||[]).forEach(function(mm){m[mm]=1});
+      });
+    });
+  });
+  return Object.keys(m).sort();
+}
+
+function noIndice(mercado){
+  var c=ST.ipc.ponderacao.map(function(p){return p.centro.replace(/^(Cidade|Prov&iacute;ncia|Província) de |^Cidade da /,'')});
+  return c.some(function(x){
+    return mercado.toLowerCase().indexOf(x.toLowerCase())>=0
+        || x.toLowerCase().indexOf(mercado.replace(/^Cidade de /,'').toLowerCase())>=0;
+  });
+}
+
+function desenharKpis(){
+  var M=mercadosSima(), fora=M.filter(function(m){return !noIndice(m)});
+  var P=ST.ipc.ponderacao, top=P[0];
+  var s26=ST.ipc.serie2026, ult=s26[s26.length-1];
+  var li=ST.ipc.lichingaSeparado;
+
+  var lista=[
+   {id:'if-fora',rotulo:'Mercados do SIMA fora do &iacute;ndice',valor:fora.length,unidade:'de '+M.length,
+    estado:'sem representa&ccedil;&atilde;o na infla&ccedil;&atilde;o nacional',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Mercados onde o SIMA mede pre&ccedil;os e que n&atilde;o t&ecirc;m centro no &iacute;ndice do INE.',
+    formula:'mercados do SIMA menos os que coincidem com centros do IPC',
+    componentes:M.map(function(m){return [m,noIndice(m)?'no &iacute;ndice':'fora','']}),
+    leitura:'As duas fontes medem realidades diferentes. O &iacute;ndice mede o custo de vida urbano; o SIMA mede o pre&ccedil;o nas pra&ccedil;as onde se compra e vende cereal. Onde n&atilde;o se sobrep&otilde;em, ningu&eacute;m est&aacute; a medir a infla&ccedil;&atilde;o.',
+    fonte:'INE e SIMA &mdash; cruzamento',dataDados:'Abril de 2026',ecra:'series-precos.html'},
+
+   {id:'if-maputo',rotulo:'Peso da Cidade de Maputo no &iacute;ndice',valor:p1(top.peso),unidade:'%',
+    estado:'o maior de oito centros',tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Fatia da Cidade de Maputo na estrutura de pondera&ccedil;&atilde;o do IPC nacional.',
+    formula:'pondera&ccedil;&atilde;o publicada pelo INE, derivada do Inqu&eacute;rito ao Or&ccedil;amento Familiar de 2022',
+    componentes:P.map(function(p){return [p.centro,p.peso,'%']}),
+    leitura:'N&atilde;o &eacute; erro nem enviesamento: &eacute; o desenho declarado do &iacute;ndice. Mas significa que uma varia&ccedil;&atilde;o de pre&ccedil;o em Maputo move o n&uacute;mero nacional quase seis vezes mais do que a mesma varia&ccedil;&atilde;o em Xai-Xai.',
+    fonte:'INE &mdash; IPC base 2023 = 100',dataDados:'Abril de 2026'},
+
+   {id:'if-homologa',rotulo:'Infla&ccedil;&atilde;o hom&oacute;loga nacional',valor:p2(ult.homologa),unidade:'%',
+    estado:ult.mes+' de 2026 &middot; oito cidades',tipo:'FACTO',cor:'var(--blue)',
+    resumo:'Varia&ccedil;&atilde;o de pre&ccedil;os face ao mesmo m&ecirc;s do ano anterior.',
+    formula:'&iacute;ndice do m&ecirc;s a dividir pelo do mesmo m&ecirc;s do ano anterior',
+    componentes:s26.map(function(x){return [x.mes+' &mdash; hom&oacute;loga',x.homologa,'%']})
+      .concat(s26.map(function(x){return [x.mes+' &mdash; mensal',x.mensal,'%']})),
+    leitura:'&Eacute; o n&uacute;mero que orienta pol&iacute;tica monet&aacute;ria e sala&aacute;rios. Cobre oito centros urbanos.',
+    fonte:'INE &mdash; nota de imprensa',dataDados:'Abril de 2026'},
+
+   {id:'if-lichinga',rotulo:'Infla&ccedil;&atilde;o hom&oacute;loga em Lichinga',valor:p2(li.homologa),unidade:'%',
+    estado:'Fevereiro de 2026 &middot; publica&ccedil;&atilde;o separada',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Infla&ccedil;&atilde;o na cidade de Lichinga, que tem &iacute;ndice pr&oacute;prio.',
+    formula:'publica&ccedil;&atilde;o pr&oacute;pria do INE para Lichinga',
+    componentes:[['Lichinga &mdash; hom&oacute;loga',li.homologa,'%'],
+                 ['Nacional &mdash; hom&oacute;loga, mesmo m&ecirc;s',s26[0].homologa,'%'],
+                 ['Diferen&ccedil;a',(li.homologa-s26[0].homologa).toFixed(2),'pontos']],
+    leitura:'<b>Mais do dobro da nacional no mesmo m&ecirc;s.</b> E n&atilde;o entra no &iacute;ndice nacional: &eacute; publica&ccedil;&atilde;o separada. &Eacute; tamb&eacute;m onde o SIMA mediu a maior dispers&atilde;o de pre&ccedil;o do pa&iacute;s.',
+    fonte:'INE &mdash; IPC de Lichinga',dataDados:'Fevereiro de 2026'}
+  ];
+  document.getElementById('kpis').innerHTML=IndicadoresSinagepe.linha(lista);
+}
+
+function desenharPonderacao(){
+  var P=ST.ipc.ponderacao, max=P[0].peso;
+  var cores=['#C98A3C','#E8BE7A','#22B8F0','#2DD4BF','#12B981','#A78BFA','#F0A926','#8FA1B8'];
+  document.getElementById('ponderacao').innerHTML=P.map(function(p,i){
+    return '<div class="pond entra" style="animation-delay:'+(i*.06)+'s">'
+     +'<span class="pond-n">'+esc(p.centro)+'</span>'
+     +'<span class="pond-t"><i class="cresce" style="width:'+(p.peso/max*100)+'%;background:'
+     +'linear-gradient(90deg,'+cores[i]+'CC,'+cores[i]+'66);animation-delay:'+(.15+i*.06)+'s"></i></span>'
+     +'<span class="pond-v" style="color:'+cores[i]+'">'+p2(p.peso)+'%</span>'
+     +'<span class="pond-m" style="color:var(--t4)">'+esc(p.provincia)+'</span></div>';
+  }).join('');
+}
+
+function desenharCobertura(){
+  var P=ST.ipc.ponderacao, fora=ST.ipc.provinciasForaDoIndice;
+  var porProv={};
+  P.forEach(function(p){porProv[p.provincia]=(porProv[p.provincia]||0)+p.peso});
+  var M=mercadosSima();
+  var h=PROVINCIAS.map(function(pr,i){
+    var peso=porProv[pr.replace('&eacute;','é')]||porProv[pr]||0;
+    var tem=peso>0;
+    var f=fora.filter(function(x){return x.provincia===pr.replace('&eacute;','é')})[0];
+    var nMerc=M.filter(function(m){
+      return m.toLowerCase().indexOf(pr.toLowerCase().replace('cidade de ',''))>=0}).length;
+    return '<div class="prov '+(tem?'sim':'nao')+' entra" style="animation-delay:'+(i*.045)+'s">'
+     +'<div class="prov-n">'+pr+'</div>'
+     +'<div class="prov-p" style="color:'+(tem?'var(--ok)':'var(--red)')+'">'
+     +(tem?p2(peso)+'<span style="font-size:12px">%</span>':'sem peso')+'</div>'
+     +'<div class="prov-s">'+(tem?'tem centro no &iacute;ndice':(f?'n&atilde;o entra no &iacute;ndice nacional':'sem centro pr&oacute;prio'))+'</div></div>';
+  }).join('');
+  document.getElementById('cobertura').innerHTML=h;
+  var semPeso=PROVINCIAS.filter(function(pr){return !(porProv[pr.replace('&eacute;','é')]||porProv[pr])}).length;
+  document.getElementById('cob-tag').innerHTML=semPeso+' de '+PROVINCIAS.length+' sem representa&ccedil;&atilde;o';
+}
+
+/* Diagrama dos dois conjuntos, desenhado em SVG e traçado à entrada. */
+function desenharVenn(){
+  var M=mercadosSima();
+  var dentro=M.filter(noIndice), fora=M.filter(function(m){return !noIndice(m)});
+  var P=ST.ipc.ponderacao.map(function(p){return p.centro});
+  var soIpc=P.filter(function(c){
+    return !M.some(function(m){return c.toLowerCase().indexOf(m.replace(/^Cidade de /,'').toLowerCase())>=0})});
+
+  var w=880,h=300;
+  var svg='<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:auto;max-height:320px" role="img" '
+   +'aria-label="Sobreposi&ccedil;&atilde;o entre os mercados do SIMA e os centros do IPC">'
+   +'<circle class="traca" cx="330" cy="150" r="126" fill="rgba(34,184,240,.09)" stroke="#22B8F0" stroke-width="1.6"/>'
+   +'<circle class="traca" cx="550" cy="150" r="126" fill="rgba(201,138,60,.09)" stroke="#C98A3C" stroke-width="1.6" style="animation-delay:.5s"/>'
+   +'<text x="212" y="42" fill="#22B8F0" font-size="12.5" font-weight="600" text-anchor="middle" class="entra">SIMA &mdash; pre&ccedil;os por pra&ccedil;a</text>'
+   +'<text x="668" y="42" fill="#C98A3C" font-size="12.5" font-weight="600" text-anchor="middle" class="entra">IPC &mdash; infla&ccedil;&atilde;o nacional</text>'
+   +'<text x="246" y="140" fill="#EF4444" font-size="42" font-weight="600" text-anchor="middle" '
+   +'font-family="IBM Plex Mono" class="entra" style="animation-delay:.9s">'+fora.length+'</text>'
+   +'<text x="246" y="166" fill="#8FA1B8" font-size="11" text-anchor="middle" class="entra" style="animation-delay:1s">mercados</text>'
+   +'<text x="246" y="182" fill="#8FA1B8" font-size="11" text-anchor="middle" class="entra" style="animation-delay:1s">s&oacute; no SIMA</text>'
+   +'<text x="440" y="140" fill="#12B981" font-size="34" font-weight="600" text-anchor="middle" '
+   +'font-family="IBM Plex Mono" class="entra" style="animation-delay:1.1s">'+dentro.length+'</text>'
+   +'<text x="440" y="164" fill="#8FA1B8" font-size="10.5" text-anchor="middle" class="entra" style="animation-delay:1.2s">em ambas</text>'
+   +'<text x="636" y="140" fill="#C98A3C" font-size="34" font-weight="600" text-anchor="middle" '
+   +'font-family="IBM Plex Mono" class="entra" style="animation-delay:1.3s">'+soIpc.length+'</text>'
+   +'<text x="636" y="164" fill="#8FA1B8" font-size="10.5" text-anchor="middle" class="entra" style="animation-delay:1.4s">s&oacute; no IPC</text>'
+   +'</svg>';
+
+  var lista='<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">'
+   +'<div><div style="font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#EF4444;margin-bottom:9px">'
+   +'Medidos pelo SIMA, fora do &iacute;ndice</div>'
+   +fora.map(function(m,i){
+     return '<div class="entra" style="animation-delay:'+(1.5+i*.035)+'s;font-size:11.5px;padding:5px 0;'
+      +'border-bottom:1px solid rgba(38,56,86,.35);color:var(--t2)">'+esc(m)+'</div>'}).join('')
+   +'</div><div><div style="font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#12B981;margin-bottom:9px">'
+   +'Em ambas as fontes</div>'
+   +dentro.map(function(m,i){
+     return '<div class="entra" style="animation-delay:'+(1.5+i*.06)+'s;font-size:11.5px;padding:5px 0;'
+      +'border-bottom:1px solid rgba(38,56,86,.35);color:var(--ok)">'+esc(m)+'</div>'}).join('')
+   +'<div style="font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#C98A3C;margin:16px 0 9px">'
+   +'Centros do &iacute;ndice sem medi&ccedil;&atilde;o do SIMA</div>'
+   +soIpc.map(function(m,i){
+     return '<div class="entra" style="animation-delay:'+(1.7+i*.05)+'s;font-size:11.5px;padding:5px 0;'
+      +'border-bottom:1px solid rgba(38,56,86,.35);color:var(--brzl)">'+esc(m)+'</div>'}).join('')
+   +'</div></div>';
+
+  document.getElementById('venn').innerHTML=svg+lista;
+  document.getElementById('sob-tag').innerHTML=dentro.length+' de '+M.length+' coincidem';
+}
+
+/* Gráfico de colunas: nacional contra Lichinga. */
+function desenharGrafico(){
+  var s=ST.ipc.serie2026, li=ST.ipc.lichingaSeparado;
+  var dados=[
+   {r:'Nacional &middot; Fev',v:s[0].homologa,c:'#22B8F0'},
+   {r:'Lichinga &middot; Fev',v:li.homologa,c:'#EF4444'},
+   {r:'Nacional &middot; Abr',v:s[1].homologa,c:'#22B8F0'}
+  ];
+  var max=Math.max.apply(null,dados.map(function(d){return d.v}))*1.18;
+  var w=440,h=250,pl=40,pb=42;
+  var bw=(w-pl-16)/dados.length*.5;
+  var Y=function(v){return h-pb-(v/max)*(h-pb-24)};
+  var g='';
+  for(var i=0;i<=4;i++){var v=max*i/4;
+    g+='<line x1="'+pl+'" y1="'+Y(v)+'" x2="'+(w-12)+'" y2="'+Y(v)+'" stroke="#22354F" stroke-width=".7"/>'
+     +'<text x="'+(pl-7)+'" y="'+(Y(v)+4)+'" fill="#5E7189" font-size="9.5" text-anchor="end" '
+     +'font-family="IBM Plex Mono">'+v.toFixed(1).replace('.',',')+'</text>';}
+  var barras=dados.map(function(d,i){
+    var x=pl+(i+.5)*((w-pl-16)/dados.length)-bw/2;
+    var y=Y(d.v), alt=h-pb-y;
+    return '<rect x="'+x+'" y="'+y+'" width="'+bw+'" height="'+alt+'" rx="4" fill="'+d.c+'" opacity=".85" '
+     +'style="transform-origin:'+x+'px '+(h-pb)+'px;animation:crescerY .8s cubic-bezier(.16,1,.3,1) '
+     +(.2+i*.15)+'s both"/>'
+     +'<text x="'+(x+bw/2)+'" y="'+(y-9)+'" fill="'+d.c+'" font-size="14" font-weight="600" '
+     +'text-anchor="middle" font-family="IBM Plex Mono" class="entra" style="animation-delay:'+(.7+i*.15)+'s">'
+     +p2(d.v)+'%</text>'
+     +'<text x="'+(x+bw/2)+'" y="'+(h-pb+18)+'" fill="#8FA1B8" font-size="10" text-anchor="middle">'+d.r+'</text>';
+  }).join('');
+  document.getElementById('grafico').innerHTML=
+    '<style>@keyframes crescerY{from{transform:scaleY(0)}to{transform:scaleY(1)}}</style>'
+   +'<svg viewBox="0 0 '+w+' '+h+'" style="width:100%;height:auto" role="img" '
+   +'aria-label="Infla&ccedil;&atilde;o hom&oacute;loga nacional e em Lichinga">'+g+barras+'</svg>'
+   +'<div style="font-size:11px;color:var(--t3);line-height:1.65;margin-top:12px">'
+   +'Em Fevereiro de 2026, Lichinga teve <b style="color:var(--red)">'+p2(li.homologa)+'%</b> de infla&ccedil;&atilde;o hom&oacute;loga '
+   +'contra <b style="color:var(--blue)">'+p2(s[0].homologa)+'%</b> no &iacute;ndice nacional. '
+   +'S&atilde;o <b>'+p2(li.homologa-s[0].homologa)+' pontos percentuais</b> de diferen&ccedil;a, no mesmo m&ecirc;s.</div>';
+}
+
+var COMPARACAO=[
+ ['O que mede','Custo de uma cesta de 367 produtos','Pre&ccedil;o de produtos agr&iacute;colas por pra&ccedil;a'],
+ ['Onde mede','8 centros urbanos','16 pra&ccedil;as, na maioria rurais'],
+ ['Com que peso','Ponderado pelo consumo das fam&iacute;lias','Sem pondera&ccedil;&atilde;o: pre&ccedil;o observado'],
+ ['Periodicidade','Mensal','Semanal'],
+ ['Base','Inqu&eacute;rito ao Or&ccedil;amento Familiar de 2022','Recolha directa nos mercados'],
+ ['Publica&ccedil;&atilde;o','Regular, com nota de imprensa','Parou em linha em Agosto de 2023'],
+ ['Para que serve','Pol&iacute;tica monet&aacute;ria, sal&aacute;rios, contratos','Decis&atilde;o de compra e venda']
+];
+function desenharComparacao(){
+  var h='<thead><tr><th></th><th style="color:#22B8F0">IPC &mdash; INE</th>'
+   +'<th style="color:#C98A3C">SIMA &mdash; MAAP</th></tr></thead><tbody>';
+  COMPARACAO.forEach(function(c,i){
+    h+='<tr class="entra" style="animation-delay:'+(i*.05)+'s">'
+     +'<td style="color:var(--t4);font-size:10px;letter-spacing:.09em;text-transform:uppercase">'+c[0]+'</td>'
+     +'<td style="color:var(--t2)">'+c[1]+'</td><td style="color:var(--t2)">'+c[2]+'</td></tr>';
+  });
+  document.getElementById('comparacao').innerHTML=h+'</tbody>';
+}
+
+var LIMITES=[
+ ['Que o &iacute;ndice esteja errado','O IPC mede o que se prop&otilde;e medir: o custo de vida nos centros urbanos onde recolhe. A pondera&ccedil;&atilde;o est&aacute; publicada e &eacute; verific&aacute;vel. <b>N&atilde;o h&aacute; aqui cr&iacute;tica ao m&eacute;todo do INE.</b>'],
+ ['Que o Niassa tenha mais infla&ccedil;&atilde;o que o pa&iacute;s','Um m&ecirc;s de Lichinga acima da m&eacute;dia nacional n&atilde;o estabelece uma tend&ecirc;ncia. Seriam precisos v&aacute;rios meses para o afirmar.'],
+ ['Que as duas fontes sejam compar&aacute;veis','N&atilde;o s&atilde;o. Uma mede um &iacute;ndice ponderado de 367 produtos; a outra mede pre&ccedil;o por quilo de cereal. <b>P&otilde;em-se lado a lado, n&atilde;o se somam.</b>'],
+ ['Que a dispers&atilde;o do SIMA seja actual','Os pre&ccedil;os do SIMA s&atilde;o de Julho de 2023. Continuam documentados e verdadeiros, mas t&ecirc;m tr&ecirc;s anos.'],
+ ['Que os n&uacute;meros de 2026 estejam confirmados','Vieram de notas de imprensa do INE reproduzidas na comunica&ccedil;&atilde;o social. O portal do INE recusa acesso autom&aacute;tico. <b>Devem ser confirmados na publica&ccedil;&atilde;o original antes de uso oficial.</b>']
+];
+function desenharLimites(){
+  var h='<thead><tr><th>O que este cruzamento n&atilde;o prova</th><th>Porqu&ecirc;</th></tr></thead><tbody>';
+  LIMITES.forEach(function(l,i){
+    h+='<tr class="entra" style="animation-delay:'+(i*.05)+'s">'
+     +'<td style="font-weight:600;max-width:280px">'+l[0]+'</td>'
+     +'<td style="color:var(--t3)">'+l[1]+'</td></tr>';
+  });
+  document.getElementById('limites').innerHTML=h+'</tbody>';
+}
+
+Promise.all(['ipc-ine','sima-precos'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.ipc=res[0];ST.sima=res[1];
+  desenharKpis();desenharPonderacao();desenharCobertura();
+  desenharVenn();desenharGrafico();desenharComparacao();desenharLimites();
+}).catch(function(e){
+  document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+});
+</script>
+</body>
+</html>

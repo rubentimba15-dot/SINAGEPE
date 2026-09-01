@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "fonte": "INE — Instituto Nacional de Estatística",
+    "serie": "Índice de Preços no Consumidor, base ano 2023 = 100",
+    "base": "Inquérito sobre o Orçamento Familiar de 2022; classificação COICOP das Nações Unidas",
+    "produtosNaCesta": 367,
+    "produtosNaCestaAnterior": 316,
+    "dataDados": "Abril de 2026",
+    "extraidoEm": "2026-08-31",
+    "verificado": true,
+    "notaFonte": "A ponderação por centro foi lida em dois documentos oficiais do INE, de Novembro de 2024 e Janeiro de 2025, e coincide nos dois. Os valores mensais de 2026 vêm de notas de imprensa do INE divulgadas na comunicação social — não foi possível aceder directamente ao PDF do INE, que recusa acesso automático. Devem ser confirmados na publicação original antes de uso oficial.",
+    "urlPortal": "https://www.ine.gov.mz",
+    "limiteImportante": "O IPC nacional mede oito centros urbanos. Não mede Niassa nem Cabo Delgado. A cidade de Lichinga tem publicação própria, que não entra no índice nacional."
+  },
+  "ponderacao": [
+    {
+      "centro": "Cidade de Maputo",
+      "peso": 29.6,
+      "provincia": "Cidade de Maputo"
+    },
+    {
+      "centro": "Cidade de Nampula",
+      "peso": 15.5,
+      "provincia": "Nampula"
+    },
+    {
+      "centro": "Cidade de Quelimane",
+      "peso": 11.94,
+      "provincia": "Zambézia"
+    },
+    {
+      "centro": "Cidade da Beira",
+      "peso": 11.58,
+      "provincia": "Sofala"
+    },
+    {
+      "centro": "Cidade de Chimoio",
+      "peso": 10.44,
+      "provincia": "Manica"
+    },
+    {
+      "centro": "Cidade de Tete",
+      "peso": 9.74,
+      "provincia": "Tete"
+    },
+    {
+      "centro": "Província de Inhambane",
+      "peso": 6.05,
+      "provincia": "Inhambane"
+    },
+    {
+      "centro": "Cidade de Xai-Xai",
+      "peso": 5.15,
+      "provincia": "Gaza"
+    }
+  ],
+  "provinciasForaDoIndice": [
+    {
+      "provincia": "Niassa",
+      "nota": "A cidade de Lichinga tem publicação própria do IPC, que não entra no índice nacional."
+    },
+    {
+      "provincia": "Cabo Delgado",
+      "nota": "Sem centro no índice nacional e sem publicação própria localizada."
+    },
+    {
+      "provincia": "Maputo província",
+      "nota": "Distinta da Cidade de Maputo. Sem centro próprio no índice."
+    }
+  ],
+  "serie2026": [
+    {
+      "mes": "Fevereiro",
+      "mensal": 0.68,
+      "acumulada": 1.94,
+      "homologa": 3.2,
+      "maiorVariacao": "Xai-Xai",
+      "verificado": false
+    },
+    {
+      "mes": "Abril",
+      "mensal": 0.63,
+      "acumulada": 2.8,
+      "homologa": 4.41,
+      "maiorVariacao": "Tete",
+      "maiorVariacaoValor": 2.2,
+      "verificado": false
+    }
+  ],
+  "lichingaSeparado": {
+    "mes": "Fevereiro de 2026",
+    "mensal": 0.49,
+    "acumulada": 3.19,
+    "homologa": 7.54,
+    "nota": "Lichinga publica IPC próprio. A inflação homóloga é mais do dobro da nacional do mesmo mês (7,54% contra 3,20%), e não entra no índice que orienta a política nacional.",
+    "verificado": false
+  },
+  "divisaoDominante": {
+    "nome": "Alimentação e bebidas não alcoólicas",
+    "nota": "É a divisão com maior peso na estrutura de consumo das famílias e a principal responsável pela variação de preços em todos os meses de 2026 registados.",
+    "produtosCitados2026": [
+      "couve",
+      "alface",
+      "repolho",
+      "cebola",
+      "tomate",
+      "carvão vegetal",
+      "carapau",
+      "óleo alimentar",
+      "cimento"
+    ]
+  }
+}
