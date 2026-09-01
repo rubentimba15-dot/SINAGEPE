@@ -1,115 +1,303 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal de Empresas &mdash; SINAGEPE</title>
 <script src="assets/access-control.js"></script>
 <script src="assets/nav-sinagepe.js"></script>
 <script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<script src="assets/produtos-visual.js"></script>
 <script src="assets/selo-proveniencia.js"></script>
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Portal de Empresas — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:-.015em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:18px;max-width:920px;line-height:1.6}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:3}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14.5px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:16px 18px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 16px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:10px 16px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+@keyframes surge{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes crescer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.entra{animation:surge .5s cubic-bezier(.16,1,.3,1) both}
+.cresce{transform-origin:left center;animation:crescer .85s cubic-bezier(.16,1,.3,1) both}
+@media (prefers-reduced-motion:reduce){.entra,.cresce{animation:none!important;opacity:1!important;transform:none!important}}
+.aviso{margin:14px 18px;padding:13px 15px;border-radius:10px;font-size:11.5px;line-height:1.7;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.lac{display:block;text-decoration:none;color:inherit;background:linear-gradient(158deg,#101B2E,#0A1220);
+ border:1px solid var(--card-line);border-radius:12px;padding:15px 16px;transition:.2s;position:relative;overflow:hidden}
+.lac:hover{transform:translateY(-3px);border-color:var(--brzg)}
+.lac:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--brz)}
+.lac-t{font-size:13.5px;font-weight:600;margin-bottom:7px}
+.lac-d{font-size:11.5px;color:var(--t3);line-height:1.65}
+.lac-f{margin-top:11px;padding-top:9px;border-top:1px solid rgba(38,56,86,.5);
+ display:flex;justify-content:space-between;gap:8px;font-size:10.5px}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
 </head>
 <body>
-
-<div class="app-shell">
+<div class="app">
   <aside class="sidebar" id="nav-mount"></aside>
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-title-group"><div class="topbar-title">Portal de Empresas</div><div class="topbar-badge">Inteligência de Mercado</div></div>
-      <div class="live-indicator" style="color:var(--amber)">Dados de demonstra&ccedil;&atilde;o</div>
+  <main>
+    <div class="eyebrow">Operadores econ&oacute;micos</div>
+    <h1>O mercado onde a sua empresa opera</h1>
+    <p class="sub">Pre&ccedil;os medidos por pra&ccedil;a, custo de transporte e infraestrutura dispon&iacute;vel. <b>O sistema n&atilde;o recomenda compras nem prev&ecirc; pre&ccedil;os</b> &mdash; mostra o que foi observado, com a data de cada observa&ccedil;&atilde;o.</p>
+
+    <div class="aviso r" style="margin:0 0 16px"><b>Este portal foi reconstru&iacute;do em Agosto de 2026.</b>
+    Tinha um bloco de <b>&laquo;Recomenda&ccedil;&otilde;es de IA&raquo;</b> com conselhos de compra e venda &mdash;
+    &laquo;trigo com subida de pre&ccedil;o prevista de 4% nas pr&oacute;ximas duas semanas, considerar compra antecipada&raquo;,
+    com 91% de confian&ccedil;a declarada.
+    <b>N&atilde;o h&aacute; IA no sistema, n&atilde;o h&aacute; s&eacute;rie que sustente previs&atilde;o de pre&ccedil;o, e a confian&ccedil;a era um n&uacute;mero escrito &agrave; m&atilde;o.</b>
+    Quem comprasse com base naquilo comprava com fic&ccedil;&atilde;o.
+    Saíram tamb&eacute;m os benchmarks de concorrentes, a quota de mercado por operador e a margem estimada,
+    todos de demonstra&ccedil;&atilde;o.</div>
+
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Pre&ccedil;o por pra&ccedil;a</h2>
+        <p>Onde cada produto foi medido mais barato e mais caro</p></div>
+        <span class="tag ok" id="n-tag">&mdash;</span></div>
+      <div class="bd" id="natureza"></div>
+      <div class="aviso i"><b>A dispers&atilde;o &eacute; oportunidade de arbitragem e &eacute; risco.</b>
+      Comprar na pra&ccedil;a mais barata e vender na mais cara parece &oacute;bvio at&eacute; se somar o transporte &mdash;
+      e o custo de mover carga entre pra&ccedil;as distantes consome grande parte da diferen&ccedil;a. <b>Os pre&ccedil;os s&atilde;o de Julho de 2023.</b></div>
     </div>
-    <div class="content" id="content-mount"></div>
-    <div class="footer"><span>© 2026 SINAGEPE Moçambique — Acesso Privado</span><span id="footer-updated">—</span></div>
-  </div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Custo de transporte</h2>
+          <p>O que o combust&iacute;vel acrescenta fora dos terminais</p></div></div>
+        <div class="bd" id="combustivel"></div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>Origens de abastecimento</h2>
+          <p>Pra&ccedil;as que mais abastecem outras</p></div>
+          <span class="tag" id="l-tag">&mdash;</span></div>
+        <div class="bd" id="lacunas"></div>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O que o sistema n&atilde;o d&aacute; a uma empresa</h2>
+        <p>E onde obter</p></div>
+        <span class="tag crit">Limites declarados</span></div>
+      <table id="limites"></table>
+    </div>
+  </main>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
-<script src="assets/sinagepe.js"></script>
 <script>
-document.getElementById('content-mount').innerHTML = `
-  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)" id="kpi-row"></div>
-  <div class="row-2">
-    <div class="card">
-      <div class="card-title">Concorrentes &amp; Benchmarks (Faixas)</div>
-      <div class="card-subtitle">Faixas largas — não percentagens exactas — para proteger a identidade de mercados com poucos operadores</div>
-      <table class="balance-table">
-        <thead><tr><th>Operador</th><th>Quota</th><th>Preço</th><th>Tendência</th></tr></thead>
-        <tbody id="bench-body"></tbody>
-      </table>
-    </div>
-    <div class="card">
-      <div class="card-title">Divisão de Custos Logísticos</div>
-      <canvas id="chart-custos" height="180"></canvas>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-title">Recomendações de IA</div>
-    <div class="card-subtitle">Orientadas a resultado comercial — não à mesma finalidade da IA interna do Governo</div>
-    <div class="row-3" id="recomendacoes-grid" style="grid-template-columns:repeat(2,1fr)"></div>
-  </div>
-`;
+if(window.SinagepeNav) SinagepeNav.montar('empresas');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-SINAGEPE.load().then(data => {
-  /* A fonte declara-se simulada; o ecrã tem de o dizer. Os nomes das entidades
-     mantêm-se com aparência realista por decisão de apresentação — o aviso de
-     simulação é dado por esta faixa e verbalmente em cada demonstração. */
-  if (window.SeloProveniencia) SeloProveniencia.aplicar({
-    modo: (data.meta && data.meta.modo) || null,
-    bloco: 'portalEmpresas',
-    quando: data.meta && data.meta.ultimaActualizacao
-  });
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
+var PROVINCIAS=['Niassa','Cabo Delgado','Nampula','Zamb\u00e9zia','Tete','Manica','Sofala',
+ 'Inhambane','Gaza','Maputo','Cidade de Maputo'];
+var ROT={estatal:'Estatal','ppp-gestao-privada':'PPP com gest&atilde;o privada',
+ 'concessao-privada':'Concess&atilde;o privada','participacao-estatal':'Participa&ccedil;&atilde;o estatal',
+ privada:'Privada',internacional:'Internacional'};
 
-  SINAGEPE.renderUserFooter({ utilizador: { nome: data.portalEmpresas.empresa, instituicao: 'Sector Privado', direccao: 'Administrador' } });
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+function desenharKpis(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var disp=R.slice().sort(function(a,b){
+    return (b.maximo.valor/b.minimo.valor)-(a.maximo.valor/a.minimo.valor)})[0];
+  var Rg=ST.cp.regioes.filter(function(r){return r.gasoleo!=null});
+  var amp=Rg[Rg.length-1].gasoleo-Rg[0].gasoleo;
+  var A=ST.arm.armazens;
+  var barato=R.slice().sort(function(a,b){return a.minimo.valor-b.minimo.valor})[0];
 
-  const e = data.portalEmpresas;
-  const kpiDefs = [
-    { label: 'Evolução do Mercado', valor: '+' + e.kpis.evolucaoMercadoPercent + '%', estado: 'Alta Mensal', tipo: 'ok' },
-    { label: 'Preço Médio (Arroz)', valor: e.kpis.precoMedioArroz + ' MZN/kg', estado: 'Estável', tipo: 'info' },
-    { label: 'Margem Estimada', valor: e.kpis.margemEstimadaPercent + '%', estado: 'Adequado', tipo: 'ok' },
+  var lista=[
+   {id:'em-dispersao',rotulo:'Maior dispers&atilde;o entre pra&ccedil;as',
+    valor:Math.round((disp.maximo.valor/disp.minimo.valor-1)*100),unidade:'%',
+    estado:disp.produto+' &middot; '+disp.minimo.mercados[0]+' vs '+disp.maximo.mercados[0],
+    tipo:'FACTO',cor:'var(--red)',
+    resumo:'Diferen&ccedil;a entre a pra&ccedil;a mais barata e a mais cara, na mesma semana.',
+    formula:'m&aacute;ximo a dividir pelo m&iacute;nimo, menos um',
+    componentes:R.map(function(r){
+      return [r.produto,Math.round((r.maximo.valor/r.minimo.valor-1)*100),'%']}),
+    leitura:'&Eacute; oportunidade e &eacute; risco: a diferen&ccedil;a s&oacute; se realiza depois de descontado o transporte, que nas pra&ccedil;as remotas &eacute; a maior parte dela.',
+    fonte:'SIMA &mdash; boletim Quente-Quente n.&ordm; '+ST.sima.meta.edicao,dataDados:'Julho de 2023',
+    ecra:'marketplace-b2b.html'},
+
+   {id:'em-produtos',rotulo:'Produtos com pre&ccedil;o medido',valor:R.length,unidade:'',
+    estado:'em 16 pra&ccedil;as do pa&iacute;s',tipo:'FACTO',cor:'var(--blue)',
+    resumo:'Produtos com pre&ccedil;o a retalho registado no boletim.',
+    formula:'contagem dos produtos na edi&ccedil;&atilde;o carregada',
+    componentes:R.map(function(r){return [r.produto,r.minimo.valor,'MT/kg m&iacute;nimo']}),
+    leitura:'O mais barato da lista &eacute; o '+barato.produto+', a '+p2(barato.minimo.valor)+' MT/kg em '+barato.minimo.mercados[0]+'.',
+    fonte:'SIMA &mdash; boletim Quente-Quente',dataDados:'Julho de 2023'},
+
+   {id:'em-gasoleo',rotulo:'Custo adicional de operar no interior',valor:p2(amp),unidade:'MT/L',
+    estado:'gas&oacute;leo, face &agrave;s cidades com terminal',tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Diferen&ccedil;a de pre&ccedil;o do gas&oacute;leo entre a regi&atilde;o mais cara e as cidades com terminal.',
+    formula:'pre&ccedil;o na regi&atilde;o mais cara menos pre&ccedil;o de refer&ecirc;ncia',
+    componentes:Rg.map(function(r,i){return [i===0?'Cidades com terminal':r.local,r.gasoleo,'MT/L']}),
+    leitura:'&Eacute; o que separa o pre&ccedil;o de compra do custo real de entrega. Entra em qualquer conta de margem.',
+    fonte:'ARENE &mdash; Decreto n.&ordm; 89/2019',dataDados:ST.cp.revisao.data,
+    ecra:'modulo-logistica.html'},
+
+   {id:'em-armazens',rotulo:'Armazenagem documentada',valor:A.length,unidade:'unidades',
+    estado:'todas com fonte oficial citada',tipo:'FACTO',cor:'var(--ok)',
+    resumo:'Unidades de armazenagem documentadas em publica&ccedil;&atilde;o oficial.',
+    formula:'contagem do cadastro nacional',
+    componentes:PROVINCIAS.map(function(p){
+      return [p,A.filter(function(a){return a.provincia===p}).length,'']}),
+    leitura:'Nenhuma reporta exist&ecirc;ncias, pelo que n&atilde;o &eacute; poss&iacute;vel saber o que est&aacute; dispon&iacute;vel em cada uma.',
+    fonte:'Cadastro Nacional de Armazenagem',dataDados:'Agosto de 2026',
+    ecra:'cadastro-armazens.html'},
+
+   {id:'em-recomendacoes',rotulo:'Recomenda&ccedil;&otilde;es de compra e venda',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Conselhos de compra e venda com previs&atilde;o de pre&ccedil;o e n&iacute;vel de confian&ccedil;a.',
+    porqueNaoEReal:'O bloco recomendava compra antecipada de trigo com subida prevista de 4% em duas semanas, e declarava 91% de confian&ccedil;a. N&atilde;o h&aacute; IA no sistema, n&atilde;o h&aacute; s&eacute;rie hist&oacute;rica que sustente previs&atilde;o de pre&ccedil;o, e a confian&ccedil;a era um n&uacute;mero escrito &agrave; m&atilde;o. <b>Quem comprasse com aquela recomenda&ccedil;&atilde;o comprava com fic&ccedil;&atilde;o.</b>',
+    oQueFalta:'S&eacute;rie de pre&ccedil;os corrente e modelo com metodologia declarada',
+    quemDetem:'MAAP &middot; SIMA'},
+
+   {id:'em-benchmarks',rotulo:'Quota de mercado e margem dos concorrentes',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Faixas de quota e de pre&ccedil;o por operador concorrente, e margem estimada.',
+    porqueNaoEReal:'As faixas de quota e pre&ccedil;o por operador eram inventadas, e a margem estimada tamb&eacute;m. Mesmo an&oacute;nimas, faixas de quota por operador num mercado pequeno identificam quem &eacute; quem. Quota de mercado exige volumes por empresa, que o sistema n&atilde;o tem.',
+    oQueFalta:'Volumes de venda por operador, com salvaguarda de sigilo comercial',
+    quemDetem:'Operadores &middot; MIC'}
   ];
-  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
+}
 
-  document.getElementById('bench-body').innerHTML = e.benchmarks.map(b => `
-    <tr><td>${b.operador}${b.operador === 'Sua Empresa' ? ' <span class="pill pill-info" style="font-size:9px">Você</span>' : ''}</td>
-    <td>${b.faixaQuota}</td><td>${b.faixaPreco}</td><td>${b.tendencia}</td></tr>`).join('');
+function desenharNatureza(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  var L=R.slice().sort(function(a,b){
+    return (b.maximo.valor/b.minimo.valor)-(a.maximo.valor/a.minimo.valor)});
+  var max=Math.max.apply(null,L.map(function(r){return r.maximo.valor}));
+  document.getElementById('natureza').innerHTML=L.map(function(r,i){
+    var d=(r.maximo.valor/r.minimo.valor-1)*100;
+    var c=d>150?'#EF4444':d>60?'#F0A926':'#12B981';
+    var ilu=(window.ProdutosVisual&&ProdutosVisual.svg)
+      ? '<span style="flex-shrink:0;line-height:0">'+ProdutosVisual.svg(r.produto,34)+'</span>':'';
+    return '<div class="entra" style="animation-delay:'+(i*.06)+'s;padding:10px 0;'
+     +'border-bottom:1px solid rgba(38,56,86,.4)">'
+     +'<div style="display:flex;align-items:center;gap:11px;margin-bottom:7px">'+ilu
+     +'<b style="flex:1;font-size:12.5px">'+esc(r.produto)+'</b>'
+     +'<span class="mono" style="color:'+c+';font-size:12px">+'+d.toFixed(0)+'%</span></div>'
+     +'<div style="position:relative;height:8px;background:#0A1421;border-radius:4px;margin-left:45px">'
+     +'<i class="cresce" style="position:absolute;left:'+(r.minimo.valor/max*100)+'%;'
+     +'width:'+((r.maximo.valor-r.minimo.valor)/max*100)+'%;top:0;bottom:0;border-radius:4px;'
+     +'background:linear-gradient(90deg,#12B981AA,'+c+'AA);animation-delay:'+(.1+i*.06)+'s"></i></div>'
+     +'<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--t4);'
+     +'margin:4px 0 0 45px"><span>'+esc(r.minimo.mercados[0])+' &middot; '+p2(r.minimo.valor)+'</span>'
+     +'<span>'+esc(r.maximo.mercados[0])+' &middot; '+p2(r.maximo.valor)+' MT/kg</span></div></div>';
+  }).join('');
+  document.getElementById('n-tag').innerHTML=L.length+' produtos';
+}
 
-  new Chart(document.getElementById('chart-custos'), {
-    type: 'doughnut',
-    data: { labels: e.custosLogisticos.map(c => c.categoria), datasets: [{ data: e.custosLogisticos.map(c => c.percent), backgroundColor: ['#d9a441', '#5b8ac9', '#3ecf8e'], borderWidth: 0 }] },
-    options: { plugins: { legend: { position: 'bottom', labels: { color: '#97a3c2', font: { size: 10.5 }, boxWidth: 10 } } }, cutout: '62%' }
+function desenharCombustivel(){
+  var Rg=ST.cp.regioes.filter(function(r){return r.gasoleo!=null});
+  var ref=Rg[0].gasoleo, max=Rg[Rg.length-1].gasoleo;
+  document.getElementById('combustivel').innerHTML=Rg.map(function(r,i){
+    var d=r.gasoleo-ref, c=d>10?'#EF4444':d>5?'#F0A926':'#12B981';
+    return '<div class="entra" style="animation-delay:'+(i*.05)+'s;display:flex;align-items:center;'
+     +'gap:11px;padding:8px 0;border-bottom:1px solid rgba(38,56,86,.35)">'
+     +'<span style="flex:1;font-size:12px">'+esc(i===0?'Cidades com terminal':r.local)+'</span>'
+     +'<span style="width:60px;height:13px;background:#0A1421;border-radius:3px;overflow:hidden">'
+     +'<i class="cresce" style="display:block;height:100%;width:'+(r.gasoleo/max*100)+'%;background:'+c
+     +'88;animation-delay:'+(.1+i*.05)+'s"></i></span>'
+     +'<span class="mono" style="width:58px;text-align:right;font-size:12px;color:'+c+'">'+p2(r.gasoleo)+'</span>'
+     +'<span class="mono" style="width:50px;text-align:right;font-size:10.5px;color:var(--t4)">'
+     +(d>0?'+'+p2(d):'&mdash;')+'</span></div>';
+  }).join('');
+}
+
+function desenharLacunas(){
+  var F=(ST.sima.fluxos1462||ST.sima.fluxos||[]);
+  var o={};F.forEach(function(f){if(f.origem)o[f.origem]=(o[f.origem]||0)+1});
+  var top=Object.keys(o).sort(function(a,b){return o[b]-o[a]}).slice(0,3);
+  var L=top.map(function(k){
+    return {t:k,d:o[k]+' fluxos documentados com origem nesta pra&ccedil;a, na edi&ccedil;&atilde;o carregada.',
+            e:'marketplace-b2b.html'};
   });
+  if(!L.length) L=[{t:'Sem fluxos na edi&ccedil;&atilde;o',d:'A edi&ccedil;&atilde;o carregada n&atilde;o regista fluxos.',e:'marketplace-b2b.html'}];
+  document.getElementById('lacunas').innerHTML=L.map(function(x,i){
+    return '<a class="lac entra" href="'+x.e+'" style="animation-delay:'+(i*.07)+'s;margin-bottom:10px">'
+     +'<div class="lac-t">'+esc(x.t)+'</div><div class="lac-d">'+x.d+'</div>'
+     +'<div class="lac-f"><span style="color:var(--t4)">SIMA</span>'
+     +'<span style="color:var(--brzl)">Ver fluxos &rarr;</span></div></a>';
+  }).join('');
+  document.getElementById('l-tag').innerHTML=L.length+' origens';
+}
 
-  document.getElementById('recomendacoes-grid').innerHTML = e.recomendacoes.map(r => `
-    <div class="card" style="background:var(--navy-800)">
-      <div class="pill pill-info" style="margin-bottom:8px">${r.tipo}</div>
-      <p style="font-size:12.5px;color:var(--ink-dim);line-height:1.5;margin:0 0 8px">${r.texto}</p>
-      <div style="font-size:10.5px;color:var(--ink-faint)">Confiança: ${r.confianca}%</div>
-    </div>`).join('');
+var LIMITES=[
+ ['Previs&atilde;o de pre&ccedil;o','Exige s&eacute;rie corrente e modelo com metodologia. A s&eacute;rie do SIMA parou em 2023.','MAAP &middot; SIMA'],
+ ['Quota de mercado por concorrente','Exige volumes por operador. Mesmo an&oacute;nima, identifica em mercado pequeno.','Operadores &middot; MIC'],
+ ['Margem de sector','Exige estrutura de custos declarada pelos operadores.','Operadores'],
+ ['Disponibilidade em armaz&eacute;m','Nenhuma unidade reporta exist&ecirc;ncias.','Armazenistas'],
+ ['Pre&ccedil;o ao grossista','O SIMA recolhe; falta public&aacute;-lo estruturado.','MAAP &middot; SIMA'],
+ ['Procura por regi&atilde;o','Exige inqu&eacute;rito ao consumo.','INE']
+];
+function desenharLimites(){
+  var h='<thead><tr><th>O que o sistema n&atilde;o d&aacute;</th><th>Porqu&ecirc;</th><th>Onde obter</th></tr></thead><tbody>';
+  LIMITES.forEach(function(x,i){
+    h+='<tr class="entra" style="animation-delay:'+(i*.04)+'s">'
+     +'<td style="font-weight:600;max-width:210px">'+x[0]+'</td>'
+     +'<td style="color:var(--t3);max-width:340px">'+x[1]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+x[2]+'</td></tr>';});
+  document.getElementById('limites').innerHTML=h+'</tbody>';
+}
+
+Promise.all(['armazens-nacionais','sima-precos','cascata-precos'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.arm=res[0];ST.sima=res[1];ST.cp=res[2];
+  desenharKpis();desenharNatureza();desenharCombustivel();desenharLacunas();desenharLimites();
+  if(window.SeloProveniencia) SeloProveniencia.aplicar({
+    modo:null,bloco:'portalEmpresas',quando:(ST.arm.meta&&ST.arm.meta.geradoEm)||null});
+}).catch(function(e){
+  document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
 });
-</script>
-
-<script>
-/* A barra deste portal estava escrita \u00e0 mão, com sete destinos por preencher.
-   Passa a vir de assets/nav-sinagepe.js, como os outros ecr\u00e3s: os itens s\u00e3o
-   gerados de uma lista \u00fanica, sempre com destino real, e filtrados pelo acesso
-   da conta. Um banco v\u00ea o que lhe diz respeito, n\u00e3o portas fechadas. */
-(function(){
-  function montar(){
-    try{
-      if(window.SinagepeNav) SinagepeNav.montar('portal-empresas');
-      if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
-    }catch(e){}
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',montar);
-  else montar();
-  /* o Banco Central constr\u00f3i a casca por c\u00f3digo; volta a montar quando ela existir */
-  setTimeout(montar,400);
-})();
 </script>
 </body>
 </html>

@@ -1,106 +1,306 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Banco Central &mdash; SINAGEPE</title>
 <script src="assets/access-control.js"></script>
 <script src="assets/nav-sinagepe.js"></script>
 <script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<script src="assets/produtos-visual.js"></script>
 <script src="assets/selo-proveniencia.js"></script>
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Dashboard Banco Central — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:-.015em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:18px;max-width:920px;line-height:1.6}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:3}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14.5px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:16px 18px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 16px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:10px 16px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+@keyframes surge{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes crescer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.entra{animation:surge .5s cubic-bezier(.16,1,.3,1) both}
+.cresce{transform-origin:left center;animation:crescer .85s cubic-bezier(.16,1,.3,1) both}
+@media (prefers-reduced-motion:reduce){.entra,.cresce{animation:none!important;opacity:1!important;transform:none!important}}
+.aviso{margin:14px 18px;padding:13px 15px;border-radius:10px;font-size:11.5px;line-height:1.7;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
 </head>
 <body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Banco de Mo&ccedil;ambique</div>
+    <h1>C&acirc;mbio e produtos essenciais</h1>
+    <p class="sub">O que o sistema mede sobre c&acirc;mbio e sobre o custo de importar. <b>N&atilde;o recomenda interven&ccedil;&atilde;o cambial nem estima necessidade de divisas</b> &mdash; essas s&atilde;o decis&otilde;es do Banco Central, com dados que o Banco Central tem e o sistema n&atilde;o.</p>
 
-<div class="app-shell" id="app-shell"></div>
+    <div class="aviso r" style="margin:0 0 16px"><b>Este ecr&atilde; foi reconstru&iacute;do em Agosto de 2026, e o que foi retirado &eacute; a coisa mais sens&iacute;vel de todo o sistema.</b>
+    Apresentava um bloco de <b>&laquo;Necessidade de Interven&ccedil;&atilde;o Cambial&raquo;</b> com montantes concretos &mdash;
+    85 milh&otilde;es de d&oacute;lares a 30 dias, 140 milh&otilde;es a 60, 210 milh&otilde;es a 90 &mdash; com justifica&ccedil;&atilde;o t&eacute;cnica escrita.
+    Apresentava tamb&eacute;m um &iacute;ndice de press&atilde;o cambial, meses de cobertura das reservas e procura de divisas por produto.
+    <b>Nenhum desses n&uacute;meros existia.</b> Recomendar montantes de interven&ccedil;&atilde;o cambial a partir de dados
+    de demonstra&ccedil;&atilde;o, num ecr&atilde; identificado como do Banco Central, &eacute; o risco mais grave que o sistema tinha.</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
-<script src="assets/sinagepe.js"></script>
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>C&acirc;mbio observado</h2>
+        <p>Registado nos boletins do SIMA, com a data de cada leitura</p></div>
+        <span class="tag ok" id="c-tag">&mdash;</span></div>
+      <div class="bd" id="cambio"></div>
+      <div class="aviso i"><b>O que este dado diz, e o que n&atilde;o diz.</b>
+      &Eacute; a taxa registada no boletim semanal do SIMA, na data indicada. N&atilde;o &eacute; a taxa de refer&ecirc;ncia do
+      Banco de Mo&ccedil;ambique, n&atilde;o &eacute; taxa m&eacute;dia ponderada, e n&atilde;o cobre o per&iacute;odo posterior a Julho de 2023.</div>
+    </div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Onde o c&acirc;mbio entra no pre&ccedil;o</h2>
+          <p>Cascata de forma&ccedil;&atilde;o do pre&ccedil;o dos combust&iacute;veis</p></div>
+          <span class="tag ok">ARENE</span></div>
+        <div class="bd" id="cascata"></div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>Importa&ccedil;&atilde;o com observa&ccedil;&atilde;o p&uacute;blica</h2>
+          <p>Pre&ccedil;o declarado face &agrave; refer&ecirc;ncia internacional</p></div></div>
+        <table id="importacao"></table>
+        <div class="aviso w"><b>N&atilde;o constitui prova de infrac&ccedil;&atilde;o.</b> &Eacute; observa&ccedil;&atilde;o publicada pelo pr&oacute;prio ICM
+        e justifica verifica&ccedil;&atilde;o documental. A qualifica&ccedil;&atilde;o cabe a quem tem compet&ecirc;ncia.</div>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O que o Banco Central tem e o sistema n&atilde;o</h2>
+        <p>E porque n&atilde;o se estima</p></div>
+        <span class="tag crit">Limites declarados</span></div>
+      <table id="limites"></table>
+      <div class="aviso i"><b>A rela&ccedil;&atilde;o &uacute;til &eacute; a inversa.</b> O Banco Central tem reservas, balan&ccedil;a de pagamentos
+      e procura de divisas. O que o SINAGEPE pode acrescentar &eacute; o lado f&iacute;sico: onde est&aacute; a armazenagem,
+      quanto custa mover carga, e onde os pre&ccedil;os divergem entre pra&ccedil;as. <b>S&atilde;o dados complementares, n&atilde;o concorrentes.</b></div>
+    </div>
+  </main>
+</div>
+
 <script>
-SINAGEPE.mountShell('painel', 'Dashboard Banco Central', 'Banco de Moçambique — Pressão Cambial e Reservas');
+if(window.SinagepeNav) SinagepeNav.montar('bancocentral');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-document.getElementById('content-mount').innerHTML = `
-  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)" id="kpi-row-1"></div>
-  <div class="kpi-row" style="grid-template-columns:repeat(3,1fr)" id="kpi-row-2"></div>
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
 
-  <div class="card">
-    <div class="card-title">Necessidade de Intervenção Cambial</div>
-    <div class="card-subtitle">Projecção a 30/60/90 dias</div>
-    <div class="row-3" id="intervencao-grid" style="grid-template-columns:repeat(3,1fr)"></div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Demanda Cambial por Produto Essencial</div>
-    <div class="card-subtitle">Ligado directamente ao preço CIF × quantidade do Simulador de Importações</div>
-    <div id="demanda-list"></div>
-  </div>
-`;
-
-SINAGEPE.load().then(function (data) {
-  /* A fonte declara-se simulada; o ecrã tem de o dizer. Os nomes das entidades
-     mantêm-se com aparência realista por decisão de apresentação — o aviso de
-     simulação é dado por esta faixa e verbalmente em cada demonstração. */
-  if (window.SeloProveniencia) SeloProveniencia.aplicar({
-    modo: (data.meta && data.meta.modo) || null,
-    bloco: 'dashboardBancoCentral',
-    quando: data.meta && data.meta.ultimaActualizacao
-  });
-  return renderDashboardBC(data);
-});
-
-function renderDashboardBC(data) {
-  SINAGEPE.renderUserFooter(data);
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
-
-  const b = data.dashboardBancoCentral;
-  const kpi1 = [
-    { label: 'Pressão Cambial Index', valor: b.kpis.pressaoCambialIndex.toFixed(2), estado: 'Moderado', tipo: 'warn' },
-    { label: 'Necessidade de Divisas (Mês)', valor: (b.kpis.necessidadeDivisasMesUsd / 1e6).toFixed(0) + 'M USD', estado: 'Urgente', tipo: 'crit' },
-    { label: 'Reservas (Cobertura)', valor: b.kpis.reservasCoberturaMeses + ' Meses', estado: b.kpis.reservasCoberturaMeses > b.kpis.nivelCriticoMeses ? 'Seguro' : 'Crítico', tipo: b.kpis.reservasCoberturaMeses > b.kpis.nivelCriticoMeses ? 'ok' : 'crit' },
-  ];
-  const kpi2 = [
-    { label: 'Inflação Mensal', valor: b.kpis.inflacaoMensalPercent + '%', estado: 'Controlada', tipo: 'ok' },
-    { label: 'Pressão de Importações', valor: '+' + b.kpis.pressaoImportacoesPercent + '% YoY', estado: 'Alto', tipo: 'warn' },
-    { label: 'Taxa de Câmbio USD/MZN', valor: b.kpis.taxaCambio, estado: 'Estável', tipo: 'info' },
-  ];
-  document.getElementById('kpi-row-1').innerHTML = kpi1.map(SINAGEPE.kpiCard).join('');
-  document.getElementById('kpi-row-2').innerHTML = kpi2.map(SINAGEPE.kpiCard).join('');
-
-  document.getElementById('intervencao-grid').innerHTML = b.intervencao.map(i => `
-    <div class="card" style="background:var(--navy-800)">
-      <div class="kpi-label">T+${i.horizonteDias} dias</div>
-      <div class="kpi-value" style="font-size:18px;margin:4px 0">${(i.valorUsd / 1e6).toFixed(0)}M USD</div>
-      <div style="font-size:11px;color:var(--ink-faint)">${i.justificacao}</div>
-    </div>`).join('');
-
-  document.getElementById('demanda-list').innerHTML = data.dashboardBancoCentral.demandaCambialProduto.map(d => `
-    <div class="util-row">
-      <div class="util-label-row"><span>${d.produto}</span><span>${(d.valorUsd / 1e6).toFixed(0)}M USD (${d.percentCota}% da cota)</span></div>
-      <div class="util-track"><div class="util-fill" style="width:${d.percentCota}%;background:var(--bronze)"></div></div>
-    </div>`).join('');
+function moedas(){
+  /* O boletim regista quatro moedas numa data, com valor anterior e
+     recente. Não é série temporal: é uma leitura com variação semanal.
+     A versão anterior tratava-o como série e produzia NaN. */
+  var c=ST.sima.cambio||{};
+  return {fonte:c.fonte||'', data:c.data||'', linhas:(c.linhas||[]).map(function(l){
+    return {moeda:l.moeda, anterior:l.anterior, recente:l.recente,
+            variacao:(l.anterior?((l.recente/l.anterior-1)*100):null)};
+  })};
 }
-</script>
 
-<script>
-/* A barra deste portal estava escrita \u00e0 mão, com sete destinos por preencher.
-   Passa a vir de assets/nav-sinagepe.js, como os outros ecr\u00e3s: os itens s\u00e3o
-   gerados de uma lista \u00fanica, sempre com destino real, e filtrados pelo acesso
-   da conta. Um banco v\u00ea o que lhe diz respeito, n\u00e3o portas fechadas. */
-(function(){
-  function montar(){
-    try{
-      if(window.SinagepeNav) SinagepeNav.montar('banco-central','sidebar-mount');
-      if(window.SinagepePesquisa) SinagepePesquisa.iniciar({alvo:'sidebar-mount'});
-    }catch(e){}
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',montar);
-  else montar();
-  /* o Banco Central constr\u00f3i a casca por c\u00f3digo; volta a montar quando ela existir */
-  setTimeout(montar,400);
-})();
+function desenharKpis(){
+  var M=moedas();
+  var usd=M.linhas.filter(function(l){return /d[óo]lar/i.test(l.moeda)})[0];
+  var maxV=M.linhas.reduce(function(a,l){
+    return (l.variacao!=null&&Math.abs(l.variacao)>Math.abs(a.variacao||0))?l:a},{variacao:0});
+  var Rg=ST.cp.regioes.filter(function(r){return r.gasoleo!=null});
+  var imp=ST.fx.icm&&ST.fx.icm.importacoes;
+  var maxD=0,prod=null;
+  if(imp&&imp.linhas) imp.linhas.forEach(function(l){
+    var d=(l.precoDeclaradoUSDt-l.precoReferenciaUSDt)/l.precoReferenciaUSDt*100;
+    if(d>maxD){maxD=d;prod=l}});
+  var etapas=(ST.cp.cascata||ST.cp.etapas||[]).length;
+
+  var lista=[
+   {id:'bc-cambio',rotulo:'D&oacute;lar americano',
+    valor:usd?p2(usd.recente):'\u2014',unidade:usd?'MT':'',
+    estado:usd?('varia&ccedil;&atilde;o de '+p2(usd.variacao)+'% na semana'):'sem leitura',
+    tipo:'FACTO',cor:'var(--ok)',
+    resumo:'Taxa registada no boletim do Banco de Mo&ccedil;ambique reproduzido pelo SIMA.',
+    formula:'leitura directa do boletim',
+    componentes:M.linhas.map(function(l){
+      return [l.moeda,l.recente,'MT (anterior '+p2(l.anterior)+')']}),
+    leitura:'O d&oacute;lar n&atilde;o variou entre as duas leituras. <b>A moeda que mais variou foi o kwacha zambiano, com '
+      +p2(maxV.variacao)+'%.</b> A estabilidade do d&oacute;lar contrasta com a varia&ccedil;&atilde;o dos pre&ccedil;os agr&iacute;colas no mesmo per&iacute;odo, o que sugere causa n&atilde;o cambial.',
+    fonte:M.fonte,dataDados:M.data},
+
+   {id:'bc-cascata',rotulo:'Etapas da cascata de pre&ccedil;o',valor:etapas||9,unidade:'',
+    estado:'do CIF ao pre&ccedil;o no posto',tipo:'FACTO',cor:'var(--brzl)',
+    resumo:'Etapas publicadas de forma&ccedil;&atilde;o do pre&ccedil;o dos combust&iacute;veis.',
+    formula:'estrutura publicada pela ARENE',
+    componentes:(ST.cp.cascata||[]).map(function(e){
+      return [e.etapa||e.nome||'',e.valor!=null?e.valor:'',e.unidade||'']}),
+    leitura:'&Eacute; o &uacute;nico produto do pa&iacute;s cuja estrutura de pre&ccedil;o &eacute; p&uacute;blica por lei. Permite ver exactamente onde o c&acirc;mbio entra e com que peso.',
+    fonte:'ARENE &mdash; Decreto n.&ordm; 89/2019',dataDados:ST.cp.revisao.data,
+    ecra:'simulador-importacoes.html'},
+
+   {id:'bc-importacao',rotulo:'Maior desvio em pre&ccedil;o de importa&ccedil;&atilde;o',
+    valor:maxD?Math.round(maxD):'\u2014',unidade:maxD?'%':'',
+    estado:prod?(prod.produto+' &mdash; observa&ccedil;&atilde;o do ICM'):'sem observa&ccedil;&atilde;o',
+    tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Diferen&ccedil;a entre o pre&ccedil;o de importa&ccedil;&atilde;o declarado e a refer&ecirc;ncia internacional.',
+    formula:'(declarado menos refer&ecirc;ncia) a dividir pela refer&ecirc;ncia',
+    componentes:prod?[[prod.produto+' declarado',prod.precoDeclaradoUSDt,'USD/t'],
+      [prod.produto+' refer&ecirc;ncia',prod.precoReferenciaUSDt,'USD/t'],
+      ['Volume',prod.volumeToneladas,'t']]:[],
+    leitura:'<b>N&atilde;o constitui prova de infrac&ccedil;&atilde;o.</b> Frete, seguro, prazo e qualidade s&atilde;o explica&ccedil;&otilde;es leg&iacute;timas poss&iacute;veis. &Eacute; indicador que justifica verifica&ccedil;&atilde;o documental.',
+    fonte:'ICM &mdash; declara&ccedil;&atilde;o p&uacute;blica',dataDados:'Junho de 2026',
+    ecra:'inteligencia-consolidada.html'},
+
+   {id:'bc-intervencao',rotulo:'Necessidade de interven&ccedil;&atilde;o cambial',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Montantes de interven&ccedil;&atilde;o recomendados a 30, 60 e 90 dias.',
+    porqueNaoEReal:'O bloco recomendava 85, 140 e 210 milh&otilde;es de d&oacute;lares, com justifica&ccedil;&atilde;o t&eacute;cnica escrita. Os montantes eram inventados. <b>Uma recomenda&ccedil;&atilde;o de interven&ccedil;&atilde;o cambial &eacute; das decis&otilde;es mais consequentes de um banco central</b>, e depende de reservas, balan&ccedil;a de pagamentos e procura de divisas &mdash; dados que o Banco tem e que o sistema n&atilde;o tem nem deve estimar.',
+    oQueFalta:'Reservas, balan&ccedil;a de pagamentos e procura de divisas por sector',
+    quemDetem:'Banco de Mo&ccedil;ambique'},
+
+   {id:'bc-pressao',rotulo:'&Iacute;ndice de press&atilde;o cambial e cobertura de reservas',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'&Iacute;ndice agregado de press&atilde;o e meses de cobertura das reservas.',
+    porqueNaoEReal:'O &iacute;ndice apresentava 0,67 sem f&oacute;rmula declarada, e a cobertura das reservas 4,8 meses contra um n&iacute;vel cr&iacute;tico de 3. S&atilde;o dados do Banco de Mo&ccedil;ambique: o sistema n&atilde;o tem acesso a nenhum deles. A procura cambial por produto essencial tinha o mesmo problema.',
+    oQueFalta:'Reservas internacionais e metodologia de c&aacute;lculo do &iacute;ndice',
+    quemDetem:'Banco de Mo&ccedil;ambique'}
+  ];
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
+}
+
+function desenharCambio(){
+  var M=moedas();
+  if(!M.linhas.length){document.getElementById('cambio').innerHTML=
+    '<div style="color:var(--t4);font-size:12px">Sem leituras de c&acirc;mbio.</div>';return}
+  var max=Math.max.apply(null,M.linhas.map(function(l){return l.recente}));
+  document.getElementById('cambio').innerHTML=M.linhas.map(function(l,i){
+    var v=l.variacao||0;
+    var c=Math.abs(v)<0.01?'#5E7189':v>0?'#F0A926':'#12B981';
+    return '<div class="entra" style="animation-delay:'+(i*.07)+'s;display:flex;align-items:center;'
+     +'gap:12px;padding:11px 0;border-bottom:1px solid rgba(38,56,86,.4)">'
+     +'<span style="width:150px;flex-shrink:0;font-size:12.5px;font-weight:600">'+esc(l.moeda)+'</span>'
+     +'<span style="flex:1;height:16px;background:#0A1421;border-radius:4px;overflow:hidden">'
+     +'<i class="cresce" style="display:block;height:100%;width:'+(l.recente/max*100)+'%;'
+     +'background:linear-gradient(90deg,#22B8F0AA,#22B8F055);animation-delay:'+(.1+i*.07)+'s"></i></span>'
+     +'<span class="mono" style="width:64px;text-align:right;font-size:12.5px">'+p2(l.recente)+'</span>'
+     +'<span class="mono" style="width:62px;text-align:right;font-size:11px;color:'+c+'">'
+     +(Math.abs(v)<0.01?'sem varia&ccedil;&atilde;o':(v>0?'+':'')+p2(v)+'%')+'</span></div>';
+  }).join('')
+   +'<div style="font-size:11.5px;color:var(--t3);line-height:1.7;margin-top:13px">'
+   +'Meticais por unidade de moeda estrangeira, em <b>'+esc(M.data)+'</b>. '
+   +'A coluna da direita compara com a leitura anterior do mesmo boletim.</div>';
+  document.getElementById('c-tag').innerHTML=M.linhas.length+' moedas';
+}
+
+function desenharCascata(){
+  var E=ST.cp.cascata||[];
+  if(!E.length){document.getElementById('cascata').innerHTML=
+    '<div style="color:var(--t4);font-size:12px">Cascata n&atilde;o carregada.</div>';return}
+  var max=Math.max.apply(null,E.map(function(e){return Math.abs(e.valor||0)}))||1;
+  document.getElementById('cascata').innerHTML=E.map(function(e,i){
+    var v=e.valor||0;
+    var c=/c&acirc;mbio|cambio|CIF|import/i.test(e.etapa||e.nome||'')?'#22B8F0':'#C98A3C';
+    return '<div class="entra" style="animation-delay:'+(i*.05)+'s;display:flex;align-items:center;'
+     +'gap:10px;padding:7px 0;border-bottom:1px solid rgba(38,56,86,.35)">'
+     +'<span style="flex:1;font-size:11.5px">'+esc(e.etapa||e.nome||'')+'</span>'
+     +'<span style="width:72px;height:13px;background:#0A1421;border-radius:3px;overflow:hidden">'
+     +'<i class="cresce" style="display:block;height:100%;width:'+(Math.abs(v)/max*100)+'%;'
+     +'background:'+c+'88;animation-delay:'+(.1+i*.05)+'s"></i></span>'
+     +'<span class="mono" style="width:60px;text-align:right;font-size:11.5px;color:'+c+'">'
+     +p2(v)+'</span></div>';
+  }).join('');
+}
+
+function desenharImportacao(){
+  var imp=ST.fx.icm&&ST.fx.icm.importacoes;
+  var h='<thead><tr><th>Produto</th><th class="n">Declarado</th><th class="n">Refer&ecirc;ncia</th>'
+   +'<th class="n">Desvio</th></tr></thead><tbody>';
+  if(imp&&imp.linhas&&imp.linhas.length){
+    imp.linhas.forEach(function(l){
+      var d=(l.precoDeclaradoUSDt-l.precoReferenciaUSDt)/l.precoReferenciaUSDt*100;
+      var ilu=(window.ProdutosVisual&&ProdutosVisual.svg)
+        ? '<span style="flex-shrink:0;line-height:0">'+ProdutosVisual.svg(l.produto,28)+'</span>':'';
+      h+='<tr><td><span style="display:flex;align-items:center;gap:9px">'+ilu
+       +'<span>'+esc(l.produto)+'</span></span></td>'
+       +'<td class="n">'+num(l.precoDeclaradoUSDt)+'</td>'
+       +'<td class="n" style="color:var(--t4)">'+num(l.precoReferenciaUSDt)+'</td>'
+       +'<td class="n" style="color:'+(d>15?'var(--amber)':'var(--t3)')+'">'
+       +(d>0?'+':'')+d.toFixed(0)+'%</td></tr>';});
+  } else h+='<tr><td colspan="4" style="color:var(--t4)">Sem observa&ccedil;&otilde;es carregadas.</td></tr>';
+  document.getElementById('importacao').innerHTML=h+'</tbody>';
+}
+
+var LIMITES=[
+ ['Reservas internacionais','S&atilde;o publicadas pelo Banco de Mo&ccedil;ambique. N&atilde;o est&atilde;o ligadas ao sistema.','Banco de Mo&ccedil;ambique'],
+ ['Balan&ccedil;a de pagamentos','Publicada trimestralmente. Sem s&eacute;rie estruturada no sistema.','Banco de Mo&ccedil;ambique'],
+ ['Procura de divisas por sector','Exige dados de opera&ccedil;&otilde;es cambiais dos bancos comerciais.','Banco de Mo&ccedil;ambique &middot; bancos'],
+ ['Taxa de refer&ecirc;ncia di&aacute;ria','O sistema tem a taxa do boletim do SIMA, que &eacute; semanal e parou em 2023.','Banco de Mo&ccedil;ambique'],
+ ['Volumes importados por produto','Exige agregado aduaneiro, com regra dos cinco operadores.','Alf&acirc;ndegas &middot; JUE'],
+ ['Interven&ccedil;&atilde;o cambial','<b>Decis&atilde;o do Banco Central.</b> O sistema n&atilde;o a recomenda nem a dimensiona.','Banco de Mo&ccedil;ambique']
+];
+function desenharLimites(){
+  var h='<thead><tr><th>Dado</th><th>Estado</th><th>Quem det&eacute;m</th></tr></thead><tbody>';
+  LIMITES.forEach(function(x,i){
+    h+='<tr class="entra" style="animation-delay:'+(i*.04)+'s">'
+     +'<td style="font-weight:600;max-width:210px">'+x[0]+'</td>'
+     +'<td style="color:var(--t3);max-width:400px">'+x[1]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+x[2]+'</td></tr>';});
+  document.getElementById('limites').innerHTML=h+'</tbody>';
+}
+
+Promise.all(['sima-precos','cascata-precos','fontes-externas'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.sima=res[0];ST.cp=res[1];ST.fx=res[2];
+  desenharKpis();desenharCambio();desenharCascata();desenharImportacao();desenharLimites();
+  if(window.SeloProveniencia) SeloProveniencia.aplicar({
+    modo:null, bloco:'dashboardBancoCentral',
+    quando:(ST.sima.meta&&ST.sima.meta.extraidoEm)||null });
+}).catch(function(e){
+  document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+});
 </script>
 </body>
 </html>
