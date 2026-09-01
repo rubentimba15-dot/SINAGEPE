@@ -47,8 +47,8 @@ h1{font-size:24px;margin:0 0 5px;letter-spacing:-.015em}
 /* ---- galeria de produtos ---- */
 .gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));gap:14px;padding:18px}
 .pd{background:linear-gradient(160deg,#101B2E 0%,#0A1220 100%);border:1px solid var(--card-line);
- border-radius:13px;overflow:hidden;transition:.2s;cursor:default;position:relative}
-.pd:hover{border-color:var(--brzg);transform:translateY(-2px)}
+ border-radius:13px;overflow:hidden;transition:.2s;cursor:pointer;position:relative}
+.pd:hover{border-color:var(--brzg);transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,.45)}
 .pd-img{height:158px;display:flex;align-items:center;justify-content:center;position:relative;
  background:radial-gradient(ellipse at 50% 62%,rgba(201,138,60,.10),transparent 68%)}
 .pd-img:after{content:"";position:absolute;inset:0;
@@ -144,6 +144,17 @@ function desenharNota(){
 }
 
 function desenharGaleria(){
+  /* ============================================================
+     Antes, todos os doze produtos mostravam a mesma percentagem —
+     100% de capacidade cega — porque nenhum armazém do país reporta
+     existências. Era verdade, mas dizia o mesmo doze vezes e o
+     cartão não levava a lado nenhum.
+
+     Passa a mostrar o que distingue cada produto: preço medido e
+     amplitude entre praças quando existem, capacidade e forma de
+     circulação quando não. E cada cartão abre o ecrã que detém
+     esse dado.
+     ============================================================ */
   var P=ST.gs1.produtos;
   document.getElementById('galeria').innerHTML=P.map(function(p){
     var c=COR_ID[p.identificacao]||'#5E7189';
@@ -151,26 +162,68 @@ function desenharGaleria(){
     var arm=ST.arm.armazens.filter(function(a){
       return (a.produtos||[]).some(function(f){return p.familiasArmazem.indexOf(f)>=0});
     });
-    var cegos=arm.filter(function(a){return a.sensor==='sem-sensor'}).length;
-    var pct=arm.length?Math.round(cegos/arm.length*100):0;
-    return '<div class="pd">'
-     +(p.prioridade==='maxima'?'<span class="pd-tag" style="background:rgba(239,68,68,.9);color:#fff">Prioridade</span>':'')
+    var pr=precoDe(p.nome);
+    var destino = pr ? 'series-precos.html'
+                : (p.identificacao==='nenhuma' ? 'ponto-cego-duplo.html' : 'cadastro-armazens.html');
+
+    var principal, sub, cor;
+    if(pr){
+      var amp=(pr.maximo.valor/pr.minimo.valor-1)*100;
+      cor = amp>150?'var(--red)':amp>60?'var(--amber)':'var(--ok)';
+      principal='<b class="mono" style="color:'+cor+'">'+p2(pr.minimo.valor)+'</b>'
+        +'<span>MT/kg em '+esc(pr.minimo.mercados[0])+'</span>';
+      sub='<div class="pd-bar"><i style="width:'+Math.min(amp/3.5,100)+'%;background:'+cor+'"></i></div>'
+        +'<div class="pd-s"><span>Amplitude entre pra&ccedil;as</span><b style="color:'+cor+'">+'
+        +amp.toFixed(0)+'%</b></div>'
+        +'<div class="pd-s"><span>M&aacute;ximo em '+esc(pr.maximo.mercados[0])+'</span><b>'
+        +p2(pr.maximo.valor)+'</b></div>';
+    } else {
+      principal='<b class="mono" style="color:var(--brzl)">'+arm.length+'</b>'
+        +'<span>unidades que o podem guardar</span>';
+      sub='<div class="pd-s"><span>Circula</span><b style="font-size:10px;font-family:Inter,sans-serif">'
+        +esc(String(p.formaCirculacao||'&mdash;').slice(0,28))+'</b></div>'
+        +'<div class="pd-s"><span>Pre&ccedil;o medido pelo SIMA</span><b style="color:var(--t4)">n&atilde;o</b></div>';
+    }
+
+    return '<a class="pd" href="'+destino+'" style="text-decoration:none;color:inherit;display:block">'
+     +(p.estrategico?'<span class="pd-tag" style="background:rgba(239,68,68,.9);color:#fff">Estrat&eacute;gico</span>':'')
      +'<div class="pd-img">'+img+'</div>'
      +'<div class="pd-b"><div class="pd-n">'+esc(p.nome)+'</div>'
      +'<div class="pd-e" style="color:'+c+'">'+ROT_ID[p.identificacao]+'</div>'
-     +'<div class="pd-d"><b class="mono" style="color:'+(pct===100?'var(--red)':'var(--amber)')+'">'+pct+'%</b>'
-     +'<span>da capacidade que o guarda est&aacute; cega</span></div>'
-     +'<div class="pd-bar"><i style="width:'+pct+'%;background:'+(pct===100?'var(--red)':'var(--amber)')+'"></i></div>'
-     +'<div class="pd-s"><span>Unidades</span><b>'+arm.length+'</b></div>'
-     +'<div class="pd-s"><span>Circula&ccedil;&atilde;o</span><b style="font-family:Inter;font-size:10px;color:var(--t3)">'
-     +esc(p.formaCirculacao.split(',')[0])+'</b></div>'
-     +'</div></div>';
+     +'<div class="pd-d">'+principal+'</div>'
+     +sub
+     +'<div class="pd-s" style="margin-top:9px;padding-top:9px;border-top:1px solid rgba(38,56,86,.5)">'
+     +'<span style="font-size:10px;color:var(--t4)">Chave aplic&aacute;vel</span>'
+     +'<b style="font-size:9.5px;color:var(--t3);text-align:right;max-width:148px;font-family:Inter,sans-serif;font-weight:400">'
+     +esc(String(p.chaveAplicavel||'&mdash;').slice(0,46))+'</b></div>'
+     +'<div style="margin-top:10px;font-size:10.5px;color:var(--brzl)">'
+     +(pr?'Ver a s&eacute;rie de pre&ccedil;os':'Ver porque n&atilde;o tem identifica&ccedil;&atilde;o')+' &rarr;</div>'
+     +'</div></a>';
   }).join('');
-  document.getElementById('p-tag').textContent=P.length+' produtos';
-  document.getElementById('p-leg').innerHTML=
-    'A percentagem &eacute; a fatia das unidades que guardam esse produto sem qualquer leitura autom&aacute;tica. '
-   +'A cor sob o nome diz o estado da identifica&ccedil;&atilde;o: vermelho sem chave em uso, &acirc;mbar com c&oacute;digo emitido fora do pa&iacute;s. '
-   +'Nenhum produto tem identifica&ccedil;&atilde;o nacional, porque n&atilde;o h&aacute; prefixo GS1 atribu&iacute;do a Mo&ccedil;ambique.';
+}
+
+/* Liga o produto ao preço medido pelo SIMA, quando existe.
+   A correspondência é por lista declarada, não por texto contido:
+   "farinha de milho" contém "milho" e apanhava o preço do grão,
+   que é outro produto e outro mercado. */
+var PRECO_DE={
+  'arroz':'Arroz',
+  'milho':'Milho',
+  'feijao':'Feijão nhemba',
+  'feijão':'Feijão nhemba'
+};
+function normNome(s){
+  return String(s).toLowerCase()
+    .replace(/[àáâã]/g,'a').replace(/[éê]/g,'e').replace(/[íì]/g,'i')
+    .replace(/[óôõ]/g,'o').replace(/[úù]/g,'u').replace(/ç/g,'c').trim();
+}
+function precoDe(nome){
+  if(!ST.sima) return null;
+  var R=ST.sima.retalho1462||ST.sima.retalho||[];
+  var alvo=PRECO_DE[normNome(nome)];
+  if(!alvo) return null;
+  for(var i=0;i<R.length;i++) if(R[i].produto===alvo) return R[i];
+  return null;
 }
 
 function desenharCombustivel(){
@@ -255,11 +308,11 @@ function desenharExposicao(){
    +'e a posi&ccedil;&atilde;o relativa, n&atilde;o para citar como estat&iacute;stica. Os limiares s&atilde;o tercis da distribui&ccedil;&atilde;o real, n&atilde;o normas.';
 }
 
-Promise.all(['identificacao-gs1','armazens-nacionais','cascata-precos','produtores-agrarios','rede-viaria'].map(function(f){
+Promise.all(['identificacao-gs1','armazens-nacionais','cascata-precos','produtores-agrarios','rede-viaria','sima-precos'].map(function(f){
   return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
     if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
 })).then(function(res){
-  ST.gs1=res[0];ST.arm=res[1];ST.cp=res[2];ST.pa=res[3];ST.rv=res[4];
+  ST.gs1=res[0];ST.arm=res[1];ST.cp=res[2];ST.pa=res[3];ST.rv=res[4];ST.sima=res[5];
   desenharNota();desenharGaleria();desenharCombustivel();desenharDonut();desenharExposicao();
 }).catch(function(e){
   document.getElementById('nota').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
