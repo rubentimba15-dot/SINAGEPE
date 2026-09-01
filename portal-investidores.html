@@ -1,124 +1,325 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portal de Investidores &mdash; SINAGEPE</title>
 <script src="assets/access-control.js"></script>
 <script src="assets/nav-sinagepe.js"></script>
 <script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
 <script src="assets/selo-proveniencia.js"></script>
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Portal de Investimento Agro-Industrial — SINAGEPE</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/sinagepe.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  .op-card { background: var(--bg-card-hover); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
-  .op-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
-  .op-nome { font-size: 13px; font-weight: 700; color: #fff; }
-  .op-meta { font-size: 11.5px; color: var(--ink-dim); }
-  .op-risco { font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
-  .hotspot-map { background: var(--bg-input); border-radius: 12px; height: 220px; position: relative; overflow: hidden; }
-  .hotspot-tag { position: absolute; background: var(--bg-card); border: 1px solid var(--border-card); border-radius: 8px; padding: 6px 10px; display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; }
-  .hotspot-dot { width: 8px; height: 8px; border-radius: 50%; }
-  .sim-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg-input); border-radius: 8px; padding: 12px; margin-bottom: 12px; }
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:-.015em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:18px;max-width:920px;line-height:1.6}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:3}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14.5px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:16px 18px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 16px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:10px 16px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+@keyframes surge{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes crescer{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.entra{animation:surge .5s cubic-bezier(.16,1,.3,1) both}
+.cresce{transform-origin:left center;animation:crescer .85s cubic-bezier(.16,1,.3,1) both}
+@media (prefers-reduced-motion:reduce){.entra,.cresce{animation:none!important;opacity:1!important;transform:none!important}}
+.lac{display:block;text-decoration:none;color:inherit;background:linear-gradient(158deg,#101B2E,#0A1220);
+ border:1px solid var(--card-line);border-radius:12px;padding:15px 16px;transition:.2s;position:relative;overflow:hidden}
+.lac:hover{transform:translateY(-3px);border-color:var(--brzg)}
+.lac:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--brz)}
+.lac-t{font-size:13.5px;font-weight:600;margin-bottom:7px}
+.lac-d{font-size:11.5px;color:var(--t3);line-height:1.65}
+.lac-f{margin-top:11px;padding-top:9px;border-top:1px solid rgba(38,56,86,.5);
+ display:flex;justify-content:space-between;gap:8px;font-size:10.5px}
+.aviso{margin:14px 18px;padding:13px 15px;border-radius:10px;font-size:11.5px;line-height:1.7;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
 </style>
 </head>
 <body>
-
-<div class="app-shell">
+<div class="app">
   <aside class="sidebar" id="nav-mount"></aside>
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-title-group"><div class="topbar-title">Portal de Investimento Agro-Industrial Moçambicano</div><div class="topbar-badge">Investidor Privado</div></div>
-      <div class="live-indicator" style="color:var(--amber)">Dados de demonstra&ccedil;&atilde;o</div>
+  <main>
+    <div class="eyebrow">Investidores</div>
+    <h1>Onde o pa&iacute;s tem lacuna documentada</h1>
+    <p class="sub">O sistema n&atilde;o projecta retornos nem classifica risco de investimento. <b>Mostra onde falta infraestrutura, com a contagem que o sustenta</b> &mdash; e cada lacuna leva ao ecr&atilde; onde est&aacute; a evid&ecirc;ncia.</p>
+
+    <div class="aviso r" style="margin:0 0 16px"><b>Este portal foi reconstru&iacute;do em Agosto de 2026, e o que foi retirado &eacute; s&eacute;rio.</b>
+    Apresentava <b>cinco projectos com retorno declarado</b> &mdash; montante, ROI e classifica&ccedil;&atilde;o de risco &mdash;
+    um <b>&laquo;Simulador de Retorno (IA)&raquo;</b>, um retorno m&eacute;dio de 22% rotulado como &laquo;hist&oacute;rico est&aacute;vel&raquo;,
+    e um cart&atilde;o que dizia &laquo;Risco do Investimento: Moderado &middot; <b>Seguro Garantido</b>&raquo;.
+    Nenhum desses n&uacute;meros existia, n&atilde;o h&aacute; hist&oacute;rico que os sustente e n&atilde;o h&aacute; IA no sistema.
+    <b>Proje&ccedil;&atilde;o de retorno e classifica&ccedil;&atilde;o de risco s&atilde;o mat&eacute;ria regulada</b>, e o SINAGEPE n&atilde;o tem
+    compet&ecirc;ncia nem dados para as produzir.</div>
+
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Lacunas com evid&ecirc;ncia</h2>
+        <p>Onde o cadastro mostra aus&ecirc;ncia, e o que isso significa</p></div>
+        <span class="tag" id="l-tag">&mdash;</span></div>
+      <div class="bd"><div class="g2" id="lacunas"></div></div>
+      <div class="aviso i"><b>Uma lacuna n&atilde;o &eacute; uma oportunidade de neg&oacute;cio.</b>
+      &Eacute; uma aus&ecirc;ncia documentada. Se h&aacute; procura que a torne rent&aacute;vel, isso &eacute; estudo de viabilidade &mdash;
+      que exige dados de consumo, de custo e de concorr&ecirc;ncia que o sistema n&atilde;o tem.</div>
     </div>
-    <div class="content" id="content-mount"></div>
-    <div class="footer"><span>© 2026 Agência para a Promoção de Investimento e Exportações (APIEX) — Acesso Privado SINAGEPE</span><span id="footer-updated">—</span></div>
-  </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Armazenagem por prov&iacute;ncia</h2>
+        <p>Unidades cadastradas, com a natureza jur&iacute;dica de cada uma</p></div>
+        <span class="tag ok" id="a-tag">&mdash;</span></div>
+      <div class="bd" id="armazenagem"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Custo de mover carga</h2>
+          <p>O que o combust&iacute;vel acrescenta por regi&atilde;o</p></div></div>
+        <div class="bd" id="combustivel"></div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>O que o sistema n&atilde;o pode dar-lhe</h2>
+          <p>E onde obter</p></div>
+          <span class="tag crit">Limites</span></div>
+        <table id="limites"></table>
+      </div>
+    </div>
+  </main>
 </div>
 
-<script src="assets/sinagepe.js"></script>
 <script>
-SINAGEPE.load().then(data => {
-  /* A fonte declara-se simulada; o ecrã tem de o dizer. Os nomes das entidades
-     mantêm-se com aparência realista por decisão de apresentação — o aviso de
-     simulação é dado por esta faixa e verbalmente em cada demonstração. */
-  if (window.SeloProveniencia) SeloProveniencia.aplicar({
-    modo: (data.meta && data.meta.modo) || null,
-    bloco: 'portalInvestidores',
-    quando: data.meta && data.meta.ultimaActualizacao
-  });
+if(window.SinagepeNav) SinagepeNav.montar('investidores');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
 
-  const p = data.portalInvestidores;
-  SINAGEPE.renderUserFooter({ utilizador: { nome: p.investidor, instituicao: 'Investidor Privado', direccao: 'Director de Portefólio' } });
-  document.getElementById('footer-updated').textContent = 'Última actualização: ' + data.meta.ultimaActualizacao;
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
 
-  document.getElementById('content-mount').innerHTML = `
-    <div class="kpi-row" id="kpi-row"></div>
-    <div class="row-2">
-      <div class="card">
-        <div class="card-title">Oportunidades de Investimento</div>
-        <div id="oportunidades-list"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Hotspots de Investimento SINAGEPE</div>
-        <div class="card-subtitle">Zonas francas activas</div>
-        <div class="hotspot-map" id="hotspot-map"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">🧮 Simulador de Retorno (IA)</div>
-        <div class="card-subtitle">Projecção média com base no histórico das províncias de Moçambique</div>
-        <div class="sim-row"><span style="font-weight:700;color:#fff">Investimento Base</span><span id="sim-base" style="font-weight:700;color:var(--ok)"></span></div>
-        <div class="kpi-label">Retorno Projectado (<span id="sim-anos"></span> Anos)</div>
-        <div class="kpi-value" style="font-size:20px;margin:4px 0" id="sim-retorno"></div>
-        <div style="font-size:11px;color:var(--ok);font-weight:600" id="sim-taxa"></div>
-      </div>
-    </div>
-  `;
+var PROVINCIAS=['Niassa','Cabo Delgado','Nampula','Zamb\u00e9zia','Tete','Manica','Sofala',
+ 'Inhambane','Gaza','Maputo','Cidade de Maputo'];
 
-  const kpiDefs = p.kpis.map(k => ({ label: k.label, valor: k.valor, estado: k.tag, tipo: k.tipo || 'ok' }));
-  document.getElementById('kpi-row').innerHTML = kpiDefs.map(SINAGEPE.kpiCard).join('');
+function desenharKpis(){
+  var A=ST.arm.armazens;
+  var semArm=PROVINCIAS.filter(function(p){
+    return A.filter(function(a){return a.provincia===p}).length===0});
+  var porConstruir=A.filter(function(a){return /por-construir|construc/i.test(a.estado||'')}).length;
+  var Rg=ST.cp.regioes.filter(function(r){return r.gasoleo!=null});
+  var amp=Rg[Rg.length-1].gasoleo-Rg[0].gasoleo;
+  var semReporte=A.filter(function(a){return a.sensor==='sem-sensor'}).length;
 
-  document.getElementById('oportunidades-list').innerHTML = p.oportunidades.map(o => `
-    <div class="op-card">
-      <div class="op-top"><span class="op-nome">${o.nome}</span><span class="pill pill-ok">${o.roi}% ROI</span></div>
-      <div class="op-meta">${o.local} · Invest: ${SINAGEPE.fmt(o.investimento)} MZN</div>
-      <div class="op-risco">Risco: ${o.risco}</div>
-    </div>`).join('');
+  var lista=[
+   {id:'in-semarm',rotulo:'Prov&iacute;ncias sem armaz&eacute;m cadastrado',valor:semArm.length,unidade:'de '+PROVINCIAS.length,
+    estado:semArm.join(', '),tipo:'FACTO',cor:'var(--red)',
+    resumo:'Prov&iacute;ncias onde o cadastro nacional n&atilde;o regista nenhuma unidade de armazenagem.',
+    formula:'prov&iacute;ncias com zero unidades no cadastro',
+    componentes:PROVINCIAS.map(function(p){
+      return [p,A.filter(function(a){return a.provincia===p}).length,'unidades']}),
+    leitura:'<b>Aus&ecirc;ncia no cadastro n&atilde;o significa aus&ecirc;ncia no terreno.</b> Significa que n&atilde;o foi localizada fonte oficial que documente unidades nessas prov&iacute;ncias. Pode ser lacuna de infraestrutura ou lacuna de registo &mdash; s&atilde;o coisas diferentes.',
+    fonte:'Cadastro Nacional de Armazenagem',dataDados:'Agosto de 2026',
+    ecra:'cadastro-armazens.html'},
 
-  const cores = ['var(--ok)', 'var(--warn)'];
-  const posicoes = [[15, 15, 55, 55], [55, 40, 40, 40]];
-  document.getElementById('hotspot-map').innerHTML = p.hotspots.map((h, i) => {
-    const [top, left] = posicoes[i];
-    return `<div class="hotspot-tag" style="top:${top}%;left:${left}%"><span class="hotspot-dot" style="background:${cores[i % 2]}"></span>${h.nome}</div>`;
+   {id:'in-construir',rotulo:'Unidades por construir ou em obra',valor:porConstruir,unidade:'de '+A.length,
+    estado:'com decis&atilde;o p&uacute;blica registada',tipo:'FACTO',cor:'var(--amber)',
+    resumo:'Unidades no cadastro cujo estado declarado n&atilde;o &eacute; de opera&ccedil;&atilde;o.',
+    formula:'contagem por estado declarado no cadastro',
+    componentes:(function(){var e={};A.forEach(function(a){e[a.estado||'n&atilde;o declarado']=(e[a.estado||'n&atilde;o declarado']||0)+1});
+      return Object.keys(e).map(function(k){return [k,e[k],'unidades']})})(),
+    leitura:'Cada uma tem fonte oficial citada. O estado &eacute; o que a publica&ccedil;&atilde;o de origem declara, e pode estar desactualizado.',
+    fonte:'Cadastro Nacional, estado por unidade',dataDados:'Agosto de 2026'},
+
+   {id:'in-gasoleo',rotulo:'Amplitude do gas&oacute;leo entre regi&otilde;es',valor:p2(amp),unidade:'MT/L',
+    estado:'custo do transporte interno, reconhecido pelo regulador',tipo:'FACTO',cor:'var(--brzl)',
+    resumo:'Diferen&ccedil;a de pre&ccedil;o do gas&oacute;leo entre a regi&atilde;o mais cara e as cidades com terminal.',
+    formula:'pre&ccedil;o na regi&atilde;o mais cara menos pre&ccedil;o de refer&ecirc;ncia',
+    componentes:Rg.map(function(r,i){return [i===0?'Cidades com terminal':r.local,r.gasoleo,'MT/L']}),
+    leitura:'&Eacute; o custo de servir o interior, e entra em qualquer conta de viabilidade de opera&ccedil;&atilde;o log&iacute;stica.',
+    fonte:'ARENE &mdash; Decreto n.&ordm; 89/2019',dataDados:ST.cp.revisao.data,
+    ecra:'modulo-logistica.html'},
+
+   {id:'in-cego',rotulo:'Unidades sem reporte de exist&ecirc;ncias',valor:semReporte,unidade:'de '+A.length,
+    estado:'nenhuma comunica o que tem',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Unidades cadastradas que n&atilde;o reportam exist&ecirc;ncias por nenhum meio.',
+    formula:'contagem das unidades sem telemetria nem declara&ccedil;&atilde;o',
+    componentes:[['No cadastro',A.length,''],['Sem reporte',semReporte,''],['Com reporte',A.length-semReporte,'']],
+    leitura:'Para quem investe em armazenagem, isto &eacute; duplo: &eacute; a lacuna que impede avaliar o mercado, e &eacute; tamb&eacute;m um servi&ccedil;o que hoje ningu&eacute;m presta.',
+    fonte:'Cadastro Nacional de Armazenagem',dataDados:'Agosto de 2026',
+    ecra:'monitorizacao-em-falta.html'},
+
+   {id:'in-roi',rotulo:'Retorno projectado e classifica&ccedil;&atilde;o de risco',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'ROI por projecto, retorno m&eacute;dio do sector e n&iacute;vel de risco do investimento.',
+    porqueNaoEReal:'O portal listava cinco projectos com montante, ROI entre 18% e 29%, e classifica&ccedil;&atilde;o de risco. Apresentava ainda um retorno m&eacute;dio de 22% rotulado como &laquo;hist&oacute;rico est&aacute;vel&raquo; e um cart&atilde;o com &laquo;Seguro Garantido&raquo;. Nada disto existia: n&atilde;o h&aacute; s&eacute;rie hist&oacute;rica de retornos, n&atilde;o h&aacute; metodologia de risco, e o sistema n&atilde;o tem compet&ecirc;ncia para garantir seja o que for. <b>Proje&ccedil;&atilde;o de retorno &eacute; mat&eacute;ria regulada.</b>',
+    oQueFalta:'S&eacute;rie hist&oacute;rica de projectos comparáveis e metodologia de avalia&ccedil;&atilde;o de risco',
+    quemDetem:'APIEX &middot; institui&ccedil;&otilde;es financeiras &middot; consultores'},
+
+   {id:'in-simulador',rotulo:'Simulador de retorno por intelig&ecirc;ncia artificial',valor:'\u2014',unidade:'',
+    estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
+    resumo:'Proje&ccedil;&atilde;o de retorno a partir de um investimento base.',
+    porqueNaoEReal:'Multiplicava um investimento base por uma taxa de 21% ao longo de tr&ecirc;s anos, e chamava a isso intelig&ecirc;ncia artificial. A taxa era um n&uacute;mero escrito no ficheiro de demonstra&ccedil;&atilde;o, e n&atilde;o h&aacute; IA no sistema. Quem decidisse com aquela proje&ccedil;&atilde;o decidiria com fic&ccedil;&atilde;o.',
+    oQueFalta:'Dados de consumo, custo e concorr&ecirc;ncia por sector',
+    quemDetem:'INE &middot; APIEX &middot; operadores'}
+  ];
+  var dem=lista.filter(function(x){return x.tipo==='DEMONSTRA\u00c7\u00c3O'}).length;
+  document.getElementById('kpis').innerHTML=
+    IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
+}
+
+function desenharLacunas(){
+  var A=ST.arm.armazens;
+  var semArm=PROVINCIAS.filter(function(p){
+    return A.filter(function(a){return a.provincia===p}).length===0});
+  var far=ST.far.porProvincia||[];
+  var semReporte=A.filter(function(a){return a.sensor==='sem-sensor'}).length;
+  var g=ST.fx.gs1&&ST.fx.gs1.situacaoMocambique;
+
+  var L=[
+   {t:'Armazenagem em '+semArm.length+' prov&iacute;ncias',
+    d:'O cadastro nacional n&atilde;o regista nenhuma unidade em '+semArm.join(', ')+'. '
+      +'Pode ser aus&ecirc;ncia de infraestrutura ou aus&ecirc;ncia de registo &mdash; o sistema n&atilde;o distingue, e diz.',
+    q:'Cadastro Nacional', e:'cadastro-armazens.html'},
+   {t:'Reporte de exist&ecirc;ncias',
+    d:'Nenhuma das '+A.length+' unidades comunica o que tem armazenado, por nenhum meio. '
+      +'&Eacute; a lacuna central do abastecimento nacional e n&atilde;o h&aacute; hoje quem preste esse servi&ccedil;o.',
+    q:'Cadastro Nacional', e:'monitorizacao-em-falta.html'},
+   {t:'Identifica&ccedil;&atilde;o normalizada de produto',
+    d:(g?'N&atilde;o existe organiza&ccedil;&atilde;o-membro GS1 em Mo&ccedil;ambique e o prefixo nacional continua por atribuir. '
+        +'Nenhum produto fabricado no pa&iacute;s pode receber c&oacute;digo emitido c&aacute;.':'Sem dados.'),
+    q:'GS1 Global', e:'fontes-internacionais.html'},
+   {t:'Farm&aacute;cias em 5 prov&iacute;ncias por extrair',
+    d:'O cadastro da ANARME cobre o pa&iacute;s, mas s&oacute; foram extra&iacute;das '+far.length+' prov&iacute;ncias. '
+      +'Tete, Zamb&eacute;zia, Nampula, Niassa e Cabo Delgado continuam por ler do documento.',
+    q:'ANARME', e:'dashboard-igsae.html'}
+  ];
+  document.getElementById('lacunas').innerHTML=L.map(function(x,i){
+    return '<a class="lac entra" href="'+x.e+'" style="animation-delay:'+(i*.07)+'s">'
+     +'<div class="lac-t">'+x.t+'</div><div class="lac-d">'+x.d+'</div>'
+     +'<div class="lac-f"><span style="color:var(--t4)">Fonte: '+x.q+'</span>'
+     +'<span style="color:var(--brzl)">Ver evid&ecirc;ncia &rarr;</span></div></a>';
   }).join('');
+  document.getElementById('l-tag').innerHTML=L.length+' lacunas documentadas';
+}
 
-  document.getElementById('sim-base').textContent = SINAGEPE.fmt(p.simulador.investimentoBaseMzn) + ' MZN';
-  document.getElementById('sim-anos').textContent = p.simulador.anos;
-  const retorno = Math.round(p.simulador.investimentoBaseMzn * (1 + p.simulador.taxaRentabilidadePercent / 100 * p.simulador.anos));
-  document.getElementById('sim-retorno').textContent = SINAGEPE.fmt(retorno) + ' MZN';
-  document.getElementById('sim-taxa').textContent = 'Taxa interna de rentabilidade de ' + p.simulador.taxaRentabilidadePercent + '%';
+function desenharArmazenagem(){
+  var A=ST.arm.armazens;
+  var ROT={estatal:'Estatal','ppp-gestao-privada':'PPP','concessao-privada':'Concess&atilde;o',
+   'participacao-estatal':'Participa&ccedil;&atilde;o estatal',privada:'Privada',internacional:'Internacional'};
+  var max=Math.max.apply(null,PROVINCIAS.map(function(p){
+    return A.filter(function(a){return a.provincia===p}).length}));
+  document.getElementById('armazenagem').innerHTML=PROVINCIAS.map(function(p,i){
+    var u=A.filter(function(a){return a.provincia===p});
+    var nat={};u.forEach(function(a){nat[a.natureza]=(nat[a.natureza]||0)+1});
+    var c=u.length?'#12B981':'#EF4444';
+    return '<div class="entra" style="animation-delay:'+(i*.04)+'s;display:flex;align-items:center;'
+     +'gap:12px;padding:8px 0;border-bottom:1px solid rgba(38,56,86,.35)">'
+     +'<span style="width:132px;flex-shrink:0;font-size:12px">'+p+'</span>'
+     +'<span style="flex:1;height:16px;background:#0A1421;border-radius:4px;overflow:hidden">'
+     +(u.length?'<i class="cresce" style="display:block;height:100%;width:'+(u.length/max*100)+'%;'
+       +'background:linear-gradient(90deg,'+c+'AA,'+c+'44);animation-delay:'+(.1+i*.04)+'s"></i>':'')+'</span>'
+     +'<span class="mono" style="width:34px;text-align:right;color:'+c+';font-size:12px">'
+     +(u.length||'0')+'</span>'
+     +'<span style="width:180px;flex-shrink:0;font-size:10px;color:var(--t4);text-align:right">'
+     +(u.length?Object.keys(nat).map(function(k){return nat[k]+' '+(ROT[k]||k)}).join(', ')
+       :'sem unidade cadastrada')+'</span></div>';
+  }).join('');
+  document.getElementById('a-tag').innerHTML=A.length+' unidades';
+}
+
+function desenharCombustivel(){
+  var Rg=ST.cp.regioes.filter(function(r){return r.gasoleo!=null});
+  var ref=Rg[0].gasoleo, max=Rg[Rg.length-1].gasoleo;
+  document.getElementById('combustivel').innerHTML=Rg.map(function(r,i){
+    var d=r.gasoleo-ref;
+    var c=d>10?'#EF4444':d>5?'#F0A926':'#12B981';
+    return '<div class="entra" style="animation-delay:'+(i*.05)+'s;display:flex;align-items:center;'
+     +'gap:11px;padding:8px 0;border-bottom:1px solid rgba(38,56,86,.35)">'
+     +'<span style="flex:1;font-size:12px">'+esc(i===0?'Cidades com terminal':r.local)+'</span>'
+     +'<span style="width:66px;height:14px;background:#0A1421;border-radius:3px;overflow:hidden">'
+     +'<i class="cresce" style="display:block;height:100%;width:'+(r.gasoleo/max*100)+'%;background:'+c
+     +'88;animation-delay:'+(.1+i*.05)+'s"></i></span>'
+     +'<span class="mono" style="width:62px;text-align:right;font-size:12px;color:'+c+'">'
+     +p2(r.gasoleo)+'</span>'
+     +'<span class="mono" style="width:52px;text-align:right;font-size:10.5px;color:var(--t4)">'
+     +(d>0?'+'+p2(d):'&mdash;')+'</span></div>';
+  }).join('')
+   +'<div style="font-size:11px;color:var(--t3);line-height:1.65;margin-top:12px">'
+   +'Pre&ccedil;o regulado pela ARENE, igual em todos os postos de cada regi&atilde;o. '
+   +'A diferen&ccedil;a &eacute; o custo do transporte interno do pr&oacute;prio combust&iacute;vel, reconhecido na cascata de forma&ccedil;&atilde;o do pre&ccedil;o.</div>';
+}
+
+var LIMITES=[
+ ['Proje&ccedil;&atilde;o de retorno','Exige s&eacute;rie hist&oacute;rica de projectos compar&aacute;veis. N&atilde;o existe no sistema.','Consultores &middot; institui&ccedil;&otilde;es financeiras'],
+ ['Classifica&ccedil;&atilde;o de risco','Exige metodologia declarada e dados de incumprimento. Mat&eacute;ria regulada.','Institui&ccedil;&otilde;es financeiras'],
+ ['Estudo de viabilidade','Exige consumo, custo e concorr&ecirc;ncia por sector e regi&atilde;o.','APIEX &middot; consultores'],
+ ['Incentivos e benef&iacute;cios fiscais','Constam do C&oacute;digo dos Benef&iacute;cios Fiscais e da lei de investimento.','APIEX &middot; Autoridade Tribut&aacute;ria'],
+ ['Procura por produto e regi&atilde;o','Exige inqu&eacute;rito ao consumo. O INE realiza-o; n&atilde;o est&aacute; ligado ao sistema.','INE'],
+ ['Disponibilidade de terra e licen&ccedil;as','Cadastro predial e licenciamento, fora do &acirc;mbito do SINAGEPE.','Munic&iacute;pios &middot; DUAT']
+];
+function desenharLimites(){
+  var h='<thead><tr><th>O que o sistema n&atilde;o d&aacute;</th><th>Porqu&ecirc;</th><th>Onde obter</th></tr></thead><tbody>';
+  LIMITES.forEach(function(x,i){
+    h+='<tr class="entra" style="animation-delay:'+(i*.04)+'s">'
+     +'<td style="font-weight:600;max-width:190px">'+x[0]+'</td>'
+     +'<td style="color:var(--t3);max-width:280px">'+x[1]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+x[2]+'</td></tr>';
+  });
+  document.getElementById('limites').innerHTML=h+'</tbody>';
+}
+
+Promise.all(['armazens-nacionais','farmacias-anarme','cascata-precos','fontes-externas'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.arm=res[0];ST.far=res[1];ST.cp=res[2];ST.fx=res[3];
+  desenharKpis();desenharLacunas();desenharArmazenagem();
+  desenharCombustivel();desenharLimites();
+  /* Selo de proveni\u00eancia: este portal deixou de ler o ficheiro de
+     demonstra\u00e7\u00e3o, mas o selo mant\u00e9m-se \u2014 declara de onde vem o
+     conte\u00fado e quando foi actualizado, como nos restantes ecr\u00e3s. */
+  if(window.SeloProveniencia) SeloProveniencia.aplicar({
+    modo: null,
+    bloco: 'portalInvestidores',
+    quando: (ST.arm.meta && ST.arm.meta.geradoEm) || null
+  });
+}).catch(function(e){
+  document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
 });
-</script>
-
-<script>
-/* A barra deste portal estava escrita \u00e0 mão, com sete destinos por preencher.
-   Passa a vir de assets/nav-sinagepe.js, como os outros ecr\u00e3s: os itens s\u00e3o
-   gerados de uma lista \u00fanica, sempre com destino real, e filtrados pelo acesso
-   da conta. Um banco v\u00ea o que lhe diz respeito, n\u00e3o portas fechadas. */
-(function(){
-  function montar(){
-    try{
-      if(window.SinagepeNav) SinagepeNav.montar('portal-investidores');
-      if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
-    }catch(e){}
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',montar);
-  else montar();
-  /* o Banco Central constr\u00f3i a casca por c\u00f3digo; volta a montar quando ela existir */
-  setTimeout(montar,400);
-})();
 </script>
 </body>
 </html>
