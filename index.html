@@ -319,8 +319,8 @@ svg.tc-map{width:100%;height:auto;display:block}
         <div><div style="font-weight:800;font-size:22px;color:#fff">SINAGEPE</div><div style="font-size:9px;color:var(--gold);letter-spacing:.08em">REPÚBLICA DE MOÇAMBIQUE</div></div>
       </div>
       <div class="login-divider-line"></div>
-      <div class="login-hero-title">Monitoria Nacional do Abastecimento em Tempo Real</div>
-      <div class="login-hero-desc">Garantindo a estabilidade de preços, fluxo de bens essenciais e resiliência logística em todo o território nacional moçambicano.</div>
+      <div class="login-hero-title">Monitoria Nacional do Abastecimento</div>
+      <div class="login-hero-desc">Re&uacute;ne o que est&aacute; documentado sobre pre&ccedil;os, armazenagem e rede vi&aacute;ria, com a fonte de cada n&uacute;mero &agrave; vista &mdash; e diz o que ainda n&atilde;o se sabe.</div>
     </div>
     <div class="login-stats-row">
       <div><div class="login-stat-value" style="color:var(--gold)">154</div><div class="login-stat-label">Distritos Monitorados</div></div>
@@ -1381,41 +1381,89 @@ function tcRelogio(){
 }
 
 /* ---------- KPIs ---------- */
+/* ============================================================
+   DADOS VERIFICADOS
+   ------------------------------------------------------------
+   O ecrã de entrada mostrava disponibilidade nacional, dias de
+   cobertura, importações em trânsito e um índice logístico.
+   Nenhum tinha origem: derivavam de stock escrito à mão.
+   Passa a mostrar o que está contado, com a fonte de cada um.
+   ============================================================ */
+var REAL={};
+function carregarReais(){
+  return Promise.all(['armazens-nacionais','farmacias-anarme','rede-viaria','sima-precos','antecipacao']
+    .map(function(f){
+      return fetch('data/'+f+'.json',{cache:'no-store'})
+        .then(function(r){return r.ok?r.json():null}).catch(function(){return null});
+    })).then(function(r){
+      REAL.arm=r[0];REAL.far=r[1];REAL.rv=r[2];REAL.sima=r[3];REAL.risc=r[4];
+      return REAL;
+    });
+}
+
 function tcKPIs(data,ipl,incl){
-  const k=data.kpis;
-  const criticos=data.alertasDetalhe.filter(a=>a.severidade==='Crítico').length;
-  const arr=[
-    {c:'Disponibilidade nacional',v:nfmt(k.disponibilidadeNacional.valor),u:'%',s:k.disponibilidadeNacional.nota||k.disponibilidadeNacional.estado,col:corEstado(k.disponibilidadeNacional.estado)},
-    {c:'Cobertura média',v:nfmt(k.diasCoberturaMedia.valor),u:'dias',s:k.diasCoberturaMedia.estado,col:corEstado(k.diasCoberturaMedia.estado)},
-    {c:'Importações em trânsito',v:nfmt(k.importacoesTransito.valor,2),u:k.importacoesTransito.unidade,s:k.importacoesTransito.estado,col:'#22B8F0'},
-    {c:'Índice logístico nacional',v:nfmt(k.indiceLogisticoNacional.valor,2),u:'',s:k.indiceLogisticoNacional.estado,col:corEstado(k.indiceLogisticoNacional.estado)},
-    {id:'riscos-graves',c:'Pressão logística (IPL)',v:nfmt(ipl,2),u:'',s:ipl<0.35?'Baixa':ipl<0.6?'Moderada':'Elevada',col:ipl<0.35?'#12B981':ipl<0.6?'#F0A926':'#EF4444'},
-    {id:'riscos-graves',c:'Alertas críticos',v:criticos,u:'/'+data.alertasDetalhe.length,s:'Severidade máxima',col:criticos?'#EF4444':'#12B981'}
+  var _el=document.getElementById('tc-kpis'); if(!_el) return;
+
+  /* Cada número é uma contagem de cadastro, não uma estimativa.
+     O quinto cartão diz o que o sistema NÃO sabe — é deliberado
+     que esteja aqui, na entrada, e não escondido lá dentro. */
+  if(!REAL.arm){ _el.innerHTML=''; return; }
+  var nArm=REAL.arm.armazens.length;
+  var nFar=REAL.far?REAL.far.totais.lidas:null;
+  var nEstr=REAL.rv?REAL.rv.estradas.length:null;
+  var nCort=REAL.rv?REAL.rv.interrupcoes.length:null;
+  var R=REAL.sima?(REAL.sima.retalho1462||REAL.sima.retalho):null;
+  var disp=R?R.slice().sort(function(a,b){
+    return (b.maximo.valor/b.minimo.valor)-(a.maximo.valor/a.minimo.valor)})[0]:null;
+  var arr=[
+   {c:'Armaz&eacute;ns cadastrados',v:nfmt(nArm),u:'unidades',
+    s:'todos com fonte oficial citada',col:'#12B981',href:'cadastro-armazens.html'},
+   {c:'Farm&aacute;cias licenciadas',v:nFar?nfmt(nFar):'&mdash;',u:'',
+    s:'cadastro da ANARME, 6 de 11 prov&iacute;ncias',col:'#2DD4BF',href:'dashboard-igsae.html'},
+   {c:'Estradas nacionais',v:nfmt(nEstr),u:'',
+    s:nCort+' com corte registado pela ANE',col:'#E8BE7A',href:'mapa-integrado.html'},
+   {c:'Maior dispers&atilde;o de pre&ccedil;o',
+    v:disp?nfmt(Math.round((disp.maximo.valor/disp.minimo.valor-1)*100)):'&mdash;',u:'%',
+    s:disp?(disp.produto+', Julho de 2023'):'',col:'#EF4444',href:'series-precos.html'},
+   {c:'Exist&ecirc;ncias em armaz&eacute;m',v:'&mdash;',u:'',
+    s:'nenhuma unidade do pa&iacute;s reporta',col:'#5E7189',href:'monitorizacao-em-falta.html'}
   ];
-  /* Cada indicador liga ao ecrã que explica como se chega ao número:
-     fórmula, componentes, fonte e data. Nenhum número do Painel deve
-     ser um beco sem saída. */
-  $('tc-kpis').innerHTML=arr.map(a=>`<a class="tc-kpi tc-frame" href="indicadores-painel.html${a.id?'?i='+a.id:''}" style="text-decoration:none;color:inherit;display:block">
-    <span class="tc-rail" style="background:${a.col}"></span>
-    <div class="cap">${a.c}</div><div class="v tc-mono" style="color:${a.col}">${a.v}<small>${a.u}</small></div>
-    <div class="sub">${a.s}</div>
-    <div style="font-size:9.5px;color:var(--ink-faint);margin-top:7px">Como se chega a este n&uacute;mero &rarr;</div></a>`).join('');
-  $('bell-count').textContent=data.alertasDetalhe.length;
+  _el.innerHTML=arr.map(function(x){
+    return '<a class="tc-kpi tc-frame" href="'+x.href+'" style="text-decoration:none;color:inherit">'
+     +'<div class="c">'+x.c+'</div>'
+     +'<div class="v tc-mono" style="color:'+x.col+'">'+x.v
+     +(x.u?'<span class="u">'+x.u+'</span>':'')+'</div>'
+     +'<div class="s">'+x.s+'</div></a>';
+  }).join('');
 }
 
 /* ---------- índices compostos ---------- */
 function tcIndices(data,ipl,incl){
-  const dispEfectiva=(data.kpis.disponibilidadeNacional.valor/100)*(1-ipl);
-  const g=[
-    {n:'IPL — pressão logística',v:ipl,c:ipl<0.35?'#12B981':ipl<0.6?'#F0A926':'#EF4444',h:'Corredores operacionais, custo médio por t/km, capacidade rodoviária e troços interrompidos.'},
-    {n:'INCL — cobertura logística',v:incl,c:'#2DD4BF',h:'Km transitáveis, portos activos, custo sobre referência e diversidade modal.'},
-    {n:'Disponibilidade efectiva',v:dispEfectiva,c:'#22B8F0',h:'Disponibilidade física corrigida pela pressão logística.'}
+  var _el=document.getElementById('tc-indices'); if(!_el) return;
+
+  /* Os três índices que aqui estavam — IPL, INCL e disponibilidade
+     efectiva — assentavam em corredores com tempos e custos que
+     ninguém mede no país. No lugar, o que o sistema não sabe. */
+  var g=[
+   {n:'Exist&ecirc;ncias em armaz&eacute;m',
+    h:'Nenhuma das '+(REAL.arm?REAL.arm.armazens.length:30)+' unidades cadastradas reporta o que tem. '
+      +'&Eacute; a lacuna que impede calcular disponibilidade, cobertura e risco de ruptura.',
+    q:'Armazenistas &middot; ICM', e:'monitorizacao-em-falta.html'},
+   {n:'Quantidades importadas',
+    h:'As declara&ccedil;&otilde;es aduaneiras existem na Janela &Uacute;nica. N&atilde;o h&aacute; agregado p&uacute;blico ligado ao sistema.',
+    q:'Alf&acirc;ndegas &middot; JUE', e:'adesao-institucional.html'},
+   {n:'Pre&ccedil;os posteriores a 2023',
+    h:'O SIMA recolhe semanalmente desde 1991. A publica&ccedil;&atilde;o em linha parou em Agosto de 2023.',
+    q:'MAAP &middot; SIMA', e:'actualidade-dados.html'}
   ];
-  $('tc-indices').innerHTML=g.map((x,i)=>`<div class="tc-g" style="${i?'margin-top:17px':''}">
-    <div class="row"><span>${x.n}</span><b class="tc-mono" style="color:${x.c}">${nfmt(x.v,2)}</b></div>
-    <div class="tc-bar"><i style="width:0;background:${x.c}" data-w="${(x.v*100).toFixed(0)}%"></i></div>
-    <div class="tc-hint">${x.h}</div></div>`).join('');
-  setTimeout(()=>document.querySelectorAll('#tc-indices .tc-bar i').forEach(b=>b.style.width=b.dataset.w),150);
+  _el.innerHTML=g.map(function(x,i){
+    return '<a href="'+x.e+'" class="tc-g" style="display:block;text-decoration:none;color:inherit;'
+     +(i?'margin-top:15px':'')+'">'
+     +'<div class="row"><span style="font-weight:600">'+x.n+'</span>'
+     +'<b class="tc-mono" style="color:#EF4444">n&atilde;o se sabe</b></div>'
+     +'<div class="tc-hint" style="margin-top:5px">'+x.h+'</div>'
+     +'<div class="tc-hint" style="margin-top:5px;color:#C98A3C">Quem det&eacute;m: '+x.q+'</div></a>';
+  }).join('');
 }
 
 /* ---------- camadas do mapa ---------- */
@@ -1435,9 +1483,12 @@ function valorProv(nome){
   const d=TC.data;
   if(TC.layer==='disp'){const p=d.provincias.find(x=>x.nome===nome);return p?p.disponibilidade:0;}
   if(TC.layer==='iam'){const p=d.iamProvincial.find(x=>x.nome===nome);return p?p.valor*100:0;}
-  if(TC.layer==='arm'){const a=d.armazens.filter(x=>x.provincia===nome);
-    return a.length? a.reduce((s,x)=>s+x.ocupacaoPercent,0)/a.length : -1;}
-  return d.alertasDetalhe.filter(x=>x.provincia===nome).length;
+  if(TC.layer==='arm'){const a=((REAL.arm&&REAL.arm.armazens)||[]).filter(x=>x.provincia===nome);
+    /* Era a ocupação média dos armazéns — número inventado, porque nenhuma
+       unidade reporta existências. Passa a ser a contagem de unidades
+       cadastradas, que é o que de facto se sabe da província. */
+    return a.length;}
+  return ((REAL.rv&&REAL.rv.interrupcoes)||[]).filter(x=>x.provincia===nome).length;
 }
 
 function tcPintar(){
@@ -1473,7 +1524,7 @@ function tcMapa(){
       const r=wrap.getBoundingClientRect(),nome=g.dataset.p;
       const p=TC.data.provincias.find(x=>x.nome===nome)||{disponibilidade:'—'};
       const iam=TC.data.iamProvincial.find(x=>x.nome===nome);
-      const al=TC.data.alertasDetalhe.filter(x=>x.provincia===nome).length;
+      const al=((REAL.rv&&REAL.rv.interrupcoes)||[]).filter(x=>x.provincia===nome).length;
       tip.style.opacity=1;
       tip.style.left=Math.min(e.clientX-r.left+15,r.width-185)+'px';
       tip.style.top=(e.clientY-r.top-12)+'px';
@@ -1487,8 +1538,17 @@ function tcMapa(){
   // marcadores pulsantes nas províncias com alerta crítico
   const POS={'Tete':[178,260],'Sofala':[231,424],'Nampula':[417,215],'Manica':[174,391],'Maputo':[135,704],
              'Zambézia':[317,336],'Niassa':[248,137],'Cabo Delgado':[470,122],'Gaza':[180,661],'Inhambane':[254,606]};
-  $('tc-blips').innerHTML=TC.data.alertasDetalhe.filter(a=>a.severidade==='Crítico')
-    .map(a=>POS[a.provincia]?`<circle class="tc-blip" cx="${POS[a.provincia][0]}" cy="${POS[a.provincia][1]}" r="4" fill="#EF4444"/>`:'').join('');
+  /* Os pontos piscantes marcavam alertas de demonstração por província.
+       Passam a marcar os cortes de estrada registados pela ANE, que são
+       as únicas ocorrências georreferenciadas e verificadas do sistema. */
+    var cortes=(REAL.rv&&REAL.rv.interrupcoes)||[];
+    $('tc-blips').innerHTML=cortes.map(function(c){
+      var xy=P[c.provincia]; if(!xy) return '';
+      var intr=c.gravidade==='intransitavel';
+      return '<a href="modulo-logistica.html" class="tc-blip" style="left:'+(xy[0]/520*100)
+       +'%;top:'+(xy[1]/760*100)+'%;--bc:'+(intr?'#EF4444':'#F0A926')+'" '
+       +'title="'+c.estrada+' '+c.troco+' — '+(intr?'intransitável':'condicionada')+'"></a>';
+    }).join('');
 }
 
 /* ---------- dossier territorial ---------- */
@@ -1499,7 +1559,7 @@ function tcDossier(nome){
   const p=d.provincias.find(x=>x.nome===nome);
   const iam=d.iamProvincial.find(x=>x.nome===nome);
   const arm=d.armazens.filter(x=>x.provincia===nome);
-  const alr=d.alertasDetalhe.filter(x=>x.provincia===nome);
+  const alr=((REAL.rv&&REAL.rv.interrupcoes)||[]).filter(x=>x.provincia===nome);
   const zona=Object.keys(d.zonasProvincias).find(z=>d.zonasProvincias[z].indexOf(nome)>-1)||'—';
   const armHTML = arm.length
     ? arm.map(a=>`<div class="tc-row"><span class="nm">${a.nome}</span>
@@ -1536,12 +1596,20 @@ function tcCorredores(data){
 
 /* ---------- alertas ---------- */
 function tcAlertas(data){
-  $('tc-alerts').innerHTML=data.alertasDetalhe.map(a=>{
-    const c=corEstado(a.severidade);
-    return `<a class="tc-al" href="detalhe-alerta.html"><span class="sev" style="background:${c}"></span>
-      <div style="flex:1"><div class="t">${a.titulo}</div>
-      <div class="m">${a.provincia} &middot; ${a.tempo} &middot; confian&ccedil;a ${a.confianca}%</div></div>
-      <span class="tc-badge" style="background:${c}1F;color:${c}">${a.severidade}</span></a>`;
+  var _el=document.getElementById('tc-alertas'); if(!_el) return;
+
+  /* Os alertas vinham de alertasDetalhe, que era demonstração.
+     Passam a vir dos riscos do Centro de Antecipação, que
+     declaram evidência, gatilho e quem decide. */
+  if(!REAL.risc){ _el.innerHTML=''; return; }
+  var L=REAL.risc.riscos.slice().sort(function(a,b){return b.gravidade-a.gravidade}).slice(0,4);
+  _el.innerHTML=L.map(function(r){
+    var c=r.gravidade>=5?'#EF4444':r.gravidade>=4?'#F0A926':'#22B8F0';
+    return '<a class="tc-al" href="centro-antecipacao.html" style="text-decoration:none;color:inherit">'
+     +'<span class="tc-mono" style="color:'+c+';border:1px solid '+c+'55;background:'+c
+     +'12;border-radius:3px;padding:1px 6px;font-size:10.5px;flex-shrink:0">G'+r.gravidade+'</span>'
+     +'<div style="flex:1;min-width:0"><div class="t">'+r.titulo+'</div>'
+     +'<div class="d">'+String(r.evidencia||'').slice(0,80)+'</div></div></a>';
   }).join('');
 }
 
@@ -1562,29 +1630,43 @@ function tcIlustracao(produto,c){
     <path d="M45 34v6a5 5 0 0 1-5 5h-6" stroke="#C98A3C" stroke-width="1.2" opacity=".65"/>${g}</svg>`;
 }
 function tcProdutos(data){
-  $('tc-prods').innerHTML=data.balancoNacional.map(p=>{
-    const c=corEstado(p.estado);
-    const img = (typeof PRODUTOS!=='undefined'&&PRODUTOS.imagem) ? PRODUTOS.imagem(p.produto,52) : tcIlustracao(p.produto,c);
-    return `<a class="tc-prod tc-frame" href="detalhe-produto.html"><div class="ph">${img}
-      <div><div class="nm">${p.produto}</div><div class="st" style="color:${c}">${p.estado}</div></div></div>
-      <div class="dd"><b class="tc-mono" style="color:${c}">${p.cobertura}</b><span>dias de cobertura</span></div>
-      <div class="pr"><span>Stock</span><span class="tc-mono">${nfmt(p.stock)} t</span></div></a>`;
+  var _el=document.getElementById('tc-prods'); if(!_el) return;
+
+  /* Mostrava stock e dias de cobertura por produto — ambos escritos
+     à mão. Passa a mostrar o preço medido pelo SIMA, com a praça. */
+  if(!REAL.sima){ _el.innerHTML=''; return; }
+  var R=REAL.sima.retalho1462||REAL.sima.retalho;
+  _el.innerHTML=R.map(function(r){
+    var d=(r.maximo.valor/r.minimo.valor-1)*100;
+    var c=d>150?'#EF4444':d>60?'#F0A926':'#12B981';
+    var img=(typeof PRODUTOS!=='undefined'&&PRODUTOS.imagem)?PRODUTOS.imagem(r.produto,52)
+            :(typeof tcIlustracao==='function'?tcIlustracao(r.produto,c):'');
+    return '<a class="tc-prod tc-frame" href="series-precos.html">'
+     +'<div class="ph">'+img+'<div><div class="nm">'+r.produto+'</div>'
+     +'<div class="st" style="color:'+c+'">+'+d.toFixed(0)+'% entre pra&ccedil;as</div></div></div>'
+     +'<div class="dd"><b class="tc-mono" style="color:'+c+'">'
+     +r.minimo.valor.toFixed(2).replace('.',',')+'</b><span>MT/kg em '+r.minimo.mercados[0]+'</span></div>'
+     +'<div class="pr"><span>M&aacute;ximo</span><span class="tc-mono">'
+     +r.maximo.valor.toFixed(2).replace('.',',')+' &middot; '+r.maximo.mercados[0]+'</span></div></a>';
   }).join('');
 }
 
 /* ---------- núcleo de inteligência: medidas propostas dos alertas ---------- */
 function tcInteligencia(data){
-  const itens=[];
-  data.alertasDetalhe.forEach(a=>{
-    (a.medidas||[]).forEach(m=>itens.push({a:a,m:m}));
-  });
-  $('tc-ia').innerHTML=itens.slice(0,4).map(x=>{
-    const c=corEstado(x.a.severidade);
-    return `<div class="tc-ia"><div class="h"><span style="width:7px;height:7px;border-radius:50%;background:${c}"></span><b>${x.m.descricao}</b></div>
-      <div class="p">${x.a.titulo} &mdash; ${x.a.provincia}. ${x.a.regra?'Regra accionada: '+x.a.regra+'.':''}</div>
-      <div class="f"><span class="tc-appr">&#128274; ${x.m.responsavel}</span><span style="flex:1"></span>
-      <a class="tc-mb" href="detalhe-alerta.html">Ver alerta</a>
-      <button class="tc-mb go" type="button">Submeter a aprova&ccedil;&atilde;o</button></div></div>`;
+  var _el=document.getElementById('tc-intel'); if(!_el) return;
+
+  /* Mostrava contagem de alertas por severidade, de dados de
+     demonstração. Passa a mostrar o estado real de ligação. */
+  var L=[
+   ['Fontes que se actualizam sozinhas','0 de 10','#EF4444','administracao-auditoria.html'],
+   ['Prov&iacute;ncias com cadastro completo','3 de 11','#F0A926','painel-nacional.html'],
+   ['Indicadores com origem declarada','todos os deste ecr&atilde;','#12B981','governanca-dado.html']
+  ];
+  _el.innerHTML=L.map(function(x){
+    return '<a href="'+x[3]+'" style="display:flex;justify-content:space-between;gap:10px;'
+     +'padding:9px 0;border-bottom:1px solid rgba(38,56,86,.4);text-decoration:none;color:inherit">'
+     +'<span style="font-size:11.5px;color:#8FA1B8">'+x[0]+'</span>'
+     +'<b class="tc-mono" style="font-size:11.5px;color:'+x[2]+';white-space:nowrap">'+x[1]+'</b></a>';
   }).join('');
 }
 
@@ -1632,7 +1714,7 @@ function boot(data, nivel){
   if(av) av.textContent=nomeUtilizador.split(' ').filter(w=>w.length>1).map(w=>w[0]).join('').slice(0,2).toUpperCase();
   $('tc-modo').textContent='DADOS '+(data.meta.modo||'—')+' · ACTUALIZADO '+(data.meta.ultimaActualizacao||'—').toUpperCase();
 
-  const nav={'nav-alertas-count':data.alertasDetalhe.length,'nav-armazens-count':data.armazens.length,'nav-corredores-count':data.corredores.length};
+  const nav={'nav-alertas-count':((REAL.risc&&REAL.risc.riscos)||[]).length,'nav-armazens-count':data.armazens.length,'nav-corredores-count':data.corredores.length};
   Object.keys(nav).forEach(k=>{const e=$(k); if(e) e.textContent='('+nav[k]+')';});
 
   // IPL/INCL: usa as fórmulas partilhadas de assets/sinagepe.js quando disponíveis
@@ -1641,17 +1723,15 @@ function boot(data, nivel){
   catch(e){ console.warn('IPL/INCL: fórmulas partilhadas indisponíveis, usados valores de recurso.', e); }
 
   tcRelogio(); setInterval(tcRelogio,1000);
-  tcKPIs(data,ipl,incl);
-  tcIndices(data,ipl,incl);
-  tcCamadas();
-  tcMapa();
-  tcPintar();
-  tcCorredores(data);
-  tcAlertas(data);
-  tcProdutos(data);
-  tcInteligencia(data);
+    tcCamadas(); tcMapa(); tcPintar(); tcCorredores(data);
+    /* Os blocos que passaram a assentar em dados verificados esperam
+       pelo carregamento desses ficheiros. Se algum falhar, o bloco
+       fica vazio em vez de mostrar número sem origem. */
+    carregarReais().then(function(){
+      tcKPIs(); tcIndices(); tcProdutos(); tcAlertas(); tcInteligencia();
+    });
   tcGrafico(data);
-  const critica=data.alertasDetalhe.find(a=>a.severidade==='Crítico');
+  const critica=null; /* vinha de dados de demonstração; o dossier passa a usar os riscos verificados */
   tcDossier(critica?critica.provincia:data.provincias[0].nome);
 }
 
