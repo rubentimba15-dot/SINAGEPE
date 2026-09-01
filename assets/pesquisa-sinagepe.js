@@ -56,6 +56,8 @@
       t:'relatorio central imprimir exportar csv json pdf documento gerar' },
     { h:'relatorio-executivo.html', n:'Relatório Executivo', d:'Documento imprimível em A4, com exportação CSV e JSON',
       t:'relatorio pdf imprimir exportar csv json executivo documento' },
+    { h:'actualidade-dados.html', n:'Actualidade dos dados', d:'Quantos ciclos de atraso tem cada fonte, medidos contra a periodicidade esperada',
+      t:'actualidade idade dados desactualizado atraso ciclos temporalidade data facto' },
     { h:'governanca-dado.html', n:'Governação do Dado', d:'Cinco regras de disciplina e classificação de cada número do sistema',
       t:'governanca dado regra facto estimativa previsao linhagem fonte auditoria' },
     { h:'adesao-institucional.html', n:'Adesão Institucional', d:'Dossier por entidade e matriz esforço × impacto',

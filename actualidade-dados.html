@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Actualidade dos dados &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<script src="assets/indicadores-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1560px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
+.sub{color:var(--t3);font-size:12.5px;margin-bottom:16px;max-width:940px;line-height:1.55}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:14px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 17px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
+.ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
+.ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.bd{padding:15px 17px}
+table{width:100%;border-collapse:collapse;font-size:11.5px}
+th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 15px;border-bottom:1px solid var(--card-line);font-weight:600}
+td{padding:10px 15px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
+.est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
+.atraso{position:relative;height:16px;background:#0A1421;border-radius:4px;overflow:hidden;min-width:110px}
+.atraso i{position:absolute;left:0;top:0;bottom:0;border-radius:4px}
+.atraso b{position:absolute;left:0;top:0;bottom:0;width:2px;background:#12B981;opacity:.9}
+.aviso{margin:12px 17px;padding:12px 14px;border-radius:9px;font-size:11.5px;line-height:1.7;border:1px solid}
+.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
+.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
+.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.aviso.g{background:rgba(18,185,129,.07);border-color:rgba(18,185,129,.26);color:#8FE3C4}
+.par{display:grid;grid-template-columns:1fr 1fr;gap:0;font-size:11.5px}
+.par>div{padding:11px 14px;border-bottom:1px solid rgba(38,56,86,.4)}
+.par>div:nth-child(odd){border-right:1px solid rgba(38,56,86,.4);color:var(--t3)}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Temporalidade</div>
+    <h1>Actualidade dos dados</h1>
+    <p class="sub">Quantos ciclos de atraso tem cada fonte, medidos contra a periodicidade com que devia publicar. <b>Um dado de dois anos pode estar actual, e um de dois meses pode estar velho</b> &mdash; depende da fonte.</p>
+
+    <div class="aviso r" style="margin:0 0 16px"><b>Este ecr&atilde; foi criado em Agosto de 2026 para corrigir um problema do pr&oacute;prio sistema.</b>
+    Os pre&ccedil;os do SIMA que o SINAGEPE mostra &mdash; incluindo o milho a 9 MT/kg em Lichinga, que abre a apresenta&ccedil;&atilde;o &mdash;
+    s&atilde;o de <b>Julho de 2023</b>. Continuam verdadeiros: aconteceram e est&atilde;o no boletim oficial.
+    Mas <b>n&atilde;o descrevem a situa&ccedil;&atilde;o de hoje</b>, e o sistema dizia-o apenas em letra pequena.
+    Passa a diz&ecirc;-lo em cada indicador, com a idade calculada.</p></div>
+
+    <div id="kpis"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Cada fonte, e quantos ciclos est&aacute; atrasada</h2>
+        <p>Ordenadas do maior atraso para o menor</p></div>
+        <span class="tag crit" id="f-tag">&mdash;</span></div>
+      <table id="fontes"></table>
+      <div class="aviso i"><b>Como se mede.</b> N&atilde;o em dias absolutos: em ciclos da pr&oacute;pria fonte.
+      O SIMA publica semanalmente, logo cada semana de atraso &eacute; um ciclo. A GS1 muda de d&eacute;cada a d&eacute;cada,
+      logo tr&ecirc;s anos n&atilde;o s&atilde;o atraso nenhum. <b>A mesma aritm&eacute;tica aplicada a escalas diferentes.</b></div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>As datas que n&atilde;o se devem confundir</h2>
+        <p>Um exemplo real do sistema</p></div></div>
+      <div class="par" id="datas"></div>
+      <div class="aviso w"><b>O sistema regista uma destas datas e n&atilde;o as outras.</b>
+      Sabe a que semana o pre&ccedil;o se refere, porque vem escrito no boletim. N&atilde;o regista quando o boletim foi
+      publicado, nem quando entrou no sistema. <b>S&atilde;o campos que faltam</b>, e est&atilde;o declarados aqui em vez
+      de ficarem por dizer.</div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>A linguagem que o sistema passa a usar</h2>
+        <p>&laquo;&Uacute;ltima informa&ccedil;&atilde;o dispon&iacute;vel&raquo; e &laquo;situa&ccedil;&atilde;o actual&raquo; n&atilde;o s&atilde;o a mesma coisa</p></div></div>
+      <table id="linguagem"></table>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O que este ecr&atilde; ainda n&atilde;o faz</h2>
+        <p>E de que depende</p></div>
+        <span class="tag crit">Limites declarados</span></div>
+      <table id="falta"></table>
+    </div>
+  </main>
+</div>
+
+<script>
+if(window.SinagepeNav) SinagepeNav.montar('actualidade');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+if(window.IndicadoresSinagepe) IndicadoresSinagepe.iniciar();
+
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+
+var HOJE=new Date();
+function idade(d){return Math.floor((HOJE-d)/86400000)}
+function txtIdade(dias){
+  return dias<60?dias+' dias':dias<730?Math.round(dias/30)+' meses'
+    :(dias/365).toFixed(1).replace('.',',')+' anos';
+}
+
+/* Cada fonte com a data do dado mais recente que o sistema tem,
+   e a periodicidade com que a instituição devia publicar. */
+var FONTES=[
+ {n:'SIMA &mdash; pre&ccedil;os e fluxos',d:new Date(2023,6,31),ciclo:7,per:'semanal',
+  nota:'A recolha continua semanalmente desde 1991. A publica&ccedil;&atilde;o em linha parou em Agosto de 2023.',
+  quem:'MAAP &middot; SIMA'},
+ {n:'ANARME &mdash; farm&aacute;cias licenciadas',d:new Date(2024,8,30),ciclo:365,per:'anual',
+  nota:'Lista de 2024. Uma edi&ccedil;&atilde;o mais recente pode existir e n&atilde;o ter sido localizada.',
+  quem:'ANARME'},
+ {n:'ANE &mdash; cortes de estrada',d:new Date(2026,0,31),ciclo:90,per:'quando h&aacute; corte',
+  nota:'Publicado em comunicado de imprensa. N&atilde;o h&aacute; ficheiro actualiz&aacute;vel.',
+  quem:'ANE'},
+ {n:'ARENE &mdash; pre&ccedil;os de combust&iacute;vel',d:new Date(2026,4,31),ciclo:180,per:'por revis&atilde;o de pre&ccedil;o',
+  nota:'Revis&atilde;o de Maio de 2026. A pr&oacute;xima revis&atilde;o substitui estes valores.',
+  quem:'ARENE'},
+ {n:'ICM &mdash; reserva e importa&ccedil;&otilde;es',d:new Date(2026,5,30),ciclo:180,per:'irregular',
+  nota:'Declara&ccedil;&otilde;es p&uacute;blicas. N&atilde;o h&aacute; periodicidade comprometida.',
+  quem:'ICM'},
+ {n:'IMOPETRO &mdash; volumes de concurso',d:new Date(2026,5,30),ciclo:180,per:'semestral',
+  nota:'Concursos p&uacute;blicos internacionais.',quem:'IMOPETRO'},
+ {n:'GS1 &mdash; situa&ccedil;&atilde;o de Mo&ccedil;ambique',d:new Date(2026,5,30),ciclo:1095,per:'est&aacute;vel',
+  nota:'A aus&ecirc;ncia de organiza&ccedil;&atilde;o-membro n&atilde;o muda de m&ecirc;s para m&ecirc;s.',quem:'GS1 Global'},
+ {n:'Cadastro Nacional de Armazenagem',d:new Date(2026,7,31),ciclo:365,per:'anual',
+  nota:'Compilado pelo SINAGEPE a partir de fontes oficiais por unidade.',
+  quem:'SINAGEPE'}
+];
+
+function estado(f){
+  var dias=idade(f.d), ciclos=dias/f.ciclo;
+  if(ciclos<=1.5) return {r:'dentro do esperado',c:'#12B981',ciclos:ciclos,dias:dias};
+  if(ciclos<=4)   return {r:'com atraso',c:'#F0A926',ciclos:ciclos,dias:dias};
+  if(ciclos<=20)  return {r:'desactualizada',c:'#EF4444',ciclos:ciclos,dias:dias};
+  return {r:'informa&ccedil;&atilde;o hist&oacute;rica',c:'#EF4444',ciclos:ciclos,dias:dias};
+}
+
+function desenharFontes(){
+  var L=FONTES.map(function(f){var e=estado(f);return {f:f,e:e}})
+    .sort(function(a,b){return b.e.ciclos-a.e.ciclos});
+  var maxC=Math.max.apply(null,L.map(function(x){return Math.min(x.e.ciclos,30)}));
+  var h='<thead><tr><th>Fonte</th><th>Dado mais recente</th><th>Publica</th>'
+   +'<th class="n">Idade</th><th>Atraso em ciclos</th><th>Estado</th></tr></thead><tbody>';
+  L.forEach(function(x){
+    var f=x.f,e=x.e;
+    var larg=Math.min(100,Math.min(e.ciclos,30)/maxC*100);
+    h+='<tr><td style="font-weight:600;max-width:230px">'+f.n
+     +'<div style="font-size:10px;color:var(--t4);font-weight:400;margin-top:4px;line-height:1.5">'+f.nota+'</div></td>'
+     +'<td class="mono" style="color:var(--t3)">'+f.d.toLocaleDateString('pt-PT',{month:'long',year:'numeric'})+'</td>'
+     +'<td style="color:var(--t3)">'+f.per+'</td>'
+     +'<td class="n" style="color:'+e.c+'">'+txtIdade(e.dias)+'</td>'
+     +'<td><div class="atraso"><i style="width:'+larg+'%;background:'+e.c+'55"></i><b></b></div>'
+     +'<div style="font-size:10px;color:'+e.c+';margin-top:3px" class="mono">'
+     +(e.ciclos<1?'menos de 1 ciclo':Math.round(e.ciclos)+' ciclos')+'</div></td>'
+     +'<td><span class="est" style="color:'+e.c+';border-color:'+e.c+'55;background:'+e.c+'12">'+e.r+'</span>'
+     +'<div style="font-size:10px;color:var(--t4);margin-top:4px">'+f.quem+'</div></td></tr>';
+  });
+  document.getElementById('fontes').innerHTML=h+'</tbody>';
+  var mal=L.filter(function(x){return x.e.ciclos>4}).length;
+  document.getElementById('f-tag').textContent=mal+' de '+L.length+' desactualizadas';
+}
+
+var DATAS=[
+ ['Data do facto','A semana a que o pre&ccedil;o se refere: 17 a 23 de Julho de 2023. <b>O sistema regista.</b>'],
+ ['Data de produ&ccedil;&atilde;o do documento','Quando o boletim n.&ordm; 1462 foi redigido. <b>N&atilde;o registamos.</b>'],
+ ['Data de publica&ccedil;&atilde;o','Quando o boletim foi tornado p&uacute;blico. <b>N&atilde;o registamos.</b>'],
+ ['Data de recep&ccedil;&atilde;o no sistema','Quando o PDF foi descarregado: Agosto de 2026. <b>N&atilde;o registamos.</b>'],
+ ['Data de extrac&ccedil;&atilde;o','Quando a ferramenta leu o PDF e escreveu no ficheiro. <b>Registamos no ficheiro, n&atilde;o no ecr&atilde;.</b>'],
+ ['Data de verifica&ccedil;&atilde;o','Quando os valores foram conferidos contra o PDF original. <b>Registamos por bloco, n&atilde;o por valor.</b>']
+];
+function desenharDatas(){
+  document.getElementById('datas').innerHTML=DATAS.map(function(d){
+    return '<div>'+d[0]+'</div><div style="color:var(--ink)">'+d[1]+'</div>';
+  }).join('');
+}
+
+var LINGUAGEM=[
+ ['Situa&ccedil;&atilde;o actual','&Uacute;ltima informa&ccedil;&atilde;o dispon&iacute;vel','Afirma que o dado descreve hoje. S&oacute; &eacute; leg&iacute;timo com fonte que se actualize.'],
+ ['Dados em tempo real','Dados de demonstra&ccedil;&atilde;o &middot; Dados de [data]','Nenhuma fonte do sistema se actualiza sozinha. J&aacute; retirado de 12 ecr&atilde;s.'],
+ ['Pre&ccedil;o do milho','Pre&ccedil;o do milho na semana de [data]','O pre&ccedil;o &eacute; de uma semana concreta, n&atilde;o um valor permanente.'],
+ ['Armaz&eacute;ns monitorizados','Armaz&eacute;ns cadastrados','Cadastrado significa que consta de registo. Monitorizado significaria que reporta.'],
+ ['Abastecimento garantido','&mdash;','Retirado. N&atilde;o havia como o afirmar, com dado nenhum.']
+];
+function desenharLinguagem(){
+  var h='<thead><tr><th>O que n&atilde;o se diz</th><th>O que se diz</th><th>Porqu&ecirc;</th></tr></thead><tbody>';
+  LINGUAGEM.forEach(function(l){
+    h+='<tr><td style="color:var(--red);text-decoration:line-through;font-weight:600">'+l[0]+'</td>'
+     +'<td style="color:var(--ok);font-weight:600">'+l[1]+'</td>'
+     +'<td style="color:var(--t3);max-width:420px">'+l[2]+'</td></tr>';
+  });
+  document.getElementById('linguagem').innerHTML=h+'</tbody>';
+}
+
+var FALTA=[
+ ['Data de recep&ccedil;&atilde;o e de publica&ccedil;&atilde;o','Exige registar cada carregamento com a sua data. Poss&iacute;vel sem servidor, por conven&ccedil;&atilde;o no ficheiro.','Trabalho de registo'],
+ ['Controlo de vers&otilde;es de documento','Guardar a vers&atilde;o anterior quando chega uma nova. O hist&oacute;rico do reposit&oacute;rio faz parte disto, mas n&atilde;o &eacute; consult&aacute;vel do sistema.','Servidor &middot; interface'],
+ ['Vis&atilde;o hist&oacute;rica','Mostrar o que o sistema sabia numa data passada. Exige guardar cada estado.','Servidor'],
+ ['Alerta autom&aacute;tico de desactualiza&ccedil;&atilde;o','Avisar quando uma fonte ultrapassa a periodicidade. O c&aacute;lculo existe; falta quem receba o aviso.','Servidor &middot; destinat&aacute;rios'],
+ ['&Iacute;ndice num&eacute;rico de actualidade','<b>Decidido n&atilde;o fazer.</b> Um n&uacute;mero de 0 a 100 composto por factores sem pesos justificados d&aacute; apar&ecirc;ncia de medi&ccedil;&atilde;o a uma conven&ccedil;&atilde;o. Os quatro estados bastam e dizem porqu&ecirc;.','&mdash;']
+];
+function desenharFalta(){
+  var h='<thead><tr><th>O que falta</th><th>Porqu&ecirc;</th><th>De que depende</th></tr></thead><tbody>';
+  FALTA.forEach(function(x){
+    h+='<tr><td style="font-weight:600">'+x[0]+'</td>'
+     +'<td style="color:var(--t3);max-width:520px">'+x[1]+'</td>'
+     +'<td style="color:var(--t4);white-space:nowrap">'+x[2]+'</td></tr>';
+  });
+  document.getElementById('falta').innerHTML=h+'</tbody>';
+}
+
+function desenharKpis(){
+  var L=FONTES.map(function(f){return {f:f,e:estado(f)}});
+  var mal=L.filter(function(x){return x.e.ciclos>4});
+  var pior=L.slice().sort(function(a,b){return b.e.ciclos-a.e.ciclos})[0];
+  var bem=L.filter(function(x){return x.e.ciclos<=1.5}).length;
+
+  var lista=[
+   {id:'ac-desactualizadas',rotulo:'Fontes desactualizadas',valor:mal.length,unidade:'de '+L.length,
+    estado:bem+' dentro do esperado',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Fontes com atraso superior a quatro ciclos da sua pr&oacute;pria periodicidade.',
+    formula:'idade do dado a dividir pela periodicidade esperada',
+    componentes:L.slice().sort(function(a,b){return b.e.ciclos-a.e.ciclos}).map(function(x){
+      return [x.f.n.replace(/&mdash;/g,'—'),Math.round(x.e.ciclos),'ciclos']}),
+    leitura:'O atraso mede-se em ciclos da fonte, n&atilde;o em dias. Tr&ecirc;s anos s&atilde;o nada para a GS1 e s&atilde;o 174 semanas para o SIMA.',
+    fonte:'Registo de proveni&ecirc;ncia do SINAGEPE',dataDados:'Agosto de 2026'},
+
+   {id:'ac-pior',rotulo:'Maior atraso',valor:Math.round(pior.e.ciclos),unidade:'ciclos',
+    estado:pior.f.n.replace(/&mdash;.*/,'').trim()+' &middot; '+txtIdade(pior.e.dias),
+    tipo:'FACTO',cor:'var(--red)',
+    resumo:'A fonte com maior atraso face &agrave; periodicidade com que devia publicar.',
+    formula:'idade em dias a dividir pelo intervalo esperado',
+    componentes:[['Idade do dado',pior.e.dias,'dias'],['Periodicidade esperada',pior.f.ciclo,'dias'],
+                 ['Atraso',Math.round(pior.e.ciclos),'ciclos']],
+    leitura:'S&atilde;o os pre&ccedil;os que sustentam o argument&aacute;rio. Continuam verdadeiros e continuam a valer como demonstra&ccedil;&atilde;o do que o sistema faz &mdash; mas n&atilde;o descrevem o mercado de hoje.',
+    fonte:'SIMA &mdash; arquivo p&uacute;blico',dataDados:'Julho de 2023',
+    ecra:'series-precos.html'},
+
+   {id:'ac-ecras',rotulo:'Ecr&atilde;s com selo de idade',valor:39,unidade:'',
+    estado:'todos os que mostram indicadores',tipo:'FACTO',cor:'var(--ok)',
+    resumo:'Ecr&atilde;s onde cada indicador passa a declarar a idade do dado.',
+    formula:'motor no ficheiro partilhado de indicadores',
+    componentes:[['Ficheiro partilhado','assets/indicadores-sinagepe.js',''],
+                 ['Ecr&atilde;s servidos',39,''],['Estados poss&iacute;veis',4,'']],
+    leitura:'Bastou acrescentar ao ficheiro partilhado: os 39 ecr&atilde;s ganharam o selo de uma vez, sem se tocar em nenhum.',
+    fonte:'C&oacute;digo do SINAGEPE',dataDados:'Agosto de 2026'}
+  ];
+  document.getElementById('kpis').innerHTML=IndicadoresSinagepe.linha(lista);
+}
+
+desenharKpis();desenharFontes();desenharDatas();desenharLinguagem();desenharFalta();
+</script>
+</body>
+</html>

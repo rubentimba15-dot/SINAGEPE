@@ -51,6 +51,10 @@
       'border-radius:12px;padding:15px 17px;cursor:pointer;transition:.16s;text-align:left;',
       'font-family:inherit;color:inherit;width:100%;display:block}',
       '.ind:hover{border-color:rgba(201,138,60,.42);transform:translateY(-2px)}',
+      '.ind-idade{display:inline-block;margin-top:8px;font-size:8.5px;letter-spacing:.09em;',
+      'text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid;cursor:help}',
+      '.ind-actual{margin-top:9px;padding:9px 11px;border-radius:7px;border:1px solid;',
+      'font-size:11px;line-height:1.6;color:#C3D0E0}',
       '.ind-marca{position:absolute;top:11px;right:12px;font-size:8px;letter-spacing:.11em;',
       'text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid;font-weight:600}',
       '.ind-l{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--t4,#5E7189);',
@@ -93,6 +97,111 @@
   var REGISTO = {};
 
   /* ---- o cartão ---- */
+
+  /* ============================================================
+     MOTOR DE ACTUALIDADE
+     ------------------------------------------------------------
+     A idade de um dado não se mede em dias absolutos: mede-se
+     contra a periodicidade com que a fonte devia publicar.
+     Um censo de dois anos está actual; um preço de mercado de
+     dois meses está velho. É a mesma aritmética aplicada a
+     escalas diferentes.
+
+     Não se produz aqui nenhum índice de 0 a 100: seria dar
+     aparência de medição a uma convenção. Há quatro estados,
+     e cada um diz porquê.
+     ============================================================ */
+  var PERIODICIDADE = {
+    'SIMA':        { dias: 7,   nome: 'semanal' },
+    'ARENE':       { dias: 180, nome: 'por revis\u00e3o de pre\u00e7o' },
+    'ANE':         { dias: 90,  nome: 'quando h\u00e1 corte' },
+    'ANARME':      { dias: 365, nome: 'anual' },
+    'ICM':         { dias: 180, nome: 'irregular' },
+    'IMOPETRO':    { dias: 180, nome: 'semestral' },
+    'INE':         { dias: 30,  nome: 'mensal' },
+    'FAO':         { dias: 365, nome: 'anual' },
+    'GS1':         { dias: 1095,nome: 'est\u00e1vel' },
+    'CADASTRO':    { dias: 365, nome: 'anual' },
+    'SISTEMA':     { dias: 90,  nome: 'por revis\u00e3o' },
+    'SINAGEPE':    { dias: 90,  nome: 'por revis\u00e3o do sistema' },
+    'PROVENI':     { dias: 90,  nome: 'por revis\u00e3o do sistema' },
+    'AUDITORIA':   { dias: 30,  nome: 'a cada entrega' },
+    'C\u00d3DIGO':      { dias: 30,  nome: 'a cada entrega' },
+    'REGISTO':     { dias: 90,  nome: 'por revis\u00e3o do sistema' },
+    'MOTOR':       { dias: 90,  nome: 'por revis\u00e3o do sistema' },
+    'FICHEIRO':    { dias: 90,  nome: 'por revis\u00e3o do sistema' },
+    'SETSAN':      { dias: 365, nome: 'anual' },
+    'ANE ':        { dias: 90,  nome: 'quando h\u00e1 corte' }
+  };
+
+  var MESES = { 'janeiro':1,'fevereiro':2,'mar\u00e7o':3,'abril':4,'maio':5,'junho':6,
+    'julho':7,'agosto':8,'setembro':9,'outubro':10,'novembro':11,'dezembro':12 };
+
+  /* Lê "Julho de 2023", "Setembro de 2024", "2026" ou "31/08/2026". */
+  function lerData(t) {
+    if (!t) return null;
+    t = String(t).toLowerCase();
+    var m = t.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+    if (m) return new Date(+m[3], +m[2] - 1, +m[1]);
+    for (var nome in MESES) {
+      if (t.indexOf(nome) >= 0) {
+        var a = t.match(/(\d{4})/);
+        if (a) return new Date(+a[1], MESES[nome], 0);
+      }
+    }
+    var so = t.match(/^\s*(\d{4})\s*$/);
+    if (so) return new Date(+so[1], 11, 31);
+    return null;
+  }
+
+  function fonteChave(f) {
+    f = String(f || '').toUpperCase();
+    for (var k in PERIODICIDADE) if (f.indexOf(k) >= 0) return k;
+    if (f.indexOf('CADASTRO') >= 0) return 'CADASTRO';
+    if (f.indexOf('BOLETIM') >= 0 || f.indexOf('QUENTE') >= 0) return 'SIMA';
+    return null;
+  }
+
+  /* Devolve o estado de actualidade, ou null quando não é aplicável. */
+  function actualidade(o) {
+    if (!o || !o.dataDados) return null;
+    var d = lerData(o.dataDados);
+    if (!d) return null;
+    var k = fonteChave(o.fonte);
+    var per = k ? PERIODICIDADE[k] : null;
+    var dias = Math.floor((new Date() - d) / 86400000);
+    if (dias < 0) return { estado: 'impossivel', dias: dias, cor: '#A78BFA',
+      rotulo: 'data futura',
+      nota: 'A data declarada \u00e9 posterior a hoje. \u00c9 erro de registo e deve ser corrigido.' };
+    if (!per) return { estado: 'indeterminado', dias: dias, cor: '#5E7189',
+      rotulo: 'periodicidade n\u00e3o declarada',
+      nota: 'N\u00e3o est\u00e1 declarada a periodicidade esperada desta fonte, pelo que n\u00e3o se pode dizer se o dado est\u00e1 atrasado.' };
+    var ciclos = dias / per.dias;
+    var txt = dias < 60 ? dias + ' dias'
+            : dias < 730 ? Math.round(dias / 30) + ' meses'
+            : (dias / 365).toFixed(1).replace('.', ',') + ' anos';
+    var base = 'O dado tem <b>' + txt + '</b>. Esta fonte publica ' + per.nome + '.';
+    if (ciclos <= 1.5) return { estado: 'actual', dias: dias, ciclos: ciclos, cor: '#12B981',
+      rotulo: '\u00faltima informa\u00e7\u00e3o dispon\u00edvel', nota: base + ' Est\u00e1 dentro do intervalo esperado.' };
+    if (ciclos <= 4) return { estado: 'recente', dias: dias, ciclos: ciclos, cor: '#F0A926',
+      rotulo: 'com atraso', nota: base + ' Est\u00e1 atrasada cerca de ' + Math.round(ciclos) + ' ciclos.' };
+    if (ciclos <= 20) return { estado: 'desfasado', dias: dias, ciclos: ciclos, cor: '#EF4444',
+      rotulo: 'desactualizado', nota: base + ' Isso s\u00e3o cerca de <b>' + Math.round(ciclos)
+        + ' ciclos de atraso</b>. N\u00e3o representa a situa\u00e7\u00e3o de hoje.' };
+    return { estado: 'historico', dias: dias, ciclos: ciclos, cor: '#EF4444',
+      rotulo: 'informa\u00e7\u00e3o hist\u00f3rica',
+      nota: base + ' S\u00e3o cerca de <b>' + Math.round(ciclos) + ' ciclos de atraso</b>. '
+        + 'O facto aconteceu e est\u00e1 documentado, mas <b>n\u00e3o descreve a situa\u00e7\u00e3o actual</b>.' };
+  }
+
+  function seloIdade(o) {
+    var a = actualidade(o);
+    if (!a) return '';
+    return '<span class="ind-idade" style="color:' + a.cor + ';border-color:' + a.cor
+      + '55;background:' + a.cor + '12" title="' + esc(a.nota.replace(/<[^>]*>/g, '')) + '">'
+      + a.rotulo + '</span>';
+  }
+
   function cartao(o) {
     estilo();
     var tipo = o.tipo || 'DEMONSTRAÇÃO';
@@ -107,6 +216,7 @@
       + '<div class="ind-v" style="color:' + corValor + '">' + num(o.valor)
       + (o.unidade ? '<small>' + esc(o.unidade) + '</small>' : '') + '</div>'
       + (o.estado ? '<div class="ind-s">' + o.estado + '</div>' : '')
+      + seloIdade(o)
       + '<div class="ind-seta">'
       + (tipo === 'DEMONSTRAÇÃO' ? 'Porque n&atilde;o &eacute; real &rarr;' : 'Como se chega a este n&uacute;mero &rarr;')
       + '</div></button>';
@@ -170,6 +280,13 @@
     h += '<div class="ind-pe"><span>'
       + (o.fonte ? '<b style="color:#8FA1B8">Fonte:</b> ' + o.fonte : 'Sem fonte declarada')
       + (o.dataDados ? ' &middot; <b style="color:#8FA1B8">Dados de:</b> ' + o.dataDados : '')
+      + (function () {
+          var a = actualidade(o);
+          if (!a) return '';
+          return '<div class="ind-actual" style="border-color:' + a.cor + '44;background:' + a.cor
+            + '0e"><b style="color:' + a.cor + '">' + a.rotulo.charAt(0).toUpperCase()
+            + a.rotulo.slice(1) + '.</b> ' + a.nota + '</div>';
+        })()
       + (o.ecra ? '<br><a href="' + esc(o.ecra) + '">Abrir o ecr&atilde; onde este indicador vive &rarr;</a>' : '')
       + '</span><button id="ind-fechar">Fechar</button></div>';
 
