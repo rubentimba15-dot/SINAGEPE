@@ -162,6 +162,11 @@
       "titulo": "Existir não é o mesmo que estar registado",
       "regra": "O sistema distingue seis estados de uma entidade: identificada, identificada por confirmar, confirmada pelo titular, activa, inactiva e de estado desconhecido. São contados em separado.",
       "numero": 8
+    },
+    {
+      "titulo": "Fonte comercial descobre, não confirma",
+      "regra": "Informação comercial publicada pelo próprio detentor pode ser usada para descobrir estabelecimentos. Entram com o estado \"identificada por fonte comercial\" e nunca como entidade confirmada.",
+      "numero": 9
     }
   ],
   "classificacao": [

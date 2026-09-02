@@ -123,6 +123,22 @@ td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
       propriet&aacute;rio nunca se registou.</div>
     </div>
 
+    <div class="card frame">
+      <div class="ch"><div><h2>Rede comercial &mdash; o que o sistema conhece</h2>
+        <p>Quem vende produtos essenciais ao p&uacute;blico, e o que falta</p></div>
+        <span class="tag crit" id="rc-tag">&mdash;</span></div>
+      <div class="bd" id="redeComercial"></div>
+      <div class="aviso r"><b>O que este quadro diz, e o que n&atilde;o diz.</b>
+      Estes s&atilde;o os operadores que <b>o sistema conhece</b>, n&atilde;o a rede comercial de Mo&ccedil;ambique.
+      Os locais declarados vêm dos s&iacute;tios das pr&oacute;prias empresas; s&oacute; uma parte tem morada no sistema,
+      e a diferen&ccedil;a &eacute; trabalho por fazer.
+      <b>Ficam de fora os mercados municipais e comunit&aacute;rios, as mercearias e os retalhistas independentes</b>,
+      que s&atilde;o a maior parte dos pontos de venda do pa&iacute;s.
+      N&atilde;o existe cadastro nacional consolidado &mdash; mas isso n&atilde;o &eacute; o mesmo que n&atilde;o existirem dados.
+      Quem emite os alvar&aacute;s comerciais &eacute; o BAU, e o Minist&eacute;rio da Ind&uacute;stria e Com&eacute;rcio publica
+      listas de mercados nos seus boletins de pre&ccedil;os.</div>
+    </div>
+
 <div class="card frame">
       <div class="ch"><div><h2>As onze prov&iacute;ncias</h2>
         <p>Cada n&uacute;mero &eacute; contado, e cada linha leva ao ecr&atilde; que a explica</p></div>
@@ -262,6 +278,150 @@ function desenharEstadosCadastro(){
   [EA,EF].forEach(function(E){ if(E) E.estados.forEach(function(e){
     if(e.estado==='confirmada-pelo-titular') conf+=e.quantas; })});
   document.getElementById('ec-tag').innerHTML=conf+' confirmadas pelo titular';
+}
+
+/* ============================================================
+   REDE COMERCIAL
+   ------------------------------------------------------------
+   O painel não lia este ficheiro. Passa a ler — e o que mostra
+   é sobretudo o tamanho da lacuna: o sistema conhece um punhado
+   de operadores num país com milhares de pontos de venda.
+   ============================================================ */
+function desenharRedeComercial(){
+  var el=document.getElementById('redeComercial'); if(!el||!ST.rc) return;
+  var O=ST.rc.operadores, U=ST.rc.unidades, X=ST.rc.outrosOperadores||[];
+  var PROV=['Niassa','Cabo Delgado','Nampula','Zamb\u00e9zia','Tete','Manica','Sofala',
+   'Inhambane','Gaza','Maputo','Cidade de Maputo'];
+  var porProv={}; U.forEach(function(u){porProv[u.provincia]=(porProv[u.provincia]||0)+1});
+  var semNada=PROV.filter(function(p){return !porProv[p]});
+  var frio=U.filter(function(u){return u.cadeiaDeFrio}).length;
+
+  /* Locais declarados pelos operadores nos seus sítios, contra os que
+     o sistema tem com morada. A diferença é trabalho por fazer, e é
+     mais honesto mostrá-la do que mostrar só o número menor. */
+  var declarados=0;
+  O.forEach(function(o){
+    var r=o.redeDeclarada||{};
+    var n=r.locais||r.lojasDeclaradas||r.locaisConhecidos;
+    if(typeof n==='number') declarados+=n;
+    else if(Array.isArray(n)) declarados+=n.length;
+  });
+  var cabecalho='<div style="display:flex;gap:26px;flex-wrap:wrap;margin-bottom:18px">'
+   +[[O.length+X.length+((ST.rc.estabelecimentosIdentificados||[]).length),
+      'entidades identificadas','#F0A926'],
+     [declarados,'locais declarados pelos operadores','#E8BE7A'],
+     [U.length,'com morada no sistema','#22B8F0'],
+     [frio,'com cadeia de frio','#2DD4BF'],
+     [semNada.length,'prov&iacute;ncias sem nenhuma','#EF4444']].map(function(x){
+      return '<div class="entra"><div class="mono" style="font-size:25px;color:'+x[2]
+       +';letter-spacing:-.02em">'+x[0]+'</div>'
+       +'<div style="font-size:10.5px;color:var(--t4);margin-top:3px">'+x[1]+'</div></div>';
+    }).join('')+'</div>';
+
+  var lista=O.map(function(o,i){
+    var un=U.filter(function(u){return u.operador===o.id});
+    var provs={}; un.forEach(function(u){provs[u.provincia]=1});
+    return '<div class="entra" style="animation-delay:'+(i*.07)+'s;padding:12px 0;'
+     +'border-bottom:1px solid rgba(38,56,86,.4)">'
+     +'<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px">'
+     +'<b style="font-size:13px">'+esc(o.insignia||o.nome)+'</b>'
+     +'<span style="font-size:10.5px;color:var(--t4)">'+esc(o.nome)+'</span>'
+     +(o.cadeiaDeFrio?'<span style="font-size:9px;letter-spacing:.09em;text-transform:uppercase;'
+       +'padding:3px 8px;border-radius:3px;border:1px solid rgba(45,212,191,.4);'
+       +'background:rgba(45,212,191,.1);color:#2DD4BF">cadeia de frio</span>':'')
+     +'<span style="flex:1"></span>'
+     +(function(){
+        var r=o.redeDeclarada||{};
+        var n=r.locais||r.lojasDeclaradas||r.locaisConhecidos;
+        if(Array.isArray(n)) n=n.length;
+        if(typeof n!=='number') return '';
+        var falta=n-un.length;
+        return '<span class="mono" style="color:var(--brzl)">'+n+' declarados</span>'
+         +(falta>0?'<span class="mono" style="color:var(--red);font-size:11px">'
+           +un.length+' com morada</span>':'');
+      })()
+     +'</div>'
+     +'<div style="font-size:11.5px;color:var(--t3);line-height:1.6">'+esc(o.actividade||o.tipo)+'</div>'
+     +((o.redeDeclarada&&(o.redeDeclarada.reserva||o.redeDeclarada.divergencia))
+       ? '<div style="font-size:10.5px;color:var(--amber);margin-top:6px;line-height:1.55">'
+         +esc(o.redeDeclarada.divergencia||o.redeDeclarada.reserva)+'</div>' : '')
+     +'<div style="font-size:10.5px;color:var(--t4);margin-top:5px">'
+     +(Object.keys(provs).length?Object.keys(provs).join(' &middot; ')+' &middot; ':'')
+     +'estado: '+esc((o.estadoCadastro||'identificada').replace(/-/g,' '))
+     +' &middot; fonte: '+esc(o.naturezaFonte||'s&iacute;tio oficial')+'</div></div>';
+  }).join('');
+
+  var outros='<div style="margin-top:14px;padding-top:13px;border-top:1px solid rgba(38,56,86,.5)">'
+   +'<div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--t4);'
+   +'margin-bottom:9px">Identificados, sem rede publicada</div>'
+   +X.map(function(o){
+      return '<div style="display:flex;gap:10px;align-items:baseline;padding:6px 0;font-size:11.5px">'
+       +'<b style="width:210px;flex-shrink:0">'+esc(o.nome)+'</b>'
+       +'<span style="color:var(--t3)">'+esc(o.tipo)+'</span>'
+       +'<span style="flex:1"></span>'
+       +'<span style="color:var(--t4);font-size:10.5px">'+esc(o.estado)+'</span></div>';
+    }).join('')+'</div>';
+
+  var mapa='<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(38,56,86,.5)">'
+   +'<div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--t4);'
+   +'margin-bottom:9px">Cobertura por prov&iacute;ncia</div>'
+   +PROV.map(function(p,i){
+      var n=porProv[p]||0;
+      var c=n?'#12B981':'#EF4444';
+      return '<div class="entra" style="animation-delay:'+(i*.03)+'s;display:flex;align-items:center;'
+       +'gap:11px;padding:5px 0"><span style="width:132px;flex-shrink:0;font-size:11.5px;color:'
+       +(n?'var(--t2)':'var(--t4)')+'">'+p+'</span>'
+       +'<span style="flex:1;height:11px;background:#0A1421;border-radius:3px;overflow:hidden">'
+       +(n?'<i class="cresce" style="display:block;height:100%;width:'+(n/4*100)+'%;background:'
+         +c+'99;animation-delay:'+(.1+i*.03)+'s"></i>':'')+'</span>'
+       +'<span class="mono" style="width:26px;text-align:right;font-size:11.5px;color:'+c+'">'
+       +(n||'0')+'</span></div>';
+    }).join('')+'</div>';
+
+  /* Estabelecimentos vindos de fonte comercial. Ficam em bloco próprio
+     e com estado distinto: são descoberta, não confirmação. */
+  var EI=(ST.rc.estabelecimentosIdentificados||[]);
+  var bei=EI.length
+   ? '<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(38,56,86,.5)">'
+     +'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">'
+     +'<div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--viol)">'
+     +'Identificados por fonte comercial</div>'
+     +'<span class="mono" style="font-size:11px;color:var(--t4)">'+EI.length+'</span></div>'
+     +'<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:8px">'
+     +EI.map(function(e,i){
+        return '<div class="entra" style="animation-delay:'+(i*.03)+'s;background:#0A1421;'
+         +'border:1px solid var(--card-line);border-left:2px solid #A78BFA;border-radius:9px;'
+         +'padding:10px 12px">'
+         +'<div style="font-size:12px;font-weight:600;margin-bottom:4px">'+esc(e.nome)+'</div>'
+         +'<div style="font-size:10px;color:var(--t3)">'+esc(e.tipo.replace(/-/g,' '))+'</div>'
+         +'<div style="font-size:9.5px;color:var(--t4);margin-top:5px">'+esc(e.localizacao)+'</div></div>';
+      }).join('')+'</div>'
+     +(ST.rc.fontesComerciais||[]).map(function(f){
+        return '<div style="font-size:11px;color:var(--t3);line-height:1.65;margin-top:12px">'
+         +'<b style="color:var(--t2)">Fonte: '+esc(f.entidade)+'.</b> '+esc(f.naturezaFonte)
+         +'. '+esc(f.nota)+'</div>';
+      }).join('')
+     +'<div style="font-size:11px;color:var(--amber);line-height:1.65;margin-top:9px">'
+     +'<b>O que se regista e o que n&atilde;o se regista.</b> Regista-se que o estabelecimento existe, '
+     +'com a fonte citada. <b>N&atilde;o se constr&oacute;i matriz de quem abastece quem</b> &mdash; '
+     +'qualquer indicador de cobertura de distribui&ccedil;&atilde;o obedece &agrave; regra dos cinco, '
+     +'como no Marketplace.</div></div>'
+   : '';
+
+  var dv=(ST.rc.divergenciasRegistadas||[]);
+  var bdv=dv.length
+   ? '<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(38,56,86,.5)">'
+     +'<div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);'
+     +'margin-bottom:9px">Diverg&ecirc;ncias registadas, n&atilde;o resolvidas</div>'
+     +dv.map(function(x){
+        return '<div style="padding:8px 0;font-size:11.5px;line-height:1.6">'
+         +'<b>'+esc(x.operador)+' &mdash; '+esc(x.assunto)+'.</b> '
+         +x.valores.map(function(v){return esc(v.fonte)+': '+esc(v.valor)}).join(' / ')
+         +'<div style="color:var(--t4);font-size:10.5px;margin-top:3px">'+esc(x.nota)+'</div></div>';
+      }).join('')+'</div>'
+   : '';
+  el.innerHTML=cabecalho+lista+outros+bei+bdv+mapa;
+  document.getElementById('rc-tag').innerHTML=U.length+' unidades conhecidas';
 }
 
 function desenharProvincias(){
@@ -475,6 +635,26 @@ function desenharKpis(){
     leitura:'Onde falta, &eacute; lacuna de cadastro e n&atilde;o de abastecimento. O sistema n&atilde;o sabe o que l&aacute; existe.',
     fonte:'Cadastro Nacional e ANARME',dataDados:'Agosto de 2026'},
 
+   {id:'pn-comercio',rotulo:'Operadores comerciais no sistema',
+    valor:(ST.rc?ST.rc.operadores.length+ST.rc.outrosOperadores.length:0),unidade:'',
+    estado:'de um universo nacional que ningu\u00e9m publica',tipo:'FACTO',cor:'var(--red)',
+    resumo:'Grossistas, retalhistas e distribuidores alimentares identificados no sistema.',
+    formula:'contagem dos operadores com fonte p&uacute;blica citada',
+    componentes:(function(){
+      if(!ST.rc) return [];
+      var c=ST.rc.operadores.map(function(o){
+        return [o.nome,(o.lojas?o.lojas.length:((o.escala&&o.escala.plataformas)||1)),'unidades']});
+      ST.rc.outrosOperadores.forEach(function(o){c.push([o.nome,'\u2014',o.estado])});
+      c.push(['Unidades no mapa',ST.rc.unidades.length,'']);
+      return c;})(),
+    leitura:'Os operadores declaram nos seus s&iacute;tios muito mais locais do que o sistema tem com morada. '
+      +'<b>N&atilde;o existe cadastro nacional consolidado &mdash; mas isso n&atilde;o &eacute; o mesmo que n&atilde;o '
+      +'existirem dados.</b> Faltam sobretudo os mercados municipais e comunit&aacute;rios, as mercearias e os '
+      +'retalhistas independentes, que s&atilde;o a maior parte dos pontos de venda do pa&iacute;s. '
+      +'O BAU emite os alvar&aacute;s e o MIC publica listas de mercados nos boletins de pre&ccedil;os.',
+    fonte:'S&iacute;tios oficiais dos operadores',dataDados:'Setembro de 2026',
+    ecra:'adesao-institucional.html'},
+
    {id:'pn-disponibilidade',rotulo:'Disponibilidade nacional',valor:'\u2014',unidade:'',
     estado:'retirado',tipo:'DEMONSTRA\u00c7\u00c3O',
     resumo:'Percentagem do stock m&iacute;nimo estrat&eacute;gico coberto.',
@@ -494,13 +674,13 @@ function desenharKpis(){
     IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
 }
 
-Promise.all(['armazens-nacionais','farmacias-anarme','rede-viaria','ipc-ine','sima-precos','antecipacao','indicadores-provinciais-ine']
+Promise.all(['armazens-nacionais','farmacias-anarme','rede-viaria','ipc-ine','sima-precos','antecipacao','indicadores-provinciais-ine','rede-comercial']
  .map(function(f){
   return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
     if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
 })).then(function(res){
-  ST.arm=res[0];ST.far=res[1];ST.rv=res[2];ST.ipc=res[3];ST.sima=res[4];ST.risc=res[5];ST.ine=res[6];
-  desenharKpis();desenharEstadosCadastro();desenharProvincias();desenharPrecos();desenharRiscos();desenharDestinos();
+  ST.arm=res[0];ST.far=res[1];ST.rv=res[2];ST.ipc=res[3];ST.sima=res[4];ST.risc=res[5];ST.ine=res[6];ST.rc=res[7];
+  desenharKpis();desenharEstadosCadastro();desenharRedeComercial();desenharProvincias();desenharPrecos();desenharRiscos();desenharDestinos();
 }).catch(function(e){
   document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
 });

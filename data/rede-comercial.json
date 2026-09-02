@@ -6,7 +6,24 @@
     "avisoStock": "NENHUM operador privado publica stock por loja. Não há, em Moçambique ou em quase parte nenhuma, obrigação de o fazer. O que estas unidades mostram é presença e papel na cadeia, não existências. Qualquer número de stock que aparecesse aqui seria inventado.",
     "avisoPrecos": "Os preços NÃO são por loja. Vêm do SIMA, que recolhe em mercados de referência ao nível do produtor, do grossista e do retalhista. Servem para saber o preço praticado numa praça, não numa insígnia.",
     "avisoCoordenadas": "Coordenadas ao nível do centro da cidade onde a plataforma opera, excepto o armazém central de Maputo, cuja morada é pública. Não são a porta da instalação.",
-    "porqueImporta": "O cadastro nacional cobre silos do Estado, terminais portuários e combustíveis. Para lá disso, o produto desaparece. Esta camada mostra por onde ele passa depois — e é também onde o ponto cego é mais fundo, porque nenhuma destas unidades reporta o que quer que seja."
+    "porqueImporta": "O cadastro nacional cobre silos do Estado, terminais portuários e combustíveis. Para lá disso, o produto desaparece. Esta camada mostra por onde ele passa depois — e é também onde o ponto cego é mais fundo, porque nenhuma destas unidades reporta o que quer que seja.",
+    "estadosCadastro": {
+      "principio": "Existir não é o mesmo que estar registado. Os operadores identificados em fonte pública constam do cadastro mesmo sem se terem registado no SINAGEPE.",
+      "identificados": 8,
+      "confirmadosPeloTitular": 0,
+      "nota": "Nenhum operador confirmou os seus dados. Não existe canal para isso."
+    },
+    "notaCoordenadas": "As unidades da Terramar têm coordenada ao nível da cidade, não da morada. A morada exacta consta do registo e está declarada no campo endereco; a coordenada serve para situar no mapa, não para navegação.",
+    "correccaoSetembro2026": "O sistema tinha o Recheio como \"identificado, rede não publicada\". A rede está publicada no sítio da própria empresa: 26 locais nas dez províncias. Faltou ir ver. A mesma verificação trouxe o VIP/SPAR, o Game e o Shoprite. Regra mantida: só fonte oficial ou o próprio operador. Directórios comerciais de terceiros e listas de clientes publicadas por distribuidores ficam de fora — as empresas listadas nessas fontes não consentiram em figurar nelas.",
+    "decisaoInformacaoComercial": {
+      "data": "Setembro de 2026",
+      "decidiu": "Ruben Timba",
+      "decisao": "Usar informação comercial publicada por terceiros como fonte de descoberta de estabelecimentos, com o estado \"identificada por fonte comercial\".",
+      "reservaInicial": "A posição anterior do sistema era não usar listas de clientes de distribuidores, por serem informação comercial de terceiros que os visados não publicaram.",
+      "porqueMudou": "A verificação da fonte enfraqueceu a reserva: o Grupo Aggy publica a lista no seu próprio sítio institucional, como material de marketing. É declaração pública da empresa que detém a informação, não informação obtida por outra via.",
+      "limiteQueSeMantem": "Regista-se que o estabelecimento existe e que o distribuidor o declara como cliente, com a fonte citada. NÃO se constrói matriz analítica de quem abastece quem: qualquer indicador de cobertura de distribuição obedece à regra dos cinco, como no Marketplace e na análise de concorrência.",
+      "porqueEsseLimite": "O SINAGEPE liga-se ao IGSAE, que fiscaliza. Um sistema do Estado que mapeia relações comerciais entre privados identificados, e que também fiscaliza, gera desconfiança que fecha portas de adesão."
+    }
   },
   "fontePrecos": {
     "nome": "SIMA — Sistema de Informação de Mercados Agrícolas",
@@ -69,7 +86,216 @@
       ],
       "expansao": "Abertura prevista de pequenos cash & carry junto aos mercados informais em Maputo, com intenção de alargar a todas as cidades. Em 2023 criou a Mega Distribuição para representação de marcas no mercado informal, servindo por cash vans e camião a partir da rede de armazéns.",
       "marcaProximidade": "LOKAL — lojas de proximidade em zonas residenciais, em fase de expansão",
-      "fonte": "https://megamocambique.com/pt-mz/pages/quem-somos"
+      "fonte": "https://megamocambique.com/pt-mz/pages/quem-somos",
+      "redeDeclarada": {
+        "locais": 7,
+        "nota": "Um armazém central em Maputo e seis centros de distribuição: Beira, Nampula, Tete, Quelimane, Chimoio e Pemba. A empresa declara ainda mais de 1.500 clientes e rede de cash vans, que não são pontos de venda próprios."
+      }
+    },
+    {
+      "id": "terramar",
+      "nome": "Moçambique Terramar Trading, Lda",
+      "insignia": "TERRAMAR",
+      "grupo": null,
+      "tipo": "grossista-cadeia-de-frio",
+      "sede": "Av. Moçambique n.º 5615, Bagamoio, Maputo",
+      "estadoCadastro": "identificada-por-confirmar",
+      "confirmadoPeloTitular": false,
+      "actividade": "Importação, retalho, grosso e distribuição de produtos alimentares congelados, refrigerados e de temperatura ambiente",
+      "escala": {
+        "lojas": 4,
+        "provincias": [
+          "Maputo",
+          "Nampula",
+          "Sofala"
+        ],
+        "nota": "O sítio oficial declara números de clientes, produtos, lojas e anos, mas os valores não são legíveis na página. Só as quatro lojas com morada foram registadas."
+      },
+      "lojas": [
+        {
+          "nome": "Terramar Bagamoio",
+          "endereco": "Av. Moçambique n.º 5615",
+          "cidade": "Maputo",
+          "provincia": "Maputo",
+          "telefone": "842070344"
+        },
+        {
+          "nome": "Terramar Malanga",
+          "endereco": "Rua do Manu n.º 114",
+          "cidade": "Maputo",
+          "provincia": "Maputo",
+          "telefone": "842070344",
+          "nota": "Abertura noticiada em 17 de Julho de 2025"
+        },
+        {
+          "nome": "Terramar Nacala",
+          "endereco": "Rua da Mogás n.º 23",
+          "cidade": "Nacala",
+          "provincia": "Nampula",
+          "telefone": "842075122"
+        },
+        {
+          "nome": "Terramar Beira",
+          "endereco": "Rua Trás-os-Montes n.º 1556, Bairro Pioneiros",
+          "cidade": "Beira",
+          "provincia": "Sofala",
+          "telefone": "842093225"
+        }
+      ],
+      "categorias": [
+        "Carne de bovino",
+        "Charcutaria",
+        "Aves",
+        "Mercearia",
+        "Bebidas",
+        "Lacticínios",
+        "Pescado"
+      ],
+      "cadeiaDeFrio": true,
+      "relevanciaSinagepe": "É o primeiro operador do sistema com cadeia de frio declarada, e cobre três províncias em vez de uma. Distribui produtos alimentares perecíveis, que são os mais sensíveis a corte de estrada e a falha de energia — e os que o sistema menos consegue monitorizar.",
+      "quotaDeclarada": {
+        "valor": "cerca de 60% do mercado alimentar",
+        "fonte": "Zebu Investments, que investiu na empresa em Março de 2022 através do Africa Food Security Fund",
+        "url": "https://www.zebuinvestments.com/terramar/",
+        "reserva": "A fonte é investidora na empresa, e não é neutra. O valor é registado como declaração do investidor, não como quota medida. Não entra em nenhum cálculo do sistema."
+      },
+      "fonte": "http://terramar.co.mz/",
+      "fonteLojas": "Sítio oficial da Terramar, secção de informação da empresa, consultada em Setembro de 2026",
+      "verificado": true,
+      "dataFonte": "Setembro de 2026",
+      "redeDeclarada": {
+        "locais": 4,
+        "nota": "Quatro lojas com morada publicada."
+      }
+    },
+    {
+      "id": "recheio",
+      "nome": "Recheio Cash & Carry, S.A.",
+      "insignia": "RECHEIO",
+      "grupo": "COGEF",
+      "tipo": "grossista-retalhista-alimentar",
+      "sede": "Escritório n.º 7, Talhão I-14, Parcela 728/B, Foral da Matola",
+      "estadoCadastro": "identificada-por-confirmar",
+      "confirmadoPeloTitular": false,
+      "actividade": "Cash and carry e supermercados, retalho e venda por grosso de mercearia",
+      "redeDeclarada": {
+        "locais": 26,
+        "provincias": 10,
+        "textoOriginal": "Estamos localizados em todas as dez províncias de Moçambique, com mais de 25 locais",
+        "cidadesNomeadas": [
+          "Maputo",
+          "Machava",
+          "Matola",
+          "Tete",
+          "Pemba",
+          "Lichinga",
+          "Quelimane",
+          "Nampula",
+          "Nacala"
+        ],
+        "reserva": "A página declara ainda a estratégia de \"alcançar 50 para o ano de 2020\". O texto é anterior a 2021, pelo que o número 26 pode não ser corrente. Registado como declaração da empresa, com data por confirmar."
+      },
+      "primeiraLoja": "2009, na Junta, Maputo",
+      "escala": "mais de 400.000 compras de consumidores activos por mês; mais de 8.500 produtos por loja",
+      "fonte": "https://recheio.co.mz/company/about",
+      "naturezaFonte": "sítio oficial da empresa",
+      "dataFonte": "consultado em Setembro de 2026",
+      "verificado": true
+    },
+    {
+      "id": "vip-spar",
+      "nome": "VIP Supermercado, Limitada",
+      "insignia": "SPAR VIP",
+      "grupo": "VIP Group, franquia SPAR",
+      "tipo": "supermercado-hipermercado",
+      "estadoCadastro": "identificada-por-confirmar",
+      "confirmadoPeloTitular": false,
+      "actividade": "Supermercados e hipermercados, em franquia da SPAR",
+      "fundada": "2006",
+      "redeDeclarada": {
+        "lojasDeclaradas": 10,
+        "localizacoesNomeadas": 12,
+        "divergencia": "A empresa declara 10 lojas e nomeia 12 localizações. Além disso, duas fontes dão listas diferentes: uma inclui Palma, a outra inclui Montepuez. Não se escolheu nenhuma.",
+        "listaA": [
+          "Maputo",
+          "Matola",
+          "Zimpeto",
+          "Chimoio",
+          "Tete",
+          "Nampula",
+          "Nacala",
+          "Pemba",
+          "Beira",
+          "Palma",
+          "Songo",
+          "Lichinga"
+        ],
+        "listaB": [
+          "Maputo",
+          "Matola",
+          "Zimpeto",
+          "Beira",
+          "Chimoio",
+          "Tete",
+          "Songo",
+          "Nampula",
+          "Lichinga",
+          "Nacala",
+          "Montepuez",
+          "Pemba"
+        ],
+        "fonteListaA": "Perfil institucional da empresa",
+        "fonteListaB": "Notícia sobre responsabilidade social da Spar VIP"
+      },
+      "fonte": "https://vipspar.com/",
+      "naturezaFonte": "perfil institucional da empresa e notícia",
+      "dataFonte": "2025",
+      "verificado": false,
+      "porConfirmar": "Número exacto de lojas e lista definitiva de localizações"
+    },
+    {
+      "id": "game",
+      "nome": "Game Mozambique",
+      "insignia": "GAME",
+      "grupo": "Massmart",
+      "tipo": "retalho-generalista-com-alimentar",
+      "estadoCadastro": "identificada-por-confirmar",
+      "confirmadoPeloTitular": false,
+      "actividade": "Retalho de bens de consumo e alimentos",
+      "redeDeclarada": {
+        "locaisConhecidos": 2,
+        "locais": [
+          "Maputo/Matola, Av. da Namaacha",
+          "Baía Mall, Maputo"
+        ],
+        "reserva": "Apenas dois locais confirmados. A empresa tem localizador de lojas que não foi lido na íntegra."
+      },
+      "fonte": "https://www.game.co.mz/stores/",
+      "naturezaFonte": "localizador oficial de lojas",
+      "dataFonte": "2026",
+      "verificado": false
+    },
+    {
+      "id": "shoprite",
+      "nome": "Shoprite Moçambique",
+      "insignia": "SHOPRITE",
+      "grupo": "Shoprite Holdings",
+      "tipo": "supermercado",
+      "estadoCadastro": "identificada-por-confirmar",
+      "confirmadoPeloTitular": false,
+      "actividade": "Supermercados",
+      "redeDeclarada": {
+        "locaisConhecidos": 1,
+        "locais": [
+          "Shoprite Tete Mall, Tete"
+        ],
+        "reserva": "Apenas um local confirmado por fonte independente. A rede em Moçambique não foi localizada em fonte da própria empresa."
+      },
+      "fonteInstitucional": "O Ministério da Indústria e Comércio identifica Shoprite, SPAR, Extra e Terramar como intervenientes na comercialização de produtos agrícolas na cidade de Maputo, no Plano Operacional de Comercialização Agrícola de 2018",
+      "fonte": "https://www.mic.gov.mz/",
+      "naturezaFonte": "documento oficial do MIC",
+      "dataFonte": "2018",
+      "verificado": false
     }
   ],
   "unidades": [
@@ -156,20 +382,81 @@
       "lon": 40.5178,
       "precisao": "centro-cidade",
       "corredor": "nacala"
+    },
+    {
+      "id": "terramar-bagamoio",
+      "operador": "terramar",
+      "nome": "Terramar Bagamoio",
+      "papel": "plataforma de cadeia de frio, aberta ao público",
+      "provincia": "Maputo",
+      "cidade": "Maputo",
+      "lat": -25.956,
+      "lon": 32.572,
+      "precisao": "cidade",
+      "corredor": "maputo",
+      "endereco": "Av. Moçambique n.º 5615",
+      "cadeiaDeFrio": true
+    },
+    {
+      "id": "terramar-malanga",
+      "operador": "terramar",
+      "nome": "Terramar Malanga",
+      "papel": "loja de cadeia de frio",
+      "provincia": "Maputo",
+      "cidade": "Maputo",
+      "lat": -25.969,
+      "lon": 32.576,
+      "precisao": "cidade",
+      "corredor": "maputo",
+      "endereco": "Rua do Manu n.º 114",
+      "cadeiaDeFrio": true,
+      "nota": "Abertura noticiada em Julho de 2025"
+    },
+    {
+      "id": "terramar-nacala",
+      "operador": "terramar",
+      "nome": "Terramar Nacala",
+      "papel": "plataforma de cadeia de frio",
+      "provincia": "Nampula",
+      "cidade": "Nacala",
+      "lat": -14.5428,
+      "lon": 40.6728,
+      "precisao": "cidade",
+      "corredor": "nacala",
+      "endereco": "Rua da Mogás n.º 23",
+      "cadeiaDeFrio": true
+    },
+    {
+      "id": "terramar-beira",
+      "operador": "terramar",
+      "nome": "Terramar Beira",
+      "papel": "plataforma de cadeia de frio",
+      "provincia": "Sofala",
+      "cidade": "Beira",
+      "lat": -19.8436,
+      "lon": 34.8389,
+      "precisao": "cidade",
+      "corredor": "beira",
+      "endereco": "Rua Trás-os-Montes n.º 1556, Bairro Pioneiros",
+      "cadeiaDeFrio": true
     }
   ],
   "outrosOperadores": [
-    {
-      "nome": "Recheio Cash & Carry, S.A.",
-      "tipo": "grossista-alimentar",
-      "estado": "identificado, rede não publicada",
-      "fonte": "https://recheio.co.mz/"
-    },
     {
       "nome": "LOKAL",
       "tipo": "retalho de proximidade",
       "estado": "marca do mesmo grupo, lojas não enumeradas publicamente",
       "fonte": "https://www.desfo.com/distribuicao-retalho"
+    },
+    {
+      "nome": "Terra-Mar Logística, Lda",
+      "tipo": "logística e despacho",
+      "estado": "identificada, rede não publicada",
+      "sede": "Beira, Sofala",
+      "constituida": "2007",
+      "actividade": "Despacho e frete, com armazenagem, enchimento e consolidação de carga dentro e fora do porto da Beira",
+      "nota": "Empresa distinta da Moçambique Terramar Trading, apesar da semelhança do nome. Registada em separado para evitar que sejam tomadas por uma só.",
+      "fonte": "https://www.facebook.com/terramarlogistics/"
     }
   ],
   "lacunas": [
@@ -192,6 +479,178 @@
       "titulo": "Boletim SIMA actualizado",
       "estado": "a confirmar",
       "nota": "O arquivo público pára em Agosto de 2023. Verificar sima.gov.mz antes de concluir que o serviço parou."
+    }
+  ],
+  "divergenciasRegistadas": [
+    {
+      "operador": "VIP/SPAR",
+      "assunto": "Número de lojas em Moçambique",
+      "valores": [
+        {
+          "fonte": "Perfil da empresa",
+          "valor": "10 lojas declaradas"
+        },
+        {
+          "fonte": "Localizações nomeadas na mesma página",
+          "valor": "12 cidades"
+        }
+      ],
+      "nota": "A empresa declara 10 lojas e nomeia 12 localizações. Pode haver cidades com presença que não é loja, ou o número pode estar desactualizado."
+    },
+    {
+      "operador": "VIP/SPAR",
+      "assunto": "Lista de localizações",
+      "valores": [
+        {
+          "fonte": "Perfil institucional",
+          "valor": "inclui Palma, não inclui Montepuez"
+        },
+        {
+          "fonte": "Notícia de 2024",
+          "valor": "inclui Montepuez, não inclui Palma"
+        }
+      ],
+      "nota": "Duas fontes, duas listas. Não se escolheu nenhuma."
+    },
+    {
+      "operador": "Recheio",
+      "assunto": "Actualidade do número de locais",
+      "valores": [
+        {
+          "fonte": "Sítio da empresa",
+          "valor": "26 locais"
+        }
+      ],
+      "nota": "A mesma página fala em atingir 50 lojas até 2020, o que data o texto. O número 26 é anterior a 2021 e pode não ser corrente."
+    }
+  ],
+  "estabelecimentosIdentificados": [
+    {
+      "id": "grand-supermercado",
+      "nome": "Grand Supermercado",
+      "tipo": "supermercado",
+      "estadoCadastro": "identificada-por-fonte-comercial",
+      "confirmadoPeloTitular": false,
+      "localizacao": "não declarada pela fonte",
+      "identificadoPor": "grupo-aggy",
+      "declaradoComoCliente": true,
+      "nota": "Nomeado pelo Grupo Aggy como cliente, na lista pública do seu sítio. A existência do estabelecimento é o que se regista; a localização e a situação de licenciamento estão por confirmar.",
+      "fonte": "https://www.grupoaggy.com/",
+      "verificado": false
+    },
+    {
+      "id": "supermercado-dia-a-dia",
+      "nome": "Supermercado Dia a Dia",
+      "tipo": "supermercado",
+      "estadoCadastro": "identificada-por-fonte-comercial",
+      "confirmadoPeloTitular": false,
+      "localizacao": "não declarada pela fonte",
+      "identificadoPor": "grupo-aggy",
+      "declaradoComoCliente": true,
+      "nota": "Nomeado pelo Grupo Aggy como cliente, na lista pública do seu sítio. A existência do estabelecimento é o que se regista; a localização e a situação de licenciamento estão por confirmar.",
+      "fonte": "https://www.grupoaggy.com/",
+      "verificado": false
+    },
+    {
+      "id": "matola-supermarkets",
+      "nome": "Matola Supermarkets",
+      "tipo": "supermercado",
+      "estadoCadastro": "identificada-por-fonte-comercial",
+      "confirmadoPeloTitular": false,
+      "localizacao": "não declarada pela fonte",
+      "identificadoPor": "grupo-aggy",
+      "declaradoComoCliente": true,
+      "nota": "Nomeado pelo Grupo Aggy como cliente, na lista pública do seu sítio. A existência do estabelecimento é o que se regista; a localização e a situação de licenciamento estão por confirmar.",
+      "fonte": "https://www.grupoaggy.com/",
+      "verificado": false
+    },
+    {
+      "id": "super-mohamed",
+      "nome": "Super Mohamed",
+      "tipo": "supermercado",
+      "estadoCadastro": "identificada-por-fonte-comercial",
+      "confirmadoPeloTitular": false,
+      "localizacao": "não declarada pela fonte",
+      "identificadoPor": "grupo-aggy",
+      "declaradoComoCliente": true,
+      "nota": "Nomeado pelo Grupo Aggy como cliente, na lista pública do seu sítio. A existência do estabelecimento é o que se regista; a localização e a situação de licenciamento estão por confirmar.",
+      "fonte": "https://www.grupoaggy.com/",
+      "verificado": false
+    },
+    {
+      "id": "casa-bhay",
+      "nome": "Casa Bhay",
+      "tipo": "retalho-alimentar",
+      "estadoCadastro": "identificada-por-fonte-comercial",
+      "confirmadoPeloTitular": false,
+      "localizacao": "não declarada pela fonte",
+      "identificadoPor": "grupo-aggy",
+      "declaradoComoCliente": true,
+      "nota": "Nomeado pelo Grupo Aggy como cliente, na lista pública do seu sítio. A existência do estabelecimento é o que se regista; a localização e a situação de licenciamento estão por confirmar.",
+      "fonte": "https://www.grupoaggy.com/",
+      "verificado": false
+    },
+    {
+      "id": "armazens-atlantico",
+      "nome": "Armazéns Atlântico",
+      "tipo": "armazenista",
+      "estadoCadastro": "identificada-por-fonte-comercial",
+      "confirmadoPeloTitular": false,
+      "localizacao": "não declarada pela fonte",
+      "identificadoPor": "grupo-aggy",
+      "declaradoComoCliente": true,
+      "nota": "Nomeado pelo Grupo Aggy como cliente, na lista pública do seu sítio. A existência do estabelecimento é o que se regista; a localização e a situação de licenciamento estão por confirmar.",
+      "fonte": "https://www.grupoaggy.com/",
+      "verificado": false
+    },
+    {
+      "id": "marine-trading",
+      "nome": "Marine Trading",
+      "tipo": "distribuidor",
+      "estadoCadastro": "identificada-por-fonte-comercial",
+      "confirmadoPeloTitular": false,
+      "localizacao": "não declarada pela fonte",
+      "identificadoPor": "grupo-aggy",
+      "declaradoComoCliente": true,
+      "nota": "Nomeado pelo Grupo Aggy como cliente, na lista pública do seu sítio. A existência do estabelecimento é o que se regista; a localização e a situação de licenciamento estão por confirmar.",
+      "fonte": "https://www.grupoaggy.com/",
+      "verificado": false
+    },
+    {
+      "id": "super-spar",
+      "nome": "Super Spar",
+      "tipo": "supermercado",
+      "estadoCadastro": "identificada-por-fonte-comercial",
+      "confirmadoPeloTitular": false,
+      "localizacao": "não declarada pela fonte",
+      "identificadoPor": "grupo-aggy",
+      "declaradoComoCliente": true,
+      "nota": "Nomeado pelo Grupo Aggy como cliente, na lista pública do seu sítio. Pode ser a mesma entidade que o SPAR VIP já registado como operador — por resolver. A existência do estabelecimento é o que se regista; a localização e a situação de licenciamento estão por confirmar.",
+      "fonte": "https://www.grupoaggy.com/",
+      "verificado": false
+    }
+  ],
+  "fontesComerciais": [
+    {
+      "id": "grupo-aggy",
+      "entidade": "GRUPO AGGY",
+      "natureza": "Grupo empresarial multi-sectorial: consultoria, importação e exportação, gestão de propriedade e marca de consumo Mboneze",
+      "sede": "Rua de Morrumbala n.º 226, Matola",
+      "fundado": "2007",
+      "escalaDeclarada": "mais de 350 clientes activos, em 6 ou mais províncias, com 7 países de origem",
+      "provinciasServidas": [
+        "Maputo",
+        "Matola",
+        "Beira",
+        "Nampula",
+        "Tete",
+        "Inhambane"
+      ],
+      "url": "https://www.grupoaggy.com/",
+      "seccao": "Our Clients",
+      "naturezaFonte": "declaração pública da própria empresa, em material de marketing",
+      "dataConsulta": "Setembro de 2026",
+      "nota": "A lista é publicada pelo próprio distribuidor no seu sítio institucional. Não foi obtida por outra via. Os estabelecimentos nomeados não a publicaram: a declaração é do distribuidor sobre eles."
     }
   ]
 }
