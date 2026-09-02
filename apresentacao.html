@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apresenta&ccedil;&atilde;o &mdash; SINAGEPE</title>
+<script src="assets/access-control.js"></script>
+<script src="assets/nav-sinagepe.js"></script>
+<script src="assets/pesquisa-sinagepe.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+--gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
+--blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
+.mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--card-line);padding:18px 12px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.brand{padding:6px 10px 16px;border-bottom:1px solid var(--card-line);margin-bottom:14px}
+.brand-t{font-size:15px;font-weight:700;letter-spacing:.06em}
+.brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active .nav-label{font-weight:600}
+.nav-icon{width:16px;text-align:center;opacity:.85}
+main{flex:1;padding:22px 26px 60px;max-width:1400px}
+.eyebrow{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brz);display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.eyebrow:before{content:"";width:12px;height:1.5px;background:var(--brz)}
+h1{font-size:25px;margin:0 0 5px;letter-spacing:-.015em}
+.sub{color:var(--t3);font-size:13px;margin-bottom:18px;max-width:900px;line-height:1.6}
+.card{background:var(--card-bg);border:1px solid var(--card-line);border-radius:14px;margin-bottom:16px}
+.frame{position:relative}
+.frame:before,.frame:after{content:"";position:absolute;width:15px;height:15px;pointer-events:none;z-index:2}
+.frame:before{top:-1px;left:-1px;border-top:1.5px solid var(--brz);border-left:1.5px solid var(--brz);border-top-left-radius:13px}
+.frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
+.ch{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--card-line);gap:14px;flex-wrap:wrap}
+.ch h2{font-size:15px;font-weight:600;color:var(--ink);margin:0 0 4px;letter-spacing:-.01em}
+.ch p{font-size:12px;color:var(--t3);margin:0;line-height:1.5}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);
+ padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
+.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.bd{padding:16px 18px}
+
+.heros{display:grid;grid-template-columns:repeat(auto-fit,minmax(206px,1fr));gap:13px;margin-bottom:18px}
+.hero{background:linear-gradient(160deg,#101B2E 0%,#0A1220 100%);border:1px solid var(--card-line);
+ border-radius:13px;padding:18px 19px;position:relative;overflow:hidden;text-decoration:none;color:inherit;display:block;transition:.16s}
+.hero:hover{border-color:var(--brzg);transform:translateY(-2px)}
+.hero:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px}
+.hero-l{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--t4);margin-bottom:10px}
+.hero-v{font-size:38px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.hero-v small{font-size:14px;font-weight:400;margin-left:4px}
+.hero-s{font-size:11px;color:var(--t3);margin-top:9px;line-height:1.45}
+.hero-f{font-size:9.5px;color:var(--t4);margin-top:9px;padding-top:8px;border-top:1px solid rgba(38,56,86,.5)}
+
+.leg{display:flex;gap:16px;flex-wrap:wrap;padding:13px 18px 0;font-size:11.5px;color:var(--t3)}
+.leg span{display:flex;align-items:center;gap:6px}
+.leg i{width:11px;height:11px;border-radius:2px;display:inline-block}
+.cw{position:relative;padding:12px 18px 18px}
+.nota{margin:0 18px 16px;padding:12px 14px;border-radius:9px;font-size:12px;line-height:1.6;
+ border:1px solid var(--brzg);background:rgba(201,138,60,.07);color:var(--brzl)}
+.nota b{color:var(--brz)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+@media(max-width:1050px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
+.fontes{padding:15px 18px;font-size:11px;color:var(--t4);line-height:1.7}
+.fontes b{color:var(--t3)}
+.err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="nav-mount"></aside>
+  <main>
+    <div class="eyebrow">Apresenta&ccedil;&atilde;o</div>
+    <h1>O que o sistema j&aacute; sabe</h1>
+    <p class="sub">Seis factos medidos, com fonte e data. Cada um deriva de dados publicados por entidades oficiais &mdash; nenhum foi estimado, assumido ou escrito &agrave; m&atilde;o.</p>
+
+    <div class="heros" id="heros"></div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O mesmo produto, pre&ccedil;os muito diferentes</h2>
+        <p>Amplitude entre a pra&ccedil;a mais barata e a mais cara, na mesma semana</p></div>
+        <span class="tag ok">Facto medido</span></div>
+      <div class="leg" id="leg1"></div>
+      <div class="cw" style="height:290px"><canvas id="g1" role="img" aria-label="Amplitude de pre&ccedil;o por produto entre pra&ccedil;as"></canvas></div>
+      <div class="nota" id="nota1"></div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>O que se colhe c&aacute; desce; o que vem de fora n&atilde;o</h2>
+        <p>Pre&ccedil;o m&eacute;dio a retalho em quatro edi&ccedil;&otilde;es do boletim SIMA</p></div>
+        <span class="tag ok">Facto medido</span></div>
+      <div class="leg" id="leg2"></div>
+      <div class="cw" style="height:310px"><canvas id="g2" role="img" aria-label="Pre&ccedil;o m&eacute;dio de quatro produtos ao longo de dez meses"></canvas></div>
+      <div class="nota" id="nota2"></div>
+    </div>
+
+    <div class="g2">
+      <div class="card frame">
+        <div class="ch"><div><h2>Nampula alimenta o Sul</h2>
+          <p>Origens dos fluxos de produto documentados</p></div></div>
+        <div class="cw" style="height:250px"><canvas id="g3" role="img" aria-label="Principais origens dos fluxos de mercado"></canvas></div>
+        <div class="nota" id="nota3"></div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>De quem &eacute; a capacidade</h2>
+          <p>Unidades do cadastro por natureza jur&iacute;dica</p></div></div>
+        <div class="leg" id="leg4"></div>
+        <div class="cw" style="height:250px"><canvas id="g4" role="img" aria-label="Unidades de armazenagem por natureza jur&iacute;dica"></canvas></div>
+        <div class="nota" id="nota4"></div>
+      </div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>A factura da geografia</h2>
+        <p>Pre&ccedil;o regulado do gas&oacute;leo por regi&atilde;o, e o acr&eacute;scimo face &agrave;s cidades com terminal</p></div>
+        <span class="tag ok">Facto medido</span></div>
+      <div class="cw" style="height:270px"><canvas id="g5" role="img" aria-label="Pre&ccedil;o do gas&oacute;leo por regi&atilde;o"></canvas></div>
+      <div class="nota" id="nota5"></div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>De onde vem cada n&uacute;mero</h2>
+        <p>Toda a informa&ccedil;&atilde;o desta p&aacute;gina tem origem verific&aacute;vel</p></div></div>
+      <div class="fontes" id="fontes"></div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script>
+if(window.SinagepeNav) SinagepeNav.montar('apresentacao');
+if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
+
+var ST={};
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function p2(n){return Number(n).toFixed(2).replace('.',',')}
+function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
+
+/* Paleta do sistema. Cada cor tem significado: bronze é o SINAGEPE,
+   verde é o mais barato, âmbar o mais caro, azul o importado. */
+var C={brz:'#C98A3C',brzl:'#E8BE7A',blue:'#22B8F0',teal:'#2DD4BF',amber:'#F0A926',
+       red:'#EF4444',ok:'#12B981',viol:'#A78BFA',rosa:'#F472B6',t4:'#5E7189'};
+var EIXO='#5E7189', GRELHA='rgba(38,56,86,.55)';
+var BASE={responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{display:false},tooltip:{backgroundColor:'#0C1626',borderColor:'rgba(38,56,86,.9)',
+    borderWidth:1,titleColor:'#F3F7FC',bodyColor:'#C3D0E0',padding:10,displayColors:true}},
+  scales:{x:{ticks:{color:EIXO,font:{size:11}},grid:{display:false},border:{color:GRELHA}},
+          y:{ticks:{color:EIXO,font:{size:11}},grid:{color:GRELHA},border:{display:false}}}};
+function legenda(id,itens){
+  document.getElementById(id).innerHTML=itens.map(function(x){
+    return '<span><i style="background:'+x[1]+'"></i>'+x[0]+'</span>';}).join('');
+}
+
+function desenharHeros(){
+  var I=ST.ind.indicadores, C6=[C.red,C.ok,C.amber,C.red,C.red,C.amber];
+  document.getElementById('heros').innerHTML=I.map(function(i,k){
+    var c=C6[k]||C.blue;
+    return '<a class="hero" href="indicadores-painel.html?i='+esc(i.id)+'" style="border-left:0">'
+     +'<span style="position:absolute;left:0;top:0;bottom:0;width:3px;background:'+c+'"></span>'
+     +'<div class="hero-l">'+esc(i.rotulo)+'</div>'
+     +'<div class="hero-v mono" style="color:'+c+'">'+String(i.valor).replace('.',',')
+     +'<small>'+esc(i.unidade)+'</small></div>'
+     +'<div class="hero-s">'+esc(i.estado)+'</div>'
+     +'<div class="hero-f">'+esc(i.dataDados)+' &middot; '+esc(i.classificacao)+'</div></a>';
+  }).join('');
+}
+
+function grafico1(){
+  var R=ST.sima.retalho1462||ST.sima.retalho;
+  R=R.slice().sort(function(a,b){return b.maximo.valor-a.maximo.valor});
+  legenda('leg1',[['Pra&ccedil;a mais barata',C.ok],['Pra&ccedil;a mais cara',C.amber]]);
+  new Chart(document.getElementById('g1'),{type:'bar',
+    data:{labels:R.map(function(r){return r.produto}),
+      datasets:[{label:'Mais barato',data:R.map(function(r){return r.minimo.valor}),
+                 backgroundColor:C.ok,borderRadius:4,barThickness:19},
+                {label:'Mais caro',data:R.map(function(r){return r.maximo.valor}),
+                 backgroundColor:C.amber,borderRadius:4,barThickness:19}]},
+    options:Object.assign({},BASE,{plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+p2(c.parsed.y)+' MT/kg'}}}}})});
+  var pior=R.reduce(function(a,b){return (b.maximo.valor/b.minimo.valor)>(a.maximo.valor/a.minimo.valor)?b:a});
+  document.getElementById('nota1').innerHTML=
+    '<b>N&atilde;o &eacute; varia&ccedil;&atilde;o de qualidade.</b> '+esc(pior.produto)+' custa '+p2(pior.minimo.valor)
+   +' MT/kg em '+esc(pior.minimo.mercados[0])+' e '+p2(pior.maximo.valor)+' em '+esc(pior.maximo.mercados[0])
+   +' &mdash; '+Math.round((pior.maximo.valor/pior.minimo.valor-1)*100)+'% de diferen&ccedil;a, no mesmo pa&iacute;s e na mesma semana. '
+   +'&Eacute; custo de transporte, isolamento de mercado e aus&ecirc;ncia de alternativa de compra.';
+}
+
+function grafico2(){
+  var S=ST.sima.series, E=S.edicoes;
+  var cor={'Arroz':C.blue,'Milho':C.brz,'Feij&atilde;o manteiga':C.teal,'Feijão manteiga':C.teal,'Amendoim pequeno':C.amber};
+  var quero=['Arroz','Milho','Feijão manteiga','Amendoim pequeno'];
+  var ds=[];
+  quero.forEach(function(nome,k){
+    var x=null;S.precoMedio.forEach(function(y){if(y.produto===nome)x=y});
+    if(!x)return;
+    ds.push({label:nome,data:E.map(function(e){return x.valores[String(e.edicao)]}),
+      borderColor:cor[nome]||C.viol,backgroundColor:cor[nome]||C.viol,
+      borderWidth:nome==='Arroz'||nome==='Milho'?2.6:1.8,
+      borderDash:k===1?[6,3]:k===3?[2,3]:[],
+      tension:.25,pointRadius:nome==='Arroz'||nome==='Milho'?4.5:3,
+      pointStyle:k===1?'rect':k===2?'triangle':'circle',spanGaps:true});
+  });
+  legenda('leg2',[['Arroz &mdash; importado',C.blue],['Milho &mdash; nacional',C.brz],
+                  ['Feij&atilde;o manteiga',C.teal],['Amendoim',C.amber]]);
+  new Chart(document.getElementById('g2'),{type:'line',
+    data:{labels:E.map(function(e){return e.mes}),datasets:ds},
+    options:Object.assign({},BASE,{interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        label:function(c){return c.dataset.label+': '+(c.parsed.y==null?'sem medi&ccedil;&atilde;o':p2(c.parsed.y)+' MT/kg')}}}}})});
+  var milho=null,arroz=null;
+  S.precoMedio.forEach(function(x){if(x.produto==='Milho')milho=x;if(x.produto==='Arroz')arroz=x});
+  function amp(x){var v=E.map(function(e){return x.valores[String(e.edicao)]}).filter(function(y){return y!=null});
+    return (Math.max.apply(null,v)/Math.min.apply(null,v)-1)*100}
+  document.getElementById('nota2').innerHTML=
+    '<b>O c&acirc;mbio esteve parado enquanto os pre&ccedil;os se moveram '+Math.round(amp(milho))+'%.</b> '
+   +'O d&oacute;lar variou dois c&ecirc;ntimos em dez meses. O milho subiu at&eacute; Mar&ccedil;o e caiu depois da colheita; '
+   +'o arroz, maioritariamente importado, moveu-se apenas '+Math.round(amp(arroz))+'%. '
+   +'No mesmo per&iacute;odo, o milho branco na bolsa sul-africana desceu &mdash; as duas s&eacute;ries andam em direc&ccedil;&otilde;es opostas.';
+}
+
+function grafico3(){
+  var F=(ST.sima.fluxos||[]).concat(ST.sima.fluxos1462||[]);
+  var o={};F.forEach(function(f){o[f.origem]=(o[f.origem]||0)+1});
+  var top=Object.keys(o).sort(function(a,b){return o[b]-o[a]}).slice(0,6);
+  new Chart(document.getElementById('g3'),{type:'bar',
+    data:{labels:top.map(function(k){return k.length>22?k.slice(0,21)+'…':k}),
+      datasets:[{data:top.map(function(k){return o[k]}),
+        backgroundColor:top.map(function(k,i){return i===0?C.brz:'rgba(201,138,60,.42)'}),
+        borderRadius:4,barThickness:17}]},
+    options:Object.assign({},BASE,{indexAxis:'y',
+      scales:{x:{ticks:{color:EIXO,font:{size:11},stepSize:2},grid:{color:GRELHA},border:{display:false}},
+              y:{ticks:{color:EIXO,font:{size:11}},grid:{display:false},border:{color:GRELHA}}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        label:function(c){return c.parsed.x+' fluxos documentados'}}}}})});
+  document.getElementById('nota3').innerHTML=
+    '<b>'+F.length+' movimenta&ccedil;&otilde;es documentadas.</b> '
+   +esc(top[0])+' &eacute; a maior origem, com '+o[top[0]]+' fluxos &mdash; o triplo da segunda. '
+   +'&Eacute; a primeira prova documental de depend&ecirc;ncia inter-provincial no sistema.';
+}
+
+function grafico4(){
+  var A=ST.arm.armazens, c={};
+  A.forEach(function(a){c[a.natureza]=(c[a.natureza]||0)+1});
+  var ROT={estatal:'Estatal','ppp-gestao-privada':'PPP','concessao-privada':'Concess&atilde;o',
+   'participacao-estatal':'Part. estatal',privada:'Privada',internacional:'Internacional'};
+  var CORN={estatal:C.brz,'ppp-gestao-privada':C.brzl,'concessao-privada':C.blue,
+   'participacao-estatal':C.teal,privada:C.amber,internacional:C.viol};
+  var ks=Object.keys(c).sort(function(a,b){return c[b]-c[a]});
+  legenda('leg4',ks.map(function(k){return [(ROT[k]||k)+' '+c[k],CORN[k]||C.t4]}));
+  new Chart(document.getElementById('g4'),{type:'doughnut',
+    data:{labels:ks.map(function(k){return ROT[k]||k}),
+      datasets:[{data:ks.map(function(k){return c[k]}),
+        backgroundColor:ks.map(function(k){return CORN[k]||C.t4}),
+        borderColor:'#0C1626',borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'62%',
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#0C1626',borderColor:'rgba(38,56,86,.9)',
+        borderWidth:1,titleColor:'#F3F7FC',bodyColor:'#C3D0E0',padding:10,
+        callbacks:{label:function(x){return x.label+': '+x.parsed+' unidades'}}}}}});
+  var pub=ks.filter(function(k){return k!=='privada'&&k!=='internacional'}).reduce(function(s,k){return s+c[k]},0);
+  document.getElementById('nota4').innerHTML=
+    '<b>'+pub+' das '+A.length+' unidades t&ecirc;m responsabilidade p&uacute;blica.</b> '
+   +'S&atilde;o do Estado, geridas em parceria ou concessionadas. Todas com fonte oficial citada. '
+   +'Nenhuma reporta exist&ecirc;ncias.';
+}
+
+function grafico5(){
+  var Rg=ST.cp.regioes.filter(function(r){return r.gasoleo!=null});
+  var ref=Rg[0].gasoleo;
+  new Chart(document.getElementById('g5'),{type:'bar',
+    data:{labels:Rg.map(function(r,i){return i===0?'Cidades com terminal':r.local}),
+      datasets:[{data:Rg.map(function(r){return r.gasoleo}),
+        backgroundColor:Rg.map(function(r){var d=r.gasoleo-ref;
+          return d===0?C.ok:d<6?C.brz:C.amber}),borderRadius:4,barThickness:34}]},
+    options:Object.assign({},BASE,{
+      scales:{x:{ticks:{color:EIXO,font:{size:10.5},maxRotation:30,autoSkip:false},grid:{display:false},border:{color:GRELHA}},
+              y:{min:Math.floor(ref-8),ticks:{color:EIXO,font:{size:11}},grid:{color:GRELHA},border:{display:false}}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        label:function(c){var d=c.parsed.y-ref;
+          return p2(c.parsed.y)+' MT/L'+(d>0?'  (+'+p2(d)+' face ao terminal)':'  (refer&ecirc;ncia)')}}}}})});
+  var pior=Rg[Rg.length-1];
+  document.getElementById('nota5').innerHTML=
+    '<b>N&atilde;o &eacute; margem de ningu&eacute;m.</b> '+esc(pior.local)+' paga mais '+p2(pior.gasoleo-ref)
+   +' MT por litro do que quem carrega junto ao porto. &Eacute; o custo do transporte interno do combust&iacute;vel, '
+   +'reconhecido pelo pr&oacute;prio regulador na metodologia de forma&ccedil;&atilde;o do pre&ccedil;o. '
+   +'Numa viagem de 400 km com cami&atilde;o de consumo m&eacute;dio, s&atilde;o cerca de '
+   +num((pior.gasoleo-ref)*128)+' MT de acr&eacute;scimo &mdash; por viagem.';
+}
+
+function fontes(){
+  var E=ST.sima.series.edicoes;
+  document.getElementById('fontes').innerHTML=
+     '<b>Pre&ccedil;os e fluxos:</b> SIMA &mdash; Sistema de Informa&ccedil;&atilde;o de Mercados Agr&iacute;colas, boletim Quente-Quente, '
+    +'edi&ccedil;&otilde;es '+E.map(function(e){return e.edicao}).join(', ')+'. '
+    +'Recolha de '+esc(E[0].semana)+' a '+esc(E[E.length-1].semana)+'.<br>'
+    +'<b>Combust&iacute;veis:</b> ARENE &mdash; pre&ccedil;os regulados ao abrigo do Decreto n.&ordm; 89/2019, revis&atilde;o de '+esc(ST.cp.revisao.data)+'.<br>'
+    +'<b>Armazenagem:</b> Cadastro Nacional do SINAGEPE, '+ST.arm.armazens.length+' unidades, cada uma com URL de fonte oficial. Agosto de 2026.<br>'
+    +'<b>C&acirc;mbio:</b> Banco de Mo&ccedil;ambique, compilado pelo SIMA no mesmo boletim.<br><br>'
+    +'<span style="color:var(--amber)"><b>Aten&ccedil;&atilde;o &agrave; data.</b> Os pre&ccedil;os do SIMA s&atilde;o de 2022 e 2023 &mdash; '
+    +'s&atilde;o as edi&ccedil;&otilde;es mais recentes que foi poss&iacute;vel extrair em formato leg&iacute;vel. '
+    +'Servem para mostrar varia&ccedil;&atilde;o real e provar o m&eacute;todo, n&atilde;o para decidir hoje.</span>';
+}
+
+Promise.all(['sima-precos','cascata-precos','armazens-nacionais','indicadores-painel'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  ST.sima=res[0];ST.cp=res[1];ST.arm=res[2];ST.ind=res[3];
+  desenharHeros();
+  if(window.Chart){grafico1();grafico2();grafico3();grafico4();grafico5()}
+  fontes();
+}).catch(function(e){
+  document.getElementById('heros').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
+});
+</script>
+</body>
+</html>
