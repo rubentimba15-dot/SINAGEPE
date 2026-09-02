@@ -726,5 +726,31 @@
       "provincia": "Zambézia",
       "situacao": "encerrada"
     }
-  ]
+  ],
+  "estadosCadastro": {
+    "principio": "A mesma distinção que se aplica à armazenagem: existir não é o mesmo que ter-se registado no SINAGEPE.",
+    "estados": [
+      {
+        "estado": "identificada",
+        "quantas": 1612,
+        "significa": "Consta da lista de licenciamento da ANARME, com alvará"
+      },
+      {
+        "estado": "activa",
+        "quantas": 1497,
+        "significa": "Em funcionamento, segundo o registo da ANARME"
+      },
+      {
+        "estado": "inactiva",
+        "quantas": 115,
+        "significa": "Encerrada, segundo o registo da ANARME"
+      },
+      {
+        "estado": "confirmada-pelo-titular",
+        "quantas": 0,
+        "significa": "Nenhuma. Não existe hoje canal para o titular confirmar."
+      }
+    ],
+    "nota": "Este é o cadastro mais forte do sistema: a ANARME licencia, pelo que a identificação tem valor administrativo e não apenas documental. Ainda assim, nenhum titular confirmou os seus dados no SINAGEPE, e a lista é de Setembro de 2024."
+  }
 }

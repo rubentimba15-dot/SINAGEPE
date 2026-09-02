@@ -157,6 +157,11 @@
           "nota": "O elo que quase nunca se escreve, e o que distingue um sistema de alerta de um sistema de gestão. Sem ele, produzem-se alertas e nunca se sabe se serviram. Exige registo do que foi decidido e acompanhamento no tempo."
         }
       ]
+    },
+    {
+      "titulo": "Existir não é o mesmo que estar registado",
+      "regra": "O sistema distingue seis estados de uma entidade: identificada, identificada por confirmar, confirmada pelo titular, activa, inactiva e de estado desconhecido. São contados em separado.",
+      "numero": 8
     }
   ],
   "classificacao": [

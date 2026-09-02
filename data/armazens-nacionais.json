@@ -32,7 +32,45 @@
       "O estado dos complexos de silos (por reabilitar / por construir) reporta-se a 2021, data dos contratos de concessão. Cinco anos depois, é indispensável confirmação junto do ICM antes de qualquer utilização decisória.",
       "As capacidades dos 11 depósitos intermédios da Petromoc estão publicadas apenas em tabelas em imagem no sítio da empresa, não em texto extraível. Ficam registadas como existentes, com capacidade a null.",
       "Nenhum operador foi contactado. Este cadastro é documental, não declarativo."
-    ]
+    ],
+    "estadosCadastro": {
+      "principio": "Existência da entidade não é o mesmo que auto-registo, actividade actual, confirmação pelo titular ou propriedade actual. São coisas distintas e contam-se separadamente.",
+      "estados": [
+        {
+          "estado": "identificada",
+          "significa": "A existência está documentada em publicação de instituição, com fonte citada",
+          "quantas": 26
+        },
+        {
+          "estado": "identificada-por-confirmar",
+          "significa": "Consta de fonte, mas a fonte é secundária ou o registo tem lacunas",
+          "quantas": 4
+        },
+        {
+          "estado": "confirmada-pelo-titular",
+          "significa": "O proprietário ou operador validou os dados no sistema",
+          "quantas": 0,
+          "nota": "Nenhuma. Não existe hoje canal para o titular confirmar."
+        },
+        {
+          "estado": "activa",
+          "significa": "Em operação, segundo a fonte",
+          "quantas": 12
+        },
+        {
+          "estado": "inactiva-ou-em-obra",
+          "significa": "Por construir, por reabilitar ou em modernização",
+          "quantas": 14
+        },
+        {
+          "estado": "estado-desconhecido",
+          "significa": "A fonte não declara o estado de operação",
+          "quantas": 4
+        }
+      ],
+      "porqueImporta": "Dizer \"30 armazéns cadastrados\" sugere que alguém os declarou. Ninguém declarou: todos foram identificados a partir de publicações oficiais. A distinção evita que uma contagem de identificações seja lida como cadastro voluntário, e evita o inverso — que uma unidade desapareça das estatísticas só porque o proprietário nunca se registou.",
+      "regraEstatistica": "O painel nacional conta separadamente identificadas, confirmadas, activas, inactivas e de estado desconhecido. Nunca apresenta o número de auto-registos como se fosse o universo real."
+    }
   },
   "resumo": {
     "unidadesRegistadas": 29,
@@ -148,7 +186,9 @@
       ],
       "sensor": "sem-sensor",
       "verificado": true,
-      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
+      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "silo-cuamba",
@@ -180,7 +220,9 @@
       ],
       "sensor": "sem-sensor",
       "verificado": true,
-      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
+      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "silo-malema",
@@ -212,7 +254,9 @@
       ],
       "sensor": "sem-sensor",
       "verificado": true,
-      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
+      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "silo-gorongosa",
@@ -245,7 +289,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "beira",
-      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
+      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "silo-nhamatanda",
@@ -278,7 +324,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "beira",
-      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
+      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "silo-lichinga",
@@ -311,7 +359,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "nacala",
-      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
+      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "silo-ulongue",
@@ -344,7 +394,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "sena",
-      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
+      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "silo-mugema",
@@ -377,7 +429,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "nota": "Localidade confirmada pelas duas fontes governamentais, mas sem coordenada fiável. Não deve ser desenhada no mapa até o distrito ser confirmado pelo ICM.",
-      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
+      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "silo-milange",
@@ -409,7 +463,9 @@
       ],
       "sensor": "sem-sensor",
       "verificado": true,
-      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/"
+      "fonte": "https://icm.gov.mz/governo-mocambicano-concessiona-silos-de-cereais-e-leguminosas/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "silo-barue",
@@ -444,7 +500,9 @@
       "divergencia": "div-barue",
       "nota": "Consta da lista do MIC e não consta da lista do ICM. Marcado verificado=false por isso mesmo.",
       "corredor": "beira",
-      "fonte": "https://www.mic.gov.mz/por/Noticias/Gestao-de-Complexos-de-Silos-e-Armazens-de-Cereais-e-leguminosas"
+      "fonte": "https://www.mic.gov.mz/por/Noticias/Gestao-de-Complexos-de-Silos-e-Armazens-de-Cereais-e-leguminosas",
+      "estadoCadastro": "identificada-por-confirmar",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "petromoc-lingamo-liquidos",
@@ -493,7 +551,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "maputo",
-      "fonte": "https://www.petromoc.co.mz/product-service/logistica/"
+      "fonte": "https://www.petromoc.co.mz/product-service/logistica/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "petromoc-lingamo-gpl",
@@ -525,7 +585,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "maputo",
-      "fonte": "https://www.petromoc.co.mz/product-service/logistica/"
+      "fonte": "https://www.petromoc.co.mz/product-service/logistica/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "petromoc-beira-gpl",
@@ -562,7 +624,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "beira",
-      "fonte": "https://www.petromoc.co.mz/product-service/logistica/"
+      "fonte": "https://www.petromoc.co.mz/product-service/logistica/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "petromoc-nacala-liquidos",
@@ -605,7 +669,9 @@
       "verificado": true,
       "divergencia": "div-nacala-combustivel",
       "corredor": "nacala",
-      "fonte": "https://www.petromoc.co.mz/product-service/logistica/"
+      "fonte": "https://www.petromoc.co.mz/product-service/logistica/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "petromoc-pemba-liquidos",
@@ -641,7 +707,9 @@
       "nota": "Serve Cabo Delgado e parte do Niassa; abastece plataformas da Bacia do Rovuma por oleoduto próprio.",
       "sensor": "sem-sensor",
       "verificado": true,
-      "fonte": "https://www.petromoc.co.mz/product-service/logistica/"
+      "fonte": "https://www.petromoc.co.mz/product-service/logistica/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "petromoc-anchilo-gpl",
@@ -672,7 +740,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "nacala",
-      "fonte": "https://www.petromoc.co.mz/product-service/logistica/"
+      "fonte": "https://www.petromoc.co.mz/product-service/logistica/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "jv-beira-9tanques",
@@ -702,7 +772,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "beira",
-      "fonte": "https://www.petromoc.co.mz/parcerias-e-participacoes/"
+      "fonte": "https://www.petromoc.co.mz/parcerias-e-participacoes/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "bp-nacala-deposito",
@@ -731,7 +803,9 @@
       "sensor": "sem-sensor",
       "verificado": false,
       "corredor": "nacala",
-      "fonte": "https://www.cfm.co.mz/en/porto-de-nacala/"
+      "fonte": "https://www.cfm.co.mz/en/porto-de-nacala/",
+      "estadoCadastro": "identificada-por-confirmar",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "porto-maputo-mpdc",
@@ -781,7 +855,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "maputo",
-      "fonte": "https://portmaputo.com/pt-pt/faqs"
+      "fonte": "https://portmaputo.com/pt-pt/faqs",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "porto-maputo-mips",
@@ -811,7 +887,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "maputo",
-      "fonte": "https://www.cfm.co.mz/en/porto-de-maputo/"
+      "fonte": "https://www.cfm.co.mz/en/porto-de-maputo/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "matola-granel-minerios",
@@ -840,7 +918,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "maputo",
-      "fonte": "https://www.correiodamanhacanada.com/governo-mocambicano-aprova-programa-de-investimento-e-expansao-do-porto-de-maputo/"
+      "fonte": "https://www.correiodamanhacanada.com/governo-mocambicano-aprova-programa-de-investimento-e-expansao-do-porto-de-maputo/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "matola-carvao-grindrod",
@@ -871,7 +951,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "maputo",
-      "fonte": "http://www.meridian-ebooks.com/Port-of-Maputo/files/basic-html/page19.html"
+      "fonte": "http://www.meridian-ebooks.com/Port-of-Maputo/files/basic-html/page19.html",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "mozal-terminal-aluminio",
@@ -904,7 +986,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "maputo",
-      "fonte": "https://www.manicaterminais.co.mz/original/Portos.html"
+      "fonte": "https://www.manicaterminais.co.mz/original/Portos.html",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "stema-matola",
@@ -948,7 +1032,9 @@
       "nota": "Movimenta trigo, milho, arroz, soja, farinha de soja, cascas de girassol, aparas de madeira e malte para cerveja. É apontada como líder no manuseamento de carga cerealífera a granel no país. Serve o mercado nacional e o trânsito de e para a África Austral.",
       "contacto": "Língamo 729, Matola · stema@stema.co.mz · stema.co.mz",
       "divergencia": "divergencia-terminais-matola",
-      "fonte": "https://igepe.org.mz/stema/"
+      "fonte": "https://igepe.org.mz/stema/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "porto-beira-contentores",
@@ -983,7 +1069,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "beira",
-      "fonte": "https://www.cfm.co.mz/terminal-de-contentores-e-propositos-multiplos/"
+      "fonte": "https://www.cfm.co.mz/terminal-de-contentores-e-propositos-multiplos/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "porto-beira-carga-geral",
@@ -1011,7 +1099,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "beira",
-      "fonte": "https://cartamz.com/economia-e-negocios/48304/cornelder-de-mocambique-vai-adquirir-duas-novas-gruas-de-grande-capacidade-para-o-porto-da-beira/"
+      "fonte": "https://cartamz.com/economia-e-negocios/48304/cornelder-de-mocambique-vai-adquirir-duas-novas-gruas-de-grande-capacidade-para-o-porto-da-beira/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "porto-nacala-armazens",
@@ -1043,7 +1133,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "nacala",
-      "fonte": "https://www.cfm.co.mz/en/porto-de-nacala/"
+      "fonte": "https://www.cfm.co.mz/en/porto-de-nacala/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "porto-nacala-contentores",
@@ -1074,7 +1166,9 @@
       "sensor": "sem-sensor",
       "verificado": true,
       "corredor": "nacala",
-      "fonte": "https://www.cfm.co.mz/en/porto-de-nacala/"
+      "fonte": "https://www.cfm.co.mz/en/porto-de-nacala/",
+      "estadoCadastro": "identificada",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "nacala-oleos-alimentares",
@@ -1104,7 +1198,9 @@
       "sensor": "sem-sensor",
       "verificado": false,
       "corredor": "nacala",
-      "fonte": "https://www.cfm.co.mz/en/porto-de-nacala/"
+      "fonte": "https://www.cfm.co.mz/en/porto-de-nacala/",
+      "estadoCadastro": "identificada-por-confirmar",
+      "confirmadoPeloTitular": false
     },
     {
       "id": "bmm-silos-afectos",
@@ -1131,7 +1227,9 @@
       "nota": "A BMM tem atribuição legal de gestão de silos e armazéns a ela afectos e de armazenagem com certificado de depósito, mas não publica o inventário. Entrada deliberadamente incompleta, para não desaparecer do radar.",
       "sensor": "sem-sensor",
       "verificado": false,
-      "fonte": "https://www.linkedin.com/company/bmm-mozambique-commodity-exchange"
+      "fonte": "https://www.linkedin.com/company/bmm-mozambique-commodity-exchange",
+      "estadoCadastro": "identificada-por-confirmar",
+      "confirmadoPeloTitular": false
     }
   ],
   "capacidadeCega": {
