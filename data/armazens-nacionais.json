@@ -1238,5 +1238,42 @@
     "unidadesTotais": 29,
     "percentagem": 100,
     "leitura": "Neste momento, cem por cento da capacidade de armazenagem cadastrada é cega. Nenhuma das 29 unidades tem telemetria ligada ao SINAGEPE. Este número não deve ser escondido — é o argumento central para o investimento em instrumentação."
+  },
+  "capacidadeNacionalPorConfirmar": {
+    "porqueEstaAqui": "O cadastro do sistema tem 30 unidades, todas com fonte citada. Existem publicações oficiais com números muito superiores, que o sistema ainda não integrou. Ficam registadas para que a contagem de 30 nunca seja lida como o universo nacional.",
+    "fontes": [
+      {
+        "fonte": "INE — Indicadores Básicos de Agricultura e Alimentação",
+        "quadro": "Q 10.1.1 — Capacidade de armazenamento nos armazéns e silos, segundo Província",
+        "fonteOriginal": "ICM, citado pelo INE",
+        "estado": "quadro confirmado como existente; valores por obter",
+        "nota": "O sítio do INE recusa acesso automático. O quadro consta do índice da publicação, verificado em Setembro de 2026. Os valores exigem descarregar o PDF manualmente.",
+        "url": "https://www.ine.gov.mz/",
+        "prioridade": "alta"
+      },
+      {
+        "fonte": "Documento governamental com base no ICM",
+        "valorReferido": "135 armazéns, 195.459 toneladas, em dez províncias",
+        "estado": "referido em análise externa; por confirmar na publicação original",
+        "nota": "Se confirmado, são 135 unidades contra as 30 que o sistema tem. A diferença não é de existência: é de integração.",
+        "prioridade": "alta"
+      },
+      {
+        "fonte": "ICM, 2026",
+        "valorReferido": "Niassa com capacidade estimada de 105.850 toneladas em 148 armazéns de apoio à comercialização agrícola",
+        "estado": "referido em análise externa; por confirmar",
+        "nota": "O sistema tem 2 unidades cadastradas em Niassa.",
+        "prioridade": "alta"
+      },
+      {
+        "fonte": "ICM — concessões de complexos de silos",
+        "valorReferido": "Complexos de Gorongosa, Nhamatanda, Lichinga, Mugema, Ulónguè, Malema, Iapala, Cuamba e Milange, com operadores identificados",
+        "estado": "referido em análise externa; por confirmar",
+        "nota": "Ligaria instalação a operador, que é relação que o sistema não tem para silos.",
+        "prioridade": "média"
+      }
+    ],
+    "distincaoObrigatoria": "Capacidade de armazenamento, existências actuais, fluxo comercial e disponibilidade económica são quatro variáveis distintas. Ter capacidade não é ter produto. O sistema tem parte da primeira e nenhuma da segunda, e não deve confundi-las.",
+    "regraDoZero": "Um zero no sistema significa \"não temos o dado\", nunca \"o valor é zero\". Quando não há informação usa-se não disponível; quando existe e não foi extraída, não extraído; quando existe de período anterior, histórico."
   }
 }

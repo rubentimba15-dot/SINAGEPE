@@ -290,10 +290,26 @@
   }
 
 
-  /* ---- 8. ÍNDICE DE TRANSPARÊNCIA DE MERCADO ----
-     Mede o que NÃO se sabe sobre cada praça, que é onde o sistema é
-     mais útil. Não mede qualidade do mercado nem conduta de ninguém:
-     mede quanta informação existe sobre ele.
+  /* ---- 8. ÍNDICE DE COBERTURA DA FONTE ----
+     ATENÇÃO AO NOME. Chamou-se "transparência de mercado" e estava
+     errado: media a cobertura de UMA fonte — o boletim do SIMA que o
+     sistema carregou — e não a informação económica que existe no país.
+
+     A correcção é de método, não de cálculo. Um zero aqui significa
+     "não extraído desta edição deste boletim", e nunca:
+       · que o mercado não tem preço
+       · que não existe informação noutra fonte
+       · que não existe informação noutro período
+       · que não existe o produto
+
+     Exemplo concreto: Manhiça, Cidade de Inhambane, Cidade de Quelimane
+     e Vilankulo aparecem a zero. Boletins do SIMA de 2022 têm preços
+     para essas praças. O zero é da edição carregada, não do país.
+
+     E a capacidade de armazenagem por província existe em publicação do
+     INE — quadro 10.1.1 dos Indicadores Básicos de Agricultura e
+     Alimentação, com o ICM como fonte. O sistema não a tem, e isso é
+     lacuna de integração, não ausência nacional.
 
      Quatro componentes, todas verificáveis. Nenhuma ponderada por
      juízo: cada uma vale um ponto, e a soma está à vista.
@@ -307,12 +323,18 @@
      defeito do cálculo. */
   var TRANSPARENCIA = {
     componentes: [
-      { id: 'preco', nome: 'Preço conhecido',
-        mede: 'Existe preço extraído do boletim para esta praça' },
+      { id: 'preco', nome: 'Preço extraído',
+        mede: 'Foi extraído preço desta edição do boletim para esta praça',
+        nota: 'Zero pode ser falha de extracção, ausência naquela semana, ou o mercado ' +
+              'não ter sido visitado. O sistema não distingue.' },
       { id: 'actualidade', nome: 'Dado actual',
-        mede: 'O preço tem menos de um ciclo de publicação da fonte' },
-      { id: 'disponibilidade', nome: 'Disponibilidade conhecida',
-        mede: 'Sabe-se que quantidade existe para venda' },
+        mede: 'O preço tem menos de um ciclo de publicação da fonte',
+        nota: 'Zero em todo o país: a publicação em linha do SIMA parou em Agosto de 2023. ' +
+              'A recolha não parou.' },
+      { id: 'disponibilidade', nome: 'Disponibilidade nesta fonte',
+        mede: 'O boletim declara quantidade disponível',
+        nota: 'O SIMA é fonte de preços, não de existências. Zero aqui é o esperado ' +
+              'e não diz nada sobre o que existe no país.' },
       { id: 'fluxo', nome: 'Origem documentada',
         mede: 'O boletim regista de onde vem o produto que ali se vende' }
     ],
@@ -323,7 +345,9 @@
       { min: 0, rotulo: 'mínima',  cor: '#7F1D1D' }
     ],
     nota: 'Cada componente vale um ponto. Não há ponderação: quem discordar ' +
-          'da igualdade dos pesos vê o detalhe e tira a sua própria conclusão.'
+          'da igualdade dos pesos vê o detalhe e tira a sua própria conclusão.',
+    aviso: 'Este índice mede a COBERTURA DE UMA FONTE, não a visibilidade económica do país. ' +
+           'Um zero significa "não extraído desta edição deste boletim" — nunca "não existe".'
   };
 
   function transparenciaMercado(sima) {
@@ -355,20 +379,27 @@
     if (sima.meta && sima.meta.dataDados) idadeCiclos = 'ver motor de actualidade';
 
     var linhas = Object.keys(universo).map(function (m) {
+      /* Estado por componente, e não booleano.
+         'nd' = não disponível nesta fonte · 'ne' = não extraído
+         'ok' = presente · 'hist' = existe noutro período */
       var c = {
-        preco: !!comPreco[m],
-        /* A série parou em Julho de 2023. Nenhuma praça tem dado actual. */
-        actualidade: false,
-        /* Nenhuma unidade do país declara existências. */
-        disponibilidade: false,
-        fluxo: !!comFluxo[m]
+        preco: comPreco[m] ? 'ok' : (declarados.indexOf(m) >= 0 ? 'ne' : 'nd'),
+        actualidade: 'hist',
+        disponibilidade: 'nd',
+        fluxo: comFluxo[m] ? 'ok' : 'nd'
+      };
+      var ESTADOS = {
+        ok:   { rotulo: 'presente', conta: true },
+        ne:   { rotulo: 'não extraído desta edição', conta: false },
+        nd:   { rotulo: 'não disponível nesta fonte', conta: false },
+        hist: { rotulo: 'existe, mas de período anterior', conta: false }
       };
       var pontos = 0;
-      for (var k in c) if (c[k]) pontos++;
+      for (var k in c) if (ESTADOS[c[k]] && ESTADOS[c[k]].conta) pontos++;
       var esc = TRANSPARENCIA.escala.filter(function (e) { return pontos >= e.min; })[0];
       return {
         praca: m, pontos: pontos, de: 4,
-        componentes: c,
+        componentes: c, estados: ESTADOS,
         produtosComPreco: comPreco[m] || 0,
         declaradoNoBoletim: declarados.indexOf(m) >= 0,
         nivel: esc.rotulo, cor: esc.cor

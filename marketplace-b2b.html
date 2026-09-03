@@ -140,8 +140,8 @@ button.s{border-color:var(--brzg);color:var(--brzl)}
 
 
     <div class="card frame" style="margin-top:14px">
-      <div class="ch"><div><h2>Transpar&ecirc;ncia de mercado</h2>
-        <p>Quanto se sabe sobre cada pra&ccedil;a &mdash; e onde o pa&iacute;s est&aacute; cego</p></div>
+      <div class="ch"><div><h2>Cobertura da fonte SIMA</h2>
+        <p>Quanto desta fonte se conseguiu extrair &mdash; n&atilde;o quanto se sabe do pa&iacute;s</p></div>
         <span class="tag crit" id="tm-tag">&mdash;</span></div>
       <div class="bd" id="transparencia"></div>
     </div>
@@ -295,8 +295,8 @@ function desenharTransparencia(){
      '<div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:18px">'
     +[[T.universo,'pra&ccedil;as no universo','#22B8F0'],
       [T.cobertura.toFixed(0)+'%','dos mercados do boletim com pre&ccedil;o','#F0A926'],
-      [T.semDisponibilidade+' de '+T.universo,'sem disponibilidade conhecida','#EF4444'],
-      ['0','pra&ccedil;as com transpar&ecirc;ncia alta','#EF4444']].map(function(x){
+      [T.semDisponibilidade+' de '+T.universo,'sem disponibilidade <b>nesta fonte</b>','#EF4444'],
+      ['4','estados poss&iacute;veis por componente','#A78BFA']].map(function(x){
       return '<div class="entra"><div class="mono" style="font-size:24px;color:'+x[2]
        +';letter-spacing:-.02em">'+x[0]+'</div>'
        +'<div style="font-size:10.5px;color:var(--t4);margin-top:3px">'+x[1]+'</div></div>';
@@ -325,9 +325,15 @@ function desenharTransparencia(){
        /* quatro quadrados, um por componente */
        +'<span style="display:flex;gap:3px;flex-shrink:0">'
        +T.componentes.map(function(c){
-          var on=l.componentes[c.id];
-          return '<i title="'+c.nome+'" style="display:block;width:15px;height:15px;border-radius:3px;'
-           +'background:'+(on?l.cor:'#0A1421')+';border:1px solid '+(on?l.cor:'rgba(38,56,86,.8)')+'"></i>';
+          /* Quatro estados, não dois. Um quadrado vazio já não quer dizer
+             "não existe" — o título diz qual dos quatro é. */
+          var e=l.componentes[c.id];
+          var CORE={ok:l.cor,ne:'#F0A926',hist:'#A78BFA',nd:'#2A3A4E'};
+          var cor=CORE[e]||'#2A3A4E';
+          var cheio=(e==='ok');
+          return '<i title="'+c.nome+': '+(l.estados[e]?l.estados[e].rotulo:e)
+           +'" style="display:block;width:15px;height:15px;border-radius:3px;'
+           +'background:'+(cheio?cor:cor+'22')+';border:1px solid '+cor+'"></i>';
         }).join('')+'</span>'
        +'<span class="mono" style="width:34px;text-align:right;font-size:11.5px;color:'+l.cor+'">'
        +l.pontos+'/'+l.de+'</span>'
@@ -341,19 +347,32 @@ function desenharTransparencia(){
     +(T.achado?'<div class="aviso w" style="margin:15px 0 0"><b>Achado.</b> '+esc(T.achado)
       +' As pra&ccedil;as sem nada s&atilde;o: '+T.declaradosSemPreco.slice(0,6).join(', ')+'.</div>':'')
 
-    +'<div class="aviso r" style="margin:12px 0 0"><b>Nenhuma pra&ccedil;a do pa&iacute;s chega a metade.</b> '
-    +'A componente da disponibilidade d&aacute; zero em todas as '+T.universo+' &mdash; '
-    +'<b>nenhuma unidade de armazenagem declara exist&ecirc;ncias</b>. '
-    +'E a actualidade d&aacute; zero em todas porque a s&eacute;rie do SIMA parou em Julho de 2023. '
-    +'Duas das quatro componentes est&atilde;o a zero em todo o territ&oacute;rio, e isso &eacute; o retrato, '
-    +'n&atilde;o um defeito do c&aacute;lculo.</div>'
+    +'<div class="aviso r" style="margin:12px 0 0"><b>Este &iacute;ndice mede uma fonte, n&atilde;o o pa&iacute;s.</b> '
+    +'Chamava-se antes &laquo;transpar&ecirc;ncia de mercado&raquo; e estava errado. '
+    +'Um zero aqui significa <b>n&atilde;o extra&iacute;do desta edi&ccedil;&atilde;o deste boletim</b> &mdash; '
+    +'nunca que o mercado n&atilde;o tem pre&ccedil;o, que n&atilde;o existe informa&ccedil;&atilde;o noutra fonte, '
+    +'ou que n&atilde;o existe o produto.<br><br>'
+    +'<b>Exemplo concreto:</b> Manhi&ccedil;a, Cidade de Inhambane, Cidade de Quelimane e Vilankulo '
+    +'aparecem a zero. Boletins do SIMA de 2022 t&ecirc;m pre&ccedil;os para essas pra&ccedil;as. '
+    +'O zero &eacute; da edi&ccedil;&atilde;o carregada, n&atilde;o do pa&iacute;s.<br><br>'
+    +'E a capacidade de armazenagem por prov&iacute;ncia existe em publica&ccedil;&atilde;o do INE, no quadro 10.1.1 '
+    +'dos Indicadores B&aacute;sicos de Agricultura e Alimenta&ccedil;&atilde;o, com o ICM como fonte. '
+    +'<b>O sistema n&atilde;o a tem, e isso &eacute; lacuna de integra&ccedil;&atilde;o, n&atilde;o aus&ecirc;ncia nacional.</b></div>'
 
+    +'<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:14px;padding-top:12px;'
+    +'border-top:1px solid rgba(38,56,86,.5);font-size:10.5px">'
+    +[['#12B981','presente'],['#F0A926','n&atilde;o extra&iacute;do desta edi&ccedil;&atilde;o'],
+      ['#A78BFA','existe, de per&iacute;odo anterior'],['#2A3A4E','n&atilde;o dispon&iacute;vel nesta fonte']]
+      .map(function(x){
+        return '<span style="display:flex;align-items:center;gap:6px;color:var(--t3)">'
+         +'<i style="display:block;width:12px;height:12px;border-radius:3px;background:'+x[0]
+         +'22;border:1px solid '+x[0]+'"></i>'+x[1]+'</span>';
+      }).join('')+'</div>'
     +'<div style="font-size:10.5px;color:var(--t4);line-height:1.65;margin-top:10px">'
     +'<b>Como se conta:</b> '+esc(T.nota)+' '
-    +'O &iacute;ndice mede quanta informa&ccedil;&atilde;o existe sobre a pra&ccedil;a. '
-    +'<b>N&atilde;o mede a qualidade do mercado nem a conduta de ningu&eacute;m.</b></div>';
+    +'<b>'+esc(CadeiaAbastecimento.escalaTransparencia.aviso)+'</b></div>';
 
-  document.getElementById('tm-tag').innerHTML='m&aacute;ximo observado: 2 de 4';
+  document.getElementById('tm-tag').innerHTML='cobertura de uma fonte';
 }
 
 function desenharCadeia(){
