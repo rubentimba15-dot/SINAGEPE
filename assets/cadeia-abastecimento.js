@@ -218,6 +218,188 @@
     return out;
   }
 
+
+  /* ---- 7. COMPARADOR DE CUSTO COLOCADO NO DESTINO ----
+     Responde à pergunta que o preço sozinho não responde:
+     comprar onde é mais barato compensa depois de pagar o transporte?
+
+     Não sabe se há produto disponível — nenhuma unidade do país declara
+     existências. Compara o custo de comprar ao preço observado em cada
+     praça, o que é coisa diferente e mais modesta. */
+  function pracasComPreco(sima, produto) {
+    var R = sima.retalho1462 || sima.retalho || [];
+    var linha = null;
+    for (var i = 0; i < R.length; i++) if (R[i].produto === produto) linha = R[i];
+    if (!linha) return [];
+    var out = [];
+    function juntar(m, v) {
+      if (!m || v == null) return;
+      for (var j = 0; j < out.length; j++) if (out[j].praca === m) return;
+      out.push({ praca: m, preco: v });
+    }
+    (linha.minimo.mercados || []).forEach(function (m) { juntar(m, linha.minimo.valor); });
+    (linha.maximo.mercados || []).forEach(function (m) { juntar(m, linha.maximo.valor); });
+    (linha.outros || []).forEach(function (o) { juntar(o.mercado, o.valor); });
+    return out;
+  }
+
+  function custoColocado(sima, cascata, produto, quantidadeKg, destino) {
+    var F = juntarFluxos(sima);
+    var cd = coordDe(destino, F);
+    var gas = 0;
+    (cascata.regioes || []).forEach(function (r) { if (r.gasoleo > gas) gas = r.gasoleo; });
+    if (!cd || !gas) return { calculavel: false, razao: 'destino sem coordenada ou preço de gasóleo em falta' };
+
+    var P = pracasComPreco(sima, produto);
+    var linhas = [];
+    P.forEach(function (x) {
+      var co = coordDe(x.praca, F);
+      if (!co) return;
+      var km = haversine(co, cd);
+      var t = custoTransporte(km, gas);
+      var mercadoria = x.preco * quantidadeKg;
+      /* O camião transporta até 20 t. Acima disso, mais viagens. */
+      var viagens = Math.max(1, Math.ceil(quantidadeKg / 1000 / TRANSPORTE.capacidadeToneladas));
+      var transporte = t.custoTotal * viagens;
+      var total = mercadoria + transporte;
+      linhas.push({
+        praca: x.praca, preco: x.preco,
+        km: km, kmEstimado: t.kmEstimado, viagens: viagens,
+        mercadoria: mercadoria, transporte: transporte,
+        total: total, precoEntregue: total / quantidadeKg,
+        acrescimo: (total / mercadoria - 1) * 100,
+        mesmaPraca: x.praca === destino
+      });
+    });
+    linhas.sort(function (a, b) { return a.total - b.total; });
+
+    /* A ordem inverteu? Isto é o que o comparador existe para mostrar. */
+    var porPreco = linhas.slice().sort(function (a, b) { return a.preco - b.preco; });
+    var inverteu = linhas.length > 1 && porPreco[0].praca !== linhas[0].praca;
+
+    return {
+      calculavel: true, produto: produto, destino: destino,
+      quantidadeKg: quantidadeKg, precoGasoleo: gas,
+      linhas: linhas, inverteu: inverteu,
+      maisBarataNaOrigem: porPreco.length ? porPreco[0].praca : null,
+      maisBarataEntregue: linhas.length ? linhas[0].praca : null,
+      naoInclui: 'Portagens, salário do motorista, amortização do veículo, seguro, carga e ' +
+                 'descarga, e retorno em vazio. E, sobretudo, não inclui saber se há produto ' +
+                 'disponível: nenhuma unidade do país declara existências.'
+    };
+  }
+
+
+  /* ---- 8. ÍNDICE DE TRANSPARÊNCIA DE MERCADO ----
+     Mede o que NÃO se sabe sobre cada praça, que é onde o sistema é
+     mais útil. Não mede qualidade do mercado nem conduta de ninguém:
+     mede quanta informação existe sobre ele.
+
+     Quatro componentes, todas verificáveis. Nenhuma ponderada por
+     juízo: cada uma vale um ponto, e a soma está à vista.
+
+       1. Preço conhecido           — há preço extraído para a praça?
+       2. Actualidade               — o dado tem menos de um ciclo da fonte?
+       3. Disponibilidade conhecida — sabe-se o que há para vender?
+       4. Fluxo documentado         — sabe-se de onde vem o produto?
+
+     A terceira dá zero em todo o país, e isso é o resultado, não um
+     defeito do cálculo. */
+  var TRANSPARENCIA = {
+    componentes: [
+      { id: 'preco', nome: 'Preço conhecido',
+        mede: 'Existe preço extraído do boletim para esta praça' },
+      { id: 'actualidade', nome: 'Dado actual',
+        mede: 'O preço tem menos de um ciclo de publicação da fonte' },
+      { id: 'disponibilidade', nome: 'Disponibilidade conhecida',
+        mede: 'Sabe-se que quantidade existe para venda' },
+      { id: 'fluxo', nome: 'Origem documentada',
+        mede: 'O boletim regista de onde vem o produto que ali se vende' }
+    ],
+    escala: [
+      { min: 4, rotulo: 'alta',    cor: '#12B981' },
+      { min: 3, rotulo: 'média',   cor: '#F0A926' },
+      { min: 2, rotulo: 'baixa',   cor: '#EF4444' },
+      { min: 0, rotulo: 'mínima',  cor: '#7F1D1D' }
+    ],
+    nota: 'Cada componente vale um ponto. Não há ponderação: quem discordar ' +
+          'da igualdade dos pesos vê o detalhe e tira a sua própria conclusão.'
+  };
+
+  function transparenciaMercado(sima) {
+    var R = sima.retalho1462 || sima.retalho || [];
+    var F = juntarFluxos(sima);
+    var declarados = sima.mercados || [];
+
+    /* Praças com preço extraído, e para quantos produtos. */
+    var comPreco = {};
+    R.forEach(function (r) {
+      (r.minimo.mercados || []).forEach(function (m) { comPreco[m] = (comPreco[m] || 0) + 1; });
+      (r.maximo.mercados || []).forEach(function (m) { comPreco[m] = (comPreco[m] || 0) + 1; });
+      (r.outros || []).forEach(function (o) { comPreco[o.mercado] = (comPreco[o.mercado] || 0) + 1; });
+    });
+
+    /* Praças com fluxo documentado, como origem ou destino. */
+    var comFluxo = {};
+    F.forEach(function (f) {
+      if (f.destino) comFluxo[f.destino] = true;
+      if (f.origem) comFluxo[f.origem] = true;
+    });
+
+    /* Universo: mercados declarados no boletim mais praças com preço. */
+    var universo = {};
+    declarados.forEach(function (m) { universo[m] = true; });
+    Object.keys(comPreco).forEach(function (m) { universo[m] = true; });
+
+    var idadeCiclos = null;
+    if (sima.meta && sima.meta.dataDados) idadeCiclos = 'ver motor de actualidade';
+
+    var linhas = Object.keys(universo).map(function (m) {
+      var c = {
+        preco: !!comPreco[m],
+        /* A série parou em Julho de 2023. Nenhuma praça tem dado actual. */
+        actualidade: false,
+        /* Nenhuma unidade do país declara existências. */
+        disponibilidade: false,
+        fluxo: !!comFluxo[m]
+      };
+      var pontos = 0;
+      for (var k in c) if (c[k]) pontos++;
+      var esc = TRANSPARENCIA.escala.filter(function (e) { return pontos >= e.min; })[0];
+      return {
+        praca: m, pontos: pontos, de: 4,
+        componentes: c,
+        produtosComPreco: comPreco[m] || 0,
+        declaradoNoBoletim: declarados.indexOf(m) >= 0,
+        nivel: esc.rotulo, cor: esc.cor
+      };
+    }).sort(function (a, b) {
+      return b.pontos - a.pontos || b.produtosComPreco - a.produtosComPreco;
+    });
+
+    /* Cobertura: dos mercados que o boletim declara, quantos têm preço? */
+    var declaradosSemPreco = declarados.filter(function (m) { return !comPreco[m]; });
+
+    return {
+      linhas: linhas,
+      universo: linhas.length,
+      declaradosNoBoletim: declarados.length,
+      declaradosComPreco: declarados.length - declaradosSemPreco.length,
+      declaradosSemPreco: declaradosSemPreco,
+      cobertura: declarados.length
+        ? (declarados.length - declaradosSemPreco.length) / declarados.length * 100 : 0,
+      semDisponibilidade: linhas.length,   /* todas */
+      componentes: TRANSPARENCIA.componentes,
+      nota: TRANSPARENCIA.nota,
+      achado: declaradosSemPreco.length
+        ? 'O boletim declara ' + declarados.length + ' mercados de recolha e o sistema só ' +
+          'conseguiu extrair preço de ' + (declarados.length - declaradosSemPreco.length) + '. ' +
+          'Os restantes são nomeados no texto sem valor associado, ou o valor não foi ' +
+          'extraído do PDF. É lacuna de extracção ou de publicação — o sistema não distingue.'
+        : null
+    };
+  }
+
   /* ---- 6. O QUE O MOTOR NÃO CALCULA ----
      Está aqui, em código, para que quem procurar a função não a encontre
      e perceba porquê. */
@@ -260,6 +442,10 @@
     distanciaAoPorto: distanciaAoPorto,
     custoTransporte: custoTransporte,
     transporteExplica: transporteExplica,
-    fluxosAfectadosPorCorte: fluxosAfectadosPorCorte
+    fluxosAfectadosPorCorte: fluxosAfectadosPorCorte,
+    pracasComPreco: pracasComPreco,
+    custoColocado: custoColocado,
+    transparenciaMercado: transparenciaMercado,
+    escalaTransparencia: TRANSPARENCIA
   };
 })(window);
