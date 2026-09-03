@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "fonte": "MADER — Ministério da Agricultura e Desenvolvimento Rural",
+    "documento": "PEDSA 2030 — Plano Estratégico para o Desenvolvimento do Sector Agrário",
+    "designacaoCorrente": "PEDSA II",
+    "periodo": "2022-2030, com o PNISA II a cobrir 2022-2026",
+    "urlVersaoLonga": "https://www.agricultura.gov.mz/documents/PEDSA_VERSAO_LONGA.pdf",
+    "urlVersaoSumarizada": "https://www.agricultura.gov.mz/documents/PEDSA_VERSAO_SUMARIZADA.pdf",
+    "licenca": "Reprodução autorizada, excepto para fins comerciais, desde que mencionado o MADER como autor, o título da publicação e o ano de edição",
+    "extraidoEm": "2026-09-01",
+    "verificado": true,
+    "natureza": "Enquadramento institucional, não fonte de dados",
+    "sucessao": "Em Maio de 2026 decorreram debates sobre o PEDSA III e o MozAgriBiz. O PEDSA II está em vigor e a ser sucedido — convém confirmar o estado antes de citar.",
+    "porqueImporta": "O PEDSA determina o registo e licenciamento dos operadores de mercado, a digitalização da comercialização e a criação de sistemas de informação de gestão. É a fundamentação institucional do que o SINAGEPE faz — e transforma um pedido de dados num contributo para uma meta do Governo."
+  },
+  "pilares": [
+    {
+      "n": 1,
+      "titulo": "Produtividade e competitividade agrárias",
+      "meio": "Investigação, extensão, mecanização e irrigação"
+    },
+    {
+      "n": 2,
+      "titulo": "Gestão sustentável dos recursos naturais",
+      "meio": "Gestão integrada e resiliente"
+    },
+    {
+      "n": 3,
+      "titulo": "Ambiente de agro-negócio",
+      "objectivo": "Fortalecer e facilitar o acesso das cadeias de valor agrárias ao mercado doméstico, regional e internacional, de forma inclusiva e competitiva",
+      "relevanciaSinagepe": "É o pilar onde o SINAGEPE se enquadra directamente."
+    },
+    {
+      "n": 4,
+      "titulo": "Fortalecimento e desenvolvimento institucional"
+    }
+  ],
+  "mandatosRelevantes": [
+    {
+      "mandato": "Registar e licenciar os operadores de mercado de escala média e grande, e digitalizar o processo de comercialização dos produtos agrários estratégicos",
+      "oQueSustenta": "O cadastro nacional de operadores da cadeia alimentar, incluindo entidades identificadas que ainda não forneceram dados ao sistema.",
+      "estadoNoSistema": "parcial — 8 operadores comerciais e 8 estabelecimentos identificados",
+      "porConfirmar": "Citação exacta e página, na versão longa"
+    },
+    {
+      "mandato": "Promover o estabelecimento e operacionalização de centros de agregação dos produtos agrários",
+      "oQueSustenta": "O mapeamento de armazéns, centros de agregação, centros de distribuição, grossistas, processadores, retalhistas e mercados como infraestrutura da cadeia.",
+      "estadoNoSistema": "parcial — 30 armazéns cadastrados, sem centros de agregação",
+      "porConfirmar": "Citação exacta e página"
+    },
+    {
+      "mandato": "Criar sistemas de informação de gestão para recolha, processamento, armazenamento, recuperação, partilha, análise e utilização de dados de monitoria dos indicadores estratégicos, incluindo banco de dados baseado na Internet",
+      "oQueSustenta": "A própria existência de uma plataforma como o SINAGEPE.",
+      "estadoNoSistema": "é o que o sistema faz",
+      "porConfirmar": "Citação exacta e página"
+    },
+    {
+      "mandato": "Estruturação das cadeias de valor, incluindo inteligência de mercados, governação e regulação",
+      "oQueSustenta": "O motor de análise da cadeia e o índice de cobertura de fonte.",
+      "estadoNoSistema": "aplicado",
+      "porConfirmar": "Citação exacta e página"
+    }
+  ],
+  "actoresDaCadeia": {
+    "declarados": [
+      "agricultores",
+      "criadores",
+      "pescadores",
+      "transportadores",
+      "processadores",
+      "armazenistas",
+      "agentes de comercialização"
+    ],
+    "nota": "O PEDSA nomeia expressamente os armazenistas e os agentes de comercialização como actores da cadeia. É fundamento para o sistema os cadastrar, e não apenas os produtores.",
+    "cadeiaReconhecida": "produção → processamento → armazenamento → transporte → comercialização → retalho → consumo"
+  },
+  "problemasIdentificados": [
+    "Ausência de estruturas de armazenamento",
+    "Estruturas de armazenamento limitadas",
+    "Modelos de armazenamento insuficientes",
+    "Problemas de reserva alimentar",
+    "Deficiências de transporte e armazenamento",
+    "Perdas significativas antes e depois da colheita",
+    "Dificuldade de acesso à informação e inteligência de mercados"
+  ],
+  "metas2030": [
+    {
+      "meta": "Redução das perdas pós-colheita",
+      "valor": 50,
+      "unidade": "% pelo menos",
+      "sinagepePodeMedir": false,
+      "oQueExigiria": "Medição de perdas na cadeia, que ninguém publica"
+    },
+    {
+      "meta": "Aumento do valor do comércio agrário de produtos nacionais no mercado doméstico",
+      "valor": 25,
+      "unidade": "% pelo menos",
+      "sinagepePodeMedir": "parcial",
+      "oQueExigiria": "Volumes transaccionados por operador, além dos preços que já temos"
+    },
+    {
+      "meta": "Aumento do valor dos produtos agrários exportados",
+      "valor": 25,
+      "unidade": "% pelo menos",
+      "sinagepePodeMedir": false,
+      "oQueExigiria": "Estatísticas de comércio externo do INE, ainda não integradas"
+    },
+    {
+      "meta": "Aumento do investimento público e privado na comercialização agrária",
+      "valor": 30,
+      "unidade": "% pelo menos",
+      "sinagepePodeMedir": false,
+      "oQueExigiria": "Séries de investimento no sector"
+    }
+  ],
+  "metaArroz": {
+    "meta": "Redução em pelo menos 33% do valor de importação de arroz até 2026, e autossuficiência até 2030",
+    "fonte": "PEDSA 2022-2030, citado na Estratégia Nacional de Desenvolvimento do Arroz",
+    "producao": {
+      "campanha2007_2008": 206385,
+      "campanha_recente": 412552,
+      "unidade": "toneladas"
+    },
+    "sinagepePodeMedir": false,
+    "oQueExigiria": "Valor de importação de arroz por ano, das estatísticas de comércio externo do INE",
+    "nota": "É a meta mais concreta e mensurável do PEDSA para um produto essencial. O sistema tem o preço do arroz por praça e a observação do ICM sobre sobredeclaração de preço de importação — mas não tem o valor importado, que é o que a meta mede."
+  },
+  "usoNasCartas": {
+    "porqueMuda": "Um pedido de dados que invoca o PEDSA deixa de ser \"queremos informação\" e passa a ser \"contribuímos para uma meta que o Governo estabeleceu\". A instituição do outro lado não está a fazer um favor: está a executar o seu próprio plano.",
+    "formulacaoSugerida": "O PEDSA 2030 determina o registo e licenciamento dos operadores de mercado, a digitalização do processo de comercialização dos produtos agrários estratégicos, e a criação de sistemas de informação de gestão com banco de dados para monitoria dos indicadores estratégicos. É nesse enquadramento que se apresenta o presente pedido.",
+    "cartasQueDevemUsar": [
+      "ANE",
+      "BAU",
+      "SETSAN",
+      "MAAP",
+      "ICM",
+      "Alfândegas"
+    ]
+  }
+}

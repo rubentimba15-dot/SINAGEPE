@@ -476,5 +476,21 @@
     "titulo": "O argumento que serve para todas",
     "texto": "Cada uma destas entidades já tem, hoje, uma imagem pública de si própria — construída a partir do que publica. O SINAGEPE limitou-se a juntá-la. O que a adesão oferece não é dar dados ao Estado: é passar a controlar a versão da sua própria informação que circula. Quem não publica não fica invisível — fica descrito por terceiros a partir de fragmentos.",
     "ordemSugerida": "Começar pelas que ganham sem dar nada (CEDSIF, pelo Subsistema de Monitoria e Avaliação; CTA, porque a proposta já é dela) e pelas de esforço mínimo e impacto máximo (ANE, ICM). A BMM é a mais transformadora mas exige decisão interna, pelo que deve vir depois de haver dois ou três casos demonstrados."
+  },
+  "enquadramentoPEDSA": {
+    "porqueEstaAqui": "Todas as cartas institucionais devem abrir com este enquadramento. Um pedido que invoca o PEDSA deixa de ser \"queremos informação\" e passa a ser \"contribuímos para uma meta que o Governo estabeleceu\". A instituição do outro lado não está a fazer um favor: está a executar o seu plano.",
+    "texto": "O PEDSA 2030 — Plano Estratégico para o Desenvolvimento do Sector Agrário determina, no seu terceiro pilar, o registo e licenciamento dos operadores de mercado de escala média e grande, a digitalização do processo de comercialização dos produtos agrários estratégicos, e a criação de sistemas de informação de gestão com banco de dados para monitoria dos indicadores estratégicos. É nesse enquadramento que se apresenta o presente pedido.",
+    "baseLegalComplementar": "Lei n.º 34/2014, de 31 de Dezembro — Lei do Direito à Informação, cujo artigo 13.º estabelece que o direito compreende solicitar, procurar, consultar, receber e divulgar informação de interesse público, e cujo artigo 10.º dispensa o requerente de demonstrar interesse legítimo.",
+    "fonte": "https://www.agricultura.gov.mz/documents/PEDSA_VERSAO_LONGA.pdf",
+    "licenca": "Reprodução autorizada para fins não comerciais, citando o MADER",
+    "reserva": "Em Maio de 2026 decorreram debates sobre o PEDSA III. Confirmar o estado de vigência do PEDSA II antes de o citar em documento formal.",
+    "aplicaSeA": [
+      "ANE",
+      "BAU",
+      "SETSAN",
+      "MAAP",
+      "ICM",
+      "ALFÂNDEGAS · JUE"
+    ]
   }
 }
