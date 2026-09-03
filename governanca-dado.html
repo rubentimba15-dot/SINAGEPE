@@ -89,7 +89,7 @@ tr:last-child td{border-bottom:none}
     <div class="kpis" id="kpis"></div>
 
     <div class="card frame">
-      <div class="ch"><h2>As cinco regras</h2><span class="tag" id="r-tag">&mdash;</span></div>
+      <div class="ch"><h2><span id="n-regras">As</span> regras</h2><span class="tag" id="r-tag">&mdash;</span></div>
       <div id="regras"></div>
     </div>
 
@@ -207,6 +207,10 @@ function desenharCadeia(C){
 }
 
 function desenharRegras(){
+  /* O título contava cinco regras. São nove. Passa a contar do ficheiro. */
+  var _t=document.getElementById('n-regras');
+  if(_t) _t.textContent=['','Uma','Duas','Três','Quatro','Cinco','Seis','Sete','Oito','Nove','Dez'][ST.g.regras.length]||('As '+ST.g.regras.length);
+
   document.getElementById('regras').innerHTML=ST.g.regras.map(function(r){
     var c=COR_EST[r.estado]||'#5E7189';
     return '<div class="regra"><div class="regra-h"><span class="regra-n">0'+r.n+'</span>'

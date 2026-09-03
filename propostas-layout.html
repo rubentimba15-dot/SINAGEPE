@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<script src="assets/access-control.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SINAGEPE — três direcções de layout</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@400;600;700&family=Courier+Prime:wght@400;700&family=Oswald:wght@300;400;500;600&family=Roboto+Mono:wght@400;500;700&family=Spectral:ital,wght@0,400;0,600;1,400&family=Inconsolata:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#1a1a1a;color:#eee;font-family:Archivo,sans-serif}
+.shell{max-width:1180px;margin:0 auto;padding:34px 22px 80px}
+.intro h1{font-size:26px;margin:0 0 8px;font-weight:600;letter-spacing:-.01em}
+.intro p{color:#999;font-size:14px;line-height:1.6;max-width:660px;margin:0 0 6px}
+.prop{margin:44px 0 0;border:1px solid #333;border-radius:3px;overflow:hidden}
+.prop-h{padding:16px 20px;background:#222;border-bottom:1px solid #333;display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+.prop-n{font-family:'Roboto Mono',monospace;font-size:12px;color:#777}
+.prop-t{font-size:18px;font-weight:600}
+.prop-s{font-size:13px;color:#8a8a8a;flex:1;min-width:240px}
+.prop-b{padding:20px;background:#141414}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:0;border-top:1px solid #333;background:#1c1c1c}
+.meta div{padding:13px 20px;border-right:1px solid #333;font-size:12px;line-height:1.55}
+.meta div:last-child{border-right:none}
+.meta b{display:block;color:#777;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;font-weight:500}
+.risco{padding:13px 20px;background:#231b13;border-top:1px solid #3a2b1c;font-size:12.5px;color:#c9a06a;line-height:1.6}
+.risco b{color:#e0b878}
+
+/* ============ A — MANIFESTO DE CARGA ============ */
+.A{background:#E8E2D4;color:#1C1A16;font-family:'Archivo Narrow',sans-serif;padding:0;border:1px solid #C4BCA8}
+.A-top{display:flex;justify-content:space-between;align-items:flex-start;padding:14px 18px;border-bottom:2px solid #1C1A16}
+.A-org{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#5A5346}
+.A-tit{font-size:21px;font-weight:700;letter-spacing:-.01em;line-height:1.1;margin-top:3px}
+.A-carimbo{border:2px solid #A8342A;color:#A8342A;padding:5px 11px;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;transform:rotate(-3deg);text-align:center;line-height:1.35}
+.A-ref{font-family:'Courier Prime',monospace;font-size:10px;color:#5A5346;margin-top:4px;letter-spacing:.02em}
+.A-campos{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #1C1A16}
+.A-c{padding:9px 18px;border-right:1px solid #C4BCA8}
+.A-c:last-child{border-right:none}
+.A-cl{font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;color:#5A5346}
+.A-cv{font-family:'Courier Prime',monospace;font-size:19px;font-weight:700;margin-top:2px}
+.A-cv.ex{color:#A8342A}
+.A table{width:100%;border-collapse:collapse;font-size:12px}
+.A th{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:#5A5346;text-align:left;padding:7px 18px;border-bottom:1px solid #1C1A16;font-weight:600}
+.A td{padding:7px 18px;border-bottom:1px dotted #B5AC96}
+.A tr:nth-child(even) td{background:#DFD8C7}
+.A .n{font-family:'Courier Prime',monospace;text-align:right}
+.A .ex{color:#A8342A;font-weight:700}
+.A-pe{padding:10px 18px;font-family:'Courier Prime',monospace;font-size:10px;color:#5A5346;border-top:2px solid #1C1A16;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ============ B — QUADRO DE PARTIDAS ============ */
+.B{background:#0E1512;color:#E8E6DF;font-family:Oswald,sans-serif;border:1px solid #1E2A24}
+.B-top{padding:14px 18px;border-bottom:1px solid #1E2A24;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+.B-tit{font-size:22px;font-weight:500;letter-spacing:.03em;text-transform:uppercase}
+.B-rel{font-family:'Roboto Mono',monospace;font-size:20px;color:#E8A317;letter-spacing:.04em}
+.B-sub{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#6F8078;font-weight:300}
+.B-lin{display:grid;grid-template-columns:20px 1fr 92px 74px 84px;gap:12px;align-items:center;padding:10px 18px;border-bottom:1px solid #172219}
+.B-lin.hd{font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:#6F8078;border-bottom:1px solid #2C3B33;padding-top:12px;padding-bottom:8px}
+.B-sp{width:11px;height:11px;border-radius:50%;border:2px solid #4E6B5C;position:relative;justify-self:center}
+.B-sp.on{background:#4E6B5C}
+.B-sp.al{border-color:#E8A317;background:#E8A317}
+.B-sp.st{border-color:#C4402E;background:#C4402E}
+.B-nm{font-size:14.5px;font-weight:400;letter-spacing:.02em}
+.B-nm small{display:block;font-size:10px;color:#6F8078;font-weight:300;letter-spacing:.06em;text-transform:uppercase;margin-top:1px}
+.B-n{font-family:'Roboto Mono',monospace;font-size:14px;text-align:right}
+.B-est{font-size:10px;letter-spacing:.13em;text-transform:uppercase;text-align:right}
+.B-est.ok{color:#5F9E7A}.B-est.al{color:#E8A317}.B-est.st{color:#C4402E}
+.B-pe{padding:11px 18px;border-top:1px solid #2C3B33;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#6F8078;font-weight:300}
+
+/* ============ C — CARTA ============ */
+.C{background:#F2EDE1;color:#20303A;font-family:Spectral,serif;border:1px solid #CFC4AE;position:relative}
+.C-grat{position:absolute;inset:0;pointer-events:none;
+ background-image:linear-gradient(#20303A11 1px,transparent 1px),linear-gradient(90deg,#20303A11 1px,transparent 1px);
+ background-size:38px 38px}
+.C-top{position:relative;padding:15px 20px 12px;border-bottom:1px solid #20303A}
+.C-tit{font-size:22px;font-weight:600;letter-spacing:.01em}
+.C-sub{font-family:Inconsolata,monospace;font-size:10.5px;color:#5E6B70;letter-spacing:.09em;text-transform:uppercase;margin-top:3px}
+.C-body{position:relative;display:grid;grid-template-columns:1fr 232px}
+@media(max-width:720px){.C-body{grid-template-columns:1fr}}
+.C-mapa{padding:16px 20px;border-right:1px solid #CFC4AE;min-height:214px}
+.C-legend{padding:15px 18px;background:#EAE3D3}
+.C-lt{font-family:Inconsolata,monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#5E6B70;border-bottom:1px solid #20303A;padding-bottom:5px;margin-bottom:9px}
+.C-li{display:flex;gap:9px;align-items:flex-start;font-size:12px;margin-bottom:8px;line-height:1.45}
+.C-li i{width:13px;flex-shrink:0;margin-top:3px}
+.C-li em{font-style:italic;color:#5E6B70}
+.C-son{font-family:Inconsolata,monospace;font-size:9.5px;fill:#5E6B70}
+.C-nm{font-family:Spectral,serif;font-style:italic;font-size:10.5px;fill:#20303A}
+.C-pe{position:relative;padding:9px 20px;border-top:1px solid #20303A;font-family:Inconsolata,monospace;font-size:9.5px;color:#5E6B70;letter-spacing:.07em}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="intro">
+    <h1>Três direcções de layout</h1>
+    <p>O mesmo conteúdo real do SINAGEPE — quatro indicadores, quatro unidades do cadastro, um corredor — desenhado de três maneiras. Nenhuma usa cartões arredondados, cantos decorativos nem acentos néon.</p>
+    <p>Todas foram buscar a linguagem visual ao mundo do próprio problema: o documento que viaja com a carga, o quadro que anuncia o que parte e o que está parado, e a carta que representa o território.</p>
+  </div>
+
+  <!-- ============ A ============ -->
+  <div class="prop">
+    <div class="prop-h">
+      <span class="prop-n">A</span>
+      <span class="prop-t">Manifesto de carga</span>
+      <span class="prop-s">A linguagem do documento que acompanha a mercadoria: campos, pautas, carimbo, rubrica.</span>
+    </div>
+    <div class="prop-b">
+      <div class="A">
+        <div class="A-top">
+          <div>
+            <div class="A-org">República de Moçambique · Sistema Nacional de Gestão de Produtos Essenciais</div>
+            <div class="A-tit">Cadastro Nacional de Armazenagem</div>
+            <div class="A-ref">FL. 01/03 · EMITIDO 21.08.2026 · FONTES ICM / MIC / PETROMOC / CFM</div>
+          </div>
+          <div class="A-carimbo">Capacidade<br>cega 100%</div>
+        </div>
+        <div class="A-campos">
+          <div class="A-c"><div class="A-cl">Unidades cadastradas</div><div class="A-cv">29</div></div>
+          <div class="A-c"><div class="A-cl">Com telemetria</div><div class="A-cv ex">00</div></div>
+          <div class="A-c"><div class="A-cl">Silos do Estado</div><div class="A-cv">75.500 <span style="font-size:12px">t</span></div></div>
+          <div class="A-c"><div class="A-cl">Por verificar</div><div class="A-cv ex">04</div></div>
+        </div>
+        <table>
+          <tr><th style="width:26px">#</th><th>Unidade</th><th>Natureza</th><th>Estado</th><th class="n">Capacidade</th></tr>
+          <tr><td class="n">01</td><td>Complexo de Silos de Nhamatanda</td><td>PPP — gestão MozGrain</td><td class="ex">Por reabilitar</td><td class="n">n/p</td></tr>
+          <tr><td class="n">02</td><td>Terminal Oceânico de Língamo</td><td>Participação estatal</td><td>Operacional</td><td class="n">390.000 m³</td></tr>
+          <tr><td class="n">03</td><td>Complexo de Silos de Barué</td><td>PPP — gestão MozGrain</td><td class="ex">Divergência MIC/ICM</td><td class="n">n/p</td></tr>
+          <tr><td class="n">04</td><td>Porto de Nacala — armazéns</td><td>Concessão</td><td>Operacional</td><td class="n">21.000 m²</td></tr>
+        </table>
+        <div class="A-pe">
+          <span>n/p = não publicado pela entidade gestora</span>
+          <span>Conferido contra fonte oficial · rubrica ______</span>
+        </div>
+      </div>
+    </div>
+    <div class="meta">
+      <div><b>Paleta</b>#E8E2D4 papel · #1C1A16 tinta · #A8342A carimbo · #5A5346 anotação · #B5AC96 pauta</div>
+      <div><b>Tipografia</b>Archivo Narrow para campos e títulos · Courier Prime para todo o algarismo</div>
+      <div><b>Assinatura</b>O carimbo. Cada ecrã é carimbado com a excepção que o define, não com um logótipo.</div>
+      <div><b>Onde brilha</b>Papel. Imprime-se e continua a ser o mesmo documento — o que o Conselho vai levar para a reunião.</div>
+    </div>
+    <div class="risco"><b>Risco:</b> pode ler-se como nostálgico. Se a execução falhar, parece burocracia velha em vez de rigor documental. Exige disciplina absoluta no espaçamento das pautas.</div>
+  </div>
+
+  <!-- ============ B ============ -->
+  <div class="prop">
+    <div class="prop-h">
+      <span class="prop-n">B</span>
+      <span class="prop-t">Quadro de partidas</span>
+      <span class="prop-s">Os três corredores são caminhos-de-ferro. O quadro anuncia o que segue, o que atrasa e o que está retido.</span>
+    </div>
+    <div class="prop-b">
+      <div class="B">
+        <div class="B-top">
+          <div>
+            <div class="B-tit">Corredor da Beira</div>
+            <div class="B-sub">Porto da Beira → Machipanda · N6 · 6 pontos</div>
+          </div>
+          <div style="text-align:right">
+            <div class="B-rel">10:27</div>
+            <div class="B-sub">Estado às sextas</div>
+          </div>
+        </div>
+        <div class="B-lin hd"><span></span><span>Ponto</span><span style="text-align:right">Capacidade</span><span style="text-align:right">Sensor</span><span style="text-align:right">Estado</span></div>
+        <div class="B-lin"><span class="B-sp on"></span><span class="B-nm">Porto da Beira <small>Cornelder · concessão</small></span><span class="B-n">200.000 m²</span><span class="B-n">—</span><span class="B-est ok">Operacional</span></div>
+        <div class="B-lin"><span class="B-sp al"></span><span class="B-nm">Silos de Nhamatanda <small>MozGrain · PPP</small></span><span class="B-n">n/p</span><span class="B-n">—</span><span class="B-est al">Por reabilitar</span></div>
+        <div class="B-lin"><span class="B-sp st"></span><span class="B-nm">Inchope <small>cruzamento N1 × N6</small></span><span class="B-n">—</span><span class="B-n">—</span><span class="B-est st">Nó crítico</span></div>
+        <div class="B-lin"><span class="B-sp on"></span><span class="B-nm">Mega — Chimoio <small>centro de distribuição</small></span><span class="B-n">n/p</span><span class="B-n">—</span><span class="B-est ok">Privado</span></div>
+        <div class="B-lin"><span class="B-sp on"></span><span class="B-nm">Machipanda <small>fronteira · Zimbabwe</small></span><span class="B-n">—</span><span class="B-n">—</span><span class="B-est ok">Aberta</span></div>
+        <div class="B-pe">Traço cheio = reporta · traço vazio = sem leitura · 0 de 5 pontos com sensor</div>
+      </div>
+    </div>
+    <div class="meta">
+      <div><b>Paleta</b>#0E1512 verde-ferro · #E8E6DF osso · #E8A317 sinal · #C4402E paragem · #4E6B5C via</div>
+      <div><b>Tipografia</b>Oswald condensado para o quadro · Roboto Mono para todo o número alinhado</div>
+      <div><b>Assinatura</b>A espinha de pontos. Cada corredor lê-se de cima a baixo como uma linha, com paragens.</div>
+      <div><b>Onde brilha</b>Parede. Projectado numa sala, lê-se de longe e diz num segundo onde está a paragem.</div>
+    </div>
+    <div class="risco"><b>Risco:</b> o escuro aproxima-se do que já temos. A diferença está na densidade e na ausência total de cartões — se voltarem os cartões, cai no mesmo sítio.</div>
+  </div>
+
+  <!-- ============ C ============ -->
+  <div class="prop">
+    <div class="prop-h">
+      <span class="prop-n">C</span>
+      <span class="prop-t">Carta</span>
+      <span class="prop-s">O território é o interface. Tudo o resto é anotação sobre a carta, como numa carta náutica ou de porto.</span>
+    </div>
+    <div class="prop-b">
+      <div class="C">
+        <div class="C-grat"></div>
+        <div class="C-top">
+          <div class="C-tit">Corredor de Nacala e hinterland</div>
+          <div class="C-sub">Folha 3 · Escala aproximada · Sondagens em toneladas</div>
+        </div>
+        <div class="C-body">
+          <div class="C-mapa">
+            <svg viewBox="0 0 400 186" style="width:100%;height:auto" role="img" aria-label="Excerto de carta do corredor de Nacala">
+              <defs>
+                <pattern id="hach" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                  <line x1="0" y1="0" x2="0" y2="6" stroke="#20303A" stroke-width=".6" opacity=".35"/>
+                </pattern>
+              </defs>
+              <path d="M8 150 L60 120 L110 128 L165 96 L225 88 L300 52 L370 40 L392 60 L392 178 L8 178 Z" fill="url(#hach)" opacity=".5"/>
+              <path d="M8 150 L60 120 L110 128 L165 96 L225 88 L300 52 L370 40" fill="none" stroke="#20303A" stroke-width="1.1"/>
+              <path d="M40 168 Q 130 140 210 118 T 360 62" fill="none" stroke="#A8622A" stroke-width="1.6" stroke-dasharray="7 4"/>
+              <text class="C-nm" x="196" y="140" transform="rotate(-13 196 140)">corredor de Nacala</text>
+              <g>
+                <circle cx="360" cy="62" r="4.5" fill="#F2EDE1" stroke="#20303A" stroke-width="1.4"/>
+                <text class="C-nm" x="352" y="52" text-anchor="end">Porto de Nacala</text>
+                <text class="C-son" x="368" y="76">2 000 000 t/ano</text>
+              </g>
+              <g>
+                <circle cx="248" cy="94" r="3.6" fill="#20303A"/>
+                <text class="C-nm" x="256" y="92">Nampula</text>
+                <text class="C-son" x="256" y="104">s/ sondagem</text>
+              </g>
+              <g>
+                <circle cx="150" cy="112" r="3.6" fill="none" stroke="#20303A" stroke-width="1.4"/>
+                <text class="C-nm" x="158" y="110">Cuamba</text>
+                <text class="C-son" x="158" y="122">por construir</text>
+              </g>
+              <g>
+                <circle cx="58" cy="132" r="3.6" fill="none" stroke="#20303A" stroke-width="1.4"/>
+                <text class="C-nm" x="66" y="130">Lichinga</text>
+                <text class="C-son" x="66" y="142">por reabilitar</text>
+              </g>
+              <g transform="translate(30,36)">
+                <circle r="13" fill="none" stroke="#20303A" stroke-width=".9"/>
+                <path d="M0,-13 L3.4,0 L0,13 L-3.4,0 Z" fill="#20303A"/>
+                <text class="C-son" x="0" y="-17" text-anchor="middle">N</text>
+              </g>
+            </svg>
+          </div>
+          <div class="C-legend">
+            <div class="C-lt">Legenda</div>
+            <div class="C-li"><i>●</i><span>Sondada — capacidade publicada <em>1 de 4</em></span></div>
+            <div class="C-li"><i>○</i><span>Não sondada — obra pendente desde 2021 <em>2 de 4</em></span></div>
+            <div class="C-li"><i style="color:#A8622A">╌</i><span>Corredor de escoamento <em>rodo-ferroviário</em></span></div>
+            <div class="C-li"><i style="opacity:.5">▨</i><span>Área sem cadastro <em>armazenagem privada dispersa</em></span></div>
+            <div class="C-lt" style="margin-top:14px">Aviso ao navegante</div>
+            <div class="C-li"><span style="font-size:11.5px;line-height:1.5">Nenhum ponto desta folha reporta existências. As sondagens são capacidades declaradas, não medidas.</span></div>
+          </div>
+        </div>
+        <div class="C-pe">Levantamento a partir de fontes públicas · sem confirmação dos operadores · não usar para decisão de engenharia</div>
+      </div>
+    </div>
+    <div class="meta">
+      <div><b>Paleta</b>#F2EDE1 carta · #20303A tinta · #A8622A rota · #5E6B70 sondagem · #EAE3D3 inseto</div>
+      <div><b>Tipografia</b>Spectral, com itálico para topónimos como manda a convenção cartográfica · Inconsolata para sondagens</div>
+      <div><b>Assinatura</b>O "aviso ao navegante". A lacuna deixa de ser rodapé e passa a ser instrumento de navegação.</div>
+      <div><b>Onde brilha</b>Território. Torna o que falta tão visível como o que existe — a área tramada é a que não tem cadastro.</div>
+    </div>
+    <div class="risco"><b>Risco:</b> o mais bonito e o mais difícil. Tabelas densas não vivem bem numa carta; exigiria uma segunda linguagem para os ecrãs de listagem, e duas linguagens é como se perde a coerência.</div>
+  </div>
+</div>
+</body>
+</html>
