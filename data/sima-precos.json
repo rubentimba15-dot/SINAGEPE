@@ -13,7 +13,8 @@
     "porqueImporta": "É a primeira vez que o SINAGEPE tem preço real por mercado, com data e fonte citável. E traz o que faltava a todo o sistema: FLUXO — produto que se move de um sítio para outro, com origem, destino e preço de compra.",
     "edicoesExtraidas": 8,
     "periodo": "Setembro de 2022 a Julho de 2023",
-    "notaExtraccao": "As edições 1444, 1446 e 1460 foram extraídas com a ferramenta automática em Agosto de 2026. Três valores de milho vieram errados — a expressão apanhou o bloco do feijão nhemba. O de 1444 foi corrigido contra o PDF (27,46 MT/kg). Os de 1446 e 1460 ficaram a null até confirmação no documento original: não se inventa um valor para preencher uma casa. Fluxos com origem truncada foram retirados pela mesma razão. Na edição 1446, quatro produtos vieram com valores idênticos aos da 1445 — sinal de que a expressão leu o bloco errado. Ficaram todos a null até confirmação no PDF. O milho de 1460 (25,44 MT/kg) foi confirmado no PDF original e a causa corrigida na ferramenta: o texto vinha partido em três linhas e a expressão não o alcançava. A edição 1446 ficou sem valores: o boletim repete o texto da 1445, verificado no PDF original em Agosto de 2026. Registar os mesmos números duas vezes criaria uma falsa semana estável na série."
+    "notaExtraccao": "As edições 1444, 1446 e 1460 foram extraídas com a ferramenta automática em Agosto de 2026. Três valores de milho vieram errados — a expressão apanhou o bloco do feijão nhemba. O de 1444 foi corrigido contra o PDF (27,46 MT/kg). Os de 1446 e 1460 ficaram a null até confirmação no documento original: não se inventa um valor para preencher uma casa. Fluxos com origem truncada foram retirados pela mesma razão. Na edição 1446, quatro produtos vieram com valores idênticos aos da 1445 — sinal de que a expressão leu o bloco errado. Ficaram todos a null até confirmação no PDF. O milho de 1460 (25,44 MT/kg) foi confirmado no PDF original e a causa corrigida na ferramenta: o texto vinha partido em três linhas e a expressão não o alcançava. A edição 1446 ficou sem valores: o boletim repete o texto da 1445, verificado no PDF original em Agosto de 2026. Registar os mesmos números duas vezes criaria uma falsa semana estável na série.",
+    "notaLimpeza": "Dez campos de origem e destino traziam quebra de linha, vinda da extracção do PDF do boletim: o texto de duas colunas ficou colado. Foi mantida a primeira linha e o texto original está preservado no campo textoOriginal de cada fluxo, para auditoria."
   },
   "retalho": [
     {
@@ -1701,12 +1702,15 @@
       "zona": "Sul",
       "produto": "Milho",
       "destino": "Vilanculos",
-      "origem": "Nampula ao\nde Chibabava",
+      "origem": "Nampula ao",
       "preco": 4800.0,
       "unidade": "MT por saco de 50 kg",
       "precoPorKg": 96.0,
       "conversaoAssumida": null,
-      "desenhavel": false
+      "desenhavel": false,
+      "textoOriginal": {
+        "origem": "Nampula ao\nde Chibabava"
+      }
     },
     {
       "zona": "Sul",
@@ -1734,12 +1738,15 @@
       "zona": "Centro",
       "produto": "Feijão",
       "destino": "Inharrime",
-      "origem": "Província de Tete distrito\nMocumbi localidade de Mahalamba",
+      "origem": "Província de Tete distrito",
       "preco": 3600.0,
       "unidade": "MT por lata de 20 litros",
       "precoPorKg": 300.0,
       "conversaoAssumida": "lata tratada como 12 kg de grão — conversão assumida, não medida",
-      "desenhavel": false
+      "desenhavel": false,
+      "textoOriginal": {
+        "origem": "Província de Tete distrito\nMocumbi localidade de Mahalamba"
+      }
     },
     {
       "zona": "Norte",
@@ -1756,23 +1763,29 @@
       "zona": "Centro",
       "produto": "Amendoim na Zona Sul O mercado de\nFluxo de Milho",
       "destino": "Mocuba",
-      "origem": "mercado grossista de\nproveniente do distrito de Lugela",
+      "origem": "mercado grossista de",
       "preco": 3200.0,
       "unidade": "MT por saco de 50 kg",
       "precoPorKg": 64.0,
       "conversaoAssumida": null,
-      "desenhavel": false
+      "desenhavel": false,
+      "textoOriginal": {
+        "origem": "mercado grossista de\nproveniente do distrito de Lugela"
+      }
     },
     {
       "zona": "Norte",
       "produto": "Milho",
       "destino": "Panda",
-      "origem": "localidade de Congerenge\namendoim pequeno e grande sem casca",
+      "origem": "localidade de Congerenge",
       "preco": 250.0,
       "unidade": "MT por saco de 50 kg",
       "precoPorKg": 5.0,
       "conversaoAssumida": null,
-      "desenhavel": false
+      "desenhavel": false,
+      "textoOriginal": {
+        "origem": "localidade de Congerenge\namendoim pequeno e grande sem casca"
+      }
     },
     {
       "zona": "Centro",
@@ -1802,12 +1815,15 @@
       "zona": "Sul",
       "produto": "Milho",
       "destino": "Panga",
-      "origem": "Lichinga\nfeijão manteiga proveniente de Nampula",
+      "origem": "Lichinga",
       "preco": 900.0,
       "unidade": "MT por saco de 50 kg",
       "precoPorKg": 18.0,
       "conversaoAssumida": null,
-      "desenhavel": false
+      "desenhavel": false,
+      "textoOriginal": {
+        "origem": "Lichinga\nfeijão manteiga proveniente de Nampula"
+      }
     },
     {
       "zona": "Centro",
@@ -1824,12 +1840,15 @@
       "zona": "Centro",
       "produto": "Feijão Manteiga",
       "destino": "Angónia",
-      "origem": "feijão manteiga proveniente de Posto\nlocalidade de Mahalamba",
+      "origem": "feijão manteiga proveniente de Posto",
       "preco": 350.0,
       "unidade": "MT por lata de 20 litros",
       "precoPorKg": 29.17,
       "conversaoAssumida": "lata tratada como 12 kg de grão — conversão assumida, não medida",
-      "desenhavel": false
+      "desenhavel": false,
+      "textoOriginal": {
+        "origem": "feijão manteiga proveniente de Posto\nlocalidade de Mahalamba"
+      }
     },
     {
       "zona": "Centro",
@@ -1857,12 +1876,15 @@
       "zona": "Centro",
       "produto": "Amendoim",
       "destino": "Montepuez",
-      "origem": "casca proveniente do distrito de\nNamuno",
+      "origem": "casca proveniente do distrito de",
       "preco": 65.0,
       "unidade": "MT/kg",
       "precoPorKg": 65.0,
       "conversaoAssumida": null,
-      "desenhavel": false
+      "desenhavel": false,
+      "textoOriginal": {
+        "origem": "casca proveniente do distrito de\nNamuno"
+      }
     }
   ],
   "fluxos1446": [
@@ -1881,34 +1903,43 @@
       "zona": "Centro",
       "produto": "Milho",
       "destino": "Manjacaze",
-      "origem": "distrito\namendoim pequeno sem casca proveniente de\nde Morrumbala",
+      "origem": "distrito",
       "preco": 600.0,
       "unidade": "MT por saco de 50 kg",
       "precoPorKg": 12.0,
       "conversaoAssumida": null,
-      "desenhavel": false
+      "desenhavel": false,
+      "textoOriginal": {
+        "origem": "distrito\namendoim pequeno sem casca proveniente de\nde Morrumbala"
+      }
     },
     {
       "zona": "Norte",
       "produto": "Milho",
       "destino": "Vilanculo",
-      "origem": "diversas\nproveniente de Nampula",
+      "origem": "diversas",
       "preco": 5500.0,
       "unidade": "MT por saco de 50 kg",
       "precoPorKg": 110.0,
       "conversaoAssumida": null,
-      "desenhavel": false
+      "desenhavel": false,
+      "textoOriginal": {
+        "origem": "diversas\nproveniente de Nampula"
+      }
     },
     {
       "zona": "Sul",
       "produto": "Feijão Manteiga",
       "destino": "Quelimane",
-      "origem": "Mulevala\nMaputo recebeu feijão manteiga e catarino",
+      "origem": "Mulevala",
       "preco": 60.0,
       "unidade": "MT por lata de 20 litros",
       "precoPorKg": 5.0,
       "conversaoAssumida": "lata tratada como 12 kg de grão — conversão assumida, não medida",
-      "desenhavel": false
+      "desenhavel": false,
+      "textoOriginal": {
+        "origem": "Mulevala\nMaputo recebeu feijão manteiga e catarino"
+      }
     }
   ]
 }

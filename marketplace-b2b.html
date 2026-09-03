@@ -9,6 +9,7 @@
 <script src="assets/nav-sinagepe.js"></script>
 <script src="assets/pesquisa-sinagepe.js"></script>
 <script src="assets/produtos-visual.js"></script>
+<script src="assets/cadeia-abastecimento.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
@@ -107,6 +108,34 @@ button.s{border-color:var(--brzg);color:var(--brzl)}
       <div class="abas" id="abas"></div>
       <div id="painel"></div>
     </div>
+
+    <div class="card frame" style="margin-top:14px">
+      <div class="ch"><div><h2>O transporte explica a diferen&ccedil;a de pre&ccedil;o?</h2>
+        <p>Quanto do intervalo entre a pra&ccedil;a mais barata e a mais cara &eacute; custo de levar l&aacute;</p></div>
+        <span class="tag crit" id="te-tag">&mdash;</span></div>
+      <div class="bd" id="transporteExplica"></div>
+    </div>
+
+    <div class="g2" style="margin-top:14px">
+      <div class="card frame">
+        <div class="ch"><div><h2>Depend&ecirc;ncia de origem</h2>
+          <p>Pra&ccedil;as abastecidas por uma s&oacute; origem documentada</p></div>
+          <span class="tag" id="do-tag">&mdash;</span></div>
+        <div class="bd" id="dependencia"></div>
+      </div>
+      <div class="card frame">
+        <div class="ch"><div><h2>Dist&acirc;ncia ao porto de entrada</h2>
+          <p>Quanto cada pra&ccedil;a dista do porto mais pr&oacute;ximo</p></div></div>
+        <div class="bd" id="portos"></div>
+      </div>
+    </div>
+
+    <div class="card frame" style="margin-top:14px">
+      <div class="ch"><div><h2>O que este motor n&atilde;o calcula</h2>
+        <p>E o que seria preciso para cada uma</p></div>
+        <span class="tag crit">Limites declarados</span></div>
+      <div class="bd" id="naoCalcula"></div>
+    </div>
   </main>
 </div>
 
@@ -118,6 +147,139 @@ var ST={aba:'arbitragem',sel:null};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
 function p2(n){return Number(n).toFixed(2).replace('.',',')}
+
+/* ============================================================
+   ANÁLISE DA CADEIA
+   ------------------------------------------------------------
+   Usa o motor partilhado. O cálculo mais útil é o primeiro: se o
+   transporte não explica a diferença de preço, a conclusão não é
+   que alguém cobra a mais — é que as duas praças provavelmente não
+   comerciam entre si. É conclusão diferente e mais provável.
+   ============================================================ */
+function desenharCadeia(){
+  if(!window.CadeiaAbastecimento) return;
+  var C=CadeiaAbastecimento;
+  var cp=ST.cp, rv=ST.rv;
+  if(!cp) return;
+
+  /* ---- transporte explica ---- */
+  var T=C.transporteExplica(ST.sima,cp).filter(function(x){return x.calculavel});
+  var maxD=Math.max.apply(null,T.map(function(x){return x.diferenca}));
+  document.getElementById('transporteExplica').innerHTML=
+    T.map(function(x,i){
+      var c=x.percentagemExplicada<10?'#EF4444':x.percentagemExplicada<40?'#F0A926':'#12B981';
+      var ilu=(window.ProdutosVisual&&ProdutosVisual.svg)
+        ? '<span style="flex-shrink:0;line-height:0">'+ProdutosVisual.svg(x.produto,32)+'</span>':'';
+      return '<div class="entra" style="animation-delay:'+(i*.07)+'s;padding:13px 0;'
+       +'border-bottom:1px solid rgba(38,56,86,.4)">'
+       +'<div style="display:flex;align-items:center;gap:11px;margin-bottom:8px;flex-wrap:wrap">'+ilu
+       +'<b style="font-size:13px">'+esc(x.produto)+'</b>'
+       +'<span style="font-size:11px;color:var(--t3)">'+esc(x.pracaBarata)+' &rarr; '+esc(x.pracaCara)
+       +' &middot; '+x.kmEstimado.toFixed(0)+' km</span>'
+       +'<span style="flex:1"></span>'
+       +'<span class="mono" style="color:'+c+';font-size:13px">explica '
+       +x.percentagemExplicada.toFixed(0)+'%</span></div>'
+       /* barra: quanto da diferença é transporte */
+       +'<div style="position:relative;height:15px;background:#0A1421;border-radius:4px;overflow:hidden">'
+       +'<i class="cresce" style="display:block;height:100%;width:'
+       +(x.diferenca/maxD*100)+'%;background:rgba(239,68,68,.22)"></i>'
+       +'<i class="cresce" style="position:absolute;left:0;top:0;bottom:0;width:'
+       +(x.custoPorKg/maxD*100)+'%;background:'+c+';animation-delay:'+(.2+i*.07)+'s"></i></div>'
+       +'<div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--t4);margin-top:5px">'
+       +'<span>Diferen&ccedil;a de pre&ccedil;o: <b class="mono" style="color:var(--t2)">'
+       +x.diferenca.toFixed(2).replace('.',',')+' MT/kg</b></span>'
+       +'<span>Combust&iacute;vel: <b class="mono" style="color:'+c+'">'
+       +x.custoPorKg.toFixed(2).replace('.',',')+' MT/kg</b></span></div>'
+       +'<div style="font-size:11px;color:'+(x.ligadasPorFluxo?'var(--amber)':'var(--t3)')
+       +';margin-top:6px;line-height:1.6">'+esc(x.leitura)+'</div></div>';
+    }).join('')
+   +'<div class="aviso i" style="margin:14px 0 0"><b>Como ler isto.</b> '
+   +'A barra clara &eacute; a diferen&ccedil;a de pre&ccedil;o entre as duas pra&ccedil;as; a barra cheia &eacute; o que '
+   +'custaria o combust&iacute;vel para levar o produto de uma &agrave; outra. '
+   +'<b>Quando o transporte explica pouco, a conclus&atilde;o n&atilde;o &eacute; que algu&eacute;m cobra a mais</b> &mdash; '
+   +'&eacute; que as duas pra&ccedil;as provavelmente n&atilde;o comerciam entre si, e s&atilde;o mercados separados. '
+   +'A excep&ccedil;&atilde;o merece aten&ccedil;&atilde;o: quando h&aacute; fluxo documentado e o transporte continua a '
+   +'explicar pouco, a diferen&ccedil;a tem outra causa que o sistema n&atilde;o mede.</div>'
+   +'<div style="font-size:10.5px;color:var(--t4);line-height:1.65;margin-top:10px">'
+   +'<b>Pressupostos:</b> '+esc(C.pressupostos.nota)+'</div>';
+  var semExpl=T.filter(function(x){return x.percentagemExplicada<10}).length;
+  document.getElementById('te-tag').innerHTML=semExpl+' de '+T.length+' sem explica&ccedil;&atilde;o log&iacute;stica';
+
+  /* ---- dependência de origem ---- */
+  var D=C.dependenciaOrigem(ST.sima);
+  var un=D.filter(function(x){return x.origemUnica});
+  document.getElementById('dependencia').innerHTML=
+     '<div style="display:flex;gap:22px;margin-bottom:15px;flex-wrap:wrap">'
+    +[[un.length,'com origem &uacute;nica','#EF4444'],
+      [D.length,'destinos documentados','#22B8F0'],
+      [D.filter(function(x){return x.producaoLocal}).length,'com produ&ccedil;&atilde;o local','#12B981']]
+      .map(function(x){
+        return '<div class="entra"><div class="mono" style="font-size:23px;color:'+x[2]+'">'+x[0]+'</div>'
+         +'<div style="font-size:10.5px;color:var(--t4);margin-top:3px">'+x[1]+'</div></div>';
+      }).join('')+'</div>'
+    +D.slice(0,10).map(function(x,i){
+      var c=x.nOrigens===1?'#EF4444':x.nOrigens<3?'#F0A926':'#12B981';
+      return '<div class="entra" style="animation-delay:'+(i*.04)+'s;display:flex;align-items:center;'
+       +'gap:10px;padding:7px 0;border-bottom:1px solid rgba(38,56,86,.35)">'
+       +'<span style="width:120px;flex-shrink:0;font-size:11.5px">'+esc(x.destino)+'</span>'
+       +'<span class="mono" style="width:22px;color:'+c+';font-size:12px">'+x.nOrigens+'</span>'
+       +'<span style="flex:1;font-size:10.5px;color:var(--t4);line-height:1.4">'
+       +esc(x.origens.slice(0,2).join(', ').slice(0,54))+(x.origens.length>2?' +'+(x.origens.length-2):'')
+       +'</span></div>';
+    }).join('')
+   +'<div style="font-size:11px;color:var(--t3);line-height:1.65;margin-top:12px">'
+   +'<b>N&atilde;o &eacute; medida de risco.</b> &Eacute; contagem do que o boletim regista. '
+   +'Uma pra&ccedil;a pode ter v&aacute;rias origens e o boletim s&oacute; documentar uma.</div>';
+  document.getElementById('do-tag').innerHTML=un.length+' com origem &uacute;nica';
+
+  /* ---- distância ao porto ---- */
+  var F=C.juntarFluxos(ST.sima);
+  var dest=D.map(function(x){return x.destino});
+  var P=[];
+  dest.forEach(function(n){var d=C.distanciaAoPorto(n,F); if(d) P.push({praca:n,d:d})});
+  P.sort(function(a,b){return b.d.km-a.d.km});
+  var maxKm=P.length?P[0].d.km:1;
+  document.getElementById('portos').innerHTML=
+    P.slice(0,11).map(function(x,i){
+      var c=x.d.km>300?'#EF4444':x.d.km>150?'#F0A926':'#12B981';
+      return '<div class="entra" style="animation-delay:'+(i*.04)+'s;display:flex;align-items:center;'
+       +'gap:10px;padding:7px 0;border-bottom:1px solid rgba(38,56,86,.35)">'
+       +'<span style="width:112px;flex-shrink:0;font-size:11.5px">'+esc(x.praca)+'</span>'
+       +'<span style="flex:1;height:12px;background:#0A1421;border-radius:3px;overflow:hidden">'
+       +'<i class="cresce" style="display:block;height:100%;width:'+(x.d.km/maxKm*100)+'%;'
+       +'background:'+c+'99;animation-delay:'+(.1+i*.04)+'s"></i></span>'
+       +'<span class="mono" style="width:52px;text-align:right;font-size:11.5px;color:'+c+'">'
+       +x.d.km.toFixed(0)+' km</span>'
+       +'<span style="width:76px;flex-shrink:0;font-size:10px;color:var(--t4);text-align:right">'
+       +esc(x.d.porto)+'</span></div>';
+    }).join('')
+   +'<div style="font-size:11px;color:var(--t3);line-height:1.65;margin-top:12px">'
+   +'Dist&acirc;ncia em linha recta ao porto mais pr&oacute;ximo, entre '+C.portos.length+' portos. '
+   +'<b>N&atilde;o &eacute; dist&acirc;ncia de estrada</b>, e n&atilde;o significa que o produto entre por esse porto.</div>';
+
+  /* ---- o que não calcula ---- */
+  document.getElementById('naoCalcula').innerHTML=
+    C.naoCalcula.map(function(x,i){
+      return '<div class="entra" style="animation-delay:'+(i*.06)+'s;padding:13px 0;'
+       +(i<C.naoCalcula.length-1?'border-bottom:1px solid rgba(38,56,86,.4)':'')+'">'
+       +'<div style="display:flex;gap:10px;align-items:flex-start">'
+       +'<span style="flex-shrink:0;width:20px;height:20px;border-radius:50%;'
+       +'background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:#EF4444;'
+       +'display:flex;align-items:center;justify-content:center;font-size:11px;margin-top:2px">&times;</span>'
+       +'<div style="flex:1"><div style="font-size:13px;font-weight:600;margin-bottom:6px">'
+       +esc(x.pedido)+'</div>'
+       +'<div style="font-size:11.5px;color:var(--t3);line-height:1.7">'+esc(x.falta)+'</div>'
+       +(x.nota?'<div style="font-size:11px;color:var(--amber);line-height:1.65;margin-top:6px">'
+         +esc(x.nota)+'</div>':'')
+       +'<div style="font-size:10.5px;color:var(--brzl);margin-top:7px">'
+       +'Exigiria: '+esc(x.exigiria)+' &middot; <span style="color:var(--t4)">'+esc(x.quemDetem)+'</span>'
+       +'</div></div></div></div>';
+    }).join('')
+   +'<div class="aviso w" style="margin:14px 0 0"><b>Porque est&atilde;o aqui.</b> '
+   +'S&atilde;o as quatro perguntas que mais se fazem a um sistema destes, e as quatro que ele n&atilde;o '
+   +'pode responder hoje. <b>Escond&ecirc;-las seria pior do que declar&aacute;-las</b>: quem n&atilde;o as v&ecirc; '
+   +'assume que o sistema as responde.</div>';
+}
 
 function desenharOferta(){
   document.getElementById('oferta').innerHTML=
@@ -423,13 +585,16 @@ function desenharPainel(){
 
 Promise.all([
   fetch('data/sima-precos.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/sima-precos.json');return r.json()}),
-  fetch('data/sinagepe-data.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/sinagepe-data.json');return r.json()})
+  fetch('data/sinagepe-data.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/sinagepe-data.json');return r.json()}),
+  /* Os dois ficheiros que o motor da cadeia precisa. */
+  fetch('data/cascata-precos.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/cascata-precos.json');return r.json()}),
+  fetch('data/rede-viaria.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/rede-viaria.json');return r.json()})
 ]).then(function(res){
-  ST.sima=res[0]; ST.d=res[1]; ST.mk=res[1].marketplace;
+  ST.sima=res[0];ST.cp=res[2];ST.rv=res[3]; ST.d=res[1]; ST.mk=res[1].marketplace;
   if(window.SeloProveniencia) SeloProveniencia.aplicar({
     modo:(ST.d.meta&&ST.d.meta.modo)||null, bloco:'marketplace',
     quando:ST.d.meta&&ST.d.meta.ultimaActualizacao});
-  desenharOferta();desenharAbas();desenharPainel();
+  desenharOferta();desenharAbas();desenharPainel();desenharCadeia();
 }).catch(function(e){
   document.getElementById('oferta').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
 });
