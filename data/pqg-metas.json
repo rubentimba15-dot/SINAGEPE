@@ -1,0 +1,112 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "documento": "PQG 2025-2029 — Programa Quinquenal do Governo",
+    "aprovacao": "Resolução n.º 17/2025, publicada em 14 de Maio de 2025",
+    "publicacao": "Boletim da República, I Série, n.º 90 de 2025",
+    "baseDeReferencia": "ENDE 2025-2044 — Estratégia Nacional de Desenvolvimento",
+    "instrumentoAnual": "PESOE — Plano Económico e Social e Orçamento do Estado, anual",
+    "cadeia": "ENDE 2025-2044 → PQG 2025-2029 → PESOE anual → execução → resultado",
+    "extraidoEm": "2026-09-01",
+    "verificado": true,
+    "natureza": "Enquadramento de metas governamentais",
+    "objectivoCentral": "Reduzir a pobreza, as desigualdades sociais e as assimetrias regionais",
+    "nota": "A Primeira-Ministra declarou que os programas dos cinco pilares podem ser monitorados através de indicadores de resultado, materializados pelos PESOE anuais."
+  },
+  "pilares": [
+    "Unidade Nacional, Paz, Segurança e Governação",
+    "Transformação Estrutural da Economia",
+    "Transformação Social e Demográfica",
+    "Infra-estruturas, Organização e Ordenamento Territorial",
+    "Quinto pilar por confirmar na publicação original"
+  ],
+  "metasRelevantes": [
+    {
+      "id": "inseguranca-cronica",
+      "meta": "Reduzir a prevalência da insegurança alimentar crónica",
+      "de": 24,
+      "para": 14,
+      "unidade": "%",
+      "pilar": "Transformação Social e Demográfica",
+      "relevanciaSinagepe": "É a meta do Governo mais directamente ligada ao propósito do sistema.",
+      "sinagepePodeMedir": false,
+      "oQueExigiria": "Medição de insegurança alimentar crónica, que o SETSAN e o IPC produzem",
+      "avisoMetodologico": "CRÓNICA NÃO É AGUDA. O sistema tem dados de insegurança alimentar AGUDA, do IPC e da FAO — 3,5 milhões de pessoas em fase 3 ou acima. A meta do PQG é sobre insegurança CRÓNICA, que é medida por outro método e outra periodicidade. <b>Confundi-las produziria uma leitura errada do cumprimento da meta.</b>",
+      "oQueOSistemaTem": "Séries de insegurança alimentar aguda do IPC e da FAO, de 2024 a 2026, com a divergência de 2,3 milhões entre as duas para o mesmo período."
+    },
+    {
+      "id": "crescimento-pib",
+      "meta": "Elevar a taxa média de crescimento do PIB",
+      "de": 1.9,
+      "para": 7.2,
+      "unidade": "%",
+      "pilar": "Transformação Estrutural da Economia",
+      "sinagepePodeMedir": false,
+      "oQueExigiria": "Contas nacionais do INE",
+      "relevanciaSinagepe": "Indirecta. O sistema não mede PIB."
+    },
+    {
+      "id": "acesso-energia",
+      "meta": "Aumentar o acesso a energia",
+      "de": 60.1,
+      "para": 88,
+      "unidade": "%",
+      "pilar": "Transformação Social e Demográfica",
+      "sinagepePodeMedir": false,
+      "relevanciaSinagepe": "Indirecta, mas importa: sem energia não há cadeia de frio, e sem cadeia de frio não há conservação de perecíveis."
+    },
+    {
+      "id": "integridade-territorial",
+      "meta": "Aumentar o índice de integridade territorial",
+      "de": 30,
+      "para": 70,
+      "unidade": "%",
+      "pilar": "Unidade Nacional, Paz, Segurança e Governação",
+      "sinagepePodeMedir": false,
+      "nota": "O índice não foi identificado. Confirmar a definição na publicação original."
+    }
+  ],
+  "prioridadesSectoriais": {
+    "agricultura": "Modernização do sector agrário, práticas resilientes às alterações climáticas, e reforço da segurança alimentar com culturas biofortificadas",
+    "fonte": "Resolução n.º 17/2025, referida em análise jurídica publicada",
+    "porConfirmar": "Metas quantificadas por sector, na publicação original"
+  },
+  "criticasParlamentares": {
+    "porqueEstaAqui": "O debate parlamentar apontou lacunas de quantificação que são exactamente as que o sistema enfrenta. Registá-las é útil: mostram que a dificuldade de medir não é só nossa.",
+    "apontado": [
+      "O PQG não mostra os quadros de apoio e recursos para a agricultura familiar, que representa 95% da população agrícola nacional",
+      "Não traz detalhes sobre as condições das vias de acesso",
+      "Não especifica quantidades construídas ou reabilitadas, o que impede saber no fim se a meta foi cumprida"
+    ],
+    "fonte": "Pareceres das Comissões de Trabalho da Assembleia da República, Abril de 2025",
+    "nota": "São críticas da oposição, registadas como posição parlamentar e não como facto técnico. A terceira é metodologicamente relevante para qualquer sistema de monitoria."
+  },
+  "oQueFaltaObter": [
+    {
+      "documento": "PQG 2025-2029, texto integral",
+      "onde": "Boletim da República, I Série, n.º 90 de 2025",
+      "oQueDa": "Metas quantificadas por pilar e por sector, com indicadores de resultado",
+      "prioridade": "alta"
+    },
+    {
+      "documento": "PESOE, plano anual",
+      "onde": "Ministério da Economia e Finanças",
+      "oQueDa": "A execução anual das metas do PQG, que é o que permite medir desvio",
+      "prioridade": "alta",
+      "nota": "Sem o PESOE há meta e não há execução. É metade da equação."
+    },
+    {
+      "documento": "ENDE 2025-2044",
+      "onde": "Publicação do Governo",
+      "oQueDa": "O enquadramento de longo prazo em que o PQG se insere",
+      "prioridade": "média"
+    },
+    {
+      "documento": "Definição de insegurança alimentar crónica usada na meta",
+      "onde": "SETSAN ou MEF",
+      "oQueDa": "Sem a definição e a linha de base, não é possível saber o que os 24% medem",
+      "prioridade": "alta",
+      "nota": "É a lacuna mais importante das quatro. Uma meta sem método declarado não é medível por ninguém de fora."
+    }
+  ]
+}

@@ -180,6 +180,17 @@ function desenharSerie(){
        +(x.emConstrucao?'<div style="font-size:10.5px;color:var(--brzl);margin-top:6px">'
          +'Em constru&ccedil;&atilde;o: '+x.emConstrucao.silos+' silos e '+x.emConstrucao.armazens
          +' armaz&eacute;ns, mais '+num(x.emConstrucao.total)+' toneladas previstas</div>':'')
+       /* Cadeia de origem: três dos quatro pontos vêm do ICM. Mostrá-lo
+          impede que se leia como confirmação cruzada o que é repetição. */
+       +(x.cadeiaOrigem
+         ? '<div style="font-size:10px;color:var(--t4);margin-top:6px;display:flex;gap:7px;'
+           +'align-items:center;flex-wrap:wrap">'
+           +'<span style="padding:2px 7px;border-radius:3px;border:1px solid '
+           +(x.cadeiaOrigem.origemPrimaria==='ICM'?'rgba(240,169,38,.45);background:rgba(240,169,38,.1);color:#F0A926'
+             :'rgba(34,184,240,.4);background:rgba(34,184,240,.09);color:#22B8F0')+'">origem: '
+           +esc(x.cadeiaOrigem.origemPrimaria)+'</span>'
+           +'<span>'+esc(x.cadeiaOrigem.caminho)+'</span></div>'
+         : '')
        +'<div style="font-size:10px;color:'+(x.verificado?'#12B981':'#F0A926')+';margin-top:6px">'
        +(x.verificado?'&#10003; verificado pelo sistema':'&#9888; '+esc(x.estadoVerificacao||'por confirmar'))
        +'</div></div>';
@@ -221,7 +232,14 @@ function desenharSerie(){
       return '<div style="font-size:11.5px;color:var(--t3);line-height:1.65;padding:4px 0">&middot; '
        +esc(x)+'</div>'}).join('')+'</div></div>'
 
-    +'<div class="aviso i" style="margin:15px 0 0"><b>A distin&ccedil;&atilde;o que o PICA j&aacute; fazia em 2013.</b> '
+    +(ST.serie.meta.independenciaDasFontes
+      ? '<div class="aviso w" style="margin:15px 0 0"><b>Estas fontes n&atilde;o s&atilde;o independentes.</b> '
+        +esc(ST.serie.meta.independenciaDasFontes.casoDesteFicheiro)+' '
+        +esc(ST.serie.meta.independenciaDasFontes.consequencia)
+        +'<br><br><b>O que falta para confirmar:</b> '
+        +esc(ST.serie.meta.independenciaDasFontes.oQueFaltaParaConfirmar)+'</div>'
+      : '')
+    +'<div class="aviso i" style="margin:12px 0 0"><b>A distin&ccedil;&atilde;o que o PICA j&aacute; fazia em 2013.</b> '
     +esc(ST.serie.meta.distincaoObrigatoria)+'</div>';
 
   /* Cadeia de origem: quantas vozes distintas há de facto. */

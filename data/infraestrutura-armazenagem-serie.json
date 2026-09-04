@@ -4,7 +4,13 @@
     "extraidoEm": "2026-09-01",
     "proposito": "Reconstruir a evolução da capacidade de armazenagem do país a partir de fontes oficiais de anos diferentes, sem escolher uma delas como verdade única.",
     "regraCentral": "Não substituir uma fonte pela outra. As três medem universos, anos e metodologias diferentes. O valor de uma série temporal está precisamente em ver a diferença.",
-    "distincaoObrigatoria": "Capacidade instalada histórica não é capacidade operacional efectiva, e nenhuma das duas é existências. O PICA declara 135 armazéns dos quais 38 não ofereciam condições de utilização: a capacidade instalada era 195.459 toneladas e a operacional era menor."
+    "distincaoObrigatoria": "Capacidade instalada histórica não é capacidade operacional efectiva, e nenhuma das duas é existências. O PICA declara 135 armazéns dos quais 38 não ofereciam condições de utilização: a capacidade instalada era 195.459 toneladas e a operacional era menor.",
+    "independenciaDasFontes": {
+      "regra": "Duas fontes que reproduzem a mesma origem primária não são confirmação independente.",
+      "casoDesteFicheiro": "Três dos quatro pontos da série têm o ICM como origem primária. O quarto é o cadastro do próprio sistema.",
+      "consequencia": "Não se pode dizer que \"duas fontes divergem\" quando é a mesma fonte a divergir de si própria ao longo do tempo. É observação diferente, e mais forte: a entidade que detém o dado publicou valores incompatíveis.",
+      "oQueFaltaParaConfirmar": "Uma medição de origem independente do ICM — inventário de campo, levantamento por outra instituição, ou censo agrário."
+    }
   },
   "serie": [
     {
@@ -101,7 +107,12 @@
       "estadoVerificacao": "A existência e o papel do PICA 2013-2020 estão confirmados pelo sítio do ICM, que o descreve como instrumento de implementação do PEDSA. Os valores da Tabela 3 constam de análise externa e não foi possível confirmá-los na publicação original a partir daqui.",
       "verificado": false,
       "origemPrimaria": "ICM",
-      "fonteSecundaria": true
+      "fonteSecundaria": true,
+      "cadeiaOrigem": {
+        "origemPrimaria": "ICM",
+        "caminho": "ICM → MIC (Tabela 3 do PICA) → SINAGEPE",
+        "elos": 2
+      }
     },
     {
       "ano": 2022,
@@ -122,7 +133,12 @@
       "estadoVerificacao": "O quadro está confirmado como existente na publicação. Os valores constam de análise externa; o sítio do INE recusa acesso automático.",
       "verificado": false,
       "origemPrimaria": "ICM",
-      "fonteSecundaria": true
+      "fonteSecundaria": true,
+      "cadeiaOrigem": {
+        "origemPrimaria": "ICM",
+        "caminho": "ICM → INE (quadro 10.1.1) → SINAGEPE",
+        "elos": 2
+      }
     },
     {
       "ano": 2026,
@@ -134,7 +150,12 @@
       "estadoVerificacao": "Referido em análise externa; por confirmar na publicação do ICM.",
       "verificado": false,
       "origemPrimaria": "ICM",
-      "fonteSecundaria": false
+      "fonteSecundaria": false,
+      "cadeiaOrigem": {
+        "origemPrimaria": "ICM",
+        "caminho": "ICM → SINAGEPE",
+        "elos": 1
+      }
     },
     {
       "ano": 2026,
@@ -144,17 +165,23 @@
       "nota": "Trinta unidades documentadas, cada uma com fonte oficial citada. A capacidade não está publicada para a maioria delas. Este número é do que o sistema conseguiu documentar, não do que existe no país.",
       "verificado": true,
       "origemPrimaria": "SINAGEPE",
-      "fonteSecundaria": false
+      "fonteSecundaria": false,
+      "cadeiaOrigem": {
+        "origemPrimaria": "SINAGEPE",
+        "caminho": "Publicações de várias instituições → cadastro próprio",
+        "elos": 1,
+        "nota": "Único ponto da série que não deriva do ICM."
+      }
     }
   ],
   "divergencias": [
     {
-      "assunto": "Capacidade nacional de armazenagem",
-      "correccao": "Registada inicialmente como divergência entre o PICA e o INE. Está errado: as duas publicações citam o ICM como fonte original. Não são duas fontes a discordar — é a mesma origem a dizer coisas diferentes em anos diferentes.",
+      "assunto": "Capacidade nacional de armazenagem, declarada pelo ICM em anos diferentes",
+      "correccao": "Esta divergência estava registada como sendo entre o PICA e o INE. Estava errado: as duas publicações citam o ICM como fonte original. Não são confirmações independentes — é a mesma origem a dizer coisas diferentes em anos diferentes.",
       "origemPrimaria": "ICM",
       "valores": [
         {
-          "publicacao": "MIC — PICA 2013-2020",
+          "publicadoPor": "MIC, no PICA",
           "origemPrimaria": "ICM",
           "ano": 2013,
           "valor": 195459,
@@ -162,7 +189,7 @@
           "universo": "135 armazéns, dez províncias"
         },
         {
-          "publicacao": "INE — Indicadores Básicos de Agricultura",
+          "publicadoPor": "INE, no quadro 10.1.1",
           "origemPrimaria": "ICM",
           "ano": 2022,
           "valor": 75000,
@@ -171,10 +198,10 @@
         }
       ],
       "razao": 2.6,
-      "confirmacoesIndependentes": 0,
-      "nota": "Zero confirmações independentes. Nenhuma fonte alheia ao ICM mediu a capacidade nacional de armazenagem. A diferença de 2,6 vezes pode ser universo, metodologia, ou perda real de capacidade — e só o ICM pode esclarecer, porque é o único que mede.",
-      "porConfirmar": true,
-      "aQuemPerguntar": "ICM — Instituto de Cereais de Moçambique"
+      "fontesIndependentes": false,
+      "nota": "O valor de 2013 é 2,6 vezes o de 2022, e ambos vêm do ICM. A diferença pode ser de universo — dez províncias contra seis — de metodologia, ou de perda real de capacidade. <b>O que não é é confirmação cruzada:</b> uma fonte a repetir-se não confirma nada. Confirmar exigiria uma medição de origem diferente.",
+      "comoResolver": "Pedir ao ICM a série própria de capacidade, com a definição de universo usada em cada ano. É a única entidade que pode explicar a diferença.",
+      "porConfirmar": true
     },
     {
       "assunto": "Capacidade de Niassa",
@@ -195,10 +222,11 @@
         }
       ],
       "razao": 6.4,
-      "nota": "Niassa passa de 12 para 148 armazéns e de 16.580 para 105.850 toneladas em treze anos. É crescimento improvável de infraestrutura pública. <b>A explicação mais provável é que o universo mudou</b>: \"armazéns de apoio à comercialização\" pode incluir unidades privadas e comunitárias que o PICA não contava. Confirmar a definição antes de usar. As duas medições são do ICM: não há fonte independente que as confronte.",
+      "nota": "Niassa passa de 12 para 148 armazéns e de 16.580 para 105.850 toneladas em treze anos. É crescimento improvável de infraestrutura pública. <b>A explicação mais provável é que o universo mudou</b>: \"armazéns de apoio à comercialização\" pode incluir unidades privadas e comunitárias que o PICA não contava. Confirmar a definição antes de usar. As duas medições são do ICM: não há fonte independente que as confronte. Também aqui as duas fontes vêm do ICM, pelo que não há confirmação independente.",
       "porConfirmar": true,
       "origemPrimaria": "ICM",
-      "confirmacoesIndependentes": 0
+      "confirmacoesIndependentes": 0,
+      "fontesIndependentes": false
     }
   ],
   "oQuePermite": [
