@@ -1,0 +1,221 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "extraidoEm": "2026-09-01",
+    "proposito": "Reconstruir a evolução da capacidade de armazenagem do país a partir de fontes oficiais de anos diferentes, sem escolher uma delas como verdade única.",
+    "regraCentral": "Não substituir uma fonte pela outra. As três medem universos, anos e metodologias diferentes. O valor de uma série temporal está precisamente em ver a diferença.",
+    "distincaoObrigatoria": "Capacidade instalada histórica não é capacidade operacional efectiva, e nenhuma das duas é existências. O PICA declara 135 armazéns dos quais 38 não ofereciam condições de utilização: a capacidade instalada era 195.459 toneladas e a operacional era menor."
+  },
+  "serie": [
+    {
+      "ano": 2013,
+      "fonte": "MIC — Plano Integrado da Comercialização Agrícola, PICA 2013-2020",
+      "fonteOriginalDeclarada": "ICM, citado na Tabela 3 do PICA",
+      "aprovacao": "Conselho de Ministros, 24 de Junho de 2013",
+      "url": "https://www.mic.gov.mz/",
+      "armazens": 135,
+      "capacidadeToneladas": 195459,
+      "ocupados": 97,
+      "naoOcupados": 38,
+      "notaOcupacao": "Os 38 não ocupados não ofereciam condições de utilização e estavam em processo de reabilitação. A capacidade operacional efectiva era, portanto, inferior às 195.459 toneladas instaladas.",
+      "porProvincia": [
+        {
+          "provincia": "Zambézia",
+          "armazens": 25,
+          "toneladas": 38820,
+          "ocupados": 19,
+          "naoOcupados": 6
+        },
+        {
+          "provincia": "Cabo Delgado",
+          "armazens": 21,
+          "toneladas": 25150,
+          "ocupados": 20,
+          "naoOcupados": 1
+        },
+        {
+          "provincia": "Nampula",
+          "armazens": 19,
+          "toneladas": 31692,
+          "ocupados": 12,
+          "naoOcupados": 7
+        },
+        {
+          "provincia": "Gaza",
+          "armazens": 17,
+          "toneladas": 28127,
+          "ocupados": 13,
+          "naoOcupados": 4
+        },
+        {
+          "provincia": "Tete",
+          "armazens": 14,
+          "toneladas": 22200,
+          "ocupados": 8,
+          "naoOcupados": 6
+        },
+        {
+          "provincia": "Niassa",
+          "armazens": 12,
+          "toneladas": 16580,
+          "ocupados": 8,
+          "naoOcupados": 4
+        },
+        {
+          "provincia": "Manica",
+          "armazens": 11,
+          "toneladas": 13900,
+          "ocupados": 6,
+          "naoOcupados": 5
+        },
+        {
+          "provincia": "Sofala",
+          "armazens": 6,
+          "toneladas": 7100,
+          "ocupados": 3,
+          "naoOcupados": 3
+        },
+        {
+          "provincia": "Maputo",
+          "armazens": 5,
+          "toneladas": 6140,
+          "ocupados": 4,
+          "naoOcupados": 1
+        },
+        {
+          "provincia": "Inhambane",
+          "armazens": 5,
+          "toneladas": 5750,
+          "ocupados": 4,
+          "naoOcupados": 1
+        }
+      ],
+      "emConstrucao": {
+        "silos": 39,
+        "capacidadeSilos": 39000,
+        "armazens": 6,
+        "capacidadeArmazens": 25500,
+        "total": 64500,
+        "fonte": "Tabela 4 do PICA, com fonte declarada MIC (DE/ICM)"
+      },
+      "estadoVerificacao": "A existência e o papel do PICA 2013-2020 estão confirmados pelo sítio do ICM, que o descreve como instrumento de implementação do PEDSA. Os valores da Tabela 3 constam de análise externa e não foi possível confirmá-los na publicação original a partir daqui.",
+      "verificado": false,
+      "origemPrimaria": "ICM",
+      "fonteSecundaria": true
+    },
+    {
+      "ano": 2022,
+      "fonte": "INE — Indicadores Básicos de Agricultura e Alimentação 2018-2022",
+      "quadro": "Q 10.1.1 — Capacidade de armazenamento nos armazéns e silos, segundo Província, página 56",
+      "fonteOriginalDeclarada": "ICM, citado pelo INE",
+      "capacidadeArmazens": 43000,
+      "capacidadeSilos": 32000,
+      "capacidadeToneladas": 75000,
+      "provinciasCobertas": [
+        "Niassa",
+        "Cabo Delgado",
+        "Nampula",
+        "Zambézia",
+        "Tete",
+        "Sofala"
+      ],
+      "estadoVerificacao": "O quadro está confirmado como existente na publicação. Os valores constam de análise externa; o sítio do INE recusa acesso automático.",
+      "verificado": false,
+      "origemPrimaria": "ICM",
+      "fonteSecundaria": true
+    },
+    {
+      "ano": 2026,
+      "fonte": "ICM, Junho de 2026",
+      "ambito": "Apenas Niassa",
+      "armazens": 148,
+      "capacidadeToneladas": 105850,
+      "descricao": "Armazéns de apoio à comercialização agrícola",
+      "estadoVerificacao": "Referido em análise externa; por confirmar na publicação do ICM.",
+      "verificado": false,
+      "origemPrimaria": "ICM",
+      "fonteSecundaria": false
+    },
+    {
+      "ano": 2026,
+      "fonte": "SINAGEPE — cadastro próprio",
+      "armazens": 30,
+      "capacidadeToneladas": null,
+      "nota": "Trinta unidades documentadas, cada uma com fonte oficial citada. A capacidade não está publicada para a maioria delas. Este número é do que o sistema conseguiu documentar, não do que existe no país.",
+      "verificado": true,
+      "origemPrimaria": "SINAGEPE",
+      "fonteSecundaria": false
+    }
+  ],
+  "divergencias": [
+    {
+      "assunto": "Capacidade nacional de armazenagem",
+      "correccao": "Registada inicialmente como divergência entre o PICA e o INE. Está errado: as duas publicações citam o ICM como fonte original. Não são duas fontes a discordar — é a mesma origem a dizer coisas diferentes em anos diferentes.",
+      "origemPrimaria": "ICM",
+      "valores": [
+        {
+          "publicacao": "MIC — PICA 2013-2020",
+          "origemPrimaria": "ICM",
+          "ano": 2013,
+          "valor": 195459,
+          "unidade": "toneladas",
+          "universo": "135 armazéns, dez províncias"
+        },
+        {
+          "publicacao": "INE — Indicadores Básicos de Agricultura",
+          "origemPrimaria": "ICM",
+          "ano": 2022,
+          "valor": 75000,
+          "unidade": "toneladas",
+          "universo": "armazéns e silos, seis províncias"
+        }
+      ],
+      "razao": 2.6,
+      "confirmacoesIndependentes": 0,
+      "nota": "Zero confirmações independentes. Nenhuma fonte alheia ao ICM mediu a capacidade nacional de armazenagem. A diferença de 2,6 vezes pode ser universo, metodologia, ou perda real de capacidade — e só o ICM pode esclarecer, porque é o único que mede.",
+      "porConfirmar": true,
+      "aQuemPerguntar": "ICM — Instituto de Cereais de Moçambique"
+    },
+    {
+      "assunto": "Capacidade de Niassa",
+      "valores": [
+        {
+          "fonte": "PICA / ICM",
+          "ano": 2013,
+          "valor": 16580,
+          "unidade": "toneladas",
+          "universo": "12 armazéns"
+        },
+        {
+          "fonte": "ICM",
+          "ano": 2026,
+          "valor": 105850,
+          "unidade": "toneladas",
+          "universo": "148 armazéns de apoio à comercialização"
+        }
+      ],
+      "razao": 6.4,
+      "nota": "Niassa passa de 12 para 148 armazéns e de 16.580 para 105.850 toneladas em treze anos. É crescimento improvável de infraestrutura pública. <b>A explicação mais provável é que o universo mudou</b>: \"armazéns de apoio à comercialização\" pode incluir unidades privadas e comunitárias que o PICA não contava. Confirmar a definição antes de usar. As duas medições são do ICM: não há fonte independente que as confronte.",
+      "porConfirmar": true,
+      "origemPrimaria": "ICM",
+      "confirmacoesIndependentes": 0
+    }
+  ],
+  "oQuePermite": [
+    "Saber quanta capacidade o país teve documentada, e não só o que o sistema conseguiu cadastrar.",
+    "Distinguir capacidade instalada de capacidade operacional, que é distinção que o PICA já fazia.",
+    "Ver onde a capacidade estava concentrada em 2013: Zambézia, Cabo Delgado e Nampula somavam 65 dos 135 armazéns.",
+    "Comparar a distribuição histórica com o cadastro actual e ver onde o sistema está mais cego."
+  ],
+  "oQueNaoPermite": [
+    "Saber a capacidade actual. Nenhuma das fontes é de 2026 à escala nacional.",
+    "Saber quanto produto existe. Capacidade não é existências, e nenhuma unidade reporta.",
+    "Somar as fontes. Medem universos diferentes e somá-las produziria um número sem significado."
+  ],
+  "independenciaDasFontes": {
+    "regra": "Duas publicações que reproduzem a mesma fonte primária não contam como duas confirmações. Contam como uma voz repetida.",
+    "nestaSerie": "Três dos quatro pontos têm o ICM como origem primária. O quarto é o cadastro do próprio sistema, construído a partir de publicações diversas.",
+    "consequencia": "A capacidade de armazenagem de Moçambique tem UMA fonte. Se o ICM estiver errado, ninguém o corrige — e o sistema não tem como saber.",
+    "oQueSeriaPrecisoParaConfirmar": "Medição independente por outra entidade: INE com recolha própria, um inquérito, ou levantamento de campo. Citar o ICM não é medir."
+  }
+}

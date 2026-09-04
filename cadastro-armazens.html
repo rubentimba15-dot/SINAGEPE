@@ -4,16 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cadastro de Armaz&eacute;ns &mdash; SINAGEPE</title>
+<script src="assets/fonte-dados.js"></script>
 <script src="assets/access-control.js"></script>
+<script src="assets/independencia-fontes.js"></script>
 <script src="assets/nav-sinagepe.js"></script>
 <script src="assets/pesquisa-sinagepe.js"></script>
 <script src="assets/indicadores-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+:root{--bg1:#080F1C;--sidebar-bg:#0B1421;--card-bg:#141F2B;--card-line:rgba(64,86,108,.55);
 --gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
 --blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
---ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#1B2836;--nav-idle:#141F2B;--accg:rgba(34,184,240,.13)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
 .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
@@ -94,7 +96,14 @@ a.fonte:hover{text-decoration:underline}
       </div>
     </div>
 
-    <div class="card frame">
+        <div class="card frame">
+      <div class="ch"><div><h2>A capacidade do pa&iacute;s ao longo do tempo</h2>
+        <p>Tr&ecirc;s fontes oficiais, tr&ecirc;s anos, tr&ecirc;s n&uacute;meros muito diferentes</p></div>
+        <span class="tag crit" id="se-tag">&mdash;</span></div>
+      <div class="bd" id="serieCapacidade"></div>
+    </div>
+
+<div class="card frame">
       <div class="ch"><div><h2>O que este cadastro n&atilde;o diz</h2>
         <p>E de quem depende cada um destes dados</p></div>
         <span class="tag crit">Honestidade de dados</span></div>
@@ -120,6 +129,115 @@ var ROT={estatal:'Estatal','ppp-gestao-privada':'PPP','concessao-privada':'Conce
  'participacao-estatal':'Part. estatal',privada:'Privada',internacional:'Internacional'};
 var CORN={estatal:'#C98A3C','ppp-gestao-privada':'#E8BE7A','concessao-privada':'#22B8F0',
  'participacao-estatal':'#2DD4BF',privada:'#F0A926',internacional:'#A78BFA'};
+
+/* ============================================================
+   SÉRIE DA CAPACIDADE DE ARMAZENAGEM
+   ------------------------------------------------------------
+   Três fontes oficiais medem a mesma coisa em anos diferentes e
+   dão números que diferem por factores de 2,6 e 6,4.
+
+   Não se escolheu nenhuma. Somá-las produziria um número sem
+   significado, porque os universos não são os mesmos.
+   ============================================================ */
+function desenharSerie(){
+  var el=document.getElementById('serieCapacidade');
+  if(!el||!ST.serie) return;
+  var S=ST.serie.serie, DV=ST.serie.divergencias||[];
+  var comCap=S.filter(function(x){return x.capacidadeToneladas});
+  var max=Math.max.apply(null,comCap.map(function(x){return x.capacidadeToneladas}));
+
+  el.innerHTML=
+     '<div style="font-size:12.5px;color:var(--t2);line-height:1.75;margin-bottom:17px">'
+    +esc(ST.serie.meta.regraCentral)+'</div>'
+
+    +S.map(function(x,i){
+      var cap=x.capacidadeToneladas;
+      var proprio=/SINAGEPE/.test(x.fonte);
+      var c=proprio?'#22B8F0':x.ano<2020?'#C98A3C':'#2DD4BF';
+      return '<div class="entra" style="animation-delay:'+(i*.08)+'s;padding:14px 0;'
+       +'border-bottom:1px solid rgba(38,56,86,.4)">'
+       +'<div style="display:flex;align-items:baseline;gap:11px;flex-wrap:wrap;margin-bottom:8px">'
+       +'<b class="mono" style="font-size:16px;color:'+c+'">'+x.ano+'</b>'
+       +'<span style="font-size:12px;font-weight:600">'+esc(x.fonte)+'</span>'
+       +(x.ambito?'<span style="font-size:10px;color:var(--amber);border:1px solid rgba(240,169,38,.4);'
+         +'background:rgba(240,169,38,.1);padding:2px 7px;border-radius:3px">'+esc(x.ambito)+'</span>':'')
+       +'<span style="flex:1"></span>'
+       +(x.armazens?'<span class="mono" style="color:'+c+';font-size:13px">'+x.armazens
+         +' armaz&eacute;ns</span>':'')
+       +(cap?'<b class="mono" style="color:'+c+';font-size:15px">'+num(cap)+' t</b>':'')+'</div>'
+       +(cap?'<div style="height:13px;background:#0A1421;border-radius:4px;overflow:hidden">'
+         +'<i class="cresce" style="display:block;height:100%;width:'+(cap/max*100)+'%;'
+         +'background:linear-gradient(90deg,'+c+'CC,'+c+'44);animation-delay:'+(.1+i*.08)+'s"></i></div>':'')
+       /* ocupação, quando a fonte a declara */
+       +(x.ocupados!=null
+         ? '<div style="display:flex;gap:16px;font-size:10.5px;color:var(--t4);margin-top:7px">'
+           +'<span>Ocupados <b class="mono" style="color:#12B981">'+x.ocupados+'</b></span>'
+           +'<span>N&atilde;o ocupados <b class="mono" style="color:#EF4444">'+x.naoOcupados+'</b></span>'
+           +'<span style="flex:1;text-align:right">'+esc(x.notaOcupacao||'')+'</span></div>'
+         : '')
+       +(x.nota?'<div style="font-size:11px;color:var(--t3);line-height:1.6;margin-top:6px">'
+         +esc(x.nota)+'</div>':'')
+       +(x.emConstrucao?'<div style="font-size:10.5px;color:var(--brzl);margin-top:6px">'
+         +'Em constru&ccedil;&atilde;o: '+x.emConstrucao.silos+' silos e '+x.emConstrucao.armazens
+         +' armaz&eacute;ns, mais '+num(x.emConstrucao.total)+' toneladas previstas</div>':'')
+       +'<div style="font-size:10px;color:'+(x.verificado?'#12B981':'#F0A926')+';margin-top:6px">'
+       +(x.verificado?'&#10003; verificado pelo sistema':'&#9888; '+esc(x.estadoVerificacao||'por confirmar'))
+       +'</div></div>';
+    }).join('')
+
+    +DV.map(function(v){
+      /* A independência das fontes muda a leitura da divergência.
+         Duas publicações que citam a mesma origem não se confirmam. */
+      var ind=window.IndependenciaFontes
+        ? IndependenciaFontes.avaliarDivergencia(v) : null;
+      return '<div class="aviso r" style="margin:14px 0 0">'
+       +(ind && ind.mesmaOrigem
+         ? '<div style="display:inline-block;font-size:9px;letter-spacing:.1em;'
+           +'text-transform:uppercase;padding:3px 8px;border-radius:3px;margin-bottom:8px;'
+           +'border:1px solid rgba(167,139,250,.5);background:rgba(167,139,250,.12);'
+           +'color:#A78BFA">mesma origem &middot; 0 confirmações independentes</div><br>'
+         : '')
+       +'<b>'+esc(v.assunto)+'.</b> '
+       +v.valores.map(function(y){
+          return esc(y.fonte)+' em '+y.ano+': <b class="mono">'+num(y.valor)+' t</b> ('+esc(y.universo)+')';
+        }).join(' &middot; ')
+       +' &mdash; diferen&ccedil;a de <b>'+v.razao.toFixed(1).replace('.',',')+' vezes</b>.<br>'+v.nota
+       +(ind && ind.mesmaOrigem
+         ? '<div style="margin-top:9px;padding-top:9px;border-top:1px solid rgba(239,68,68,.25);'
+           +'font-size:11px;line-height:1.6;color:#C9B8F0">'+esc(ind.leitura)+'</div>'
+         : '')
+       +'</div>';
+    }).join('')
+
+    +'<div class="g2" style="margin-top:16px">'
+    +'<div><div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#12B981;'
+    +'margin-bottom:8px">O que esta s&eacute;rie permite</div>'
+    +ST.serie.oQuePermite.map(function(x){
+      return '<div style="font-size:11.5px;color:var(--t3);line-height:1.65;padding:4px 0">&middot; '
+       +esc(x)+'</div>'}).join('')+'</div>'
+    +'<div><div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#EF4444;'
+    +'margin-bottom:8px">O que n&atilde;o permite</div>'
+    +ST.serie.oQueNaoPermite.map(function(x){
+      return '<div style="font-size:11.5px;color:var(--t3);line-height:1.65;padding:4px 0">&middot; '
+       +esc(x)+'</div>'}).join('')+'</div></div>'
+
+    +'<div class="aviso i" style="margin:15px 0 0"><b>A distin&ccedil;&atilde;o que o PICA j&aacute; fazia em 2013.</b> '
+    +esc(ST.serie.meta.distincaoObrigatoria)+'</div>';
+
+  /* Cadeia de origem: quantas vozes distintas há de facto. */
+  var ci=window.IndependenciaFontes
+    ? IndependenciaFontes.confirmacoesIndependentes(S) : null;
+  if(ci){
+    el.innerHTML+='<div class="aviso i" style="margin:15px 0 0">'
+     +'<b>Independ&ecirc;ncia das fontes.</b> '+esc(ci.leitura)+' '
+     +ci.cadeias.map(function(c){return esc(c.nota)}).join(' ')
+     +'<div style="margin-top:9px;padding-top:9px;border-top:1px solid rgba(34,184,240,.22);'
+     +'color:#FFB4B4"><b>Consequ&ecirc;ncia:</b> '
+     +esc((ST.serie.independenciaDasFontes||{}).consequencia||'')+'</div></div>';
+  }
+  document.getElementById('se-tag').innerHTML=S.length+' publica&ccedil;&otilde;es, '
+    +(ci?ci.origensDistintas:'?')+' origens';
+}
 
 function desenharKpis(){
   var A=ST.arm.armazens;
@@ -303,11 +421,13 @@ function desenharNaoDiz(){
   document.getElementById('naodiz').innerHTML=h+'</tbody>';
 }
 
-fetch('data/armazens-nacionais.json',{cache:'no-store'})
- .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/armazens-nacionais.json');return r.json()})
- .then(function(j){
+Promise.all(['armazens-nacionais','infraestrutura-armazenagem-serie'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  var j=res[0]; ST.serie=res[1];
    ST.arm=j;
-   desenharKpis();desenharFiltros();desenharTabela();desenharNaoDiz();
+   desenharKpis();desenharFiltros();desenharTabela();desenharSerie();desenharNaoDiz();
  })
  .catch(function(e){
    document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';

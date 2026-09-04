@@ -173,6 +173,14 @@
       "comoAplicamos": "Oito estabelecimentos entraram a partir da lista de clientes que o Grupo Aggy publica no seu sítio. Ficam em bloco próprio no painel, com a fonte declarada. Qualquer agregado de cobertura de distribuição obedece à regra dos cinco.",
       "estado": "aplicada",
       "porFechar": "Cruzar com o registo de alvarás do BAU para os validar."
+    },
+    {
+      "n": 10,
+      "titulo": "Duas publicações da mesma origem não são duas confirmações",
+      "regra": "Publicações que reproduzem a mesma fonte primária contam como uma voz repetida, não como confirmações independentes. Cada fonte declara a sua origem, e o sistema conta origens, não publicações.",
+      "comoAplicamos": "A série de capacidade de armazenagem tem quatro publicações e duas origens: o PICA de 2013, o quadro do INE de 2022 e o dado de Niassa de 2026 citam todos o ICM. A divergência de 2,6 vezes que o sistema registava como sendo entre o PICA e o INE é, de facto, o ICM a dizer coisas diferentes em anos diferentes — e não há fonte alheia que o confronte.",
+      "estado": "aplicada",
+      "porFechar": "Estender a verificação às restantes divergências do sistema."
     }
   ],
   "classificacao": [
