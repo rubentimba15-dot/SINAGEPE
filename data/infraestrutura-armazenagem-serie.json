@@ -10,7 +10,8 @@
       "casoDesteFicheiro": "Quatro dos cinco pontos da série derivam do ICM. O de 2024 é o único com origem primária diferente — os SDAE dos 22 distritos da Zambézia — e é também o que revela que os universos medidos não são os mesmos.",
       "consequencia": "Não se pode dizer que \"duas fontes divergem\" quando é a mesma fonte a divergir de si própria ao longo do tempo. É observação diferente, e mais forte: a entidade que detém o dado publicou valores incompatíveis.",
       "oQueFaltaParaConfirmar": "Uma medição de origem independente do ICM — inventário de campo, levantamento por outra instituição, ou censo agrário."
-    }
+    },
+    "distincaoPublicadorOrigem": "Órgão publicador e origem dos dados são campos distintos. O ICM publica um relatório cujos dados vêm dos SDAE; o INE publica um quadro cujos dados vêm do ICM. Confundir os dois faria parecer que há mais fontes independentes do que há."
   },
   "serie": [
     {
@@ -176,14 +177,17 @@
         }
       ],
       "cadeiaOrigem": {
-        "origemPrimaria": "SDAE dos 22 distritos da Zambézia",
-        "caminho": "SDAE dos 22 distritos → ICM Delegação Zambézia → relatório anual → SINAGEPE",
+        "origemPrimaria": "SDAE dos 22 distritos",
+        "caminho": "SDAE dos 22 distritos → ICM, IP, Delegação Provincial da Zambézia → Relatório das Actividades Anual de 2024 → SINAGEPE",
         "elos": 3,
-        "nota": "É a única fonte da série cuja origem primária não é o ICM central. São os serviços distritais que contam no terreno."
+        "nota": "Órgão publicador e origem dos dados são coisas distintas. O ICM publicou; os SDAE contaram. É a única fonte da série cuja contagem é feita no terreno, distrito a distrito.",
+        "orgaoPublicador": "ICM, IP — Delegação Provincial da Zambézia"
       },
       "estadoVerificacao": "A existência da Delegação Provincial do ICM na Zambézia e a sua articulação com os SDAE dos 22 distritos estão confirmadas pelo sítio do ICM. O relatório e os valores constam de análise externa, a partir de cópia depositada em repositório de terceiros. Por confirmar na fonte institucional.",
       "notaSobreFonte": "O documento circula no Scribd, que é repositório e não origem. A fonte a citar é o relatório do ICM, nunca o repositório.",
-      "verificado": false
+      "verificado": false,
+      "orgaoPublicador": "Instituto de Cereais de Moçambique, IP — Delegação Provincial da Zambézia",
+      "origemDosDados": "SDAE — Serviços Distritais de Actividades Económicas dos 22 distritos"
     },
     {
       "ano": 2026,
@@ -226,20 +230,22 @@
       "origemPrimaria": "ICM",
       "valores": [
         {
-          "publicadoPor": "MIC, no PICA",
+          "publicadoPor": "Ministério da Indústria e Comércio, no PICA 2013-2020",
           "origemPrimaria": "ICM",
           "ano": 2013,
           "valor": 195459,
           "unidade": "toneladas",
-          "universo": "135 armazéns, dez províncias"
+          "universo": "135 armazéns, dez províncias",
+          "origemDosDados": "ICM, citado na Tabela 3"
         },
         {
-          "publicadoPor": "INE, no quadro 10.1.1",
+          "publicadoPor": "Instituto Nacional de Estatística, quadro 10.1.1",
           "origemPrimaria": "ICM",
           "ano": 2022,
           "valor": 75000,
           "unidade": "toneladas",
-          "universo": "armazéns e silos, seis províncias"
+          "universo": "armazéns e silos, seis províncias",
+          "origemDosDados": "ICM, citado pelo INE"
         }
       ],
       "razao": 2.6,
@@ -252,18 +258,20 @@
       "assunto": "Capacidade de Niassa",
       "valores": [
         {
-          "fonte": "PICA / ICM",
           "ano": 2013,
           "valor": 16580,
           "unidade": "toneladas",
-          "universo": "12 armazéns"
+          "universo": "12 armazéns",
+          "publicadoPor": "Ministério da Indústria e Comércio, no PICA 2013-2020",
+          "origemDosDados": "ICM"
         },
         {
-          "fonte": "ICM",
           "ano": 2026,
           "valor": 105850,
           "unidade": "toneladas",
-          "universo": "148 armazéns de apoio à comercialização"
+          "universo": "148 armazéns de apoio à comercialização",
+          "publicadoPor": "Instituto de Cereais de Moçambique, IP",
+          "origemDosDados": "ICM"
         }
       ],
       "razao": 6.4,
@@ -278,19 +286,21 @@
       "casoQueProva": "Milange",
       "valores": [
         {
-          "publicadoPor": "ICM Delegação Zambézia, a partir dos SDAE",
+          "publicadoPor": "Instituto de Cereais de Moçambique, IP — Delegação Provincial da Zambézia",
           "ano": 2024,
           "distrito": "Milange",
           "valor": 220000,
           "unidade": "toneladas",
-          "armazens": 98
+          "armazens": 98,
+          "origemDosDados": "SDAE dos 22 distritos"
         },
         {
-          "publicadoPor": "INE, quadro 10.1.1, com fonte ICM",
+          "publicadoPor": "Instituto Nacional de Estatística, quadro 10.1.1",
           "ano": 2022,
           "distrito": "Milange",
           "valor": 5000,
-          "unidade": "toneladas"
+          "unidade": "toneladas",
+          "origemDosDados": "ICM, citado pelo INE"
         }
       ],
       "razao": 44.0,
