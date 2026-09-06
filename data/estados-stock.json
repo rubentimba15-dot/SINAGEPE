@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "criadoEm": "2026-09-01",
+    "reformulacao": "O sistema dizia \"não se sabe o que está nos armazéns do país\". A formulação correcta é: não existe telemetria nacional contínua de existências. Ausência de telemetria não é ausência de informação — mas, no caso concreto, o sistema também não tem os dados documentais que permitiriam estimar.",
+    "regraFundamental": "STOCK DESCONHECIDO NÃO É ZERO. Se o sistema conhece a existência de um armazém e não consegue determinar o conteúdo, classifica como desconhecido e lista o que falta — nunca escreve zero toneladas."
+  },
+  "estadosDeStock": [
+    {
+      "estado": "confirmado",
+      "cor": "#12B981",
+      "significa": "Verificado por fonte recente e directa",
+      "quantosNoSistema": 0
+    },
+    {
+      "estado": "declarado",
+      "cor": "#22B8F0",
+      "significa": "O operador comunicou o valor",
+      "quantosNoSistema": 0,
+      "nota": "Não existe canal para o operador declarar."
+    },
+    {
+      "estado": "estimado",
+      "cor": "#F0A926",
+      "significa": "Calculado por balanço físico, com intervalo de confiança",
+      "quantosNoSistema": 0,
+      "nota": "Não calculável: o balanço exige stock anterior, entradas, saídas e perdas, e o sistema não tem nenhum dos quatro."
+    },
+    {
+      "estado": "desactualizado",
+      "cor": "#A78BFA",
+      "significa": "Houve valor, mas é antigo demais para a periodicidade do produto",
+      "quantosNoSistema": 0
+    },
+    {
+      "estado": "desconhecido",
+      "cor": "#EF4444",
+      "significa": "A unidade existe e o conteúdo não é determinável",
+      "quantosNoSistema": 30,
+      "nota": "Todas as 30 unidades cadastradas. É o retrato honesto, e não é zero."
+    }
+  ],
+  "balancoFisico": {
+    "formula": "stock anterior + entradas + transferências recebidas − saídas − vendas − transferências expedidas − perdas",
+    "calculavelHoje": false,
+    "componentes": [
+      {
+        "componente": "Stock anterior",
+        "temos": false,
+        "fonte": "Operador ou inventário"
+      },
+      {
+        "componente": "Entradas",
+        "temos": false,
+        "fonte": "Operador, alfândegas ou guias de transporte"
+      },
+      {
+        "componente": "Saídas e vendas",
+        "temos": false,
+        "fonte": "Operador ou facturação"
+      },
+      {
+        "componente": "Transferências",
+        "temos": false,
+        "fonte": "Operador ou guias"
+      },
+      {
+        "componente": "Perdas",
+        "temos": false,
+        "fonte": "Operador ou estimativa técnica"
+      }
+    ],
+    "quantosTemos": 0,
+    "deQuantos": 5,
+    "avisoImportante": "O balanço físico é o método certo e não é aplicável hoje. Não por falta de sensores — por falta de registo de movimentos. <b>Apresentar um intervalo estimado sem nenhuma das cinco componentes seria inventar com aparência de método.</b> Quando houver entradas e saídas declaradas, ainda que por formulário simples, o balanço passa a ser calculável.",
+    "oQueDesbloqueia": "Um único dado desbloqueia muito: se os operadores declararem entradas e saídas, mesmo mensalmente, o stock estimado torna-se possível para as unidades que declararem."
+  },
+  "camadasMozGIS": {
+    "servico": "https://www.mozgis.gov.mz/server/rest/services/PQG/MapServer",
+    "verificadoEm": "Setembro de 2026",
+    "grupoRelevante": "MIC — camada 29",
+    "naturezaCritica": "ATENÇÃO: estas camadas descrevem infraestruturas A SEREM INTERVENCIONADAS no âmbito do PQG 2020-2024. Não são inventário do que existe — são a lista de intervenções planeadas. Confundir as duas coisas produziria uma contagem errada da capacidade nacional.",
+    "camadas": [
+      {
+        "id": 30,
+        "nome": "Construção de armazém de 500 toneladas",
+        "registos": 1,
+        "url": "https://www.mozgis.gov.mz/server/rest/services/PQG/MapServer/30"
+      },
+      {
+        "id": 31,
+        "nome": "Construção de complexos de silos",
+        "registos": 9,
+        "url": "https://www.mozgis.gov.mz/server/rest/services/PQG/MapServer/31"
+      },
+      {
+        "id": 33,
+        "nome": "Aumentar a capacidade de armazenagem dos produtos agrícolas",
+        "registos": "não declarado no descritor",
+        "url": "https://www.mozgis.gov.mz/server/rest/services/PQG/MapServer/33"
+      }
+    ],
+    "camposUteis": [
+      "PROVINCIA",
+      "DISTRITO",
+      "POSTO",
+      "LOCALIDADE",
+      "NAME_LOCAL",
+      "N_DE_ARMAZ (número de armazéns)",
+      "ESTADO_DE (estado de conservação)",
+      "PQG_20_24",
+      "X",
+      "Y"
+    ],
+    "formatosSuportados": [
+      "JSON",
+      "geoJSON"
+    ],
+    "consultaAvancada": true,
+    "maxRegistosPorConsulta": 1000,
+    "oQueDa": "Localização, província, distrito, número de armazéns e estado de conservação das infraestruturas de armazenagem previstas no PQG 2020-2024.",
+    "oQueNaoDa": "Existências. Nenhuma camada tem quantidade armazenada.",
+    "estadoIntegracao": "identificado, não integrado",
+    "comoIntegrar": "Consulta ao serviço com f=geojson e where=1=1. Exige parâmetros que o sistema ainda não constrói — é trabalho de uma passagem.",
+    "prioridade": "alta"
+  },
+  "oQueMudaNaFormulacao": {
+    "antes": "Não se sabe o que está nos armazéns do país.",
+    "depois": "O país não dispõe de telemetria nacional de existências, e o sistema não tem hoje os registos de movimento que permitiriam estimá-las. As 30 unidades cadastradas estão classificadas como STOCK DESCONHECIDO — que não é zero, e para cada uma o sistema lista o que falta para fechar a análise.",
+    "porqueImporta": "A primeira formulação sugere que a informação não existe em lado nenhum. A segunda diz o que falta e a quem pedir, que é accionável."
+  },
+  "oQueFaltaPorUnidade": [
+    "Stock actual, declarado pelo operador",
+    "Última entrada, com data e quantidade",
+    "Última saída, com data e quantidade",
+    "Transferências recebidas e expedidas",
+    "Perdas registadas",
+    "Data da próxima reposição prevista"
+  ]
+}

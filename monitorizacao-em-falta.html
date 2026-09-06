@@ -4,16 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Monitoriza&ccedil;&atilde;o em falta &mdash; SINAGEPE</title>
+<script src="assets/fonte-dados.js"></script>
 <script src="assets/access-control.js"></script>
 <script src="assets/nav-sinagepe.js"></script>
 <script src="assets/pesquisa-sinagepe.js"></script>
 <script src="assets/indicadores-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+:root{--bg1:#080F1C;--sidebar-bg:#0B1421;--card-bg:#141F2B;--card-line:rgba(64,86,108,.55);
 --gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
 --blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
---ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#1B2836;--nav-idle:#141F2B;--accg:rgba(34,184,240,.13)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
 .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
@@ -78,7 +79,14 @@ td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 
     <div id="kpis"></div>
 
-    <div class="card frame">
+        <div class="card frame">
+      <div class="ch"><div><h2>Stock desconhecido n&atilde;o &eacute; zero</h2>
+        <p>Cinco estados poss&iacute;veis, e onde as trinta unidades est&atilde;o</p></div>
+        <span class="tag crit" id="es-tag">&mdash;</span></div>
+      <div class="bd" id="estadosStock"></div>
+    </div>
+
+<div class="card frame">
       <div class="ch"><div><h2>Onde o pa&iacute;s n&atilde;o v&ecirc;</h2>
         <p>Unidades sem qualquer forma de reporte, por natureza jur&iacute;dica</p></div>
         <span class="tag crit" id="l-tag">&mdash;</span></div>
@@ -130,6 +138,91 @@ var EXIGENCIA={
 
 function semReporte(){
   return ST.arm.armazens.filter(function(a){return a.sensor==='sem-sensor'});
+}
+
+/* ============================================================
+   ESTADOS DE STOCK
+   ------------------------------------------------------------
+   A frase "não se sabe o que está nos armazéns" estava errada
+   por excesso. A formulação correcta separa duas coisas: não há
+   telemetria, e não há registo de movimentos que permita estimar.
+
+   E fixa a regra: desconhecido não é zero.
+   ============================================================ */
+function desenharEstadosStock(){
+  var el=document.getElementById('estadosStock');
+  if(!el||!ST.stock) return;
+  var E=ST.stock.estadosDeStock, B=ST.stock.balancoFisico, M=ST.stock.camadasMozGIS;
+  var tot=E.reduce(function(a,x){return a+x.quantosNoSistema},0)||1;
+
+  el.innerHTML=
+     '<div style="font-size:12.5px;color:var(--t2);line-height:1.75;margin-bottom:17px;'
+    +'padding:14px 16px;background:rgba(239,68,68,.07);border-left:3px solid var(--red);'
+    +'border-radius:0 10px 10px 0">'
+    +'<b style="color:#FFB4B4">'+esc(ST.stock.meta.regraFundamental)+'</b></div>'
+
+    +E.map(function(x,i){
+      return '<div class="entra" style="animation-delay:'+(i*.05)+'s;display:flex;align-items:center;'
+       +'gap:11px;padding:9px 0;border-bottom:1px solid rgba(38,56,86,.4)">'
+       +'<span style="width:126px;flex-shrink:0;font-size:12px;color:'
+       +(x.quantosNoSistema?'var(--ink)':'var(--t4)')+'">'+esc(x.estado)+'</span>'
+       +'<span style="flex:1;height:14px;background:#0A1421;border-radius:4px;overflow:hidden">'
+       +(x.quantosNoSistema
+         ?'<i class="cresce" style="display:block;height:100%;width:'+(x.quantosNoSistema/tot*100)
+          +'%;background:'+x.cor+'AA;animation-delay:'+(.1+i*.05)+'s"></i>':'')+'</span>'
+       +'<span class="mono" style="width:34px;text-align:right;font-size:12.5px;color:'
+       +(x.quantosNoSistema?x.cor:'var(--t4)')+'">'+x.quantosNoSistema+'</span>'
+       +'<span style="width:290px;flex-shrink:0;font-size:10.5px;color:var(--t4);text-align:right;'
+       +'line-height:1.45">'+esc(x.significa)+(x.nota?' &middot; '+esc(x.nota):'')+'</span></div>';
+    }).join('')
+
+    /* balanço físico: método certo, componentes em falta */
+    +'<div style="margin-top:18px;padding-top:15px;border-top:1px solid rgba(38,56,86,.5)">'
+    +'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">'
+    +'<b style="font-size:13px">Balan&ccedil;o f&iacute;sico &mdash; o m&eacute;todo que dispensaria sensores</b>'
+    +'<span class="mono" style="color:var(--red)">'+B.quantosTemos+' de '+B.deQuantos
+    +' componentes</span></div>'
+    +'<div style="font-size:11.5px;color:var(--t3);line-height:1.7;margin-bottom:11px">'
+    +esc(B.formula)+'</div>'
+    +B.componentes.map(function(c){
+      return '<div style="display:flex;align-items:center;gap:9px;padding:5px 0;font-size:11.5px">'
+       +'<span style="width:16px;height:16px;border-radius:4px;border:1px solid rgba(239,68,68,.4);'
+       +'background:rgba(239,68,68,.09);color:#EF4444;display:flex;align-items:center;'
+       +'justify-content:center;font-size:10px">&times;</span>'
+       +'<span style="width:180px;color:var(--t2)">'+esc(c.componente)+'</span>'
+       +'<span style="flex:1;font-size:10.5px;color:var(--t4)">'+esc(c.fonte)+'</span></div>';
+    }).join('')
+    +'<div class="aviso w" style="margin:12px 0 0">'+B.avisoImportante
+    +'<br><br><b>O que desbloqueia:</b> '+esc(B.oQueDesbloqueia)+'</div></div>'
+
+    /* MozGIS */
+    +(M?'<div style="margin-top:16px;padding-top:15px;border-top:1px solid rgba(38,56,86,.5)">'
+      +'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px">'
+      +'<b style="font-size:13px">Camadas que o Estado j&aacute; publica</b>'
+      +'<span style="font-size:10px;color:var(--amber);text-transform:uppercase;letter-spacing:.09em">'
+      +esc(M.estadoIntegracao)+'</span></div>'
+      +M.camadas.map(function(c){
+        return '<div style="display:flex;align-items:baseline;gap:10px;padding:6px 0;font-size:11.5px">'
+         +'<span class="mono" style="width:28px;color:var(--brzl)">'+c.id+'</span>'
+         +'<span style="flex:1;color:var(--t2)">'+esc(c.nome)+'</span>'
+         +'<span class="mono" style="color:var(--t4);font-size:10.5px">'+esc(String(c.registos))+'</span></div>';
+      }).join('')
+      +'<div style="font-size:10.5px;color:var(--t4);margin-top:8px">Campos: '
+      +M.camposUteis.slice(0,7).join(' &middot; ')+'</div>'
+      +'<div class="aviso r" style="margin:12px 0 0"><b>Aten&ccedil;&atilde;o ao que estas camadas s&atilde;o.</b> '
+      +esc(M.naturezaCritica)+'<br><br><b>O que d&atilde;o:</b> '+esc(M.oQueDa)
+      +' <b>O que n&atilde;o d&atilde;o:</b> '+esc(M.oQueNaoDa)+'</div></div>':'')
+
+    /* o que falta por unidade */
+    +'<div style="margin-top:16px;padding-top:15px;border-top:1px solid rgba(38,56,86,.5)">'
+    +'<div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brz);'
+    +'margin-bottom:9px">Para fechar a an&aacute;lise de cada unidade faltam</div>'
+    +ST.stock.oQueFaltaPorUnidade.map(function(x,i){
+      return '<div style="display:flex;gap:9px;padding:4px 0;font-size:11.5px;color:var(--t3)">'
+       +'<span class="mono" style="color:var(--t4);width:16px">'+(i+1)+'</span>'+esc(x)+'</div>';
+    }).join('')+'</div>';
+
+  document.getElementById('es-tag').innerHTML='30 desconhecidas, 0 confirmadas';
 }
 
 function desenharKpis(){
@@ -264,11 +357,13 @@ function desenharDestrava(){
   document.getElementById('destrava').innerHTML=h+'</tbody>';
 }
 
-fetch('data/armazens-nacionais.json',{cache:'no-store'})
- .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/armazens-nacionais.json');return r.json()})
- .then(function(j){
+Promise.all(['armazens-nacionais','estados-stock'].map(function(f){
+  return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
+    if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
+})).then(function(res){
+  var j=res[0]; ST.stock=res[1];
    ST.arm=j;
-   desenharKpis();desenharFiltros();desenharLista();desenharExigencia();desenharDestrava();
+   desenharKpis();desenharEstadosStock();desenharFiltros();desenharLista();desenharExigencia();desenharDestrava();
  })
  .catch(function(e){
    document.getElementById('kpis').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
