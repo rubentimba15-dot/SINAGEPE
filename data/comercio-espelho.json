@@ -1,0 +1,117 @@
+{
+  "meta": {
+    "versao": "0.1",
+    "estado": "endpoint verificado, dados por extrair",
+    "criadoEm": "2026-09-01",
+    "correccao": "Foi afirmado que o comércio espelho pressupunha dados que o sistema não tem. A afirmação confundia duas coisas: o sistema não os tem, e eles existem. São públicos, gratuitos e acessíveis sem chave de subscrição.",
+    "oQueE": "Comparar o que Moçambique declara exportar para um país com o que esse país declara importar de Moçambique. A diferença chama-se desvio de espelho.",
+    "porqueImporta": "Um desvio persistente e grande entre as duas declarações é indicador de subfacturação, contrabando ou erro de classificação. <b>Não é prova de nenhum deles</b> — frete, seguro, prazo de registo e diferença FOB/CIF explicam parte."
+  },
+  "fonte": {
+    "nome": "UN Comtrade",
+    "portal": "https://comtradeplus.un.org/",
+    "endpointPublico": "https://comtradeapi.un.org/public/v1/preview/C/A/HS",
+    "exigeChave": false,
+    "verificado": "Setembro de 2026 — o endpoint responde",
+    "limiteSemChave": "500 registos por consulta",
+    "limiteComChaveGratuita": "100.000 registos por chamada, 500 chamadas por dia",
+    "comoObterChave": "Registo gratuito em comtradeplus.un.org",
+    "parametros": {
+      "reporterCode": "508 para Moçambique",
+      "flowCode": "X para exportação, M para importação",
+      "period": "ano, por exemplo 2023",
+      "cmdCode": "código HS do produto",
+      "partnerCode": "código do país parceiro"
+    },
+    "exemploExportacaoMocambique": "https://comtradeapi.un.org/public/v1/preview/C/A/HS?flowCode=X&reporterCode=508&period=2023",
+    "nota": "O endpoint respondeu ao ser consultado, mas devolve conteúdo que este ambiente não consegue ler. A extracção exige um cliente que processe a resposta — trabalho de servidor, não de navegador."
+  },
+  "parceirosPrioritarios": [
+    {
+      "pais": "África do Sul",
+      "codigo": 710,
+      "porque": "Maior parceiro comercial e fronteira terrestre principal"
+    },
+    {
+      "pais": "China",
+      "codigo": 156,
+      "porque": "Principal destino de exportação de recursos"
+    },
+    {
+      "pais": "Índia",
+      "codigo": 699,
+      "porque": "Destino histórico de castanha de caju e leguminosas"
+    },
+    {
+      "pais": "Emirados Árabes Unidos",
+      "codigo": 784,
+      "porque": "Plataforma de reexportação"
+    },
+    {
+      "pais": "Países Baixos",
+      "codigo": 528,
+      "porque": "Porto de entrada na Europa"
+    },
+    {
+      "pais": "Zâmbia",
+      "codigo": 894,
+      "porque": "Comércio de corredor, com trânsito"
+    }
+  ],
+  "produtosEssenciaisComHS": [
+    {
+      "produto": "Arroz",
+      "hs": "1006",
+      "metaPEDSA": "redução de 33% no valor de importação até 2026"
+    },
+    {
+      "produto": "Trigo",
+      "hs": "1001",
+      "nota": "Produção nacional residual"
+    },
+    {
+      "produto": "Milho",
+      "hs": "1005"
+    },
+    {
+      "produto": "Açúcar",
+      "hs": "1701",
+      "nota": "Moçambique é exportador; pode ter saldo positivo"
+    },
+    {
+      "produto": "Óleo alimentar",
+      "hs": "1507 a 1515"
+    },
+    {
+      "produto": "Fertilizantes",
+      "hs": "31"
+    },
+    {
+      "produto": "Medicamentos",
+      "hs": "30"
+    }
+  ],
+  "comoSeCalcula": {
+    "formula": "desvio = (declarado pelo parceiro − declarado por Moçambique) a dividir pelo declarado por Moçambique",
+    "avisoObrigatorio": "Um desvio não é prova de infracção. As explicações legítimas incluem: Moçambique declara em FOB e o parceiro em CIF, o que inclui frete e seguro; desfasamento de registo entre a saída e a entrada; reexportação através de terceiro país; e diferença de classificação pautal. O sistema assinala o desvio e não o qualifica.",
+    "limiarSugerido": "Assinalar acima de 20% de desvio persistente por mais de dois anos",
+    "quemQualifica": "Alfândegas, no âmbito das suas competências de fiscalização"
+  },
+  "oQueFaltaParaActivar": [
+    {
+      "passo": "Obter chave gratuita do Comtrade",
+      "esforco": 1,
+      "quem": "Qualquer pessoa, com registo em comtradeplus.un.org"
+    },
+    {
+      "passo": "Cliente que consulte o endpoint e guarde o resultado",
+      "esforco": 3,
+      "quem": "Exige servidor — o navegador é bloqueado por origem cruzada"
+    },
+    {
+      "passo": "Cruzar com a declaração de Moçambique",
+      "esforco": 2,
+      "quem": "O próprio Comtrade tem os dois lados; o cruzamento é local"
+    }
+  ]
+}

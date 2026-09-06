@@ -118,6 +118,20 @@ tr:last-child td{border-bottom:none}
         <span class="tag" id="f-tag">&mdash;</span></div>
       <table id="fontes"></table>
     </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Com&eacute;rcio espelho</h2>
+        <p>O que Mo&ccedil;ambique declara exportar, contra o que o parceiro declara importar</p></div>
+        <span class="tag crit" id="esp-tag">&mdash;</span></div>
+      <div class="bd" id="espelho"></div>
+    </div>
+
+    <div class="card frame">
+      <div class="ch"><div><h2>Motores do sistema</h2>
+        <p>O que o SINAGEPE calcula de facto, e onde</p></div>
+        <span class="tag" id="mot-tag">&mdash;</span></div>
+      <div class="bd" id="motores"></div>
+    </div>
   </main>
 </div>
 
@@ -130,7 +144,7 @@ function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'
 var EST={'por obter':{c:'#F0A926',i:'\u25CB'},'parcial':{c:'#22B8F0',i:'\u25D1'},
  'não existe':{c:'#EF4444',i:'\u2715'},'obtido':{c:'#12B981',i:'\u2713'}};
 
-var ST_PQG=null;
+var ST_PQG=null, ST_ESP=null, ST_MOT=null;
 
 function desenharMetas(D){
   document.getElementById('metas').innerHTML=D.metasPEDSA.map(function(m,i){
@@ -177,6 +191,108 @@ function desenharMetas(D){
    insegurança CRÓNICA; o que o sistema tem é AGUDA. São métodos
    diferentes e o aviso está no ecrã.
    ============================================================ */
+/* ============================================================
+   COMÉRCIO ESPELHO E MOTORES
+   ------------------------------------------------------------
+   Duas correcções, e ambas ficam declaradas no ecrã.
+
+   A primeira: os dados de comércio espelho existem, são públicos
+   e gratuitos. O que falta é a ligação, não os dados.
+
+   A segunda: sete dos nove motores existiam já, construídos com
+   outros nomes. Dizer que não existiam foi erro de memória.
+   ============================================================ */
+function desenharEspelho(){
+  var el=document.getElementById('espelho'); if(!el||!ST_ESP) return;
+  var F=ST_ESP.fonte, C=ST_ESP.comoSeCalcula;
+  el.innerHTML=
+     '<div class="aviso i" style="margin:0 0 15px"><b>Correcção registada.</b> '
+    +esc(ST_ESP.meta.correccao)+'</div>'
+    +'<div style="font-size:12.5px;color:var(--t2);line-height:1.75;margin-bottom:16px">'
+    +esc(ST_ESP.meta.oQueE)+' '+ST_ESP.meta.porqueImporta+'</div>'
+
+    +'<div style="background:#0A1421;border:1px solid var(--card-line);border-left:3px solid var(--ok);'
+    +'border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:16px">'
+    +'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">'
+    +'<b style="font-size:13px">'+esc(F.nome)+'</b>'
+    +'<span style="font-size:9.5px;color:var(--ok);text-transform:uppercase;letter-spacing:.09em">'
+    +esc(F.verificado)+'</span></div>'
+    +'<div class="mono" style="font-size:10.5px;color:var(--brzl);word-break:break-all;'
+    +'margin-bottom:9px">'+esc(F.endpointPublico)+'</div>'
+    +'<div style="display:flex;gap:18px;flex-wrap:wrap;font-size:10.5px;color:var(--t4)">'
+    +'<span>Exige chave: <b style="color:var(--ok)">n&atilde;o</b></span>'
+    +'<span>Sem chave: <b style="color:var(--t3)">'+esc(F.limiteSemChave)+'</b></span>'
+    +'<span>Com chave gratuita: <b style="color:var(--t3)">'+esc(F.limiteComChaveGratuita)+'</b></span>'
+    +'</div>'
+    +'<div style="font-size:10.5px;color:var(--t3);line-height:1.6;margin-top:9px">'+esc(F.nota)+'</div></div>'
+
+    +'<div class="g2">'
+    +'<div><div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brz);'
+    +'margin-bottom:9px">Parceiros priorit&aacute;rios</div>'
+    +ST_ESP.parceirosPrioritarios.map(function(x){
+      return '<div style="display:flex;gap:9px;align-items:baseline;padding:5px 0;font-size:11.5px">'
+       +'<span class="mono" style="width:38px;color:var(--t4)">'+x.codigo+'</span>'
+       +'<b style="width:112px">'+esc(x.pais)+'</b>'
+       +'<span style="flex:1;color:var(--t4);font-size:10.5px">'+esc(x.porque)+'</span></div>';
+    }).join('')+'</div>'
+    +'<div><div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);'
+    +'margin-bottom:9px">Produtos essenciais, com c&oacute;digo HS</div>'
+    +ST_ESP.produtosEssenciaisComHS.map(function(x){
+      return '<div style="display:flex;gap:9px;align-items:baseline;padding:5px 0;font-size:11.5px">'
+       +'<span class="mono" style="width:56px;color:var(--brzl)">'+esc(x.hs)+'</span>'
+       +'<b style="width:120px">'+esc(x.produto)+'</b>'
+       +'<span style="flex:1;color:var(--t4);font-size:10.5px">'+esc(x.metaPEDSA||x.nota||'')+'</span></div>';
+    }).join('')+'</div></div>'
+
+    +'<div class="aviso r" style="margin:16px 0 0"><b>O desvio n&atilde;o &eacute; prova de infrac&ccedil;&atilde;o.</b> '
+    +esc(C.avisoObrigatorio)+'<br><br><b>Quem qualifica:</b> '+esc(C.quemQualifica)+'</div>'
+
+    +'<div style="margin-top:15px;padding-top:13px;border-top:1px solid rgba(38,56,86,.5)">'
+    +'<div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);'
+    +'margin-bottom:9px">O que falta para activar</div>'
+    +ST_ESP.oQueFaltaParaActivar.map(function(x,i){
+      return '<div style="display:flex;gap:10px;align-items:baseline;padding:6px 0;font-size:11.5px">'
+       +'<span class="mono" style="width:18px;color:var(--t4)">'+(i+1)+'</span>'
+       +'<span style="flex:1;color:var(--t2)">'+esc(x.passo)+'</span>'
+       +'<span class="mono" style="width:60px;text-align:right;color:'
+       +(x.esforco<=1?'#12B981':x.esforco<=2?'#F0A926':'#EF4444')+'">esforço '+x.esforco+'</span>'
+       +'<span style="width:250px;flex-shrink:0;font-size:10px;color:var(--t4);text-align:right">'
+       +esc(x.quem)+'</span></div>';
+    }).join('')+'</div>';
+  document.getElementById('esp-tag').innerHTML='endpoint verificado, sem liga&ccedil;&atilde;o';
+}
+
+function desenharMotores(){
+  var el=document.getElementById('motores'); if(!el||!ST_MOT) return;
+  var M=ST_MOT.motores;
+  var activos=M.filter(function(x){return x.estado.indexOf('activo')===0}).length;
+  el.innerHTML=
+     '<div class="aviso w" style="margin:0 0 15px"><b>Correcção registada.</b> '
+    +esc(ST_MOT.meta.correccaoRegistada)+'</div>'
+    +M.map(function(m,i){
+      var act=m.estado.indexOf('activo')===0;
+      var c=act?'#12B981':m.estado.indexOf('estrutura')===0?'#F0A926':'#EF4444';
+      return '<div class="entra" style="animation-delay:'+(i*.04)+'s;padding:10px 0;'
+       +'border-bottom:1px solid rgba(38,56,86,.4)">'
+       +'<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px">'
+       +'<b style="font-size:12.5px;min-width:212px;color:'+(act?'var(--ink)':'var(--t3)')+'">'
+       +esc(m.nome)+'</b>'
+       +'<span style="font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;'
+       +'border-radius:3px;border:1px solid '+c+'55;background:'+c+'12;color:'+c+'">'
+       +esc(m.estado)+'</span>'
+       +(m.onde&&m.onde!=='—'?'<span class="mono" style="flex:1;font-size:10px;color:var(--t4);'
+         +'text-align:right">'+esc(m.onde)+'</span>':'')+'</div>'
+       +(m.faz?'<div style="font-size:11px;color:var(--t3);line-height:1.6">'+esc(m.faz)+'</div>':'')
+       +(m.funcoes?'<div class="mono" style="font-size:10px;color:var(--brzl);margin-top:4px">'
+         +m.funcoes.join(' &middot; ')+'</div>':'')
+       +(m.limite?'<div style="font-size:10.5px;color:var(--amber);margin-top:4px">'+esc(m.limite)+'</div>':'')
+       +(m.porque?'<div style="font-size:10.5px;color:var(--red);margin-top:4px">'+esc(m.porque)+'</div>':'')
+       +(m.nota?'<div style="font-size:10.5px;color:var(--ok);margin-top:4px">'+esc(m.nota)+'</div>':'')
+       +'</div>';
+    }).join('');
+  document.getElementById('mot-tag').innerHTML=activos+' de '+M.length+' activos';
+}
+
 function desenharPQG(){
   var el=document.getElementById('pqg'); if(!el||!ST_PQG) return;
   var M=ST_PQG.metasRelevantes;
@@ -268,13 +384,13 @@ function desenharFontes(D){
   document.getElementById('f-tag').innerHTML=D.fontesAPedir.length+' fontes';
 }
 
-Promise.all(['comercio-externo','pqg-metas'].map(function(f){
+Promise.all(['comercio-externo','pqg-metas','comercio-espelho','motores'].map(function(f){
   return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
     if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
 }))
  .then(function(res){
-   var D=res[0]; ST_PQG=res[1];
-   desenharMetas(D);desenharDependencia(D);desenharPorque(D);desenharFontes(D);desenharPQG();
+   var D=res[0]; ST_PQG=res[1]; ST_ESP=res[2]; ST_MOT=res[3];
+   desenharMetas(D);desenharDependencia(D);desenharPorque(D);desenharFontes(D);desenharPQG();desenharEspelho();desenharMotores();
  })
  .catch(function(e){
    document.getElementById('metas').innerHTML=

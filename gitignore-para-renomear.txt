@@ -1,0 +1,44 @@
+# ============================================================
+# SINAGEPE — ficheiros que NUNCA devem ir para o GitHub
+# ------------------------------------------------------------
+# Este repositório é público. Tudo o que aqui não estiver
+# ignorado fica visível para qualquer pessoa na Internet, e o
+# histórico do Git guarda-o mesmo depois de apagado.
+# ============================================================
+
+# --- Credenciais e palavras-passe -----------------------------
+credenciais-*.md
+credenciais-*.txt
+*credenciais*
+*palavras-passe*
+*passwords*
+*.key
+*.pem
+
+# --- Documentos de escritório ---------------------------------
+# Neste repositório não há nenhum que deva ser publicado.
+*.docx
+*.doc
+*.xlsx
+*.xls
+*.pptx
+
+# --- Ferramentas temporárias de manutenção --------------------
+# Expõem a estrutura de acessos ou permitem testar palavras-passe
+# contra os hashes. Usar e apagar; se ficarem por engano, não sobem.
+verificador-ecras.html
+diagnostico-credencial.html
+gerar-credencial.html
+
+# --- Ficheiros de trabalho e cópias ---------------------------
+*-copia.*
+*-backup.*
+*-rascunho.*
+*.bak
+*.tmp
+~$*
+
+# --- Lixo do sistema operativo --------------------------------
+Thumbs.db
+desktop.ini
+.DS_Store

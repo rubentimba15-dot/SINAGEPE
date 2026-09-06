@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "criadoEm": "2026-09-01",
+    "proposito": "Registo do que o sistema calcula de facto, com o nome do ficheiro e da função. Existe porque a resposta a \"o sistema tem motor de X?\" estava a ser dada de memória e foi dada errada.",
+    "correccaoRegistada": "Foi afirmado que nenhum dos motores do ponto 30 do prompt SAGE existia. É falso: sete dos nove existem, construídos ao longo do trabalho com outros nomes. Os dois que faltam são o de previsão, que exige série que não há, e o de comércio espelho, que exige uma ligação por fazer."
+  },
+  "motores": [
+    {
+      "nome": "Torre de Controlo",
+      "estado": "activo",
+      "onde": "painel-nacional.html",
+      "faz": "Indicadores nacionais com origem declarada, estados de cadastro, rede comercial e cobertura por província"
+    },
+    {
+      "nome": "Economic Chain Engine",
+      "estado": "activo",
+      "onde": "assets/cadeia-abastecimento.js",
+      "funcoes": [
+        "dependenciaOrigem",
+        "distanciaAoPorto",
+        "juntarFluxos",
+        "fluxosAfectadosPorCorte"
+      ],
+      "faz": "Dependência de origem por praça, distância ao porto e fluxos entre praças"
+    },
+    {
+      "nome": "Price & Margin Engine",
+      "estado": "activo",
+      "onde": "assets/cadeia-abastecimento.js",
+      "funcoes": [
+        "transporteExplica",
+        "custoTransporte",
+        "custoColocado"
+      ],
+      "faz": "Quanto da diferença de preço o transporte explica, e custo colocado no destino"
+    },
+    {
+      "nome": "Risk Engine",
+      "estado": "activo",
+      "onde": "centro-antecipacao.html",
+      "faz": "Dez riscos com gravidade, certeza, cadeia causal, gatilho e mitigações",
+      "limite": "Sem probabilidade atribuída — não há série que a sustente"
+    },
+    {
+      "nome": "Meta Engine",
+      "estado": "activo, sem dados",
+      "onde": "comercio-externo.html",
+      "faz": "Metas do PEDSA e do PQG, com as componentes que as medem e o estado de cada fonte",
+      "limite": "Zero de sete metas medíveis hoje"
+    },
+    {
+      "nome": "Economic Reconciliation Engine",
+      "estado": "activo",
+      "onde": "infraestrutura-armazenagem-serie.json e fontes-internacionais.json",
+      "faz": "Registo de divergências entre fontes, com cadeia de origem e teste de independência",
+      "nota": "Foi este motor que apanhou que o PICA e o INE não são fontes independentes."
+    },
+    {
+      "nome": "Responsibility Engine",
+      "estado": "activo",
+      "onde": "adesao-institucional.json",
+      "faz": "Quinze entidades, o que cada uma detém, esforço e impacto de a integrar"
+    },
+    {
+      "nome": "Índice de cobertura da fonte",
+      "estado": "activo",
+      "onde": "assets/cadeia-abastecimento.js",
+      "funcoes": [
+        "transparenciaMercado"
+      ],
+      "faz": "Quanto de cada fonte foi extraído, com quatro estados por componente"
+    },
+    {
+      "nome": "Forecast Engine",
+      "estado": "não existe",
+      "porque": "Exige série corrente. O SIMA tem oito edições e parou em Julho de 2023.",
+      "oQueDesbloqueia": "Retoma da publicação do SIMA, ou série equivalente"
+    },
+    {
+      "nome": "Mirror Trade Engine",
+      "estado": "estrutura criada, sem ligação",
+      "porque": "Os dados existem e são públicos. Falta a ligação, que exige servidor.",
+      "onde": "comercio-espelho.json"
+    }
+  ]
+}

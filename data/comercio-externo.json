@@ -1,0 +1,630 @@
+{
+  "meta": {
+    "versao": "0.1",
+    "estado": "estrutura por preencher",
+    "criadoEm": "2026-09-01",
+    "proposito": "Medir o cumprimento das metas de comércio externo do PEDSA 2030. A estrutura existe antes dos dados para tornar visível o que falta pedir, e a quem.",
+    "regra": "Nenhum campo é preenchido por estimativa. Um campo vazio significa que o dado não foi obtido — nunca que o valor é zero.",
+    "camada": "pública — apenas agregados",
+    "naoInclui": "NUIT, declarações aduaneiras individuais, nomes de importadores ou exportadores. Nenhuma meta do PEDSA exige esse detalhe: todas são agregadas."
+  },
+  "porqueSoAgregado": {
+    "razaoDeMandato": "As metas do PEDSA medem-se com valores agregados: valor de importação, valor de exportação, perdas, investimento. Nenhuma exige saber quem importou o quê.",
+    "razaoTecnica": "O SINAGEPE é um sítio estático, sem servidor. O controlo de acesso é JavaScript no navegador. Dados individualizados ficariam num ficheiro JSON no repositório público, descarregáveis por quem soubesse o endereço. Não aparecer no ecrã não é o mesmo que não estar acessível.",
+    "oQueExigiriaAOutraCamada": "Servidor com autenticação, registo de acessos e encriptação; e, antes disso, protocolo com as Alfândegas que defina a finalidade e os limites do tratamento."
+  },
+  "metasPEDSA": [
+    {
+      "id": "arroz-importacao",
+      "meta": "Redução em pelo menos 33% do valor de importação de arroz",
+      "prazo": 2026,
+      "metaSeguinte": "Autossuficiência até 2030",
+      "fonte": "PEDSA 2022-2030",
+      "anoBase": null,
+      "valorBase": null,
+      "valorActual": null,
+      "unidade": "USD ou MZN, conforme a publicação",
+      "execucaoPercent": null,
+      "estado": "sem dados",
+      "componentes": [
+        {
+          "componente": "Valor de importação de arroz, por ano",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "comoObter": "www.ine.gov.mz → Estatísticas → Estatísticas Sectoriais → Comércio Externo"
+        },
+        {
+          "componente": "Produção nacional de arroz",
+          "fonte": "MAAP — Inquérito Agrário Integrado",
+          "estado": "parcial",
+          "nota": "A campanha 2025/26 do MAAP dá cereais em conjunto, não arroz isolado. A Estratégia Nacional do Arroz refere 412.552 toneladas numa campanha recente."
+        }
+      ],
+      "oQueOSistemaJaTem": "Preço do arroz por praça, de Julho de 2023, e a observação pública do ICM sobre preço de importação declarado a cerca de 470 USD por tonelada quando o mercado internacional rondava 350."
+    },
+    {
+      "id": "exportacao-agraria",
+      "meta": "Aumento de pelo menos 25% do valor dos produtos agrários exportados",
+      "prazo": 2030,
+      "fonte": "PEDSA 2030",
+      "anoBase": null,
+      "valorBase": null,
+      "valorActual": null,
+      "execucaoPercent": null,
+      "estado": "sem dados",
+      "componentes": [
+        {
+          "componente": "Valor de exportação agrária, por ano",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter"
+        },
+        {
+          "componente": "Distinção entre produto de origem nacional e reexportação",
+          "fonte": "e-COSIS — Registo de Exportadores e Certificados de Origem, gerido pela Direcção Nacional da Indústria com a Autoridade Tributária",
+          "estado": "por obter",
+          "porqueImporta": "Sem esta distinção, uma subida do valor exportado pode ser reexportação e não produção nacional. A meta do PEDSA é sobre produto nacional."
+        }
+      ]
+    },
+    {
+      "id": "comercio-domestico",
+      "meta": "Aumento de pelo menos 25% do valor do comércio agrário de produtos nacionais no mercado doméstico",
+      "prazo": 2030,
+      "fonte": "PEDSA 2030",
+      "anoBase": null,
+      "valorBase": null,
+      "valorActual": null,
+      "execucaoPercent": null,
+      "estado": "sem dados",
+      "componentes": [
+        {
+          "componente": "Volumes transaccionados no mercado doméstico",
+          "fonte": "MAAP · SIMA, ou declaração de operadores",
+          "estado": "não existe",
+          "nota": "O SIMA publica preços, não volumes. É a lacuna mais difícil das quatro."
+        }
+      ],
+      "oQueOSistemaJaTem": "Preços por praça e 77 fluxos documentados entre praças — que mostram por onde o produto circula, mas não quanto."
+    }
+  ],
+  "indicadorDependenciaExterna": {
+    "formula": "Importação a dividir por (produção nacional mais importação menos exportação, com ajuste de variação de existências)",
+    "estado": "não calculável",
+    "componentesEmFalta": [
+      {
+        "componente": "Importação por produto",
+        "temos": false,
+        "fonte": "INE — Comércio Externo"
+      },
+      {
+        "componente": "Produção nacional por produto",
+        "temos": "parcial",
+        "fonte": "MAAP — Inquérito Agrário Integrado",
+        "nota": "A campanha do MAAP dá grupos de cultura, não produtos isolados."
+      },
+      {
+        "componente": "Exportação por produto",
+        "temos": false,
+        "fonte": "INE — Comércio Externo"
+      },
+      {
+        "componente": "Variação de existências",
+        "temos": false,
+        "fonte": "Armazenistas",
+        "nota": "Nenhuma unidade do país reporta existências."
+      }
+    ],
+    "regraDeApresentacao": "Se e quando for calculável, apresenta-se como dependência ESTIMADA, com a fonte de cada componente à vista — nunca como identidade contabilística exacta. Faltando qualquer componente, não se calcula.",
+    "quantosTemos": 0,
+    "deQuantos": 4
+  },
+  "fontesAPedir": [
+    {
+      "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+      "serie": "2020 a 2025",
+      "oQueDa": "Importações e exportações por produto, quantidade, valor e país",
+      "estado": "publicação identificada; valores por obter",
+      "acesso": "O sítio do INE recusa acesso automático. Exige descarregamento manual.",
+      "prioridade": 1
+    },
+    {
+      "fonte": "Banco de Moçambique — Relatório Anual da Balança de Pagamentos",
+      "oQueDa": "Validação macroeconómica dos totais de importação e exportação",
+      "estado": "por obter",
+      "porqueImporta": "Nenhum indicador crítico deve depender de uma fonte só. Serve para confrontar os totais do INE.",
+      "prioridade": 2
+    },
+    {
+      "fonte": "e-COSIS — Registo de Exportadores e Certificados de Origem",
+      "oQueDa": "Distinção entre exportação de origem nacional e reexportação",
+      "estado": "por obter",
+      "gestao": "Direcção Nacional da Indústria com a Autoridade Tributária",
+      "prioridade": 3
+    },
+    {
+      "fonte": "Autoridade Tributária — Folheto de Estatísticas Tributárias",
+      "oQueDa": "Direitos aduaneiros, IVA de importação e isenções",
+      "estado": "por obter",
+      "prioridade": 4
+    }
+  ],
+  "produtosEssenciais": [
+    {
+      "slug": "arroz",
+      "nome": "Arroz",
+      "estrategico": true,
+      "formaCirculacao": "granel na importação, embalado no retalho",
+      "componentes": [
+        {
+          "componente": "Valor e quantidade de importação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Produção nacional",
+          "fonte": "Estratégia Nacional de Desenvolvimento do Arroz",
+          "estado": "parcial",
+          "valor": null,
+          "oQueSeSabe": "412.552 toneladas numa campanha recente, contra 206.385 em 2007-2008"
+        },
+        {
+          "componente": "Valor e quantidade de exportação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Variação de existências",
+          "fonte": "Armazenistas",
+          "estado": "não existe",
+          "valor": null
+        }
+      ],
+      "componentesObtidos": 0,
+      "componentesParciais": 1,
+      "dependenciaCalculavel": false,
+      "dependenciaEstimadaValor": null,
+      "metaPropria": "Redução de 33% no valor de importação até 2026 e autossuficiência até 2030, segundo o PEDSA e a Estratégia Nacional de Desenvolvimento do Arroz",
+      "jaTemos": "Preço por praça, de Julho de 2023, e a observação do ICM sobre preço de importação declarado a cerca de 470 USD por tonelada quando o mercado internacional rondava 350",
+      "dependenciaEsperada": "elevada — é o produto com meta explícita de redução de importação"
+    },
+    {
+      "slug": "trigo",
+      "nome": "Trigo",
+      "estrategico": true,
+      "formaCirculacao": "granel",
+      "componentes": [
+        {
+          "componente": "Valor e quantidade de importação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Produção nacional",
+          "fonte": "MAAP — Inquérito Agrário Integrado",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Valor e quantidade de exportação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Variação de existências",
+          "fonte": "Armazenistas",
+          "estado": "não existe",
+          "valor": null
+        }
+      ],
+      "componentesObtidos": 0,
+      "componentesParciais": 0,
+      "dependenciaCalculavel": false,
+      "dependenciaEstimadaValor": null,
+      "jaTemos": "Nenhum preço no boletim carregado. O ICM monitorou a descarga de 15.000 toneladas no Porto da Beira em Junho de 2026, segundo referência por confirmar.",
+      "dependenciaEsperada": "muito elevada — a produção nacional de trigo é residual",
+      "nota": "Não há produção nacional relevante declarada. A dependência é quase total, mas o valor exacto exige os dados do INE."
+    },
+    {
+      "slug": "farinha-de-milho",
+      "nome": "Farinha de milho",
+      "estrategico": true,
+      "formaCirculacao": "embalado",
+      "componentes": [
+        {
+          "componente": "Valor e quantidade de importação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Produção nacional",
+          "fonte": "MAAP — Inquérito Agrário Integrado",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Valor e quantidade de exportação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Variação de existências",
+          "fonte": "Armazenistas",
+          "estado": "não existe",
+          "valor": null
+        }
+      ],
+      "componentesObtidos": 0,
+      "componentesParciais": 0,
+      "dependenciaCalculavel": false,
+      "dependenciaEstimadaValor": null,
+      "jaTemos": "Nada. Não tem preço no boletim carregado nem produção declarada em separado.",
+      "nota": "É produto transformado. Depende da moagem nacional, que o sistema não cadastra."
+    },
+    {
+      "slug": "milho",
+      "nome": "Milho",
+      "estrategico": true,
+      "formaCirculacao": "granel",
+      "componentes": [
+        {
+          "componente": "Valor e quantidade de importação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Produção nacional",
+          "fonte": "MAAP — campanha agrária 2025/26",
+          "estado": "parcial",
+          "valor": null,
+          "oQueSeSabe": "Incluído nos 3,4 milhões de toneladas de cereais previstos na campanha 2025/26"
+        },
+        {
+          "componente": "Valor e quantidade de exportação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Variação de existências",
+          "fonte": "Armazenistas",
+          "estado": "não existe",
+          "valor": null
+        }
+      ],
+      "componentesObtidos": 0,
+      "componentesParciais": 1,
+      "dependenciaCalculavel": false,
+      "dependenciaEstimadaValor": null,
+      "jaTemos": "Preço em quatro praças, com dispersão de 341% entre Mandimba e Búzi",
+      "dependenciaEsperada": "baixa — é a base alimentar de produção nacional",
+      "nota": "A produção do MAAP é por grupo de cultura. O milho não aparece isolado."
+    },
+    {
+      "slug": "feijao",
+      "nome": "Feijão",
+      "estrategico": true,
+      "formaCirculacao": "granel e embalado",
+      "componentes": [
+        {
+          "componente": "Valor e quantidade de importação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Produção nacional",
+          "fonte": "MAAP — campanha agrária 2025/26",
+          "estado": "parcial",
+          "valor": null,
+          "oQueSeSabe": "Incluído nas 930 mil toneladas de leguminosas previstas na campanha 2025/26"
+        },
+        {
+          "componente": "Valor e quantidade de exportação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Variação de existências",
+          "fonte": "Armazenistas",
+          "estado": "não existe",
+          "valor": null
+        }
+      ],
+      "componentesObtidos": 0,
+      "componentesParciais": 1,
+      "dependenciaCalculavel": false,
+      "dependenciaEstimadaValor": null,
+      "jaTemos": "Preço de duas variedades: nhemba com 303% de dispersão e manteiga com 212%",
+      "dependenciaEsperada": "baixa a média"
+    },
+    {
+      "slug": "oleo-alimentar",
+      "nome": "Óleo alimentar",
+      "estrategico": true,
+      "formaCirculacao": "granel líquido na importação, embalado no retalho",
+      "componentes": [
+        {
+          "componente": "Valor e quantidade de importação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Produção nacional",
+          "fonte": "MAAP — campanha agrária 2025/26",
+          "estado": "parcial",
+          "valor": null,
+          "oQueSeSabe": "Incluído nas 400 mil toneladas de oleaginosas previstas"
+        },
+        {
+          "componente": "Valor e quantidade de exportação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Variação de existências",
+          "fonte": "Armazenistas",
+          "estado": "não existe",
+          "valor": null
+        }
+      ],
+      "componentesObtidos": 0,
+      "componentesParciais": 1,
+      "dependenciaCalculavel": false,
+      "dependenciaEstimadaValor": null,
+      "jaTemos": "Treze unidades de armazenagem podem guardá-lo. Sem preço no boletim carregado.",
+      "dependenciaEsperada": "elevada — a transformação nacional é limitada",
+      "nota": "A oleaginosa produz-se cá; o óleo refinado importa-se em grande parte. A distinção exige código pautal."
+    },
+    {
+      "slug": "acucar",
+      "nome": "Açúcar",
+      "estrategico": true,
+      "formaCirculacao": "granel e embalado",
+      "componentes": [
+        {
+          "componente": "Valor e quantidade de importação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Produção nacional",
+          "fonte": "MAAP — Inquérito Agrário Integrado",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Valor e quantidade de exportação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Variação de existências",
+          "fonte": "Armazenistas",
+          "estado": "não existe",
+          "valor": null
+        }
+      ],
+      "componentesObtidos": 0,
+      "componentesParciais": 0,
+      "dependenciaCalculavel": false,
+      "dependenciaEstimadaValor": null,
+      "jaTemos": "Quatro unidades de armazenagem podem guardá-lo. Sem preço no boletim carregado.",
+      "dependenciaEsperada": "baixa — há produção açucareira nacional estabelecida",
+      "nota": "Moçambique exporta açúcar. Este produto pode ter dependência negativa, ou seja, saldo exportador."
+    },
+    {
+      "slug": "fertilizantes",
+      "nome": "Fertilizantes",
+      "estrategico": true,
+      "formaCirculacao": "granel e saco industrial",
+      "componentes": [
+        {
+          "componente": "Valor e quantidade de importação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Produção nacional",
+          "fonte": "MAAP — Inquérito Agrário Integrado",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Valor e quantidade de exportação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Variação de existências",
+          "fonte": "Armazenistas",
+          "estado": "não existe",
+          "valor": null
+        }
+      ],
+      "componentesObtidos": 0,
+      "componentesParciais": 0,
+      "dependenciaCalculavel": false,
+      "dependenciaEstimadaValor": null,
+      "jaTemos": "Cadastrado como estratégico, sem preço nem produção declarada",
+      "dependenciaEsperada": "muito elevada — quase toda a oferta é importada",
+      "nota": "Afecta directamente a produção agrária, pelo que a sua dependência é dependência de segunda ordem para todos os alimentos."
+    },
+    {
+      "slug": "medicamentos",
+      "nome": "Medicamentos",
+      "estrategico": true,
+      "formaCirculacao": "embalado",
+      "componentes": [
+        {
+          "componente": "Valor e quantidade de importação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Produção nacional",
+          "fonte": "MAAP — Inquérito Agrário Integrado",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Valor e quantidade de exportação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Variação de existências",
+          "fonte": "Armazenistas",
+          "estado": "não existe",
+          "valor": null
+        }
+      ],
+      "componentesObtidos": 0,
+      "componentesParciais": 0,
+      "dependenciaCalculavel": false,
+      "dependenciaEstimadaValor": null,
+      "jaTemos": "1.612 farmácias licenciadas em 98 distritos, do cadastro da ANARME",
+      "dependenciaEsperada": "muito elevada",
+      "nota": "O código pautal de medicamentos é vasto. A agregação por produto essencial exigiria uma lista de medicamentos prioritários, que o MISAU define."
+    },
+    {
+      "slug": "cimento-nacional",
+      "nome": "Cimento Nacional",
+      "estrategico": false,
+      "formaCirculacao": "saco industrial e granel",
+      "componentes": [
+        {
+          "componente": "Valor e quantidade de importação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Produção nacional",
+          "fonte": "MAAP — Inquérito Agrário Integrado",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Valor e quantidade de exportação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Variação de existências",
+          "fonte": "Armazenistas",
+          "estado": "não existe",
+          "valor": null
+        }
+      ],
+      "componentesObtidos": 0,
+      "componentesParciais": 0,
+      "dependenciaCalculavel": false,
+      "dependenciaEstimadaValor": null,
+      "jaTemos": "Cadastrado como não estratégico",
+      "dependenciaEsperada": "baixa — há produção nacional de cimento",
+      "nota": "Não é produto alimentar. Consta do cadastro por ser bem essencial à construção e por partilhar a mesma logística."
+    },
+    {
+      "slug": "gasoleo",
+      "nome": "Gasóleo",
+      "estrategico": true,
+      "formaCirculacao": "granel líquido",
+      "componentes": [
+        {
+          "componente": "Valor e quantidade de importação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Produção nacional",
+          "fonte": "MAAP — Inquérito Agrário Integrado",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Valor e quantidade de exportação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Variação de existências",
+          "fonte": "Armazenistas",
+          "estado": "não existe",
+          "valor": null
+        }
+      ],
+      "componentesObtidos": 0,
+      "componentesParciais": 0,
+      "dependenciaCalculavel": false,
+      "dependenciaEstimadaValor": null,
+      "jaTemos": "Preço regulado por região, da cascata da ARENE, com seis regiões e amplitude de 15,60 MT por litro",
+      "dependenciaEsperada": "total — não há refinação nacional",
+      "nota": "É o único produto do sistema com estrutura de preço publicada por lei. A cascata da ARENE já mostra o peso do custo de importação no preço final."
+    },
+    {
+      "slug": "gasolina",
+      "nome": "Gasolina",
+      "estrategico": true,
+      "formaCirculacao": "granel líquido",
+      "componentes": [
+        {
+          "componente": "Valor e quantidade de importação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Produção nacional",
+          "fonte": "MAAP — Inquérito Agrário Integrado",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Valor e quantidade de exportação",
+          "fonte": "INE — Estatísticas de Comércio Externo de Bens",
+          "estado": "por obter",
+          "valor": null
+        },
+        {
+          "componente": "Variação de existências",
+          "fonte": "Armazenistas",
+          "estado": "não existe",
+          "valor": null
+        }
+      ],
+      "componentesObtidos": 0,
+      "componentesParciais": 0,
+      "dependenciaCalculavel": false,
+      "dependenciaEstimadaValor": null,
+      "jaTemos": "Preço regulado por região, da cascata da ARENE",
+      "dependenciaEsperada": "total — não há refinação nacional"
+    }
+  ],
+  "resumoProdutos": {
+    "total": 12,
+    "estrategicos": 11,
+    "comDependenciaCalculavel": 0,
+    "comAlgumaComponente": 4,
+    "comMetaPropria": 1,
+    "nota": "Nenhum dos doze produtos tem a dependência externa calculável. Cinco têm produção conhecida em grupo de cultura, o que é parcial. A componente de existências não existe para nenhum, porque nenhuma unidade de armazenagem do país reporta."
+  }
+}

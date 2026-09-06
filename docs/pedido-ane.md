@@ -25,6 +25,8 @@ Avenida de Moçambique, n.º 1225, Maputo
 
 Excelência,
 
+**Enquadramento.** O PEDSA 2030 — Plano Estratégico para o Desenvolvimento do Sector Agrário determina, no seu terceiro pilar, o registo e licenciamento dos operadores de mercado, a digitalização do processo de comercialização dos produtos agrários estratégicos, e a criação de sistemas de informação de gestão com banco de dados para monitoria dos indicadores estratégicos. É nesse enquadramento, e ao abrigo da Lei n.º 34/2014, de 31 de Dezembro, que se apresenta o presente pedido.
+
 O SINAGEPE é um sistema de monitoria do abastecimento nacional de produtos essenciais, que reúne informação publicada por instituições do Estado sobre preços, armazenagem e rede viária. Cada número apresentado declara a fonte e a data, e o sistema regista explicitamente o que não sabe.
 
 A rede rodoviária é determinante para o abastecimento: uma unidade de armazenagem servida por troço intransitável é de difícil abastecimento, e o custo do transporte entra no preço de todos os produtos essenciais.

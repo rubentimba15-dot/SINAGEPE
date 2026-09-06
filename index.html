@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="pt-PT">
 <head>
+<script src="assets/fonte-dados.js"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SINAGEPE — Painel Executivo</title>
@@ -192,15 +193,15 @@
    ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 :root{
-  --bg1:#060B16; --bg2:#060B16; --sidebar-bg:#080E1B; --card-bg:#0C1626;
-  --card-line:rgba(38,56,86,.75); --gold-line:rgba(201,138,60,.28);
+  --bg1:#080F1C; --bg2:#060B16; --sidebar-bg:#0B1421; --card-bg:#141F2B;
+  --card-line:rgba(64,86,108,.55); --gold-line:rgba(201,138,60,.28);
   --gold:#C98A3C; --blue:#22B8F0; --teal:#2DD4BF; --amber:#F0A926; --red:#EF4444; --ok:#12B981;
   --ink:#F3F7FC; --ink-dim:#8FA1B8; --ink-faint:#5E7189;
-  --nav-active:#22B8F0; --nav-idle:#111E31;
+  --nav-active:#22B8F0; --nav-idle:#141F2B;
   --brz:#C98A3C; --brzl:#E8BE7A; --brzg:rgba(201,138,60,.30);
   --acc:#22B8F0; --accg:rgba(34,184,240,.13);
   --t2:#C3D0E0; --t3:#8FA1B8; --t4:#5E7189;
-  --cardh:#111E31;
+  --cardh:#1B2836;
 }
 body{background-image:radial-gradient(ellipse 60% 40% at 12% 0%,rgba(34,184,240,.08),transparent 60%),radial-gradient(ellipse 50% 45% at 95% 100%,rgba(201,138,60,.09),transparent 60%);background-attachment:fixed}
 .tc-mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
@@ -572,7 +573,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "administrador@gmail.com",
     "paginaInicial": "index.html",
@@ -660,7 +662,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "governo@gmail.com",
     "paginaInicial": "index.html",
@@ -699,7 +702,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "masa@gmail.com",
     "paginaInicial": "dashboard-agricultura.html",
@@ -737,7 +741,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "financas@gmail.com",
     "paginaInicial": "dashboard-financas.html",
@@ -772,7 +777,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "bancocentral@gmail.com",
     "paginaInicial": "dashboard-banco-central.html",
@@ -810,7 +816,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "transportes@gmail.com",
     "paginaInicial": "dashboard-transportes.html",
@@ -847,7 +854,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "igsae@gmail.com",
     "paginaInicial": "dashboard-igsae.html",
@@ -886,7 +894,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "arc@gmail.com",
     "paginaInicial": "dashboard-arc.html",
@@ -916,7 +925,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "empresas@gmail.com",
     "paginaInicial": "portal-empresas.html",
@@ -941,7 +951,8 @@ const NIVEIS_ACESSO = [
       "fontes-internacionais.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "produtores@gmail.com",
     "paginaInicial": "portal-produtores.html",
@@ -967,7 +978,8 @@ const NIVEIS_ACESSO = [
       "fontes-internacionais.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "comerciantes@gmail.com",
     "paginaInicial": "portal-comerciantes.html",
@@ -994,7 +1006,8 @@ const NIVEIS_ACESSO = [
       "fontes-internacionais.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "transportadores@gmail.com",
     "paginaInicial": "portal-transportadores.html",
@@ -1023,7 +1036,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "bancos@gmail.com",
     "paginaInicial": "portal-bancos.html",
@@ -1051,7 +1065,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "investidores@gmail.com",
     "paginaInicial": "portal-investidores.html",
@@ -1084,7 +1099,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "universidades@gmail.com",
     "paginaInicial": "portal-universidades.html",
@@ -1107,7 +1123,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "parceiros@gmail.com",
     "paginaInicial": "portal-parceiros.html",
@@ -1139,7 +1156,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "publico@gmail.com",
     "paginaInicial": "portal-publico.html",
@@ -1169,7 +1187,8 @@ const NIVEIS_ACESSO = [
       "monitorizacao-em-falta.html",
       "actualidade-dados.html",
       "inflacao-cobertura.html",
-      "series-precos.html"
+      "series-precos.html",
+      "comercio-externo.html"
     ],
     "email": "cta@gmail.com",
     "paginaInicial": "portal-parceiros.html",

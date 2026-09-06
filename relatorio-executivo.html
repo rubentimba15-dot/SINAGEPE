@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Relatório Executivo — SINAGEPE</title>
+<script src="assets/fonte-dados.js"></script>
 <script src="assets/access-control.js"></script>
 <script src="assets/pesquisa-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -165,7 +166,8 @@ function montar(){
    +'<div><b>Emitido</b>'+hoje()+'</div>'
    +'<div><b>Âmbito</b>Armazenagem, rede viária, identificação e risco</div>'
    +'<div><b>Fontes</b>Públicas e oficiais, listadas no anexo</div>'
-   +'<div><b>Natureza</b>Documento de trabalho</div>'
+   +'<div><b>Natureza</b>Prot\u00f3tipo de demonstra\u00e7\u00e3o</div>'
+   +'<div><b>Idade dos dados</b>Cadastro Ago/2026 \u00b7 SIMA Jul/2023 \u00b7 ANE Jan/2026 \u00b7 ARENE Mai/2026</div>'
    +'</div></div>';
 
   /* 1 — sumário */
@@ -205,7 +207,66 @@ function montar(){
   h+='</section>';
 
   /* 3 — riscos */
-  h+='<section><h2><span class="num">03</span>Riscos e mitigações</h2>'
+  /* 3 — preços e mercados: o único dado do sistema que se move */
+  var S=DATA.sima, CP=DATA.cp;
+  if(S&&S.series){
+    var E=S.series.edicoes, ult=E[E.length-1];
+    var milho=null,arroz=null;
+    S.series.precoMedio.forEach(function(x){
+      if(x.produto==='Milho')milho=x; if(x.produto==='Arroz')arroz=x;});
+    function amp(x){var v=E.map(function(e){return x.valores[String(e.edicao)]}).filter(function(y){return y!=null});
+      return (Math.max.apply(null,v)/Math.min.apply(null,v)-1)*100}
+    var R=S.retalho1462||S.retalho;
+    h+='<section><h2><span class="num">03</span>Preços e mercados</h2>'
+     +'<p class="lead">Quatro edições do boletim Quente-Quente do SIMA, de Setembro de 2022 a Julho de 2023, '
+     +'dão ao sistema a sua primeira série temporal. É o único dado do SINAGEPE que se move.</p>'
+     +'<div class="nums">'
+     + nu('Amplitude do milho','+'+amp(milho).toFixed(0)+'%','Entre o mínimo e o máximo em dez meses. Pico em Março, antes da colheita.',true)
+     + nu('Amplitude do arroz','+'+amp(arroz).toFixed(0)+'%','Produto maioritariamente importado. Preço ancorado no exterior, não na safra nacional.')
+     + nu('Variação do câmbio','+0,03%','O dólar moveu dois cêntimos no mesmo período. O que move o preço da comida não é o câmbio.')
+     + nu('Dispersão máxima','+'+(function(){var mx=0;R.forEach(function(r){var d=(r.maximo.valor/r.minimo.valor-1)*100;if(d>mx)mx=d});return mx.toFixed(0)})()+'%',
+         'Diferença entre a praça mais barata e a mais cara, para o mesmo produto na mesma semana.',true)
+     +'</div>'
+     +'<table><thead><tr><th>Produto</th>'+E.map(function(e){return '<th class="n">'+e.mes+'</th>'}).join('')
+     +'<th class="n">Amplitude</th></tr></thead><tbody>'
+     + S.series.precoMedio.map(function(x){
+        return '<tr><td>'+esc(x.produto)+'</td>'
+         + E.map(function(e){var v=x.valores[String(e.edicao)];
+             return '<td class="n">'+(v==null?'—':v.toFixed(2).replace('.',','))+'</td>'}).join('')
+         + '<td class="n">+'+amp(x).toFixed(0)+'%</td></tr>';
+       }).join('')
+     +'</tbody></table>'
+     +'<div class="bloco">Preço médio a retalho, meticais por quilograma. Fonte: SIMA, boletim Quente-Quente, edições '
+     + E.map(function(e){return e.edicao}).join(', ')+'. <b>Dados de '+esc(ult.semana)+' e anteriores — não são preço corrente.</b></div>'
+     +'<div class="bloco ouro"><b>A leitura</b>Os quatro produtos colhidos em Moçambique descem entre Março e Julho; '
+     +'o arroz, importado, sobe. A safra nacional pesa mais no preço interno do que a cotação regional — no mesmo período, '
+     +'todos os cereais subiram na bolsa sul-africana.</div>'
+     +'</section>';
+  }
+
+  /* 4 — a factura da geografia */
+  if(CP&&CP.regioes){
+    var Rg=CP.regioes.filter(function(r){return r.gasoleo!=null});
+    var ref=Rg[0].gasoleo, pior=Rg[Rg.length-1];
+    h+='<section><h2><span class="num">04</span>A factura da geografia</h2>'
+     +'<p class="lead">Os combustíveis são o único produto de Moçambique com cascata de preço pública por lei. '
+     +'A diferença entre regiões não é margem de ninguém: é o custo do transporte interno, reconhecido pelo regulador.</p>'
+     +'<table><thead><tr><th>Região</th><th class="n">Gasóleo MT/L</th><th class="n">Face ao terminal</th></tr></thead><tbody>'
+     + Rg.map(function(r,i){var d=r.gasoleo-ref;
+        return '<tr><td>'+esc(i===0?'Cidades com terminal de distribuição':r.local)+'</td>'
+         +'<td class="n">'+r.gasoleo.toFixed(2).replace('.',',')+'</td>'
+         +'<td class="n">'+(d>0?'+'+d.toFixed(2).replace('.',',')+' ('+(d/ref*100).toFixed(1).replace('.',',')+'%)':'referência')+'</td></tr>';
+       }).join('')
+     +'</tbody></table>'
+     +'<div class="bloco ouro"><b>O que isto custa a quem produz longe</b>'
+     +esc(pior.local)+' paga mais '+(pior.gasoleo-ref).toFixed(2).replace('.',',')+' MT por litro do que quem carrega junto ao porto. '
+     +'Numa viagem de 400 km com um camião de consumo médio, são cerca de '
+     +Math.round((pior.gasoleo-ref)*128)+' meticais de acréscimo — por viagem, e antes de qualquer margem.</div>'
+     +'<div class="bloco">Fonte: ARENE, preços regulados ao abrigo do Decreto n.º 89/2019. Revisão de '+esc(CP.revisao.data)+'.</div>'
+     +'</section>';
+  }
+
+  h+='<section><h2><span class="num">05</span>Riscos e mitigações</h2>'
    +'<p>Cada risco tem um gatilho conhecido e uma janela de calendário. A antecedência não vem de prever datas — vem de a vulnerabilidade ser estrutural e permanente.</p>';
   ANT.riscos.slice().sort(function(a,b){return b.gravidade-a.gravidade}).slice(0,5).forEach(function(r){
     h+='<div class="risco g'+r.gravidade+'"><div class="risco-t">'+esc(r.titulo)
@@ -222,7 +283,7 @@ function montar(){
   h+='</section>';
 
   /* 4 — o que falta */
-  h+='<section><h2><span class="num">04</span>O que não é conhecido</h2>'
+  h+='<section><h2><span class="num">06</span>O que não é conhecido</h2>'
    +'<p>Esta secção existe de propósito. Um relatório que só mostra o que sabe induz em erro quem decide sobre o que não sabe.</p>'
    +'<table><thead><tr><th>Lacuna</th><th>Situação</th><th>Como se resolve</th></tr></thead><tbody>';
   (RV.ausencias||[]).concat((COM&&COM.lacunas)?COM.lacunas.map(function(l){
@@ -239,7 +300,32 @@ function montar(){
   A.forEach(function(a){if(a.fonte)fontes[a.fonte]=1});
   (RV.estradas||[]).forEach(function(e){if(e.fonte)fontes[e.fonte]=1});
   if(COM&&COM.fontePrecos)fontes[COM.fontePrecos.fonte]=1;
-  h+='<section><h2><span class="num">05</span>Anexo — fontes utilizadas</h2>'
+  /* 7 — recomendações: o que fazer, que é o que faltava */
+  var acc=[];
+  (DATA.ant.riscos||[]).forEach(function(r){
+    (r.mitigacoes||[]).forEach(function(m){
+      if(m.horizonte==='agora')acc.push({r:r,m:m});
+    });
+  });
+  h+='<section><h2><span class="num">07</span>Recomendações</h2>'
+   +'<p class="lead">Acções executáveis em semanas, sem orçamento novo, cada uma com quem decide identificado. '
+   +'Não são propostas do sistema: derivam dos riscos declarados e das lacunas de dados verificadas.</p>'
+   +'<table><thead><tr><th style="width:34px">#</th><th>Acção</th><th>Motivo</th><th>Decide</th></tr></thead><tbody>'
+   + acc.slice(0,8).map(function(x,i){
+      return '<tr><td class="n">'+(i+1)+'</td><td><b>'+esc(x.m.accao)+'</b></td>'
+       +'<td>'+esc(x.r.titulo)+'</td><td>'+esc(x.m.decide)+'</td></tr>';
+     }).join('')
+   +'</tbody></table>'
+   +'<div class="bloco ouro"><b>A recomendação de maior retorno</b>'
+   +'Um ficheiro estruturado da ANE com os cortes de estrada, actualizado quando há corte. '
+   +'É a integração de menor esforço e maior impacto de toda a lista: transformaria dados de Janeiro em dados de hoje, '
+   +'e o planeamento de rota deixaria de ser adivinhação. Não exige orçamento nem sistema novo — exige um formato.</div>'
+   +'<div class="bloco"><b>O que não se recomenda</b>Nenhuma acção deste relatório propõe adquirir tecnologia, '
+   +'instalar sensores ou desenvolver plataforma. Todas assentam em dados que já são produzidos por entidades públicas '
+   +'e que só precisam de mudar de formato.</div>'
+   +'</section>';
+
+  h+='<section><h2><span class="num">08</span>Anexo — fontes utilizadas</h2>'
    +'<p style="font-size:12px;color:var(--t3)">Cada ligação foi consultada na construção dos cadastros. Ao imprimir, o endereço completo aparece a seguir a cada entrada.</p>'
    +'<ol class="fontes">';
   Object.keys(fontes).sort().forEach(function(u){
@@ -277,11 +363,11 @@ document.getElementById('b-json').addEventListener('click',function(){
   descarregar('sinagepe-dados.json',JSON.stringify(DATA,null,2),'application/json');
 });
 
-Promise.all(['armazens-nacionais','antecipacao','rede-viaria','rede-comercial'].map(function(f){
+Promise.all(['armazens-nacionais','antecipacao','rede-viaria','rede-comercial','sima-precos','cascata-precos'].map(function(f){
   return fetch('data/'+f+'.json',{cache:'no-store'}).then(function(r){
     if(!r.ok)throw new Error('HTTP '+r.status+' em data/'+f+'.json');return r.json();});
 })).then(function(res){
-  DATA={arm:res[0],ant:res[1],rv:res[2],com:res[3]};
+  DATA={arm:res[0],ant:res[1],rv:res[2],com:res[3],sima:res[4],cp:res[5]};
   montar();
 }).catch(function(e){
   document.getElementById('folha').innerHTML='<div class="err"><b>Não foi possível gerar o relatório.</b><br>'
