@@ -5,6 +5,31 @@
 ---
 
 ## Instalar
+---
+
+## Onde vai cada coisa
+
+O pacote tem duas partes.
+
+### `_fora-do-repositorio/` → para a sua pasta pessoal
+
+**Não descompacte esta pasta dentro do SINAGEPE.**
+
+| Ficheiro | O que é |
+|---|---|
+| `extractor-sima.py` | Lê os boletins do SIMA e produz o `sima-precos.json` |
+| `LEIA-ME-extractor.md` | Como correr o extractor |
+| `verificador-pacote.py` | Verifica um pacote antes de o entregar |
+| `auditoria-regressao.py` | Testa que nada partiu depois de alterações |
+
+### Tudo o resto → raiz do `SINAGEPE`
+
+Ecrãs na raiz, e as pastas `data`, `assets` e `docs` no sítio.
+
+**Nenhum ficheiro `.py` vai para o repositório.**
+
+---
+
 
 Descompacte na raiz de `Documents\GitHub\SINAGEPE`, **substituindo o que lá está.** A estrutura é a mesma do repositório.
 
@@ -34,6 +59,22 @@ Convém, porém, guardar uma cópia à parte: é a guarda de sessão de todo o s
 ### O `credenciais-sinagepe.md` também não vai
 
 Tem as chaves dos dezoito perfis. **Não deve estar no repositório público** nem em pacote nenhum. Guarde-o na sua pasta pessoal.
+
+---
+
+---
+
+## Antes de qualquer entrega futura
+
+Corra o **`verificador-pacote.py`**:
+
+```
+python3 verificador-pacote.py .
+```
+
+Verifica quatro coisas: se falta alguma coisa, se vai algum segredo, se as dependências críticas estão declaradas, e se há links mortos. **Sai com erro se houver problema.**
+
+Existe por causa de um pacote entregue como completo que tinha quatro ficheiros a menos. Da primeira vez que correu, apanhou outro erro que ninguém sabia: dois ecrãs referiam um módulo que não existe.
 
 ---
 
