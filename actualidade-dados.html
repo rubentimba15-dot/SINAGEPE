@@ -4,16 +4,17 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Actualidade dos dados &mdash; SINAGEPE</title>
+<script src="assets/fonte-dados.js"></script>
 <script src="assets/access-control.js"></script>
 <script src="assets/nav-sinagepe.js"></script>
 <script src="assets/pesquisa-sinagepe.js"></script>
 <script src="assets/indicadores-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg1:#060B16;--sidebar-bg:#080E1B;--card-bg:#0C1626;--card-line:rgba(38,56,86,.75);
+:root{--bg1:#080F1C;--sidebar-bg:#0B1421;--card-bg:#141F2B;--card-line:rgba(64,86,108,.55);
 --gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
 --blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
---ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#111E31;--nav-idle:#111E31;--accg:rgba(34,184,240,.13)}
+--ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#1B2836;--nav-idle:#141F2B;--accg:rgba(34,184,240,.13)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
 .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
@@ -78,7 +79,14 @@ td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 
     <div id="kpis"></div>
 
-    <div class="card frame">
+        <div class="card frame">
+      <div class="ch"><div><h2>Cat&aacute;logo central de fontes</h2>
+        <p>Todas as fontes do sistema num s&oacute; sítio, com estado e periodicidade</p></div>
+        <span class="tag crit" id="cat-tag">&mdash;</span></div>
+      <div class="bd" id="catalogo"></div>
+    </div>
+
+<div class="card frame">
       <div class="ch"><div><h2>Cada fonte, e quantos ciclos est&aacute; atrasada</h2>
         <p>Ordenadas do maior atraso para o menor</p></div>
         <span class="tag crit" id="f-tag">&mdash;</span></div>
@@ -161,6 +169,77 @@ function estado(f){
   if(ciclos<=4)   return {r:'com atraso',c:'#F0A926',ciclos:ciclos,dias:dias};
   if(ciclos<=20)  return {r:'desactualizada',c:'#EF4444',ciclos:ciclos,dias:dias};
   return {r:'informa&ccedil;&atilde;o hist&oacute;rica',c:'#EF4444',ciclos:ciclos,dias:dias};
+}
+
+/* ============================================================
+   CATÁLOGO CENTRAL DE FONTES
+   ------------------------------------------------------------
+   As fontes estavam espalhadas por vinte e quatro ficheiros.
+   Ninguém conseguia responder a "quantas temos e quantas estão
+   atrasadas" sem abrir todos.
+
+   O número que interessa está no fim: zero de dezasseis
+   actualizam-se sozinhas.
+   ============================================================ */
+function desenharCatalogo(){
+  var el=document.getElementById('catalogo'); if(!el||!ST.cat) return;
+  var F=ST.cat.fontes, R=ST.cat.resumo;
+  var COR={'activa':'#12B981','atrasada':'#EF4444','identificada, não integrada':'#F0A926',
+   'por solicitar':'#A78BFA','parcialmente integrada':'#22B8F0','por confirmar':'#8FA1B8'};
+
+  el.innerHTML=
+     '<div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:18px">'
+    +[[R.total,'fontes no cat&aacute;logo','#22B8F0'],
+      [R.integradas,'com dados no sistema','#12B981'],
+      [R.naoIntegradas,'identificadas, por integrar','#F0A926'],
+      [R.comActualizacaoAutomatica+' de '+R.total,'actualizam-se sozinhas','#EF4444']]
+      .map(function(x){
+        return '<div class="entra"><div class="mono" style="font-size:24px;color:'+x[2]
+         +';letter-spacing:-.02em">'+x[0]+'</div>'
+         +'<div style="font-size:10.5px;color:var(--t4);margin-top:3px">'+x[1]+'</div></div>';
+      }).join('')+'</div>'
+
+    +F.map(function(x,i){
+      var c=COR[x.estado]||'#8FA1B8';
+      return '<div class="entra" style="animation-delay:'+(i*.035)+'s;padding:11px 0;'
+       +'border-bottom:1px solid rgba(38,56,86,.4)">'
+       +'<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:5px">'
+       +'<b style="font-size:12.5px;min-width:180px">'+esc(x.instituicao)+'</b>'
+       +'<span style="flex:1;font-size:11.5px;color:var(--t3);min-width:200px">'+esc(x.nome)+'</span>'
+       +'<span style="font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;'
+       +'border-radius:3px;border:1px solid '+c+'55;background:'+c+'12;color:'+c
+       +';white-space:nowrap">'+esc(x.estado)+'</span></div>'
+       +'<div style="display:flex;gap:16px;flex-wrap:wrap;font-size:10.5px;color:var(--t4)">'
+       +'<span>Periodicidade: <b style="color:var(--t3)">'+esc(x.periodicidade)+'</b></span>'
+       +'<span>&Uacute;ltima publica&ccedil;&atilde;o: <b style="color:var(--t3)">'
+       +esc(x.ultimaPublicacaoConhecida)+'</b></span>'
+       +'<span>Confian&ccedil;a: <b style="color:var(--brzl)">'+esc(x.confianca)+'</b></span>'
+       +'<span style="flex:1;text-align:right">'+esc(x.metodoAcesso)+'</span></div>'
+       +(x.nota?'<div style="font-size:10.5px;color:var(--t3);line-height:1.55;margin-top:5px">'
+         +esc(x.nota)+'</div>':'')+'</div>';
+    }).join('')
+
+    +'<div class="aviso r" style="margin:16px 0 0"><b>Zero de '+R.total
+    +' fontes actualizam-se sozinhas.</b> '+esc(R.nota)+'</div>'
+
+    +'<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(38,56,86,.5)">'
+    +'<div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);'
+    +'margin-bottom:9px">O que exige servidor</div>'
+    +ST.cat.oQueExigeServidor.map(function(x){
+      return '<div style="display:flex;gap:10px;padding:5px 0;font-size:11.5px">'
+       +'<span style="width:210px;flex-shrink:0;color:var(--t2)">'+esc(x.funcao)+'</span>'
+       +'<span style="flex:1;color:var(--t4);font-size:10.5px">'+esc(x.porque)+'</span></div>';
+    }).join('')+'</div>'
+
+    +'<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(38,56,86,.5)">'
+    +'<div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brz);'
+    +'margin-bottom:9px">A regra de ouro</div>'
+    +ST.cat.meta.regraDeOuro.map(function(x){
+      return '<div style="font-size:11.5px;color:var(--t2);line-height:1.7;padding:2px 0">'
+       +esc(x)+'</div>';
+    }).join('')+'</div>';
+
+  document.getElementById('cat-tag').innerHTML=R.total+' fontes, 0 autom&aacute;ticas';
 }
 
 function desenharFontes(){
@@ -276,6 +355,16 @@ function desenharKpis(){
 }
 
 desenharKpis();desenharFontes();desenharDatas();desenharLinguagem();desenharFalta();
+
+var ST=window.ST||{};
+fetch('data/catalogo-fontes.json',{cache:'no-store'})
+ .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/catalogo-fontes.json');return r.json()})
+ .then(function(j){ ST.cat=j; desenharCatalogo(); })
+ .catch(function(e){
+   var el=document.getElementById('catalogo');
+   if(el) el.innerHTML='<div style="color:var(--red);font-size:12px">'
+     +'<b>N&atilde;o foi poss&iacute;vel carregar o cat&aacute;logo.</b><br>'+esc(e.message)+'</div>';
+ });
 </script>
 </body>
 </html>

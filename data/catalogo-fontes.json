@@ -1,0 +1,403 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "criadoEm": "2026-09-01",
+    "proposito": "Responder, num sítio só, a: quantas fontes o sistema tem, de onde vêm, com que periodicidade deviam publicar, e quantas estão atrasadas.",
+    "porqueSoIsto": "Este é o Catálogo de Fontes, que é a Fase 3 da ordem de implementação do motor SAGE. As restantes fases — pesquisa automática, extracção, integração e notificação — exigem servidor com trabalhos agendados. Um sítio estático não pode pesquisar a internet: o navegador é bloqueado por política de origem cruzada, e não há onde agendar nada.",
+    "regraDeOuro": [
+      "Pesquisar não significa aceitar.",
+      "Encontrar não significa validar.",
+      "Validar não significa substituir.",
+      "Actualizar não significa apagar.",
+      "Uma diferença não significa fraude.",
+      "Um alerta não significa culpa.",
+      "Uma revisão não significa que o dado anterior deixou de existir."
+    ],
+    "escalaConfianca": {
+      "A": "Fonte oficial directa, obtida da publicação original",
+      "B": "Fonte oficial indirecta, ou triangulada",
+      "C": "Fonte institucional secundária",
+      "D": "Indicativa — serve para descoberta, não alimenta indicador",
+      "E": "Não validada — nunca alimenta indicador"
+    }
+  },
+  "fontes": [
+    {
+      "id": "sima",
+      "instituicao": "MAAP",
+      "nome": "SIMA — Sistema de Informação de Mercados Agrários",
+      "tipo": "boletim",
+      "url": "https://www.agricultura.gov.mz/sima/",
+      "periodicidade": "semanal",
+      "formato": "PDF",
+      "indicadores": [
+        "preço a retalho por praça",
+        "preço ao produtor",
+        "fluxos entre praças",
+        "câmbio"
+      ],
+      "coberturaTemporal": "Setembro de 2022 a Julho de 2023, no sistema",
+      "ultimaPublicacaoConhecida": "Agosto de 2023, em linha",
+      "ultimaIntegracao": "Agosto de 2026",
+      "estado": "atrasada",
+      "metodoAcesso": "descarregamento manual",
+      "confianca": "A",
+      "ficheiro": "sima-precos",
+      "nota": "A recolha não parou. Parou a publicação em linha que o sistema alcançou. O SIMA passou a ter sítio próprio, sima.gov.mz."
+    },
+    {
+      "id": "anarme",
+      "instituicao": "ANARME",
+      "nome": "Lista de farmácias licenciadas",
+      "tipo": "cadastro",
+      "url": "https://www.anarme.gov.mz/",
+      "periodicidade": "não declarada",
+      "formato": "PDF",
+      "indicadores": [
+        "farmácias por província e distrito",
+        "estado de funcionamento"
+      ],
+      "coberturaTemporal": "Setembro de 2024",
+      "ultimaPublicacaoConhecida": "Setembro de 2024",
+      "ultimaIntegracao": "Agosto de 2026",
+      "estado": "activa",
+      "metodoAcesso": "descarregamento manual",
+      "confianca": "A",
+      "ficheiro": "farmacias-anarme",
+      "nota": "1.612 registos. Três leituras automáticas truncaram no mesmo ponto; só foi extraída depois de o ficheiro ser aberto manualmente."
+    },
+    {
+      "id": "ane-mozgis",
+      "instituicao": "ANE",
+      "nome": "Rede rodoviária no MozGIS",
+      "tipo": "serviço geográfico",
+      "url": "https://www.mozgis.gov.mz/server/rest/services/ANE/RedeEstradasObrasDeEstradas/MapServer",
+      "periodicidade": "não declarada",
+      "formato": "JSON e geoJSON",
+      "indicadores": [
+        "troços da rede",
+        "pontes",
+        "classificação"
+      ],
+      "coberturaTemporal": "2020",
+      "ultimaPublicacaoConhecida": "2020",
+      "ultimaIntegracao": "não integrado",
+      "estado": "identificada, não integrada",
+      "metodoAcesso": "consulta ao serviço",
+      "confianca": "A",
+      "ficheiro": null,
+      "nota": "1.270 troços, WGS84, licença de uso não comercial com citação da ANE 2020. É a fonte de maior valor por integrar."
+    },
+    {
+      "id": "ane-interrupcoes",
+      "instituicao": "ANE",
+      "nome": "Comunicados de interrupção de circulação",
+      "tipo": "comunicado",
+      "url": "https://www.ane.gov.mz/",
+      "periodicidade": "sem periodicidade fixa",
+      "formato": "nota de imprensa",
+      "indicadores": [
+        "cortes de estrada",
+        "causa",
+        "alternativa"
+      ],
+      "coberturaTemporal": "Janeiro de 2026",
+      "ultimaPublicacaoConhecida": "Janeiro de 2026",
+      "ultimaIntegracao": "Agosto de 2026",
+      "estado": "atrasada",
+      "metodoAcesso": "leitura de comunicado",
+      "confianca": "A",
+      "ficheiro": "rede-viaria",
+      "nota": "O sistema não sabe se os três cortes registados foram reparados. Sem periodicidade não é possível distinguir ausência de novidade de fim de publicação."
+    },
+    {
+      "id": "arene",
+      "instituicao": "ARENE",
+      "nome": "Cascata de formação do preço dos combustíveis",
+      "tipo": "regulamentar",
+      "url": "https://www.arene.org.mz/",
+      "periodicidade": "por revisão de preços",
+      "formato": "despacho",
+      "indicadores": [
+        "preço por região",
+        "estrutura de custo"
+      ],
+      "coberturaTemporal": "revisão de Maio de 2026",
+      "ultimaPublicacaoConhecida": "Maio de 2026",
+      "ultimaIntegracao": "Agosto de 2026",
+      "estado": "activa",
+      "metodoAcesso": "leitura de despacho",
+      "confianca": "A",
+      "ficheiro": "cascata-precos",
+      "nota": "Único produto do país com estrutura de preço pública por lei — Decreto n.º 89/2019."
+    },
+    {
+      "id": "ine-provinciais",
+      "instituicao": "INE",
+      "nome": "Dinâmica de População em Moçambique",
+      "tipo": "publicação estatística",
+      "url": "https://www.ine.gov.mz/",
+      "periodicidade": "pontual",
+      "formato": "PDF",
+      "indicadores": [
+        "esperança de vida",
+        "migração líquida",
+        "fecundidade",
+        "dependência"
+      ],
+      "coberturaTemporal": "Censo de 2017",
+      "ultimaPublicacaoConhecida": "Dezembro de 2023",
+      "ultimaIntegracao": "Agosto de 2026",
+      "estado": "activa",
+      "metodoAcesso": "descarregamento manual",
+      "confianca": "A",
+      "ficheiro": "indicadores-provinciais-ine"
+    },
+    {
+      "id": "ine-ipc",
+      "instituicao": "INE",
+      "nome": "Índice de Preços no Consumidor",
+      "tipo": "série estatística",
+      "url": "https://www.ine.gov.mz/",
+      "periodicidade": "mensal",
+      "formato": "PDF e folha de cálculo",
+      "indicadores": [
+        "inflação",
+        "inflação alimentar"
+      ],
+      "coberturaTemporal": "até Abril de 2026",
+      "ultimaPublicacaoConhecida": "Abril de 2026",
+      "ultimaIntegracao": "Agosto de 2026",
+      "estado": "activa",
+      "metodoAcesso": "descarregamento manual",
+      "confianca": "A",
+      "ficheiro": "ipc-ine"
+    },
+    {
+      "id": "maap-campanha",
+      "instituicao": "MAAP",
+      "nome": "Balanço da campanha agrária",
+      "tipo": "notícia institucional",
+      "url": "https://www.agricultura.gov.mz/",
+      "periodicidade": "por evento",
+      "formato": "notícia em página web",
+      "indicadores": [
+        "área planificada",
+        "produção prevista por grupo",
+        "impacto de cheias"
+      ],
+      "coberturaTemporal": "campanha 2025/26",
+      "ultimaPublicacaoConhecida": "Janeiro de 2026",
+      "ultimaIntegracao": "Setembro de 2026",
+      "estado": "activa",
+      "metodoAcesso": "leitura de página",
+      "confianca": "A",
+      "ficheiro": "campanha-agraria-maap",
+      "nota": "Dados oficiais publicados em formato de notícia, não em ficheiro estruturado."
+    },
+    {
+      "id": "ine-comercio-externo",
+      "instituicao": "INE",
+      "nome": "Estatísticas de Comércio Externo de Bens",
+      "tipo": "publicação estatística",
+      "url": "http://www.ine.gov.mz/estatisticas/estatisticas-sectoriais/comercio-externo",
+      "periodicidade": "anual",
+      "formato": "PDF",
+      "indicadores": [
+        "importações e exportações por produto, quantidade, valor e país"
+      ],
+      "coberturaTemporal": "2020 a 2025",
+      "ultimaPublicacaoConhecida": "2026",
+      "ultimaIntegracao": "não integrado",
+      "estado": "identificada, não integrada",
+      "metodoAcesso": "descarregamento manual — o sítio recusa acesso automático",
+      "confianca": "A",
+      "ficheiro": null,
+      "nota": "Maior lacuna do sistema. Sem ela, nenhuma meta de comércio externo é medível."
+    },
+    {
+      "id": "ine-armazenagem",
+      "instituicao": "INE",
+      "nome": "Indicadores Básicos de Agricultura e Alimentação",
+      "tipo": "publicação estatística",
+      "url": "https://www.ine.gov.mz/",
+      "periodicidade": "periódica",
+      "formato": "PDF",
+      "indicadores": [
+        "capacidade de armazenamento por província, quadro 10.1.1"
+      ],
+      "coberturaTemporal": "2018 a 2022",
+      "ultimaPublicacaoConhecida": "2022",
+      "ultimaIntegracao": "não integrado",
+      "estado": "identificada, não integrada",
+      "metodoAcesso": "descarregamento manual — o sítio recusa acesso automático",
+      "confianca": "A",
+      "ficheiro": null,
+      "nota": "Fonte original declarada: ICM. Ver a regra de independência das fontes."
+    },
+    {
+      "id": "mozgis-pqg",
+      "instituicao": "MIC, no MozGIS",
+      "nome": "Infraestruturas de armazenagem do PQG",
+      "tipo": "serviço geográfico",
+      "url": "https://www.mozgis.gov.mz/server/rest/services/PQG/MapServer",
+      "periodicidade": "não declarada",
+      "formato": "JSON e geoJSON",
+      "indicadores": [
+        "complexos de silos",
+        "armazéns",
+        "estado de conservação",
+        "coordenadas"
+      ],
+      "coberturaTemporal": "PQG 2020-2024",
+      "ultimaPublicacaoConhecida": "2024",
+      "ultimaIntegracao": "não integrado",
+      "estado": "identificada, não integrada",
+      "metodoAcesso": "consulta ao serviço",
+      "confianca": "A",
+      "ficheiro": null,
+      "nota": "ATENÇÃO: são intervenções PLANEADAS, não inventário do existente."
+    },
+    {
+      "id": "bau",
+      "instituicao": "BAU, IP",
+      "nome": "Registo de alvarás comerciais",
+      "tipo": "registo administrativo",
+      "url": "https://www.bau.gov.mz/",
+      "periodicidade": "contínua",
+      "formato": "plataforma e-BAU",
+      "indicadores": [
+        "alvarás por distrito e tipo de actividade",
+        "operadores de comércio externo"
+      ],
+      "coberturaTemporal": "corrente",
+      "ultimaPublicacaoConhecida": "não publica agregados",
+      "ultimaIntegracao": "não integrado",
+      "estado": "por solicitar",
+      "metodoAcesso": "pedido institucional",
+      "confianca": "A",
+      "ficheiro": "bau-licenciamento",
+      "nota": "Pede-se contagem agregada por distrito, não dados de empresas."
+    },
+    {
+      "id": "setsan-ipc",
+      "instituicao": "SETSAN, com IPC e FAO",
+      "nome": "Classificação de insegurança alimentar",
+      "tipo": "classificação multi-agência",
+      "url": "https://www.ipcinfo.org/ipc-country-analysis/en/?country=MOZ",
+      "periodicidade": "duas a três análises por ano",
+      "formato": "relatório e dados estruturados",
+      "indicadores": [
+        "fases IPC por distrito",
+        "desnutrição aguda"
+      ],
+      "coberturaTemporal": "2024 a 2026",
+      "ultimaPublicacaoConhecida": "2026",
+      "ultimaIntegracao": "Setembro de 2026, transcrito à mão",
+      "estado": "parcialmente integrada",
+      "metodoAcesso": "leitura de publicação",
+      "confianca": "A",
+      "ficheiro": "fontes-internacionais",
+      "nota": "O IPC publica em formato estruturado. A ligação é possível e está por fazer."
+    },
+    {
+      "id": "icm",
+      "instituicao": "ICM",
+      "nome": "Comunicações sobre armazenagem e comercialização",
+      "tipo": "comunicado institucional",
+      "url": "https://icm.gov.mz/",
+      "periodicidade": "por evento",
+      "formato": "notícia em página web",
+      "indicadores": [
+        "capacidade de armazenagem",
+        "descargas em porto",
+        "concessões de silos"
+      ],
+      "coberturaTemporal": "2026",
+      "ultimaPublicacaoConhecida": "Junho de 2026",
+      "ultimaIntegracao": "parcial, por confirmar",
+      "estado": "por confirmar",
+      "metodoAcesso": "leitura de página",
+      "confianca": "B",
+      "ficheiro": "infraestrutura-armazenagem-serie",
+      "nota": "É a origem primária de três das quatro fontes de capacidade. Pedir-lhe a série própria resolveria a divergência."
+    },
+    {
+      "id": "pqg",
+      "instituicao": "MEF",
+      "nome": "Programa Quinquenal do Governo 2025-2029",
+      "tipo": "instrumento de planeamento",
+      "url": "https://mef.gov.mz/",
+      "periodicidade": "quinquenal",
+      "formato": "PDF",
+      "indicadores": [
+        "metas por pilar",
+        "insegurança alimentar crónica"
+      ],
+      "coberturaTemporal": "2025 a 2029",
+      "ultimaPublicacaoConhecida": "Maio de 2025",
+      "ultimaIntegracao": "Setembro de 2026, parcial",
+      "estado": "parcialmente integrada",
+      "metodoAcesso": "descarregamento manual",
+      "confianca": "A",
+      "ficheiro": "pqg-metas"
+    },
+    {
+      "id": "pesoe",
+      "instituicao": "MEF",
+      "nome": "Plano Económico e Social e Orçamento do Estado",
+      "tipo": "instrumento de planeamento",
+      "url": "https://mef.gov.mz/",
+      "periodicidade": "anual",
+      "formato": "PDF",
+      "indicadores": [
+        "execução anual das metas do PQG"
+      ],
+      "coberturaTemporal": "anual",
+      "ultimaPublicacaoConhecida": "por confirmar",
+      "ultimaIntegracao": "não integrado",
+      "estado": "por solicitar",
+      "metodoAcesso": "descarregamento manual",
+      "confianca": "A",
+      "ficheiro": null,
+      "nota": "Sem o PESOE há meta e não há execução. É metade da equação."
+    }
+  ],
+  "resumo": {
+    "total": 16,
+    "porEstado": {
+      "activa": 5,
+      "identificada, não integrada": 4,
+      "atrasada": 2,
+      "por solicitar": 2,
+      "parcialmente integrada": 2,
+      "por confirmar": 1
+    },
+    "integradas": 11,
+    "naoIntegradas": 5,
+    "comActualizacaoAutomatica": 0,
+    "nota": "Nenhuma fonte se actualiza sozinha. Todas foram carregadas à mão. É o número que mede o estado real do sistema, e é zero de dezasseis."
+  },
+  "oQueExigeServidor": [
+    {
+      "funcao": "Pesquisa automática de novas publicações",
+      "porque": "O navegador é bloqueado por política de origem cruzada e não pode percorrer sítios"
+    },
+    {
+      "funcao": "Trabalhos agendados por periodicidade",
+      "porque": "Um sítio estático não tem onde agendar nada"
+    },
+    {
+      "funcao": "Versionamento e histórico de alterações",
+      "porque": "Exige escrita, e a escrita exige servidor"
+    },
+    {
+      "funcao": "Notificações ao administrador",
+      "porque": "Exige processo a correr fora do navegador"
+    },
+    {
+      "funcao": "Modo sombra",
+      "porque": "Simular actualizações exige guardar o que seria alterado"
+    }
+  ]
+}
