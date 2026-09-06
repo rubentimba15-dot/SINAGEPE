@@ -7,7 +7,7 @@
     "distincaoObrigatoria": "Capacidade instalada histórica não é capacidade operacional efectiva, e nenhuma das duas é existências. O PICA declara 135 armazéns dos quais 38 não ofereciam condições de utilização: a capacidade instalada era 195.459 toneladas e a operacional era menor.",
     "independenciaDasFontes": {
       "regra": "Duas fontes que reproduzem a mesma origem primária não são confirmação independente.",
-      "casoDesteFicheiro": "Três dos quatro pontos da série têm o ICM como origem primária. O quarto é o cadastro do próprio sistema.",
+      "casoDesteFicheiro": "Quatro dos cinco pontos da série derivam do ICM. O de 2024 é o único com origem primária diferente — os SDAE dos 22 distritos da Zambézia — e é também o que revela que os universos medidos não são os mesmos.",
       "consequencia": "Não se pode dizer que \"duas fontes divergem\" quando é a mesma fonte a divergir de si própria ao longo do tempo. É observação diferente, e mais forte: a entidade que detém o dado publicou valores incompatíveis.",
       "oQueFaltaParaConfirmar": "Uma medição de origem independente do ICM — inventário de campo, levantamento por outra instituição, ou censo agrário."
     }
@@ -141,6 +141,51 @@
       }
     },
     {
+      "ano": 2024,
+      "ambito": "Apenas Zambézia",
+      "fonte": "ICM, IP — Delegação Provincial da Zambézia, Relatório das Actividades Anual de 2024, Quelimane, Janeiro de 2025",
+      "fonteOriginalDeclarada": "SDAE — Serviços Distritais de Actividades Económicas, citados no quadro 2.12 do relatório",
+      "armazens": 733,
+      "capacidadeToneladas": 801648,
+      "anoAnterior": {
+        "ano": 2023,
+        "armazens": 699,
+        "toneladas": 775248
+      },
+      "descricao": "Armazéns de apoio à comercialização agrícola",
+      "porDistritoConhecido": [
+        {
+          "distrito": "Milange",
+          "armazens": 98,
+          "toneladas": 220000
+        },
+        {
+          "distrito": "Gurué",
+          "armazens": 102,
+          "toneladas": 187400
+        },
+        {
+          "distrito": "Mocuba",
+          "armazens": 54,
+          "toneladas": 62861
+        },
+        {
+          "distrito": "Quelimane",
+          "armazens": 34,
+          "toneladas": 51780
+        }
+      ],
+      "cadeiaOrigem": {
+        "origemPrimaria": "SDAE dos 22 distritos da Zambézia",
+        "caminho": "SDAE dos 22 distritos → ICM Delegação Zambézia → relatório anual → SINAGEPE",
+        "elos": 3,
+        "nota": "É a única fonte da série cuja origem primária não é o ICM central. São os serviços distritais que contam no terreno."
+      },
+      "estadoVerificacao": "A existência da Delegação Provincial do ICM na Zambézia e a sua articulação com os SDAE dos 22 distritos estão confirmadas pelo sítio do ICM. O relatório e os valores constam de análise externa, a partir de cópia depositada em repositório de terceiros. Por confirmar na fonte institucional.",
+      "notaSobreFonte": "O documento circula no Scribd, que é repositório e não origem. A fonte a citar é o relatório do ICM, nunca o repositório.",
+      "verificado": false
+    },
+    {
       "ano": 2026,
       "fonte": "ICM, Junho de 2026",
       "ambito": "Apenas Niassa",
@@ -227,6 +272,33 @@
       "origemPrimaria": "ICM",
       "confirmacoesIndependentes": 0,
       "fontesIndependentes": false
+    },
+    {
+      "assunto": "O que conta como armazém — divergência de definição, não de valor",
+      "casoQueProva": "Milange",
+      "valores": [
+        {
+          "publicadoPor": "ICM Delegação Zambézia, a partir dos SDAE",
+          "ano": 2024,
+          "distrito": "Milange",
+          "valor": 220000,
+          "unidade": "toneladas",
+          "armazens": 98
+        },
+        {
+          "publicadoPor": "INE, quadro 10.1.1, com fonte ICM",
+          "ano": 2022,
+          "distrito": "Milange",
+          "valor": 5000,
+          "unidade": "toneladas"
+        }
+      ],
+      "razao": 44.0,
+      "fontesIndependentes": false,
+      "nota": "Milange aparece com 220.000 toneladas num documento e 5.000 no outro. <b>São 44 vezes.</b> Uma diferença desta ordem não é erro de medição: é diferença de definição. A leitura mais provável é que \"armazéns de apoio à comercialização agrícola\" contados pelos SDAE incluem armazenagem comunitária, privada e de exploração, enquanto o quadro do INE conta apenas unidades institucionais.",
+      "consequenciaPratica": "Os dois números podem estar ambos certos e não podem ser somados nem comparados. <b>E a Zambézia sozinha, com 801.648 toneladas, tem quatro vezes a capacidade nacional que o PICA declarava em 2013.</b> Isso confirma que os universos são diferentes, não que a capacidade quadruplicou.",
+      "comoResolver": "Obter dos SDAE a definição usada e a lista distrital que deu origem aos 733. É o passo que transforma um agregado provincial numa base individualizável.",
+      "porConfirmar": true
     }
   ],
   "oQuePermite": [
@@ -245,5 +317,13 @@
     "nestaSerie": "Três dos quatro pontos têm o ICM como origem primária. O quarto é o cadastro do próprio sistema, construído a partir de publicações diversas.",
     "consequencia": "A capacidade de armazenagem de Moçambique tem UMA fonte. Se o ICM estiver errado, ninguém o corrige — e o sistema não tem como saber.",
     "oQueSeriaPrecisoParaConfirmar": "Medição independente por outra entidade: INE com recolha própria, um inquérito, ou levantamento de campo. Citar o ICM não é medir."
+  },
+  "proximoPasso": {
+    "accao": "Obter dos SDAE a lista distrital que deu origem aos 733 armazéns",
+    "porque": "Transforma um agregado provincial numa base individualizável: distrito → localização → operador → capacidade → estado → actividade",
+    "quem": "ICM Delegação Provincial da Zambézia, que articula com os 22 SDAE",
+    "esforco": 2,
+    "impacto": 5,
+    "nota": "Se resultar na Zambézia, o mesmo pedido replica-se às outras dez províncias."
   }
 }

@@ -210,7 +210,12 @@ function desenharSerie(){
          : '')
        +'<b>'+esc(v.assunto)+'.</b> '
        +v.valores.map(function(y){
-          return esc(y.fonte)+' em '+y.ano+': <b class="mono">'+num(y.valor)+' t</b> ('+esc(y.universo)+')';
+          /* O campo mudou de nome quando a cadeia de origem foi registada:
+             passou de 'fonte' para 'publicadoPor'. Aceitar os dois. */
+          var quem = y.publicadoPor || y.fonte || '';
+          var amb  = y.universo || y.distrito || y.ambito || '';
+          return esc(quem)+' em '+y.ano+': <b class="mono">'+num(y.valor)+' t</b>'
+           +(amb?' ('+esc(amb)+')':'');
         }).join(' &middot; ')
        +' &mdash; diferen&ccedil;a de <b>'+v.razao.toFixed(1).replace('.',',')+' vezes</b>.<br>'+v.nota
        +(ind && ind.mesmaOrigem
