@@ -361,22 +361,43 @@
       "confianca": "A",
       "ficheiro": null,
       "nota": "Sem o PESOE há meta e não há execução. É metade da equação."
+    },
+    {
+      "id": "mozdata",
+      "instituicao": "INE",
+      "nome": "Arquivo Nacional de Dados — catálogo de microdados",
+      "tipo": "catálogo de microdados",
+      "url": "https://mozdata.ine.gov.mz/index.php/catalog",
+      "periodicidade": "contínua",
+      "formato": "JSON e DDI/XML nos metadados; microdados sob licença",
+      "indicadores": [
+        "metadados de 79 operações estatísticas",
+        "microdados mediante pedido"
+      ],
+      "coberturaTemporal": "1928 a 2024",
+      "ultimaPublicacaoConhecida": "Julho de 2025",
+      "ultimaIntegracao": "não integrado",
+      "estado": "identificada, não integrada",
+      "metodoAcesso": "ACEITA ACESSO AUTOMÁTICO — é a única fonte do sistema que o faz",
+      "confianca": "A",
+      "ficheiro": "mozdata-ine",
+      "nota": "O www.ine.gov.mz recusa acesso automático; este endereço não. Metadados públicos em JSON; microdados sob licença, mediante pedido a info@ine.gov.mz."
     }
   ],
   "resumo": {
-    "total": 16,
+    "total": 17,
     "porEstado": {
       "activa": 5,
-      "identificada, não integrada": 4,
+      "identificada, não integrada": 5,
       "atrasada": 2,
       "por solicitar": 2,
       "parcialmente integrada": 2,
       "por confirmar": 1
     },
-    "integradas": 11,
+    "integradas": 12,
     "naoIntegradas": 5,
     "comActualizacaoAutomatica": 0,
-    "nota": "Nenhuma fonte se actualiza sozinha. Todas foram carregadas à mão. É o número que mede o estado real do sistema, e é zero de dezasseis."
+    "nota": "Nenhuma fonte se actualiza sozinha. Todas foram carregadas à mão. O mozdata é a primeira que aceita acesso automático — a ligação é possível e está por fazer."
   },
   "oQueExigeServidor": [
     {

@@ -1,0 +1,139 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "nome": "Arquivo Nacional de Dados — INE",
+    "url": "https://mozdata.ine.gov.mz/index.php/catalog",
+    "verificadoEm": "Setembro de 2026",
+    "acessoAutomatico": true,
+    "porqueImporta": "É a primeira fonte do sistema que responde a acesso automático. O www.ine.gov.mz recusa-o; este endereço não. E exporta metadados em JSON e DDI/XML, o que nenhuma outra fonte faz.",
+    "totalOperacoes": 79,
+    "contacto": "info@ine.gov.mz",
+    "unidade": "Departamento de Difusão, Documentação e Marketing — Centro de Documentação"
+  },
+  "distincaoObrigatoria": {
+    "metadados": "PÚBLICOS e legíveis por máquina. Exportação em JSON e DDI/XML por operação. Incluem objectivos, cobertura geográfica, amostragem, método de recolha, processamento, produtores, financiadores e quadros produzidos.",
+    "microdados": "LICENCIADOS. Marcados como \"Arquivo de dados com Licença\", disponíveis mediante pedido e condições. Base de dados anonimizada.",
+    "regra": "Não confundir uma coisa com a outra. O sistema pode ler os metadados hoje; os microdados exigem pedido formal ao INE."
+  },
+  "colecoes": {
+    "Demográficos": 14,
+    "Empresas e sectoriais": 10,
+    "Agricultura": 5
+  },
+  "operacoesRelevantes": [
+    {
+      "id": 115,
+      "idno": "MOZ.INE.IAI.2022.v2",
+      "titulo": "Inquérito Agrário Integrado 2023",
+      "ano": "2022-2023",
+      "produtor": "MADER — Direcção de Planificação e Políticas",
+      "url": "https://mozdata.ine.gov.mz/index.php/catalog/115",
+      "json": "https://mozdata.ine.gov.mz/index.php/metadata/export/115/json",
+      "cobertura": "145 distritos predominantemente rurais. Ficaram de fora 9 distritos de Cabo Delgado: Palma, Mueda, Nangade, Mocímboa da Praia, Muidumbe, Macomia, Meluco, Quissanga e Ibo, por instabilidade",
+      "universo": "4,5 milhões de explorações: 4.383.460 pequenas (98,3%), 74.706 médias, 1.131 grandes",
+      "amostragem": "Bietápica, sobre o Master Sample Frame construído a partir do Censo de 2017, sessão F — Agro-Pecuária",
+      "ressalvaDoProprioINE": "Houve recusa de proprietários de grandes explorações em responder. As estimativas totais dessa categoria vieram da Direcção Nacional de Agricultura Comercial, não do inquérito.",
+      "estadoNoSistema": "base do produtores-agrarios.json — SUPERADO pelo CAP 2023/2024",
+      "prioridade": "média"
+    },
+    {
+      "id": 37,
+      "idno": "MOZ-INE-CAP2009-2010.V1.C230",
+      "titulo": "Censo Agro-Pecuário 2009-2010",
+      "ano": "2009-2010",
+      "url": "https://mozdata.ine.gov.mz/index.php/catalog/37",
+      "nota": "Censo anterior. Serve para série histórica: o CAP 2023/2024 mede as mudanças dos últimos quinze anos face a este.",
+      "prioridade": "média"
+    },
+    {
+      "id": 24,
+      "idno": "moz-ine-censo-iv-2017-v1",
+      "titulo": "Censo 2017, IV",
+      "ano": 2017,
+      "url": "https://mozdata.ine.gov.mz/index.php/catalog/24",
+      "nota": "Base do Master Sample Frame agrário e dos indicadores provinciais que o sistema já tem",
+      "prioridade": "baixa"
+    },
+    {
+      "id": 78,
+      "idno": "MOZ.INE.CEMPRE2014-2015.V2.C220",
+      "titulo": "Censo de Empresas 2014-2015",
+      "ano": "2014-2017",
+      "url": "https://mozdata.ine.gov.mz/index.php/catalog/78",
+      "nota": "Pode conter a estrutura do comércio a retalho e por grosso — a lacuna da rede comercial",
+      "prioridade": "alta"
+    },
+    {
+      "id": 31,
+      "idno": "MZ-CONTAS2021.V1",
+      "titulo": "Contas Nacionais",
+      "ano": 2020,
+      "url": "https://mozdata.ine.gov.mz/index.php/catalog/31",
+      "nota": "Validação macroeconómica",
+      "prioridade": "baixa"
+    }
+  ],
+  "capPorPublicar": {
+    "titulo": "III Censo Agro-Pecuário — CAP 2023/2024",
+    "estadoNoCatalogo": "ainda não consta do mozdata. O catálogo tem cinco operações em Agricultura e a mais recente é o IAI 2023.",
+    "resultadosFinais": "Divulgados em Maio de 2026, em seminário do INE com o MAAP, financiado pelo Banco Mundial",
+    "recolha": "Dezembro de 2024 a Junho de 2025",
+    "metodo": "Tablets com CAPI e GPS para medição das machambas e georreferenciação das explorações",
+    "cobertura": "142 de 161 distritos, 88,2% do território. Seis distritos de Cabo Delgado ficaram de fora por insegurança",
+    "inquiridas": "42.657 explorações: 36.213 pequenas, 5.561 médias, 883 grandes",
+    "primeiraVez": "Primeiro censo agro-pecuário com representatividade DISTRITAL",
+    "resultados": {
+      "exploracoes": 5200000,
+      "pequenasEMedias": "99,9%",
+      "chefiadasPorMulheres": "38%",
+      "hectaresCultivados": 6500000,
+      "terraAravel": 36000000,
+      "percentagemUtilizada": 17.8,
+      "menosDeDoisHectares": "84% das explorações",
+      "comExtensaoAgraria": "6,7% das pequenas e médias",
+      "comRotacaoDeCulturas": "20,6%",
+      "bovinos": 2400000,
+      "caprinos": 4200000,
+      "galinhas": 16000000
+    },
+    "urlRelatorio": "https://www.ine.gov.mz/web/guest/d/relatorio-cap-2023_2024",
+    "urlQuadrosExcel": "https://www.ine.gov.mz/web/guest/d/quadros-finais-cap-2023",
+    "avisoAcesso": "Estes dois endereços estão no www.ine.gov.mz, que recusa acesso automático. Exigem descarregamento manual.",
+    "oQueSupera": "O produtores-agrarios.json do sistema assenta no IAI 2023, com 4,5 milhões de explorações. O CAP dá 5,2 milhões e, sobretudo, desagregação distrital. É a maior actualização de dados possível hoje.",
+    "prioridade": "máxima"
+  },
+  "discrepanciaDistritos": {
+    "assunto": "Número de distritos do país",
+    "valores": [
+      {
+        "fonte": "CAP 2023/2024, noticiado",
+        "valor": 161
+      },
+      {
+        "fonte": "IAI 2023, no catálogo do INE",
+        "valor": 154,
+        "nota": "145 inquiridos mais 9 excluídos de Cabo Delgado"
+      },
+      {
+        "fonte": "SINAGEPE",
+        "valor": 154,
+        "nota": "usado no filtro de distritos das farmácias"
+      }
+    ],
+    "nota": "Sete distritos de diferença. Pode ser criação de distritos novos, ou contagem que inclui cidades com estatuto de distrito. Confirmar antes de usar qualquer contagem como denominador.",
+    "porConfirmar": true
+  },
+  "pedidoAoINE": {
+    "destinatario": "Instituto Nacional de Estatística — Departamento de Difusão, Documentação e Marketing",
+    "correio": "info@ine.gov.mz",
+    "oQuePedir": [
+      "Microdados do III Censo Agro-Pecuário 2023/2024, quando publicados no Arquivo Nacional de Dados",
+      "Microdados do Inquérito Agrário Integrado 2023, identificador MOZ.INE.IAI.2022.v2, catálogo 115",
+      "Quadros finais do CAP em formato Excel, que o INE já publica mas cujo endereço recusa acesso automático",
+      "Quadro 10.1.1 dos Indicadores Básicos de Agricultura e Alimentação — capacidade de armazenamento por província",
+      "Estatísticas de Comércio Externo de Bens, série 2020 a 2025"
+    ],
+    "fundamentacao": "Lei n.º 34/2014, artigos 10.º e 13.º. E o PEDSA 2030, que determina a criação de sistemas de informação de gestão para monitoria dos indicadores estratégicos.",
+    "nota": "O pedido passa a ser concreto: identificadores de catálogo, não descrições vagas."
+  }
+}
