@@ -41,19 +41,22 @@ problema que o sistema torna visível antes de propor resolvê-lo.
 
 ## O que já se descobriu
 
-**O transporte quase não explica a dispersão de preço.** Na semana de 17 a 23 de Julho de
-2023, o feijão manteiga custava 52 MT/kg em Lichinga e 162 MT/kg em Mandimba — 211% de
-diferença entre dois mercados da mesma província, na mesma semana, com fluxo do produto
-documentado entre eles pelo próprio boletim. O gasóleo dessa viagem custa cerca de
-0,37 MT/kg, calculado ao preço mais alto praticado no país e a uma distância de estrada
-estimada em 162 km. Explica **menos de meio por cento** da diferença.
+**Maior dispersão de preço registada: milho, 341%.** Na semana de 17 a 23 de Julho de 2023,
+o milho custava 17 MT/kg em Mandimba e 75 MT/kg no Búzi. O boletim regista o valor do Búzi
+e não o explica. A dispersão é calculada como (máximo − mínimo) ÷ mínimo, sobre os preços a
+retalho da mesma edição — a fórmula está à vista no ecrã, com a edição, o período e as duas
+praças identificadas.
+
+**Caso logístico analisado: feijão manteiga, 211%.** Na mesma semana, 52 MT/kg em Lichinga e
+162 MT/kg em Mandimba. Não é o recorde, mas é o caso que permite provar o método, porque é o
+único em que existem as três coisas ao mesmo tempo: duas praças da mesma província, fluxo do
+produto documentado entre elas pelo próprio boletim, e distância calculável. O gasóleo dessa
+viagem custa cerca de 0,37 MT/kg — a uma distância de estrada estimada em 162 km e ao preço
+mais alto praticado no país. Explica **menos de meio por cento** da diferença.
 
 A leitura que o sistema tira daqui é deliberadamente contida: não conclui que alguém cobra
 a mais. Conclui que o custo de mover o produto não chega para explicar o preço, e que a
 explicação está noutro lado.
-
-**A maior dispersão medida é de 341%.** Milho, mesma semana: 17 MT/kg em Mandimba e
-75 MT/kg no Búzi. O boletim regista o valor do Búzi e não o explica.
 
 **Duas fontes oficiais divergem 44 vezes sobre o mesmo distrito.** Milange: 220.000 t de
 capacidade de armazenagem no relatório de 2024 do ICM da Zambézia, com origem nos serviços
