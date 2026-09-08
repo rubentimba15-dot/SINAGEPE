@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motor Nacional de Combustíveis — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#080F1C; --bg2:#060B16; --sidebar-bg:#0B1421; --card-bg:#141F2B;
+  --card-line:rgba(64,86,108,.55); --gold-line:rgba(201,138,60,.28);
+  --gold:#C98A3C; --blue:#22B8F0; --teal:#2DD4BF; --amber:#F0A926; --red:#EF4444; --ok:#12B981;
+  --ink:#F3F7FC; --ink-dim:#8FA1B8; --ink-faint:#5E7189;
+  --nav-active:#22B8F0; --nav-idle:#141F2B;
+  --brz:#C98A3C; --brzl:#E8BE7A; --acc:#22B8F0; --accg:rgba(34,184,240,.13);
+  --t2:#C3D0E0; --t3:#8FA1B8; --t4:#5E7189;
+  --font-display:'Inter',sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:'Inter',sans-serif;font-size:14px;line-height:1.55}
+.app{display:flex;min-height:100vh}
+
+/* ---- barra lateral: mesmas classes do resto do sistema ---- */
+.sidebar{width:240px;flex-shrink:0;background:var(--sidebar-bg);border-right:1px solid var(--gold-line);
+  display:flex;flex-direction:column;padding-bottom:20px;overflow-y:auto;height:100vh;position:sticky;top:0}
+.brand{padding:22px 20px 18px;border-bottom:1px solid var(--gold-line);margin-bottom:8px}
+.brand-t{font-family:var(--font-display);font-weight:700;font-size:18px}
+.brand-s{font-weight:600;font-size:9px;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 16px;margin:2px 12px;border-radius:8px;
+  border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none}
+.nav-item:hover{background:#1B2836}
+.nav-item.active{background:var(--nav-active)}
+.nav-icon{width:18px;height:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink-dim)}
+.nav-label{flex:1;font-size:14px;font-weight:400;color:var(--ink-dim)}
+.nav-item.active .nav-label,.nav-item.active .nav-icon{font-weight:600;color:#f1f5f9}
+
+/* ---- conteúdo ---- */
+main{flex:1;min-width:0;padding:28px 32px 60px;max-width:1080px}
+h1{font-size:25px;font-weight:700;margin:0 0 4px;letter-spacing:-.01em}
+.sub-h{color:var(--t3);margin:0 0 24px;max-width:70ch}
+h2{font-size:17px;font-weight:650;margin:0 0 3px}
+section{background:var(--card-bg);border:1px solid var(--card-line);border-radius:12px;padding:20px 22px;margin-bottom:18px}
+section.blocked{border-color:var(--gold-line);background:linear-gradient(180deg,rgba(201,138,60,.05),transparent 120px),var(--card-bg)}
+.sec-head{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.sec-head p{margin:0;color:var(--t3);max-width:72ch;font-size:13px}
+.tag{font-size:10.5px;font-weight:700;letter-spacing:.07em;padding:4px 9px;border-radius:5px;white-space:nowrap;margin-left:auto}
+.tag.calc{color:var(--ok);border:1px solid rgba(18,185,129,.4);background:rgba(18,185,129,.08)}
+.tag.miss{color:var(--brzl);border:1px solid var(--gold-line);background:rgba(201,138,60,.08)}
+
+.ctrl{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:15px;margin-bottom:20px}
+label{display:block;font-size:12px;color:var(--t3);margin-bottom:6px}
+select{width:100%;background:var(--bg2);border:1px solid var(--card-line);color:var(--ink);border-radius:7px;padding:8px 10px;font:inherit;font-size:13px}
+select:focus,input:focus{outline:2px solid var(--acc);outline-offset:0;border-color:var(--acc)}
+input[type=range]{width:100%;accent-color:var(--acc)}
+.rng-v{float:right;color:var(--ink);font-variant-numeric:tabular-nums}
+
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--card-line);border:1px solid var(--card-line);border-radius:10px;overflow:hidden}
+.out div{background:var(--bg2);padding:13px 15px}
+.out .k{font-size:11.5px;color:var(--t4);margin-bottom:3px}
+.out .v{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.out .u{font-size:11.5px;color:var(--t4);font-weight:400}
+.blue{color:var(--blue)} .amb{color:var(--amber)} .nul{color:var(--t4)}
+
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11px;color:var(--t4);font-weight:600;letter-spacing:.05em;padding:0 12px 9px;border-bottom:1px solid var(--card-line)}
+td{padding:11px 12px;border-bottom:1px solid rgba(64,86,108,.25);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.p{color:var(--t3);font-size:12.5px}
+.nd{color:var(--t4);font-variant-numeric:tabular-nums}
+.who{display:inline-block;font-size:11px;color:var(--brzl);border:1px solid var(--gold-line);border-radius:4px;padding:2px 7px;white-space:nowrap}
+
+.formula{background:var(--bg2);border:1px solid var(--card-line);border-radius:8px;padding:13px 15px;font-size:13px;color:var(--t2);margin:14px 0}
+.formula .op{color:var(--t4)}
+.note{color:var(--t3);font-size:12.5px;margin:14px 0 0;max-width:78ch}
+.src{font-size:11.5px;color:var(--t4);margin-top:14px;padding-top:12px;border-top:1px solid var(--card-line)}
+.src a{color:var(--blue);text-decoration:none}
+.src a:hover{text-decoration:underline}
+
+@media(max-width:1080px){main{padding:20px 16px 50px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar" id="nav-mount"></aside>
+
+<main>
+  <h1>Motor Nacional de Combustíveis</h1>
+  <p class="sub-h">O gasóleo é o único produto essencial em Moçambique cuja estrutura de preço é
+  fixada por lei, calculada por uma entidade pública e publicada mensalmente. É por isso o
+  produto onde o método se prova antes de se prometer.</p>
+
+  <!-- ========== 1. CALCULÁVEL ========== -->
+  <section>
+    <div class="sec-head">
+      <div>
+        <h2>Custo de combustível de uma rota</h2>
+        <p>Calculado a partir dos preços regionais publicados pela ARENE e dos parâmetros de
+        transporte declarados abaixo. Todos os pressupostos são editáveis.</p>
+      </div>
+      <span class="tag calc">CALCULADO</span>
+    </div>
+
+    <div class="ctrl">
+      <div>
+        <label for="reg">Praça de abastecimento (preço do gasóleo)</label>
+        <select id="reg">
+          <option value="116.25">Maputo, Matola, Beira, Nacala, Pemba — 116,25 MT/l</option>
+          <option value="120.70">Quelimane — 120,70 MT/l</option>
+          <option value="121.64">Tete — 121,64 MT/l</option>
+          <option value="123.27">Lichinga — 123,27 MT/l</option>
+          <option value="126.27">Mecula — 126,27 MT/l</option>
+          <option value="131.85" selected>Mueda e Palma — 131,85 MT/l</option>
+        </select>
+      </div>
+      <div>
+        <label for="km">Distância de estrada <span class="rng-v" id="kmv">162 km</span></label>
+        <input type="range" id="km" min="10" max="1600" step="10" value="162">
+      </div>
+      <div>
+        <label for="cap">Carga transportada <span class="rng-v" id="capv">20 t</span></label>
+        <input type="range" id="cap" min="1" max="30" step="1" value="20">
+      </div>
+      <div>
+        <label for="cons">Consumo <span class="rng-v" id="consv">35 l/100 km</span></label>
+        <input type="range" id="cons" min="15" max="60" step="1" value="35">
+      </div>
+      <div>
+        <label for="vaz">Retorno vazio</label>
+        <select id="vaz"><option value="1">Não — só a viagem de ida</option><option value="2">Sim — ida e volta</option></select>
+      </div>
+      <div>
+        <label for="dif">Diferença de preço a explicar <span class="rng-v" id="difv">110 MT/kg</span></label>
+        <input type="range" id="dif" min="1" max="200" step="1" value="110">
+      </div>
+    </div>
+
+    <div class="out">
+      <div><div class="k">Gasóleo consumido</div><div class="v blue" id="o1">—<span class="u"> l</span></div></div>
+      <div><div class="k">Custo do gasóleo</div><div class="v blue" id="o2">—<span class="u"> MT</span></div></div>
+      <div><div class="k">Por tonelada</div><div class="v" id="o3">—<span class="u"> MT/t</span></div></div>
+      <div><div class="k">Por quilograma</div><div class="v" id="o4">—<span class="u"> MT/kg</span></div></div>
+      <div><div class="k">Explica da diferença</div><div class="v amb" id="o5">—<span class="u"> %</span></div></div>
+    </div>
+
+    <p class="note">O caso que está carregado por omissão é o do feijão manteiga na semana de 17 a
+    23 de Julho de 2023: 52 MT/kg em Lichinga e 162 MT/kg em Mandimba, duas praças da mesma
+    província, com fluxo do produto documentado entre elas pelo boletim do SIMA. Está calculado ao
+    preço de gasóleo mais alto do país, que é a hipótese mais desfavorável ao argumento.</p>
+
+    <p class="note">O que este cálculo <b>não</b> diz: que alguém cobra a mais. Diz que o custo de
+    mover o produto não chega para explicar o preço, e que a explicação está noutro lado — margem,
+    número de intermediários, poder de mercado local, ou mercados que simplesmente não transaccionam
+    entre si. Distinguir entre essas hipóteses exige dados que o sistema não tem.</p>
+
+    <div class="src">
+      Preços: ARENE, revisão de 7 de Maio de 2026, fixados por região ao abrigo do Decreto n.º 89/2019
+      e da Lei n.º 11/2017 · <a href="https://arene.org.mz/">arene.org.mz</a><br>
+      Preços dos produtos: SIMA/MAAP, boletim n.º 1462 · <a href="https://www.agricultura.gov.mz/sima/">agricultura.gov.mz/sima</a><br>
+      Distância: linha recta entre coordenadas × 1,30 (factor de traçado). Não é distância de estrada medida.
+    </div>
+  </section>
+
+  <!-- ========== 2. NÃO CALCULÁVEL ========== -->
+  <section class="blocked">
+    <div class="sec-head">
+      <div>
+        <h2>Simulador da política de subsídio ao gasóleo</h2>
+        <p>A estrutura de cálculo está construída. Nenhum dos seis parâmetros que ela exige existe
+        em fonte pública consultada, e por isso o simulador não produz resultados.</p>
+      </div>
+      <span class="tag miss">0 DE 6 PARÂMETROS</span>
+    </div>
+
+    <div class="out">
+      <div><div class="k">Custo fiscal do subsídio</div><div class="v nul">—</div></div>
+      <div><div class="k">Produção adicional</div><div class="v nul">—</div></div>
+      <div><div class="k">Importações evitadas</div><div class="v nul">—</div></div>
+      <div><div class="k">Redução no preço final</div><div class="v nul">—</div></div>
+      <div><div class="k">Multiplicador (MESP)</div><div class="v nul">—</div></div>
+    </div>
+
+    <div class="formula">
+      MESP <span class="op">=</span> benefício económico total <span class="op">÷</span> custo fiscal do subsídio<br>
+      <span class="op" style="font-size:12px">Um traço não significa zero. Significa que o valor não é determinável com o que existe.</span>
+    </div>
+
+    <table>
+      <thead><tr><th style="width:31%">Parâmetro em falta</th><th style="width:41%">Porque é indispensável</th><th>Quem o detém</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Litros de gasóleo por hectare</b><br><span class="nd">por cultura e por operação</span></td>
+          <td class="p">Sem isto, o custo energético por tonelada é uma multiplicação por um número escolhido. É o parâmetro que sustenta toda a cadeia produtiva.</td>
+          <td><span class="who">MAAP · IIAM</span></td>
+        </tr>
+        <tr>
+          <td><b>Elasticidade do preço alimentar ao custo de transporte</b></td>
+          <td class="p">Converte uma variação de custo numa variação de preço ao consumidor. Exige série histórica com erro medido; o sistema tem oito edições de preço, sete com dados.</td>
+          <td><span class="who">MEF · Banco de Moçambique</span></td>
+        </tr>
+        <tr>
+          <td><b>Parque de tractores em operação</b><br><span class="nd">e consumo médio</span></td>
+          <td class="p">Define a base sobre a qual um subsídio dirigido à mecanização actuaria. Sem ela não há denominador.</td>
+          <td><span class="who">MAAP</span></td>
+        </tr>
+        <tr>
+          <td><b>Volume de gasóleo consumido pelo sector agrário</b></td>
+          <td class="p">Separa o consumo produtivo do consumo geral. É a diferença entre um subsídio dirigido e um subsídio universal.</td>
+          <td><span class="who">ARENE · Petromoc</span></td>
+        </tr>
+        <tr>
+          <td><b>Custo fiscal actual do subsídio, se existir</b></td>
+          <td class="p">É o denominador do multiplicador. Sem ele não há razão a calcular.</td>
+          <td><span class="who">MEF · PESOE</span></td>
+        </tr>
+        <tr>
+          <td><b>Importações alimentares por produto</b><br><span class="nd">volume e valor</span></td>
+          <td class="p">Sem elas não se estima o que uma produção adicional substituiria, nem as divisas poupadas.</td>
+          <td><span class="who">INE · Alfândegas</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="note">Apresentar um multiplicador com estes seis campos preenchidos por estimativa seria
+    inventar com aparência de método. E um número único sobre política de subsídios circula: sai do
+    ecrã, entra num documento, e ninguém volta a perguntar de onde veio.</p>
+
+    <p class="note">O que desbloqueia isto não é programação. São dois pedidos de informação — um ao
+    MAAP, outro ao MEF. Com o primeiro parâmetro sozinho, o custo energético por tonelada passa a ser
+    calculável para as culturas mecanizadas.</p>
+  </section>
+</main>
+</div>
+
+<script src="assets/nav-sinagepe.js"></script>
+<script>
+if (window.SinagepeNav) SinagepeNav.montar('combustiveis');
+
+var $=function(i){return document.getElementById(i)};
+function fmt(n,c){return n.toLocaleString('pt-PT',{minimumFractionDigits:c,maximumFractionDigits:c})}
+function calc(){
+  var p=parseFloat($('reg').value), km=+$('km').value, cap=+$('cap').value,
+      cons=+$('cons').value, vz=+$('vaz').value, dif=+$('dif').value;
+  $('kmv').textContent=km+' km'; $('capv').textContent=cap+' t';
+  $('consv').textContent=cons+' l/100 km'; $('difv').textContent=dif+' MT/kg';
+  var litros=km*vz*cons/100, custo=litros*p, porT=custo/cap, porKg=porT/1000;
+  $('o1').innerHTML=fmt(litros,1)+'<span class="u"> l</span>';
+  $('o2').innerHTML=fmt(custo,0)+'<span class="u"> MT</span>';
+  $('o3').innerHTML=fmt(porT,2)+'<span class="u"> MT/t</span>';
+  $('o4').innerHTML=fmt(porKg,4)+'<span class="u"> MT/kg</span>';
+  $('o5').innerHTML=fmt(porKg/dif*100,2)+'<span class="u"> %</span>';
+}
+['reg','km','cap','cons','vaz','dif'].forEach(function(i){
+  $(i).addEventListener('input',calc); $(i).addEventListener('change',calc);
+});
+calc();
+</script>
+</body>
+</html>
