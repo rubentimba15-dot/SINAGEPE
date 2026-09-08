@@ -135,7 +135,7 @@ const SINAGEPE = (() => {
         </div>
         <div class="content" id="content-mount"></div>
         <div class="footer">
-          <span>© 2026 SINAGEPE Moçambique — Ministério da Indústria e Comércio</span>
+                <span>© 2026 SINAGEPE — protótipo independente</span>
           <span style="display:flex;gap:18px;align-items:center">
             <a href="portal-publico.html" style="color:var(--ink-faint)">Portal Público ↗</a>
             <span id="footer-updated">Última actualização: —</span>
