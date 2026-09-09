@@ -33,6 +33,7 @@
     { key: 'mapa',          icon: '\u25CE', label: 'Mapa Nacional',         href: 'mapa-nacional.html', grupo: 'TERRITORIO' },
     { key: 'simulador',     icon: '\u224B', label: 'Simulador',             href: 'simulador-importacoes.html', grupo: 'INTELIGENCIA' },
     { key: 'preditivo',     icon: '\u25AD', label: 'Simulador Preditivo',   href: 'simulador-preditivo.html', grupo: 'INTELIGENCIA' },
+        { key: 'combustiveis', icon: '\u26FD', label: 'Motor de Combust\u00edveis', href: 'motor-combustiveis.html', grupo: 'ANALISE' },
     { key: 'portal-produtores', icon: '\u2618', label: 'Portal do Produtor',  href: 'portal-produtores.html', grupo: 'PORTAIS' },
     { key: 'portal-transportadores', icon: '\u26DF', label: 'Portal do Transportador', href: 'portal-transportadores.html', grupo: 'PORTAIS' },
     { key: 'portal-comerciantes', icon: '\u2696', label: 'Portal do Comerciante', href: 'portal-comerciantes.html', grupo: 'PORTAIS' },
@@ -49,10 +50,10 @@
     { key: 'relatorios-central', icon: '\u2637', label: 'Central de Relat\u00f3rios', href: 'relatorios-central.html', grupo: 'RELATORIOS' },
     { key: 'relatorios',    icon: '\u25A7', label: 'Relat\u00f3rios',       href: 'relatorios.html', grupo: 'RELATORIOS' },
     { key: 'governanca',    icon: '\u2696', label: 'Governa\u00e7\u00e3o do Dado', href: 'governanca-dado.html', grupo: 'GOVERNACAO' },
-    { key: 'actualidade', icon: '\u25F4', label: 'Actualidade dos dados', href: 'actualidade-dados.html', grupo: 'GOVERNA\u00c7\u00c3O' },
-    { key: 'inflacao', icon: '\u25E7', label: 'Onde a infla\u00e7\u00e3o n\u00e3o chega', href: 'inflacao-cobertura.html', grupo: 'AN\u00c1LISE' },
-    { key: 'series', icon: '\u25E9', label: 'S\u00e9rie de pre\u00e7os', href: 'series-precos.html', grupo: 'AN\u00c1LISE' },
-    { key: 'comercio', icon: '\u2691', label: 'Com\u00e9rcio externo', href: 'comercio-externo.html', grupo: 'AN\u00c1LISE' },
+        { key: 'actualidade', icon: '\u25F4', label: 'Actualidade dos dados', href: 'actualidade-dados.html', grupo: 'GOVERNACAO' },
+    { key: 'inflacao', icon: '\u25E7', label: 'Onde a infla\u00e7\u00e3o n\u00e3o chega', href: 'inflacao-cobertura.html', grupo: 'ANALISE' },
+    { key: 'series', icon: '\u25E9', label: 'S\u00e9rie de pre\u00e7os', href: 'series-precos.html', grupo: 'ANALISE' },
+    { key: 'comercio', icon: '\u2691', label: 'Com\u00e9rcio externo', href: 'comercio-externo.html', grupo: 'ANALISE' },
     { key: 'config',        icon: '\u2699', label: 'Configura\u00e7\u00f5es', href: 'administracao-auditoria.html', grupo: 'GOVERNACAO' },
     { key: 'marketplace',   icon: '\u2B21', label: 'Marketplace B2B',       href: 'marketplace-b2b.html', grupo: 'PORTAIS' },
     { key: 'portal-bancos', icon: '\u26C3', label: 'Portal dos Bancos', href: 'portal-bancos.html', grupo: 'FINANCIAMENTO' },
@@ -110,11 +111,12 @@
     /* Vinte e cinco itens numa lista plana não se lêem. Agrupam-se em famílias,
        pela ordem em que se usam: onde estou, onde é, o que vai acontecer,
        por onde passa, quem recebe, o que levo, e como se governa isto. */
-    var ORDEM = ['PAINEL','TERRITORIO','INTELIGENCIA','CADEIA','PORTAIS','FINANCIAMENTO','RELATORIOS','GOVERNACAO'];
+            var ORDEM = ['PAINEL','TERRITORIO','INTELIGENCIA','ANALISE','CADEIA','PORTAIS','FINANCIAMENTO','RELATORIOS','GOVERNACAO'];
     var ROTULO = {
       PAINEL: null,
       TERRITORIO: 'Territ\u00f3rio',
       INTELIGENCIA: 'Intelig\u00eancia',
+            ANALISE: 'An\u00e1lise',
       CADEIA: 'Cadeia de abastecimento',
       PORTAIS: 'Portais por perfil',
       FINANCIAMENTO: 'Financiamento',
