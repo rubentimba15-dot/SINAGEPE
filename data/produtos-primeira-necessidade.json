@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "criadoEm": "2026-09-08",
+    "natureza": "Enquadramento legal — não é fonte de preços",
+    "porqueExiste": "O SINAGEPE monitorizava produtos escolhidos pela disponibilidade da fonte, não por definição legal. Este ficheiro inverte a ordem: primeiro o que a lei define como essencial, depois o que o sistema consegue observar. A diferença entre os dois é a lacuna, e passa a ser mensurável.",
+    "achadoCentral": "Existem duas definições oficiais de produto essencial em Moçambique e não coincidem. O feijão e o amendoim integram a cesta básica alimentar do MISAU e não constam da lista de isenções do artigo 9 do Código do IVA. São dois dos cinco produtos que o sistema monitoriza hoje.",
+    "regraAplicada": "Não se escolhe uma definição em silêncio. Registam-se as duas, com a base legal de cada uma, e assinala-se onde divergem."
+  },
+
+  "definicoes": [
+    {
+      "id": "iva-artigo-9",
+      "designacao": "Bens isentos de IVA nas operações internas",
+      "instrumento": "Código do IVA, artigo 9",
+      "natureza": "Isenção fiscal — é a definição com força de lei",
+      "baseLegal": [
+        {
+          "diploma": "Decreto n.º 51/98, de 29 de Setembro",
+          "oQueFez": "Estabeleceu o Código do IVA. Isentou o arroz, a farinha de milho, o pão e os vegetais (cebola, batata, tomate fresco e refrigerado).",
+          "vigenteDesde": 1999
+        },
+        {
+          "diploma": "Lei n.º 32/2007, de 31 de Dezembro",
+          "oQueFez": "Alterou o Código do IVA. Acrescentou o óleo alimentar, o açúcar, o sabão, o carapau, o petróleo de iluminação e o transporte semicolectivo."
+        }
+      ],
+      "bens": [
+        { "produto": "Milho", "categoria": "cereal", "noSistema": "preco" },
+        { "produto": "Farinha de milho", "categoria": "cereal transformado", "noSistema": "nao" },
+        { "produto": "Arroz", "categoria": "cereal", "noSistema": "preco" },
+        { "produto": "Pão", "categoria": "cereal transformado", "noSistema": "nao" },
+        { "produto": "Sal iodado", "categoria": "condimento", "noSistema": "nao" },
+        { "produto": "Leite em pó para lactente até um ano", "categoria": "lacticínio", "noSistema": "nao" },
+        { "produto": "Trigo", "categoria": "cereal", "noSistema": "nao" },
+        { "produto": "Farinha de trigo", "categoria": "cereal transformado", "noSistema": "nao" },
+        { "produto": "Tomate fresco ou refrigerado", "categoria": "hortícola", "noSistema": "nao" },
+        { "produto": "Batata", "categoria": "hortícola", "noSistema": "nao" },
+        { "produto": "Cebola", "categoria": "hortícola", "noSistema": "nao" },
+        { "produto": "Carapau congelado", "categoria": "pescado", "noSistema": "nao" },
+        { "produto": "Petróleo de iluminação", "categoria": "combustível", "noSistema": "preco" },
+        { "produto": "Gás doméstico GPL", "categoria": "combustível", "noSistema": "preco" },
+        { "produto": "Jet fuel", "categoria": "combustível", "noSistema": "nao" },
+        { "produto": "Preservativos", "categoria": "saúde", "noSistema": "nao" },
+        { "produto": "Bicicletas comuns e de ferro até quatro velocidades", "categoria": "transporte", "noSistema": "nao" },
+        { "produto": "Insecticidas", "categoria": "agro-insumo", "noSistema": "nao" }
+      ],
+      "outrasIsencoesDoMesmoArtigo": [
+        "Redes mosquiteiras",
+        "Medicamentos e outros produtos farmacêuticos",
+        "Sementes",
+        "Reprodutores",
+        "Adubos",
+        "Pesticidas, herbicidas e fungicidas",
+        "Redes e anzóis",
+        "Transporte público de passageiros"
+      ],
+      "notaMedicamentos": "O sistema tem o cadastro de 1 612 farmácias licenciadas pela ANARME, mas nenhum preço de medicamento. Cobertura de infraestrutura, não de preço.",
+      "fontes": [
+        "https://cartamz.com/economia-e-negocios/6155/12672-mocambique-com-novo-codigo-do-iva-desde-01-de-janeiro/",
+        "https://www.rangel.com/pt/noticias/alteracoes-codigo-imposto-sobre-valor-acrescentado-iva/",
+        "https://omrmz.org/wp-content/uploads/2025/03/DR-319.pdf"
+      ],
+      "porConfirmar": "Citação do artigo e da redacção em vigor, no Boletim da República. As fontes usadas são secundárias."
+    },
+    {
+      "id": "cesta-basica-misau",
+      "designacao": "Cesta básica alimentar",
+      "instrumento": "Definição do Ministério da Saúde",
+      "natureza": "Referência nutricional — define quantidades, não isenções",
+      "bens": [
+        { "produto": "Farinha de milho", "quantidade": 9.1, "unidade": "kg", "noSistema": "nao" },
+        { "produto": "Arroz", "quantidade": 3.0, "unidade": "kg", "noSistema": "preco" },
+        { "produto": "Peixe seco", "quantidade": 3.3, "unidade": "kg", "noSistema": "nao" },
+        { "produto": "Vegetais", "quantidade": 3.4, "unidade": "kg", "noSistema": "nao" },
+        { "produto": "Feijão seco", "quantidade": 2.0, "unidade": "kg", "noSistema": "preco" },
+        { "produto": "Açúcar", "quantidade": 1.2, "unidade": "kg", "noSistema": "nao" },
+        { "produto": "Sal", "quantidade": 1.0, "unidade": "kg", "noSistema": "nao" },
+        { "produto": "Amendoim", "quantidade": 0.5, "unidade": "kg", "noSistema": "preco" },
+        { "produto": "Óleo alimentar", "quantidade": 0.5, "unidade": "l", "noSistema": "nao" },
+        { "produto": "Frutas da época", "quantidade": null, "unidade": null, "noSistema": "nao" }
+      ],
+      "fonte": "https://omrmz.org/wp-content/uploads/2025/03/DR-319.pdf",
+      "porConfirmar": "Documento original do MISAU, período de referência das quantidades e se são per capita e por que período."
+    }
+  ],
+
+  "divergencias": [
+    {
+      "assunto": "O que conta como produto essencial",
+      "fonteA": "Código do IVA, artigo 9",
+      "fonteB": "Cesta básica alimentar do MISAU",
+      "naListaAeNaoNaB": ["Trigo", "Carapau congelado", "Leite em pó para lactente", "Combustíveis domésticos", "Bens não alimentares"],
+      "naListaBeNaoNaA": ["Feijão seco", "Amendoim", "Peixe seco", "Frutas da época"],
+      "possivelExplicacao": "Instrumentos com finalidades diferentes. A lista do IVA é fiscal e inclui bens não alimentares; a cesta do MISAU é nutricional e atribui quantidades. Não são erro de nenhum dos dois.",
+      "porqueImporta": "O feijão e o amendoim são monitorizados pelo SINAGEPE e não têm isenção de IVA. O feijão manteiga é o caso central do sistema — a dispersão de 211% entre Lichinga e Mandimba incide sobre um produto tributado.",
+      "estado": "registada, não reconciliada"
+    },
+    {
+      "assunto": "Isenção do açúcar, óleo alimentar e sabão",
+      "historico": "Isentos em 2007 pela Lei n.º 32/2007, com o objectivo declarado de proteger e desenvolver as indústrias nacionais respectivas. A isenção foi levantada por se ter reconhecido que os preços ao consumidor não baixaram, as indústrias não aumentaram produção nem competitividade, e o Estado perdia receita. Foi depois reposta a título temporário.",
+      "ultimoActoConhecido": "Lei promulgada em Maio de 2025, aprovada por consenso das quatro bancadas parlamentares, prorrogando a isenção até 31 de Dezembro de 2025. Impacto fiscal estimado pelo Governo em 2 270,79 milhões de meticais.",
+      "estadoHoje": "NÃO DETERMINADO",
+      "avisoCritico": "A prorrogação conhecida termina em 31 de Dezembro de 2025. O sistema não sabe o que foi decidido depois dessa data. Nenhum ecrã deve declarar estes três produtos como isentos ou tributados sem confirmação no Boletim da República.",
+      "quemDetem": "Autoridade Tributária de Moçambique · Boletim da República",
+      "fontes": [
+        "https://aimnews.org/2025/05/23/chapo-promulga-lei-que-altera-o-codigo-do-iva/",
+        "https://aimnews.org/2025/05/14/ar-prorroga-isencao-do-iva-para-tres-produtos-ate-31-de-dezembro-proximo/",
+        "https://cartamz.com/economia-e-negocios/43099/acucar-oleo-alimentar-e-saboes-isentos-do-iva-ate-dezembro-de-2025/"
+      ]
+    }
+  ],
+
+  "cobertura": {
+    "metodo": "Um produto conta como coberto quando o sistema tem pelo menos um preço observado com fonte, edição e data declaradas.",
+    "ivaArtigo9": { "bens": 18, "comPreco": 4, "semPreco": 14 },
+    "cestaMisau": { "bens": 10, "comPreco": 3, "semPreco": 7 },
+    "produtosNoSistema": [
+      { "produto": "Milho", "fonte": "SIMA 1462", "emAmbasAsListas": false, "lista": "IVA" },
+      { "produto": "Arroz", "fonte": "SIMA 1462", "emAmbasAsListas": true },
+      { "produto": "Feijão manteiga", "fonte": "SIMA 1462", "lista": "MISAU" },
+      { "produto": "Feijão nhemba", "fonte": "SIMA 1462", "lista": "MISAU" },
+      { "produto": "Amendoim pequeno", "fonte": "SIMA 1462", "lista": "MISAU" },
+      { "produto": "Petróleo de iluminação", "fonte": "ARENE", "lista": "IVA" },
+      { "produto": "Gás doméstico GPL", "fonte": "ARENE", "lista": "IVA" }
+    ],
+    "leitura": "O sistema cobre bem os combustíveis, porque o preço é regulado e publicado. Cobre mal os alimentos transformados — farinha de milho, farinha de trigo, pão, óleo alimentar, açúcar — que são os que a população compra e onde a margem se forma. Nenhum deles tem preço no sistema."
+  },
+
+  "porObter": [
+    {
+      "dado": "Preços de farinha de milho, farinha de trigo, batata, cebola e tomate",
+      "onde": "SIMA — o boletim recolhe mais produtos por edição do que os que estão extraídos",
+      "esforco": "baixo",
+      "impacto": "alto",
+      "nota": "Não exige pedido a ninguém. É extrair mais linhas dos boletins já publicados."
+    },
+    {
+      "dado": "Preço do óleo alimentar e do açúcar",
+      "onde": "SIMA e Bolsa de Mercadorias de Moçambique",
+      "esforco": "médio",
+      "impacto": "alto",
+      "nota": "São os dois produtos onde a política fiscal mudou duas vezes em três anos. Ter série de preço permitiria observar se a isenção se reflectiu no consumidor — que é a pergunta que o Parlamento fez e ninguém respondeu com dados."
+    },
+    {
+      "dado": "Redacção em vigor do artigo 9 do Código do IVA",
+      "onde": "Boletim da República · Autoridade Tributária",
+      "esforco": "baixo",
+      "impacto": "alto",
+      "nota": "Substitui as fontes secundárias usadas aqui por fonte primária."
+    },
+    {
+      "dado": "Documento original da cesta básica do MISAU",
+      "onde": "Ministério da Saúde",
+      "esforco": "médio",
+      "impacto": "médio"
+    },
+    {
+      "dado": "Preços de medicamentos essenciais",
+      "onde": "Central de Medicamentos e Artigos Médicos · ANARME",
+      "esforco": "alto",
+      "impacto": "alto",
+      "nota": "Os preços de aquisição pública não são publicados por lote. É lacuna estrutural, não de extracção."
+    }
+  ]
+}
