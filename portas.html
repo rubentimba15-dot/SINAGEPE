@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portas — SINAGEPE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="assets/access-control.js"></script>
+<style>
+:root{
+  --bg1:#080F1C; --bg2:#0B1421; --sidebar-bg:#0B1421; --card:#141F2B; --card-bg:#141F2B; --cardh:#1B2836;
+  --line:rgba(64,86,108,.55); --card-line:rgba(64,86,108,.55);
+  --gl1:rgba(201,138,60,.55); --gl2:rgba(201,138,60,.30); --gold-line:rgba(201,138,60,.28);
+  --brz:#C98A3C; --brzl:#E8BE7A; --brzd:#8A5C25; --gold:#C98A3C;
+  --blue:#22B8F0; --teal:#2DD4BF; --amber:#F0A926; --red:#EF4444; --ok:#12B981;
+  --ink:#F3F7FC; --ink-dim:#8FA1B8; --ink-faint:#5E7189;
+  --nav-active:#22B8F0; --nav-idle:#141F2B;
+  --t2:#C3D0E0; --t3:#8FA1B8; --t4:#5E7189;
+  --font-display:'Inter',sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg1);color:var(--ink);font-family:'Inter',sans-serif;font-size:14px;line-height:1.55}
+.app{display:flex;min-height:100vh}
+
+/* barra lateral — mesmas classes do resto do sistema */
+.sidebar{width:240px;flex-shrink:0;background:linear-gradient(180deg,#100E0B,#0B1421 240px);
+  border-right:1px solid var(--gold-line);display:flex;flex-direction:column;padding-bottom:20px;
+  overflow-y:auto;height:100vh;position:sticky;top:0}
+.brand{padding:22px 20px 18px;border-bottom:1px solid var(--gold-line);margin-bottom:8px}
+.brand-t{font-family:var(--font-display);font-weight:700;font-size:18px}
+.brand-s{font-weight:600;font-size:9px;color:var(--gold);letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:10px 16px;margin:2px 12px;border-radius:8px;
+  border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none}
+.nav-item:hover{background:var(--cardh)}
+.nav-item.active{background:var(--nav-active)}
+.nav-icon{width:18px;height:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink-dim)}
+.nav-label{flex:1;font-size:14px;font-weight:400;color:var(--ink-dim)}
+.nav-item.active .nav-label,.nav-item.active .nav-icon{font-weight:600;color:#f1f5f9}
+
+/* conteúdo */
+main{flex:1;min-width:0;position:relative;overflow:hidden;
+  background:linear-gradient(168deg,#14110C 0%,#0C1019 44%,var(--bg1) 100%)}
+.halo{position:absolute;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,138,60,.20),transparent 66%);top:-170px;right:-130px;pointer-events:none}
+.halo2{position:absolute;width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,138,60,.09),transparent 70%);bottom:-150px;left:-90px;pointer-events:none}
+.wrap{position:relative;max-width:1000px;padding:30px 32px 60px}
+
+.eyebrow{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--brz);font-weight:700;margin-bottom:8px}
+h1{font-size:27px;font-weight:800;margin:0;letter-spacing:-.015em}
+.risco{width:76px;height:3px;background:linear-gradient(90deg,var(--brz),rgba(201,138,60,0));margin:13px 0 14px}
+.lede{color:var(--t3);margin:0 0 26px;max-width:70ch;font-size:13.5px}
+
+.portas{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px}
+.porta{position:relative;background:linear-gradient(180deg,rgba(201,138,60,.07),transparent 74px),var(--card);
+  border:1px solid var(--gl2);border-radius:12px;padding:17px 18px;text-decoration:none;color:var(--ink);
+  display:flex;flex-direction:column;gap:7px;min-height:126px;overflow:hidden}
+.porta::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--brz),var(--brzd))}
+.porta:hover{background:linear-gradient(180deg,rgba(201,138,60,.14),transparent 84px),var(--cardh);border-color:var(--gl1)}
+.porta:focus-visible{outline:2px solid var(--brzl);outline-offset:2px}
+.porta .ic{font-size:18px;line-height:1;color:var(--brzl)}
+.porta .nm{font-weight:650;font-size:15px}
+.porta .est{font-size:11.5px;color:var(--t3);margin-top:auto}
+.porta .qtd{font-variant-numeric:tabular-nums;font-weight:700}
+.q-ok{color:var(--ok)} .q-am{color:var(--amber)} .q-rd{color:var(--red)}
+
+.porta.fechada{cursor:not-allowed;border-style:dashed;
+  background:repeating-linear-gradient(135deg,rgba(201,138,60,.045) 0 9px,transparent 9px 18px),var(--bg2)}
+.porta.fechada::before{background:linear-gradient(180deg,var(--brzd),rgba(138,92,37,.25))}
+.porta.fechada:hover{border-color:var(--gl2);background:repeating-linear-gradient(135deg,rgba(201,138,60,.045) 0 9px,transparent 9px 18px),var(--bg2)}
+.porta.fechada .nm{color:var(--t3)}
+.porta.fechada .ic{color:var(--brzd)}
+.porta.fechada .est{color:var(--brzl)}
+.selo-f{position:absolute;top:13px;right:13px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--brzl);border:1px solid var(--gl2);border-radius:4px;padding:2px 7px;background:rgba(201,138,60,.08)}
+
+.trab{margin-top:34px;padding-top:26px;border-top:1px solid var(--gl2)}
+.trab h2{font-size:17px;margin:0 0 6px;font-weight:650}
+.trab p.i{color:var(--t3);font-size:13px;margin:0 0 18px;max-width:74ch}
+.pedido{display:flex;gap:14px;align-items:flex-start;background:var(--bg2);border:1px solid var(--gl2);
+  border-left:3px solid var(--brz);border-radius:9px;padding:14px 16px;margin-bottom:9px}
+.pedido .qn{font-weight:700;font-size:13.5px;min-width:190px}
+.pedido .qq{color:var(--t3);font-size:12.5px;flex:1}
+.who{display:inline-block;font-size:11px;color:var(--brzl);border:1px solid var(--gl2);
+  border-radius:4px;padding:2px 8px;background:rgba(201,138,60,.07);white-space:nowrap}
+
+@media(max-width:1080px){.wrap{padding:20px 16px 50px}}
+@media(max-width:640px){.pedido{flex-direction:column;gap:5px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<aside class="sidebar" id="nav-mount"></aside>
+
+<main>
+  <div class="halo"></div><div class="halo2"></div>
+  <div class="wrap">
+
+    <div class="eyebrow">Torre de Controlo Nacional</div>
+    <h1>Portas</h1>
+    <div class="risco"></div>
+    <p class="lede">Cada porta declara o que tem antes de ser aberta. As tracejadas não abrem porque
+    não há dados — e dizem quem os detém.</p>
+
+    <div class="portas">
+
+      <a class="porta" href="motor-combustiveis.html">
+        <span class="ic">⛽</span><span class="nm">Combustíveis</span>
+        <span class="est"><span class="qtd q-ok">6</span> regiões · preço regulado e publicado</span>
+      </a>
+
+      <a class="porta" href="series-precos.html">
+        <span class="ic">▤</span><span class="nm">Preços de mercado</span>
+        <span class="est"><span class="qtd q-am">5</span> produtos · uma semana de Jul 2023</span>
+      </a>
+
+      <a class="porta" href="armazens-nacionais.html">
+        <span class="ic">▦</span><span class="nm">Armazenagem</span>
+        <span class="est">30 cadastrados · <span class="qtd q-rd">0</span> reportam existências</span>
+      </a>
+
+      <a class="porta" href="rede-logistica.html">
+        <span class="ic">⇄</span><span class="nm">Rede viária e logística</span>
+        <span class="est"><span class="qtd q-ok">14</span> estradas · 3 cortes registados</span>
+      </a>
+
+      <a class="porta" href="medicamentos-cadeia.html">
+        <span class="ic">⚕</span><span class="nm">Saúde</span>
+        <span class="est">1 612 farmácias · <span class="qtd q-rd">0</span> preços de medicamento</span>
+      </a>
+
+      <a class="porta" href="comercio-externo.html">
+        <span class="ic">⚑</span><span class="nm">Comércio externo</span>
+        <span class="est">parcial · por integrar com o INE</span>
+      </a>
+
+      <a class="porta" href="inflacao-cobertura.html">
+        <span class="ic">◨</span><span class="nm">Onde a inflação não chega</span>
+        <span class="est">cobertura territorial do índice de preços</span>
+      </a>
+
+      <a class="porta" href="monitorizacao-em-falta.html">
+        <span class="ic">◌</span><span class="nm">O que não está no mapa</span>
+        <span class="est">lacunas declaradas, com entidade identificada</span>
+      </a>
+
+      <div class="porta fechada" aria-disabled="true">
+        <span class="selo-f">Sem dados</span>
+        <span class="ic">☘</span><span class="nm">Insumos agrários</span>
+        <span class="est">MAAP · IIAM</span>
+      </div>
+
+      <div class="porta fechada" aria-disabled="true">
+        <span class="selo-f">Sem dados</span>
+        <span class="ic">☂</span><span class="nm">Clima</span>
+        <span class="est">INAM</span>
+      </div>
+
+      <div class="porta fechada" aria-disabled="true">
+        <span class="selo-f">Sem dados</span>
+        <span class="ic">◆</span><span class="nm">Financiamento</span>
+        <span class="est">MEF · Banco de Moçambique</span>
+      </div>
+
+      <div class="porta fechada" aria-disabled="true">
+        <span class="selo-f">Sem dados</span>
+        <span class="ic">◍</span><span class="nm">Existências em armazém</span>
+        <span class="est">ICM · operadores cadastrados</span>
+      </div>
+
+    </div>
+
+    <section class="trab">
+      <h2>As portas fechadas são a lista de trabalho</h2>
+      <p class="i">Cada porta que não abre é um pedido de informação com destinatário. Não é um vazio
+      no sistema — é o que falta ao país, dito em voz alta e com nome de quem o detém.</p>
+
+      <div class="pedido">
+        <div class="qn">Insumos agrários</div>
+        <div class="qq">Consumo de fertilizantes, sementes e pesticidas por província, e parque de máquinas em operação.</div>
+        <div><span class="who">MAAP · IIAM</span></div>
+      </div>
+      <div class="pedido">
+        <div class="qn">Clima</div>
+        <div class="qq">Séries de precipitação e temperatura por estação, em formato de dados e não em boletim.</div>
+        <div><span class="who">INAM</span></div>
+      </div>
+      <div class="pedido">
+        <div class="qn">Financiamento</div>
+        <div class="qq">Crédito ao sector agrário e execução dos programas públicos de apoio à comercialização.</div>
+        <div><span class="who">MEF · Banco de Moçambique</span></div>
+      </div>
+      <div class="pedido">
+        <div class="qn">Existências em armazém</div>
+        <div class="qq">Entradas e saídas declaradas pelos operadores, ainda que mensalmente. Uma só declaração torna o stock estimável.</div>
+        <div><span class="who">ICM · operadores cadastrados</span></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+</div>
+
+<script src="assets/nav-sinagepe.js"></script>
+<script>if (window.SinagepeNav) SinagepeNav.montar('portas');</script>
+</body>
+</html>
