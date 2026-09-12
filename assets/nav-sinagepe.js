@@ -22,6 +22,7 @@
 
   var ITENS = [
     { key: 'painel',        icon: '\u25A6', label: 'PAINEL',                href: 'index.html', grupo: 'PAINEL' },
+        { key: 'portas', icon: '\u229E', label: 'Portas', href: 'portas.html', grupo: 'PAINEL' },
     { key: 'indicadores', icon: '\u25EB', label: 'Indicadores do Painel', href: 'indicadores-painel.html', grupo: 'PAINEL' },
     { key: 'apresentacao', icon: '\u25C8', label: 'Apresenta\u00e7\u00e3o', href: 'apresentacao.html', grupo: 'PAINEL' },
     { key: 'balanco-visual', icon: '\u25A3', label: 'Balan\u00e7o Visual', href: 'balanco-visual.html', grupo: 'TERRITORIO' },
