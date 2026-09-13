@@ -1414,12 +1414,12 @@ function tcRelogio(){
    ============================================================ */
 var REAL={};
 function carregarReais(){
-  return Promise.all(['armazens-nacionais','farmacias-anarme','rede-viaria','sima-precos','antecipacao']
+    return Promise.all(['armazens-nacionais','farmacias-anarme','rede-viaria','sima-precos','antecipacao','saude-anuario-misau']
     .map(function(f){
       return fetch('data/'+f+'.json',{cache:'no-store'})
         .then(function(r){return r.ok?r.json():null}).catch(function(){return null});
     })).then(function(r){
-      REAL.arm=r[0];REAL.far=r[1];REAL.rv=r[2];REAL.sima=r[3];REAL.risc=r[4];
+            REAL.arm=r[0];REAL.far=r[1];REAL.rv=r[2];REAL.sima=r[3];REAL.risc=r[4];REAL.saude=r[5];
       return REAL;
     });
 }
@@ -1491,10 +1491,9 @@ function tcIndices(data,ipl,incl){
 
 /* ---------- camadas do mapa ---------- */
 const LAYERS=[
-  {id:'disp',n:'Disponibilidade',s:'Stock físico por província',ic:'M3 12h4l3 8 4-16 3 8h4',t:'Disponibilidade por província',
-   bands:[[80,'#12B981','Normal ≥80%'],[50,'#F0A926','Aviso 50–80%'],[0,'#EF4444','Ruptura <50%']]},
-  {id:'iam',n:'Índice de abastecimento',s:'IAM provincial',ic:'M4 18l5-6 4 4 7-9',t:'Índice de abastecimento provincial (IAM)',
-   bands:[[80,'#2DD4BF','Excelente ≥0,80'],[70,'#12B981','Adequado 0,70–0,79'],[50,'#F0A926','Moderado 0,50–0,69'],[0,'#EF4444','Crítico <0,50']]},
+    {id:'disp',n:'Medicamentos',s:'Disponibilidade · MISAU 2025',ic:'M3 12h4l3 8 4-16 3 8h4',t:'Disponibilidade de medicamentos essenciais de saúde materna, por província — Anuário Estatístico de Saúde 2025, fonte nSIMAM. Meta do MISAU: 90%.',
+   bands:[[90,'#12B981','Cumpre a meta ≥90%'],[80,'#F0A926','Abaixo da meta 80–90%'],[0,'#EF4444','Bem abaixo <80%']]},
+  
   {id:'arm',n:'Ocupação de armazéns',s:'Capacidade utilizada',ic:'M3 21V9l9-6 9 6v12M9 21v-8h6v8',t:'Ocupação dos armazéns registados',
    bands:[[95,'#EF4444','Crítico >95%'],[80,'#F0A926','Alerta 80–95%'],[60,'#22B8F0','Aviso 60–80%'],[0,'#12B981','Normal <60%']]},
   {id:'alr',n:'Alertas activos',s:'Ocorrências por província',ic:'M12 3l9 16H3L12 3ZM12 9v5M12 17h.01',t:'Alertas activos por província',
@@ -1503,9 +1502,14 @@ const LAYERS=[
 const bandaCor=(bands,v)=>{for(const b of bands) if(v>=b[0]) return b[1];return bands[bands.length-1][1];};
 
 function valorProv(nome){
-  const d=TC.data;
-  if(TC.layer==='disp'){const p=d.provincias.find(x=>x.nome===nome);return p?p.disponibilidade:0;}
-  if(TC.layer==='iam'){const p=d.iamProvincial.find(x=>x.nome===nome);return p?p.valor*100:0;}
+  if(TC.layer==='disp'){
+    /* Era o "stock físico por província" do ficheiro de demonstração —
+       número inventado, porque nenhuma unidade reporta existências.
+       Passa a ser a disponibilidade de medicamentos essenciais publicada
+       pelo MISAU no Anuário Estatístico de Saúde 2025, fonte nSIMAM. */
+    const s=((REAL.saude&&REAL.saude.disponibilidadeMedicamentos)||{}).porProvincia||[];
+    const p=s.find(x=>x.provincia===nome);
+    return p?p.valor:null;}
   if(TC.layer==='arm'){const a=((REAL.arm&&REAL.arm.armazens)||[]).filter(x=>x.provincia===nome);
     /* Era a ocupação média dos armazéns — número inventado, porque nenhuma
        unidade reporta existências. Passa a ser a contagem de unidades
@@ -1513,7 +1517,6 @@ function valorProv(nome){
     return a.length;}
   return ((REAL.rv&&REAL.rv.interrupcoes)||[]).filter(x=>x.provincia===nome).length;
 }
-
 function tcPintar(){
   const L=LAYERS.find(l=>l.id===TC.layer);
   $('tc-maptitle').textContent=L.t;
