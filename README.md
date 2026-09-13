@@ -41,11 +41,14 @@ problema que o sistema torna visível antes de propor resolvê-lo.
 
 ## O que já se descobriu
 
-**Maior dispersão de preço registada: milho, 341%.** Na semana de 17 a 23 de Julho de 2023,
-o milho custava 17 MT/kg em Mandimba e 75 MT/kg no Búzi. O boletim regista o valor do Búzi
-e não o explica. A dispersão é calculada como (máximo − mínimo) ÷ mínimo, sobre os preços a
-retalho da mesma edição — a fórmula está à vista no ecrã, com a edição, o período e as duas
-praças identificadas.
+**Maior dispersão de preço registada: milho, 341% — não confirmada por segunda fonte.** Na
+semana de 17 a 23 de Julho de 2023, o SIMA regista milho a 17 MT/kg em Mandimba e 75 MT/kg no
+Búzi, e não explica o valor do Búzi. A base de preços do Programa Alimentar Mundial, para o
+mesmo mês, tem milho branco em catorze mercados e não tem o Búzi: o máximo é Panda, a 34,29,
+o que dá 100% de dispersão. As duas fontes têm universos de recolha diferentes e nenhuma está
+necessariamente errada — mas o indicador mais visível do sistema assenta numa observação de
+fonte única, e é assim que está declarado. A dispersão é calculada como (máximo − mínimo) ÷
+mínimo, com a edição, o período e as praças identificadas.
 
 **Caso logístico analisado: feijão manteiga, 211%.** Na mesma semana, 52 MT/kg em Lichinga e
 162 MT/kg em Mandimba. Não é o recorde, mas é o caso que permite provar o método, porque é o
@@ -53,6 +56,11 @@ praças identificadas.
 produto documentado entre elas pelo próprio boletim, e distância calculável. O gasóleo dessa
 viagem custa cerca de 0,37 MT/kg — a uma distância de estrada estimada em 162 km e ao preço
 mais alto praticado no país. Explica **menos de meio por cento** da diferença.
+
+Este achado está confirmado por fonte independente. A base do Programa Alimentar Mundial, para
+Julho de 2023, regista 52,00 em Lichinga e 161,66 em Mandimba — os mesmos 211%, a partir de
+recolha diferente. O mínimo do milho em Mandimba, o milho em Panda e o mínimo do amendoim em
+Lichinga confirmam-se igualmente.
 
 A leitura que o sistema tira daqui é deliberadamente contida: não conclui que alguém cobra
 a mais. Conclui que o custo de mover o produto não chega para explicar o preço, e que a
@@ -69,6 +77,14 @@ resolvida em silêncio.
 oito edições, sete com valores utilizáveis, entre Setembro de 2022 e Julho de 2023 — não é
 série contínua, são fotografias em datas diferentes, cada uma com a edição e a ligação ao
 PDF original declaradas.
+
+**A série longa veio de fora.** A base de preços de mercado do Programa Alimentar Mundial traz
+32.027 observações de retalho entre Janeiro de 2015 e Março de 2026, em 99 mercados das onze
+províncias, para 21 produtos. São preços observados, não estimados — cada linha da fonte traz
+essa marca. Cobre os alimentos transformados que o SIMA extraído não cobria: farinha de milho,
+farinha de trigo, óleo alimentar e açúcar, que são bens isentos de IVA pelo artigo 9.º do
+respectivo Código e onde o sistema tinha lacuna. A recolha é irregular — 12.077 observações em
+2021 e 1.876 em 2025 — pelo que cada mês traz o seu número de observações.
 
 **A insegurança alimentar tem dois números oficiais em simultâneo.** Para Outubro de 2025 a
 Março de 2026, a FAO indica 3,5 milhões de pessoas em fase 3 ou acima, a nível nacional; a
@@ -122,8 +138,9 @@ Escritas no sistema e aplicadas em todos os ecrãs:
   combustível estão todos à vista e podem ser trocados por quem discordar.
 - O sistema não prevê **quando** ocorrerá uma ruptura — não há série histórica que o permita
   e qualquer probabilidade seria inventada. Diz **onde** a cadeia é estruturalmente frágil.
-- Os preços mais recentes que o sistema alcança são de Julho de 2023. Servem para provar o
-  método e medir variação real entre datas, não para decidir hoje.
+- Os preços observados chegam a Março de 2026 em oito produtos, pela base do Programa Alimentar
+  Mundial, e param em Julho de 2023 na série extraída do SIMA. Nenhuma das duas se actualiza
+  sozinha: ambas exigem descarregar e tratar o ficheiro à mão.
 - Moçambique não tem organização-membro da GS1 nem prefixo nacional de país. Zero produtos
   com identificação normalizada.
 
@@ -150,12 +167,28 @@ Informação de Mercados Agrários, MAAP (www.agricultura.gov.mz/sima e www.sima
 Administração Nacional de Estradas, via MozGIS (dados de rede viária sob licença de uso não
 comercial com citação, ANE 2020) · Autoridade Reguladora de Energia, ARENE (preços regulados
 ao abrigo do Decreto n.º 89/2019 e da Lei n.º 11/2017) · Bolsa de Mercadorias de Moçambique ·
-Instituto de Cereais de Moçambique · ANARME · Balcão de Atendimento Único · APIEX
+Instituto de Cereais de Moçambique · ANARME · Programa Alimentar Mundial, base de preços de mercado
+via Humanitarian Data Exchange · Balcão de Atendimento Único · APIEX
 (apiex.gov.mz) · CEDSIF (www.cedsif.gov.mz) · UN Comtrade · FAO e classificação IPC.
 
 Cada valor apresentado no sistema traz a sua fonte, a data de recolha e o estado de
 verificação. As lacunas estão listadas em ecrã próprio, com identificação da entidade que
 detém o dado em falta.
+
+---
+
+## Para onde vai
+
+O objectivo é o tempo real: fontes que se actualizam sozinhas, operadores que declaram entradas
+e saídas, e um painel que mostra a situação de hoje em vez da última recolha conhecida.
+
+Hoje nenhuma das 17 fontes se actualiza automaticamente. Esse número está no ecrã de entrada,
+ao lado da data da última recolha, e é o indicador de progresso do sistema — quando uma fonte
+passar a automática, sobe.
+
+O que falta não é programação. É infraestrutura de servidor, sem a qual não há tarefas
+agendadas nem recolha automática, e um canal pelo qual as instituições possam declarar dados.
+O ecrã de portas mostra, para cada área sem dados, quem os detém.
 
 ---
 
