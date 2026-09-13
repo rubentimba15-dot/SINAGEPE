@@ -75,10 +75,15 @@ tr:last-child td{border-bottom:none}
   <main>
     <div class="eyebrow">Cadeia de abastecimento &mdash; sa&uacute;de</div>
     <h1>Cadeia Nacional de Medicamentos</h1>
-    <p class="sub">Estrutura constru&iacute;da e a aguardar liga&ccedil;&atilde;o. Mostra o que o sistema far&aacute; quando o agregado do MISAU e da ANARME estiver ligado, e declara em cada indicador o que falta e quem o det&eacute;m.</p>
+    <p class="sub">Quatro indicadores ligados, a partir do Anu&aacute;rio Estat&iacute;stico de Sa&uacute;de do MISAU. Oito por ligar, cada um a declarar o que falta e quem o det&eacute;m. Disponibilidade n&atilde;o &eacute; exist&ecirc;ncia: mede em quantas unidades sanit&aacute;rias o produto estava presente, n&atilde;o que quantidade havia.</p>
 
     <div class="aviso-topo" id="aviso"></div>
     <div class="principio" id="principio"></div>
+
+    <div class="card frame">
+      <div class="ch"><h2>Ligado &mdash; Anu&aacute;rio Estat&iacute;stico de Sa&uacute;de 2025</h2><span class="tag ok" id="l-tag">&mdash;</span></div>
+      <div class="bd" id="ligado"></div>
+    </div>
 
     <div class="card frame">
       <div class="ch"><h2>Sistemas que j&aacute; produzem estes dados</h2><span class="tag ok" id="s-tag">&mdash;</span></div>
@@ -116,10 +121,61 @@ if(window.SinagepePesquisa) SinagepePesquisa.iniciar();
 var ST={};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 
+function desenharLigado(){
+  var a=ST.a; if(!a){document.getElementById('ligado').innerHTML='<div class="err">Anu&aacute;rio n&atilde;o carregado.</div>';return}
+  var dm=a.disponibilidadeMedicamentos, gc=a.gestaoDaCadeia, qm=a.qualidadeDeMedicamentos;
+
+  function cor(v,meta){return v>=meta?'#12B981':(v>=meta*0.85?'#F0A926':'#EF4444')}
+
+  var h='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin-bottom:14px">';
+  h+='<div style="padding:13px 15px;border:1px solid var(--card-line);border-radius:10px;background:#0A121E">'
+   +'<div style="font-size:10.5px;color:var(--t4)">Disponibilidade de medicamentos</div>'
+   +'<div class="mono" style="font-size:23px;font-weight:700;color:'+cor(dm.nacional,dm.meta)+'">'+String(dm.nacional).replace('.',',')+'%</div>'
+   +'<div style="font-size:10.5px;color:var(--t3)">meta '+dm.meta+'% &middot; '+dm.fonte+'</div></div>';
+  h+='<div style="padding:13px 15px;border:1px solid var(--card-line);border-radius:10px;background:#0A121E">'
+   +'<div style="font-size:10.5px;color:var(--t4)">Prov&iacute;ncias acima da meta</div>'
+   +'<div class="mono" style="font-size:23px;font-weight:700;color:#EF4444">0 <span style="font-size:12px;color:var(--t4)">de '+dm.porProvincia.length+'</span></div>'
+   +'<div style="font-size:10.5px;color:var(--t3)">nenhuma atinge os '+dm.meta+'%</div></div>';
+  h+='<div style="padding:13px 15px;border:1px solid var(--card-line);border-radius:10px;background:#0A121E">'
+   +'<div style="font-size:10.5px;color:var(--t4)">Gest&atilde;o da cadeia, m&eacute;dia</div>'
+   +'<div class="mono" style="font-size:23px;font-weight:700;color:#F0A926">'+gc.mediaNacional+'%</div>'
+   +'<div style="font-size:10.5px;color:var(--t3)">'+gc.classificacaoMedia+' &middot; CMAM</div></div>';
+  h+='<div style="padding:13px 15px;border:1px solid var(--card-line);border-radius:10px;background:#0A121E">'
+   +'<div style="font-size:10.5px;color:var(--t4)">Amostras com qualidade</div>'
+   +'<div class="mono" style="font-size:23px;font-weight:700;color:#12B981">'+String(qm.nacional.percentagemQualidade).replace('.',',')+'%</div>'
+   +'<div style="font-size:10.5px;color:var(--t3)">'+qm.nacional.analisadas+' de '+qm.nacional.recebidas+' analisadas &middot; ANARME</div></div>';
+  h+='</div>';
+
+  h+='<table style="margin-bottom:6px"><thead><tr><th>Prov&iacute;ncia</th><th style="text-align:right">Disponibilidade</th>'
+   +'<th style="text-align:right">Gest&atilde;o da cadeia</th><th style="text-align:right">Amostras analisadas</th>'
+   +'<th style="text-align:right">Com qualidade</th></tr></thead><tbody>';
+  var gci={},qmi={};
+  gc.porProvincia.forEach(function(x){gci[x.provincia]=x});
+  qm.porProvincia.forEach(function(x){qmi[x.provincia]=x});
+  dm.porProvincia.slice().sort(function(a,b){return a.valor-b.valor}).forEach(function(p){
+    var g=gci[p.provincia], q=qmi[p.provincia];
+    h+='<tr><td style="font-weight:600">'+esc(p.provincia)+'</td>'
+     +'<td class="mono" style="text-align:right;color:'+cor(p.valor,dm.meta)+'">'+String(p.valor).replace('.',',')+'%</td>'
+     +'<td class="mono" style="text-align:right;color:var(--t2)">'+(g?String(g.pontuacao).replace('.',',')+'% <span style="color:var(--t4);font-size:10px">'+g.classificacao+'</span>':'<span style="color:var(--t4)">&mdash;</span>')+'</td>'
+     +'<td class="mono" style="text-align:right;color:var(--t3)">'+(q?q.analisadas:'&mdash;')+'</td>'
+     +'<td class="mono" style="text-align:right;color:var(--t3)">'+(q?String(q.percentagemQualidade).replace('.',',')+'%':'&mdash;')+'</td></tr>';
+  });
+  h+='</tbody></table>';
+
+  h+='<div class="aviso r"><b>Disponibilidade n&atilde;o &eacute; exist&ecirc;ncia.</b> Mede a percentagem de unidades sanit&aacute;rias onde o produto estava presente, n&atilde;o a quantidade em armaz&eacute;m. Os oito indicadores de exist&ecirc;ncia e consumo continuam por ligar.</div>';
+  h+='<div class="aviso i"><b>Base desigual na qualidade.</b> Maputo Cidade recebeu '+qmi['Maputo Cidade'].recebidas+' amostras e Sofala recebeu '+qmi['Sofala'].recebidas+'. Percentagens calculadas sobre tr&ecirc;s amostras n&atilde;o s&atilde;o compar&aacute;veis com as calculadas sobre '+qmi['Nampula'].analisadas+'.</div>';
+  h+='<div class="aviso r"><b>Tete: 20 amostras analisadas, zero com qualidade.</b> &Uacute;nica prov&iacute;ncia nessa situa&ccedil;&atilde;o. O anu&aacute;rio n&atilde;o comenta. Requer verifica&ccedil;&atilde;o junto da ANARME antes de qualquer leitura.</div>';
+  h+='<div class="aviso i"><b>Dez prov&iacute;ncias na gest&atilde;o da cadeia, n&atilde;o onze.</b> Maputo Cidade n&atilde;o consta da tabela do anu&aacute;rio. N&atilde;o se sabe se n&atilde;o foi avaliada ou se foi omitida.</div>';
+  h+='<div style="margin-top:12px;font-size:10.5px;color:var(--t4);line-height:1.55">Fonte: '+esc(a.meta.fonte)+' &middot; publicado em '+esc(a.meta.publicadoEm)+' &middot; per&iacute;odo de refer&ecirc;ncia '+esc(a.meta.periodoDeReferencia)+'. Fontes primárias dos indicadores: nSIMAM, Ferramenta Central, CMAM e ANARME.</div>';
+
+  document.getElementById('ligado').innerHTML=h;
+  document.getElementById('l-tag').textContent='4 indicadores ligados';
+}
+
 function desenhar(){
   var m=ST.d.meta;
   document.getElementById('aviso').innerHTML=
-    '<b>Sem dados. De prop&oacute;sito.</b> '+esc(m.avisoPrincipal)
+    '<b>Parcialmente ligado.</b> Os indicadores de disponibilidade, gest&atilde;o e qualidade vêm do Anu&aacute;rio Estat&iacute;stico de Sa&uacute;de do MISAU, publicado. Os indicadores de exist&ecirc;ncia, consumo, validade e tr&acirc;nsito continuam por ligar e aguardam o agregado da CMAM e do MISAU. Nenhum n&uacute;mero &eacute; inventado.'
    +'<div style="margin-top:9px;color:var(--t3)">'+esc(m.semDadosDeDoente)+'</div>';
   document.getElementById('principio').innerHTML=
     '<b>O princ&iacute;pio.</b> '+esc(m.principio);
@@ -173,9 +229,11 @@ function desenhar(){
   document.getElementById('r-tag').textContent=ST.d.recusado.length+' itens';
 }
 
-fetch('data/medicamentos-cadeia.json',{cache:'no-store'})
- .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status+' em data/medicamentos-cadeia.json');return r.json()})
- .then(function(j){ST.d=j;desenhar()})
+function ler(u){return fetch(u,{cache:'no-store'}).then(function(r){
+  if(!r.ok)throw new Error('HTTP '+r.status+' em '+u);return r.json()})}
+
+Promise.all([ler('data/medicamentos-cadeia.json'),ler('data/saude-anuario-misau.json')])
+ .then(function(v){ST.d=v[0];ST.a=v[1];desenhar();desenharLigado()})
  .catch(function(e){
    document.getElementById('aviso').innerHTML='<div class="err"><b>N&atilde;o foi poss&iacute;vel carregar.</b><br>'+esc(e.message)+'</div>';
  });
