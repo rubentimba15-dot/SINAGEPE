@@ -1,0 +1,214 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "criadoEm": "2026-09-13",
+    "titulo": "Fase Zero — Estado da Informação da Cadeia Farmacêutica de Moçambique",
+    "natureza": "Inventário documental dos sistemas de informação da cadeia de medicamentos. NÃO contém dados operacionais de existências, consumo ou distribuição — apenas o mapa de quem produz o quê.",
+    "metodo": "Pesquisa em fontes públicas: sítios institucionais do MISAU e da CMAM, documentação do DHIS2 e do OpenLMIS, publicações de parceiros de desenvolvimento (USAID, PNUD, Fundo Global) e do implementador nacional do DHIS2. Cada afirmação traz a sua fonte. O que não se confirmou fica declarado como não confirmado.",
+    "complementa": "medicamentos-cadeia.json, que define os indicadores e o que cada um precisa. Este ficheiro responde à pergunta anterior: que sistemas existem, quem os detém e o que cada um sabe.",
+    "semDadosDeDoente": "Nada neste ficheiro é dado individual. Trabalha sobre sistemas e instituições."
+  },
+
+  "achadoPrincipal": {
+    "titulo": "A camada de integração que se propunha construir já existe",
+    "oQue": "O MISAU integrou dados logísticos no SISMA, a sua plataforma nacional baseada em DHIS2. A integração foi feita pela Saudigitus, implementador nacional do DHIS2, aproveitando a camada de interoperabilidade que a própria organização desenvolveu para o SISMA, e abrange dados logísticos do MISAU e da Ferramenta Central. Está documentada a visualização do inventário nacional de produtos para antirretrovirais dentro do SISMA.",
+    "consequenciaParaOSinagepe": "O SINAGEPE não deve construir um motor de reconciliação da cadeia farmacêutica. Deve pedir acesso ao agregado que o SISMA já produz. Construir em paralelo seria duplicar trabalho do Estado e criar uma segunda verdade — o que as regras do próprio sistema proíbem.",
+    "parceiros": "MISAU em parceria com o Fundo Global, USAID, GAVI e Saudigitus (HISP Moçambique)",
+    "fontes": [
+      "https://dhis2.org/pt-pt/mozambique-logistics-integration/",
+      "https://saudigitus.org/aproveitamento-das-capacidades-de-interoperabilidade-do-dhis2-para-fornecer-sistemas-de-logistica-que-salvam-vidas-em-mocambique/"
+    ],
+    "estado": "confirmado por duas fontes que descrevem o mesmo trabalho"
+  },
+
+  "sistemas": [
+    {
+      "sigla": "SISMA",
+      "nome": "Sistema de Informação para Saúde em Monitoria e Avaliação",
+      "detentor": "MISAU — Direcção de Planificação e Cooperação, Departamento de Informação para Saúde",
+      "base": "DHIS2, plataforma de código aberto",
+      "oQueE": "Principal plataforma de gestão e análise de dados do MISAU. Suporta recolha, armazenamento, análise, interpretação, visualização e disseminação de informação de saúde, à escala nacional.",
+      "nivelTerritorial": "nacional, com hierarquia até unidade sanitária",
+      "contemTambem": "Lista Principal de Unidades Sanitárias (Master Facility List)",
+      "acessoPublico": "parcial — o portal é público e publica documentação e anuários; os dados de gestão exigem credencial",
+      "url": "https://sisma.misau.gov.mz/",
+      "publicacaoAproveitavel": {
+        "documento": "Anuário Estatístico de Saúde",
+        "edicaoLocalizada": "2025, com data de 30 de Abril de 2026",
+        "url": "https://sisma.misau.gov.mz/docs/",
+        "porqueImporta": "É informação de saúde publicada, com desagregação territorial, e não exige autorização nenhuma para ser lida. É o primeiro dado de saúde a que o SINAGEPE pode chegar sem pedir nada a ninguém.",
+        "estado": "por extrair"
+      },
+      "estado": "confirmado",
+      "fontes": ["https://sisma.misau.gov.mz/", "https://www.misau.gov.mz/?p=9738"]
+    },
+    {
+      "sigla": "SIGLUS",
+      "nome": "Sistema de Informação de Gestão Logística para Unidades Sanitárias",
+      "detentor": "CMAM, com o MISAU. Adoptado pela CMAM como solução de logística electrónica.",
+      "base": "OpenLMIS. Desenvolvido pela ThoughtWorks sobre essa plataforma, com apoio da Clinton Health Access Initiative e do departamento britânico de cooperação.",
+      "implementador": "Programa de aquisição e gestão de abastecimento em saúde global da USAID (GHSC-PSM)",
+      "oQueE": "Aplicação móvel em tablete que permite às unidades sanitárias gerir existências e encomendas electronicamente. A interface reproduz os formulários em papel anteriores. Funciona com e sem ligação, sincronizando automaticamente quando há sinal.",
+      "nivelTerritorial": "unidade sanitária",
+      "fluxoDeDados": "Unidade sanitária → depósito distrital → sincronização para o SIMAM. Através de um portal, a CMAM e as autoridades provinciais e distritais consultam os níveis de existência.",
+      "coberturaHistorica": [
+        {"data": "Dezembro de 2017", "valor": "157 unidades sanitárias, 4 províncias, 12 distritos"},
+        {"data": "Maio de 2020", "valor": "1 047 de 1 580 sítios a reportar activamente, 66%, cerca de três quartos das unidades sanitárias públicas do país"},
+        {"data": "cerca de 2021", "valor": "1 321 unidades sanitárias"}
+      ],
+      "avisoSobreACobertura": "As três contagens vêm de fontes e momentos diferentes e não são directamente comparáveis: mudam o universo e a definição de sítio activo. Registam-se as três sem escolher nenhuma.",
+      "estado": "confirmado",
+      "fontes": [
+        "https://openlmis.org/implementation_region/mozambique/",
+        "https://www.ghsupplychain.org/news/tablets-bring-data-insights-logistics-mozambique",
+        "https://www.ghsupplychain.org/news/remote-supportive-supervision-supply-chain-professionals-mozambique-during-covid-19"
+      ]
+    },
+    {
+      "sigla": "nSIMAM",
+      "nome": "Novo Sistema de Informação de Medicamentos e Artigos Médicos",
+      "detentor": "CMAM",
+      "oQueE": "Substitui o SIMAM. Cobre ajustes de existência, inventários, requisições, guias de remessa e módulos de suporte técnico, com monitoria de indicadores de desempenho.",
+      "nivelTerritorial": "armazéns provinciais e intermédios",
+      "estadoDeImplantacao": "Em formação de formadores. A CMAM, com o projecto PSM, formou técnicos provinciais e dos armazéns intermédios em Macaneta, de 20 a 24 de Outubro de 2025, e realizou formação nacional de formadores e administradores de 24 de Novembro a 5 de Dezembro de 2025.",
+      "correccaoAoRegistoAnterior": "O medicamentos-cadeia.json regista SIMAM. O sistema em implantação é o nSIMAM, com formação em curso durante 2025. Convém actualizar a designação.",
+      "estado": "confirmado",
+      "fontes": [
+        "https://www.cmam.gov.mz/formacao-de-formadores-no-uso-do-nsimam/",
+        "https://www.cmam.gov.mz/formacao-de-formadores-e-administradores-dos-sistemas-macs-wms-ferramenta-central-e-nsimam/"
+      ]
+    },
+    {
+      "sigla": "MACS WMS",
+      "nome": "Sistema de gestão de armazém",
+      "detentor": "CMAM",
+      "oQueE": "Gestão do armazém central e dos armazéns regionais. Formação nacional de formadores e administradores realizada em conjunto com o nSIMAM e a Ferramenta Central, de 24 de Novembro a 5 de Dezembro de 2025.",
+      "nivelTerritorial": "armazém central e regionais",
+      "oQueFaltaSaber": "Fornecedor, âmbito exacto dos módulos, interoperabilidade com o nSIMAM e com o SISMA, e período de dados disponível.",
+      "estado": "parcialmente confirmado — existência e formação confirmadas, funcionamento não documentado publicamente",
+      "fontes": ["https://www.cmam.gov.mz/formacao-de-formadores-e-administradores-dos-sistemas-macs-wms-ferramenta-central-e-nsimam/"]
+    },
+    {
+      "sigla": "FC",
+      "nome": "Ferramenta Central",
+      "detentor": "MISAU",
+      "oQueE": "Plataforma personalizada que integra a Lista Principal de Produtos (Master Product List).",
+      "porqueImporta": "É a fonte da nomenclatura dos produtos de saúde. Sem uma lista mestra de produtos não há reconciliação possível entre sistemas — é o equivalente farmacêutico ao problema dos códigos HS no comércio.",
+      "integracao": "Os seus dados foram integrados no SISMA através da camada de interoperabilidade do DHIS2.",
+      "estado": "confirmado",
+      "fontes": ["https://dhis2.org/pt-pt/mozambique-logistics-integration/"]
+    },
+    {
+      "sigla": "OpenLMIS",
+      "nome": "Plataforma de gestão logística de código aberto",
+      "detentor": "plataforma internacional, não é sistema nacional",
+      "oQueE": "Base sobre a qual o SIGLUS foi construído. Foi também implementada em Moçambique para gestão de existências de vacinas, no âmbito do Programa Alargado de Vacinação.",
+      "estado": "confirmado",
+      "fontes": ["https://openlmis.org/implementation_region/mozambique/", "https://dhis2.org/pt-pt/mozambique-logistics-integration/"]
+    },
+    {
+      "sigla": "SELV",
+      "nome": "Sistema Electrónico de Logística de Vacinas",
+      "detentor": "MISAU, implementado pela VillageReach",
+      "oQueE": "Logística de vacinas. Os logísticos registam visitas, equipamento de cadeia de frio, inventário e taxas de cobertura directamente no sistema, durante as distribuições.",
+      "cobertura": "nacional",
+      "estado": "confirmado",
+      "fontes": ["https://openlmis.org/implementation_region/mozambique/"]
+    },
+    {
+      "sigla": "SRM · Track & Trace",
+      "nome": "Sistema Nacional de Rastreabilidade de Medicamentos e Produtos de Saúde",
+      "detentor": "ANARME",
+      "oQueE": "Selo de rastreio aplicado do fabrico ao paciente.",
+      "marcos": "Lançado a 30 de Julho de 2025. Sala de controlo instalada em Junho de 2026.",
+      "estado": "confirmado no registo anterior do sistema",
+      "fontes": ["https://misau.gov.mz/mocambique-lanca-sistema-nacional-de-rastreabilidade-de-medicamentos-para-combater-contrabando-e-falsificacao/"]
+    },
+    {
+      "sigla": "iDART",
+      "nome": "Sistema de dispensa de antirretrovirais",
+      "estado": "NÃO CONFIRMADO EM FONTE PÚBLICA CONSULTADA",
+      "nota": "Consta do documento que motivou esta auditoria. Não foi localizada documentação pública sobre a sua utilização em Moçambique nesta pesquisa. Fica registado como por verificar, não como inexistente."
+    }
+  ],
+
+  "instituicoes": [
+    {
+      "sigla": "CMAM",
+      "nome": "Central de Medicamentos e Artigos Médicos, IP",
+      "natureza": "Agência semi-autónoma do Ministério da Saúde. Instituição de logística farmacêutica.",
+      "fundacao": "6 de Setembro de 1975, pelo Decreto Presidencial n.º 13/75",
+      "mandato": "Planificação, aquisição, importação, armazenagem, conservação e distribuição de medicamentos, artigos médicos e outros produtos de saúde para o Serviço Nacional de Saúde, em todo o território nacional. É a única instituição com mandato para a logística farmacêutica no país.",
+      "sede": "Av. Moçambique n.º 847, Zimpeto, Cidade de Maputo",
+      "url": "https://www.cmam.gov.mz/",
+      "publicaConcursos": "Sim, em https://www.cmam.gov.mz/categoria/concursos/ — fonte pública sobre aquisição de medicamentos e insumos, ao abrigo do Decreto n.º 79/2022 de 30 de Dezembro",
+      "estado": "confirmado",
+      "fontes": [
+        "https://www.cmam.gov.mz/sobre-nos/",
+        "https://www.usaid.gov/pt/mozambique/fact-sheet/intermediary-warehouse-implementation-central-and-intermediate-warehouses-management-and-accountability-project-cmam"
+      ]
+    }
+  ],
+
+  "redeFisica": {
+    "titulo": "A rede de armazenagem de medicamentos — que o SINAGEPE não tem no mapa",
+    "modeloAnterior": "Antes de 2014, todos os produtos de saúde destinados às unidades sanitárias públicas eram guardados em três armazéns centrais.",
+    "modeloEmTransicao": {
+      "substitui": {"depositosProvinciais": 11, "depositosDistritais": 240},
+      "por": {"armazensIntermediarios": 30, "estado": "previstos"},
+      "logica": "Os armazéns intermediários abastecem directamente as unidades sanitárias, substituindo depósitos de menor porte nos distritos.",
+      "construidos": "Cinco, à data da ficha da USAID consultada. Chimoio inaugurado a 1 de Julho de 2021. Mocuba inaugurado posteriormente. Previstos Ile e Mopeia.",
+      "capacidades": [
+        {"armazem": "Chimoio, Manica", "paletes": 1620},
+        {"armazem": "Mocuba, Zambézia", "paletes": 720},
+        {"armazem": "Beira, Sofala", "paletes": 5000, "nota": "em requalificação, capacidade prevista; o armazém é regularmente afectado por ciclones e está a ser ampliado com resistência climática"}
+      ],
+      "financiamento": "Mocuba e Chimoio orçados em cerca de 8 milhões de dólares, financiados pela USAID. Beira financiado pelo Fundo Global através do MISAU, obra executada pelo PNUD.",
+      "enquadramento": "Programa Quinquenal do Governo 2020-2024 e Plano Estratégico de Logística Farmacêutica"
+    },
+    "avisoDeConfusao": "O número 30 aparece nos dois lados e não é o mesmo: o SINAGEPE tem 30 armazéns cadastrados de produtos agrícolas e comerciais, e a CMAM prevê 30 armazéns intermediários de medicamentos. São redes distintas, com donos distintos. Nunca somar nem comparar.",
+    "oQueIstoSignificaParaOSinagepe": "Existe uma rede nacional de armazenagem de medicamentos — 11 depósitos provinciais, 240 distritais e 30 armazéns intermediários em construção — que não está no cadastro do sistema. É infraestrutura pública documentada, cartografável, e cruzável com a rede viária que o sistema já tem.",
+    "estado": "confirmado",
+    "fontes": [
+      "https://www.cmam.gov.mz/cmam-reforca-infraestruturas-com-inauguracao-de-mais-dois-armazens-de-medicamentos/",
+      "https://www.undp.org/mozambique/news/cadeia-de-abastecimento-e-logistica-lancada-1a-pedra-para-requalificacao-do-armazem-central-de-medicamentos-e-artigos-medicos-da",
+      "https://mozambique.un.org/pt/136281-popula%C3%A7%C3%A3o-da-regi%C3%A3o-centro-de-mo%C3%A7ambique-ganha-novo-armaz%C3%A9m-de-produtos-m%C3%A9dicos",
+      "https://dhis2.org/pt-pt/mozambique-logistics-integration/"
+    ]
+  },
+
+  "oQueOSinagepePodeFazerSemAutorizacao": [
+    {
+      "accao": "Extrair o Anuário Estatístico de Saúde do SISMA",
+      "porque": "É publicação oficial do MISAU, com desagregação territorial, e está em linha. A edição de 2025 tem data de 30 de Abril de 2026.",
+      "esforco": "baixo", "impacto": "alto", "autorizacao": "nenhuma"
+    },
+    {
+      "accao": "Cadastrar a rede de armazenagem de medicamentos",
+      "porque": "Os armazéns intermediários estão documentados com localização, capacidade em paletes, financiador e data de inauguração. Cruzam-se com a rede viária e os cortes da ANE que o sistema já tem.",
+      "esforco": "médio", "impacto": "alto", "autorizacao": "nenhuma"
+    },
+    {
+      "accao": "Acompanhar os concursos publicados pela CMAM",
+      "porque": "São fonte pública sobre aquisição de medicamentos e insumos médicos. Não dão preço por lote, mas dão objecto, adjudicação e enquadramento legal.",
+      "esforco": "médio", "impacto": "médio", "autorizacao": "nenhuma"
+    }
+  ],
+
+  "oQueExigeAutorizacao": [
+    {"dado": "Existências e consumo por unidade sanitária", "sistema": "SIGLUS", "detentor": "CMAM · MISAU"},
+    {"dado": "Existências em armazéns provinciais e intermédios", "sistema": "nSIMAM", "detentor": "CMAM"},
+    {"dado": "Agregado logístico nacional já integrado", "sistema": "SISMA", "detentor": "MISAU — DPC/DIS", "nota": "É o pedido de maior retorno: a integração já está feita, falta o acesso ao agregado."},
+    {"dado": "Lista Principal de Produtos", "sistema": "Ferramenta Central", "detentor": "MISAU"},
+    {"dado": "Volume selado e anomalias de rastreabilidade", "sistema": "SRM", "detentor": "ANARME"}
+  ],
+
+  "lacunasDestaAuditoria": [
+    "Não se confirmou a periodicidade de actualização de nenhum dos sistemas.",
+    "Não se confirmou o período histórico de dados disponível em nenhum deles.",
+    "Não se localizou documentação pública sobre o iDART em Moçambique.",
+    "Não se confirmou se o SISMA publica dados logísticos desagregados ou apenas indicadores clínicos.",
+    "As contagens de cobertura do SIGLUS são de 2017, 2020 e cerca de 2021. Não se localizou valor actual.",
+    "Não se localizou o Plano Estratégico de Logística Farmacêutica em versão integral; é referido por terceiros."
+  ]
+}
