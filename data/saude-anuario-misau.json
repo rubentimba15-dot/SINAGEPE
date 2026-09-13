@@ -1,0 +1,199 @@
+{
+  "meta": {
+    "versao": "1.0",
+    "criadoEm": "2026-09-13",
+    "fonte": "MISAU — Anuário Estatístico de Saúde 2025",
+    "orgaoPublicador": "Ministério da Saúde, Direcção de Planificação e Cooperação, Departamento de Informação de Saúde",
+    "publicadoEm": "2026-04-21",
+    "periodoDeReferencia": "2025 (anexos cobrem 2021-2025)",
+    "url": "https://sisma.misau.gov.mz/",
+    "licenca": "Publicação oficial. Verificar termos de reprodução antes de redistribuir.",
+    "nivelConfianca": "A — fonte oficial primária",
+    "porqueImporta": "É o primeiro dado de existências e disponibilidade de medicamentos que o SINAGEPE alcança. O medicamentos-cadeia.json marca oito indicadores como POR LIGAR, à espera de agregados do MISAU e da CMAM. Parte desses agregados está publicada — e vem exactamente dos sistemas inventariados na Fase Zero: nSIMAM, Ferramenta Central, CMAM e ANARME.",
+    "oQueNaoTem": "Existências em unidades ou toneladas, consumo, lotes, validade, movimentos entre armazéns e preços. A disponibilidade é uma percentagem de unidades sanitárias com o produto, não uma quantidade.",
+    "semDadosDeDoente": "Nada aqui é dado individual. Todos os valores são agregados provinciais ou nacionais."
+  },
+
+  "disponibilidadeMedicamentos": {
+    "indicador": "Disponibilidade de medicamentos essenciais de saúde materna e reprodutiva a nível da unidade sanitária",
+    "fonte": "nSIMAM",
+    "ano": 2025,
+    "unidade": "% de disponibilidade anual",
+    "meta": 90,
+    "ambito": "unidades sanitárias com serviços de maternidade",
+    "leituraDoAnuario": "A disponibilidade foi de 81%. Todas as províncias tiveram desempenho abaixo da meta estabelecida de 90%.",
+    "nacional": 80.9,
+    "porProvincia": [
+      {"provincia": "Niassa", "valor": 84.0},
+      {"provincia": "Cabo Delgado", "valor": 77.3},
+      {"provincia": "Nampula", "valor": 83.4},
+      {"provincia": "Zambézia", "valor": 79.6},
+      {"provincia": "Tete", "valor": 75.7},
+      {"provincia": "Manica", "valor": 81.1},
+      {"provincia": "Sofala", "valor": 80.5},
+      {"provincia": "Inhambane", "valor": 77.0},
+      {"provincia": "Gaza", "valor": 83.9},
+      {"provincia": "Maputo Província", "valor": 80.9},
+      {"provincia": "Maputo Cidade", "valor": 89.2}
+    ],
+    "porProduto": [
+      {"produto": "Sulfato de magnésio 500/100 mg/mL (10%/50%) injectável", "valor": 92.1},
+      {"produto": "Gentamicina, sulfato 80 mg/2 mL injectável", "valor": 83.2},
+      {"produto": "Oxitocina 5/10 UI/mL injectável", "valor": 83.1},
+      {"produto": "Hidralazina 20/25 mL injectável", "valor": 82.7},
+      {"produto": "Metronidazol 500 mg/100 mL injectável", "valor": 72.6},
+      {"produto": "Ampicilina 500 mg injectável", "valor": 56.9, "nota": "O anuário assinala disponibilidade limitada, média de 57%, abaixo do padrão desejado."}
+    ]
+  },
+
+  "rupturasARV": {
+    "indicador": "Proporção de locais TARV que apresentam rupturas de antirretrovirais sentinela no final do mês",
+    "fonte": "Ferramenta Central",
+    "ano": 2025,
+    "meta": 5,
+    "unidade": "%",
+    "leituraDoAnuario": "Resultado satisfatório em todas as províncias, abaixo do mínimo de 5%.",
+    "valoresLidos": [1.4, 0.5, 2.3, 1.4, 1.0, 1.3, 0.9, 0.8, 1.4, 3.4, 1.8, 1.4],
+    "avisoDeExtraccao": "Os valores vêm de um gráfico de barras, não de uma tabela. A correspondência entre cada valor e a respectiva província NÃO foi possível estabelecer a partir do texto extraído. Ficam registados como série sem rótulo, para verificação visual no documento original, página 76.",
+    "estado": "extraído parcialmente — associação província/valor por confirmar"
+  },
+
+  "gestaoDaCadeia": {
+    "indicador": "Províncias que cumprem satisfatoriamente os procedimentos de gestão, controlo e dispensa de medicamentos na cadeia de distribuição",
+    "fonte": "Relatório da CMAM, IP",
+    "ano": 2025,
+    "unidade": "pontuação %",
+    "mediaNacional": 65,
+    "classificacaoMedia": "Aceitável",
+    "escala": [
+      {"intervalo": "90-100", "classificacao": "Excelente"},
+      {"intervalo": "75-90", "classificacao": "Bom"},
+      {"intervalo": "60-75", "classificacao": "Aceitável"},
+      {"intervalo": "0-60", "classificacao": "Não satisfatório"}
+    ],
+    "porProvincia": [
+      {"provincia": "Inhambane", "pontuacao": 79.0, "classificacao": "Bom"},
+      {"provincia": "Gaza", "pontuacao": 75.0, "classificacao": "Bom"},
+      {"provincia": "Sofala", "pontuacao": 72.0, "classificacao": "Aceitável"},
+      {"provincia": "Nampula", "pontuacao": 70.0, "classificacao": "Aceitável"},
+      {"provincia": "Tete", "pontuacao": 67.4, "classificacao": "Aceitável"},
+      {"provincia": "Cabo Delgado", "pontuacao": 65.4, "classificacao": "Aceitável"},
+      {"provincia": "Maputo Província", "pontuacao": 65.0, "classificacao": "Aceitável"},
+      {"provincia": "Niassa", "pontuacao": 61.0, "classificacao": "Aceitável"},
+      {"provincia": "Zambézia", "pontuacao": 60.0, "classificacao": "Aceitável"},
+      {"provincia": "Manica", "pontuacao": 60.0, "classificacao": "Aceitável"}
+    ],
+    "avisoDeCobertura": "São dez províncias avaliadas, não onze. Maputo Cidade não consta da tabela do anuário. Não se sabe se não foi avaliada ou se foi omitida.",
+    "observacao": "Zambézia e Manica estão exactamente em 60,0, no limite inferior do Aceitável. Meio ponto abaixo passariam a Não Satisfatório."
+  },
+
+  "qualidadeDeMedicamentos": {
+    "indicador": "Amostras recebidas, analisadas e com qualidade, e reacções adversas a medicamentos notificadas",
+    "fonte": "Relatório da ANARME",
+    "ano": 2025,
+    "leituraDoAnuario": "Cerca de 86% das amostras de medicamentos analisadas foram consideradas de qualidade. As províncias de Cabo Delgado, Maputo e Niassa são as que menos notificaram reacções adversas ao longo de 2025.",
+    "nacional": {"recebidas": 705, "analisadas": 409, "comQualidade": 351, "percentagemQualidade": 85.8, "ramNotificadas": 8798},
+    "porProvincia": [
+      {"provincia": "Niassa", "recebidas": 1, "analisadas": 0, "comQualidade": 0, "percentagemQualidade": 0, "ramNotificadas": 123},
+      {"provincia": "Cabo Delgado", "recebidas": 32, "analisadas": 11, "comQualidade": 9, "percentagemQualidade": 81.8, "ramNotificadas": 89},
+      {"provincia": "Nampula", "recebidas": 183, "analisadas": 154, "comQualidade": 152, "percentagemQualidade": 98.7, "ramNotificadas": 1083},
+      {"provincia": "Zambézia", "recebidas": 23, "analisadas": 10, "comQualidade": 10, "percentagemQualidade": 100.0, "ramNotificadas": 337},
+      {"provincia": "Tete", "recebidas": 39, "analisadas": 20, "comQualidade": 0, "percentagemQualidade": 0.0, "ramNotificadas": 1665},
+      {"provincia": "Manica", "recebidas": 5, "analisadas": 5, "comQualidade": 5, "percentagemQualidade": 100.0, "ramNotificadas": 840},
+      {"provincia": "Sofala", "recebidas": 5, "analisadas": 3, "comQualidade": 3, "percentagemQualidade": 100.0, "ramNotificadas": 2778},
+      {"provincia": "Inhambane", "recebidas": 29, "analisadas": 28, "comQualidade": 11, "percentagemQualidade": 39.3, "ramNotificadas": 854},
+      {"provincia": "Gaza", "recebidas": 49, "analisadas": 36, "comQualidade": 33, "percentagemQualidade": 91.7, "ramNotificadas": 792},
+      {"provincia": "Maputo Província", "recebidas": 81, "analisadas": 31, "comQualidade": 28, "percentagemQualidade": 90.3, "ramNotificadas": 100},
+      {"provincia": "Maputo Cidade", "recebidas": 258, "analisadas": 111, "comQualidade": 100, "percentagemQualidade": 90.1, "ramNotificadas": 137}
+    ],
+    "avisosDeLeitura": [
+      "A taxa de análise é muito desigual: Maputo Cidade recebeu 258 amostras e Manica e Sofala receberam 5 cada. As percentagens de qualidade de províncias com 3 ou 5 amostras analisadas não são comparáveis com as de províncias com 154. Pela regra do sistema, nenhum valor é publicado a partir de menos de cinco operadores — aqui o mesmo princípio recomenda não comparar percentagens sobre bases tão diferentes.",
+      "Tete tem 20 amostras analisadas e zero com qualidade. O anuário não comenta este resultado. É a única província nessa situação e merece verificação junto da ANARME antes de qualquer leitura.",
+      "Das 705 amostras recebidas nacionalmente, 409 foram analisadas — 58%. O anuário não explica o destino das restantes 296."
+    ]
+  },
+
+  "unidadesSanitarias": {
+    "indicador": "Unidades Sanitárias do Serviço Nacional de Saúde, por província e por nível",
+    "fonte": "MISAU — Anuário Estatístico de Saúde 2025, Anexo 1, Tabela 84",
+    "periodo": "2021-2025",
+    "niveis": ["Centros de Saúde urbanos e rurais", "Postos de Saúde", "Hospitais distritais, rurais e gerais", "Hospitais provinciais", "Hospitais centrais, especializados e militares"],
+    "nacional": [
+      {"ano": 2021, "total": 1769},
+      {"ano": 2022, "total": 1779},
+      {"ano": 2023, "total": 1841},
+      {"ano": 2024, "total": 1878},
+      {"ano": 2025, "total": 1935}
+    ],
+    "porProvincia2025": [
+      {"provincia": "Zambézia", "total": 292},
+      {"provincia": "Nampula", "total": 245},
+      {"provincia": "Niassa", "total": 221},
+      {"provincia": "Sofala", "total": 199},
+      {"provincia": "Gaza", "total": 171},
+      {"provincia": "Tete", "total": 164},
+      {"provincia": "Inhambane", "total": 160},
+      {"provincia": "Manica", "total": 154},
+      {"provincia": "Cabo Delgado", "total": 146},
+      {"provincia": "Maputo Província", "total": 135},
+      {"provincia": "Maputo Cidade", "total": 37}
+    ],
+    "seriePorProvincia": {
+      "Niassa": {"2021": 197, "2022": 199, "2023": 209, "2024": 214, "2025": 221},
+      "Cabo Delgado": {"2021": 133, "2022": 135, "2023": 136, "2024": 142, "2025": 146},
+      "Nampula": {"2021": 244, "2022": 245, "2023": 249, "2024": 252, "2025": 245},
+      "Zambézia": {"2021": 273, "2022": 274, "2023": 282, "2024": 283, "2025": 292},
+      "Tete": {"2021": 147, "2022": 147, "2023": 158, "2024": 156, "2025": 164},
+      "Manica": {"2021": 131, "2022": 131, "2023": 143, "2024": 145, "2025": 154},
+      "Sofala": {"2021": 176, "2022": 179, "2023": 189, "2024": 193, "2025": 199},
+      "Inhambane": {"2021": 150, "2022": 150, "2023": 155, "2024": 156, "2025": 160},
+      "Gaza": {"2021": 156, "2022": 156, "2023": 163, "2024": 167, "2025": 171},
+      "Maputo Província": {"2021": 124, "2022": 125, "2023": 120, "2024": 133, "2025": 135},
+      "Maputo Cidade": {"2021": 38, "2022": 38, "2023": 37, "2024": 37, "2025": 37}
+    }
+  },
+
+  "divergencias": [
+    {
+      "assunto": "O total nacional de unidades sanitárias de 2025 não bate com a soma das províncias",
+      "fonteUnica": "MISAU — Anuário Estatístico de Saúde 2025, Anexo 1",
+      "totalNacionalDeclarado": 1935,
+      "somaDasOnzeProvincias": 1924,
+      "diferenca": 11,
+      "verificacaoDe2021": "Em 2021 a soma bate certo: 1 769 declarados e 1 769 somados. A divergência é específica de 2025.",
+      "possivelExplicacao": "Pode haver unidades não atribuídas a província, erro de transcrição numa linha provincial, ou arredondamento de uma categoria. Não é determinável a partir do documento.",
+      "estado": "não reconciliado",
+      "quemPodeResolver": "MISAU — Direcção de Planificação e Cooperação, Departamento de Informação de Saúde",
+      "regraAplicada": "Divergências entre fontes registam-se e devolvem-se à instituição de origem; não se resolvem por arbitragem interna. Aqui a divergência é interna a uma só fonte, o que a torna mais fácil de esclarecer e igualmente obrigatória de registar."
+    },
+    {
+      "assunto": "Nampula perde unidades sanitárias em 2025",
+      "serie": "244, 245, 249, 252, 245",
+      "observacao": "Nampula é a única província que regista descida entre 2024 e 2025, de 252 para 245. Todas as outras sobem ou mantêm-se. O anuário não comenta.",
+      "estado": "por verificar",
+      "quemPodeResolver": "MISAU · Direcção Provincial de Saúde de Nampula"
+    },
+    {
+      "assunto": "O Anexo 2 tem colunas de rácios internamente inconsistentes",
+      "detalhe": "A coluna Habitante/Unidade Sanitária apresenta valores como 0,6, depois 0,1, depois 1,0. Um rácio de habitantes por unidade sanitária em Moçambique anda na ordem dos milhares — o Anuário de 2021 é citado noutras fontes com 1 unidade para 17 419 habitantes. Os valores publicados no Anexo 2 de 2025 não são interpretáveis como rácio.",
+      "consequencia": "O Anexo 2 NÃO foi extraído para este ficheiro. As camas hospitalares, que estão na mesma tabela, também ficam de fora até se esclarecer a formatação.",
+      "estado": "não utilizável",
+      "quemPodeResolver": "MISAU — Departamento de Informação de Saúde"
+    }
+  ],
+
+  "oQueIstoDesbloqueia": [
+    "Cinco dos oito indicadores do medicamentos-cadeia.json deixam de estar totalmente vazios: existe agora disponibilidade por província, rupturas de antirretrovirais, cumprimento de procedimentos e qualidade de medicamentos.",
+    "A porta da Saúde passa a ter conteúdo verificado, com fonte oficial e ano declarado.",
+    "As unidades sanitárias por província cruzam-se com a rede viária e com os armazéns intermediários da CMAM documentados na Fase Zero."
+  ],
+
+  "oQueContinuaEmFalta": [
+    {"dado": "Existências em quantidade, por medicamento e por armazém", "detentor": "CMAM · nSIMAM"},
+    {"dado": "Consumo, para calcular dias de cobertura", "detentor": "MISAU · SIGLUS"},
+    {"dado": "Lotes próximos da validade", "detentor": "CMAM · SIMAM"},
+    {"dado": "Medicamentos em trânsito", "detentor": "MISAU · SIGLUS"},
+    {"dado": "Volume selado e anomalias de rastreabilidade", "detentor": "ANARME · SRM"},
+    {"dado": "Preços de aquisição por lote", "detentor": "CMAM", "nota": "Lacuna estrutural: não são publicados."}
+  ]
+}
