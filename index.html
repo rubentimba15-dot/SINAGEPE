@@ -383,7 +383,7 @@ svg.tc-map{width:100%;height:auto;display:block}
     <div class="topbar">
       <div class="topbar-title-group">
         <div class="topbar-title">Torre de Controlo Nacional</div>
-        <div class="status-badge">SISTEMA VIVO</div>
+                <div class="status-badge">PROT&Oacute;TIPO</div>
       </div>
       <div class="topbar-actions">
         <div style="text-align:right;margin-right:4px">
@@ -418,7 +418,7 @@ svg.tc-map{width:100%;height:auto;display:block}
         </div>
 
         <div class="tc-card tc-mapcol tc-frame">
-          <div class="tc-ch"><h2 id="tc-maptitle">Disponibilidade por prov&iacute;ncia</h2><span class="tc-tag live" id="tc-maptag">Tempo real</span></div>
+                    <div class="tc-ch"><h2 id="tc-maptitle">Disponibilidade por prov&iacute;ncia</h2><span class="tc-tag live" id="tc-maptag">&Uacute;ltima recolha: Jul 2023</span></div>
           <div class="tc-mapwrap" id="tc-mapwrap"><div class="tc-tip" id="tc-tip"></div><svg class="tc-map" viewBox="0 0 520 760" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa de Moçambique com indicadores por província">
 <defs><pattern id="tc-grid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#152740" stroke-width=".7"/></pattern>
 <linearGradient id="tc-sweep" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#22B8F0" stop-opacity="0"/><stop offset="50%" stop-color="#22B8F0" stop-opacity=".12"/><stop offset="100%" stop-color="#22B8F0" stop-opacity="0"/></linearGradient></defs>
@@ -1535,7 +1535,7 @@ function tcCamadas(){
   document.querySelectorAll('.tc-layer').forEach(n=>n.addEventListener('click',()=>{
     document.querySelectorAll('.tc-layer').forEach(x=>x.classList.remove('on'));
     n.classList.add('on');TC.layer=n.dataset.l;tcPintar();
-    $('tc-maptag').textContent=TC.layer==='arm'?'Rede física':'Tempo real';
+        $('tc-maptag').textContent=TC.layer==='arm'?'Rede física':'Última recolha: Jul 2023';
   }));
 }
 
