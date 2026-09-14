@@ -1414,12 +1414,15 @@ function tcRelogio(){
    ============================================================ */
 var REAL={};
 function carregarReais(){
-    return Promise.all(['armazens-nacionais','farmacias-anarme','rede-viaria','sima-precos','antecipacao','saude-anuario-misau']
+  return Promise.all(['armazens-nacionais','farmacias-anarme','rede-viaria','sima-precos','antecipacao','saude-anuario-misau']
     .map(function(f){
       return fetch('data/'+f+'.json',{cache:'no-store'})
-        .then(function(r){return r.ok?r.json():null}).catch(function(){return null});
+        .then(function(r){
+          if(!r.ok) console.warn('[SINAGEPE] fonte nao carregou: '+f+' ('+r.status+')');
+          return r.ok?r.json():null;
+        }).catch(function(){console.warn('[SINAGEPE] falha de rede: '+f);return null});
     })).then(function(r){
-            REAL.arm=r[0];REAL.far=r[1];REAL.rv=r[2];REAL.sima=r[3];REAL.risc=r[4];REAL.saude=r[5];
+      REAL.arm=r[0];REAL.far=r[1];REAL.rv=r[2];REAL.sima=r[3];REAL.risc=r[4];REAL.saude=r[5];
       return REAL;
     });
 }
@@ -1491,25 +1494,41 @@ function tcIndices(data,ipl,incl){
 
 /* ---------- camadas do mapa ---------- */
 const LAYERS=[
-    {id:'disp',n:'Medicamentos',s:'Disponibilidade · MISAU 2025',ic:'M3 12h4l3 8 4-16 3 8h4',t:'Disponibilidade de medicamentos essenciais de saúde materna, por província — Anuário Estatístico de Saúde 2025, fonte nSIMAM. Meta do MISAU: 90%.',
-   bands:[[90,'#12B981','Cumpre a meta ≥90%'],[80,'#F0A926','Abaixo da meta 80–90%'],[0,'#EF4444','Bem abaixo <80%']]},
+  {id:'disp',n:'Medicamentos',s:'Disponibilidade · MISAU 2025',ic:'M12 3v18M3 12h18',
+ t:'Disponibilidade de medicamentos essenciais de saúde materna e reprodutiva — nSIMAM, Anuário MISAU 2025. Meta: 90%',
+ bands:[[90,'#12B981','Cumpre a meta ≥90%'],[80,'#F0A926','Abaixo da meta 80–90%'],[0,'#EF4444','Crítico <80%']]},
   
   {id:'arm',n:'Ocupação de armazéns',s:'Capacidade utilizada',ic:'M3 21V9l9-6 9 6v12M9 21v-8h6v8',t:'Ocupação dos armazéns registados',
    bands:[[95,'#EF4444','Crítico >95%'],[80,'#F0A926','Alerta 80–95%'],[60,'#22B8F0','Aviso 60–80%'],[0,'#12B981','Normal <60%']]},
   {id:'alr',n:'Alertas activos',s:'Ocorrências por província',ic:'M12 3l9 16H3L12 3ZM12 9v5M12 17h.01',t:'Alertas activos por província',
    bands:[[2,'#EF4444','2 ou mais'],[1,'#F0A926','1 alerta'],[0,'#12B981','Sem alertas']]}
 ];
-const bandaCor=(bands,v)=>{for(const b of bands) if(v>=b[0]) return b[1];return bands[bands.length-1][1];};
+const bandaCor=(bands,v)=>{ if(v===null||v===undefined) return '#141F2B';
+  for(const b of bands) if(v>=b[0]) return b[1]; return '#141F2B'; };
 
+const chaveProv = s => {
+  let t=(s||'').toString().toLowerCase().normalize('NFD')
+        .replace(/[\u0300-\u036f]/g,'').trim();
+  const eCidade=/cidade/.test(t), eProv=/provincia/.test(t);
+  t=t.replace(/\b(cidade|provincia|de|da|do)\b/g,'').replace(/\s+/g,' ').trim();
+    if(t==='maputo') return eCidade?'maputo cidade':'maputo provincia';
+  return t;
+};
+
+let _idxSaude=null;
+function valorSaude(nome){
+  const d=REAL.saude&&REAL.saude.disponibilidadeMedicamentos;
+  if(!d||!Array.isArray(d.porProvincia)) return null;
+  if(!_idxSaude){
+    _idxSaude={};
+    d.porProvincia.forEach(x=>{_idxSaude[chaveProv(x.provincia)]=x.valor;});
+  }
+  const v=_idxSaude[chaveProv(nome)];
+  return (typeof v==='number'&&!isNaN(v))?v:null;
+}
 function valorProv(nome){
-  if(TC.layer==='disp'){
-    /* Era o "stock físico por província" do ficheiro de demonstração —
-       número inventado, porque nenhuma unidade reporta existências.
-       Passa a ser a disponibilidade de medicamentos essenciais publicada
-       pelo MISAU no Anuário Estatístico de Saúde 2025, fonte nSIMAM. */
-    const s=((REAL.saude&&REAL.saude.disponibilidadeMedicamentos)||{}).porProvincia||[];
-    const p=s.find(x=>x.provincia===nome);
-    return p?p.valor:null;}
+  const d=TC.data;
+    if(TC.layer==='disp') return valorSaude(nome);
   if(TC.layer==='arm'){const a=((REAL.arm&&REAL.arm.armazens)||[]).filter(x=>x.provincia===nome);
     /* Era a ocupação média dos armazéns — número inventado, porque nenhuma
        unidade reporta existências. Passa a ser a contagem de unidades
@@ -1517,6 +1536,7 @@ function valorProv(nome){
     return a.length;}
   return ((REAL.rv&&REAL.rv.interrupcoes)||[]).filter(x=>x.provincia===nome).length;
 }
+
 function tcPintar(){
   const L=LAYERS.find(l=>l.id===TC.layer);
   $('tc-maptitle').textContent=L.t;
@@ -1754,7 +1774,8 @@ function boot(data, nivel){
        pelo carregamento desses ficheiros. Se algum falhar, o bloco
        fica vazio em vez de mostrar número sem origem. */
     carregarReais().then(function(){
-      tcKPIs(); tcIndices(); tcProdutos(); tcAlertas(); tcInteligencia();
+            tcKPIs(); tcIndices(); tcProdutos(); tcAlertas(); tcInteligencia(); tcPintar();
+      
     });
   tcGrafico(data);
   const critica=null; /* vinha de dados de demonstração; o dossier passa a usar os riscos verificados */
