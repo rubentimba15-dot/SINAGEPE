@@ -57,9 +57,17 @@ const SINAGEPE = (() => {
   }
 
   // ---------------------------------------------------------------
-  // Navegação partilhada — fonte única da sidebar, para todos os ecrãs.
-  // Qualquer alteração aqui aplica-se a TODOS os ecrãs de uma vez,
-  // evitando as inconsistências que já vimos no protótipo Figma.
+  // LISTA DE RECURSO (18 Set 2026)
+  //
+  // A navegação do sistema é agora UMA só: assets/nav-sinagepe.js, que
+  // filtra os ecrãs pelo perfil da sessão. Esta lista só é usada se esse
+  // ficheiro não carregar, para a barra lateral nunca ficar vazia.
+  //
+  // Enquanto foi a lista principal, mostrava a mesma coisa a toda a gente:
+  // a conta das Finanças via Sandbox EPCIS e Ponto Cego Duplo sem os ter
+  // autorizados. Tinha ainda 'modulo-logistica.html', que não existe no
+  // repositório, e 'portal-pme.html', que não está autorizado a ninguém.
+  // Ambos removidos aqui.
   // ---------------------------------------------------------------
   const NAV_ITEMS = [
     { key: 'painel',     label: 'Painel',      icon: '▦', href: 'index.html' },
@@ -67,7 +75,6 @@ const SINAGEPE = (() => {
     { key: 'mapa',       label: 'Mapa',        icon: '◎', href: 'mapa-nacional.html' },
     { key: 'simulador',  label: 'Simulador',   icon: '≋', href: 'simulador-importacoes.html' },
     { key: 'preditivo',  label: 'Simulador Preditivo', icon: '◭', href: 'simulador-preditivo.html' },
-    { key: 'pmes',       label: 'PMEs',        icon: '⛁', href: 'portal-pme.html' },
     { key: 'armazens',   label: 'Armazéns',    icon: '▤', href: 'cadastro-armazens.html', countId: 'nav-armazens-count' },
     { key: 'armazens-nac', label: 'Armazéns Nacionais', icon: '◫', href: 'armazens-nacionais.html' },
     { key: 'ponto-cego', label: 'Ponto Cego Duplo', icon: '◉', href: 'ponto-cego-duplo.html' },
@@ -79,7 +86,6 @@ const SINAGEPE = (() => {
     { key: 'portal-transportadores', label: 'Portal do Transportador', icon: '⛟', href: 'portal-transportadores.html' },
     { key: 'relatorio-exec', label: 'Relatório Executivo', icon: '▤', href: 'relatorio-executivo.html' },
     { key: 'adesao', label: 'Adesão Institucional', icon: '☸', href: 'adesao-institucional.html' },
-    { key: 'logistica',  label: 'Logística',   icon: '⇄', href: 'modulo-logistica.html', countId: 'nav-corredores-count' },
     { key: 'rede',       label: 'Rede Logística', icon: '⌘', href: 'rede-logistica.html' },
     { key: 'relatorios', label: 'Relatórios',  icon: '▧', href: 'relatorios.html' },
     { key: 'config',     label: 'Configurações', icon: '⚙', href: 'administracao-auditoria.html' },
@@ -89,13 +95,22 @@ const SINAGEPE = (() => {
     { key: 'fontes', label: 'Fontes Internacionais', icon: '⬢', href: 'fontes-internacionais.html' },
   ];
 
-  function renderSidebar(activeKey) {
-    const nav = NAV_ITEMS.map(item => {
+  function listaDeRecurso(activeKey) {
+    return NAV_ITEMS.map(item => {
       const cls = item.key === activeKey ? 'nav-item active' : 'nav-item';
       const href = item._built === false ? '#' : item.href;
       const count = item.countId ? ` <span id="${item.countId}"></span>` : '';
       return `<a class="${cls}" href="${href}"><span class="nav-icon">${item.icon}</span> ${item.label}${count}</a>`;
     }).join('');
+  }
+
+  /* A barra lateral vem do menu único (assets/nav-sinagepe.js), que já traz
+     os grupos e mostra a cada perfil apenas o que lhe está autorizado. Se
+     esse ficheiro não estiver carregado, usa-se a lista de recurso acima. */
+  function renderSidebar(activeKey) {
+    const nav = (window.SinagepeNav && window.SinagepeNav.htmlItens)
+      ? window.SinagepeNav.htmlItens(activeKey)
+      : listaDeRecurso(activeKey);
     const logout = `<a class="nav-item" href="index.html" onclick="sessionStorage.removeItem('sinagepe_nivel')" style="margin-top:8px;border-top:1px solid var(--border-card);border-radius:0;padding-top:14px"><span class="nav-icon">↩</span> <span style="color:var(--crit)">Sair (Logout)</span></a>`;
 
     return `
@@ -144,6 +159,19 @@ const SINAGEPE = (() => {
         </div>
       </div>`;
     document.getElementById('sidebar-mount').innerHTML = renderSidebar(activeKey);
+
+    /* Muitos ecrãs antigos não declaram o assets/nav-sinagepe.js no <head>.
+       Em vez de os editar um a um, carrega-se aqui e redesenha-se a barra
+       quando chegar. Se já estiver carregado, não faz nada. */
+    if (!window.SinagepeNav) {
+      const js = document.createElement('script');
+      js.src = 'assets/nav-sinagepe.js';
+      js.onload = () => {
+        const alvo = document.getElementById('sidebar-mount');
+        if (alvo) alvo.innerHTML = renderSidebar(activeKey);
+      };
+      document.head.appendChild(js);
+    }
   }
 
   // ---------------------------------------------------------------
