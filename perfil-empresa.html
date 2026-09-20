@@ -27,7 +27,37 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="assets/chart.umd.min.js"></script>
+<script>
+/* A biblioteca de gráficos vinha de cdnjs.cloudflare.com, num endereço que
+   nunca existiu: a versão 4.4.4 não está publicada nesse repositório, e o
+   pedido devolvia sempre 404. Consequência: `new Chart(...)` rebentava e
+   interrompia a função de desenho, deixando em branco não só o gráfico mas
+   tudo o que vinha depois dele no ecrã — sem aviso nenhum ao utilizador.
+
+   Passa a ser servida do próprio repositório (assets/chart.umd.min.js,
+   versão 4.4.1), pelo que funciona sem Internet e sem depender de terceiros.
+
+   O bloco abaixo é a rede de segurança: se um dia a biblioteca faltar, cada
+   tela de gráfico é substituída por uma linha a dizê-lo, e o resto do ecrã
+   continua a desenhar. Um gráfico em falta deve declarar-se, não desaparecer
+   em silêncio nem levar o ecrã atrás. */
+if (typeof Chart === 'undefined') {
+  window.Chart = function (alvo) {
+    var tela = alvo && alvo.canvas ? alvo.canvas : alvo;
+    if (tela && tela.parentNode) {
+      var aviso = document.createElement('div');
+      aviso.className = 'grafico-indisponivel';
+      aviso.textContent = 'Gráfico indisponível — a biblioteca de gráficos não carregou.';
+      aviso.style.cssText = 'display:flex;align-items:center;justify-content:center;' +
+        'min-height:120px;padding:18px;border:1px dashed rgba(201,138,60,.45);' +
+        'border-radius:10px;color:#8FA1B8;font-size:12px;text-align:center';
+      tela.parentNode.replaceChild(aviso, tela);
+    }
+    return { destroy: function () {}, update: function () {}, resize: function () {} };
+  };
+}
+</script>
 <script src="assets/sinagepe.js"></script>
 <script>
 document.getElementById('content-mount').innerHTML = `
