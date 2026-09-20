@@ -75,6 +75,12 @@ pre{margin:12px 17px 15px;padding:13px;background:#0A1421;border:1px solid var(-
     <div class="lista" id="dados"></div>
   </div>
 
+  <div class="card">
+    <div class="ch"><h2>Cobertura por conta</h2><span class="mono" style="font-size:11px;color:var(--t4)" id="c-cobertura">—</span></div>
+    <div class="lista" id="cobertura"></div>
+    <div class="nota"><b>Porque isto importa.</b> Um ecrã autorizado a nenhuma conta não abre para ninguém: existe no repositório e não existe para o sistema. Um ecrã autorizado só ao administrador foi, quase sempre, esquecido quando se escreveram os acessos — foi o caso do Motor de Combustíveis, construído e invisível a todos os ministérios. A lista de ecrãs e a lista de acessos cresceram em separado; esta verificação é o que as obriga a bater certo.</div>
+  </div>
+
   <div class="card" id="c-resumo" style="display:none">
     <div class="ch"><h2>Lista do que falta</h2><span style="font-size:10px;color:var(--t4)">copie e envie</span></div>
     <pre id="resumo"></pre>
@@ -83,7 +89,29 @@ pre{margin:12px 17px 15px;padding:13px;background:#0A1421;border:1px solid var(-
 </div>
 
 <script>
-var R=[],D=[],FILT='todos';
+var R=[],D=[],FILT='todos',NIVEIS=[];
+
+/* Quantas contas vêem cada ecrã. Zero significa um ecrã que não abre para
+   ninguém; um significa, quase sempre, um esquecimento na lista de acessos.
+   O ecrã existir e passar no teste de abertura não basta: se não estiver
+   autorizado a ninguém, ninguém lá chega. */
+function desenharCobertura(){
+  if(!NIVEIS.length) return;
+  var cont={}, total=NIVEIS.length;
+  R.forEach(function(x){cont[x.url]=0});
+  NIVEIS.forEach(function(n){(n.paginas||[]).forEach(function(p){if(p in cont)cont[p]++})});
+  var linhas=Object.keys(cont).map(function(u){return{url:u,n:cont[u]}})
+    .sort(function(a,b){return a.n-b.n||a.url.localeCompare(b.url)});
+  var criticos=linhas.filter(function(l){return l.n<=1});
+  document.getElementById('c-cobertura').textContent=criticos.length+' com 0 ou 1 conta · '+linhas.length+' ecrãs';
+  document.getElementById('cobertura').innerHTML=linhas.map(function(l){
+    var cor=l.n===0?COR.falta:l.n===1?COR.vazio:COR.ok;
+    var rot=l.n===0?'nenhuma conta':l.n===1?'só 1 conta':l.n+' de '+total+' contas';
+    return '<div class="it"><span class="pt" style="background:'+cor+'"></span>'
+      +'<span class="nm">'+esc(l.url)+'</span>'
+      +'<span class="st" style="color:'+cor+'">'+rot+'</span></div>';
+  }).join('');
+}
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 var COR={ok:'#12B981',vazio:'#F0A926',falta:'#EF4444',erro:'#EF4444'};
 var ROT={ok:'abre',vazio:'abre mas vem vazio',falta:'não existe',erro:'erro'};
@@ -164,6 +192,7 @@ document.getElementById('b-correr').addEventListener('click',async function(){
     var m=t.match(/const NIVEIS_ACESSO = (\[[\s\S]*?\n\]);/);
     if(!m)throw new Error('não encontrei o NIVEIS_ACESSO no index.html');
     var nv=JSON.parse(m[1]),set={};
+    NIVEIS=nv;
     nv.forEach(function(n){(n.paginas||[]).forEach(function(p){set[p]=1})});
     (t.match(/href="([a-z0-9\-]+\.html)"/g)||[]).forEach(function(h){set[h.slice(6,-1)]=1});
     pg=Object.keys(set).sort();
@@ -200,6 +229,7 @@ document.getElementById('b-correr').addEventListener('click',async function(){
   document.getElementById('c-dados').textContent=D.filter(function(x){return x.estado==='ok'}).length+' de '+D.length;
 
   desenhar();
+  desenharCobertura();
   b.disabled=false;b.textContent='Verificar outra vez';
 });
 </script>
