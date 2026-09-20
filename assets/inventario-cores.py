@@ -18,7 +18,16 @@ Depois envie o cores.txt.
 """
 import collections, glob, os, re, sys
 
-RAIZ = os.path.dirname(os.path.abspath(__file__))
+def raiz_do_repositorio():
+    aqui = os.path.dirname(os.path.abspath(__file__))
+    if os.path.basename(aqui).lower() in ('assets', 'scripts', 'ferramentas'):
+        acima = os.path.dirname(aqui)
+        if os.path.exists(os.path.join(acima, 'index.html')):
+            return acima
+    return aqui
+
+
+RAIZ = raiz_do_repositorio()
 
 HEX = re.compile(r'#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})\b')
 RGBA = re.compile(r'rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(?:,\s*[\d.]+\s*)?\)')

@@ -10,8 +10,10 @@ que pintam o mapa e os cartões.
 POR DEFEITO NÃO ALTERA NADA — mostra o que mudaria. Para aplicar mesmo,
 acrescente --aplicar.
 
-    python subir-luz.py              (simulação, escreve nada)
-    python subir-luz.py --aplicar    (altera os ficheiros)
+    python assets\\subir-luz.py              (simulação, escreve nada)
+    python assets\\subir-luz.py --aplicar    (altera os ficheiros)
+
+O script encontra o repositório esteja ele na raiz ou dentro de assets.
 
 Antes de aplicar, garanta que não tem alterações por comitar: assim, se
 o resultado não agradar, basta "Discard changes" no GitHub Desktop e
@@ -35,7 +37,19 @@ O que NÃO é tocado, e porquê:
 """
 import glob, os, re, sys
 
-RAIZ = os.path.dirname(os.path.abspath(__file__))
+def raiz_do_repositorio():
+    """O script pode viver na raiz ou em assets/. Numa pasta de ferramentas
+    (assets), os ecras estao um nivel acima — procurar ali daria zero
+    ficheiros e a impressao falsa de que nao havia nada a mudar."""
+    aqui = os.path.dirname(os.path.abspath(__file__))
+    if os.path.basename(aqui).lower() in ('assets', 'scripts', 'ferramentas'):
+        acima = os.path.dirname(aqui)
+        if os.path.exists(os.path.join(acima, 'index.html')):
+            return acima
+    return aqui
+
+
+RAIZ = raiz_do_repositorio()
 APLICAR = '--aplicar' in sys.argv
 
 EXCLUIR = {
@@ -167,9 +181,10 @@ def main():
             open(cam, 'w', encoding='utf-8', newline='').write(t)
 
     print()
+    print(f'repositorio: {RAIZ}')
     print(f'ficheiros alterados: {tocados}   |   substituicoes: {trocas}   |   ignorados: {saltados}')
     if not APLICAR:
-        print('\nNada foi escrito. Para aplicar mesmo:  python subir-luz.py --aplicar')
+        print('\nNada foi escrito. Para aplicar mesmo, acrescente --aplicar ao mesmo comando.')
     else:
         print('\nFeito. Abra o localhost e confira antes de comitar.')
         print('Se nao gostar: GitHub Desktop, botao direito, Discard changes.')
