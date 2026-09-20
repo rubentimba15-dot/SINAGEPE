@@ -76,6 +76,12 @@ pre{margin:12px 17px 15px;padding:13px;background:#0A1421;border:1px solid var(-
   </div>
 
   <div class="card">
+    <div class="ch"><h2>Entrada de cada conta</h2><span class="mono" style="font-size:11px;color:var(--t4)" id="c-entradas">—</span></div>
+    <div class="lista" id="entradas"></div>
+    <div class="nota"><b>O que isto testa.</b> Cada conta declara a página onde aterra depois de entrar. Se essa página não estiver na sua lista de acessos, a conta é expulsa no primeiro instante e nunca chega a usar o sistema — sem mensagem de erro que o explique.</div>
+  </div>
+
+  <div class="card">
     <div class="ch"><h2>Cobertura por conta</h2><span class="mono" style="font-size:11px;color:var(--t4)" id="c-cobertura">—</span></div>
     <div class="lista" id="cobertura"></div>
     <div class="nota"><b>Porque isto importa.</b> Um ecrã autorizado a nenhuma conta não abre para ninguém: existe no repositório e não existe para o sistema. Um ecrã autorizado só ao administrador foi, quase sempre, esquecido quando se escreveram os acessos — foi o caso do Motor de Combustíveis, construído e invisível a todos os ministérios. A lista de ecrãs e a lista de acessos cresceram em separado; esta verificação é o que as obriga a bater certo.</div>
@@ -95,6 +101,30 @@ var R=[],D=[],FILT='todos',NIVEIS=[];
    ninguém; um significa, quase sempre, um esquecimento na lista de acessos.
    O ecrã existir e passar no teste de abertura não basta: se não estiver
    autorizado a ninguém, ninguém lá chega. */
+/* Uma conta cuja página inicial não esteja na sua lista de páginas nunca
+   chega a entrar: o access-control.js expulsa-a no primeiro instante.
+   Aconteceu com três contas — universidades, parceiros e CTA — que
+   apontavam para portais não autorizados a ninguém. É uma incoerência
+   interna do NIVEIS_ACESSO, e não se vê a testar páginas uma a uma. */
+function desenharEntradas(){
+  if(!NIVEIS.length) return;
+  var mau=NIVEIS.filter(function(n){
+    return n.paginaInicial && (n.paginas||[]).indexOf(n.paginaInicial)<0;});
+  var el=document.getElementById('entradas');
+  document.getElementById('c-entradas').textContent=
+    mau.length? mau.length+' de '+NIVEIS.length+' contas nao entram' : NIVEIS.length+' contas, todas entram';
+  if(!mau.length){
+    el.innerHTML='<div class="it"><span class="pt" style="background:'+COR.ok+'"></span>'
+      +'<span class="nm">todas as contas tem autorizada a pagina onde entram</span></div>';
+    return;
+  }
+  el.innerHTML=mau.map(function(n){
+    return '<div class="it"><span class="pt" style="background:'+COR.falta+'"></span>'
+      +'<span class="nm">'+esc(n.chave)+'</span>'
+      +'<span class="st" style="color:'+COR.falta+'">entra em '+esc(n.paginaInicial)+' sem a ter autorizada</span></div>';
+  }).join('');
+}
+
 function desenharCobertura(){
   if(!NIVEIS.length) return;
   var cont={}, total=NIVEIS.length;
@@ -230,6 +260,7 @@ document.getElementById('b-correr').addEventListener('click',async function(){
 
   desenhar();
   desenharCobertura();
+  desenharEntradas();
   b.disabled=false;b.textContent='Verificar outra vez';
 });
 </script>

@@ -139,7 +139,25 @@
     { key: 'importacao',        icon: '\u2913', label: 'Importa\u00e7\u00e3o de Dados', href: 'importacao-dados.html', grupo: 'ADMIN' },
     { key: 'historico',         icon: '\u21BA', label: 'Hist\u00f3rico de Actividade', href: 'historico-actividade.html', grupo: 'ADMIN' },
     { key: 'notificacoes',      icon: '\u2709', label: 'Centro de Notifica\u00e7\u00f5es', href: 'centro-notificacoes.html', grupo: 'ADMIN' },
-    { key: 'ajuda',             icon: '\u003F', label: 'Ajuda',                 href: 'painel-ajuda.html', grupo: 'ADMIN' }
+    { key: 'ajuda',             icon: '\u003F', label: 'Ajuda',                 href: 'painel-ajuda.html', grupo: 'ADMIN' },
+
+    /* --- Por decidir ---------------------------------------------
+       Estes nove existem no repositório e, até 20 Set 2026, não estavam
+       autorizados a conta nenhuma: ninguém os conseguia abrir, nem o
+       administrador. Foram acrescentados à conta de administrador para
+       poderem ser vistos e decididos, um a um: abrir a mais contas,
+       corrigir, ou arquivar. Enquanto estiverem neste grupo, NÃO são
+       parte da navegação normal do sistema — o rótulo diz isso a quem
+       os vir. Decidido o destino de cada um, sai daqui. */
+    { key: 'rev-portal-pme',       icon: '\u2691', label: 'Portal das PME',        href: 'portal-pme.html', grupo: 'REVISAO' },
+    { key: 'rev-portal-univ',      icon: '\u2691', label: 'Portal das Universidades', href: 'portal-universidades.html', grupo: 'REVISAO' },
+    { key: 'rev-portal-parc',      icon: '\u2691', label: 'Portal dos Parceiros',  href: 'portal-parceiros.html', grupo: 'REVISAO' },
+    { key: 'rev-armazens-ouro',    icon: '\u2691', label: 'Armaz\u00e9ns Nacionais (vers\u00e3o ouro)', href: 'armazens-nacionais-ouro.html', grupo: 'REVISAO' },
+    { key: 'rev-propostas',        icon: '\u2691', label: 'Propostas de Layout',   href: 'propostas-layout.html', grupo: 'REVISAO' },
+    { key: 'rev-onb-1',            icon: '\u2691', label: 'Onboarding 1 \u2014 Boas-vindas', href: 'onboarding-boas-vindas.html', grupo: 'REVISAO' },
+    { key: 'rev-onb-2',            icon: '\u2691', label: 'Onboarding 2 \u2014 Perfil', href: 'onboarding-selecionar-perfil.html', grupo: 'REVISAO' },
+    { key: 'rev-onb-3',            icon: '\u2691', label: 'Onboarding 3 \u2014 Prov\u00edncias', href: 'onboarding-configurar-provincias.html', grupo: 'REVISAO' },
+    { key: 'rev-onb-4',            icon: '\u2691', label: 'Onboarding 4 \u2014 Conclus\u00e3o', href: 'onboarding-conclusao.html', grupo: 'REVISAO' }
   ];
 
   function esc(s) {
@@ -177,7 +195,8 @@
     INTELIGENCIA: 'An\u00e1lise e intelig\u00eancia',
     SECTORES: 'Pain\u00e9is sectoriais e portais',
     GOVERNACAO: 'Relat\u00f3rios, governa\u00e7\u00e3o e fontes',
-    ADMIN: 'Administra\u00e7\u00e3o'
+    ADMIN: 'Administra\u00e7\u00e3o',
+    REVISAO: '\u2691 Por decidir \u2014 fora do sistema'
   };
 
   function permitidas() {
@@ -200,7 +219,7 @@
        por onde passa, o que vai acontecer, quem recebe e quem regula, como
        se presta contas, e quem administra a casa. A última só aparece a
        quem tem esses ecrãs autorizados. */
-    var ORDEM = ['PAINEL','TERRITORIO','CADEIA','INTELIGENCIA','SECTORES','GOVERNACAO','ADMIN'];
+    var ORDEM = ['PAINEL','TERRITORIO','CADEIA','INTELIGENCIA','SECTORES','GOVERNACAO','ADMIN','REVISAO'];
     var ROTULO = ROTULOS;
     var nav = '';
     ORDEM.forEach(function (g) {
@@ -208,9 +227,10 @@
         return (i.grupo || 'GOVERNACAO') === g && SO_POR_LIGACAO.indexOf(i.href) < 0;
       });
       if (!doGrupo.length) return;
-      if (ROTULO[g]) nav += '<div class="nav-grupo">' + ROTULO[g] + '</div>';
+      if (ROTULO[g]) nav += '<div class="nav-grupo' + (g === 'REVISAO' ? ' rev' : '') + '">' + ROTULO[g] + '</div>';
       nav += doGrupo.map(function (i) {
         var act = i.key === activeKey ? ' active' : '';
+        if (i.grupo === 'REVISAO') act += ' rev';
         return '<a class="nav-item' + act + '" href="' + esc(i.href) + '">'
              + '<span class="nav-icon">' + i.icon + '</span>'
              + '<span class="nav-label">' + esc(i.label) + '</span></a>';
@@ -234,6 +254,8 @@
     e.textContent = '.nav-grupo{font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;'
       + 'color:#5E7189;padding:14px 14px 6px;font-weight:600}'
       + '.nav-grupo:first-child{padding-top:4px}'
+      + '.nav-grupo.rev{color:#E8BE7A}'
+      + '.nav-item.rev{border:1px dashed rgba(201,138,60,.55);border-radius:7px;margin:2px 8px;opacity:.85}'
       + '@media(max-width:1080px){'
       + '#nav-abrir{display:flex !important}'
       + '.sidebar,#nav-mount{display:block !important;position:fixed !important;top:0;left:0;bottom:0;'
@@ -297,16 +319,17 @@
     var itens = ITENS.filter(function (i) {
       return !lista || i.href === 'index.html' || lista.indexOf(i.href) >= 0;
     });
-    var ORDEM = ['PAINEL','TERRITORIO','CADEIA','INTELIGENCIA','SECTORES','GOVERNACAO','ADMIN'];
+    var ORDEM = ['PAINEL','TERRITORIO','CADEIA','INTELIGENCIA','SECTORES','GOVERNACAO','ADMIN','REVISAO'];
     var out = '';
     ORDEM.forEach(function (g) {
       var doGrupo = itens.filter(function (i) {
         return (i.grupo || 'GOVERNACAO') === g && SO_POR_LIGACAO.indexOf(i.href) < 0;
       });
       if (!doGrupo.length) return;
-      if (ROTULOS[g]) out += '<div class="nav-grupo">' + ROTULOS[g] + '</div>';
+      if (ROTULOS[g]) out += '<div class="nav-grupo' + (g === 'REVISAO' ? ' rev' : '') + '">' + ROTULOS[g] + '</div>';
       out += doGrupo.map(function (i) {
         var act = i.key === activeKey ? ' active' : '';
+        if (i.grupo === 'REVISAO') act += ' rev';
         return '<a class="nav-item' + act + '" href="' + esc(i.href) + '">'
              + '<span class="nav-icon">' + i.icon + '</span>'
              + '<span class="nav-label">' + esc(i.label) + '</span></a>';
