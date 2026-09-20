@@ -51,7 +51,7 @@
     gasolina:     { a:'#8FB8D9', b:'#6390B4', c:'#3F6684', saco:'#83AECF' },
     jet:          { a:'#B9B0D6', b:'#8F84B4', c:'#635A84', saco:'#AEA4CD' },
     gpl:          { a:'#E09A8C', b:'#BC7062', c:'#8A4A3E', saco:'#D68F80' },
-    generico:     { a:'#C3D0E0', b:'#8FA1B8', c:'#5E7189', saco:'#B5C4D6' }
+    generico:     { a:'#D6E1EE', b:'#C2D1E4', c:'#9DB0C8', saco:'#B5C4D6' }
   };
 
   /* ============================================================

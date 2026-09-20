@@ -54,11 +54,11 @@
     e.id = ID + '-css';
     e.textContent = [
       '#' + ID + '{position:sticky;top:0;z-index:9000;display:flex;align-items:center;gap:12px;',
-      'padding:9px 18px;background:linear-gradient(90deg,rgba(240,169,38,.16),rgba(240,169,38,.07));',
-      'border-bottom:1px solid rgba(240,169,38,.42);color:#F0A926;font-family:Inter,sans-serif;',
+      'padding:9px 18px;background:linear-gradient(90deg,rgba(255,195,82,.16),rgba(255,195,82,.07));',
+      'border-bottom:1px solid rgba(255,195,82,.42);color:#FFC352;font-family:Inter,sans-serif;',
       'font-size:11.5px;line-height:1.5;flex-wrap:wrap}',
       '#' + ID + ' b{letter-spacing:.13em;text-transform:uppercase;font-size:10px;',
-      'border:1px solid rgba(240,169,38,.5);padding:3px 9px;border-radius:3px;flex-shrink:0}',
+      'border:1px solid rgba(255,195,82,.5);padding:3px 9px;border-radius:3px;flex-shrink:0}',
       '#' + ID + ' span{flex:1;min-width:200px;color:#F3D9A6}',
       '#' + ID + ' i{font-style:normal;color:#B99248;font-size:10.5px;flex-shrink:0}',
       '@media print{#' + ID + '{position:static;background:#fff;color:#8C2F22;border-color:#8C2F22}}'

@@ -11,10 +11,10 @@
 <script src="assets/produtos-visual.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg1:#080F1C;--sidebar-bg:#0B1421;--card-bg:#141F2B;--card-line:rgba(64,86,108,.55);
---gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
---blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
---ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#1B2836;--nav-idle:#141F2B;--accg:rgba(34,184,240,.13)}
+:root{--bg1:#0B1524;--sidebar-bg:#0E1A2B;--card-bg:#17243A;--card-line:rgba(100,128,164,.62);
+--gold-line:rgba(237,184,110,.52);--brz:#EDB86E;--brzl:#F5DDB8;--brzg:rgba(237,184,110,.52);
+--blue:#5CCBF7;--teal:#5FE3D2;--amber:#FFC352;--red:#FF7A7A;--ok:#3FD9A8;--viol:#BFA9FF;
+--ink:#FAFCFF;--t2:#D6E1EE;--t3:#C2D1E4;--t4:#9DB0C8;--cardh:#203148;--nav-idle:#17243A;--accg:rgba(92,203,247,.13)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
 .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
@@ -25,7 +25,7 @@ body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-seri
 .brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
 .nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
 .nav-item:hover{background:var(--cardh)}
-.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active{background:var(--blue);color:#0A1F2C}
 .nav-item.active .nav-label{font-weight:600}
 .nav-icon{width:16px;text-align:center;opacity:.85}
 main{flex:1;padding:22px 26px 60px;max-width:1560px}
@@ -40,18 +40,18 @@ h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
 .frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
 .ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
 .ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
-.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
-.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(237,184,110,.12)}
+.tag.crit{color:var(--red);border-color:rgba(255,122,122,.35);background:rgba(255,122,122,.08)}
 .bd{padding:15px 17px}
 
 /* selector */
 .abas{display:flex;gap:5px;padding:12px 17px;border-bottom:1px solid var(--card-line);flex-wrap:wrap}
 .ab{font-size:11.5px;padding:7px 15px;border-radius:20px;border:1px solid var(--card-line);background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
-.ab.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+.ab.on{background:var(--accg);border-color:rgba(92,203,247,.45);color:var(--blue);font-weight:600}
 .lista-sel{max-height:220px;overflow-y:auto;padding:8px 0}
-.ls{display:flex;align-items:center;gap:10px;padding:8px 17px;cursor:pointer;font-size:12px;border-bottom:1px solid rgba(38,56,86,.3)}
+.ls{display:flex;align-items:center;gap:10px;padding:8px 17px;cursor:pointer;font-size:12px;border-bottom:1px solid rgba(72,100,144,.3)}
 .ls:hover{background:var(--cardh)}
-.ls.on{background:rgba(34,184,240,.09)}
+.ls.on{background:rgba(92,203,247,.09)}
 .ls-d{width:9px;height:9px;border-radius:50%;flex-shrink:0;border:2px solid}
 .ls-n{flex:1;line-height:1.35}
 .ls-m{font-size:10px;color:var(--t4)}
@@ -71,11 +71,11 @@ h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
 
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
 @media(max-width:1100px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
-.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid rgba(38,56,86,.4);font-size:12px}
+.row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid rgba(72,100,144,.4);font-size:12px}
 .row:last-child{border-bottom:none}
 .row span:first-child{color:var(--t4);flex-shrink:0}
 .row span:last-child{text-align:right;color:var(--t2)}
-.it{display:flex;align-items:center;gap:10px;padding:9px 17px;border-bottom:1px solid rgba(38,56,86,.4);font-size:12px;cursor:pointer}
+.it{display:flex;align-items:center;gap:10px;padding:9px 17px;border-bottom:1px solid rgba(72,100,144,.4);font-size:12px;cursor:pointer}
 .it:hover{background:var(--cardh)}
 .it:last-child{border-bottom:none}
 .it-d{width:9px;height:9px;border-radius:50%;flex-shrink:0;border:2px solid}
@@ -83,10 +83,10 @@ h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
 .it-m{font-size:10px;color:var(--t4)}
 .it-v{font-size:11px;color:var(--t3);flex-shrink:0;text-align:right}
 .aviso{margin:12px 17px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.55;border:1px solid}
-.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
-.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
-.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
-.aviso.g{background:rgba(18,185,129,.07);border-color:rgba(18,185,129,.26);color:#8FE3C4}
+.aviso.w{background:rgba(255,195,82,.07);border-color:rgba(255,195,82,.26);color:var(--amber)}
+.aviso.i{background:rgba(92,203,247,.07);border-color:rgba(92,203,247,.26);color:#9EDCF7}
+.aviso.r{background:rgba(255,122,122,.07);border-color:rgba(255,122,122,.28);color:#FFB4B4}
+.aviso.g{background:rgba(63,217,168,.07);border-color:rgba(63,217,168,.26);color:#8FE3C4}
 .src{padding:11px 17px;border-top:1px solid var(--card-line);font-size:10.5px}
 .src a{color:var(--blue);text-decoration:none;word-break:break-all}
 .vazio{padding:22px 17px;color:var(--t4);font-size:12px;text-align:center;line-height:1.6}
@@ -121,12 +121,12 @@ function p2(n){return n.toFixed(2).replace('.',',')}
 function p1(n){return n.toFixed(1).replace('.',',')}
 function sp(a,b){function n(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()}return n(a)===n(b)}
 
-var COR_NAT={estatal:'#7A5F17','ppp-gestao-privada':'#C98A3C','concessao-privada':'#22B8F0',
- 'participacao-estatal':'#2DD4BF',privada:'#F0A926',internacional:'#A78BFA'};
+var COR_NAT={estatal:'#7A5F17','ppp-gestao-privada':'#EDB86E','concessao-privada':'#5CCBF7',
+ 'participacao-estatal':'#5FE3D2',privada:'#FFC352',internacional:'#BFA9FF'};
 var ROT_NAT={estatal:'Estatal','ppp-gestao-privada':'PPP \u2014 Estado/gest\u00e3o privada','concessao-privada':'Concess\u00e3o',
  'participacao-estatal':'Participa\u00e7\u00e3o estatal',privada:'Privada',internacional:'Internacional'};
-var COR_EST={operacional:'#12B981','em-modernizacao':'#22B8F0','por-reabilitar':'#EF4444','por-construir':'#EF4444',desconhecido:'#5E7189'};
-var COR_ID={nenhuma:'#EF4444',estrangeira:'#F0A926',nacional:'#12B981'};
+var COR_EST={operacional:'#3FD9A8','em-modernizacao':'#5CCBF7','por-reabilitar':'#FF7A7A','por-construir':'#FF7A7A',desconhecido:'#9DB0C8'};
+var COR_ID={nenhuma:'#FF7A7A',estrangeira:'#FFC352',nacional:'#3FD9A8'};
 var ROT_ID={nenhuma:'Sem identifica\u00e7\u00e3o em uso',estrangeira:'Identifica\u00e7\u00e3o estrangeira',nacional:'Identifica\u00e7\u00e3o nacional'};
 
 function cap(a){
@@ -163,7 +163,7 @@ function desenharSelector(){
   var h='';
   if(ST.modo==='unidade'){
     ST.arm.armazens.forEach(function(a){
-      var c=COR_NAT[a.natureza]||'#5E7189';
+      var c=COR_NAT[a.natureza]||'#9DB0C8';
       h+='<div class="ls'+(ST.sel===a.id?' on':'')+'" data-i="'+esc(a.id)+'">'
        +'<span class="ls-d" style="border-color:'+c+';background:'+(a.estado==='operacional'?c:'transparent')+'"></span>'
        +'<span class="ls-n">'+esc(a.nome)+'<div class="ls-m">'+esc(a.provincia||'')+' \u00b7 '+(ROT_NAT[a.natureza]||'')+'</div></span></div>';
@@ -177,7 +177,7 @@ function desenharSelector(){
     });
   } else {
     ST.pa.provincias.forEach(function(p){
-      var v=exposicao(p), c=v>0.67?'#EF4444':v>0.54?'#F0A926':'#12B981';
+      var v=exposicao(p), c=v>0.67?'#FF7A7A':v>0.54?'#FFC352':'#3FD9A8';
       h+='<div class="ls'+(ST.sel===p.nome?' on':'')+'" data-i="'+esc(p.nome)+'">'
        +'<span class="ls-d" style="border-color:'+c+';background:'+c+'"></span>'
        +'<span class="ls-n">'+esc(p.nome)+'<div class="ls-m">exposi&ccedil;&atilde;o '+v.toFixed(2).replace('.',',')
@@ -202,7 +202,7 @@ function linha(l,v){return v==null||v===''?'':'<div class="row"><span>'+l+'</spa
 function fichaUnidade(id){
   var a=null;ST.arm.armazens.forEach(function(x){if(x.id===id)a=x});
   if(!a)return '';
-  var cn=COR_NAT[a.natureza]||'#5E7189', ce=COR_EST[a.estado]||'#5E7189';
+  var cn=COR_NAT[a.natureza]||'#9DB0C8', ce=COR_EST[a.estado]||'#9DB0C8';
   var h='';
 
   /* cabeçalho */
@@ -211,7 +211,7 @@ function fichaUnidade(id){
    +'<div class="hero-s">'+esc(a.provincia||'')+(a.distrito?', '+esc(a.distrito):'')+' \u00b7 '+esc(a.tipo||'')+'</div>'
    +'<span class="pill" style="color:'+cn+';border-color:'+cn+'55;background:'+cn+'14">'+(ROT_NAT[a.natureza]||a.natureza)+'</span>'
    +'<span class="pill" style="color:'+ce+';border-color:'+ce+'55;background:'+ce+'14">'+esc(a.estado)+'</span>'
-   +(a.verificado?'':'<span class="pill" style="color:#F0A926;border-color:#F0A92655;background:#F0A92614">Por verificar</span>')
+   +(a.verificado?'':'<span class="pill" style="color:#FFC352;border-color:#FFC35255;background:#FFC35214">Por verificar</span>')
    +'</div></div>'
    +'<div class="hero-k">'
    +'<div class="hk"><div class="hk-l">Capacidade</div><div class="hk-v mono">'+cap(a)+'</div></div>'
@@ -279,7 +279,7 @@ function fichaUnidade(id){
     var viz=ST.arm.armazens.filter(function(x){return x.corredor===a.corredor&&x.id!==a.id});
     if(viz.length) h+=bloco('Outras unidades no corredor '+esc(a.corredor),[viz.length+' unidades'],
       viz.map(function(x){
-        var c=COR_NAT[x.natureza]||'#5E7189';
+        var c=COR_NAT[x.natureza]||'#9DB0C8';
         return '<div class="it" data-ir="un:'+esc(x.id)+'">'
          +'<span class="it-d" style="border-color:'+c+';background:'+(x.estado==='operacional'?c:'transparent')+'"></span>'
          +'<span class="it-n">'+esc(x.nome)+'<div class="it-m">'+esc(x.provincia||'')+'</div></span>'
@@ -327,7 +327,7 @@ function fichaUnidade(id){
     riscos.map(function(r){
       var c=r.gravidade>=5?'var(--red)':'var(--amber)';
       var ag=r.mitigacoes.filter(function(m){return m.horizonte==='agora'});
-      return '<div class="bd" style="border-bottom:1px solid rgba(38,56,86,.4)">'
+      return '<div class="bd" style="border-bottom:1px solid rgba(72,100,144,.4)">'
        +'<div style="font-weight:600;color:'+c+';font-size:13px">'+esc(r.titulo)+'</div>'
        +'<div style="font-size:11.5px;color:var(--t3);margin-top:4px;line-height:1.55">'+esc(r.resumo)+'</div>'
        +(ag.length?'<div style="margin-top:8px;font-size:11.5px;color:#8FE3C4"><b>Agir j&aacute;:</b> '+esc(ag[0].accao)
@@ -350,7 +350,7 @@ function fichaProduto(slug){
    +'<div class="hero-b"><div class="hero-t">'+esc(p.nome)+'</div>'
    +'<div class="hero-s">'+esc(p.formaCirculacao)+(p.estrategico?' \u00b7 produto estrat&eacute;gico':'')+'</div>'
    +'<span class="pill" style="color:'+c+';border-color:'+c+'55;background:'+c+'14">'+ROT_ID[p.identificacao]+'</span>'
-   +(p.prioridade==='maxima'?'<span class="pill" style="color:#EF4444;border-color:#EF444455;background:#EF444414">Prioridade m&aacute;xima</span>':'')
+   +(p.prioridade==='maxima'?'<span class="pill" style="color:#FF7A7A;border-color:#FF7A7A55;background:#FF7A7A14">Prioridade m&aacute;xima</span>':'')
    +'</div></div>'
    +'<div class="hero-k">'
    +'<div class="hk"><div class="hk-l">Unidades que o guardam</div><div class="hk-v mono">'+uns.length+'</div></div>'
@@ -382,7 +382,7 @@ function fichaProduto(slug){
 
   h+=bloco('Onde est&aacute; guardado',[uns.length+' unidades'],
     uns.length?uns.map(function(a){
-      var cn=COR_NAT[a.natureza]||'#5E7189';
+      var cn=COR_NAT[a.natureza]||'#9DB0C8';
       return '<div class="it" data-ir="un:'+esc(a.id)+'">'
        +'<span class="it-d" style="border-color:'+cn+';background:'+(a.estado==='operacional'?cn:'transparent')+'"></span>'
        +'<span class="it-n">'+esc(a.nome)+'<div class="it-m">'+esc(a.provincia||'')+' \u00b7 '+esc(a.estado)+'</div></span>'
@@ -425,7 +425,7 @@ function fichaProvincia(nome){
    +'<div class="hero-s">Corredor de escoamento: '+esc(corr||'\u2014')
    +(irmas.length?' \u00b7 partilhado com '+esc(irmas.join(', ')):'')+'</div>'
    +'<span class="pill" style="color:'+cv+';border-color:'+cv+'55;background:'+cv+'14">Exposi&ccedil;&atilde;o '+v.toFixed(2).replace('.',',')+'</span>'
-   +'<span class="pill" style="color:var(--amber);border-color:#F0A92655;background:#F0A92614">Agregados por confirmar</span>'
+   +'<span class="pill" style="color:var(--amber);border-color:#FFC35255;background:#FFC35214">Agregados por confirmar</span>'
    +'</div></div>'
    +'<div class="hero-k">'
    +'<div class="hk"><div class="hk-l">Explora&ccedil;&otilde;es</div><div class="hk-v mono">'+num(p.exploracoes)+'</div></div>'
@@ -471,7 +471,7 @@ function fichaProvincia(nome){
 
   h+=bloco('Unidades de armazenagem',[uns.length+' no cadastro'],
     uns.length?uns.map(function(a){
-      var cn=COR_NAT[a.natureza]||'#5E7189';
+      var cn=COR_NAT[a.natureza]||'#9DB0C8';
       return '<div class="it" data-ir="un:'+esc(a.id)+'">'
        +'<span class="it-d" style="border-color:'+cn+';background:'+(a.estado==='operacional'?cn:'transparent')+'"></span>'
        +'<span class="it-n">'+esc(a.nome)+'<div class="it-m">'+(ROT_NAT[a.natureza]||'')+' \u00b7 '+esc(a.estado)+'</div></span>'
@@ -488,7 +488,7 @@ function fichaProvincia(nome){
   if(ints.length) h+=bloco('Cortes de estrada',['Jan 2026','crit'],
     ints.map(function(i){
       var c=i.gravidade==='intransitavel'?'var(--red)':'var(--amber)';
-      return '<div class="bd" style="border-bottom:1px solid rgba(38,56,86,.4)">'
+      return '<div class="bd" style="border-bottom:1px solid rgba(72,100,144,.4)">'
        +'<div style="font-weight:600;color:'+c+'">'+esc(i.estrada)+' \u00b7 '+esc(i.troco)+'</div>'
        +'<div style="font-size:11.5px;color:var(--t3);margin-top:4px">'+esc(i.causa)+'</div>'
        +'<div style="font-size:11.5px;margin-top:5px;color:'+(i.alternativa?'var(--t2)':'#FFB4B4')+'"><b>Alternativa:</b> '+esc(i.alternativa||'nenhuma')+'</div>'

@@ -12,10 +12,10 @@
 <script src="assets/produtos-visual.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg1:#080F1C;--sidebar-bg:#0B1421;--card-bg:#141F2B;--card-line:rgba(64,86,108,.55);
---gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
---blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
---ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#1B2836;--nav-idle:#141F2B;--accg:rgba(34,184,240,.13)}
+:root{--bg1:#0B1524;--sidebar-bg:#0E1A2B;--card-bg:#17243A;--card-line:rgba(100,128,164,.62);
+--gold-line:rgba(237,184,110,.52);--brz:#EDB86E;--brzl:#F5DDB8;--brzg:rgba(237,184,110,.52);
+--blue:#5CCBF7;--teal:#5FE3D2;--amber:#FFC352;--red:#FF7A7A;--ok:#3FD9A8;--viol:#BFA9FF;
+--ink:#FAFCFF;--t2:#D6E1EE;--t3:#C2D1E4;--t4:#9DB0C8;--cardh:#203148;--nav-idle:#17243A;--accg:rgba(92,203,247,.13)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
 .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
@@ -26,7 +26,7 @@ body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-seri
 .brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
 .nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
 .nav-item:hover{background:var(--cardh)}
-.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active{background:var(--blue);color:#0A1F2C}
 .nav-item.active .nav-label{font-weight:600}
 .nav-icon{width:16px;text-align:center;opacity:.85}
 main{flex:1;padding:22px 26px 60px;max-width:1500px}
@@ -42,14 +42,14 @@ h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
 .ch{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 17px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
 .ch h2{font-size:14px;font-weight:600;margin:0 0 3px}
 .ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
-.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
-.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(237,184,110,.12);white-space:nowrap;flex-shrink:0}
+.tag.ok{color:var(--ok);border-color:rgba(63,217,168,.35);background:rgba(63,217,168,.08)}
 .bd{padding:15px 17px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
 @media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
 table{width:100%;border-collapse:collapse;font-size:11.5px}
 th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 15px;border-bottom:1px solid var(--card-line);font-weight:600}
-td{padding:9px 15px;border-bottom:1px solid rgba(38,56,86,.4)}
+td{padding:9px 15px;border-bottom:1px solid rgba(72,100,144,.4)}
 tr:last-child td{border-bottom:none}
 td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 .est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
@@ -58,9 +58,9 @@ td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 .leg i{width:11px;height:11px;border-radius:2px;display:inline-block}
 .cw{padding:12px 17px 17px}
 .aviso{margin:12px 17px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.55;border:1px solid}
-.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
-.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
-.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.aviso.i{background:rgba(92,203,247,.07);border-color:rgba(92,203,247,.26);color:#9EDCF7}
+.aviso.w{background:rgba(255,195,82,.07);border-color:rgba(255,195,82,.26);color:var(--amber)}
+.aviso.r{background:rgba(255,122,122,.07);border-color:rgba(255,122,122,.28);color:#FFB4B4}
 .err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
 </style>
 </head>
@@ -152,8 +152,8 @@ if (typeof Chart === 'undefined') {
       aviso.className = 'grafico-indisponivel';
       aviso.textContent = 'Gráfico indisponível — a biblioteca de gráficos não carregou.';
       aviso.style.cssText = 'display:flex;align-items:center;justify-content:center;' +
-        'min-height:120px;padding:18px;border:1px dashed rgba(201,138,60,.45);' +
-        'border-radius:10px;color:#8FA1B8;font-size:12px;text-align:center';
+        'min-height:120px;padding:18px;border:1px dashed rgba(237,184,110,.62);' +
+        'border-radius:10px;color:#C2D1E4;font-size:12px;text-align:center';
       tela.parentNode.replaceChild(aviso, tela);
     }
     return { destroy: function () {}, update: function () {}, resize: function () {} };
@@ -250,7 +250,7 @@ function desenharKpis(){
     IndicadoresSinagepe.faixaDemonstracao(dem,lista.length)+IndicadoresSinagepe.linha(lista);
 }
 
-var C={brz:'#C98A3C',blue:'#22B8F0',teal:'#2DD4BF',amber:'#F0A926',viol:'#A78BFA'};
+var C={brz:'#EDB86E',blue:'#5CCBF7',teal:'#5FE3D2',amber:'#FFC352',viol:'#BFA9FF'};
 function desenharGrafico(){
   if(!window.Chart)return;
   var S=ST.sima.series,E=S.edicoes;
@@ -267,12 +267,12 @@ function desenharGrafico(){
   new Chart(document.getElementById('g1'),{type:'line',
     data:{labels:E.map(function(e){return e.mes||('n.º '+e.edicao)}),datasets:ds},
     options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
-      plugins:{legend:{display:false},tooltip:{backgroundColor:'#0C1626',borderColor:'rgba(38,56,86,.9)',
-        borderWidth:1,titleColor:'#F3F7FC',bodyColor:'#C3D0E0',padding:10,
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#17243A',borderColor:'rgba(72,100,144,.9)',
+        borderWidth:1,titleColor:'#FAFCFF',bodyColor:'#D6E1EE',padding:10,
         callbacks:{label:function(c){return c.dataset.label+': '
           +(c.parsed.y==null?'sem medi&ccedil;&atilde;o':p2(c.parsed.y)+' MT/kg')}}}},
-      scales:{x:{ticks:{color:'#5E7189',font:{size:11}},grid:{display:false},border:{color:'rgba(38,56,86,.55)'}},
-              y:{ticks:{color:'#5E7189',font:{size:11}},grid:{color:'rgba(38,56,86,.55)'},border:{display:false}}}}});
+      scales:{x:{ticks:{color:'#9DB0C8',font:{size:11}},grid:{display:false},border:{color:'rgba(72,100,144,.55)'}},
+              y:{ticks:{color:'#9DB0C8',font:{size:11}},grid:{color:'rgba(72,100,144,.55)'},border:{display:false}}}}});
   var vazias=E.filter(function(e){
     return !S.precoMedio.some(function(x){return x.valores[String(e.edicao)]!=null})});
   document.getElementById('nota-serie').innerHTML=
@@ -331,7 +331,7 @@ function desenharCampanha(){
   var C=ST.maap&&ST.maap.campanha2025_26;
   if(!C){document.getElementById('campanha').innerHTML='';return}
   var max=Math.max.apply(null,C.producaoPrevista.map(function(g){return g.toneladas}));
-  var cores=['#C98A3C','#E8BE7A','#2DD4BF','#22B8F0','#A78BFA'];
+  var cores=['#EDB86E','#F5DDB8','#5FE3D2','#5CCBF7','#BFA9FF'];
   document.getElementById('campanha').innerHTML=
      '<div style="display:flex;align-items:baseline;gap:12px;margin-bottom:16px;flex-wrap:wrap">'
     +'<b class="mono" style="font-size:26px;color:var(--brzl);letter-spacing:-.02em">'
@@ -343,10 +343,10 @@ function desenharCampanha(){
         ? '<span style="flex-shrink:0;line-height:0">'
           +ProdutosVisual.svg(/cereai/i.test(g.grupo)?'Milho':'Feij&atilde;o',30)+'</span>' : '';
       return '<div class="entra" style="animation-delay:'+(i*.07)+'s;display:flex;align-items:center;'
-       +'gap:11px;padding:9px 0;border-bottom:1px solid rgba(38,56,86,.4)">'
+       +'gap:11px;padding:9px 0;border-bottom:1px solid rgba(72,100,144,.4)">'
        +(ilu||'<span style="width:30px;flex-shrink:0"></span>')
        +'<span style="width:180px;flex-shrink:0;font-size:12.5px">'+esc(g.grupo)+'</span>'
-       +'<span style="flex:1;height:17px;background:#0A1421;border-radius:4px;overflow:hidden">'
+       +'<span style="flex:1;height:17px;background:#0E1A2B;border-radius:4px;overflow:hidden">'
        +'<i class="cresce" style="display:block;height:100%;width:'+(g.toneladas/max*100)+'%;'
        +'background:linear-gradient(90deg,'+cores[i%5]+'CC,'+cores[i%5]+'55);'
        +'animation-delay:'+(.1+i*.07)+'s"></i></span>'
@@ -361,22 +361,22 @@ function desenharCheias(){
   var comDado=C.porProvincia.filter(function(p){return p.hectaresSemeados});
   document.getElementById('cheias').innerHTML=
      '<div style="display:flex;gap:22px;flex-wrap:wrap;margin-bottom:16px">'
-    +[[num(C.hectaresAfectados),'hectares afectados','#EF4444'],
-      [C.percentagemAreaSemeada.toString().replace('.',',')+'%','da &aacute;rea semeada','#F0A926'],
-      [num(C.familiasProdutoras),'fam&iacute;lias produtoras','#EF4444'],
-      [C.provinciasAfectadas.length,'prov&iacute;ncias','#22B8F0']].map(function(x){
+    +[[num(C.hectaresAfectados),'hectares afectados','#FF7A7A'],
+      [C.percentagemAreaSemeada.toString().replace('.',',')+'%','da &aacute;rea semeada','#FFC352'],
+      [num(C.familiasProdutoras),'fam&iacute;lias produtoras','#FF7A7A'],
+      [C.provinciasAfectadas.length,'prov&iacute;ncias','#5CCBF7']].map(function(x){
       return '<div class="entra"><div class="mono" style="font-size:22px;color:'+x[2]
        +';letter-spacing:-.02em">'+x[0]+'</div>'
        +'<div style="font-size:11px;color:var(--t4);margin-top:3px">'+x[1]+'</div></div>';
     }).join('')+'</div>'
     +comDado.map(function(p,i){
       var pc=p.hectaresInundados/p.hectaresSemeados*100;
-      var c=pc>10?'#EF4444':pc>2?'#F0A926':'#12B981';
+      var c=pc>10?'#FF7A7A':pc>2?'#FFC352':'#3FD9A8';
       return '<div class="entra" style="animation-delay:'+(i*.08)+'s;margin-bottom:13px">'
        +'<div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px">'
        +'<b>'+esc(p.provincia)+'</b><span class="mono" style="color:'+c+'">'
        +pc.toFixed(1).replace('.',',')+'% inundado</span></div>'
-       +'<div style="height:9px;background:#0A1421;border-radius:5px;overflow:hidden">'
+       +'<div style="height:9px;background:#0E1A2B;border-radius:5px;overflow:hidden">'
        +'<i class="cresce" style="display:block;height:100%;width:'+Math.min(pc,100)+'%;'
        +'background:'+c+'AA;animation-delay:'+(.1+i*.08)+'s"></i></div>'
        +'<div style="font-size:10.5px;color:var(--t4);margin-top:4px">'

@@ -10,10 +10,10 @@
 <script src="assets/pesquisa-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg1:#080F1C;--sidebar-bg:#0B1421;--card-bg:#141F2B;--card-line:rgba(64,86,108,.55);
---gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
---blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
---ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#1B2836;--nav-idle:#141F2B;--accg:rgba(34,184,240,.13)}
+:root{--bg1:#0B1524;--sidebar-bg:#0E1A2B;--card-bg:#17243A;--card-line:rgba(100,128,164,.62);
+--gold-line:rgba(237,184,110,.52);--brz:#EDB86E;--brzl:#F5DDB8;--brzg:rgba(237,184,110,.52);
+--blue:#5CCBF7;--teal:#5FE3D2;--amber:#FFC352;--red:#FF7A7A;--ok:#3FD9A8;--viol:#BFA9FF;
+--ink:#FAFCFF;--t2:#D6E1EE;--t3:#C2D1E4;--t4:#9DB0C8;--cardh:#203148;--nav-idle:#17243A;--accg:rgba(92,203,247,.13)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
 .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
@@ -24,7 +24,7 @@ body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-seri
 .brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
 .nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
 .nav-item:hover{background:var(--cardh)}
-.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active{background:var(--blue);color:#0A1F2C}
 .nav-item.active .nav-label{font-weight:600}
 .nav-icon{width:16px;text-align:center;opacity:.85}
 main{flex:1;padding:22px 26px 60px;max-width:1500px}
@@ -39,15 +39,15 @@ h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
 .frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
 .ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
 .ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
-.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
-.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
-.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(237,184,110,.12)}
+.tag.crit{color:var(--red);border-color:rgba(255,122,122,.35);background:rgba(255,122,122,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(63,217,168,.35);background:rgba(63,217,168,.08)}
 .bd{padding:15px 17px}
-.aviso-topo{padding:15px 18px;border-radius:12px;border:1px solid rgba(240,169,38,.45);
- background:rgba(240,169,38,.09);margin-bottom:16px;font-size:12.5px;line-height:1.65;color:#F3D9A6}
+.aviso-topo{padding:15px 18px;border-radius:12px;border:1px solid rgba(255,195,82,.45);
+ background:rgba(255,195,82,.09);margin-bottom:16px;font-size:12.5px;line-height:1.65;color:#F3D9A6}
 .aviso-topo b{color:var(--amber)}
-.principio{padding:15px 18px;border-radius:12px;border:1px solid rgba(34,184,240,.32);
- background:rgba(34,184,240,.07);margin-bottom:16px;font-size:12.5px;line-height:1.65;color:#9EDCF7}
+.principio{padding:15px 18px;border-radius:12px;border:1px solid rgba(92,203,247,.32);
+ background:rgba(92,203,247,.07);margin-bottom:16px;font-size:12.5px;line-height:1.65;color:#9EDCF7}
 .principio b{color:var(--blue)}
 .estados{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0}
 .es{padding:14px 17px;border-right:1px solid var(--card-line);border-bottom:1px solid var(--card-line)}
@@ -57,15 +57,15 @@ h1{font-size:23px;margin:0 0 5px;letter-spacing:-.01em}
 .es-l{font-size:10px;color:var(--t4);margin-top:6px}
 table{width:100%;border-collapse:collapse;font-size:11.5px}
 th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 14px;border-bottom:1px solid var(--card-line);font-weight:600}
-td{padding:9px 14px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+td{padding:9px 14px;border-bottom:1px solid rgba(72,100,144,.4);vertical-align:top}
 tr:last-child td{border-bottom:none}
 .est{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid;white-space:nowrap}
 .g2{display:grid;grid-template-columns:1.1fr 1fr;gap:14px;align-items:start}
 @media(max-width:1080px){.g2{grid-template-columns:1fr}.sidebar{display:none}}
 .aviso{margin-top:12px;padding:11px 13px;border-radius:9px;font-size:11.5px;line-height:1.55;border:1px solid}
-.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
-.aviso.g{background:rgba(18,185,129,.07);border-color:rgba(18,185,129,.26);color:#8FE3C4}
-.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.aviso.i{background:rgba(92,203,247,.07);border-color:rgba(92,203,247,.26);color:#9EDCF7}
+.aviso.g{background:rgba(63,217,168,.07);border-color:rgba(63,217,168,.26);color:#8FE3C4}
+.aviso.r{background:rgba(255,122,122,.07);border-color:rgba(255,122,122,.28);color:#FFB4B4}
 .err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
 </style>
 </head>
@@ -125,7 +125,7 @@ function desenharLigado(){
   var a=ST.a; if(!a){document.getElementById('ligado').innerHTML='<div class="err">Anu&aacute;rio n&atilde;o carregado.</div>';return}
   var dm=a.disponibilidadeMedicamentos, gc=a.gestaoDaCadeia, qm=a.qualidadeDeMedicamentos;
 
-  function cor(v,meta){return v>=meta?'#12B981':(v>=meta*0.85?'#F0A926':'#EF4444')}
+  function cor(v,meta){return v>=meta?'#3FD9A8':(v>=meta*0.85?'#FFC352':'#FF7A7A')}
 
   var h='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:11px;margin-bottom:14px">';
   h+='<div style="padding:13px 15px;border:1px solid var(--card-line);border-radius:10px;background:#0A121E">'
@@ -134,15 +134,15 @@ function desenharLigado(){
    +'<div style="font-size:10.5px;color:var(--t3)">meta '+dm.meta+'% &middot; '+dm.fonte+'</div></div>';
   h+='<div style="padding:13px 15px;border:1px solid var(--card-line);border-radius:10px;background:#0A121E">'
    +'<div style="font-size:10.5px;color:var(--t4)">Prov&iacute;ncias acima da meta</div>'
-   +'<div class="mono" style="font-size:23px;font-weight:700;color:#EF4444">0 <span style="font-size:12px;color:var(--t4)">de '+dm.porProvincia.length+'</span></div>'
+   +'<div class="mono" style="font-size:23px;font-weight:700;color:#FF7A7A">0 <span style="font-size:12px;color:var(--t4)">de '+dm.porProvincia.length+'</span></div>'
    +'<div style="font-size:10.5px;color:var(--t3)">nenhuma atinge os '+dm.meta+'%</div></div>';
   h+='<div style="padding:13px 15px;border:1px solid var(--card-line);border-radius:10px;background:#0A121E">'
    +'<div style="font-size:10.5px;color:var(--t4)">Gest&atilde;o da cadeia, m&eacute;dia</div>'
-   +'<div class="mono" style="font-size:23px;font-weight:700;color:#F0A926">'+gc.mediaNacional+'%</div>'
+   +'<div class="mono" style="font-size:23px;font-weight:700;color:#FFC352">'+gc.mediaNacional+'%</div>'
    +'<div style="font-size:10.5px;color:var(--t3)">'+gc.classificacaoMedia+' &middot; CMAM</div></div>';
   h+='<div style="padding:13px 15px;border:1px solid var(--card-line);border-radius:10px;background:#0A121E">'
    +'<div style="font-size:10.5px;color:var(--t4)">Amostras com qualidade</div>'
-   +'<div class="mono" style="font-size:23px;font-weight:700;color:#12B981">'+String(qm.nacional.percentagemQualidade).replace('.',',')+'%</div>'
+   +'<div class="mono" style="font-size:23px;font-weight:700;color:#3FD9A8">'+String(qm.nacional.percentagemQualidade).replace('.',',')+'%</div>'
    +'<div style="font-size:10.5px;color:var(--t3)">'+qm.nacional.analisadas+' de '+qm.nacional.recebidas+' analisadas &middot; ANARME</div></div>';
   h+='</div>';
 
@@ -197,10 +197,10 @@ function desenhar(){
      +'<div class="es-l">Limiar definido por: '+esc(e.limiarDefinidoPor)+'</div></div>';
   }).join('');
 
-  var COR={'POR LIGAR':'#EF4444','CALCULÁVEL':'#12B981'};
+  var COR={'POR LIGAR':'#FF7A7A','CALCULÁVEL':'#3FD9A8'};
   var h2='<thead><tr><th>Indicador</th><th>Estado</th><th>O que precisa</th><th>Quem det&eacute;m</th><th>Cruza com</th></tr></thead><tbody>';
   ST.d.indicadores.forEach(function(i){
-    var c=COR[i.estado]||'#5E7189';
+    var c=COR[i.estado]||'#9DB0C8';
     h2+='<tr><td style="font-weight:600">'+esc(i.nome)+'</td>'
      +'<td><span class="est" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">'+esc(i.estado)+'</span></td>'
      +'<td style="color:var(--t3);max-width:400px">'+esc(i.oQuePrecisa)+'</td>'

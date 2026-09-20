@@ -6,26 +6,26 @@
 
 :root {
   /* ---- Fundos (tema escuro obrigatório) ---- */
-  --bg-primary: #040712;
-  --bg-card: #0f1a30;
-  --bg-card-hover: #111e35;
-  --bg-input: #0a1128;
-  --bg-topbar: #0f1a30;
+  --bg-primary: #0B1524;
+  --bg-card: #17243A;
+  --bg-card-hover: #1B2A44;
+  --bg-input: #101B34;
+  --bg-topbar: #17243A;
 
   /* Compatibilidade com nomes antigos já usados nos 30 ficheiros —
      resolvem agora para os tons oficiais desta especificação. */
-  --page-bg: #040712;
-  --sidebar-bg-top: #040712; --sidebar-bg-bottom: #040712;
-  --card-bg: #0f1a30; --topbar-bg: #0f1a30;
-  --navy-950: #040712; --navy-900: #0a1128; --navy-850: #0f1a30;
-  --navy-800: #111e35; --navy-700: #1e2d4b; --navy-600: #1e2d4b;
+  --page-bg: #0B1524;
+  --sidebar-bg-top: #0B1524; --sidebar-bg-bottom: #0B1524;
+  --card-bg: #17243A; --topbar-bg: #17243A;
+  --navy-950: #0B1524; --navy-900: #101B34; --navy-850: #17243A;
+  --navy-800: #1B2A44; --navy-700: #1e2d4b; --navy-600: #1e2d4b;
 
   /* ---- Texto ---- */
   --ink: #ffffff;         /* text-primary */
-  --ink-dim: #cbd5e1;      /* text-secondary */
-  --ink-faint: #94a3b8;    /* text-tertiary */
-  --ink-muted: #64748b;    /* text-muted */
-  --sidebar-text: #94a3b8;
+  --ink-dim: #D6E1EE;      /* text-secondary */
+  --ink-faint: #C2D1E4;    /* text-tertiary */
+  --ink-muted: #9DB0C8;    /* text-muted */
+  --sidebar-text: #C2D1E4;
 
   /* ---- Acentos semânticos (oficiais) ---- */
   --accent-primary: #2490de;
@@ -33,7 +33,7 @@
   --warn: #f59e0b; --warn-bg: rgba(245,158,11,0.15);
   --crit: #dc2626; --crit-bg: rgba(220,38,38,0.15);
   --info: #2490de; --info-bg: rgba(36,144,222,0.15);
-  --teal: #2dd4bf; --teal-bg: rgba(45,212,191,0.15);
+  --teal: #5FE3D2; --teal-bg: rgba(45,212,191,0.15);
   --accent-orange: #d97706;
 
   /* Bronze — mantido por compatibilidade com o código já escrito;
@@ -48,7 +48,7 @@
   --line: rgba(30,45,75,0.5);
   --sidebar-line: rgba(30,45,75,0.5);
   --sidebar-item-active-bg: var(--accent-primary);
-  --sidebar-avatar-bg: #111e35;
+  --sidebar-avatar-bg: #1B2A44;
 
   /* Tipo — família única, tal como pede a especificação */
   --font-display: 'Inter', sans-serif;
@@ -128,7 +128,7 @@ a { color: inherit; text-decoration: none; }
 .topbar-title { font-size: 20px; font-weight: 600; color: #fff; }
 .topbar-badge {
   font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 4px;
-  background: #f1f5f9; color: #64748b;
+  background: #f1f5f9; color: #9DB0C8;
 }
 .live-indicator { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 600; color: var(--ok); }
 .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 0 rgba(5,150,105,0.5); animation: pulse 2s ease-out infinite; }

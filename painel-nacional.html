@@ -12,10 +12,10 @@
 <script src="assets/produtos-visual.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg1:#080F1C;--sidebar-bg:#0B1421;--card-bg:#141F2B;--card-line:rgba(64,86,108,.55);
---gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
---blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
---ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#1B2836;--nav-idle:#141F2B;--accg:rgba(34,184,240,.13)}
+:root{--bg1:#0B1524;--sidebar-bg:#0E1A2B;--card-bg:#17243A;--card-line:rgba(100,128,164,.62);
+--gold-line:rgba(237,184,110,.52);--brz:#EDB86E;--brzl:#F5DDB8;--brzg:rgba(237,184,110,.52);
+--blue:#5CCBF7;--teal:#5FE3D2;--amber:#FFC352;--red:#FF7A7A;--ok:#3FD9A8;--viol:#BFA9FF;
+--ink:#FAFCFF;--t2:#D6E1EE;--t3:#C2D1E4;--t4:#9DB0C8;--cardh:#203148;--nav-idle:#17243A;--accg:rgba(92,203,247,.13)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
 .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
@@ -26,7 +26,7 @@ body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-seri
 .brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
 .nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
 .nav-item:hover{background:var(--cardh)}
-.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active{background:var(--blue);color:#0A1F2C}
 .nav-item.active .nav-label{font-weight:600}
 .nav-icon{width:16px;text-align:center;opacity:.85}
 main{flex:1;padding:22px 26px 60px;max-width:1560px}
@@ -42,13 +42,13 @@ h1{font-size:25px;margin:0 0 6px;letter-spacing:-.015em}
 .ch{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
 .ch h2{font-size:15px;font-weight:600;margin:0 0 3px}
 .ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
-.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
-.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
-.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(237,184,110,.12);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(255,122,122,.35);background:rgba(255,122,122,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(63,217,168,.35);background:rgba(63,217,168,.08)}
 .bd{padding:16px 18px}
 table{width:100%;border-collapse:collapse;font-size:11.5px}
 th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 16px;border-bottom:1px solid var(--card-line);font-weight:600}
-td{padding:10px 16px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:middle}
+td{padding:10px 16px;border-bottom:1px solid rgba(72,100,144,.4);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 .g2{display:grid;grid-template-columns:1.25fr 1fr;gap:14px;align-items:start}
@@ -63,7 +63,7 @@ td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 
 /* ---- mosaico de províncias, clicável ---- */
 .malha{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
-.prov{display:block;text-decoration:none;color:inherit;background:linear-gradient(158deg,#101B2E,#0A1220);
+.prov{display:block;text-decoration:none;color:inherit;background:linear-gradient(158deg,#18263C,#0E1A2B);
  border:1px solid var(--card-line);border-radius:12px;padding:14px 15px 13px;position:relative;
  overflow:hidden;cursor:pointer;transition:.2s}
 .prov:hover{transform:translateY(-4px);border-color:var(--brzg);box-shadow:0 10px 26px rgba(0,0,0,.4)}
@@ -77,20 +77,20 @@ td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 .linha-i{width:15px;text-align:center;opacity:.7;flex-shrink:0}
 .linha-t{flex:1;color:var(--t3)}
 .linha-v{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600}
-.prov-f{margin-top:11px;padding-top:9px;border-top:1px solid rgba(38,56,86,.5);font-size:10px;color:var(--brzl);
+.prov-f{margin-top:11px;padding-top:9px;border-top:1px solid rgba(72,100,144,.5);font-size:10px;color:var(--brzl);
  display:flex;align-items:center;justify-content:space-between;gap:6px}
 .prov:hover .prov-f{color:var(--brz)}
 
 .dest{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:9px}
-.dest a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--t2);background:#0A1421;
+.dest a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--t2);background:#0E1A2B;
  border:1px solid var(--card-line);border-radius:10px;padding:11px 13px;font-size:12px;transition:.16s}
 .dest a:hover{background:var(--cardh);border-color:var(--brzg);color:var(--ink);transform:translateX(3px)}
 .dest .ic{width:17px;text-align:center;opacity:.75;flex-shrink:0}
 .grupo{font-size:9.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--brz);margin:18px 0 10px}
 .grupo:first-child{margin-top:0}
 .aviso{margin:14px 18px;padding:13px 15px;border-radius:10px;font-size:11.5px;line-height:1.7;border:1px solid}
-.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
-.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.aviso.i{background:rgba(92,203,247,.07);border-color:rgba(92,203,247,.26);color:#9EDCF7}
+.aviso.r{background:rgba(255,122,122,.07);border-color:rgba(255,122,122,.28);color:#FFB4B4}
 .err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
 </style>
 </head>
@@ -220,9 +220,9 @@ function mercadosDe(p){
    "Por extrair" n\u00e3o \u00e9 dado: \u00e9 trabalho por fazer, e conta como falta. */
 function corProvincia(d){
   var temFar=!!d.fa, temArm=d.arm.length>0;
-  if(temArm && temFar) return ['#12B981','documentada'];
-  if(temArm || temFar) return ['#F0A926','parcial'];
-  return ['#EF4444','sem cadastro'];
+  if(temArm && temFar) return ['#3FD9A8','documentada'];
+  if(temArm || temFar) return ['#FFC352','parcial'];
+  return ['#FF7A7A','sem cadastro'];
 }
 
 /* ============================================================
@@ -238,9 +238,9 @@ function desenharEstadosCadastro(){
   var EF=ST.far.estadosCadastro||null;
   if(!EA&&!EF){el.innerHTML='';return}
 
-  var COR={identificada:'#22B8F0','identificada-por-confirmar':'#F0A926',
-   'confirmada-pelo-titular':'#EF4444',activa:'#12B981',inactiva:'#5E7189',
-   'inactiva-ou-em-obra':'#F0A926','estado-desconhecido':'#5E7189'};
+  var COR={identificada:'#5CCBF7','identificada-por-confirmar':'#FFC352',
+   'confirmada-pelo-titular':'#FF7A7A',activa:'#3FD9A8',inactiva:'#9DB0C8',
+   'inactiva-ou-em-obra':'#FFC352','estado-desconhecido':'#9DB0C8'};
 
   function grupo(titulo,estados,total,ecra){
     var max=Math.max.apply(null,estados.map(function(e){return e.quantas}))||1;
@@ -250,13 +250,13 @@ function desenharEstadosCadastro(){
      +'<a href="'+ecra+'" style="font-size:10.5px;color:var(--brzl);text-decoration:none">'
      +'ver o cadastro &rarr;</a></div>'
      +estados.map(function(e,i){
-        var c=COR[e.estado]||'#8FA1B8';
+        var c=COR[e.estado]||'#C2D1E4';
         var zero=e.quantas===0;
         return '<div class="entra" style="animation-delay:'+(i*.05)+'s;display:flex;'
-         +'align-items:center;gap:11px;padding:8px 0;border-bottom:1px solid rgba(38,56,86,.35)">'
+         +'align-items:center;gap:11px;padding:8px 0;border-bottom:1px solid rgba(72,100,144,.35)">'
          +'<span style="width:186px;flex-shrink:0;font-size:12px;color:'
          +(zero?'var(--t4)':'var(--t2)')+'">'+esc(e.estado.replace(/-/g,' '))+'</span>'
-         +'<span style="flex:1;height:14px;background:#0A1421;border-radius:4px;overflow:hidden">'
+         +'<span style="flex:1;height:14px;background:#0E1A2B;border-radius:4px;overflow:hidden">'
          +(zero?'':'<i class="cresce" style="display:block;height:100%;width:'+(e.quantas/max*100)
            +'%;background:linear-gradient(90deg,'+c+'AA,'+c+'44);animation-delay:'+(.1+i*.05)+'s"></i>')
          +'</span>'
@@ -271,7 +271,7 @@ function desenharEstadosCadastro(){
   if(EA) h+=grupo('Armazenagem',EA.estados,30,'cadastro-armazens.html');
   if(EF) h+=grupo('Farm&aacute;cias',EF.estados,ST.far.totais.lidas,'dashboard-igsae.html');
   h+='<div style="font-size:11.5px;color:var(--t3);line-height:1.75;margin-top:6px;'
-   +'padding-top:14px;border-top:1px solid rgba(38,56,86,.5)">'
+   +'padding-top:14px;border-top:1px solid rgba(72,100,144,.5)">'
    +(EA?esc(EA.principio):'')+'</div>';
   el.innerHTML=h;
 
@@ -309,11 +309,11 @@ function desenharRedeComercial(){
   });
   var cabecalho='<div style="display:flex;gap:26px;flex-wrap:wrap;margin-bottom:18px">'
    +[[O.length+X.length+((ST.rc.estabelecimentosIdentificados||[]).length),
-      'entidades identificadas','#F0A926'],
-     [declarados,'locais declarados pelos operadores','#E8BE7A'],
-     [U.length,'com morada no sistema','#22B8F0'],
-     [frio,'com cadeia de frio','#2DD4BF'],
-     [semNada.length,'prov&iacute;ncias sem nenhuma','#EF4444']].map(function(x){
+      'entidades identificadas','#FFC352'],
+     [declarados,'locais declarados pelos operadores','#F5DDB8'],
+     [U.length,'com morada no sistema','#5CCBF7'],
+     [frio,'com cadeia de frio','#5FE3D2'],
+     [semNada.length,'prov&iacute;ncias sem nenhuma','#FF7A7A']].map(function(x){
       return '<div class="entra"><div class="mono" style="font-size:25px;color:'+x[2]
        +';letter-spacing:-.02em">'+x[0]+'</div>'
        +'<div style="font-size:10.5px;color:var(--t4);margin-top:3px">'+x[1]+'</div></div>';
@@ -323,13 +323,13 @@ function desenharRedeComercial(){
     var un=U.filter(function(u){return u.operador===o.id});
     var provs={}; un.forEach(function(u){provs[u.provincia]=1});
     return '<div class="entra" style="animation-delay:'+(i*.07)+'s;padding:12px 0;'
-     +'border-bottom:1px solid rgba(38,56,86,.4)">'
+     +'border-bottom:1px solid rgba(72,100,144,.4)">'
      +'<div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px">'
      +'<b style="font-size:13px">'+esc(o.insignia||o.nome)+'</b>'
      +'<span style="font-size:10.5px;color:var(--t4)">'+esc(o.nome)+'</span>'
      +(o.cadeiaDeFrio?'<span style="font-size:9px;letter-spacing:.09em;text-transform:uppercase;'
        +'padding:3px 8px;border-radius:3px;border:1px solid rgba(45,212,191,.4);'
-       +'background:rgba(45,212,191,.1);color:#2DD4BF">cadeia de frio</span>':'')
+       +'background:rgba(45,212,191,.1);color:#5FE3D2">cadeia de frio</span>':'')
      +'<span style="flex:1"></span>'
      +(function(){
         var r=o.redeDeclarada||{};
@@ -352,7 +352,7 @@ function desenharRedeComercial(){
      +' &middot; fonte: '+esc(o.naturezaFonte||'s&iacute;tio oficial')+'</div></div>';
   }).join('');
 
-  var outros='<div style="margin-top:14px;padding-top:13px;border-top:1px solid rgba(38,56,86,.5)">'
+  var outros='<div style="margin-top:14px;padding-top:13px;border-top:1px solid rgba(72,100,144,.5)">'
    +'<div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--t4);'
    +'margin-bottom:9px">Identificados, sem rede publicada</div>'
    +X.map(function(o){
@@ -363,16 +363,16 @@ function desenharRedeComercial(){
        +'<span style="color:var(--t4);font-size:10.5px">'+esc(o.estado)+'</span></div>';
     }).join('')+'</div>';
 
-  var mapa='<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(38,56,86,.5)">'
+  var mapa='<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(72,100,144,.5)">'
    +'<div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--t4);'
    +'margin-bottom:9px">Cobertura por prov&iacute;ncia</div>'
    +PROV.map(function(p,i){
       var n=porProv[p]||0;
-      var c=n?'#12B981':'#EF4444';
+      var c=n?'#3FD9A8':'#FF7A7A';
       return '<div class="entra" style="animation-delay:'+(i*.03)+'s;display:flex;align-items:center;'
        +'gap:11px;padding:5px 0"><span style="width:132px;flex-shrink:0;font-size:11.5px;color:'
        +(n?'var(--t2)':'var(--t4)')+'">'+p+'</span>'
-       +'<span style="flex:1;height:11px;background:#0A1421;border-radius:3px;overflow:hidden">'
+       +'<span style="flex:1;height:11px;background:#0E1A2B;border-radius:3px;overflow:hidden">'
        +(n?'<i class="cresce" style="display:block;height:100%;width:'+(n/4*100)+'%;background:'
          +c+'99;animation-delay:'+(.1+i*.03)+'s"></i>':'')+'</span>'
        +'<span class="mono" style="width:26px;text-align:right;font-size:11.5px;color:'+c+'">'
@@ -383,15 +383,15 @@ function desenharRedeComercial(){
      e com estado distinto: são descoberta, não confirmação. */
   var EI=(ST.rc.estabelecimentosIdentificados||[]);
   var bei=EI.length
-   ? '<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(38,56,86,.5)">'
+   ? '<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(72,100,144,.5)">'
      +'<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px">'
      +'<div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--viol)">'
      +'Identificados por fonte comercial</div>'
      +'<span class="mono" style="font-size:11px;color:var(--t4)">'+EI.length+'</span></div>'
      +'<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:8px">'
      +EI.map(function(e,i){
-        return '<div class="entra" style="animation-delay:'+(i*.03)+'s;background:#0A1421;'
-         +'border:1px solid var(--card-line);border-left:2px solid #A78BFA;border-radius:9px;'
+        return '<div class="entra" style="animation-delay:'+(i*.03)+'s;background:#0E1A2B;'
+         +'border:1px solid var(--card-line);border-left:2px solid #BFA9FF;border-radius:9px;'
          +'padding:10px 12px">'
          +'<div style="font-size:12px;font-weight:600;margin-bottom:4px">'+esc(e.nome)+'</div>'
          +'<div style="font-size:10px;color:var(--t3)">'+esc(e.tipo.replace(/-/g,' '))+'</div>'
@@ -411,7 +411,7 @@ function desenharRedeComercial(){
 
   var dv=(ST.rc.divergenciasRegistadas||[]);
   var bdv=dv.length
-   ? '<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(38,56,86,.5)">'
+   ? '<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(72,100,144,.5)">'
      +'<div style="font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);'
      +'margin-bottom:9px">Diverg&ecirc;ncias registadas, n&atilde;o resolvidas</div>'
      +dv.map(function(x){
@@ -431,28 +431,28 @@ function desenharProvincias(){
     var linhas=[];
     linhas.push(['\u25A4','Armaz&eacute;ns cadastrados',d.arm.length,
       d.arm.length?'cadastro-armazens.html':'monitorizacao-em-falta.html',
-      d.arm.length?'#12B981':'#5E7189']);
+      d.arm.length?'#3FD9A8':'#9DB0C8']);
     linhas.push(['\u2695','Farm&aacute;cias licenciadas',
       d.fa?num(d.fa.emFuncionamento):(d.porLer?'por extrair':'&mdash;'),
-      'dashboard-igsae.html', d.fa?'#2DD4BF':'#5E7189']);
-    linhas.push(['\u25AC','Estradas nacionais',d.estradas.length,'mapa-integrado.html','#E8BE7A']);
+      'dashboard-igsae.html', d.fa?'#5FE3D2':'#9DB0C8']);
+    linhas.push(['\u25AC','Estradas nacionais',d.estradas.length,'mapa-integrado.html','#F5DDB8']);
     if(d.cortes.length) linhas.push(['\u26A0','Cortes de estrada',d.cortes.length,
-      'modulo-logistica.html','#EF4444']);
+      'modulo-logistica.html','#FF7A7A']);
     if(d.mercados.length) linhas.push(['\u25CF','Pra&ccedil;as medidas pelo SIMA',d.mercados.length,
-      'series-precos.html','#22B8F0']);
+      'series-precos.html','#5CCBF7']);
     if(d.ipc) linhas.push(['\u25D1','Peso no &iacute;ndice de pre&ccedil;os',p2(d.ipc)+'%',
-      'inflacao-cobertura.html','#A78BFA']);
+      'inflacao-cobertura.html','#BFA9FF']);
     /* Do estudo temático do INE sobre a dinâmica da população, 2023.
        Entram porque mudam a leitura: uma província que perde população
        e não tem armazém cadastrado é caso diferente de uma que cresce. */
     if(d.ine){
       var ev=d.ine.esperancaVida2017.homens;
       linhas.push(['\u25CB','Esperan&ccedil;a de vida, homens',p1(ev)+' anos',
-        'inflacao-cobertura.html', ev<53?'#EF4444':ev<57?'#F0A926':'#12B981']);
+        'inflacao-cobertura.html', ev<53?'#FF7A7A':ev<57?'#FFC352':'#3FD9A8']);
       var mg=d.ine.migracaoLiquida2017;
       linhas.push([mg<0?'\u2193':'\u2191','Migra&ccedil;&atilde;o l&iacute;quida',
         (mg>0?'+':'')+p1(mg)+'%','inflacao-cobertura.html',
-        mg<-10?'#EF4444':mg<0?'#F0A926':'#2DD4BF']);
+        mg<-10?'#FF7A7A':mg<0?'#FFC352':'#5FE3D2']);
     }
 
     var destino=d.arm.length?'cadastro-armazens.html':'monitorizacao-em-falta.html';
@@ -494,7 +494,7 @@ function desenharPrecos(){
   var max=(L[0].maximo.valor/L[0].minimo.valor-1)*100;
   document.getElementById('precos').innerHTML=L.map(function(r,i){
     var d=(r.maximo.valor/r.minimo.valor-1)*100;
-    var c=d>150?'#EF4444':d>60?'#F0A926':'#12B981';
+    var c=d>150?'#FF7A7A':d>60?'#FFC352':'#3FD9A8';
     /* A ilustração entra à esquerda do nome. Se o ficheiro visual não
        estiver carregado, a linha continua a funcionar sem ela. */
     var ilu=(window.ProdutosVisual&&ProdutosVisual.svg)
@@ -505,7 +505,7 @@ function desenharPrecos(){
      +ilu
      +'<b style="flex:1;font-size:12.5px">'+esc(r.produto)+'</b>'
      +'<span class="mono" style="color:'+c+'">+'+d.toFixed(0)+'%</span></div>'
-     +'<div style="height:7px;background:#0A1421;border-radius:4px;overflow:hidden">'
+     +'<div style="height:7px;background:#0E1A2B;border-radius:4px;overflow:hidden">'
      +'<i class="cresce" style="display:block;height:100%;width:'+(d/max*100)+'%;'
      +'background:linear-gradient(90deg,'+c+'AA,'+c+'55);animation-delay:'+(.1+i*.06)+'s"></i></div>'
      +'<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--t4);margin-top:4px">'
@@ -522,10 +522,10 @@ function desenharRiscos(){
     .sort(function(a,b){return (b.gravidade||0)-(a.gravidade||0)}).slice(0,5);
   document.getElementById('riscos').innerHTML=R.map(function(r,i){
     var g=r.gravidade||0;
-    var c=g>=3?'#EF4444':g>=2?'#F0A926':'#22B8F0';
+    var c=g>=3?'#FF7A7A':g>=2?'#FFC352':'#5CCBF7';
     return '<a href="centro-antecipacao.html" class="entra" style="animation-delay:'+(i*.06)+'s;'
      +'display:block;text-decoration:none;color:inherit;padding:11px 0;'
-     +'border-bottom:1px solid rgba(38,56,86,.4)">'
+     +'border-bottom:1px solid rgba(72,100,144,.4)">'
      +'<div style="display:flex;gap:10px;align-items:flex-start">'
      +'<span style="flex-shrink:0;font-family:IBM Plex Mono,monospace;font-size:11px;color:'+c+';'
      +'border:1px solid '+c+'55;background:'+c+'12;border-radius:3px;padding:1px 6px;margin-top:1px">'

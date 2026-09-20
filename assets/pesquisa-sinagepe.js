@@ -229,31 +229,31 @@
       '#pesq-fundo{position:fixed;inset:0;background:rgba(4,7,18,.72);z-index:99998;display:none;',
       'align-items:flex-start;justify-content:center;padding:9vh 20px 20px;backdrop-filter:blur(2px)}',
       '#pesq-fundo.on{display:flex}',
-      '#pesq-cx{width:100%;max-width:660px;background:#0C1626;border:1px solid rgba(38,56,86,.9);',
+      '#pesq-cx{width:100%;max-width:660px;background:#17243A;border:1px solid rgba(72,100,144,.9);',
       'border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}',
-      '#pesq-in{width:100%;padding:17px 19px;background:transparent;border:none;border-bottom:1px solid rgba(38,56,86,.75);',
-      'color:#F3F7FC;font-family:Inter,sans-serif;font-size:16px;outline:none}',
-      '#pesq-in::placeholder{color:#5E7189}',
+      '#pesq-in{width:100%;padding:17px 19px;background:transparent;border:none;border-bottom:1px solid rgba(72,100,144,.75);',
+      'color:#FAFCFF;font-family:Inter,sans-serif;font-size:16px;outline:none}',
+      '#pesq-in::placeholder{color:#9DB0C8}',
       '#pesq-res{max-height:58vh;overflow-y:auto}',
-      '.pesq-g{font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#5E7189;',
+      '.pesq-g{font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#9DB0C8;',
       'padding:13px 19px 6px;font-weight:600}',
       '.pesq-i{display:flex;gap:12px;align-items:baseline;padding:9px 19px;cursor:pointer;text-decoration:none;color:inherit}',
       '.pesq-i:hover,.pesq-i.sel{background:#111E31}',
-      '.pesq-n{font-size:13px;font-weight:600;color:#F3F7FC}',
-      '.pesq-d{font-size:11px;color:#8FA1B8;margin-top:2px;line-height:1.45}',
-      '.pesq-t{font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:#C98A3C;',
+      '.pesq-n{font-size:13px;font-weight:600;color:#FAFCFF}',
+      '.pesq-d{font-size:11px;color:#C2D1E4;margin-top:2px;line-height:1.45}',
+      '.pesq-t{font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:#EDB86E;',
       'border:1px solid rgba(201,138,60,.3);padding:2px 7px;border-radius:3px;flex-shrink:0}',
       '.pesq-v{flex:1;min-width:0}',
-      '#pesq-res mark{background:rgba(201,138,60,.28);color:#E8BE7A;border-radius:2px;padding:0 1px}',
-      '.pesq-vazio{padding:26px 19px;color:#5E7189;font-size:12.5px;line-height:1.6;text-align:center}',
-      '.pesq-pe{padding:10px 19px;border-top:1px solid rgba(38,56,86,.75);font-size:10px;color:#5E7189;',
+      '#pesq-res mark{background:rgba(237,184,110,.52);color:#F5DDB8;border-radius:2px;padding:0 1px}',
+      '.pesq-vazio{padding:26px 19px;color:#9DB0C8;font-size:12.5px;line-height:1.6;text-align:center}',
+      '.pesq-pe{padding:10px 19px;border-top:1px solid rgba(72,100,144,.75);font-size:10px;color:#9DB0C8;',
       'display:flex;gap:14px;flex-wrap:wrap}',
       '#pesq-btn{display:flex;align-items:center;gap:9px;width:100%;padding:8px 13px;margin-bottom:10px;',
-      'border-radius:8px;border:1px solid rgba(38,56,86,.75);background:#080F1C;color:#5E7189;',
+      'border-radius:8px;border:1px solid rgba(72,100,144,.75);background:#0B1524;color:#9DB0C8;',
       'font-family:Inter,sans-serif;font-size:12px;cursor:pointer;text-align:left}',
-      '#pesq-btn:hover{border-color:rgba(201,138,60,.3);color:#8FA1B8}',
+      '#pesq-btn:hover{border-color:rgba(201,138,60,.3);color:#C2D1E4}',
       '#pesq-btn kbd{margin-left:auto;font-family:IBM Plex Mono,monospace;font-size:9.5px;',
-      'border:1px solid rgba(38,56,86,.9);border-radius:3px;padding:2px 5px}'
+      'border:1px solid rgba(72,100,144,.9);border-radius:3px;padding:2px 5px}'
     ].join('');
     document.head.appendChild(e);
   }
@@ -284,7 +284,7 @@
         + '<span class="pesq-t">' + esc(x.tipo) + '</span></a>';
     });
     if (!n) {
-      h = '<div class="pesq-vazio">Nada encontrado para <b style="color:#8FA1B8">' + esc(q) + '</b>.'
+      h = '<div class="pesq-vazio">Nada encontrado para <b style="color:#C2D1E4">' + esc(q) + '</b>.'
         + '<br><br>Procure por um ecrã, uma unidade do cadastro, uma província, um produto,'
         + ' uma entidade ou um conceito do sistema.</div>';
     }

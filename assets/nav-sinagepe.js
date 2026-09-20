@@ -243,7 +243,7 @@
          + '<a class="nav-item" href="#" id="btn-logout" style="margin-top:8px;'
          + 'border-top:1px solid var(--gold-line);border-radius:0;padding-top:13px">'
          + '<span class="nav-icon">\u21A9</span>'
-         + '<span class="nav-label" style="color:#EF4444">Sair (Logout)</span></a>';
+         + '<span class="nav-label" style="color:#FF7A7A">Sair (Logout)</span></a>';
   }
 
   /* O CSS dos cabeçalhos é injectado aqui, para nenhum ecrã ter de o declarar. */
@@ -252,10 +252,10 @@
     var e = document.createElement('style');
     e.id = 'nav-sinagepe-css';
     e.textContent = '.nav-grupo{font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;'
-      + 'color:#5E7189;padding:14px 14px 6px;font-weight:600}'
+      + 'color:#9DB0C8;padding:14px 14px 6px;font-weight:600}'
       + '.nav-grupo:first-child{padding-top:4px}'
-      + '.nav-grupo.rev{color:#E8BE7A}'
-      + '.nav-item.rev{border:1px dashed rgba(201,138,60,.55);border-radius:7px;margin:2px 8px;opacity:.85}'
+      + '.nav-grupo.rev{color:#F5DDB8}'
+      + '.nav-item.rev{border:1px dashed rgba(237,184,110,.70);border-radius:7px;margin:2px 8px;opacity:.85}'
       + '@media(max-width:1080px){'
       + '#nav-abrir{display:flex !important}'
       + '.sidebar,#nav-mount{display:block !important;position:fixed !important;top:0;left:0;bottom:0;'
@@ -267,12 +267,12 @@
       + '#nav-veu.on{display:block}'
       + 'main{padding-top:56px !important}'
       + '#nav-fechar{display:block;width:calc(100% - 24px);margin:10px 12px 4px;padding:9px;'
-      + 'border-radius:8px;border:1px solid rgba(38,56,86,.9);background:#111E31;color:#8FA1B8;'
+      + 'border-radius:8px;border:1px solid rgba(72,100,144,.9);background:#111E31;color:#C2D1E4;'
       + 'font-family:Inter,sans-serif;font-size:11.5px;cursor:pointer}'
       + '}'
       + '#nav-abrir{display:none;position:fixed;top:11px;left:11px;z-index:99500;'
       + 'align-items:center;gap:8px;padding:9px 14px;border-radius:9px;'
-      + 'border:1px solid rgba(201,138,60,.42);background:#0C1626;color:#E8BE7A;'
+      + 'border:1px solid rgba(201,138,60,.42);background:#17243A;color:#F5DDB8;'
       + 'font-family:Inter,sans-serif;font-size:12.5px;cursor:pointer;'
       + 'box-shadow:0 4px 16px rgba(0,0,0,.4)}'
       + '#nav-fechar{display:none}';

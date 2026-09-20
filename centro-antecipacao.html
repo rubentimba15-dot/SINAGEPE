@@ -11,10 +11,10 @@
 <script src="assets/indicadores-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg1:#080F1C;--sidebar-bg:#0B1421;--card-bg:#141F2B;--card-line:rgba(64,86,108,.55);
---gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
---blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
---ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#1B2836;--nav-idle:#141F2B;--accg:rgba(34,184,240,.13)}
+:root{--bg1:#0B1524;--sidebar-bg:#0E1A2B;--card-bg:#17243A;--card-line:rgba(100,128,164,.62);
+--gold-line:rgba(237,184,110,.52);--brz:#EDB86E;--brzl:#F5DDB8;--brzg:rgba(237,184,110,.52);
+--blue:#5CCBF7;--teal:#5FE3D2;--amber:#FFC352;--red:#FF7A7A;--ok:#3FD9A8;--viol:#BFA9FF;
+--ink:#FAFCFF;--t2:#D6E1EE;--t3:#C2D1E4;--t4:#9DB0C8;--cardh:#203148;--nav-idle:#17243A;--accg:rgba(92,203,247,.13)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
 .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
@@ -25,7 +25,7 @@ body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-seri
 .brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
 .nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
 .nav-item:hover{background:var(--cardh)}
-.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active{background:var(--blue);color:#0A1F2C}
 .nav-item.active .nav-label{font-weight:600}
 .nav-icon{width:16px;text-align:center;opacity:.85}
 main{flex:1;padding:22px 26px 60px;max-width:1560px}
@@ -41,13 +41,13 @@ h1{font-size:24px;margin:0 0 6px;letter-spacing:-.015em}
 .ch{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--card-line);gap:12px;flex-wrap:wrap}
 .ch h2{font-size:14.5px;font-weight:600;margin:0 0 3px}
 .ch p{font-size:11.5px;color:var(--t3);margin:0;line-height:1.5}
-.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07);white-space:nowrap;flex-shrink:0}
-.tag.crit{color:var(--red);border-color:rgba(239,68,68,.35);background:rgba(239,68,68,.08)}
-.tag.ok{color:var(--ok);border-color:rgba(18,185,129,.35);background:rgba(18,185,129,.08)}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(237,184,110,.12);white-space:nowrap;flex-shrink:0}
+.tag.crit{color:var(--red);border-color:rgba(255,122,122,.35);background:rgba(255,122,122,.08)}
+.tag.ok{color:var(--ok);border-color:rgba(63,217,168,.35);background:rgba(63,217,168,.08)}
 .bd{padding:16px 18px}
 table{width:100%;border-collapse:collapse;font-size:11.5px}
 th{text-align:left;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--t4);padding:9px 16px;border-bottom:1px solid var(--card-line);font-weight:600}
-td{padding:10px 16px;border-bottom:1px solid rgba(38,56,86,.4);vertical-align:top}
+td{padding:10px 16px;border-bottom:1px solid rgba(72,100,144,.4);vertical-align:top}
 tr:last-child td{border-bottom:none}
 td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
@@ -63,7 +63,7 @@ td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 /* ---- calendário de doze meses ---- */
 .cal{display:grid;grid-template-columns:repeat(12,1fr);gap:5px}
 @media(max-width:720px){.cal{grid-template-columns:repeat(6,1fr)}}
-.cal-m{background:#0A1421;border:1px solid var(--card-line);border-radius:9px;padding:11px 6px;
+.cal-m{background:#0E1A2B;border:1px solid var(--card-line);border-radius:9px;padding:11px 6px;
  text-align:center;cursor:pointer;transition:.18s;position:relative;overflow:hidden}
 .cal-m:hover{transform:translateY(-3px);border-color:var(--brzg)}
 .cal-m.on{border-color:var(--brz);background:var(--cardh)}
@@ -75,7 +75,7 @@ td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 .risco{border-bottom:1px solid var(--card-line);transition:.16s}
 .risco:last-child{border-bottom:none}
 .risco-h{display:flex;align-items:flex-start;gap:12px;padding:15px 18px;cursor:pointer}
-.risco-h:hover{background:rgba(34,184,240,.04)}
+.risco-h:hover{background:rgba(92,203,247,.04)}
 .risco-g{flex-shrink:0;width:34px;height:34px;border-radius:8px;display:flex;align-items:center;
  justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;border:1px solid}
 .risco-t{flex:1;min-width:0}
@@ -90,22 +90,22 @@ td.n{text-align:right;font-family:'IBM Plex Mono',monospace}
 .bloco-c{font-size:11.5px;color:var(--t2);line-height:1.7}
 .cadeia{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px}
 .cadeia b{font-size:11px;font-weight:500;padding:5px 10px;border-radius:5px;
- background:rgba(239,68,68,.09);border:1px solid rgba(239,68,68,.26);color:#FFB4B4}
+ background:rgba(255,122,122,.09);border:1px solid rgba(255,122,122,.26);color:#FFB4B4}
 .cadeia i{color:var(--t4);font-style:normal}
 .mit{display:flex;gap:9px;align-items:flex-start;padding:7px 0;font-size:11.5px;line-height:1.6}
-.mit-n{flex-shrink:0;width:19px;height:19px;border-radius:50%;background:rgba(18,185,129,.13);
- border:1px solid rgba(18,185,129,.35);color:var(--ok);display:flex;align-items:center;
+.mit-n{flex-shrink:0;width:19px;height:19px;border-radius:50%;background:rgba(63,217,168,.13);
+ border:1px solid rgba(63,217,168,.35);color:var(--ok);display:flex;align-items:center;
  justify-content:center;font-size:10px;font-family:'IBM Plex Mono',monospace;margin-top:1px}
 .chip{display:inline-block;font-size:9px;letter-spacing:.09em;text-transform:uppercase;
  padding:3px 8px;border-radius:3px;border:1px solid;margin-right:5px;white-space:nowrap}
 .fb{font-size:11px;padding:6px 12px;border-radius:20px;border:1px solid var(--card-line);
  background:transparent;color:var(--t3);cursor:pointer;font-family:inherit}
-.fb.on{background:var(--accg);border-color:rgba(34,184,240,.45);color:var(--blue);font-weight:600}
+.fb.on{background:var(--accg);border-color:rgba(92,203,247,.45);color:var(--blue);font-weight:600}
 .filtros{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid var(--card-line)}
 .aviso{margin:14px 18px;padding:13px 15px;border-radius:10px;font-size:11.5px;line-height:1.7;border:1px solid}
-.aviso.i{background:rgba(34,184,240,.07);border-color:rgba(34,184,240,.26);color:#9EDCF7}
-.aviso.w{background:rgba(240,169,38,.07);border-color:rgba(240,169,38,.26);color:var(--amber)}
-.aviso.r{background:rgba(239,68,68,.07);border-color:rgba(239,68,68,.28);color:#FFB4B4}
+.aviso.i{background:rgba(92,203,247,.07);border-color:rgba(92,203,247,.26);color:#9EDCF7}
+.aviso.w{background:rgba(255,195,82,.07);border-color:rgba(255,195,82,.26);color:var(--amber)}
+.aviso.r{background:rgba(255,122,122,.07);border-color:rgba(255,122,122,.28);color:#FFB4B4}
 .err{padding:22px;color:var(--red);font-size:12px;line-height:1.6}
 </style>
 </head>
@@ -170,8 +170,8 @@ var ST={filtro:'todos',mes:null};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function num(n){return new Intl.NumberFormat('pt-PT').format(Math.round(n))}
 
-var COR_G={5:'#EF4444',4:'#F0A926',3:'#22B8F0',2:'#2DD4BF',1:'#12B981'};
-var COR_RISCO={alto:'#EF4444',medio:'#F0A926','m\u00e9dio':'#F0A926',baixo:'#12B981'};
+var COR_G={5:'#FF7A7A',4:'#FFC352',3:'#5CCBF7',2:'#5FE3D2',1:'#3FD9A8'};
+var COR_RISCO={alto:'#FF7A7A',medio:'#FFC352','m\u00e9dio':'#FFC352',baixo:'#3FD9A8'};
 var MESES={Jan:'Janeiro',Fev:'Fevereiro',Mar:'Mar\u00e7o',Abr:'Abril',Mai:'Maio',Jun:'Junho',
  Jul:'Julho',Ago:'Agosto',Set:'Setembro',Out:'Outubro',Nov:'Novembro',Dez:'Dezembro'};
 
@@ -235,7 +235,7 @@ function desenharKpis(){
 function desenharCalendario(){
   var C=ST.a.calendario;
   document.getElementById('calendario').innerHTML=C.map(function(c,i){
-    var cor=COR_RISCO[String(c.risco).toLowerCase()]||'#5E7189';
+    var cor=COR_RISCO[String(c.risco).toLowerCase()]||'#9DB0C8';
     return '<div class="cal-m entra'+(ST.mes===i?' on':'')+'" data-m="'+i+'" '
      +'style="animation-delay:'+(i*.035)+'s" role="button" tabindex="0">'
      +'<span style="position:absolute;left:0;right:0;top:0;height:3px;background:'+cor+'"></span>'
@@ -255,8 +255,8 @@ function desenharCalendario(){
      +'<b>'+altos+' dos 12 meses</b> est&atilde;o classificados como de risco alto. '
      +'Clique num m&ecirc;s para ver a raz&atilde;o declarada.</div>';
   } else {
-    var c=C[ST.mes], cor=COR_RISCO[String(c.risco).toLowerCase()]||'#5E7189';
-    d.innerHTML='<div class="entra" style="padding:14px 16px;background:#0A1421;border-radius:10px;'
+    var c=C[ST.mes], cor=COR_RISCO[String(c.risco).toLowerCase()]||'#9DB0C8';
+    d.innerHTML='<div class="entra" style="padding:14px 16px;background:#0E1A2B;border-radius:10px;'
      +'border-left:3px solid '+cor+'">'
      +'<div style="display:flex;gap:10px;align-items:baseline;margin-bottom:7px">'
      +'<b style="font-size:14px">'+(MESES[c.mes]||c.mes)+'</b>'
@@ -295,8 +295,8 @@ function riscosFiltrados(){
 function desenharRiscos(){
   var R=riscosFiltrados();
   document.getElementById('riscos').innerHTML=R.map(function(r,i){
-    var c=COR_G[r.gravidade]||'#5E7189';
-    var cf=r.certeza==='facto'?'#12B981':'#F0A926';
+    var c=COR_G[r.gravidade]||'#9DB0C8';
+    var cf=r.certeza==='facto'?'#3FD9A8':'#FFC352';
     return '<div class="risco entra" data-i="'+i+'" style="animation-delay:'+(i*.05)+'s">'
      +'<div class="risco-h">'
      +'<span class="risco-g" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">G'+r.gravidade+'</span>'
@@ -304,8 +304,8 @@ function desenharRiscos(){
      +'<div class="risco-r">'+esc(r.resumo)+'</div>'
      +'<div style="margin-top:9px">'
      +'<span class="chip" style="color:'+cf+';border-color:'+cf+'55;background:'+cf+'12">'+esc(r.certeza)+'</span>'
-     +'<span class="chip" style="color:var(--t4);border-color:rgba(38,56,86,.8)">'+esc(r.janela)+'</span>'
-     +((r.afecta||[]).length?'<span class="chip" style="color:var(--t4);border-color:rgba(38,56,86,.8)">'
+     +'<span class="chip" style="color:var(--t4);border-color:rgba(72,100,144,.8)">'+esc(r.janela)+'</span>'
+     +((r.afecta||[]).length?'<span class="chip" style="color:var(--t4);border-color:rgba(72,100,144,.8)">'
        +esc(r.afecta[0])+((r.afecta.length>1)?' +'+(r.afecta.length-1):'')+'</span>':'')
      +'</div></div>'
      +'<span class="risco-seta">&#9654;</span></div>'
@@ -334,16 +334,16 @@ function desenharRiscos(){
 /* Cada mitigação traz acção, horizonte, custo, efeito e quem decide.
    A versão anterior imprimia o objecto inteiro e saía "[object Object]"
    no ecrã — foi o que o teste apanhou. */
-var COR_HOR={agora:'#EF4444','90dias':'#F0A926','1ano':'#22B8F0',medio:'#F0A926',longo:'#5E7189'};
+var COR_HOR={agora:'#FF7A7A','90dias':'#FFC352','1ano':'#5CCBF7',medio:'#FFC352',longo:'#9DB0C8'};
 var ROT_HOR={agora:'agora','90dias':'90 dias','1ano':'1 ano'};
-var COR_CUSTO={baixo:'#12B981',medio:'#F0A926',alto:'#EF4444','m\u00e9dio':'#F0A926'};
+var COR_CUSTO={baixo:'#3FD9A8',medio:'#FFC352',alto:'#FF7A7A','m\u00e9dio':'#FFC352'};
 
 function mitigacao(m,n){
   if(typeof m==='string') return '<div class="mit"><span class="mit-n">'+n+'</span><span>'+esc(m)+'</span></div>';
-  var ch=COR_HOR[m.horizonte]||'#5E7189';
-  var cc=COR_CUSTO[m.custo]||'#5E7189';
+  var ch=COR_HOR[m.horizonte]||'#9DB0C8';
+  var cc=COR_CUSTO[m.custo]||'#9DB0C8';
   return '<div class="mit" style="align-items:flex-start;padding:11px 0;'
-   +'border-bottom:1px solid rgba(38,56,86,.3)">'
+   +'border-bottom:1px solid rgba(72,100,144,.3)">'
    +'<span class="mit-n">'+n+'</span>'
    +'<div style="flex:1;min-width:0">'
    +'<div style="font-weight:600;font-size:12px;line-height:1.45;margin-bottom:6px">'+esc(m.accao)+'</div>'
@@ -353,7 +353,7 @@ function mitigacao(m,n){
    +(m.custo?'<span class="chip" style="color:'+cc+';border-color:'+cc+'55;background:'+cc+'12">'
      +'custo '+esc(m.custo)+'</span>':'')
    +(m.decide?'<span class="chip" style="color:var(--brz);border-color:var(--brzg);'
-     +'background:rgba(201,138,60,.09)">'+esc(m.decide)+'</span>':'')
+     +'background:rgba(237,184,110,.14)">'+esc(m.decide)+'</span>':'')
    +'</div>'
    +(m.efeito?'<div style="font-size:11px;color:var(--t3);line-height:1.65">'+esc(m.efeito)+'</div>':'')
    +'</div></div>';
@@ -373,11 +373,11 @@ function desenharExposicao(){
   var max=Math.max.apply(null,K.map(function(k){return prov[k]||0}))||1;
   document.getElementById('exposicao').innerHTML=K.map(function(k,i){
     var v=prov[k]||0;
-    var c=v>=max*.9?'#EF4444':v>=max*.6?'#F0A926':'#22B8F0';
+    var c=v>=max*.9?'#FF7A7A':v>=max*.6?'#FFC352':'#5CCBF7';
     return '<div class="entra" style="animation-delay:'+(i*.04)+'s;display:flex;align-items:center;'
-     +'gap:11px;padding:8px 0;border-bottom:1px solid rgba(38,56,86,.35)">'
+     +'gap:11px;padding:8px 0;border-bottom:1px solid rgba(72,100,144,.35)">'
      +'<span style="width:126px;flex-shrink:0;font-size:12px">'+k+'</span>'
-     +'<span style="flex:1;height:15px;background:#0A1421;border-radius:4px;overflow:hidden">'
+     +'<span style="flex:1;height:15px;background:#0E1A2B;border-radius:4px;overflow:hidden">'
      +'<i class="cresce" style="display:block;height:100%;width:'+(v/max*100)+'%;'
      +'background:linear-gradient(90deg,'+c+'AA,'+c+'44);animation-delay:'+(.1+i*.04)+'s"></i></span>'
      +'<span class="mono" style="width:34px;text-align:right;font-size:12px;color:'+c+'">'+v+'</span></div>';
@@ -392,7 +392,7 @@ function desenharMitigacoes(){
   var R=ST.a.riscos.slice().sort(function(a,b){return b.gravidade-a.gravidade}).slice(0,4);
   var n=0;
   document.getElementById('mitigacoes').innerHTML=R.map(function(r,i){
-    var c=COR_G[r.gravidade]||'#5E7189';
+    var c=COR_G[r.gravidade]||'#9DB0C8';
     return '<div class="entra" style="animation-delay:'+(i*.07)+'s;margin-bottom:15px">'
      +'<div style="display:flex;gap:9px;align-items:baseline;margin-bottom:7px">'
      +'<span class="chip" style="color:'+c+';border-color:'+c+'55;background:'+c+'12">G'+r.gravidade+'</span>'

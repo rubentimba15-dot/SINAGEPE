@@ -30,18 +30,18 @@
 let FX=null;
 
 function capa(tipo){
-  const B='#C98A3C', A='#22B8F0', V='#12B981';
+  const B='#EDB86E', A='#5CCBF7', V='#3FD9A8';
   const defs=`<defs><linearGradient id="g${tipo}" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="${tipo==='ine'?B:tipo==='icm'?V:tipo==='imopetro'?'#E0A458':A}" stop-opacity=".18"/><stop offset="100%" stop-color="#060B16" stop-opacity="0"/></linearGradient>
-    <pattern id="p${tipo}" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M14 0H0V14" fill="none" stroke="#152740" stroke-width=".6"/></pattern></defs>`;
-  const base=`<rect width="300" height="104" fill="#0A1220"/><rect width="300" height="104" fill="url(#g${tipo})"/><rect width="300" height="104" fill="url(#p${tipo})" opacity=".7"/>`;
+      <stop offset="0%" stop-color="${tipo==='ine'?B:tipo==='icm'?V:tipo==='imopetro'?'#E0A458':A}" stop-opacity=".18"/><stop offset="100%" stop-color="#0B1524" stop-opacity="0"/></linearGradient>
+    <pattern id="p${tipo}" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M14 0H0V14" fill="none" stroke="#1E3350" stroke-width=".6"/></pattern></defs>`;
+  const base=`<rect width="300" height="104" fill="#0E1A2B"/><rect width="300" height="104" fill="url(#g${tipo})"/><rect width="300" height="104" fill="url(#p${tipo})" opacity=".7"/>`;
   let art='';
   if(tipo==='ine'){
     art=`<g stroke="${B}" stroke-width="1.4" fill="none">
       <rect x="96" y="60" width="15" height="28"/><rect x="118" y="46" width="15" height="42"/>
       <rect x="140" y="54" width="15" height="34"/><rect x="162" y="34" width="15" height="54"/><rect x="184" y="48" width="15" height="40"/></g>
       <path d="M96 66l22-16 22 10 22-22 22 16" stroke="${A}" stroke-width="1.5" fill="none"/>
-      <circle cx="184" cy="54" r="3" fill="${A}"/><path d="M84 88h132" stroke="#22354F" stroke-width="1"/>`;
+      <circle cx="184" cy="54" r="3" fill="${A}"/><path d="M84 88h132" stroke="#2B4165" stroke-width="1"/>`;
   }else{
     art=`<path d="M150 92V40" stroke="${V}" stroke-width="2.4" stroke-linecap="round"/>
       <g fill="none" stroke="${V}" stroke-width="1.5">
@@ -56,25 +56,25 @@ function capa(tipo){
       <path d="M130 46h9a4 4 0 0 1 4 4v22a5 5 0 0 0 10 0V58h-3"/></g>
       <g stroke="${A}" stroke-width="1.4" fill="none"><ellipse cx="196" cy="50" rx="26" ry="10"/>
       <path d="M170 50v24c0 5.5 11.6 10 26 10s26-4.5 26-10V50"/><path d="M170 62c0 5.5 11.6 10 26 10s26-4.5 26-10"/></g>
-      <path d="M60 88h190" stroke="#C98A3C" stroke-width="1.2" opacity=".7"/>
-      <path d="M62 40l10 10 10-16 10 12" stroke="#EF4444" stroke-width="1.4" fill="none" opacity=".8"/>`;
+      <path d="M60 88h190" stroke="#EDB86E" stroke-width="1.2" opacity=".7"/>
+      <path d="M62 40l10 10 10-16 10 12" stroke="#FF7A7A" stroke-width="1.4" fill="none" opacity=".8"/>`;
   } else if(tipo==='cta'){
     art=`<g stroke="${A}" stroke-width="1.5" fill="none">
       <circle cx="120" cy="46" r="10"/><path d="M104 76c0-9 7-16 16-16s16 7 16 16"/>
       <circle cx="180" cy="46" r="10"/><path d="M164 76c0-9 7-16 16-16s16 7 16 16"/>
       <circle cx="150" cy="34" r="11"/><path d="M132 68c0-10 8-18 18-18s18 8 18 18"/></g>
-      <path d="M70 88h160" stroke="#C98A3C" stroke-width="1.2" opacity=".7"/>
-      <path d="M232 40l14-8 14 12" stroke="#12B981" stroke-width="1.4" fill="none" opacity=".8"/>
-      <path d="M40 40l14-8 14 12" stroke="#12B981" stroke-width="1.4" fill="none" opacity=".8"/>`;
+      <path d="M70 88h160" stroke="#EDB86E" stroke-width="1.2" opacity=".7"/>
+      <path d="M232 40l14-8 14 12" stroke="#3FD9A8" stroke-width="1.4" fill="none" opacity=".8"/>
+      <path d="M40 40l14-8 14 12" stroke="#3FD9A8" stroke-width="1.4" fill="none" opacity=".8"/>`;
   }
   return `<svg viewBox="0 0 300 104" preserveAspectRatio="xMidYMid slice">${defs}${base}${art}</svg>`;
 }
 
 const JANELAS=[
-  {id:'ine', org:'INE — Instituto Nacional de Estatística', desc:'Índice de Preços no Consumidor e estatísticas oficiais do país', estado:'Importação manual', cor:'#C98A3C'},
-  {id:'icm', org:'ICM — Instituto de Cereais de Moçambique', desc:'Reserva estratégica, comercialização agrícola e importações de cereais', estado:'Recolha manual', cor:'#12B981'},
+  {id:'ine', org:'INE — Instituto Nacional de Estatística', desc:'Índice de Preços no Consumidor e estatísticas oficiais do país', estado:'Importação manual', cor:'#EDB86E'},
+  {id:'icm', org:'ICM — Instituto de Cereais de Moçambique', desc:'Reserva estratégica, comercialização agrícola e importações de cereais', estado:'Recolha manual', cor:'#3FD9A8'},
   {id:'imopetro', org:'IMOPETRO / ENAPP', desc:'Importação de combustíveis líquidos — gasóleo, gasolina, jet e gás', estado:'Em transição', cor:'#E0A458'},
-  {id:'cta', org:'CTA — Sector privado', desc:'Confederação das Associações Económicas de Moçambique', estado:'Parceiro', cor:'#22B8F0'}
+  {id:'cta', org:'CTA — Sector privado', desc:'Confederação das Associações Económicas de Moçambique', estado:'Parceiro', cor:'#5CCBF7'}
 ];
 
 function aviso(tipo,titulo,texto){
@@ -103,11 +103,11 @@ function importarCSV(txt,alvo){
     const pts=vals.map((v,i)=>[28+i/(vals.length-1)*(w-40),h-18-((v-mn)/((mx-mn)||1))*(h-36)]);
     const d=pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
     graf=`<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;margin-bottom:14px">
-      <path d="${d} L${pts[pts.length-1][0]},${h-18} L${pts[0][0]},${h-18}Z" fill="#C98A3C" opacity=".13"/>
-      <path d="${d}" fill="none" stroke="#C98A3C" stroke-width="2.3" stroke-linejoin="round"/>
-      <circle cx="${pts[pts.length-1][0]}" cy="${pts[pts.length-1][1]}" r="4" fill="#C98A3C" stroke="#060B16" stroke-width="2"/>
-      <text x="4" y="14" fill="#5E7189" font-size="9.5" font-family="IBM Plex Mono">${nf(mx,1)}</text>
-      <text x="4" y="${h-4}" fill="#5E7189" font-size="9.5" font-family="IBM Plex Mono">${nf(mn,1)}</text></svg>`;
+      <path d="${d} L${pts[pts.length-1][0]},${h-18} L${pts[0][0]},${h-18}Z" fill="#EDB86E" opacity=".13"/>
+      <path d="${d}" fill="none" stroke="#EDB86E" stroke-width="2.3" stroke-linejoin="round"/>
+      <circle cx="${pts[pts.length-1][0]}" cy="${pts[pts.length-1][1]}" r="4" fill="#EDB86E" stroke="#0B1524" stroke-width="2"/>
+      <text x="4" y="14" fill="#9DB0C8" font-size="9.5" font-family="IBM Plex Mono">${nf(mx,1)}</text>
+      <text x="4" y="${h-4}" fill="#9DB0C8" font-size="9.5" font-family="IBM Plex Mono">${nf(mn,1)}</text></svg>`;
   }
   out.innerHTML=graf+`<table><thead><tr>${cab.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
     <tbody>${dados.slice(0,12).map(d=>`<tr>${d.map((v,i)=>`<td class="${numCol[i]?'mono':''}"${numCol[i]?' style="text-align:right;color:var(--brzl)"':''}>${v}</td>`).join('')}</tr></tr>`).join('')}</tbody></table>
@@ -132,15 +132,15 @@ function painelINE(){
     const X=i=>34+i/(s.length-1)*(w-46), Y=v=>h-22-((v-mn)/(mx-mn))*(h-40);
     const ln=k=>s.map((x,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(x[k]).toFixed(1)).join(' ');
     let g='';for(let i=0;i<4;i++){const v=mn+(mx-mn)*i/3;
-      g+=`<line x1="34" y1="${Y(v)}" x2="${w-12}" y2="${Y(v)}" stroke="#22354F" stroke-width=".7"/><text x="2" y="${Y(v)+4}" fill="#5E7189" font-size="9" font-family="IBM Plex Mono">${nf(v,0)}</text>`;}
-    const lab=s.map((x,i)=>`<text x="${X(i)}" y="${h-6}" fill="#5E7189" font-size="9" text-anchor="middle">${x.mes.slice(5)}</text>`).join('');
+      g+=`<line x1="34" y1="${Y(v)}" x2="${w-12}" y2="${Y(v)}" stroke="#2B4165" stroke-width=".7"/><text x="2" y="${Y(v)+4}" fill="#9DB0C8" font-size="9" font-family="IBM Plex Mono">${nf(v,0)}</text>`;}
+    const lab=s.map((x,i)=>`<text x="${X(i)}" y="${h-6}" fill="#9DB0C8" font-size="9" text-anchor="middle">${x.mes.slice(5)}</text>`).join('');
     serie=`<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto">${g}${lab}
-      <path d="${ln('indiceAlimentar')}" fill="none" stroke="#C98A3C" stroke-width="2.4" stroke-linejoin="round"/>
-      <path d="${ln('indiceGeral')}" fill="none" stroke="#22B8F0" stroke-width="1.9" stroke-dasharray="5 4"/>
-      <circle cx="${X(s.length-1)}" cy="${Y(s[s.length-1].indiceAlimentar)}" r="4" fill="#C98A3C" stroke="#060B16" stroke-width="2"/></svg>
+      <path d="${ln('indiceAlimentar')}" fill="none" stroke="#EDB86E" stroke-width="2.4" stroke-linejoin="round"/>
+      <path d="${ln('indiceGeral')}" fill="none" stroke="#5CCBF7" stroke-width="1.9" stroke-dasharray="5 4"/>
+      <circle cx="${X(s.length-1)}" cy="${Y(s[s.length-1].indiceAlimentar)}" r="4" fill="#EDB86E" stroke="#0B1524" stroke-width="2"/></svg>
       <div class="row" style="font-size:10.5px;color:var(--ink-dim);margin-top:8px">
-        <span style="display:flex;align-items:center;gap:6px"><i style="width:10px;height:10px;border-radius:2px;background:#C98A3C"></i>Alimentação e bebidas não alcoólicas</span>
-        <span style="display:flex;align-items:center;gap:6px"><i style="width:10px;height:10px;border-radius:2px;background:#22B8F0"></i>Índice geral</span></div>`;
+        <span style="display:flex;align-items:center;gap:6px"><i style="width:10px;height:10px;border-radius:2px;background:#EDB86E"></i>Alimentação e bebidas não alcoólicas</span>
+        <span style="display:flex;align-items:center;gap:6px"><i style="width:10px;height:10px;border-radius:2px;background:#5CCBF7"></i>Índice geral</span></div>`;
   }
   const ult=s[s.length-1], pri=s[0];
   const premio = (ult&&pri) ? ((ult.indiceAlimentar/pri.indiceAlimentar-1)-(ult.indiceGeral/pri.indiceGeral-1))*100 : null;

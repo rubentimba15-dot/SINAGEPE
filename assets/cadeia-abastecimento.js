@@ -339,9 +339,9 @@
         mede: 'O boletim regista de onde vem o produto que ali se vende' }
     ],
     escala: [
-      { min: 4, rotulo: 'alta',    cor: '#12B981' },
-      { min: 3, rotulo: 'média',   cor: '#F0A926' },
-      { min: 2, rotulo: 'baixa',   cor: '#EF4444' },
+      { min: 4, rotulo: 'alta',    cor: '#3FD9A8' },
+      { min: 3, rotulo: 'média',   cor: '#FFC352' },
+      { min: 2, rotulo: 'baixa',   cor: '#FF7A7A' },
       { min: 0, rotulo: 'mínima',  cor: '#7F1D1D' }
     ],
     nota: 'Cada componente vale um ponto. Não há ponderação: quem discordar ' +

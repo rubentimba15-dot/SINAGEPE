@@ -10,10 +10,10 @@
 <script src="assets/pesquisa-sinagepe.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg1:#080F1C;--sidebar-bg:#0B1421;--card-bg:#141F2B;--card-line:rgba(64,86,108,.55);
---gold-line:rgba(201,138,60,.28);--brz:#C98A3C;--brzl:#E8BE7A;--brzg:rgba(201,138,60,.30);
---blue:#22B8F0;--teal:#2DD4BF;--amber:#F0A926;--red:#EF4444;--ok:#12B981;--viol:#A78BFA;
---ink:#F3F7FC;--t2:#C3D0E0;--t3:#8FA1B8;--t4:#5E7189;--cardh:#1B2836;--nav-idle:#141F2B;--accg:rgba(34,184,240,.13)}
+:root{--bg1:#0B1524;--sidebar-bg:#0E1A2B;--card-bg:#17243A;--card-line:rgba(100,128,164,.62);
+--gold-line:rgba(237,184,110,.52);--brz:#EDB86E;--brzl:#F5DDB8;--brzg:rgba(237,184,110,.52);
+--blue:#5CCBF7;--teal:#5FE3D2;--amber:#FFC352;--red:#FF7A7A;--ok:#3FD9A8;--viol:#BFA9FF;
+--ink:#FAFCFF;--t2:#D6E1EE;--t3:#C2D1E4;--t4:#9DB0C8;--cardh:#203148;--nav-idle:#17243A;--accg:rgba(92,203,247,.13)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-serif;font-size:13px}
 .mono{font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums}
@@ -24,7 +24,7 @@ body{margin:0;background:var(--bg1);color:var(--ink);font-family:Inter,sans-seri
 .brand-s{font-size:9px;color:var(--brz);letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
 .nav-item{display:flex;align-items:center;gap:11px;padding:9px 14px;border-radius:8px;border:1px solid var(--gold-line);background:var(--nav-idle);cursor:pointer;text-decoration:none;color:var(--t2);margin-bottom:5px;font-size:12px}
 .nav-item:hover{background:var(--cardh)}
-.nav-item.active{background:var(--blue);color:#02121c}
+.nav-item.active{background:var(--blue);color:#0A1F2C}
 .nav-item.active .nav-label{font-weight:600}
 .nav-icon{width:16px;text-align:center;opacity:.85}
 main{flex:1;padding:22px 26px 60px;max-width:1560px}
@@ -39,8 +39,8 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:-.01em}
 .frame:after{bottom:-1px;right:-1px;border-bottom:1.5px solid var(--brz);border-right:1.5px solid var(--brz);border-bottom-right-radius:13px}
 .ch{display:flex;align-items:center;justify-content:space-between;padding:13px 17px;border-bottom:1px solid var(--card-line);gap:10px;flex-wrap:wrap}
 .ch h2{font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--t2);margin:0}
-.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(201,138,60,.07)}
-.aviso{padding:13px 16px;border-radius:12px;border:1px solid rgba(201,138,60,.35);background:rgba(201,138,60,.07);margin-bottom:14px;font-size:12px;line-height:1.6;color:var(--brzl)}
+.tag{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--brzl);border:1px solid var(--brzg);padding:4px 9px;border-radius:3px;background:rgba(237,184,110,.12)}
+.aviso{padding:13px 16px;border-radius:12px;border:1px solid rgba(201,138,60,.35);background:rgba(237,184,110,.12);margin-bottom:14px;font-size:12px;line-height:1.6;color:var(--brzl)}
 .aviso b{color:var(--brz)}
 .grid{display:grid;grid-template-columns:1fr 1.2fr;gap:14px;align-items:start}
 @media(max-width:1150px){.grid{grid-template-columns:1fr}.sidebar{display:none}}
@@ -48,12 +48,12 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:-.01em}
 .pt{cursor:pointer}
 .pt:hover circle{stroke-width:3.4}
 .pt.sel circle{stroke-width:4}
-.axl{font-size:8.5px;fill:#5E7189;letter-spacing:.1em;text-transform:uppercase}
+.axl{font-size:8.5px;fill:#9DB0C8;letter-spacing:.1em;text-transform:uppercase}
 .ptl{font-size:9px;font-weight:700;pointer-events:none}
-.qd{font-size:8.5px;fill:#5E7189;font-style:italic}
-.li{display:flex;align-items:center;gap:10px;padding:10px 17px;border-bottom:1px solid rgba(38,56,86,.4);cursor:pointer;font-size:12px}
+.qd{font-size:8.5px;fill:#9DB0C8;font-style:italic}
+.li{display:flex;align-items:center;gap:10px;padding:10px 17px;border-bottom:1px solid rgba(72,100,144,.4);cursor:pointer;font-size:12px}
 .li:hover{background:var(--cardh)}
-.li.sel{background:rgba(34,184,240,.08)}
+.li.sel{background:rgba(92,203,247,.08)}
 .li-s{width:44px;flex-shrink:0;font-size:10px;font-weight:700;letter-spacing:.05em}
 .li-n{flex:1;line-height:1.35}
 .li-m{font-size:10px;color:var(--t4)}
@@ -70,16 +70,16 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:-.01em}
 .tj .sec-t{color:var(--blue)}.tj .sec-t:before{background:var(--blue)}
 .tl .sec-t{color:var(--amber)}.tl .sec-t:before{background:var(--amber)}
 .tg .sec-t{color:var(--ok)}.tg .sec-t:before{background:var(--ok)}
-.custa{margin-top:16px;padding:12px 14px;border-radius:9px;background:rgba(18,185,129,.07);border:1px solid rgba(18,185,129,.26);font-size:12px;line-height:1.55;color:#8FE3C4}
+.custa{margin-top:16px;padding:12px 14px;border-radius:9px;background:rgba(63,217,168,.07);border:1px solid rgba(63,217,168,.26);font-size:12px;line-height:1.55;color:#8FE3C4}
 .custa b{color:var(--ok);display:block;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:5px}
-.passo{margin-top:10px;padding:12px 14px;border-radius:9px;background:rgba(201,138,60,.08);border:1px solid var(--brzg);font-size:12px;line-height:1.55;color:var(--brzl)}
+.passo{margin-top:10px;padding:12px 14px;border-radius:9px;background:rgba(237,184,110,.13);border:1px solid var(--brzg);font-size:12px;line-height:1.55;color:var(--brzl)}
 .passo b{color:var(--brz);display:block;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:5px}
 .chave{margin-top:10px;padding:12px 14px;border-radius:9px;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.3);font-size:12px;line-height:1.55;color:#CDBBFF}
 .src{margin-top:12px;font-size:10.5px}
 .src a{color:var(--blue);text-decoration:none;word-break:break-all}
 .arg{padding:15px 17px;font-size:12.5px;line-height:1.65;color:var(--t2)}
-.arg .o{margin-top:12px;padding-top:12px;border-top:1px solid rgba(38,56,86,.5);font-size:11.5px;color:var(--t3)}
-.dd{padding:12px 17px;border-bottom:1px solid rgba(38,56,86,.4)}
+.arg .o{margin-top:12px;padding-top:12px;border-top:1px solid rgba(72,100,144,.5);font-size:11.5px;color:var(--t3)}
+.dd{padding:12px 17px;border-bottom:1px solid rgba(72,100,144,.4)}
 .dd:last-child{border-bottom:none}
 .dd-l{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:12.5px}
 .dd-a{color:var(--red);text-decoration:line-through;opacity:.75}
@@ -104,12 +104,12 @@ h1{font-size:22px;margin:0 0 5px;letter-spacing:-.01em}
         <div class="card frame">
           <div class="ch"><h2>Esfor&ccedil;o &times; impacto</h2><span class="tag" id="mx-tag">&mdash;</span></div>
           <svg class="mx" viewBox="0 0 460 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Matriz de esfor&ccedil;o e impacto por entidade">
-            <defs><pattern id="g2" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="#152740" stroke-width=".6"/></pattern></defs>
+            <defs><pattern id="g2" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="#1E3350" stroke-width=".6"/></pattern></defs>
             <rect x="46" y="16" width="384" height="264" fill="url(#g2)" opacity=".55"/>
-            <rect x="46" y="16" width="192" height="132" fill="#12B981" opacity=".05"/>
+            <rect x="46" y="16" width="192" height="132" fill="#3FD9A8" opacity=".05"/>
             <text class="qd" x="52" y="30">baixo esfor&ccedil;o &middot; alto impacto &mdash; come&ccedil;ar aqui</text>
-            <line x1="46" y1="16" x2="46" y2="280" stroke="#22354F" stroke-width="1"/>
-            <line x1="46" y1="280" x2="430" y2="280" stroke="#22354F" stroke-width="1"/>
+            <line x1="46" y1="16" x2="46" y2="280" stroke="#2B4165" stroke-width="1"/>
+            <line x1="46" y1="280" x2="430" y2="280" stroke="#2B4165" stroke-width="1"/>
             <text class="axl" x="238" y="308" text-anchor="middle">Esfor&ccedil;o que a ades&atilde;o exige &rarr;</text>
             <text class="axl" x="14" y="150" text-anchor="middle" transform="rotate(-90 14 150)">Impacto no sistema &rarr;</text>
             <g id="pontos"></g>
@@ -144,7 +144,7 @@ var ST={d:null,sel:null};
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function cor(e){ // verde = bom alvo (pouco esforco, muito impacto)
   var v=e.impacto-e.esforco;
-  return v>=3?'#12B981':v>=1?'#22B8F0':v>=0?'#F0A926':'#A78BFA';
+  return v>=3?'#3FD9A8':v>=1?'#5CCBF7':v>=0?'#FFC352':'#BFA9FF';
 }
 function achar(id){var r=null;ST.d.entidades.forEach(function(x){if(x.id===id)r=x});return r}
 
@@ -153,7 +153,7 @@ function desenharAviso(){
   document.getElementById('aviso').innerHTML='<b>'+esc(m.avisoTom)+'</b>'
     +'<div style="margin-top:8px;color:var(--t3)">'+esc(m.principio)+'</div>'
     +'<div style="margin-top:8px;color:var(--t4);font-size:11px">'+esc(m.avisoBeneficios)+'</div>'
-    +(m.avisoCapacidadeAprovada?'<div style="margin-top:9px;padding-top:9px;border-top:1px solid rgba(201,138,60,.25);color:#FFB4B4;font-size:11px"><b style="color:#EF4444">Regra a n&atilde;o quebrar:</b> '+esc(m.avisoCapacidadeAprovada)+'</div>':'');
+    +(m.avisoCapacidadeAprovada?'<div style="margin-top:9px;padding-top:9px;border-top:1px solid rgba(201,138,60,.25);color:#FFB4B4;font-size:11px"><b style="color:#FF7A7A">Regra a n&atilde;o quebrar:</b> '+esc(m.avisoCapacidadeAprovada)+'</div>':'');
 }
 
 function desenharMatriz(){

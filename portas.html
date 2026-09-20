@@ -8,14 +8,14 @@
 <script src="assets/access-control.js"></script>
 <style>
 :root{
-  --bg1:#080F1C; --bg2:#0B1421; --sidebar-bg:#0B1421; --card:#141F2B; --card-bg:#141F2B; --cardh:#1B2836;
-  --line:rgba(64,86,108,.55); --card-line:rgba(64,86,108,.55);
-  --gl1:rgba(201,138,60,.55); --gl2:rgba(201,138,60,.30); --gold-line:rgba(201,138,60,.28);
-  --brz:#C98A3C; --brzl:#E8BE7A; --brzd:#8A5C25; --gold:#C98A3C;
-  --blue:#22B8F0; --teal:#2DD4BF; --amber:#F0A926; --red:#EF4444; --ok:#12B981;
-  --ink:#F3F7FC; --ink-dim:#8FA1B8; --ink-faint:#5E7189;
-  --nav-active:#22B8F0; --nav-idle:#141F2B;
-  --t2:#C3D0E0; --t3:#8FA1B8; --t4:#5E7189;
+  --bg1:#0B1524; --bg2:#0E1A2B; --sidebar-bg:#0E1A2B; --card:#17243A; --card-bg:#17243A; --cardh:#203148;
+  --line:rgba(100,128,164,.62); --card-line:rgba(100,128,164,.62);
+  --gl1:rgba(237,184,110,.70); --gl2:rgba(237,184,110,.52); --gold-line:rgba(237,184,110,.52);
+  --brz:#EDB86E; --brzl:#F5DDB8; --brzd:#A8743A; --gold:#EDB86E;
+  --blue:#5CCBF7; --teal:#5FE3D2; --amber:#FFC352; --red:#FF7A7A; --ok:#3FD9A8;
+  --ink:#FAFCFF; --ink-dim:#C2D1E4; --ink-faint:#9DB0C8;
+  --nav-active:#5CCBF7; --nav-idle:#17243A;
+  --t2:#D6E1EE; --t3:#C2D1E4; --t4:#9DB0C8;
   --font-display:'Inter',sans-serif;
 }
 *{box-sizing:border-box}
@@ -23,7 +23,7 @@ body{margin:0;background:var(--bg1);color:var(--ink);font-family:'Inter',sans-se
 .app{display:flex;min-height:100vh}
 
 /* barra lateral — mesmas classes do resto do sistema */
-.sidebar{width:240px;flex-shrink:0;background:linear-gradient(180deg,#100E0B,#0B1421 240px);
+.sidebar{width:240px;flex-shrink:0;background:linear-gradient(180deg,#100E0B,#0E1A2B 240px);
   border-right:1px solid var(--gold-line);display:flex;flex-direction:column;padding-bottom:20px;
   overflow-y:auto;height:100vh;position:sticky;top:0}
 .brand{padding:22px 20px 18px;border-bottom:1px solid var(--gold-line);margin-bottom:8px}
@@ -43,7 +43,7 @@ main{flex:1;min-width:0;position:relative;overflow:hidden;
 .halo{position:absolute;width:520px;height:520px;border-radius:50%;
   background:radial-gradient(circle,rgba(201,138,60,.20),transparent 66%);top:-170px;right:-130px;pointer-events:none}
 .halo2{position:absolute;width:340px;height:340px;border-radius:50%;
-  background:radial-gradient(circle,rgba(201,138,60,.09),transparent 70%);bottom:-150px;left:-90px;pointer-events:none}
+  background:radial-gradient(circle,rgba(237,184,110,.14),transparent 70%);bottom:-150px;left:-90px;pointer-events:none}
 .wrap{position:relative;max-width:1000px;padding:30px 32px 60px}
 
 .eyebrow{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--brz);font-weight:700;margin-bottom:8px}
@@ -52,7 +52,7 @@ h1{font-size:27px;font-weight:800;margin:0;letter-spacing:-.015em}
 .lede{color:var(--t3);margin:0 0 26px;max-width:70ch;font-size:13.5px}
 
 .portas{display:grid;grid-template-columns:repeat(auto-fill,minmax(238px,1fr));gap:14px}
-.porta{position:relative;background:linear-gradient(180deg,rgba(201,138,60,.07),transparent 74px),var(--card);
+.porta{position:relative;background:linear-gradient(180deg,rgba(237,184,110,.12),transparent 74px),var(--card);
   border:1px solid var(--gl2);border-radius:12px;padding:17px 18px;text-decoration:none;color:var(--ink);
   display:flex;flex-direction:column;gap:7px;min-height:126px;overflow:hidden}
 .porta::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--brz),var(--brzd))}
@@ -72,7 +72,7 @@ h1{font-size:27px;font-weight:800;margin:0;letter-spacing:-.015em}
 .porta.fechada .ic{color:var(--brzd)}
 .porta.fechada .est{color:var(--brzl)}
 .selo-f{position:absolute;top:13px;right:13px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--brzl);border:1px solid var(--gl2);border-radius:4px;padding:2px 7px;background:rgba(201,138,60,.08)}
+  color:var(--brzl);border:1px solid var(--gl2);border-radius:4px;padding:2px 7px;background:rgba(237,184,110,.13)}
 
 .trab{margin-top:34px;padding-top:26px;border-top:1px solid var(--gl2)}
 .trab h2{font-size:17px;margin:0 0 6px;font-weight:650}
@@ -82,7 +82,7 @@ h1{font-size:27px;font-weight:800;margin:0;letter-spacing:-.015em}
 .pedido .qn{font-weight:700;font-size:13.5px;min-width:190px}
 .pedido .qq{color:var(--t3);font-size:12.5px;flex:1}
 .who{display:inline-block;font-size:11px;color:var(--brzl);border:1px solid var(--gl2);
-  border-radius:4px;padding:2px 8px;background:rgba(201,138,60,.07);white-space:nowrap}
+  border-radius:4px;padding:2px 8px;background:rgba(237,184,110,.12);white-space:nowrap}
 
 @media(max-width:1080px){.wrap{padding:20px 16px 50px}}
 @media(max-width:640px){.pedido{flex-direction:column;gap:5px}}

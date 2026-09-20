@@ -24,7 +24,7 @@
 <script src="assets/sinagepe.js"></script>
 <script>
 SINAGEPE.load().then(data => {
-  const SEV = { 'Crítico': ['#f26659','rgba(239,68,68,0.1)'], 'Atenção': ['#f2991a','rgba(245,158,11,0.1)'] };
+  const SEV = { 'Crítico': ['#f26659','rgba(255,122,122,0.1)'], 'Atenção': ['#f2991a','rgba(245,158,11,0.1)'] };
   document.getElementById('mob-content').innerHTML = data.alertasDetalhe.map(a => {
     const [cor,bg] = SEV[a.severidade] || SEV['Atenção'];
     return `<div class="mob-card" style="border-left:3px solid ${cor}">
